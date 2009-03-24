@@ -1,5 +1,10 @@
 2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Ignore svnw related files.
+	* .gitignore: Here.
+
+2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix compilation issues.
 	* .gitignore: Add Autotools generated files.
 	* configure.ac: Set where Libool should copy its files.

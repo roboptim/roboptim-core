@@ -25,3 +25,5 @@ packages/rpm/Makefile.in
 src/Makefile.in
 tests/Makefile.in
 tests/testsuite
++committed/
+,*
