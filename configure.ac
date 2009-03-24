@@ -45,6 +45,7 @@ JRL_CXX_WARNINGS([[-Wall],
 ## ------------------- ##
 
 # Search for Libtool.
+AC_CONFIG_MACRO_DIR([build-aux])
 AC_PROG_LIBTOOL
 
 ## ------------ ##

@@ -13,6 +13,11 @@ CLEANFILES += atconfig
 # Source which are shared by all tests.
 COMMON_SOURCES = common.hh
 
+# simple-test
+check_PROGRAMS = simple-test
+simple_test_SOURCES = simple-test.cc $(COMMON_SOURCES)
+simple_test_LDADD = $(top_builddir)/src/liboptimization.la
+
 .PHONY: generate-reference
 
 # Re-generate reference outputs.
