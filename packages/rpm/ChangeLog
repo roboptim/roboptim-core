@@ -1,0 +1,5 @@
+2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	* ChangeLog,
+	* liboptimization.spec,
+	* Makefile.am: Initial work.

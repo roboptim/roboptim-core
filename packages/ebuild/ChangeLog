@@ -1,0 +1,7 @@
+2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	* ChangeLog,
+	* liboptimization-0.1.ebuild,
+	* liboptimization-9999.ebuild,
+	* Makefile.am,
+	* metadata.xml: Initial work.
