@@ -1,5 +1,7 @@
 include $(top_srcdir)/build-aux/init.mk
 
+SUBDIRS = plug-in
+
 # Add available warnings flags.
 AM_CXXFLAGS += $(WARNING_CXXFLAGS)
 

@@ -1,5 +1,14 @@
 2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add dummy plug-in placeholder.
+	* configure.ac: Generate plug-in, dummy Makefiles.
+	* src/Makefile.am: Add plug-in to SUBDIRS.
+	* src/plug-in/Makefile.am: New.
+	* src/plug-in/dummy/Makefile.am: New.
+	* src/plug-in/dummy/dummy.cc: New.
+
+2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Ignore svnw related files.
 	* .gitignore: Here.
 

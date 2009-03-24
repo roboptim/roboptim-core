@@ -71,6 +71,8 @@ AC_CONFIG_FILES([
     packages/ebuild/Makefile
     packages/rpm/Makefile
    src/Makefile
+    src/plug-in/Makefile
+     src/plug-in/dummy/Makefile
    doc/Makefile
    tests/Makefile
     tests/atlocal
