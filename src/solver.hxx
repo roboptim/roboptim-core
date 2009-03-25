@@ -28,7 +28,8 @@
 namespace optimization
 {
   template <typename F>
-  Solver<F>::Solver (const function_t&) throw ()
+  Solver<F>::Solver (const function_t& fct) throw ()
+    : function_ (fct)
   {
   }
 

@@ -21,26 +21,38 @@
 #include "common.hh"
 #include <dummy.hh>
 
+double my_fun (double x1, double x2, double x3, double x4)
+{
+  return x1 * x4 * (x1 + x2 + x3) + x4;
+}
+
 int run_test ()
 {
   using namespace optimization;
   using namespace boost::lambda;
 
-  // Check with boost::function.
-
   // Check with identity function (fun x -> x).
   {
-    typedef DummySolver<boost::function<double (double)> > solver_t;
+    typedef DummySolver<double (double)> solver_t;
     solver_t solver (_1);
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
   }
 
-  // Check with identity function (fun x y -> x + y).
+  // Check with basic function (fun x y -> x + y).
   {
-    typedef DummySolver<boost::function<double (double, double)> > solver_t;
+    typedef DummySolver<double (double, double)> solver_t;
     solver_t solver (_1 + _2);
+
+    solver_t::result_t res = solver.getMinimum ();
+    boost::get<SolverError> (res);
+  }
+
+  // Check with complex function.
+  {
+    typedef DummySolver<double (double, double, double, double)> solver_t;
+    solver_t solver (my_fun);
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);

@@ -29,6 +29,7 @@
 # include <boost/variant.hpp>
 # include <boost/utility.hpp>
 
+
 # include <optimization-fwd.hh>
 
 namespace optimization
@@ -40,25 +41,28 @@ namespace optimization
   };
 
   /// Abstract solver class.
-  template <typename F>
+  template <typename Signature>
   class Solver : public boost::noncopyable
   {
   public:
-    typedef F function_t;
-    typedef double functionResult_t; // boost::result_of<function_t>
+    typedef boost::function<Signature> function_t;
+    typedef typename function_t::result_type functionResult_t;
     typedef boost::variant<functionResult_t, SolverError> result_t;
 
     typedef function_t gradient_t;
 
 
-    Solver (const function_t&) throw ();
+    explicit Solver (const function_t&) throw ();
     virtual ~Solver () throw ();
 
     virtual result_t getMinimum () throw () = 0;
 
   private:
+    const function_t& function_;
     boost::optional<gradient_t> gradient_;
+
     result_t result_;
+
 
     //FIXME: More?
     //boost::optional<jacobian_t> jacobian_;

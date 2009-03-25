@@ -1,5 +1,13 @@
 2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Store minimized function in the solver.
+	* src/dummy.hh: Add explicit constructor.
+	* src/solver.hh: Add explicit constructor, store function.
+	* src/solver.hxx: Implement constructor.
+	* tests/simple-test.cc: Add a more complex test, fix comments.
+
+2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make Solver generic.
 	* configure.ac: Remove plug-in Makefiles, distribute tar.bz2.
 	* src/Makefile.am: Remove plug-in.

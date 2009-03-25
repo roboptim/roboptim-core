@@ -34,7 +34,7 @@ namespace optimization
   public:
     typedef Solver<F> parent_t;
 
-    DummySolver (const typename parent_t::function_t& fct) throw ()
+    explicit DummySolver (const typename parent_t::function_t& fct) throw ()
       : parent_t (fct)
     {
     }
