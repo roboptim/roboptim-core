@@ -1,5 +1,12 @@
 2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Generate pkg-config file.
+	* Makefile.am: Add generation and install rules.
+	* build-aux/pkg-config.pc.in: New.
+	* configure.ac: Build tar.bz2 tarball.
+
+2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement dummy solver.
 	* configure.ac: Search for Boost.
 	* src/Makefile.am: Fix filenames.
