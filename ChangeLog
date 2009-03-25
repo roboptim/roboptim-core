@@ -1,3 +1,9 @@
+2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Rename main header/source files.
+	* src/solver.cc: Rename from src/optimization.cc.
+	* src/solver.hh: Rename from src/optimization.hh.
+
 2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add dummy plug-in placeholder.
