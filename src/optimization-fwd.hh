@@ -29,6 +29,9 @@ namespace optimization
   template <typename F>
   class Solver;
 
+  template <typename F>
+  class IpoptSolver;
+
   class SolverError;
 } // end of namespace optimization.
 

@@ -60,7 +60,7 @@ namespace optimization
     virtual result_t getMinimum () throw () = 0;
 
     std::size_t getArity () const throw ();
-  private:
+  protected:
     const function_t& function_;
     boost::optional<gradient_t> gradient_;
 

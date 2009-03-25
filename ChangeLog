@@ -1,5 +1,12 @@
 2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Enhance Ipopt bridge.
+	* src/ipopt.hh: Put MyTNLP out of IpoptSolver.
+	* src/optimization-fwd.hh: Declare IpoptSolver.
+	* src/solver.hh: Change attributes to protected.
+
+2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Detect function arity at compile-time.
 	* src/ipopt.hh: Set arity in get_nlp_info.
 	* src/solver.hh,
