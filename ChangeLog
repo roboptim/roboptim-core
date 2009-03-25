@@ -1,5 +1,20 @@
 2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make Solver generic.
+	* configure.ac: Remove plug-in Makefiles, distribute tar.bz2.
+	* src/Makefile.am: Remove plug-in.
+	* src/dummy.hh: Rename from src/plug-in/dummy/dummy.cc.
+	* src/optimization-fwd.hh: Fix Solver type.
+	* src/plug-in/Makefile.am: Remove.
+	* src/plug-in/dummy/Makefile.am: Remove.
+	* src/solver.hh: Make Solver generic.
+	* src/solver.hxx: Rename from src/solver.cc.
+	* tests/Makefile.am: Fix test linking.
+	* tests/simple-test.at: Fix test description.
+	* tests/simple-test.cc: Use generic solver class.
+
+2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Generate pkg-config file.
 	* Makefile.am: Add generation and install rules.
 	* build-aux/pkg-config.pc.in: New.

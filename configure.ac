@@ -12,7 +12,7 @@ AC_INIT([Generic optimization library], [0.1], [thomas.moulard@gmail.com],
 AC_CONFIG_AUX_DIR([build-aux])
 
 # Automake.
-AM_INIT_AUTOMAKE([1.9.6 -Wall nostdinc])
+AM_INIT_AUTOMAKE([1.9.6 dist-bzip2 -Wall nostdinc])
 
 ## ------------- ##
 ## C++ compiler  ##
@@ -78,8 +78,6 @@ AC_CONFIG_FILES([
     packages/ebuild/Makefile
     packages/rpm/Makefile
    src/Makefile
-    src/plug-in/Makefile
-     src/plug-in/dummy/Makefile
    doc/Makefile
    tests/Makefile
     tests/atlocal

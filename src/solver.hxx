@@ -17,55 +17,26 @@
 
 
 /**
- * \file dummy.cc
+ * \file solver.hxx
  *
- * \brief Implementation of the dummy module (always fail).
+ * \brief Implementation of the Solver class.
  */
 
-#include <solver.hh>
+#ifndef OPTIMIZATION_SOLVER_HXX
+# define OPTIMIZATION_SOLVER_HXX
 
 namespace optimization
 {
-
-  class DummySolver : public Solver
+  template <typename F>
+  Solver<F>::Solver (const function_t&) throw ()
   {
-  public:
-    DummySolver (const function_t& fct) throw ()
-      : Solver (fct)
-    {
-    }
+  }
 
-    virtual ~DummySolver () throw ()
-    {
-    }
-
-    virtual result_t
-    getMinimum () throw ()
-    {
-      return result_t (SolverError ());
-    }
-  };
+  template <typename F>
+  Solver<F>::~Solver () throw ()
+  {
+  }
 
 } // end of namespace optimization
 
-
-extern "C"
-{
-  optimization::Solver*
-  create (const optimization::DummySolver::function_t& arg)
-  {
-    return new optimization::DummySolver (arg);
-  }
-
-  void
-  destroy (optimization::Solver* p)
-  {
-    delete p;
-  }
-
-  unsigned
-  version ()
-  {
-    return optimization::Solver::PLUGIN_INTERFACE_VERSION;
-  }
-}
+#endif //! OPTIMIZATION_SOLVER_HXX

@@ -17,21 +17,39 @@
 
 
 /**
- * \file solver.cc
+ * \file dummy.hh
  *
- * \brief Implementation of the Solver class.
+ * \brief Implementation of the dummy module (always fail).
  */
 
-#include "config.h"
-#include <solver.hh>
+#ifndef OPTIMIZATION_DUMMY_HH
+# define OPTIMIZATION_DUMMY_HH
+# include <solver.hh>
 
 namespace optimization
 {
-  Solver::Solver (const function_t&) throw ()
+  template <typename F>
+  class DummySolver : public Solver<F>
   {
-  }
+  public:
+    typedef Solver<F> parent_t;
 
-  Solver::~Solver () throw ()
-  {
-  }
+    DummySolver (const typename parent_t::function_t& fct) throw ()
+      : parent_t (fct)
+    {
+    }
+
+    virtual ~DummySolver () throw ()
+    {
+    }
+
+    virtual typename parent_t::result_t
+    getMinimum () throw ()
+    {
+      return typename parent_t::result_t (SolverError ());
+    }
+  };
+
 } // end of namespace optimization
+
+#endif //! OPTIMIZATION_DUMMY_HH

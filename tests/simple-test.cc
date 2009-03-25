@@ -19,19 +19,32 @@
 #include <boost/lambda/lambda.hpp>
 
 #include "common.hh"
-
-#include "plug-in/dummy/dummy.cc"
+#include <dummy.hh>
 
 int run_test ()
 {
   using namespace optimization;
   using namespace boost::lambda;
 
-  // Check with identity function (fun x -> x).
-  DummySolver solver (_1);
+  // Check with boost::function.
 
-  DummySolver::result_t res = solver.getMinimum ();
-  boost::get<SolverError> (res);
+  // Check with identity function (fun x -> x).
+  {
+    typedef DummySolver<boost::function<double (double)> > solver_t;
+    solver_t solver (_1);
+
+    solver_t::result_t res = solver.getMinimum ();
+    boost::get<SolverError> (res);
+  }
+
+  // Check with identity function (fun x y -> x + y).
+  {
+    typedef DummySolver<boost::function<double (double, double)> > solver_t;
+    solver_t solver (_1 + _2);
+
+    solver_t::result_t res = solver.getMinimum ();
+    boost::get<SolverError> (res);
+  }
 
   return 0;
 }

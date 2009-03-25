@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-AT_SETUP([Bypass plug-in mechanism and check DummySolver.])
+AT_SETUP([Check DummySolver.])
 
 AT_TESTED([simple-test])
 

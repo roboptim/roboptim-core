@@ -40,13 +40,13 @@ namespace optimization
   };
 
   /// Abstract solver class.
+  template <typename F>
   class Solver : public boost::noncopyable
   {
   public:
-    static const unsigned PLUGIN_INTERFACE_VERSION = 1;
-
-    typedef boost::variant<double, SolverError> result_t;
-    typedef boost::function<double (double x)> function_t;
+    typedef F function_t;
+    typedef double functionResult_t; // boost::result_of<function_t>
+    typedef boost::variant<functionResult_t, SolverError> result_t;
 
     typedef function_t gradient_t;
 
@@ -67,4 +67,5 @@ namespace optimization
 
 } // end of namespace optimization
 
+# include <solver.hxx>
 #endif //! OPTIMIZATION_SOLVER_HH
