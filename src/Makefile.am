@@ -9,8 +9,8 @@ lib_LTLIBRARIES = liboptimization.la
 
 include_HEADERS =					\
 				optimization-fwd.hh	\
-				optimization.hh
+				solver.hh
 
 liboptimization_la_SOURCES = 				\
 				doc.hh			\
-				optimization.cc
+				solver.cc

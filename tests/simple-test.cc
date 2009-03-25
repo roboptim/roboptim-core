@@ -16,9 +16,24 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
+#include <boost/lambda/lambda.hpp>
 
 #include "common.hh"
 
-//FIXME:
+#include "plug-in/dummy/dummy.cc"
+
+int run_test ()
+{
+  using namespace optimization;
+  using namespace boost::lambda;
+
+  // Check with identity function (fun x -> x).
+  DummySolver solver (_1);
+
+  DummySolver::result_t res = solver.getMinimum ();
+  boost::get<SolverError> (res);
+
+  return 0;
+}
 
 GENERATE_TEST ()

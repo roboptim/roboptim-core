@@ -1,5 +1,18 @@
 2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Implement dummy solver.
+	* configure.ac: Search for Boost.
+	* src/Makefile.am: Fix filenames.
+	* src/optimization-fwd.hh: Add forward declarations.
+	* src/plug-in/dummy/dummy.cc: Implement dummy solver.
+	* src/solver.cc,
+	* src/solver.hh: Implement abstract solver.
+	* tests/common.hh: Fix GENERATE_TEST macro.
+	* tests/simple-test.at: Fix description.
+	* tests/simple-test.cc: Implement test using the dummy solver.
+
+2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update and add support for Boost.Optional.
 	* build-aux/boost.m4: Here.
 

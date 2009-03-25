@@ -26,6 +26,10 @@
 
 namespace optimization
 {
+  class Solver;
+  class SolverError;
+
+  class PluginSolver;
 } // end of namespace optimization.
 
 #endif //! OPTIMIZATION_FWD_HH

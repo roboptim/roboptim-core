@@ -17,13 +17,21 @@
 
 
 /**
- * \file optimization.cc
+ * \file solver.cc
  *
- * \brief Implementation of the Optimization class.
+ * \brief Implementation of the Solver class.
  */
 
 #include "config.h"
+#include <solver.hh>
 
 namespace optimization
 {
+  Solver::Solver (const function_t&) throw ()
+  {
+  }
+
+  Solver::~Solver () throw ()
+  {
+  }
 } // end of namespace optimization

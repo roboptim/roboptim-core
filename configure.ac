@@ -48,6 +48,13 @@ JRL_CXX_WARNINGS([[-Wall],
 AC_CONFIG_MACRO_DIR([build-aux])
 AC_PROG_LIBTOOL
 
+# Search for Boost
+BOOST_FUNCTION
+BOOST_LAMBDA
+BOOST_OPTIONAL
+BOOST_UTILITY
+BOOST_VARIANT
+
 ## ------------ ##
 ## Test-suite.  ##
 ## ------------ ##

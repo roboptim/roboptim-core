@@ -18,8 +18,7 @@
 
 #ifndef OPTIMIZATION_TESTS_COMMON_HH
 # define OPTIMIZATION_TESTS_COMMON_HH
-# include "optimization.hh"
-
+# include <stdexcept>
 # include "config.h"
 
 static const int TEST_FAILED = 10;
@@ -37,7 +36,20 @@ static const int TEST_SUCCEED = 0;
       }                                                 \
                                                         \
     int status = 0;                                     \
-    /* FIXME */                                         \
+    try                                                 \
+      {                                                 \
+        status = run_test ();                           \
+      }                                                 \
+    catch (std::runtime_error& e)                       \
+      {                                                 \
+        std::cerr << e.what () << std::endl;            \
+        return 1;                                       \
+      }                                                 \
+    catch (...)                                         \
+      {                                                 \
+        std::cerr << "Unexpected error" << std::endl;   \
+        return 2;                                       \
+      }                                                 \
     return status;                                      \
   }
 
