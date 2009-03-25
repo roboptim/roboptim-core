@@ -1,5 +1,13 @@
 2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Detect function arity at compile-time.
+	* src/ipopt.hh: Set arity in get_nlp_info.
+	* src/solver.hh,
+	* src/solver.hxx: Detect arity and add getArity method.
+	* tests/Makefile.am: Fix ipopt test case flags.
+
+2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Stub bridge for Ipopt.
 	* src/Makefile.am: Add ipopt.hh to distributed headers.
 	* src/ipopt.hh: New.

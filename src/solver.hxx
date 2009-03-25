@@ -38,6 +38,12 @@ namespace optimization
   {
   }
 
+  template <typename F>
+  std::size_t
+  Solver<F>::getArity () const throw ()
+  {
+    return arity;
+  }
 } // end of namespace optimization
 
 #endif //! OPTIMIZATION_SOLVER_HXX

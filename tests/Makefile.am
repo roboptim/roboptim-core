@@ -21,6 +21,7 @@ simple_test_SOURCES = simple-test.cc $(COMMON_SOURCES)
 check_PROGRAMS += ipopt
 ipopt_SOURCES = ipopt.cc $(COMMON_SOURCES)
 ipopt_LDADD = -lipopt -lgfortran
+ipopt_LDFLAGS = -pthread
 
 .PHONY: generate-reference
 

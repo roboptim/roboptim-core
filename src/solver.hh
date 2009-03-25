@@ -26,6 +26,7 @@
 
 # include <boost/function.hpp>
 # include <boost/optional.hpp>
+# include <boost/type_traits/function_traits.hpp>
 # include <boost/variant.hpp>
 # include <boost/utility.hpp>
 
@@ -40,12 +41,13 @@ namespace optimization
     //FIXME: make exception.
   };
 
-  /// Abstract solver class.
+  /// Generic solver class.
   template <typename Signature>
   class Solver : public boost::noncopyable
   {
   public:
     typedef boost::function<Signature> function_t;
+    static const std::size_t arity = boost::function_traits<Signature>::arity;
     typedef typename function_t::result_type functionResult_t;
     typedef boost::variant<functionResult_t, SolverError> result_t;
 
@@ -57,6 +59,7 @@ namespace optimization
 
     virtual result_t getMinimum () throw () = 0;
 
+    std::size_t getArity () const throw ();
   private:
     const function_t& function_;
     boost::optional<gradient_t> gradient_;

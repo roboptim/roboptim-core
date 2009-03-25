@@ -24,8 +24,9 @@
 
 #ifndef OPTIMIZATION_IPOPT_HH
 # define OPTIMIZATION_IPOPT_HH
-# include "IpIpoptApplication.hpp"
-# include "IpTNLP.hpp"
+# include <cassert>
+# include <IpIpoptApplication.hpp>
+# include <IpTNLP.hpp>
 
 # include <solver.hh>
 
@@ -71,6 +72,11 @@ namespace optimization
       get_nlp_info (Index& n, Index& m, Index& nnz_jac_g,
                     Index& nnz_h_lag, TNLP::IndexStyleEnum& index_style)
       {
+        n = parent_t::arity;
+        m = 0;
+        nnz_jac_g = 0;
+        nnz_h_lag = 0;
+        index_style = TNLP::C_STYLE;
         return true;
       }
       virtual bool
