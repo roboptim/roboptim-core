@@ -17,6 +17,11 @@ COMMON_SOURCES = common.hh
 check_PROGRAMS = simple-test
 simple_test_SOURCES = simple-test.cc $(COMMON_SOURCES)
 
+# Ipopt
+check_PROGRAMS += ipopt
+ipopt_SOURCES = ipopt.cc $(COMMON_SOURCES)
+ipopt_LDADD = -lipopt -lgfortran
+
 .PHONY: generate-reference
 
 # Re-generate reference outputs.
@@ -38,8 +43,10 @@ generate-reference:
 # ------------ #
 
 TESTSUITE_AT =					\
-	simple-test.at
+	simple-test.at				\
+	ipopt.at
 
 # Distribute reference files.
 EXTRA_DIST +=					\
-	simple-test.stdout
+	simple-test.stdout			\
+	ipopt.stdout

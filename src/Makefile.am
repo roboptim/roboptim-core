@@ -7,4 +7,5 @@ include_HEADERS =					\
 				optimization-fwd.hh	\
 				solver.hh		\
 				solver.hxx		\
-				dummy.hh
+				dummy.hh		\
+				ipopt.hh

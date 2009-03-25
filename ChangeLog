@@ -1,5 +1,16 @@
 2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Stub bridge for Ipopt.
+	* src/Makefile.am: Add ipopt.hh to distributed headers.
+	* src/ipopt.hh: New.
+	* tests/Makefile.am: Add Ipopt test.
+	* tests/ipopt.at: Copy from tests/testsuite.at.
+	* tests/ipopt.cc: New.
+	* tests/ipopt.stdout: New.
+	* tests/testsuite.at: Include Ipopt test.
+
+2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Store minimized function in the solver.
 	* src/dummy.hh: Add explicit constructor.
 	* src/solver.hh: Add explicit constructor, store function.
