@@ -26,13 +26,9 @@
 
 namespace optimization
 {
-  template <int N, typename DataType = double>
   class Solver;
 
-  template <int N, typename DataType = double>
   class DummySolver;
-
-  template <int N>
   class IpoptSolver;
 
   class SolverError;

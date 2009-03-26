@@ -35,6 +35,8 @@
 
 namespace optimization
 {
+  namespace ublas = boost::numeric::ublas;
+
   /// Generic solver error.
   class SolverError
   {
@@ -42,20 +44,17 @@ namespace optimization
   };
 
   /// Generic solver class.
-  template <int N, typename DataType>
   class Solver : public boost::noncopyable
   {
   public:
     /// \{
-    /// Data type (usually double).
-    typedef DataType value_type;
-    /// Number of arguments to minimize.
-    static const int size = N;
+    /// Data type.
+    typedef double value_type;
+    /// Size type.
+    typedef std::size_t size_type;
 
-    /// Internal storage type.
-    typedef boost::numeric::ublas::bounded_array<double, size> storage_t;
     /// Array type.
-    typedef boost::numeric::ublas::vector<value_type, storage_t> array_t;
+    typedef ublas::vector<value_type> array_t;
     /// Function type.
     typedef boost::function<value_type (const array_t&)> function_t;
     /// Result type.
@@ -66,19 +65,23 @@ namespace optimization
     /// \}
 
     /// \{
-    explicit Solver (const function_t&) throw ();
+    explicit Solver (const function_t&, size_type) throw ();
     virtual ~Solver () throw ();
     /// \}
 
     virtual result_t getMinimum () throw () = 0;
 
+    const function_t& getFunction () const throw ();
     std::size_t getArity () const throw ();
+
   protected:
+    /// Number of arguments in objective function.
+    size_type arity_;
     /// Function to minimize.
     const function_t& function_;
     /// Gradient function.
     boost::optional<gradient_t> gradient_;
-
+    /// Result of minimization.
     result_t result_;
 
 
@@ -89,5 +92,4 @@ namespace optimization
 
 } // end of namespace optimization
 
-# include <solver.hxx>
 #endif //! OPTIMIZATION_SOLVER_HH

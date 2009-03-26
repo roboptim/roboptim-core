@@ -17,19 +17,17 @@
 
 
 /**
- * \file ipopt.hh
+ * \file ipopt.cc
  *
  * \brief Implementation of the Ipopt class.
  */
 
-#ifndef OPTIMIZATION_IPOPT_HH
-# define OPTIMIZATION_IPOPT_HH
-# include <cassert>
+#include <cassert>
 
-# include <IpIpoptApplication.hpp>
-# include <IpTNLP.hpp>
+#include <IpIpoptApplication.hpp>
+#include <IpTNLP.hpp>
 
-# include <solver.hh>
+#include "ipopt.hh"
 
 namespace optimization
 {
@@ -37,12 +35,9 @@ namespace optimization
 
   namespace
   {
-    template <int N>
     struct MyTNLP : public TNLP
     {
-      typedef IpoptSolver<N> solver_t;
-
-      MyTNLP (const IpoptSolver<N>& solver)
+      MyTNLP (const IpoptSolver& solver)
         : solver_ (solver)
       {
       }
@@ -51,7 +46,7 @@ namespace optimization
       get_nlp_info (Index& n, Index& m, Index& nnz_jac_g,
                     Index& nnz_h_lag, TNLP::IndexStyleEnum& index_style)
       {
-        n = IpoptSolver<N>::size;
+        n = solver_.getArity ();
         m = 0;
         nnz_jac_g = 0;
         nnz_h_lag = 0;
@@ -77,12 +72,12 @@ namespace optimization
       virtual bool
       eval_f (Index n, const Number* x, bool new_x, Number& obj_value)
       {
-        typename solver_t::array_t x_ (n);
+        IpoptSolver::array_t x_ (n);
 
         // FIXME: iterate for now.
         std::copy (x, x + n, x_.begin ());
 
-        obj_value = solver_.function_ (x_);
+        obj_value = solver_.getFunction () (x_);
         return true;
       }
 
@@ -117,47 +112,34 @@ namespace optimization
       {
       }
 
-      const solver_t& solver_;
+      const IpoptSolver& solver_;
     };
   };
 
-  template <int N>
-  class IpoptSolver : public Solver<N, double>
+
+  IpoptSolver::IpoptSolver (const function_t& fct, size_type n) throw ()
+    : Solver (fct, n),
+      nlp_ (new MyTNLP (*this)),
+      app_ (new IpoptApplication ())
   {
-  public:
-    friend class MyTNLP<N>;
-    typedef Solver<N, double> parent_t;
+  }
 
-    explicit IpoptSolver (const typename parent_t::function_t& fct) throw ()
-      : parent_t (fct),
-        nlp_ (new MyTNLP<N> (*this)),
-        app_ (new IpoptApplication ())
-    {
-    }
+  IpoptSolver::~IpoptSolver () throw ()
+  {
+  }
 
-    virtual ~IpoptSolver () throw ()
-    {
-    }
+  IpoptSolver::result_t
+  IpoptSolver::getMinimum () throw ()
+  {
+    ApplicationReturnStatus status = app_->Initialize ();
+    if (status != Solve_Succeeded)
+      return result_t (SolverError ());
 
-    virtual typename parent_t::result_t
-    getMinimum () throw ()
-    {
-      ApplicationReturnStatus status = app_->Initialize ();
-      if (status != Solve_Succeeded)
-        return typename parent_t::result_t (SolverError ());
+    status = app_->OptimizeTNLP (nlp_);
+    if (status != Solve_Succeeded)
+      return result_t (SolverError ());
 
-      status = app_->OptimizeTNLP (nlp_);
-      if (status != Solve_Succeeded)
-        return typename parent_t::result_t (SolverError ());
-
-      return typename parent_t::result_t (0.);
-    }
-
-  private:
-    SmartPtr<TNLP> nlp_;
-    SmartPtr<IpoptApplication> app_;
-  };
+    return result_;
+  }
 
 } // end of namespace optimization
-
-#endif //! OPTIMIZATION_IPOPT_HH

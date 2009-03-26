@@ -5,7 +5,15 @@ AM_CXXFLAGS += $(WARNING_CXXFLAGS)
 
 include_HEADERS =					\
 				optimization-fwd.hh	\
-				solver.hh		\
-				solver.hxx		\
-				dummy.hh		\
-				ipopt.hh
+				solver.hh
+
+lib_LTLIBRARIES = liboptimization.la
+
+liboptimization_la_SOURCES = 				\
+				doc.hh			\
+				solver.cc		\
+				dummy.cc		\
+				ipopt.cc
+
+liboptimization_la_LIBADD = -lipopt -lgfortran
+liboptimization_la_LDFLAGS = -pthread

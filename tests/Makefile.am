@@ -16,12 +16,13 @@ COMMON_SOURCES = common.hh
 # simple-test
 check_PROGRAMS = simple-test
 simple_test_SOURCES = simple-test.cc $(COMMON_SOURCES)
+simple_test_LDADD = $(top_builddir)/src/liboptimization.la
 
 # Ipopt
 check_PROGRAMS += ipopt
 ipopt_SOURCES = ipopt.cc $(COMMON_SOURCES)
-ipopt_LDADD = -lipopt -lgfortran
-ipopt_LDFLAGS = -pthread
+ipopt_LDADD = $(top_builddir)/src/liboptimization.la
+
 
 .PHONY: generate-reference
 

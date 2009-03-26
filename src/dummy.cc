@@ -17,33 +17,28 @@
 
 
 /**
- * \file solver.hxx
+ * \file dummy.cc
  *
- * \brief Implementation of the Solver class.
+ * \brief Implementation of the dummy module (always fail).
  */
 
-#ifndef OPTIMIZATION_SOLVER_HXX
-# define OPTIMIZATION_SOLVER_HXX
+#include "dummy.hh"
 
 namespace optimization
 {
-  template <int N, typename DataType>
-  Solver<N, DataType>::Solver (const function_t& fct) throw ()
-    : function_ (fct)
+  DummySolver::DummySolver (const function_t& fct, size_type n) throw ()
+    : Solver (fct, n)
   {
   }
 
-  template <int N, typename DataType>
-  Solver<N, DataType>::~Solver () throw ()
+  DummySolver::~DummySolver () throw ()
   {
   }
 
-  template <int N, typename DataType>
-  std::size_t
-  Solver<N, DataType>::getArity () const throw ()
+  DummySolver::result_t
+  DummySolver::getMinimum () throw ()
   {
-    return size;
+    return result_t (SolverError ());
   }
+
 } // end of namespace optimization
-
-#endif //! OPTIMIZATION_SOLVER_HXX

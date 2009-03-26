@@ -1,5 +1,18 @@
 2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Back to object oriented.
+	* src/Makefile.am: Add library.
+	* src/dummy.cc: Rename from src/dummy.hh.
+	* src/ipopt.cc: Rename from src/ipopt.hh.
+	* src/optimization-fwd.hh: Remove template.
+	* src/solver.cc: Rename from src/solver.hxx.
+	* src/solver.hh: Fix header to get function arity at run-time.
+	* tests/Makefile.am: Link to liboptimization.
+	* tests/ipopt.cc,
+	* tests/simple-test.cc: Use the untemplated interface.
+
+2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Really call objective function in Ipopt.
 	* TODO: Add items.
 	* src/ipopt.hh: Call objective function.
