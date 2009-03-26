@@ -25,6 +25,7 @@
 #ifndef OPTIMIZATION_IPOPT_HH
 # define OPTIMIZATION_IPOPT_HH
 # include <cassert>
+
 # include <IpIpoptApplication.hpp>
 # include <IpTNLP.hpp>
 
@@ -39,6 +40,8 @@ namespace optimization
     template <int N>
     struct MyTNLP : public TNLP
     {
+      typedef IpoptSolver<N> solver_t;
+
       MyTNLP (const IpoptSolver<N>& solver)
         : solver_ (solver)
       {
@@ -74,8 +77,12 @@ namespace optimization
       virtual bool
       eval_f (Index n, const Number* x, bool new_x, Number& obj_value)
       {
-        //FIXME: call the function for real.
-        //obj_value = solver_.function_ (x[0]);
+        typename solver_t::array_t x_ (n);
+
+        // FIXME: iterate for now.
+        std::copy (x, x + n, x_.begin ());
+
+        obj_value = solver_.function_ (x_);
         return true;
       }
 
@@ -110,7 +117,7 @@ namespace optimization
       {
       }
 
-      const IpoptSolver<N>& solver_;
+      const solver_t& solver_;
     };
   };
 

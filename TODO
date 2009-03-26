@@ -1,3 +1,4 @@
                                                                 -*- outline -*-
 
-* FIXME
+* Detect solvers headers and compile/test only available solvers.
+* Find a way to map a C array into a uBLAS vector.

@@ -1,5 +1,11 @@
 2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Really call objective function in Ipopt.
+	* TODO: Add items.
+	* src/ipopt.hh: Call objective function.
+
+2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Moving to uBLAS vector for function arguments.
 	* src/dummy.hh,
 	* src/ipopt.hh: Use new template parameters of Solve class.
