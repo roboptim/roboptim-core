@@ -32,6 +32,7 @@ namespace optimization
       function_ (fct),
       gradient_ (gradient),
       start_ (),
+      constraints_ (),
       result_ (NoSolution ())
   {
   }
@@ -70,5 +71,17 @@ namespace optimization
   Solver::getArity () const throw ()
   {
     return arity_;
+  }
+
+  Solver::constraints_t&
+  Solver::getConstraints () throw ()
+  {
+    return constraints_;
+  }
+
+  const Solver::constraints_t&
+  Solver::getConstraints () const throw ()
+  {
+    return constraints_;
   }
 } // end of namespace optimization

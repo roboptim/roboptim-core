@@ -23,6 +23,7 @@
 
 #ifndef OPTIMIZATION_SOLVER_HH
 # define OPTIMIZATION_SOLVER_HH
+# include <vector>
 
 # include <boost/function.hpp>
 # include <boost/numeric/ublas/vector.hpp>
@@ -61,6 +62,7 @@ namespace optimization
     /// Size type.
     typedef std::size_t size_type;
 
+
     /// Array type.
     typedef ublas::vector<value_type> array_t;
     /// Function type.
@@ -71,6 +73,29 @@ namespace optimization
     /// Gradient type.
     typedef boost::optional<
       const boost::function<const array_t (const array_t&)>&> gradient_t;
+    /// \}
+
+
+    /// \{
+    /// FIXME: clean constraints.
+    struct InequalityConstraint
+    {
+      size_type index;
+      value_type lower;
+      value_type upper;
+    };
+    struct FunctionConstraint
+    {
+      FunctionConstraint (function_t fct)
+        : function_ (fct)
+      {}
+
+      function_t function_;
+      value_type lower;
+      value_type upper;
+    };
+    typedef boost::variant<InequalityConstraint, FunctionConstraint> constraint_t;
+    typedef std::vector<constraint_t> constraints_t;
     /// \}
 
     /// \{
@@ -87,6 +112,8 @@ namespace optimization
     function_t getFunction () const throw ();
     gradient_t getGradient () const throw ();
     std::size_t getArity () const throw ();
+    constraints_t& getConstraints () throw ();
+    const constraints_t& getConstraints () const throw ();
 
   protected:
     /// Number of arguments in objective function.
@@ -97,6 +124,8 @@ namespace optimization
     gradient_t gradient_;
     /// Starting point.
     boost::optional<array_t> start_;
+    /// Constraints
+    constraints_t constraints_;
 
     /// Result of minimization.
     result_t result_;
