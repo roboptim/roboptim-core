@@ -64,16 +64,17 @@ namespace optimization
     /// Array type.
     typedef ublas::vector<value_type> array_t;
     /// Function type.
-    typedef boost::function<value_type (const array_t&)> function_t;
+    typedef const boost::function<value_type (const array_t&)>& function_t;
     /// Result type.
     typedef boost::variant<NoSolution, array_t, SolverError> result_t;
 
     /// Gradient type.
-    typedef function_t gradient_t;
+    typedef boost::optional<
+      const boost::function<const array_t (const array_t&)>&> gradient_t;
     /// \}
 
     /// \{
-    explicit Solver (const function_t&, size_type) throw ();
+    explicit Solver (function_t, size_type, gradient_t) throw ();
     virtual ~Solver () throw ();
     /// \}
 
@@ -83,16 +84,17 @@ namespace optimization
 
     virtual result_t getMinimum () throw () = 0;
 
-    const function_t& getFunction () const throw ();
+    function_t getFunction () const throw ();
+    gradient_t getGradient () const throw ();
     std::size_t getArity () const throw ();
 
   protected:
     /// Number of arguments in objective function.
     size_type arity_;
     /// Function to minimize.
-    const function_t& function_;
+    function_t function_;
     /// Gradient function.
-    boost::optional<gradient_t> gradient_;
+    gradient_t gradient_;
     /// Starting point.
     boost::optional<array_t> start_;
 

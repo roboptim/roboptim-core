@@ -28,16 +28,27 @@ using namespace boost::lambda;
 
 typedef IpoptSolver solver_t;
 
-double my_fun (const IpoptSolver::array_t& x)
+double my_fun (const solver_t::array_t& x)
 {
   return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
+}
+
+solver_t::array_t my_gradient (const solver_t::array_t& x)
+{
+  solver_t::array_t grad (x.size ());
+
+  grad[0] = x[0] * x[3] + x[3] * (x[0] + x[1] + x[2]),
+    grad[1] = x[0] * x[3],
+    grad[2] = x[0] * x[3] + 1,
+    grad[3] = x[0] * (x[0] + x[1] + x[2]);
+  return grad;
 }
 
 int run_test ()
 {
   // Check with complex function.
   {
-    solver_t solver (my_fun, 4);
+    solver_t solver (my_fun, 4, solver_t::gradient_t (my_gradient));
 
     solver_t::array_t start (4);
     start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;

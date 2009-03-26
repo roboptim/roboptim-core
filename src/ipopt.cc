@@ -100,6 +100,13 @@ namespace optimization
       virtual bool
       eval_grad_f(Index n, const Number* x, bool new_x, Number* grad_f)
       {
+        if (!solver_.getGradient ())
+          return true;
+
+        IpoptSolver::array_t x_ (n);
+        array_to_vector (x_, x);
+        IpoptSolver::array_t grad = (*solver_.getGradient ()) (x_);
+        vector_to_array(grad_f, grad);
         return true;
       }
 
@@ -143,8 +150,8 @@ namespace optimization
 
   using namespace detail;
 
-  IpoptSolver::IpoptSolver (const function_t& fct, size_type n) throw ()
-    : Solver (fct, n),
+  IpoptSolver::IpoptSolver (function_t fct, size_type n, gradient_t g) throw ()
+    : Solver (fct, n, g),
       nlp_ (new MyTNLP (*this)),
       app_ (new IpoptApplication ())
   {

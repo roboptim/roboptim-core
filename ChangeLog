@@ -1,5 +1,15 @@
 2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add gradient function.
+	* src/dummy.cc: Add optional gradient to constructor.
+	* src/ipopt.cc: Use gradient in Ipopt if possible.
+	* src/solver.cc,
+	* src/solver.hh: Handle optional gradient.
+	* tests/ipopt.cc: Add problem specific gradient.
+	* tests/simple-test.cc: Do not use gradient.
+
+2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add the possibility to set a starting point.
 	* src/ipopt.cc: Use the starting point if possible.
 	* src/solver.cc,

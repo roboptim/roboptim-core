@@ -26,8 +26,8 @@
 
 namespace optimization
 {
-  DummySolver::DummySolver (const function_t& fct, size_type n) throw ()
-    : Solver (fct, n)
+  DummySolver::DummySolver (function_t fct, size_type n, gradient_t g) throw ()
+    : Solver (fct, n, g)
   {
     result_ = SolverError ();
   }

@@ -27,10 +27,10 @@
 
 namespace optimization
 {
-  Solver::Solver (const function_t& fct, size_type n) throw ()
+  Solver::Solver (function_t fct, size_type n, gradient_t gradient) throw ()
     : arity_ (n),
       function_ (fct),
-      gradient_ (),
+      gradient_ (gradient),
       start_ (),
       result_ (NoSolution ())
   {
@@ -54,10 +54,16 @@ namespace optimization
     reset ();
   }
 
-  const Solver::function_t&
+  Solver::function_t
   Solver::getFunction () const throw ()
   {
     return function_;
+  }
+
+  Solver::gradient_t
+  Solver::getGradient () const throw ()
+  {
+    return gradient_;
   }
 
   std::size_t

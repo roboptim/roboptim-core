@@ -27,7 +27,7 @@ using namespace boost::lambda;
 
 typedef DummySolver solver_t;
 
-double my_fun (const DummySolver::array_t& x)
+double my_fun (const solver_t::array_t& x)
 {
   return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
 }
@@ -37,7 +37,7 @@ int run_test ()
 
   // Check with identity function (fun x -> x).
   {
-    solver_t solver (ret<const double&> (_1[0]), 1);
+    solver_t solver (ret<const double&> (_1[0]), 1, solver_t::gradient_t ());
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
@@ -45,7 +45,8 @@ int run_test ()
 
   // Check with basic function (fun x y -> x + y).
   {
-    solver_t solver (ret<const double&> (_1[0]) + ret<const double&> (_1[1]), 2);
+    solver_t solver (ret<const double&> (_1[0]) + ret<const double&> (_1[1]),
+                     2, solver_t::gradient_t ());
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
@@ -53,7 +54,7 @@ int run_test ()
 
   // Check with complex function.
   {
-    solver_t solver (my_fun, 4);
+    solver_t solver (my_fun, 4, solver_t::gradient_t ());
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
