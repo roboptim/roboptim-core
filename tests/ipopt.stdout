@@ -1,18 +1,17 @@
-Exception of type: OPTION_INVALID in file "../../../../Ipopt/src/Algorithm/IpAlgBuilder.cpp" at line 275:
- Exception message: Selected linear solver MA27 not available.
-Tried to obtain MA27 from shared library "libhsl.so", but the following error occured:
-libhsl.so: cannot open shared object file: No such file or directory
 
-EXIT: Invalid option encountered.
-Exception of type: OPTION_INVALID in file "../../../../Ipopt/src/Algorithm/IpAlgBuilder.cpp" at line 275:
- Exception message: Selected linear solver MA27 not available.
-Tried to obtain MA27 from shared library "libhsl.so", but the following error occured:
-libhsl.so: cannot open shared object file: No such file or directory
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Common Public License (CPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+******************************************************************************
 
-EXIT: Invalid option encountered.
-Exception of type: OPTION_INVALID in file "../../../../Ipopt/src/Algorithm/IpAlgBuilder.cpp" at line 275:
- Exception message: Selected linear solver MA27 not available.
-Tried to obtain MA27 from shared library "libhsl.so", but the following error occured:
-libhsl.so: cannot open shared object file: No such file or directory
+NOTE: You are using Ipopt by default with the MUMPS linear solver.
+      Other linear solvers might be more efficient (see Ipopt documentation).
 
-EXIT: Invalid option encountered.
+
+This is Ipopt version 3.5.5, running with linear solver mumps.
+
+All variables are fixed and constraint violation 0.000000e+00
+   is below tolerance 1.000000e-08. Declaring success.
+
+EXIT: Optimal Solution Found.

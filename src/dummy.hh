@@ -28,11 +28,11 @@
 
 namespace optimization
 {
-  template <typename F>
-  class DummySolver : public Solver<F>
+  template <int N, typename DataType>
+  class DummySolver : public Solver<N, DataType>
   {
   public:
-    typedef Solver<F> parent_t;
+    typedef Solver<N, DataType> parent_t;
 
     explicit DummySolver (const typename parent_t::function_t& fct) throw ()
       : parent_t (fct)

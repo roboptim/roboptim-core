@@ -36,10 +36,10 @@ namespace optimization
 
   namespace
   {
-    template <typename F>
+    template <int N>
     struct MyTNLP : public TNLP
     {
-      MyTNLP (const IpoptSolver<F>& solver)
+      MyTNLP (const IpoptSolver<N>& solver)
         : solver_ (solver)
       {
       }
@@ -48,7 +48,7 @@ namespace optimization
       get_nlp_info (Index& n, Index& m, Index& nnz_jac_g,
                     Index& nnz_h_lag, TNLP::IndexStyleEnum& index_style)
       {
-        n = IpoptSolver<F>::arity;
+        n = IpoptSolver<N>::size;
         m = 0;
         nnz_jac_g = 0;
         nnz_h_lag = 0;
@@ -110,20 +110,20 @@ namespace optimization
       {
       }
 
-      const IpoptSolver<F>& solver_;
+      const IpoptSolver<N>& solver_;
     };
   };
 
-  template <typename F>
-  class IpoptSolver : public Solver<F>
+  template <int N>
+  class IpoptSolver : public Solver<N, double>
   {
   public:
-    friend class MyTNLP<F>;
-    typedef Solver<F> parent_t;
+    friend class MyTNLP<N>;
+    typedef Solver<N, double> parent_t;
 
     explicit IpoptSolver (const typename parent_t::function_t& fct) throw ()
       : parent_t (fct),
-        nlp_ (new MyTNLP<F> (*this)),
+        nlp_ (new MyTNLP<N> (*this)),
         app_ (new IpoptApplication ())
     {
     }

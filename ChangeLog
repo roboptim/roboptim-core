@@ -1,3 +1,15 @@
+2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Moving to uBLAS vector for function arguments.
+	* src/dummy.hh,
+	* src/ipopt.hh: Use new template parameters of Solve class.
+	* src/optimization-fwd.hh: Add fwd declaration with default data type.
+	* src/solver.hh: Use uBLAS bounded vector.
+	* src/solver.hxx: Use uBLAS vector, fix getArity.
+	* tests/ipopt.cc: Use new interface.
+	* tests/ipopt.stdout: Update test output.
+	* tests/simple-test.cc: Use new interace.
+
 2009-03-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Enhance Ipopt bridge.

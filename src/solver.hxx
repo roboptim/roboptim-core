@@ -27,22 +27,22 @@
 
 namespace optimization
 {
-  template <typename F>
-  Solver<F>::Solver (const function_t& fct) throw ()
+  template <int N, typename DataType>
+  Solver<N, DataType>::Solver (const function_t& fct) throw ()
     : function_ (fct)
   {
   }
 
-  template <typename F>
-  Solver<F>::~Solver () throw ()
+  template <int N, typename DataType>
+  Solver<N, DataType>::~Solver () throw ()
   {
   }
 
-  template <typename F>
+  template <int N, typename DataType>
   std::size_t
-  Solver<F>::getArity () const throw ()
+  Solver<N, DataType>::getArity () const throw ()
   {
-    return arity;
+    return size;
   }
 } // end of namespace optimization
 

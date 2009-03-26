@@ -25,8 +25,8 @@
 # define OPTIMIZATION_SOLVER_HH
 
 # include <boost/function.hpp>
+# include <boost/numeric/ublas/vector.hpp>
 # include <boost/optional.hpp>
-# include <boost/type_traits/function_traits.hpp>
 # include <boost/variant.hpp>
 # include <boost/utility.hpp>
 
@@ -42,26 +42,41 @@ namespace optimization
   };
 
   /// Generic solver class.
-  template <typename Signature>
+  template <int N, typename DataType>
   class Solver : public boost::noncopyable
   {
   public:
-    typedef boost::function<Signature> function_t;
-    static const std::size_t arity = boost::function_traits<Signature>::arity;
-    typedef typename function_t::result_type functionResult_t;
-    typedef boost::variant<functionResult_t, SolverError> result_t;
+    /// \{
+    /// Data type (usually double).
+    typedef DataType value_type;
+    /// Number of arguments to minimize.
+    static const int size = N;
 
+    /// Internal storage type.
+    typedef boost::numeric::ublas::bounded_array<double, size> storage_t;
+    /// Array type.
+    typedef boost::numeric::ublas::vector<value_type, storage_t> array_t;
+    /// Function type.
+    typedef boost::function<value_type (const array_t&)> function_t;
+    /// Result type.
+    typedef boost::variant<value_type, SolverError> result_t;
+
+    /// Gradient type.
     typedef function_t gradient_t;
+    /// \}
 
-
+    /// \{
     explicit Solver (const function_t&) throw ();
     virtual ~Solver () throw ();
+    /// \}
 
     virtual result_t getMinimum () throw () = 0;
 
     std::size_t getArity () const throw ();
   protected:
+    /// Function to minimize.
     const function_t& function_;
+    /// Gradient function.
     boost::optional<gradient_t> gradient_;
 
     result_t result_;

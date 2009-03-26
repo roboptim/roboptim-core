@@ -22,20 +22,22 @@
 
 #include "common.hh"
 
-double my_fun (double x1, double x2, double x3, double x4)
+using namespace optimization;
+using namespace boost;
+using namespace boost::lambda;
+
+double my_fun (const IpoptSolver<4>::array_t& x)
 {
-  return x1 * x4 * (x1 + x2 + x3) + x4;
+  return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
 }
 
 int run_test ()
 {
-  using namespace optimization;
-  using namespace boost::lambda;
 
   // Check with identity function (fun x -> x).
   {
-    typedef IpoptSolver<double (double)> solver_t;
-    solver_t solver (_1);
+    typedef IpoptSolver<1> solver_t;
+    solver_t solver (ret<const double&> (_1[0]));
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
@@ -43,8 +45,8 @@ int run_test ()
 
   // Check with basic function (fun x y -> x + y).
   {
-    typedef IpoptSolver<double (double, double)> solver_t;
-    solver_t solver (_1 + _2);
+    typedef IpoptSolver<2> solver_t;
+    solver_t solver (ret<const double&> (_1[0]) + ret<const double&> (_1[1]));
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
@@ -52,7 +54,7 @@ int run_test ()
 
   // Check with complex function.
   {
-    typedef IpoptSolver<double (double, double, double, double)> solver_t;
+    typedef IpoptSolver<4> solver_t;
     solver_t solver (my_fun);
 
     solver_t::result_t res = solver.getMinimum ();
@@ -61,5 +63,6 @@ int run_test ()
 
   return 0;
 }
+
 
 GENERATE_TEST ()
