@@ -1,4 +1,4 @@
                                                                 -*- outline -*-
 
 * Detect solvers headers and compile/test only available solvers.
-* Find a way to map a C array into a uBLAS vector.
+* Check src/ipopt.cc to see if the memcpy is safe.

@@ -74,8 +74,8 @@ namespace optimization
       {
         IpoptSolver::array_t x_ (n);
 
-        // FIXME: iterate for now.
-        std::copy (x, x + n, x_.begin ());
+        // FIXME: check if this is safe.
+        memcpy (&x_[0], x, n * sizeof (Number));
 
         obj_value = solver_.getFunction () (x_);
         return true;

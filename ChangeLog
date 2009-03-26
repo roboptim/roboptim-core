@@ -1,5 +1,11 @@
 2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Optimize arguments copy.
+	* TODO: Update item.
+	* src/ipopt.cc: Use memcpy to copy data.
+
+2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Back to object oriented.
 	* src/Makefile.am: Add library.
 	* src/dummy.cc: Rename from src/dummy.hh.
