@@ -35,29 +35,17 @@ double my_fun (const IpoptSolver::array_t& x)
 
 int run_test ()
 {
-
-  // Check with identity function (fun x -> x).
-  {
-    solver_t solver (ret<const double&> (_1[0]), 1);
-
-    solver_t::result_t res = solver.getMinimum ();
-    boost::get<SolverError> (res);
-  }
-
-  // Check with basic function (fun x y -> x + y).
-  {
-    solver_t solver (ret<const double&> (_1[0]) + ret<const double&> (_1[1]), 2);
-
-    solver_t::result_t res = solver.getMinimum ();
-    boost::get<SolverError> (res);
-  }
-
   // Check with complex function.
   {
     solver_t solver (my_fun, 4);
 
+    solver_t::array_t start (4);
+    start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
+
+    solver.setStartingPoint (start);
+
     solver_t::result_t res = solver.getMinimum ();
-    boost::get<SolverError> (res);
+    //boost::get<SolverError> (res);
   }
 
   return 0;

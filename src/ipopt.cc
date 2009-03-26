@@ -35,6 +35,19 @@ namespace optimization
 
   namespace detail
   {
+    //FIXME: check if this is safe.
+    static void
+    vector_to_array (Solver::value_type* dst, const Solver::array_t& src)
+    {
+      memcpy (dst, &src, src.size () * sizeof (Solver::value_type));
+    }
+
+    static void
+    array_to_vector (Solver::array_t& dst, const Solver::value_type* src)
+    {
+      memcpy (&dst[0], src, dst.size () * sizeof (Solver::value_type));
+    }
+
     struct MyTNLP : public TNLP
     {
       MyTNLP (IpoptSolver& solver)
@@ -66,6 +79,12 @@ namespace optimization
                          Index m, bool init_lambda,
                          Number* lambda)
       {
+        if (!solver_.start_ && !!init_x)
+          solver_.result_ = SolverError ();
+        if (!solver_.start_)
+          return true;
+
+        vector_to_array (x, *solver_.start_);
         return true;
       }
 
@@ -73,10 +92,7 @@ namespace optimization
       eval_f (Index n, const Number* x, bool new_x, Number& obj_value)
       {
         IpoptSolver::array_t x_ (n);
-
-        // FIXME: check if this is safe.
-        memcpy (&x_[0], x, n * sizeof (Number));
-
+        array_to_vector (x_, x);
         obj_value = solver_.getFunction () (x_);
         return true;
       }
@@ -116,7 +132,9 @@ namespace optimization
             return;
           }
 
-        solver_.result_ = obj_value;
+        Solver::array_t arr (n);
+        array_to_vector (arr, x);
+        solver_.result_ = arr;
       }
 
       IpoptSolver& solver_;
@@ -148,6 +166,7 @@ namespace optimization
         result_ = SolverError ();
         return result_;
       }
+
     app_->OptimizeTNLP (nlp_);
     return result_;
   }

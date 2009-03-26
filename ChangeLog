@@ -1,5 +1,14 @@
 2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add the possibility to set a starting point.
+	* src/ipopt.cc: Use the starting point if possible.
+	* src/solver.cc,
+	* src/solver.hh: Add setStartingPoint method.
+	* tests/ipopt.cc: Factorize type transformations.
+	* tests/ipopt.stdout: Update from reference.
+
+2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make getMinimum lazy.
 	* src/dummy.cc: Precompute result in constructor.
 	* src/ipopt.cc: Make getMinimum lazy.

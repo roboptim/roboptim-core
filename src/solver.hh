@@ -66,7 +66,7 @@ namespace optimization
     /// Function type.
     typedef boost::function<value_type (const array_t&)> function_t;
     /// Result type.
-    typedef boost::variant<NoSolution, value_type, SolverError> result_t;
+    typedef boost::variant<NoSolution, array_t, SolverError> result_t;
 
     /// Gradient type.
     typedef function_t gradient_t;
@@ -76,6 +76,10 @@ namespace optimization
     explicit Solver (const function_t&, size_type) throw ();
     virtual ~Solver () throw ();
     /// \}
+
+    void reset () throw ();
+
+    void setStartingPoint (const array_t&) throw ();
 
     virtual result_t getMinimum () throw () = 0;
 
@@ -89,6 +93,9 @@ namespace optimization
     const function_t& function_;
     /// Gradient function.
     boost::optional<gradient_t> gradient_;
+    /// Starting point.
+    boost::optional<array_t> start_;
+
     /// Result of minimization.
     result_t result_;
 

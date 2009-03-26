@@ -22,6 +22,7 @@
  * \brief Implementation of the Solver class.
  */
 
+#include <cassert>
 #include "solver.hh"
 
 namespace optimization
@@ -30,12 +31,27 @@ namespace optimization
     : arity_ (n),
       function_ (fct),
       gradient_ (),
+      start_ (),
       result_ (NoSolution ())
   {
   }
 
   Solver::~Solver () throw ()
   {
+  }
+
+  void
+  Solver::reset () throw ()
+  {
+    result_ = NoSolution ();
+  }
+
+  void
+  Solver::setStartingPoint (const array_t& point) throw ()
+  {
+    assert (point.size () == arity_);
+    start_ = point;
+    reset ();
   }
 
   const Solver::function_t&

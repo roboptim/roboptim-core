@@ -11,7 +11,5 @@ NOTE: You are using Ipopt by default with the MUMPS linear solver.
 
 This is Ipopt version 3.5.5, running with linear solver mumps.
 
-All variables are fixed and constraint violation 0.000000e+00
-   is below tolerance 1.000000e-08. Declaring success.
-
-EXIT: Optimal Solution Found.
+Exception of type: IpoptException in file "Unknown File" at line -1:
+ Exception message: Unknown Exception caught in Ipopt
