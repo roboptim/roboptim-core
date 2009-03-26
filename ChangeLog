@@ -1,5 +1,13 @@
 2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make getMinimum lazy.
+	* src/dummy.cc: Precompute result in constructor.
+	* src/ipopt.cc: Make getMinimum lazy.
+	* src/solver.cc: Initialize all fields in constructor.
+	* src/solver.hh: Add NoSolution as a possibility in result.
+
+2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Optimize arguments copy.
 	* TODO: Update item.
 	* src/ipopt.cc: Use memcpy to copy data.

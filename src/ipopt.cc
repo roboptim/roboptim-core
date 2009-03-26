@@ -33,11 +33,11 @@ namespace optimization
 {
   using namespace Ipopt;
 
-  namespace
+  namespace detail
   {
     struct MyTNLP : public TNLP
     {
-      MyTNLP (const IpoptSolver& solver)
+      MyTNLP (IpoptSolver& solver)
         : solver_ (solver)
       {
       }
@@ -110,12 +110,20 @@ namespace optimization
                         const IpoptData* ip_data,
                         IpoptCalculatedQuantities* ip_cq)
       {
+        if (status != SUCCESS)
+          {
+            solver_.result_ = SolverError ();
+            return;
+          }
+
+        solver_.result_ = obj_value;
       }
 
-      const IpoptSolver& solver_;
+      IpoptSolver& solver_;
     };
-  };
+  }; // end of namespace detail
 
+  using namespace detail;
 
   IpoptSolver::IpoptSolver (const function_t& fct, size_type n) throw ()
     : Solver (fct, n),
@@ -131,14 +139,16 @@ namespace optimization
   IpoptSolver::result_t
   IpoptSolver::getMinimum () throw ()
   {
+    if (result_.which () != SOLVER_NO_SOLUTION)
+      return result_;
+
     ApplicationReturnStatus status = app_->Initialize ();
     if (status != Solve_Succeeded)
-      return result_t (SolverError ());
-
-    status = app_->OptimizeTNLP (nlp_);
-    if (status != Solve_Succeeded)
-      return result_t (SolverError ());
-
+      {
+        result_ = SolverError ();
+        return result_;
+      }
+    app_->OptimizeTNLP (nlp_);
     return result_;
   }
 

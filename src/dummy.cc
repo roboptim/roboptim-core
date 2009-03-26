@@ -29,6 +29,7 @@ namespace optimization
   DummySolver::DummySolver (const function_t& fct, size_type n) throw ()
     : Solver (fct, n)
   {
+    result_ = SolverError ();
   }
 
   DummySolver::~DummySolver () throw ()
@@ -38,7 +39,7 @@ namespace optimization
   DummySolver::result_t
   DummySolver::getMinimum () throw ()
   {
-    return result_t (SolverError ());
+    return result_;
   }
 
 } // end of namespace optimization

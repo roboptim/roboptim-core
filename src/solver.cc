@@ -28,7 +28,9 @@ namespace optimization
 {
   Solver::Solver (const function_t& fct, size_type n) throw ()
     : arity_ (n),
-      function_ (fct)
+      function_ (fct),
+      gradient_ (),
+      result_ (NoSolution ())
   {
   }
 

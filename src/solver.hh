@@ -38,15 +38,23 @@ namespace optimization
   namespace ublas = boost::numeric::ublas;
 
   /// Generic solver error.
-  class SolverError
+  struct SolverError
   {
     //FIXME: make exception.
   };
+
+  struct NoSolution {};
 
   /// Generic solver class.
   class Solver : public boost::noncopyable
   {
   public:
+    enum solutions {
+      SOLVER_NO_SOLUTION,
+      SOLVER_VALUE,
+      SOLVER_ERROR
+    };
+
     /// \{
     /// Data type.
     typedef double value_type;
@@ -58,7 +66,7 @@ namespace optimization
     /// Function type.
     typedef boost::function<value_type (const array_t&)> function_t;
     /// Result type.
-    typedef boost::variant<value_type, SolverError> result_t;
+    typedef boost::variant<NoSolution, value_type, SolverError> result_t;
 
     /// Gradient type.
     typedef function_t gradient_t;
