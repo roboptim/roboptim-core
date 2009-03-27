@@ -17,12 +17,13 @@
 
 
 /**
- * \file solver.cc
+ * \file src/solver.cc
  *
  * \brief Implementation of the Solver class.
  */
 
 #include <cassert>
+#include <algorithm>
 #include "solver.hh"
 
 namespace optimization
@@ -32,9 +33,13 @@ namespace optimization
       function_ (fct),
       gradient_ (gradient),
       start_ (),
+      bounds_ (n),
       constraints_ (),
       result_ (NoSolution ())
   {
+    std::fill (bounds_.begin (), bounds_.end (),
+               std::make_pair (-std::numeric_limits<value_type>::infinity (),
+                               std::numeric_limits<value_type>::infinity ()));
   }
 
   Solver::~Solver () throw ()
@@ -67,10 +72,24 @@ namespace optimization
     return gradient_;
   }
 
-  std::size_t
+  Solver::size_type
   Solver::getArity () const throw ()
   {
     return arity_;
+  }
+
+  Solver::bound_t
+  Solver::getBound(size_type i) const throw ()
+  {
+    assert (i < getArity ());
+    return bounds_[i];
+  }
+
+  void
+  Solver::setBound(size_type i, bound_t b) throw ()
+  {
+    assert (i < getArity ());
+    bounds_[i] = b;
   }
 
   Solver::constraints_t&

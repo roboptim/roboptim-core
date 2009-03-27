@@ -16,7 +16,7 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file doc.hh
+ * \file src/doc.hh
  *
  * \brief Main documentation header.
  */
@@ -42,4 +42,13 @@
   \brief Main namespace
 
   The namespace gathers all the classes of this library.
+*/
+
+/*!
+  \namespace optimization::detail
+
+  \brief Implementation namespace
+
+  The namespace gathers implementation details which are of no-concern
+  for the end user of this library.
 */

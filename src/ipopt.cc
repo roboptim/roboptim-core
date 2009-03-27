@@ -17,7 +17,7 @@
 
 
 /**
- * \file ipopt.cc
+ * \file src/ipopt.cc
  *
  * \brief Implementation of the Ipopt class.
  */
@@ -48,6 +48,7 @@ namespace optimization
       memcpy (&dst[0], src, dst.size () * sizeof (Solver::value_type));
     }
 
+    /// Ipopt non linear problem definition.
     struct MyTNLP : public TNLP
     {
       MyTNLP (IpoptSolver& solver)
@@ -70,6 +71,12 @@ namespace optimization
       get_bounds_info (Index n, Number* x_l, Number* x_u,
                        Index m, Number* g_l, Number* g_u)
       {
+        assert (solver_.bounds_.size () - n == 0);
+
+        typedef IpoptSolver::bounds_t::const_iterator citer_t;
+        for (citer_t it = solver_.bounds_.begin ();
+             it != solver_.bounds_.end (); ++it)
+          *(x_l++) = (*it).first, *(x_u++) = (*it).second;
         return true;
       }
 

@@ -9,6 +9,7 @@ html-local: Doxyfile
 
 edit = sed -e "s|@ID@|$$Id|" \
 	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g' \
+	   -e 's,@PACKAGE_TARNAME\@,$(PACKAGE_TARNAME),g' \
 	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g' \
 	   -e 's,@top_builddir\@,$(top_builddir),g' \
 	   -e 's,@top_srcdir\@,$(top_srcdir),g'

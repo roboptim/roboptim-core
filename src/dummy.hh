@@ -17,29 +17,29 @@
 
 
 /**
- * \file src/dummy.cc
+ * \file src/dummy.hh
  *
  * \brief Implementation of the dummy module (always fail).
  */
 
-#include "dummy.hh"
+#ifndef OPTIMIZATION_DUMMY_HH
+# define OPTIMIZATION_DUMMY_HH
+# include <solver.hh>
 
 namespace optimization
 {
-  DummySolver::DummySolver (function_t fct, size_type n, gradient_t g) throw ()
-    : Solver (fct, n, g)
+  /// Dummy solver which always fails.
+  class DummySolver : public Solver
   {
-    result_ = SolverError ();
-  }
-
-  DummySolver::~DummySolver () throw ()
-  {
-  }
-
-  DummySolver::result_t
-  DummySolver::getMinimum () throw ()
-  {
-    return result_;
-  }
+  public:
+    /// Constructor.
+    explicit DummySolver (function_t, size_type, gradient_t) throw ();
+    /// Destructor.
+    virtual ~DummySolver () throw ();
+    /// Return the default solver error.
+    virtual result_t getMinimum () throw ();
+  };
 
 } // end of namespace optimization
+
+#endif //! OPTIMIZATION_DUMMY_HH

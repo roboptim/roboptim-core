@@ -521,7 +521,9 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                =
+EXCLUDE                = @top_builddir@/packages \
+                         @top_builddir@/doc      \
+                         @top_builddir@/@PACKAGE_TARNAME@-@PACKAGE_VERSION@
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
 # directories that are symbolic links (a Unix filesystem feature) are excluded

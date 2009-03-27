@@ -16,7 +16,7 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file optimization-fwd.hh
+ * \file src/optimization-fwd.hh
  *
  * \brief Forward declarations.
  */

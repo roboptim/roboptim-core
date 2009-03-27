@@ -1,3 +1,18 @@
+2009-03-27  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Implement bounded variable in Solver and IpoptSolver.
+	* .gitignore: Do not commit testsuite.log.
+	* doc/Doxyfile.in: Do not search for doc in tarballs/packages.
+	* doc/Makefile.am: Pass PACKAGE_TARNAME to Doxygen.
+	* src/doc.hh: Document detail namespace.
+	* src/dummy.cc,
+	* src/dummy.hh: Fix documentation.
+	* src/ipopt.cc: Implement bounds.
+	* src/ipopt.hh: New.
+	* src/optimization-fwd.hh: Fix documentation.
+	* src/solver.cc,
+	* src/solver.hh: Implement bounds.
+
 2009-03-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add constraints definition.

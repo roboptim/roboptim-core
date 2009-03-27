@@ -27,3 +27,4 @@ tests/Makefile.in
 tests/testsuite
 +committed/
 ,*
+testsuite.log

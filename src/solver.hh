@@ -16,13 +16,15 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file solver.hh
+ * \file src/solver.hh
  *
  * \brief Declaration of the Solver class.
  */
 
 #ifndef OPTIMIZATION_SOLVER_HH
 # define OPTIMIZATION_SOLVER_HH
+# include <limits>
+# include <utility>
 # include <vector>
 
 # include <boost/function.hpp>
@@ -50,9 +52,13 @@ namespace optimization
   class Solver : public boost::noncopyable
   {
   public:
+    /// Define the kind of solution which has been found.
     enum solutions {
+      /// Solution has yet to be found.
       SOLVER_NO_SOLUTION,
+      /// Solution has been found.
       SOLVER_VALUE,
+      /// The solver failed to found a solution.
       SOLVER_ERROR
     };
 
@@ -61,7 +67,6 @@ namespace optimization
     typedef double value_type;
     /// Size type.
     typedef std::size_t size_type;
-
 
     /// Array type.
     typedef ublas::vector<value_type> array_t;
@@ -73,17 +78,19 @@ namespace optimization
     /// Gradient type.
     typedef boost::optional<
       const boost::function<const array_t (const array_t&)>&> gradient_t;
+
+    /// Bound type (lower bound, upper bound).
+    typedef std::pair<value_type, value_type> bound_t;
+    /// Bound vector.
+    typedef ublas::vector<bound_t> bounds_t;
     /// \}
 
 
     /// \{
-    /// FIXME: clean constraints.
-    struct InequalityConstraint
-    {
-      size_type index;
-      value_type lower;
-      value_type upper;
-    };
+    // FIXME: linear/non-linear constraint?
+
+    /// Function constraint such that
+    /// lower < function_ (x) < upper
     struct FunctionConstraint
     {
       FunctionConstraint (function_t fct)
@@ -94,8 +101,8 @@ namespace optimization
       value_type lower;
       value_type upper;
     };
-    typedef boost::variant<InequalityConstraint, FunctionConstraint> constraint_t;
-    typedef std::vector<constraint_t> constraints_t;
+    /// A problem can have several constraints.
+    typedef std::vector<FunctionConstraint> constraints_t;
     /// \}
 
     /// \{
@@ -103,16 +110,32 @@ namespace optimization
     virtual ~Solver () throw ();
     /// \}
 
+    /// Reset the internal mechanism to force the solution to be
+    /// re-computed next time getMinimum is called.
     void reset () throw ();
 
+    /// Set the (optional) starting point.
     void setStartingPoint (const array_t&) throw ();
 
+    /// Returns the function minimum (and solve the problem, if
+    /// it has not yet been solved).
     virtual result_t getMinimum () throw () = 0;
 
+    /// Get the objective function.
     function_t getFunction () const throw ();
+    /// Get the gradient of the objective function.
     gradient_t getGradient () const throw ();
+    /// Get problem arity.
     std::size_t getArity () const throw ();
+
+    /// Get bound on a specific variable.
+    bound_t getBound(size_t) const throw ();
+    /// Set bound on a specific variable.
+    void setBound(size_t, bound_t) throw ();
+
+    /// Get constraints list.
     constraints_t& getConstraints () throw ();
+    /// Get constraints list.
     const constraints_t& getConstraints () const throw ();
 
   protected:
@@ -124,6 +147,8 @@ namespace optimization
     gradient_t gradient_;
     /// Starting point.
     boost::optional<array_t> start_;
+    /// Variables bounds.
+    bounds_t bounds_;
     /// Constraints
     constraints_t constraints_;
 
