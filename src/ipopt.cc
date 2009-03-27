@@ -61,7 +61,7 @@ namespace optimization
                     Index& nnz_h_lag, TNLP::IndexStyleEnum& index_style)
       {
         n = solver_.getArity ();
-        m = 0;
+        m = solver_.getConstraints ().size ();
         nnz_jac_g = 0;
         nnz_h_lag = 0;
         index_style = TNLP::C_STYLE;
@@ -73,10 +73,19 @@ namespace optimization
       {
         assert (solver_.bounds_.size () - n == 0);
 
-        typedef IpoptSolver::bounds_t::const_iterator citer_t;
-        for (citer_t it = solver_.bounds_.begin ();
-             it != solver_.bounds_.end (); ++it)
-          *(x_l++) = (*it).first, *(x_u++) = (*it).second;
+        {
+          typedef IpoptSolver::bounds_t::const_iterator citer_t;
+          for (citer_t it = solver_.bounds_.begin ();
+               it != solver_.bounds_.end (); ++it)
+            *(x_l++) = (*it).first, *(x_u++) = (*it).second;
+        }
+
+        {
+          typedef IpoptSolver::constraints_t::const_iterator citer_t;
+          for (citer_t it = solver_.getConstraints ().begin ();
+               it != solver_.getConstraints ().end (); ++it)
+            *(g_l++) = (*it).lower, *(g_u++) = (*it).upper;
+        }
         return true;
       }
 

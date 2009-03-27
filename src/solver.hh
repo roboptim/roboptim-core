@@ -91,9 +91,9 @@ namespace optimization
 
     /// Function constraint such that
     /// lower < function_ (x) < upper
-    struct FunctionConstraint
+    struct Constraint
     {
-      FunctionConstraint (function_t fct)
+      Constraint (function_t fct)
         : function_ (fct)
       {}
 
@@ -102,7 +102,7 @@ namespace optimization
       value_type upper;
     };
     /// A problem can have several constraints.
-    typedef std::vector<FunctionConstraint> constraints_t;
+    typedef std::vector<Constraint> constraints_t;
     /// \}
 
     /// \{

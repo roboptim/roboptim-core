@@ -1,5 +1,11 @@
 2009-03-27  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Use constraints bounds.
+	* src/ipopt.cc: Use constraint bounds.
+	* src/solver.hh: Clean constraints type.
+
+2009-03-27  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement bounded variable in Solver and IpoptSolver.
 	* .gitignore: Do not commit testsuite.log.
 	* doc/Doxyfile.in: Do not search for doc in tarballs/packages.
