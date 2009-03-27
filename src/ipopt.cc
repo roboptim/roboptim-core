@@ -130,6 +130,20 @@ namespace optimization
       eval_g(Index n, const Number* x, bool new_x,
                         Index m, Number* g)
       {
+        assert (solver_.getArity () - n == 0);
+        assert (solver_.getConstraints ().size () - m == 0);
+
+        IpoptSolver::array_t x_ (n);
+        array_to_vector (x_, x);
+
+        typedef IpoptSolver::constraints_t::const_iterator citer_t;
+
+        IpoptSolver::array_t g_ (m);
+        int i = 0;
+        for (citer_t it = solver_.getConstraints ().begin ();
+             it != solver_.getConstraints ().end (); ++it, ++i)
+          g_[i] = (*it).function (x_);
+        vector_to_array(g, g_);
         return true;
       }
 
@@ -137,6 +151,15 @@ namespace optimization
       eval_jac_g(Index n, const Number* x, bool new_x,
                  Index m, Index nele_jac, Index* iRow,
                  Index *jCol, Number* values)
+      {
+        return true;
+      }
+
+      virtual bool
+      eval_h (Index n, const Number* x, bool new_x,
+              Number obj_factor, Index m, const Number* lambda,
+              bool new_lambda, Index nele_hess, Index* iRow,
+              Index* jCol, Number* values)
       {
         return true;
       }

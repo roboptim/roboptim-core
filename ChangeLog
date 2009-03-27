@@ -1,5 +1,11 @@
 2009-03-27  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Compute constraints.
+	* src/ipopt.cc: Compute constraints.
+	* src/solver.hh: Fix Constraint class attribute naming.
+
+2009-03-27  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Use constraints bounds.
 	* src/ipopt.cc: Use constraint bounds.
 	* src/solver.hh: Clean constraints type.

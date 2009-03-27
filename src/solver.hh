@@ -94,11 +94,14 @@ namespace optimization
     struct Constraint
     {
       Constraint (function_t fct)
-        : function_ (fct)
+        : function (fct)
       {}
 
-      function_t function_;
+      /// Constraint function.
+      function_t function;
+      /// Lower bound.
       value_type lower;
+      /// Upper bound.
       value_type upper;
     };
     /// A problem can have several constraints.
