@@ -53,8 +53,7 @@ namespace optimization
     {
       MyTNLP (IpoptSolver& solver)
         : solver_ (solver)
-      {
-      }
+      {}
 
       virtual bool
       get_nlp_info (Index& n, Index& m, Index& nnz_jac_g,
@@ -62,8 +61,8 @@ namespace optimization
       {
         n = solver_.getArity ();
         m = solver_.getConstraints ().size ();
-        nnz_jac_g = 0;
-        nnz_h_lag = 0;
+        nnz_jac_g = 0; //FIXME: get info from matrix.
+        nnz_h_lag = 0; //FIXME: get info from matrix.
         index_style = TNLP::C_STYLE;
         return true;
       }
@@ -71,7 +70,9 @@ namespace optimization
       get_bounds_info (Index n, Number* x_l, Number* x_u,
                        Index m, Number* g_l, Number* g_u)
       {
+        assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
+        assert (solver_.getConstraints ().size () - m == 0);
 
         {
           typedef IpoptSolver::bounds_t::const_iterator citer_t;
@@ -95,6 +96,15 @@ namespace optimization
                          Index m, bool init_lambda,
                          Number* lambda)
       {
+        assert (solver_.getArity () - n == 0);
+        assert (solver_.bounds_.size () - n == 0);
+        assert (solver_.getConstraints ().size () - m == 0);
+
+        //FIXME: handle all modes.
+        assert(init_x == true);
+        assert(init_z == false);
+        assert(init_lambda == false);
+
         if (!solver_.start_ && !!init_x)
           solver_.result_ = SolverError ();
         if (!solver_.start_)
@@ -107,6 +117,9 @@ namespace optimization
       virtual bool
       eval_f (Index n, const Number* x, bool new_x, Number& obj_value)
       {
+        assert (solver_.getArity () - n == 0);
+        assert (solver_.bounds_.size () - n == 0);
+
         IpoptSolver::array_t x_ (n);
         array_to_vector (x_, x);
         obj_value = solver_.getFunction () (x_);
@@ -116,8 +129,11 @@ namespace optimization
       virtual bool
       eval_grad_f(Index n, const Number* x, bool new_x, Number* grad_f)
       {
+        assert (solver_.getArity () - n == 0);
+        assert (solver_.bounds_.size () - n == 0);
+
         if (!solver_.getGradient ())
-          return true;
+          return false;
 
         IpoptSolver::array_t x_ (n);
         array_to_vector (x_, x);
@@ -128,9 +144,10 @@ namespace optimization
 
       virtual bool
       eval_g(Index n, const Number* x, bool new_x,
-                        Index m, Number* g)
+             Index m, Number* g)
       {
         assert (solver_.getArity () - n == 0);
+        assert (solver_.bounds_.size () - n == 0);
         assert (solver_.getConstraints ().size () - m == 0);
 
         IpoptSolver::array_t x_ (n);
@@ -152,6 +169,19 @@ namespace optimization
                  Index m, Index nele_jac, Index* iRow,
                  Index *jCol, Number* values)
       {
+        assert (solver_.getArity () - n == 0);
+        assert (solver_.bounds_.size () - n == 0);
+        assert (solver_.getConstraints ().size () - m == 0);
+
+        if (!values)
+          {
+            //FIXME: give matrix structure.
+          }
+        else
+          {
+            //FIXME: implement me.
+          }
+
         return true;
       }
 
@@ -161,6 +191,19 @@ namespace optimization
               bool new_lambda, Index nele_hess, Index* iRow,
               Index* jCol, Number* values)
       {
+        assert (solver_.getArity () - n == 0);
+        assert (solver_.bounds_.size () - n == 0);
+        assert (solver_.getConstraints ().size () - m == 0);
+
+        if (!values)
+          {
+            //FIXME: give matrix structure.
+          }
+        else
+          {
+            //FIXME: implement me.
+          }
+
         return true;
       }
 
@@ -172,6 +215,10 @@ namespace optimization
                         const IpoptData* ip_data,
                         IpoptCalculatedQuantities* ip_cq)
       {
+        assert (solver_.getArity () - n == 0);
+        assert (solver_.bounds_.size () - n == 0);
+        assert (solver_.getConstraints ().size () - m == 0);
+
         if (status != SUCCESS)
           {
             solver_.result_ = SolverError ();
@@ -194,6 +241,10 @@ namespace optimization
       nlp_ (new MyTNLP (*this)),
       app_ (new IpoptApplication ())
   {
+    // Set default options.
+    app_->Options ()->SetNumericValue ("tol", 1e-7);
+    app_->Options ()->SetStringValue ("mu_strategy", "adaptive");
+    app_->Options ()->SetStringValue ("output_file", "ipopt.out");
   }
 
   IpoptSolver::~IpoptSolver () throw ()
@@ -212,7 +263,6 @@ namespace optimization
         result_ = SolverError ();
         return result_;
       }
-
     app_->OptimizeTNLP (nlp_);
     return result_;
   }

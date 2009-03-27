@@ -33,6 +33,16 @@ double my_fun (const solver_t::array_t& x)
   return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
 }
 
+double g_0 (const solver_t::array_t& x)
+{
+  return x[0] * x[1] * x[2] * x[3];
+}
+
+double g_1 (const solver_t::array_t& x)
+{
+  return x[0]*x[0] + x[1]*x[1] + x[2]*x[2] + x[3]*x[3];
+}
+
 solver_t::array_t my_gradient (const solver_t::array_t& x)
 {
   solver_t::array_t grad (x.size ());
@@ -47,18 +57,19 @@ solver_t::array_t my_gradient (const solver_t::array_t& x)
 int run_test ()
 {
   // Check with complex function.
-  {
-    solver_t solver (my_fun, 4, solver_t::gradient_t (my_gradient));
+  solver_t solver (my_fun, 4, solver_t::gradient_t (my_gradient));
 
-    solver_t::array_t start (4);
-    start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
+  solver_t::array_t start (4);
+  start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
+  solver.setStartingPoint (start);
 
-    solver.setStartingPoint (start);
+  for (int i = 0; i < 4; ++i)
+    solver.setBound (i, std::make_pair(1., 5.));
 
-    solver_t::result_t res = solver.getMinimum ();
-    //boost::get<SolverError> (res);
-  }
+  solver.getConstraints ().push_back (IpoptSolver::Constraint (g_0, 25.));
+  solver.getConstraints ().push_back (IpoptSolver::Constraint (g_1, 40., 40.));
 
+  solver_t::result_t res = solver.getMinimum ();
   return 0;
 }
 

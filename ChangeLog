@@ -1,5 +1,12 @@
 2009-03-27  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Enhance constraint handling, add constraints in Ipopt test.
+	* src/ipopt.cc: Add default options.
+	* src/solver.hh: Fix constructor, add copy constructor.
+	* tests/ipopt.cc: Set bounds and constraints.
+
+2009-03-27  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Compute constraints.
 	* src/ipopt.cc: Compute constraints.
 	* src/solver.hh: Fix Constraint class attribute naming.

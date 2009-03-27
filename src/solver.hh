@@ -90,12 +90,21 @@ namespace optimization
     // FIXME: linear/non-linear constraint?
 
     /// Function constraint such that
-    /// lower < function_ (x) < upper
+    /// lower < function (x) < upper
     struct Constraint
     {
-      Constraint (function_t fct)
-        : function (fct)
+      Constraint (function_t fct,
+                  value_type l = -std::numeric_limits<value_type>::infinity (),
+                  value_type u = std::numeric_limits<value_type>::infinity ())
+        : function (fct),
+          lower (l),
+          upper (u)
       {}
+
+      Constraint* operator= (const Constraint& c)
+      {
+        return new Constraint (c.function, c.lower, c.upper);
+      }
 
       /// Constraint function.
       function_t function;
