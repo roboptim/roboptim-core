@@ -1,5 +1,20 @@
 2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Clean package, debug Ipopt.
+	* src/Makefile.am: Add missing distributed headers.
+	* src/doc.hh: Document (draft of the main page).
+	* src/dummy.cc: Describe returned errors.
+	* src/dummy.hh: Add default params to constructors.
+	* src/ipopt.cc: Clean, debug implementation.
+	* src/ipopt.hh: Add default params to constructor.
+	* src/solver.hh: Add default parameters to constructor
+        and allows access to internal Ipopt application.
+	* tests/ipopt.cc: Debug and clean, make stricter.
+	* tests/ipopt.stdout: Put definitive output.
+	* tests/simple-test.cc: Do not pass useless parameters.
+
+2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix hessian matrix.
 	* tests/ipopt.cc: Fix hessian matrix (symmetric).
 

@@ -5,7 +5,9 @@ AM_CXXFLAGS += $(WARNING_CXXFLAGS)
 
 include_HEADERS =					\
 				optimization-fwd.hh	\
-				solver.hh
+				solver.hh		\
+				dummy.hh		\
+				ipopt.hh
 
 lib_LTLIBRARIES = liboptimization.la
 

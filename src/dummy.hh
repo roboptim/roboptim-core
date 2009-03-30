@@ -35,9 +35,9 @@ namespace optimization
     /// Constructor.
     explicit DummySolver (function_t,
                           size_type,
-                          gradient_t,
-                          hessian_t,
-                          jacobian_t) throw ();
+                          gradient_t = gradient_t (),
+                          hessian_t = hessian_t (),
+                          jacobian_t = jacobian_t ()) throw ();
     /// Destructor.
     virtual ~DummySolver () throw ();
     /// Return the default solver error.

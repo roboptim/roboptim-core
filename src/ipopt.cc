@@ -35,29 +35,36 @@ namespace optimization
 
   namespace detail
   {
-    //FIXME: check if this is safe.
     static void
     vector_to_array (Solver::value_type* dst, const Solver::array_t& src)
     {
-      memcpy (dst, &src, src.size () * sizeof (Solver::value_type));
+      memcpy (dst, &src[0], src.size () * sizeof (Solver::value_type));
+
+      for (std::size_t i = 0; i < src.size (); ++i)
+        assert (dst[i] = src[i]);
     }
 
     static void
     array_to_vector (Solver::array_t& dst, const Solver::value_type* src)
     {
       memcpy (&dst[0], src, dst.size () * sizeof (Solver::value_type));
+
+      for (std::size_t i = 0; i < dst.size (); ++i)
+        assert (dst[i] = src[i]);
     }
 
     /// Ipopt non linear problem definition.
     struct MyTNLP : public TNLP
     {
       MyTNLP (IpoptSolver& solver)
+        throw ()
         : solver_ (solver)
       {}
 
       virtual bool
       get_nlp_info (Index& n, Index& m, Index& nnz_jac_g,
                     Index& nnz_h_lag, TNLP::IndexStyleEnum& index_style)
+        throw ()
       {
         n = solver_.getArity ();
         m = solver_.getConstraints ().size ();
@@ -69,6 +76,7 @@ namespace optimization
       virtual bool
       get_bounds_info (Index n, Number* x_l, Number* x_u,
                        Index m, Number* g_l, Number* g_u)
+        throw ()
       {
         assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
@@ -95,6 +103,7 @@ namespace optimization
                          bool init_z, Number* z_L, Number* z_U,
                          Index m, bool init_lambda,
                          Number* lambda)
+        throw ()
       {
         assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
@@ -106,7 +115,8 @@ namespace optimization
         assert(init_lambda == false);
 
         if (!solver_.start_ && !!init_x)
-          solver_.result_ = SolverError ();
+          solver_.result_ =
+            SolverError ("Ipopt method needs a starting point.");
         if (!solver_.start_)
           return true;
 
@@ -116,9 +126,11 @@ namespace optimization
 
       virtual bool
       eval_f (Index n, const Number* x, bool new_x, Number& obj_value)
+        throw ()
       {
         assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
+        assert (!solver_.getFunction ().empty ());
 
         IpoptSolver::array_t x_ (n);
         array_to_vector (x_, x);
@@ -128,16 +140,17 @@ namespace optimization
 
       virtual bool
       eval_grad_f(Index n, const Number* x, bool new_x, Number* grad_f)
+        throw ()
       {
         assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
 
-        if (!solver_.getGradient ())
+        if (solver_.getGradient ().empty ())
           return false;
 
         IpoptSolver::array_t x_ (n);
         array_to_vector (x_, x);
-        IpoptSolver::array_t grad = (*solver_.getGradient ()) (x_);
+        IpoptSolver::array_t grad = solver_.getGradient () (x_);
         vector_to_array(grad_f, grad);
         return true;
       }
@@ -145,6 +158,7 @@ namespace optimization
       virtual bool
       eval_g(Index n, const Number* x, bool new_x,
              Index m, Number* g)
+        throw ()
       {
         assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
@@ -168,12 +182,13 @@ namespace optimization
       eval_jac_g(Index n, const Number* x, bool new_x,
                  Index m, Index nele_jac, Index* iRow,
                  Index *jCol, Number* values)
+        throw ()
       {
         assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
         assert (solver_.getConstraints ().size () - m == 0);
 
-        if (!solver_.getJacobian ())
+        if (solver_.getJacobian ().empty ())
           return false;
 
         if (!values)
@@ -189,11 +204,10 @@ namespace optimization
           }
         else
           {
-            //FIXME: implement me.
             IpoptSolver::array_t x_ (n);
             array_to_vector (x_, x);
             IpoptSolver::matrix_t jac =
-              (*solver_.getJacobian ()) (x_, solver_.getConstraints ());
+              solver_.getJacobian () (x_, solver_.getConstraints ());
 
             int idx = 0;
             for (int i = 0; i < m; ++i)
@@ -209,12 +223,13 @@ namespace optimization
               Number obj_factor, Index m, const Number* lambda,
               bool new_lambda, Index nele_hess, Index* iRow,
               Index* jCol, Number* values)
+        throw ()
       {
         assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
         assert (solver_.getConstraints ().size () - m == 0);
 
-        if (!solver_.getHessian ())
+        if (solver_.getHessian ().empty ())
           return false;
 
         if (!values)
@@ -227,10 +242,10 @@ namespace optimization
                   iRow[idx] = i, jCol[idx] = j;
                   ++idx;
                 }
+            assert(idx == nele_hess);
           }
         else
           {
-            //FIXME: implement me.
             IpoptSolver::array_t x_ (n);
             array_to_vector (x_, x);
 
@@ -238,8 +253,8 @@ namespace optimization
             array_to_vector (lambda_, lambda);
 
             IpoptSolver::matrix_t h =
-              (*solver_.getHessian ()) (x_, solver_.getConstraints (),
-                                        obj_factor, lambda_);
+              solver_.getHessian () (x_, solver_.getConstraints (),
+                                     obj_factor, lambda_);
 
             int idx = 0;
             for (int i = 0; i < n; ++i)
@@ -252,11 +267,12 @@ namespace optimization
 
       virtual void
       finalize_solution(SolverReturn status,
-                        Index n, const Number* x, const Number* z_L, const Number* z_U,
-                        Index m, const Number* g, const Number* lambda,
-                        Number obj_value,
+                        Index n, const Number* x, const Number* z_L,
+                        const Number* z_U, Index m, const Number* g,
+                        const Number* lambda, Number obj_value,
                         const IpoptData* ip_data,
                         IpoptCalculatedQuantities* ip_cq)
+        throw ()
       {
         assert (solver_.getArity () - n == 0);
         assert (solver_.bounds_.size () - n == 0);
@@ -264,7 +280,8 @@ namespace optimization
 
         if (status != SUCCESS)
           {
-            solver_.result_ = SolverError ();
+            //FIXME: put a more precise error message.
+            solver_.result_ = SolverError ("Ipopt failed to minimize.");
             return;
           }
 
@@ -286,12 +303,12 @@ namespace optimization
                             jacobian_t j) throw ()
     : Solver (fct, n, g, h, j),
       nlp_ (new MyTNLP (*this)),
-      app_ (new IpoptApplication ())
+      app_ (new IpoptApplication (false, false))
   {
     // Set default options.
     app_->Options ()->SetNumericValue ("tol", 1e-7);
     app_->Options ()->SetStringValue ("mu_strategy", "adaptive");
-    app_->Options ()->SetStringValue ("output_file", "ipopt.out");
+    app_->Options ()->SetStringValue ("output_file", "");
   }
 
   IpoptSolver::~IpoptSolver () throw ()
@@ -304,14 +321,21 @@ namespace optimization
     if (result_.which () != SOLVER_NO_SOLUTION)
       return result_;
 
-    ApplicationReturnStatus status = app_->Initialize ();
+    ApplicationReturnStatus status = app_->Initialize ("");
     if (status != Solve_Succeeded)
       {
-        result_ = SolverError ();
+        //FIXME: put a more precise error message.
+        result_ = SolverError ("Ipopt application failed to initialize.");
         return result_;
       }
     app_->OptimizeTNLP (nlp_);
     return result_;
+  }
+
+  Ipopt::SmartPtr<Ipopt::IpoptApplication>
+  IpoptSolver::getApplication () throw ()
+  {
+    return app_;
   }
 
 } // end of namespace optimization

@@ -27,6 +27,7 @@
 # include <IpSmartPtr.hpp>
 # include <solver.hh>
 
+/// Ipopt classes.
 namespace Ipopt
 {
   class TNLP;
@@ -50,14 +51,18 @@ namespace optimization
     /// Constructor.
     explicit IpoptSolver (function_t,
                           size_type,
-                          gradient_t,
-                          hessian_t,
-                          jacobian_t) throw ();
+                          gradient_t = gradient_t (),
+                          hessian_t = hessian_t (),
+                          jacobian_t = jacobian_t ()) throw ();
     /// Destructor.
     virtual ~IpoptSolver () throw ();
 
     /// Returns the minimum and solve the problem using Ipopt if necessary.
     virtual result_t getMinimum () throw ();
+
+    /// Get Ipopt Application object for Ipopt specific tuning.
+    virtual Ipopt::SmartPtr<Ipopt::IpoptApplication> getApplication ()
+      throw ();
   private:
     /// Smart pointer to the Ipopt non linear problem description.
     Ipopt::SmartPtr<Ipopt::TNLP> nlp_;

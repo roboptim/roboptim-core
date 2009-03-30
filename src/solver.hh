@@ -24,16 +24,16 @@
 #ifndef OPTIMIZATION_SOLVER_HH
 # define OPTIMIZATION_SOLVER_HH
 # include <limits>
+# include <stdexcept>
 # include <utility>
 # include <vector>
 
 # include <boost/function.hpp>
+# include <boost/noncopyable.hpp>
 # include <boost/numeric/ublas/matrix.hpp>
 # include <boost/numeric/ublas/vector.hpp>
-# include <boost/optional.hpp>
-# include <boost/variant.hpp>
-# include <boost/utility.hpp>
-
+# include <boost/optional/optional.hpp>
+# include <boost/variant/variant.hpp>
 
 # include <optimization-fwd.hh>
 
@@ -41,12 +41,17 @@ namespace optimization
 {
   namespace ublas = boost::numeric::ublas;
 
-  /// Generic solver error.
-  struct SolverError
+  /// \brief Base error.
+  /// All other errors inherits this class.
+  struct SolverError : public std::runtime_error
   {
-    //FIXME: make exception.
+    SolverError (const std::string& arg) throw ()
+      : std::runtime_error (arg)
+    {}
   };
 
+  /// \brief Returned by Solver::getMinimum if no solution can be
+  /// found (but no error has been encountered during the process).
   struct NoSolution {};
 
   /// Generic solver class.
@@ -63,7 +68,9 @@ namespace optimization
       SOLVER_ERROR
     };
 
+    /// \defgroup Typedefs.
     /// \{
+
     /// Data type.
     typedef double value_type;
     /// Size type.
@@ -75,13 +82,12 @@ namespace optimization
     typedef ublas::matrix<value_type> matrix_t;
 
     /// Function type.
-    typedef const boost::function<value_type (const array_t&)>& function_t;
+    typedef boost::function<value_type (const array_t&)> function_t;
     /// Result type.
     typedef boost::variant<NoSolution, array_t, SolverError> result_t;
 
     /// Gradient type.
-    typedef boost::optional<
-      const boost::function<const array_t (const array_t&)>&> gradient_t;
+    typedef boost::function<const array_t (const array_t&)> gradient_t;
 
     /// Bound type (lower bound, upper bound).
     typedef std::pair<value_type, value_type> bound_t;
@@ -90,13 +96,16 @@ namespace optimization
     /// \}
 
 
+    /// \defgroup Constraints related types.
     /// \{
-    // FIXME: linear/non-linear constraint?
 
-    /// Function constraint such that
-    /// lower < function (x) < upper
+    /// Function constraint such that \f$lower < function (x) < upper\f$.
     struct Constraint
     {
+      /// Construct a new constraint from a function, a lower and upper bound.
+      /// \param fct Constraint function.
+      /// \param l Lower bound (defaulting to \f$-\infty\f$).
+      /// \param u Upper bound (defaulting to \f$+\infty\f$).
       Constraint (function_t fct,
                   value_type l = -std::numeric_limits<value_type>::infinity (),
                   value_type u = std::numeric_limits<value_type>::infinity ())
@@ -105,6 +114,7 @@ namespace optimization
           upper (u)
       {}
 
+      /// Default copy constructor.
       Constraint* operator= (const Constraint& c)
       {
         return new Constraint (c.function, c.lower, c.upper);
@@ -121,21 +131,31 @@ namespace optimization
     typedef std::vector<Constraint> constraints_t;
     /// \}
 
-    typedef boost::optional<
-      const boost::function<
-        const matrix_t (const array_t&, const constraints_t&,
-                        value_type, const array_t&)>&> hessian_t;
-    typedef boost::optional<
-      const boost::function<
-        const matrix_t (const array_t&, const constraints_t&)>&> jacobian_t;
+    /// Hessian function.
+    typedef boost::function<
+      const matrix_t (const array_t&, const constraints_t&,
+                      value_type, const array_t&)> hessian_t;
+    /// Jacobian of the lagrangian function.
+    typedef boost::function<
+      const matrix_t (const array_t&, const constraints_t&)> jacobian_t;
 
+    /// \defgroup Constructors and destructors.
     /// \{
-    explicit Solver (function_t,
-                     size_type,
-                     gradient_t,
-                     hessian_t,
-                     jacobian_t) throw ();
+
+    /// Main constructor.
+    /// \param fct Objective function
+    /// \param n Problem's size.
+    /// \param g Gradient function.
+    /// \param h Hessian function.
+    /// \param j Jacobian's lagrangian function.
+    explicit Solver (function_t fct,
+                     size_type n,
+                     gradient_t g = gradient_t (),
+                     hessian_t h = hessian_t (),
+                     jacobian_t j = jacobian_t ()) throw ();
+    /// Destructor.
     virtual ~Solver () throw ();
+
     /// \}
 
     /// Reset the internal mechanism to force the solution to be
@@ -158,12 +178,12 @@ namespace optimization
     /// Get the Jacobian
     jacobian_t getJacobian () const throw ();
     /// Get problem arity.
-    std::size_t getArity () const throw ();
+    size_type getArity () const throw ();
 
     /// Get bound on a specific variable.
-    bound_t getBound(size_t) const throw ();
+    bound_t getBound(size_type) const throw ();
     /// Set bound on a specific variable.
-    void setBound(size_t, bound_t) throw ();
+    void setBound(size_type, bound_t) throw ();
 
     /// Get constraints list.
     constraints_t& getConstraints () throw ();
@@ -184,9 +204,9 @@ namespace optimization
     /// Constraints
     constraints_t constraints_;
 
-    // Hessian
+    /// Hessian
     hessian_t hessian_;
-    // Jacobian
+    /// Jacobian
     jacobian_t jacobian_;
 
     /// Result of minimization.

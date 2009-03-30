@@ -1,15 +1,3 @@
-
-******************************************************************************
-This program contains Ipopt, a library for large-scale nonlinear optimization.
- Ipopt is released as open source code under the Common Public License (CPL).
-         For more information visit http://projects.coin-or.org/Ipopt
-******************************************************************************
-
-NOTE: You are using Ipopt by default with the MUMPS linear solver.
-      Other linear solvers might be more efficient (see Ipopt documentation).
-
-
-This is Ipopt version 3.5.5, running with linear solver mumps.
-
-Exception of type: IpoptException in file "Unknown File" at line -1:
- Exception message: Unknown Exception caught in Ipopt
+A solution has been found: 
+[4](1,4.743,3.82115,1.37941)
+f(*x) = 14.5723

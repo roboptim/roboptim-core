@@ -24,6 +24,7 @@
 
 #include <cassert>
 #include <algorithm>
+
 #include "solver.hh"
 
 namespace optimization

@@ -17,7 +17,10 @@
 
 #include <iostream>
 #include <boost/lambda/lambda.hpp>
+#include <boost/numeric/ublas/io.hpp>
+#include <boost/variant/get.hpp>
 
+#include <IpIpoptApplication.hpp>
 #include <ipopt.hh>
 
 #include "common.hh"
@@ -59,7 +62,8 @@ solver_t::matrix_t my_hessian (const solver_t::array_t& x,
                                double sigma_f,
                                const solver_t::array_t& lambda)
 {
-  solver_t::matrix_t h (g.size (), x.size ());
+  solver_t::matrix_t h (x.size (), x.size ());
+  h.clear ();
 
   h (0, 0) = sigma_f * (2 * x[3]);
 
@@ -104,6 +108,7 @@ solver_t::matrix_t my_jacobian (const solver_t::array_t& x,
                                 const solver_t::constraints_t& g)
 {
   solver_t::matrix_t l (g.size (), x.size ());
+  l.clear ();
 
   l(0, 0) = x[1] * x[2] * x[3];
   l(0, 1) = x[0] * x[2] * x[3];
@@ -119,23 +124,48 @@ solver_t::matrix_t my_jacobian (const solver_t::array_t& x,
 
 int run_test ()
 {
-  // Check with complex function.
-  solver_t solver (my_fun, 4,
-                   solver_t::gradient_t (my_gradient),
-                   solver_t::hessian_t (my_hessian),
-                   solver_t::jacobian_t (my_jacobian));
+  // Number of variables.
+  static const int nvar = 4;
 
-  solver_t::array_t start (4);
+  // Initialize solver
+  // (4 variables, using custom gradient, hessian and jacobian).
+  solver_t solver (my_fun, nvar, my_gradient, my_hessian, my_jacobian);
+
+  // Log everything.
+  solver.getApplication ()->OpenOutputFile ("ipopt.log", Ipopt::J_ALL);
+
+  // Set the starting point.
+  solver_t::array_t start (nvar);
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
   solver.setStartingPoint (start);
 
-  for (int i = 0; i < 4; ++i)
+  // Set bound for all variables.
+  // 1. < x_i < 5. (x_i in [1.;5.])
+  for (int i = 0; i < nvar; ++i)
     solver.setBound (i, std::make_pair(1., 5.));
 
+  // Define the constraints.
   solver.getConstraints ().push_back (IpoptSolver::Constraint (g_0, 25.));
   solver.getConstraints ().push_back (IpoptSolver::Constraint (g_1, 40., 40.));
 
+  // Compute the minimum and retrieve the result.
   solver_t::result_t res = solver.getMinimum ();
+
+  // Check if the minimization has succeed.
+  if (res.which () != IpoptSolver::SOLVER_VALUE)
+    {
+      std::cout << "A solution should have been found. Failing..."
+                << std::endl;
+      return 1;
+    }
+
+  // Get the result.
+  solver_t::array_t& result = boost::get<solver_t::array_t> (res);
+
+  // Display the result.
+  std::cout << "A solution has been found: " << std::endl;
+  std::cout << result << std::endl;
+  std::cout << "f(*x) = " << my_fun (result) << std::endl;
   return 0;
 }
 

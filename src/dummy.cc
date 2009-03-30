@@ -33,7 +33,7 @@ namespace optimization
                             jacobian_t j) throw ()
     : Solver (fct, n, g, h, j)
   {
-    result_ = SolverError ();
+    result_ = SolverError ("The dummy solver always fail.");
   }
 
   DummySolver::~DummySolver () throw ()
