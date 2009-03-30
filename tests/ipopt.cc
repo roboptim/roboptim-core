@@ -47,17 +47,76 @@ solver_t::array_t my_gradient (const solver_t::array_t& x)
 {
   solver_t::array_t grad (x.size ());
 
-  grad[0] = x[0] * x[3] + x[3] * (x[0] + x[1] + x[2]),
-    grad[1] = x[0] * x[3],
-    grad[2] = x[0] * x[3] + 1,
-    grad[3] = x[0] * (x[0] + x[1] + x[2]);
+  grad[0] = x[0] * x[3] + x[3] * (x[0] + x[1] + x[2]);
+  grad[1] = x[0] * x[3];
+  grad[2] = x[0] * x[3] + 1;
+  grad[3] = x[0] * (x[0] + x[1] + x[2]);
   return grad;
+}
+
+solver_t::matrix_t my_hessian (const solver_t::array_t& x,
+                               const solver_t::constraints_t& g,
+                               double sigma_f,
+                               const solver_t::array_t& lambda)
+{
+  solver_t::matrix_t h (g.size (), x.size ());
+
+  h (0, 0) = sigma_f * (2 * x[3]);
+  h (1, 0) = sigma_f * (x[3]);
+  h (1, 1) = 0.;
+
+  h (2, 0) = sigma_f * (x[3]);
+  h (2, 1) = 0.;
+  h (2, 2) = 0.;
+
+  h (3, 0) = sigma_f * (2*x[0] + x[1] + x[2]);
+  h (3, 1) = sigma_f * (x[0]);
+  h (3, 2) = sigma_f * (x[0]);
+  h (3, 3) = 0.;
+
+  // Add first constraint portion.
+  h (1, 0) += lambda[0] * (x[2] * x[3]);
+
+  h (2, 0) += lambda[0] * (x[1] * x[3]);
+  h (2, 1) += lambda[0] * (x[0] * x[3]);
+
+  h (3, 0) += lambda[0] * (x[1] * x[2]);
+  h (3, 1) += lambda[0] * (x[0] * x[2]);
+  h (3, 2) += lambda[0] * (x[0] * x[1]);
+
+  // Add second constraint portion.
+  h (0, 0) += lambda[1] * 2;
+  h (1, 1) += lambda[1] * 2;
+  h (2, 2) += lambda[1] * 2;
+  h (3, 3) += lambda[1] * 2;
+
+  return h;
+}
+
+solver_t::matrix_t my_jacobian (const solver_t::array_t& x,
+                                const solver_t::constraints_t& g)
+{
+  solver_t::matrix_t l (g.size (), x.size ());
+
+  l(0, 0) = x[1] * x[2] * x[3];
+  l(0, 1) = x[0] * x[2] * x[3];
+  l(0, 2) = x[0] * x[1] * x[3];
+  l(0, 3) = x[0] * x[1] * x[2];
+
+  l(1, 0) = 2 * x[0];
+  l(1, 1) = 2 * x[1];
+  l(1, 2) = 2 * x[2];
+  l(1, 3) = 2 * x[3];
+  return l;
 }
 
 int run_test ()
 {
   // Check with complex function.
-  solver_t solver (my_fun, 4, solver_t::gradient_t (my_gradient));
+  solver_t solver (my_fun, 4,
+                   solver_t::gradient_t (my_gradient),
+                   solver_t::hessian_t (my_hessian),
+                   solver_t::jacobian_t (my_jacobian));
 
   solver_t::array_t start (4);
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;

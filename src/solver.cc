@@ -28,13 +28,19 @@
 
 namespace optimization
 {
-  Solver::Solver (function_t fct, size_type n, gradient_t gradient) throw ()
+  Solver::Solver (function_t fct,
+                  size_type n,
+                  gradient_t gradient,
+                  hessian_t hessian,
+                  jacobian_t jacobian) throw ()
     : arity_ (n),
       function_ (fct),
       gradient_ (gradient),
       start_ (),
       bounds_ (n),
       constraints_ (),
+      hessian_ (hessian),
+      jacobian_ (jacobian),
       result_ (NoSolution ())
   {
     std::fill (bounds_.begin (), bounds_.end (),
@@ -70,6 +76,18 @@ namespace optimization
   Solver::getGradient () const throw ()
   {
     return gradient_;
+  }
+
+  Solver::hessian_t
+  Solver::getHessian () const throw ()
+  {
+    return hessian_;
+  }
+
+  Solver::jacobian_t
+  Solver::getJacobian () const throw ()
+  {
+    return jacobian_;
   }
 
   Solver::size_type

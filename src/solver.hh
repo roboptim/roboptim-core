@@ -28,6 +28,7 @@
 # include <vector>
 
 # include <boost/function.hpp>
+# include <boost/numeric/ublas/matrix.hpp>
 # include <boost/numeric/ublas/vector.hpp>
 # include <boost/optional.hpp>
 # include <boost/variant.hpp>
@@ -70,6 +71,9 @@ namespace optimization
 
     /// Array type.
     typedef ublas::vector<value_type> array_t;
+    /// Matrix type.
+    typedef ublas::matrix<value_type> matrix_t;
+
     /// Function type.
     typedef const boost::function<value_type (const array_t&)>& function_t;
     /// Result type.
@@ -117,8 +121,20 @@ namespace optimization
     typedef std::vector<Constraint> constraints_t;
     /// \}
 
+    typedef boost::optional<
+      const boost::function<
+        const matrix_t (const array_t&, const constraints_t&,
+                        value_type, const array_t&)>&> hessian_t;
+    typedef boost::optional<
+      const boost::function<
+        const matrix_t (const array_t&, const constraints_t&)>&> jacobian_t;
+
     /// \{
-    explicit Solver (function_t, size_type, gradient_t) throw ();
+    explicit Solver (function_t,
+                     size_type,
+                     gradient_t,
+                     hessian_t,
+                     jacobian_t) throw ();
     virtual ~Solver () throw ();
     /// \}
 
@@ -137,6 +153,10 @@ namespace optimization
     function_t getFunction () const throw ();
     /// Get the gradient of the objective function.
     gradient_t getGradient () const throw ();
+    /// Get the Hessian
+    hessian_t getHessian () const throw ();
+    /// Get the Jacobian
+    jacobian_t getJacobian () const throw ();
     /// Get problem arity.
     std::size_t getArity () const throw ();
 
@@ -164,13 +184,15 @@ namespace optimization
     /// Constraints
     constraints_t constraints_;
 
+    // Hessian
+    hessian_t hessian_;
+    // Jacobian
+    jacobian_t jacobian_;
+
     /// Result of minimization.
     result_t result_;
 
 
-    //FIXME: More?
-    //boost::optional<jacobian_t> jacobian_;
-    //boost::optional<lagrangian_t> lagrangian_;
   };
 
 } // end of namespace optimization

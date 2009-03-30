@@ -61,8 +61,8 @@ namespace optimization
       {
         n = solver_.getArity ();
         m = solver_.getConstraints ().size ();
-        nnz_jac_g = 0; //FIXME: get info from matrix.
-        nnz_h_lag = 0; //FIXME: get info from matrix.
+        nnz_jac_g = n * m; //FIXME: use a dense matrix for now.
+        nnz_h_lag = n * n; //FIXME: use a dense matrix for now.
         index_style = TNLP::C_STYLE;
         return true;
       }
@@ -173,13 +173,32 @@ namespace optimization
         assert (solver_.bounds_.size () - n == 0);
         assert (solver_.getConstraints ().size () - m == 0);
 
+        if (!solver_.getJacobian ())
+          return false;
+
         if (!values)
           {
-            //FIXME: give matrix structure.
+            //FIXME: always dense for now.
+            int idx = 0;
+            for (int i = 0; i < m; ++i)
+              for (int j = 0; j < n; ++j)
+                {
+                  iRow[idx] = i, jCol[idx] = j;
+                  ++idx;
+                }
           }
         else
           {
             //FIXME: implement me.
+            IpoptSolver::array_t x_ (n);
+            array_to_vector (x_, x);
+            IpoptSolver::matrix_t jac =
+              (*solver_.getJacobian ()) (x_, solver_.getConstraints ());
+
+            int idx = 0;
+            for (int i = 0; i < m; ++i)
+              for (int j = 0; j < n; ++j)
+                values[idx++] = jac (i, j);
           }
 
         return true;
@@ -195,13 +214,37 @@ namespace optimization
         assert (solver_.bounds_.size () - n == 0);
         assert (solver_.getConstraints ().size () - m == 0);
 
+        if (!solver_.getHessian ())
+          return false;
+
         if (!values)
           {
-            //FIXME: give matrix structure.
+            //FIXME: always dense for now.
+            int idx = 0;
+            for (int i = 0; i < n; ++i)
+              for (int j = 0; j < n; ++j)
+                {
+                  iRow[idx] = i, jCol[idx] = j;
+                  ++idx;
+                }
           }
         else
           {
             //FIXME: implement me.
+            IpoptSolver::array_t x_ (n);
+            array_to_vector (x_, x);
+
+            IpoptSolver::array_t lambda_ (m);
+            array_to_vector (lambda_, lambda);
+
+            IpoptSolver::matrix_t h =
+              (*solver_.getHessian ()) (x_, solver_.getConstraints (),
+                                        obj_factor, lambda_);
+
+            int idx = 0;
+            for (int i = 0; i < n; ++i)
+              for (int j = 0; j < n; ++j)
+                values[idx++] = h (i, j);
           }
 
         return true;
@@ -236,8 +279,12 @@ namespace optimization
 
   using namespace detail;
 
-  IpoptSolver::IpoptSolver (function_t fct, size_type n, gradient_t g) throw ()
-    : Solver (fct, n, g),
+  IpoptSolver::IpoptSolver (function_t fct,
+                            size_type n,
+                            gradient_t g,
+                            hessian_t h,
+                            jacobian_t j) throw ()
+    : Solver (fct, n, g, h, j),
       nlp_ (new MyTNLP (*this)),
       app_ (new IpoptApplication ())
   {

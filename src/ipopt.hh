@@ -48,7 +48,11 @@ namespace optimization
     friend class detail::MyTNLP;
 
     /// Constructor.
-    explicit IpoptSolver (function_t, size_type, gradient_t) throw ();
+    explicit IpoptSolver (function_t,
+                          size_type,
+                          gradient_t,
+                          hessian_t,
+                          jacobian_t) throw ();
     /// Destructor.
     virtual ~IpoptSolver () throw ();
 

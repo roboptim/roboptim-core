@@ -37,7 +37,10 @@ int run_test ()
 
   // Check with identity function (fun x -> x).
   {
-    solver_t solver (ret<const double&> (_1[0]), 1, solver_t::gradient_t ());
+    solver_t solver (ret<const double&> (_1[0]), 1,
+                     solver_t::gradient_t (),
+                     solver_t::hessian_t (),
+                     solver_t::jacobian_t ());
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
@@ -46,7 +49,9 @@ int run_test ()
   // Check with basic function (fun x y -> x + y).
   {
     solver_t solver (ret<const double&> (_1[0]) + ret<const double&> (_1[1]),
-                     2, solver_t::gradient_t ());
+                     2, solver_t::gradient_t (),
+                     solver_t::hessian_t (),
+                     solver_t::jacobian_t ());
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
@@ -54,7 +59,9 @@ int run_test ()
 
   // Check with complex function.
   {
-    solver_t solver (my_fun, 4, solver_t::gradient_t ());
+    solver_t solver (my_fun, 4, solver_t::gradient_t (),
+                     solver_t::hessian_t (),
+                     solver_t::jacobian_t ());
 
     solver_t::result_t res = solver.getMinimum ();
     boost::get<SolverError> (res);
