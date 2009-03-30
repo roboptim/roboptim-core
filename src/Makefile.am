@@ -19,5 +19,5 @@ liboptimization_la_SOURCES = 				\
 				ipopt.cc		\
 				cfsqp.cc
 
-liboptimization_la_LIBADD = -lipopt -lgfortran
+liboptimization_la_LIBADD = -lipopt -lgfortran -lcfsqp
 liboptimization_la_LDFLAGS = -pthread

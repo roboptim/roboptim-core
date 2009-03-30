@@ -1,5 +1,12 @@
 2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add rough implementation of a CFSQP bridge.
+	* TODO: Add items.
+	* src/Makefile.am: Link against CFSQP.
+	* src/cfsqp.cc: Implement the bridge.
+
+2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add CFSQP solver.
 	* src/Makefile.am: Compile CFSQPSolver class, distribute header.
 	* src/cfsqp.cc: Copy from src/optimization-fwd.hh.

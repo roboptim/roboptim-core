@@ -1,4 +1,11 @@
                                                                 -*- outline -*-
 
 * Detect solvers headers and compile/test only available solvers.
-* Check src/ipopt.cc to see if the memcpy is safe.
+** Detect Ipopt properly.
+** Detect CFSQP properly, choose a linking policy (license problem?).
+
+* Remove duplicated code for array copy in cfsqp.cc and ipopt.cc.
+
+* Choose a consistant, scalable linking policy (one lib per solver?).
+
+* Clean, fix filenames, prepare for distribution (header names, etc.).
