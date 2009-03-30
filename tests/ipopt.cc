@@ -62,27 +62,34 @@ solver_t::matrix_t my_hessian (const solver_t::array_t& x,
   solver_t::matrix_t h (g.size (), x.size ());
 
   h (0, 0) = sigma_f * (2 * x[3]);
-  h (1, 0) = sigma_f * (x[3]);
+
+  h (1, 0) = h (0, 1) = sigma_f * (x[3]);
   h (1, 1) = 0.;
 
-  h (2, 0) = sigma_f * (x[3]);
-  h (2, 1) = 0.;
+  h (2, 0) = h (0, 2) = sigma_f * (x[3]);
+  h (2, 1) = h (2, 2) = 0.;
   h (2, 2) = 0.;
 
-  h (3, 0) = sigma_f * (2*x[0] + x[1] + x[2]);
-  h (3, 1) = sigma_f * (x[0]);
-  h (3, 2) = sigma_f * (x[0]);
+  h (3, 0) = h (0, 3) = sigma_f * (2*x[0] + x[1] + x[2]);
+  h (3, 1) = h (1, 3) = sigma_f * (x[0]);
+  h (3, 2) = h (2, 3) = sigma_f * (x[0]);
   h (3, 3) = 0.;
 
   // Add first constraint portion.
   h (1, 0) += lambda[0] * (x[2] * x[3]);
+  h (0, 1) += lambda[0] * (x[2] * x[3]);
 
   h (2, 0) += lambda[0] * (x[1] * x[3]);
+  h (0, 2) += lambda[0] * (x[1] * x[3]);
   h (2, 1) += lambda[0] * (x[0] * x[3]);
+  h (1, 2) += lambda[0] * (x[0] * x[3]);
 
   h (3, 0) += lambda[0] * (x[1] * x[2]);
+  h (0, 3) += lambda[0] * (x[1] * x[2]);
   h (3, 1) += lambda[0] * (x[0] * x[2]);
+  h (1, 3) += lambda[0] * (x[0] * x[2]);
   h (3, 2) += lambda[0] * (x[0] * x[1]);
+  h (2, 3) += lambda[0] * (x[0] * x[1]);
 
   // Add second constraint portion.
   h (0, 0) += lambda[1] * 2;

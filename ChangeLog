@@ -1,5 +1,10 @@
 2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix hessian matrix.
+	* tests/ipopt.cc: Fix hessian matrix (symmetric).
+
+2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add Hessian/Jacobian handling.
 	* src/dummy.cc,
 	* src/dummy.hh: Do not use Hessian, Jacobian with Dummy.
