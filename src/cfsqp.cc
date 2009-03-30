@@ -15,24 +15,34 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
+
 /**
- * \file src/optimization-fwd.hh
+ * \file src/cfsqp.cc
  *
- * \brief Forward declarations.
+ * \brief Implementation of the CFSQP module.
  */
 
-#ifndef OPTIMIZATION_FWD_HH
-# define OPTIMIZATION_FWD_HH
+#include "cfsqp.hh"
 
 namespace optimization
 {
-  class Solver;
+  CFSQPSolver::CFSQPSolver (function_t fct,
+                            size_type n,
+                            gradient_t g,
+                            hessian_t h,
+                            jacobian_t j) throw ()
+    : Solver (fct, n, g, h, j)
+  {
+  }
 
-  class CFSQPSolver;
-  class DummySolver;
-  class IpoptSolver;
+  CFSQPSolver::~CFSQPSolver () throw ()
+  {
+  }
 
-  class SolverError;
-} // end of namespace optimization.
+  CFSQPSolver::result_t
+  CFSQPSolver::getMinimum () throw ()
+  {
+    return result_;
+  }
 
-#endif //! OPTIMIZATION_FWD_HH
+} // end of namespace optimization

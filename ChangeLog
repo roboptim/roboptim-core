@@ -1,5 +1,19 @@
 2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add CFSQP solver.
+	* src/Makefile.am: Compile CFSQPSolver class, distribute header.
+	* src/cfsqp.cc: Copy from src/optimization-fwd.hh.
+	* src/cfsqp.hh: Copy from src/optimization-fwd.hh.
+	* src/optimization-fwd.hh: Predeclare CFSQPSolver.
+	* tests/Makefile.am: Add CFSQP test.
+	* tests/cfsqp.at: Add CFSQP test (tag as xfail for now).
+	* tests/cfsqp.cc: Copy from tests/ipopt.cc.
+	* tests/cfsqp.stdout: New.
+	* tests/ipopt.cc: Remove explicit use of IpoptSolver.
+	* tests/testsuite.at: Include CFSQP test.
+
+2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Clean package, debug Ipopt.
 	* src/Makefile.am: Add missing distributed headers.
 	* src/doc.hh: Document (draft of the main page).

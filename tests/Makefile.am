@@ -23,6 +23,11 @@ check_PROGRAMS += ipopt
 ipopt_SOURCES = ipopt.cc $(COMMON_SOURCES)
 ipopt_LDADD = $(top_builddir)/src/liboptimization.la
 
+# CFSQP
+check_PROGRAMS += cfsqp
+cfsqp_SOURCES = cfsqp.cc $(COMMON_SOURCES)
+cfsqp_LDADD = $(top_builddir)/src/liboptimization.la
+
 
 .PHONY: generate-reference
 
@@ -46,9 +51,11 @@ generate-reference:
 
 TESTSUITE_AT =					\
 	simple-test.at				\
-	ipopt.at
+	ipopt.at				\
+	cfsqp.at
 
 # Distribute reference files.
 EXTRA_DIST +=					\
 	simple-test.stdout			\
-	ipopt.stdout
+	ipopt.stdout				\
+	cfsqp.stdout

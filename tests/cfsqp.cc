@@ -20,8 +20,7 @@
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/variant/get.hpp>
 
-#include <IpIpoptApplication.hpp>
-#include <ipopt.hh>
+#include <cfsqp.hh>
 
 #include "common.hh"
 
@@ -29,7 +28,7 @@ using namespace optimization;
 using namespace boost;
 using namespace boost::lambda;
 
-typedef IpoptSolver solver_t;
+typedef CFSQPSolver solver_t;
 
 double my_fun (const solver_t::array_t& x)
 {
@@ -131,9 +130,6 @@ int run_test ()
   // (4 variables, using custom gradient, hessian and jacobian).
   solver_t solver (my_fun, nvar, my_gradient, my_hessian, my_jacobian);
 
-  // Log everything.
-  solver.getApplication ()->OpenOutputFile ("ipopt.log", Ipopt::J_ALL);
-
   // Set the starting point.
   solver_t::array_t start (nvar);
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
@@ -152,7 +148,7 @@ int run_test ()
   solver_t::result_t res = solver.getMinimum ();
 
   // Check if the minimization has succeed.
-  if (res.which () != IpoptSolver::SOLVER_VALUE)
+  if (res.which () != solver_t::SOLVER_VALUE)
     {
       std::cout << "A solution should have been found. Failing..."
                 << std::endl;

@@ -15,17 +15,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-## ----------------------- ##
-## Launch the test suite.  ##
-## ----------------------- ##
+AT_SETUP([Check CFSQPSolver.])
 
-AT_INIT([Main library])
-AT_COPYRIGHT(
-[Copyright (C) 2009 Thomas Moulard, FIXME
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
+AT_TESTED([cfsqp])
+AT_XFAIL_IF([true]) #FIXME: CFSQP is not yet ready.
 
-# Class mechanism test.
-m4_include([simple-test.at])
-m4_include([ipopt.at])
-m4_include([cfsqp.at])
+cp $abs_srcdir/cfsqp.stdout expout
+AT_CHECK([cfsqp], [0], [expout], [ignore])
+
+AT_CLEANUP
+
+# End of cfsqp.at
