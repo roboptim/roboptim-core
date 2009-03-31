@@ -1,5 +1,14 @@
 2009-03-31  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Factorize some code.
+	* src/Makefile.am: Add util source/header.
+	* src/cfsqp.cc,
+	* src/ipopt.cc: Move vector_to_array/array_to_vector into util.cc.
+	* src/util.cc: New.
+	* src/util.hh: New.
+
+2009-03-31  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix pkg-config file generation.
 	* Makefile.am: Fix sed command line.
 	* build-aux/pkg-config.pc.in: Fix tags.

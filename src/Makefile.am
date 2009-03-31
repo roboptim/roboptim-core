@@ -8,7 +8,8 @@ include_HEADERS =					\
 				solver.hh		\
 				dummy.hh		\
 				ipopt.hh		\
-				cfsqp.hh
+				cfsqp.hh		\
+				util.hh
 
 lib_LTLIBRARIES = liboptimization.la
 
@@ -17,7 +18,8 @@ liboptimization_la_SOURCES = 				\
 				solver.cc		\
 				dummy.cc		\
 				ipopt.cc		\
-				cfsqp.cc
+				cfsqp.cc		\
+				util.cc
 
 liboptimization_la_LIBADD = -lipopt -lgfortran -lcfsqp
 liboptimization_la_LDFLAGS = -pthread

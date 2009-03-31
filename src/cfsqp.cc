@@ -25,6 +25,7 @@
 #include <cfsqpusr.h>
 
 #include "cfsqp.hh"
+#include "util.hh"
 
 namespace optimization
 {
@@ -33,26 +34,7 @@ namespace optimization
 
   namespace detail
   {
-    //FIXME: BEGIN should not duplicate that.
-//     static void
-//     vector_to_array (Solver::value_type* dst, const Solver::array_t& src)
-//     {
-//       memcpy (dst, &src[0], src.size () * sizeof (Solver::value_type));
-
-//       for (std::size_t i = 0; i < src.size (); ++i)
-//         assert (dst[i] = src[i]);
-//     }
-
-    static void
-    array_to_vector (Solver::array_t& dst, const Solver::value_type* src)
-    {
-      memcpy (&dst[0], src, dst.size () * sizeof (Solver::value_type));
-
-      for (std::size_t i = 0; i < dst.size (); ++i)
-        assert (dst[i] = src[i]);
-    }
-    //FIXME: END should not duplicate that.
-
+    /// CFSQP objective function.
     void obj (int nparam, int j , double* x, double* fj, void* cd)
     {
       assert (cd);
@@ -63,6 +45,7 @@ namespace optimization
       *fj = solver->getFunction () (x_);
     }
 
+    /// CFSQP constraints function.
     void constr (int nparam, int j,
                  double* x, double* gj, void* cd)
     {
@@ -86,6 +69,7 @@ namespace optimization
         *gj = *gj - solver->getConstraints () [j_].upper;
     }
 
+    /// CFSQP objective function gradient.
     void gradob (int nparam, int j,
                  double* x, double* gradf, fct_t dummy, void* cd)
     {
@@ -102,6 +86,7 @@ namespace optimization
       *gradf = res[j-1];
     }
 
+    /// CFSQP constraints function gradient.
     void gradcn (int nparam, int j,
                  double* x, double* gradgj, fct_t dummy, void* cd)
     {

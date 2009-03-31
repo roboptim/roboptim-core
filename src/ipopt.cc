@@ -28,6 +28,7 @@
 #include <IpTNLP.hpp>
 
 #include "ipopt.hh"
+#include "util.hh"
 
 namespace optimization
 {
@@ -35,24 +36,6 @@ namespace optimization
 
   namespace detail
   {
-    static void
-    vector_to_array (Solver::value_type* dst, const Solver::array_t& src)
-    {
-      memcpy (dst, &src[0], src.size () * sizeof (Solver::value_type));
-
-      for (std::size_t i = 0; i < src.size (); ++i)
-        assert (dst[i] = src[i]);
-    }
-
-    static void
-    array_to_vector (Solver::array_t& dst, const Solver::value_type* src)
-    {
-      memcpy (&dst[0], src, dst.size () * sizeof (Solver::value_type));
-
-      for (std::size_t i = 0; i < dst.size (); ++i)
-        assert (dst[i] = src[i]);
-    }
-
     /// Ipopt non linear problem definition.
     struct MyTNLP : public TNLP
     {
