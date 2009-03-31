@@ -42,6 +42,10 @@ namespace optimization
     virtual ~CFSQPSolver () throw ();
     /// Return the default solver error.
     virtual result_t getMinimum () throw ();
+
+  private:
+    /// Initialize bounds.
+    void initialize_bounds (double* bl, double* bu) const throw ();
   };
 
 } // end of namespace optimization

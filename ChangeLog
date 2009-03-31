@@ -1,3 +1,9 @@
+2009-03-31  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Enhance CFSQP bridge.
+	* src/cfsqp.cc: Fix constraint handling.
+	* src/cfsqp.hh: Add bounds initializing method.
+
 2009-03-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add rough implementation of a CFSQP bridge.

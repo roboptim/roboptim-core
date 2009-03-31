@@ -53,8 +53,6 @@ namespace optimization
     }
     //FIXME: END should not duplicate that.
 
-
-
     void obj (int nparam, int j , double* x, double* fj, void* cd)
     {
       assert (cd);
@@ -71,12 +69,21 @@ namespace optimization
       assert (cd);
       CFSQPSolver* solver = static_cast<CFSQPSolver*> (cd);
 
-      assert (solver->getConstraints ().size () - j == 0);
-
       CFSQPSolver::array_t x_ (nparam);
       array_to_vector (x_, x);
 
-      *gj = solver->getConstraints () [j].function (x_);
+      int j_ = (j < 2) ? 0 : (j - 1)/2;
+      if (solver->getConstraints () [j_].function.empty ())
+        assert (false && "Empty function in a constraint.");
+
+      *gj = solver->getConstraints () [j_].function (x_);
+
+      if (j % 2 == 0)
+        // g(x) >= b, -g(x) + b <= 0
+        *gj = -*gj + solver->getConstraints () [j_].lower;
+      else
+        // g(x) <= b, g(x) - b <= 0
+        *gj = *gj - solver->getConstraints () [j_].upper;
     }
 
     void gradob (int nparam, int j,
@@ -88,8 +95,11 @@ namespace optimization
       if (solver->getGradient ().empty ())
         ::grobfd (nparam, j, x, gradf, dummy, cd);
 
-      //FIXME: should use gradient here.
-      ::grobfd (nparam, j, x, gradf, dummy, cd);
+      CFSQPSolver::array_t x_ (nparam);
+      array_to_vector (x_, x);
+
+      CFSQPSolver::array_t res = solver->getGradient () (x_);
+      *gradf = res[j-1];
     }
 
     void gradcn (int nparam, int j,
@@ -118,6 +128,20 @@ namespace optimization
   {
   }
 
+  void
+  CFSQPSolver::initialize_bounds (double* bl, double* bu) const throw ()
+  {
+    typedef bounds_t::const_iterator citer_t;
+
+    size_type i = 0;
+    for (citer_t it = bounds_.begin ();
+         it != bounds_.end (); ++it)
+      {
+        bl[i] = (*it).first, bu[i] = (*it).second;
+        ++i;
+      }
+  }
+
   CFSQPSolver::result_t
   CFSQPSolver::getMinimum () throw ()
   {
@@ -127,15 +151,15 @@ namespace optimization
     int nparam = getArity ();
     int nf = 1; //FIXME: only one objective function.
     int nfsr = 0;
-    int nineqn = 0;
-    int nineq = 0;
+    int nineqn = 2 * getConstraints ().size ();
+    int nineq = 2 * getConstraints ().size ();
     int neqn = 0;
     int neq = 0;
     int ncsrl = 0;
     int ncsrn = 0;
-    int mesh_pts;
+    int mesh_pts[1];
     int mode = 100;
-    int iprint = 2;
+    int iprint = 0;
     int miter = 500;
     int inform = 0;
     double bignd = std::numeric_limits<value_type>::infinity ();
@@ -145,9 +169,9 @@ namespace optimization
     double bl[getArity ()];
     double bu[getArity ()];
     double x[getArity ()];
-    double f = 0.;
-    double g = 0.;
-    double lambda[getArity ()];
+    double f[1];
+    double g[2 * getConstraints ().size ()];
+    double lambda[getArity () + 1 + 2 * getConstraints ().size ()];
     fct_t obj = detail::obj;
     fct_t constr = detail::constr;
     grad_t gradob = detail::gradob;
@@ -155,12 +179,7 @@ namespace optimization
     void* cd = this;
 
     // Initialize bounds.
-    for (size_type i = 0; i < getArity (); ++i)
-      {
-        bl[i] = -std::numeric_limits<value_type>::infinity ();
-        bu[i] = std::numeric_limits<value_type>::infinity ();
-        lambda[i] = 1.; //FIXME: what's that?
-      }
+    initialize_bounds (bl, bu);
 
     // Copy starting point.
     if (start_)
@@ -168,9 +187,18 @@ namespace optimization
 
 
     cfsqp (nparam, nf, nfsr, nineqn, nineq, neqn, neq, ncsrl,  ncsrn,
-           &mesh_pts, mode,  iprint, miter, &inform, bignd, eps, epseqn,
-           udelta, bl, bu, x, &f, &g, lambda,
+           mesh_pts, mode,  iprint, miter, &inform, bignd, eps, epseqn,
+           udelta, bl, bu, x, f, g, lambda,
            obj, constr, gradob, gradcn, cd);
+
+    if (inform == 0)
+      {
+        CFSQPSolver::array_t x_ (nparam);
+        detail::array_to_vector (x_, x);
+        result_ = x_;
+      }
+    else
+      result_ = SolverError ("CFSQP has failed.");
 
     return result_;
   }
