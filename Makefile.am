@@ -17,13 +17,15 @@ all:
 PKG_CONFIG_FILE = @PACKAGE_TARNAME@-@PACKAGE_VERSION@.pc
 PKG_DIR="$(DESTDIR)$(libdir)/pkg-config/"
 
-edit = sed -e "s|@prefix@$(prefix)||" \
-	   -e 's,@exec_prefix@,$(exec_prefix),g' \
-	   -e 's,@libdir@,$(libdir),g' \
-	   -e 's,@includedir@,$(includedir),g' \
-	   -e 's,@datarootdir@,$(datarootdir),g' \
-	   -e 's,@PACKAGE@,$(docdir),g' \
-	   -e 's,@VERSION@,$(docdir),g'
+edit = sed -e 's,@prefix\@,$(prefix),g' \
+	   -e 's,@exec_prefix\@,$(exec_prefix),g' \
+	   -e 's,@libdir\@,$(libdir),g' \
+	   -e 's,@includedir\@,$(includedir),g' \
+	   -e 's,@datadir\@,$(datadir),g' \
+	   -e 's,@datarootdir\@,$(datarootdir),g' \
+	   -e 's,@PACKAGE\@,@PACKAGE@,g' \
+	   -e 's,@PACKAGE_TARNAME\@,@PACKAGE_TARNAME@,g' \
+	   -e 's,@VERSION\@,@VERSION@,g'
 
 @PACKAGE_TARNAME@-@PACKAGE_VERSION@.pc: $(srcdir)/build-aux/pkg-config.pc.in
 	$(edit) $(srcdir)/build-aux/pkg-config.pc.in >$@

@@ -1,5 +1,11 @@
 2009-03-31  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix pkg-config file generation.
+	* Makefile.am: Fix sed command line.
+	* build-aux/pkg-config.pc.in: Fix tags.
+
+2009-03-31  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Enhance CFSQP bridge.
 	* src/cfsqp.cc: Fix constraint handling.
 	* src/cfsqp.hh: Add bounds initializing method.
