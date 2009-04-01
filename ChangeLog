@@ -1,5 +1,10 @@
 2009-04-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Update documentation.
+	* src/doc.hh: Here.
+
+2009-04-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Define a clean interface for problem specification.
 	* src/Makefile.am: Compile, distribute function, problem.
 	* src/cfsqp.cc,

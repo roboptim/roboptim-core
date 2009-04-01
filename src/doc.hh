@@ -48,67 +48,146 @@
    Here is a complete example of using Ipopt to solve a problem.
 
    \code
-   // Used solver.
-   typedef IpoptSolver solver_t;
+struct F : public Function
+{
+  F () : Function (4)
+  {
+    // Set bound for all variables.
+    // 1. < x_i < 5. (x_i in [1.;5.])
+    for (int i = 0; i - n > 0; ++i)
+      argBounds[i] = std::make_pair(1., 5.);
+  }
 
-   // Objective function.
-   double my_fun (const solver_t::array_t& x) { FIXME }
+  virtual value_type
+  operator () (const vector_t& x) const throw ()
+  {
+    return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
+  }
 
-   // A constraint.
-   double g_0 (const solver_t::array_t& x) { FIXME }
+  virtual gradient_t
+  gradient (const vector_t& x) const throw ()
+  {
+    vector_t grad (n);
 
-   // A gradient function.
-   solver_t::array_t my_gradient (const solver_t::array_t& x) { FIXME }
+    grad[0] = x[0] * x[3] + x[3] * (x[0] + x[1] + x[2]);
+    grad[1] = x[0] * x[3];
+    grad[2] = x[0] * x[3] + 1;
+    grad[3] = x[0] * (x[0] + x[1] + x[2]);
+    return grad;
+  }
 
-   // A hessian function.
-   solver_t::matrix_t my_hessian (const solver_t::array_t& x,
-                                  const solver_t::constraints_t& g,
-                                  double sigma_f,
-                                  const solver_t::array_t& lambda) { FIXME }
+  virtual hessian_t
+  hessian (const vector_t& x) const throw ()
+  {
+    matrix_t h (n, n);
+    h (0, 0) = 2 * x[3];
+    h (0, 1) = x[3];
+    h (0, 2) = x[3];
+    h (0, 3) = 2 * x[0] + x[1] + x[2];
 
-   // A jacobian function.
-   solver_t::matrix_t my_jacobian (const solver_t::array_t& x,
-                                   const solver_t::constraints_t& g) { FIXME }
+    h (1, 0) = x[3];
+    h (1, 1) = 0.;
+    h (1, 2) = 0.;
+    h (1, 3) = x[0];
 
-  // Declare a problem with 2 variables
-  static const int nvar = 2;
+    h (2, 0) = x[3];
+    h (2, 1) = 0.;
+    h (2, 2) = 0.;
+    h (2, 3) = x[1];
 
-  // Initialize solver
-  solver_t solver (my_fun, nvar, my_gradient, my_hessian, my_jacobian);
+    h (3, 0) = 2 * x[0] + x[1] + x[2];
+    h (3, 1) = x[0];
+    h (3, 2) = x[0];
+    h (3, 3) = 0.;
+    return h;
+  }
+};
+
+struct G0 : public Function
+{
+  G0 ()
+    : Function (4)
+  {}
+
+  virtual value_type
+  operator () (const vector_t& x) const throw ()
+  {
+    return x[0] * x[1] * x[2] * x[3];
+  }
+
+  virtual gradient_t
+  gradient (const vector_t& x) const throw ()
+  {
+    vector_t grad (n);
+
+    grad[0] = x[1] * x[2] * x[3];
+    grad[1] = x[0] * x[2] * x[3];
+    grad[2] = x[0] * x[1] * x[3];
+    grad[3] = x[0] * x[1] * x[2];
+    return grad;
+  }
+};
+
+struct G1 : public Function
+{
+  G1 ()
+    : Function (4)
+  {}
+
+  virtual value_type
+  operator () (const vector_t& x) const throw ()
+  {
+    return x[0]*x[0] + x[1]*x[1] + x[2]*x[2] + x[3]*x[3];
+  }
+
+  virtual gradient_t
+  gradient (const vector_t& x) const throw ()
+  {
+    vector_t grad (n);
+
+    grad[0] = 2 * x[0];
+    grad[1] = 2 * x[1];
+    grad[2] = 2 * x[2];
+    grad[3] = 2 * x[3];
+    return grad;
+  }
+};
+
+int main ()
+{
+  Problem pb = Problem (F ());
 
   // Set the starting point.
-  solver_t::array_t start (nvar);
+  Function::vector_t start (pb.function.n);
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
-  solver.setStartingPoint (start);
+  pb.start = start;
 
-  // Set bound for all variables.
-  // 1. < x_i < 5. (x_i in [1.;5.])
-  for (int i = 0; i < nvar; ++i)
-    solver.setBound (i, std::make_pair(1., 5.));
+  pb.constraints.push_back (Problem::functionPtr_t (new G0 ()));
+  pb.constraints.push_back (Problem::functionPtr_t (new G1 ()));
 
-  // Add a constraint.
-  // The constraint is that g_0(x) should be at least 10 and at most 50
-  solver.getConstraints ().push_back (IpoptSolver::Constraint (g_0, 10., 25.));
+  // Initialize solver
+  IpoptSolver solver (pb);
 
   // Compute the minimum and retrieve the result.
-  // Then, check if a minimum has been found.
-  if (solver.getMinimum ().which () != IpoptSolver::SOLVER_VALUE)
+  IpoptSolver::result_t res = solver.getMinimum ();
+
+  // Check if the minimization has succeed.
+  if (res.which () != IpoptSolver::SOLVER_VALUE)
     {
-      // Failing...
+      // Solver has failed.
       return 1;
     }
 
   // Get the result.
-  // As long the problem is not changed, the result will not be recomputed.
-  solver_t::array_t& result =
-     boost::get<solver_t::array_t> (solver.getMinimum ());
+  IpoptSolver::vector_t& result = boost::get<IpoptSolver::vector_t> (res);
 
   // Display the result.
   std::cout << "A solution has been found: " << std::endl;
   std::cout << result << std::endl;
-  std::cout << "f(*x) = " << my_fun (result) << std::endl;
+  std::cout << "f(*x) = " << pb.function (result) << std::endl;
   return 0;
-  \endcode
+}
+   \endcode
 
    \section faq Frequently Asked Questions (FAQ)
 
