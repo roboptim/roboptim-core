@@ -82,8 +82,12 @@ namespace optimization
       Function::gradient_t grad = solver->problem.function.gradient (x_);
 
       if (!grad)
-        ::grobfd (nparam, j, x, gradf, dummy, cd);
-      *gradf = (*grad)[j]; //FIXME: check that.
+        {
+          ::grobfd (nparam, j, x, gradf, dummy, cd);
+          return;
+        }
+
+      vector_to_array (gradf, *grad);
     }
 
     /// CFSQP constraints function gradient.
@@ -91,11 +95,24 @@ namespace optimization
                  double* x, double* gradgj, fct_t dummy, void* cd)
     {
       assert (cd);
-      //CFSQPSolver* solver = static_cast<CFSQPSolver*> (cd);
 
-      //FIXME: if gradient of constraints available, use it else...
-      //if (!solver.getGradient ())
-      ::grcnfd (nparam, j, x, gradgj, dummy, cd);
+      CFSQPSolver* solver = static_cast<CFSQPSolver*> (cd);
+
+      Function::vector_t x_ (nparam);
+      array_to_vector (x_, x);
+
+      int j_ = (j < 2) ? 0 : (j - 1)/2;
+
+      Function::gradient_t grad =
+        solver->problem.constraints[j_]->gradient (x_);
+
+      if (!grad)
+        {
+          ::grcnfd (nparam, j, x, gradgj, dummy, cd);
+          return;
+        }
+
+      vector_to_array (gradgj, *grad);
     }
 
   }
