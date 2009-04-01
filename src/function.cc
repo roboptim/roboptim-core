@@ -17,29 +17,39 @@
 
 
 /**
- * \file src/dummy.cc
+ * \file src/function.cc
  *
- * \brief Implementation of the dummy module (always fail).
+ * \brief Implementation of the Function class.
  */
 
-#include "dummy.hh"
+#include "function.hh"
 
 namespace optimization
 {
-  DummySolver::DummySolver (const Problem& pb) throw ()
-    : Solver (pb)
+  Function::Function (unsigned n, value_type inf) throw ()
+    : n (n),
+      infinity (inf),
+      argBounds (n)
   {
-    result_ = SolverError ("The dummy solver always fail.");
+    bound = std::make_pair (-inf, inf);
+
+    for (bounds_t::iterator it = argBounds.begin (); it != argBounds.end (); ++it)
+      *it = std::make_pair (-inf, inf);
   }
 
-  DummySolver::~DummySolver () throw ()
+  Function::~Function () throw ()
   {
   }
 
-  DummySolver::result_t
-  DummySolver::getMinimum () throw ()
+  Function::gradient_t
+  Function::gradient (const vector_t&) const throw ()
   {
-    return result_;
+    return gradient_t ();
   }
 
+  Function::hessian_t
+  Function::hessian (const vector_t&) const throw ()
+  {
+    return hessian_t ();
+  }
 } // end of namespace optimization

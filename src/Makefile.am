@@ -9,6 +9,8 @@ include_HEADERS =					\
 				dummy.hh		\
 				ipopt.hh		\
 				cfsqp.hh		\
+				function.hh		\
+				problem.hh		\
 				util.hh
 
 lib_LTLIBRARIES = liboptimization.la
@@ -19,6 +21,8 @@ liboptimization_la_SOURCES = 				\
 				dummy.cc		\
 				ipopt.cc		\
 				cfsqp.cc		\
+				function.cc		\
+				problem.cc		\
 				util.cc
 
 liboptimization_la_LIBADD = -lipopt -lgfortran -lcfsqp

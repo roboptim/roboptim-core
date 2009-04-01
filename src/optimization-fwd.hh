@@ -26,6 +26,9 @@
 
 namespace optimization
 {
+  class Function;
+  class Problem;
+
   class Solver;
 
   class CFSQPSolver;

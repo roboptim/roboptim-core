@@ -33,11 +33,7 @@ namespace optimization
   {
   public:
     /// Constructor.
-    explicit DummySolver (function_t,
-                          size_type,
-                          gradient_t = gradient_t (),
-                          hessian_t = hessian_t (),
-                          jacobian_t = jacobian_t ()) throw ();
+    explicit DummySolver (const Problem&) throw ();
     /// Destructor.
     virtual ~DummySolver () throw ();
     /// Return the default solver error.

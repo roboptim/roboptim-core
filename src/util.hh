@@ -23,17 +23,23 @@
  */
 #ifndef OPTIMIZATION_UTIL_HH
 # define OPTIMIZATION_UTIL_HH
-# include <solver.hh>
+# include <function.hh>
+# include <problem.hh>
 
 namespace optimization
 {
   namespace detail
   {
     /// Copy the content of a uBLAS vector into a C array.
-    void vector_to_array (Solver::value_type* dst, const Solver::array_t& src);
+    void vector_to_array (Function::value_type* dst, const Function::vector_t& src);
 
     /// Copy the content of a C array into a uBLAS vector.
-    void array_to_vector (Solver::array_t& dst, const Solver::value_type* src);
+    void array_to_vector (Function::vector_t& dst, const Function::value_type* src);
+
+    /// Merge gradients from several functions (each gradient is a line).
+    void jacobian_from_gradients (Function::matrix_t&,
+                                  const Problem::constraints_t&,
+                                  const Function::vector_t&);
 
   }; // end of namespace detail.
 }; // end of namespace optimization.

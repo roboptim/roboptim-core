@@ -11,7 +11,7 @@ EXTRA_DIST += package.m4.in
 CLEANFILES += atconfig
 
 # Source which are shared by all tests.
-COMMON_SOURCES = common.hh
+COMMON_SOURCES = common.hh hs071.hh
 
 # simple-test
 check_PROGRAMS = simple-test

@@ -16,46 +16,36 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
-#include <boost/lambda/lambda.hpp>
 #include <boost/variant/get.hpp>
 
 #include "common.hh"
 #include <dummy.hh>
+#include <problem.hh>
 
 using namespace optimization;
-using namespace boost;
-using namespace boost::lambda;
 
 typedef DummySolver solver_t;
 
-double my_fun (const solver_t::array_t& x)
+struct F : public Function
 {
-  return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
-}
+  F () : Function (4)
+  {}
+
+  virtual value_type operator () (const vector_t& x) const throw ()
+  {
+    return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
+  }
+
+  // No gradient, hessian.
+};
 
 int run_test ()
 {
+  Problem pb = Problem (F ());
 
-  // Check with identity function (fun x -> x).
-  {
-    solver_t solver (ret<const double&> (_1[0]), 1);
-    solver_t::result_t res = solver.getMinimum ();
-    boost::get<SolverError> (res);
-  }
-
-  // Check with basic function (fun x y -> x + y).
-  {
-    solver_t solver (ret<const double&> (_1[0]) + ret<const double&> (_1[1]), 2);
-    solver_t::result_t res = solver.getMinimum ();
-    boost::get<SolverError> (res);
-  }
-
-  // Check with complex function.
-  {
-    solver_t solver (my_fun, 4, solver_t::gradient_t ());
-    solver_t::result_t res = solver.getMinimum ();
-    boost::get<SolverError> (res);
-  }
+  solver_t solver (pb);
+  solver_t::result_t res = solver.getMinimum ();
+  boost::get<SolverError> (res);
 
   return 0;
 }

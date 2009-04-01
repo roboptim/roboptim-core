@@ -29,24 +29,10 @@
 
 namespace optimization
 {
-  Solver::Solver (function_t fct,
-                  size_type n,
-                  gradient_t gradient,
-                  hessian_t hessian,
-                  jacobian_t jacobian) throw ()
-    : arity_ (n),
-      function_ (fct),
-      gradient_ (gradient),
-      start_ (),
-      bounds_ (n),
-      constraints_ (),
-      hessian_ (hessian),
-      jacobian_ (jacobian),
+  Solver::Solver (const Problem& pb) throw ()
+    : problem (pb),
       result_ (NoSolution ())
   {
-    std::fill (bounds_.begin (), bounds_.end (),
-               std::make_pair (-std::numeric_limits<value_type>::infinity (),
-                               std::numeric_limits<value_type>::infinity ()));
   }
 
   Solver::~Solver () throw ()
@@ -57,69 +43,5 @@ namespace optimization
   Solver::reset () throw ()
   {
     result_ = NoSolution ();
-  }
-
-  void
-  Solver::setStartingPoint (const array_t& point) throw ()
-  {
-    assert (point.size () == arity_);
-    start_ = point;
-    reset ();
-  }
-
-  Solver::function_t
-  Solver::getFunction () const throw ()
-  {
-    return function_;
-  }
-
-  Solver::gradient_t
-  Solver::getGradient () const throw ()
-  {
-    return gradient_;
-  }
-
-  Solver::hessian_t
-  Solver::getHessian () const throw ()
-  {
-    return hessian_;
-  }
-
-  Solver::jacobian_t
-  Solver::getJacobian () const throw ()
-  {
-    return jacobian_;
-  }
-
-  Solver::size_type
-  Solver::getArity () const throw ()
-  {
-    return arity_;
-  }
-
-  Solver::bound_t
-  Solver::getBound(size_type i) const throw ()
-  {
-    assert (i < getArity ());
-    return bounds_[i];
-  }
-
-  void
-  Solver::setBound(size_type i, bound_t b) throw ()
-  {
-    assert (i < getArity ());
-    bounds_[i] = b;
-  }
-
-  Solver::constraints_t&
-  Solver::getConstraints () throw ()
-  {
-    return constraints_;
-  }
-
-  const Solver::constraints_t&
-  Solver::getConstraints () const throw ()
-  {
-    return constraints_;
   }
 } // end of namespace optimization

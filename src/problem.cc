@@ -15,31 +15,23 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * \file src/dummy.cc
+ * \file src/problem.cc
  *
- * \brief Implementation of the dummy module (always fail).
+ * \brief Implementation of the Problem class.
  */
 
-#include "dummy.hh"
+#include "problem.hh"
 
 namespace optimization
 {
-  DummySolver::DummySolver (const Problem& pb) throw ()
-    : Solver (pb)
-  {
-    result_ = SolverError ("The dummy solver always fail.");
-  }
-
-  DummySolver::~DummySolver () throw ()
+  Problem::Problem (const Function& fct) throw ()
+    : function (fct),
+      constraints ()
   {
   }
 
-  DummySolver::result_t
-  DummySolver::getMinimum () throw ()
+  Problem::~Problem () throw ()
   {
-    return result_;
   }
-
 } // end of namespace optimization

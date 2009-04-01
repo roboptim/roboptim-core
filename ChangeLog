@@ -1,3 +1,31 @@
+2009-04-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Define a clean interface for problem specification.
+	* src/Makefile.am: Compile, distribute function, problem.
+	* src/cfsqp.cc,
+	* src/cfsqp.hh,
+	* src/dummy.cc,
+	* src/dummy.hh: Use new interface.
+	* src/function.cc,
+	* src/function.hh: Define function class. New.
+	* src/ipopt.cc,
+	* src/ipopt.hh: Use new interface.
+	* src/optimization-fwd.hh: Predeclare function/problem.
+	* src/problem.cc,
+	* src/problem.hh: Define problem class. New.
+	* src/solver.cc,
+	* src/solver.hh: Use new interface
+        (move problem definition in problem/function).
+	* src/util.cc,
+	* src/util.hh: Use new interface and
+        compute jacobian from several gradients.
+	* tests/Makefile.am: Factorize problem in hs071 header.
+	* tests/cfsqp.cc: Use new interface.
+	* tests/hs071.hh: Define problem with new interface. New.
+	* tests/ipopt.at: Tag as XFAIL for now.
+	* tests/ipopt.cc: Use new interface.
+	* tests/simple-test.cc: Use new interface.
+
 2009-03-31  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Factorize some code.

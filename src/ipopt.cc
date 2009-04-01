@@ -28,6 +28,7 @@
 #include <IpTNLP.hpp>
 
 #include "ipopt.hh"
+#include "problem.hh"
 #include "util.hh"
 
 namespace optimization
@@ -49,8 +50,8 @@ namespace optimization
                     Index& nnz_h_lag, TNLP::IndexStyleEnum& index_style)
         throw ()
       {
-        n = solver_.getArity ();
-        m = solver_.getConstraints ().size ();
+        n = solver_.problem.function.n;
+        m = solver_.problem.constraints.size ();
         nnz_jac_g = n * m; //FIXME: use a dense matrix for now.
         nnz_h_lag = n * n; //FIXME: use a dense matrix for now.
         index_style = TNLP::C_STYLE;
@@ -61,22 +62,21 @@ namespace optimization
                        Index m, Number* g_l, Number* g_u)
         throw ()
       {
-        assert (solver_.getArity () - n == 0);
-        assert (solver_.bounds_.size () - n == 0);
-        assert (solver_.getConstraints ().size () - m == 0);
+        assert (solver_.problem.function.n - n == 0);
+        assert (solver_.problem.constraints.size () - m == 0);
 
         {
-          typedef IpoptSolver::bounds_t::const_iterator citer_t;
-          for (citer_t it = solver_.bounds_.begin ();
-               it != solver_.bounds_.end (); ++it)
+          typedef Function::bounds_t::const_iterator citer_t;
+          for (citer_t it = solver_.problem.function.argBounds.begin ();
+               it != solver_.problem.function.argBounds.end (); ++it)
             *(x_l++) = (*it).first, *(x_u++) = (*it).second;
         }
 
         {
-          typedef IpoptSolver::constraints_t::const_iterator citer_t;
-          for (citer_t it = solver_.getConstraints ().begin ();
-               it != solver_.getConstraints ().end (); ++it)
-            *(g_l++) = (*it).lower, *(g_u++) = (*it).upper;
+          typedef Problem::constraints_t::const_iterator citer_t;
+          for (citer_t it = solver_.problem.constraints.begin ();
+               it != solver_.problem.constraints.end (); ++it)
+            *(g_l++) = (*it)->bound.first, *(g_u++) = (*it)->bound.second;
         }
         return true;
       }
@@ -88,22 +88,21 @@ namespace optimization
                          Number* lambda)
         throw ()
       {
-        assert (solver_.getArity () - n == 0);
-        assert (solver_.bounds_.size () - n == 0);
-        assert (solver_.getConstraints ().size () - m == 0);
+        assert (solver_.problem.function.n - n == 0);
+        assert (solver_.problem.constraints.size () - m == 0);
 
         //FIXME: handle all modes.
         assert(init_x == true);
         assert(init_z == false);
         assert(init_lambda == false);
 
-        if (!solver_.start_ && !!init_x)
+        if (solver_.problem.start.empty () && !!init_x)
           solver_.result_ =
             SolverError ("Ipopt method needs a starting point.");
-        if (!solver_.start_)
+        if (solver_.problem.start.empty ())
           return true;
 
-        vector_to_array (x, *solver_.start_);
+        vector_to_array (x, solver_.problem.start);
         return true;
       }
 
@@ -111,13 +110,11 @@ namespace optimization
       eval_f (Index n, const Number* x, bool new_x, Number& obj_value)
         throw ()
       {
-        assert (solver_.getArity () - n == 0);
-        assert (solver_.bounds_.size () - n == 0);
-        assert (!solver_.getFunction ().empty ());
+        assert (solver_.problem.function.n - n == 0);
 
-        IpoptSolver::array_t x_ (n);
+        IpoptSolver::vector_t x_ (n);
         array_to_vector (x_, x);
-        obj_value = solver_.getFunction () (x_);
+        obj_value = solver_.problem.function (x_);
         return true;
       }
 
@@ -125,16 +122,14 @@ namespace optimization
       eval_grad_f(Index n, const Number* x, bool new_x, Number* grad_f)
         throw ()
       {
-        assert (solver_.getArity () - n == 0);
-        assert (solver_.bounds_.size () - n == 0);
+        assert (solver_.problem.function.n - n == 0);
 
-        if (solver_.getGradient ().empty ())
-          return false;
-
-        IpoptSolver::array_t x_ (n);
+        IpoptSolver::vector_t x_ (n);
         array_to_vector (x_, x);
-        IpoptSolver::array_t grad = solver_.getGradient () (x_);
-        vector_to_array(grad_f, grad);
+        Function::gradient_t grad = solver_.problem.function.gradient (x_);
+        if (!grad)
+          return false;
+        vector_to_array(grad_f, *grad);
         return true;
       }
 
@@ -143,20 +138,19 @@ namespace optimization
              Index m, Number* g)
         throw ()
       {
-        assert (solver_.getArity () - n == 0);
-        assert (solver_.bounds_.size () - n == 0);
-        assert (solver_.getConstraints ().size () - m == 0);
+        assert (solver_.problem.function.n - n == 0);
+        assert (solver_.problem.constraints.size () - m == 0);
 
-        IpoptSolver::array_t x_ (n);
+        IpoptSolver::vector_t x_ (n);
         array_to_vector (x_, x);
 
-        typedef IpoptSolver::constraints_t::const_iterator citer_t;
+        typedef Problem::constraints_t::const_iterator citer_t;
 
-        IpoptSolver::array_t g_ (m);
+        IpoptSolver::vector_t g_ (m);
         int i = 0;
-        for (citer_t it = solver_.getConstraints ().begin ();
-             it != solver_.getConstraints ().end (); ++it, ++i)
-          g_[i] = (*it).function (x_);
+        for (citer_t it = solver_.problem.constraints.begin ();
+             it != solver_.problem.constraints.end (); ++it, ++i)
+          g_[i] = (**it) (x_);
         vector_to_array(g, g_);
         return true;
       }
@@ -167,12 +161,8 @@ namespace optimization
                  Index *jCol, Number* values)
         throw ()
       {
-        assert (solver_.getArity () - n == 0);
-        assert (solver_.bounds_.size () - n == 0);
-        assert (solver_.getConstraints ().size () - m == 0);
-
-        if (solver_.getJacobian ().empty ())
-          return false;
+        assert (solver_.problem.function.n - n == 0);
+        assert (solver_.problem.constraints.size () - m == 0);
 
         if (!values)
           {
@@ -187,10 +177,11 @@ namespace optimization
           }
         else
           {
-            IpoptSolver::array_t x_ (n);
+            IpoptSolver::vector_t x_ (n);
             array_to_vector (x_, x);
-            IpoptSolver::matrix_t jac =
-              solver_.getJacobian () (x_, solver_.getConstraints ());
+            Function::matrix_t jac (solver_.problem.constraints.size (),
+                                    solver_.problem.function.n);
+            jacobian_from_gradients (jac, solver_.problem.constraints, x_);
 
             int idx = 0;
             for (int i = 0; i < m; ++i)
@@ -201,6 +192,24 @@ namespace optimization
         return true;
       }
 
+      /// Compute Ipopt hessian from several hessians.
+      void compute_hessian (Function::matrix_t& h,
+                            const IpoptSolver::vector_t& x,
+                            Number obj_factor,
+                            const Number* lambda)
+
+      {
+        typedef Problem::constraints_t::const_iterator citer_t;
+
+        Function::hessian_t fct_h = solver_.problem.function.hessian (x);
+        h = obj_factor * *fct_h;
+
+        int i = 0;
+        for (citer_t it = solver_.problem.constraints.begin ();
+             it != solver_.problem.constraints.end (); ++it)
+          h += lambda[i++] * *((*it)->hessian (x));
+      }
+
       virtual bool
       eval_h (Index n, const Number* x, bool new_x,
               Number obj_factor, Index m, const Number* lambda,
@@ -208,12 +217,10 @@ namespace optimization
               Index* jCol, Number* values)
         throw ()
       {
-        assert (solver_.getArity () - n == 0);
-        assert (solver_.bounds_.size () - n == 0);
-        assert (solver_.getConstraints ().size () - m == 0);
+        assert (solver_.problem.function.n - n == 0);
+        assert (solver_.problem.constraints.size () - m == 0);
 
-        if (solver_.getHessian ().empty ())
-          return false;
+        //FIXME: check if a hessian is provided.
 
         if (!values)
           {
@@ -229,15 +236,15 @@ namespace optimization
           }
         else
           {
-            IpoptSolver::array_t x_ (n);
+            IpoptSolver::vector_t x_ (n);
             array_to_vector (x_, x);
 
-            IpoptSolver::array_t lambda_ (m);
+            IpoptSolver::vector_t lambda_ (m);
             array_to_vector (lambda_, lambda);
 
-            IpoptSolver::matrix_t h =
-              solver_.getHessian () (x_, solver_.getConstraints (),
-                                     obj_factor, lambda_);
+            Function::matrix_t h (solver_.problem.function.n,
+                                     solver_.problem.function.n);
+            compute_hessian (h, x_, obj_factor, lambda);
 
             int idx = 0;
             for (int i = 0; i < n; ++i)
@@ -257,9 +264,8 @@ namespace optimization
                         IpoptCalculatedQuantities* ip_cq)
         throw ()
       {
-        assert (solver_.getArity () - n == 0);
-        assert (solver_.bounds_.size () - n == 0);
-        assert (solver_.getConstraints ().size () - m == 0);
+        assert (solver_.problem.function.n - n == 0);
+        assert (solver_.problem.constraints.size () - m == 0);
 
         if (status != SUCCESS)
           {
@@ -268,7 +274,7 @@ namespace optimization
             return;
           }
 
-        Solver::array_t arr (n);
+        Solver::vector_t arr (n);
         array_to_vector (arr, x);
         solver_.result_ = arr;
       }
@@ -279,12 +285,8 @@ namespace optimization
 
   using namespace detail;
 
-  IpoptSolver::IpoptSolver (function_t fct,
-                            size_type n,
-                            gradient_t g,
-                            hessian_t h,
-                            jacobian_t j) throw ()
-    : Solver (fct, n, g, h, j),
+  IpoptSolver::IpoptSolver (const Problem& pb) throw ()
+    : Solver (pb),
       nlp_ (new MyTNLP (*this)),
       app_ (new IpoptApplication (false, false))
   {

@@ -33,11 +33,7 @@ namespace optimization
   {
   public:
     /// Constructor.
-    explicit CFSQPSolver (function_t,
-                          size_type,
-                          gradient_t = gradient_t (),
-                          hessian_t = hessian_t (),
-                          jacobian_t = jacobian_t ()) throw ();
+    explicit CFSQPSolver (const Problem&) throw ();
     /// Destructor.
     virtual ~CFSQPSolver () throw ();
     /// Return the default solver error.

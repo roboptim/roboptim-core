@@ -15,31 +15,37 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * \file src/dummy.cc
+ * \file src/problem.hh
  *
- * \brief Implementation of the dummy module (always fail).
+ * \brief Declaration of the Problem class.
  */
 
-#include "dummy.hh"
+#ifndef OPTIMIZATION_PROBLEM_HH
+# define OPTIMIZATION_PROBLEM_HH
+# include <vector>
+# include <boost/shared_ptr.hpp>
+
+# include <optimization-fwd.hh>
+# include <function.hh>
 
 namespace optimization
 {
-  DummySolver::DummySolver (const Problem& pb) throw ()
-    : Solver (pb)
+  /// Define an optimization problem.
+  struct Problem
   {
-    result_ = SolverError ("The dummy solver always fail.");
-  }
+    typedef boost::shared_ptr<Function> functionPtr_t;
+    typedef std::vector<functionPtr_t> constraints_t;
 
-  DummySolver::~DummySolver () throw ()
-  {
-  }
+    Problem (const Function&) throw ();
+    ~Problem () throw ();
 
-  DummySolver::result_t
-  DummySolver::getMinimum () throw ()
-  {
-    return result_;
-  }
+    const Function& function;
+    constraints_t constraints;
 
+    /// Starting point.
+    Function::vector_t start;
+  };
 } // end of namespace optimization
+
+#endif //! OPTIMIZATION_PROBLEM_HH
