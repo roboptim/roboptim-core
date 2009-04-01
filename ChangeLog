@@ -1,5 +1,11 @@
 2009-04-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix test suite.
+	* tests/hs071.hh: Add missing bounds on constraints.
+	* tests/ipopt.at: Test is passed now.
+
+2009-04-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix misc bugs.
 	* src/cfsqp.cc: Fix buggy assertion.
 	* src/problem.cc: Fix attributes initialization.

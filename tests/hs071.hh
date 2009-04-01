@@ -82,7 +82,9 @@ struct G0 : public Function
 {
   G0 ()
     : Function (4)
-  {}
+  {
+    bound.first = 25.;
+  }
 
   virtual value_type
   operator () (const vector_t& x) const throw ()
@@ -133,7 +135,10 @@ struct G1 : public Function
 {
   G1 ()
     : Function (4)
-  {}
+  {
+    bound.first = 40.;
+    bound.second = 40.;
+  }
 
   virtual value_type
   operator () (const vector_t& x) const throw ()

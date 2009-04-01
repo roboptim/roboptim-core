@@ -18,7 +18,6 @@
 AT_SETUP([Check Ipopt bridge.])
 
 AT_TESTED([ipopt])
-AT_XFAIL_IF([true]) #FIXME: Don't bother to fix bridge for now.
 
 cp $abs_srcdir/ipopt.stdout expout
 AT_CHECK([ipopt], [0], [expout], [ignore])
