@@ -27,7 +27,8 @@ namespace optimization
 {
   Problem::Problem (const Function& fct) throw ()
     : function (fct),
-      constraints ()
+      constraints (),
+      start ()
   {
   }
 

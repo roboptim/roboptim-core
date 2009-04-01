@@ -1,5 +1,15 @@
 2009-04-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix misc bugs.
+	* src/cfsqp.cc: Fix buggy assertion.
+	* src/problem.cc: Fix attributes initialization.
+	* src/util.cc: Fix buggy assertion.
+	* tests/cfsqp.cc: Do not use F as a temporary.
+	* tests/hs071.hh: Add constraints hessian.
+	* tests/ipopt.cc: Do not use F as a temporary.
+
+2009-04-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update documentation.
 	* src/doc.hh: Here.
 

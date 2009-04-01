@@ -73,7 +73,7 @@ namespace optimization
                  double* x, double* gradf, fct_t dummy, void* cd)
     {
       assert (cd);
-      assert (j == 0);
+      assert (j == 1);
 
       CFSQPSolver* solver = static_cast<CFSQPSolver*> (cd);
 

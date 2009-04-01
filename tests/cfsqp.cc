@@ -28,7 +28,9 @@
 
 int run_test ()
 {
-  Problem pb = Problem (F ());
+  F f;
+
+  Problem pb = Problem (f);
 
   // Set the starting point.
   Function::vector_t start (pb.function.n);

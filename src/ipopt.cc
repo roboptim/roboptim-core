@@ -69,7 +69,7 @@ namespace optimization
           typedef Function::bounds_t::const_iterator citer_t;
           for (citer_t it = solver_.problem.function.argBounds.begin ();
                it != solver_.problem.function.argBounds.end (); ++it)
-            *(x_l++) = (*it).first, *(x_u++) = (*it).second;
+              *(x_l++) = (*it).first, *(x_u++) = (*it).second;
         }
 
         {

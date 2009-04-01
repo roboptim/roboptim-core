@@ -38,7 +38,7 @@ namespace optimization
       memcpy (dst, &src[0], src.size () * sizeof (Function::value_type));
 
       for (std::size_t i = 0; i < src.size (); ++i)
-        assert (dst[i] = src[i]);
+        assert (dst[i] == src[i]);
     }
 
     void
@@ -47,7 +47,7 @@ namespace optimization
       memcpy (&dst[0], src, dst.size () * sizeof (Function::value_type));
 
       for (std::size_t i = 0; i < dst.size (); ++i)
-        assert (dst[i] = src[i]);
+        assert (dst[i] == src[i]);
     }
 
     void

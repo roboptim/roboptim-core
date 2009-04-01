@@ -29,7 +29,7 @@ struct F : public Function
   {
     // Set bound for all variables.
     // 1. < x_i < 5. (x_i in [1.;5.])
-    for (int i = 0; i - n > 0; ++i)
+    for (size_type i = 0; i < n; ++i)
       argBounds[i] = std::make_pair(1., 5.);
   }
 
@@ -101,6 +101,32 @@ struct G0 : public Function
     grad[3] = x[0] * x[1] * x[2];
     return grad;
   }
+
+  virtual hessian_t
+  hessian (const vector_t& x) const throw ()
+  {
+    matrix_t h (n, n);
+    h (0, 0) = 0.;
+    h (0, 1) = x[2] * x[3];
+    h (0, 2) = x[1] * x[3];
+    h (0, 3) = x[1] * x[2];
+
+    h (1, 0) = x[2] * x[3];
+    h (1, 1) = 0.;
+    h (1, 2) = x[0] * x[3];
+    h (1, 3) = x[0] * x[2];
+
+    h (2, 0) = x[1] * x[3];
+    h (2, 1) = x[0] * x[3];
+    h (2, 2) = 0.;
+    h (2, 3) = x[0] * x[1];
+
+    h (3, 0) = x[1] * x[2];
+    h (3, 1) = x[0] * x[2];
+    h (3, 2) = x[0] * x[1];
+    h (3, 3) = 0.;
+    return h;
+  }
 };
 
 struct G1 : public Function
@@ -125,6 +151,32 @@ struct G1 : public Function
     grad[2] = 2 * x[2];
     grad[3] = 2 * x[3];
     return grad;
+  }
+
+  virtual hessian_t
+  hessian (const vector_t& x) const throw ()
+  {
+    matrix_t h (n, n);
+    h (0, 0) = 2.;
+    h (0, 1) = 0.;
+    h (0, 2) = 0.;
+    h (0, 3) = 0.;
+
+    h (1, 0) = 0.;
+    h (1, 1) = 2.;
+    h (1, 2) = 0.;
+    h (1, 3) = 0.;
+
+    h (2, 0) = 0.;
+    h (2, 1) = 0.;
+    h (2, 2) = 2.;
+    h (2, 3) = 0.;
+
+    h (3, 0) = 0.;
+    h (3, 1) = 0.;
+    h (3, 2) = 0.;
+    h (3, 3) = 2.;
+    return h;
   }
 };
 
