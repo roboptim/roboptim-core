@@ -36,8 +36,7 @@ namespace optimization
 {
   namespace ublas = boost::numeric::ublas;
 
-  /// Define a mathematical function
-  /// (and possibly a jacobian/hessian).
+  /// \brief Define a mathematical function.
   struct Function
   {
     /// Values type.
@@ -61,6 +60,9 @@ namespace optimization
     typedef std::pair<value_type, value_type> bound_t;
     /// Vector of bound.
     typedef std::vector<bound_t> bounds_t;
+
+    /// Scale vector.
+    typedef std::vector<value_type> scales_t;
 
     /// Function arity.
     const size_type n;
@@ -91,11 +93,25 @@ namespace optimization
     /// Hessian.
     virtual hessian_t hessian (const vector_t&) const throw ();
 
+    /// Construct a bound from a lower and upper bound.
+    bound_t makeBound (value_type, value_type) const throw ();
+    /// Construct an infinite bound.
+    bound_t makeBound () const throw ();
+    /// Construct a bound from a lower bound.
+    bound_t makeLowerBound (value_type) const throw ();
+    /// Construct a bound from an upper bound.
+    bound_t makeUpperBound (value_type) const throw ();
+
     /// Function bounds.
     bound_t bound;
 
     /// Arguments bounds.
     bounds_t argBounds;
+
+    /// Result scale.
+    double scale;
+    /// Arguments' scales.
+    scales_t argScales;
 
     /// Function linearity.
     Linearity linearity;

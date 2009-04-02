@@ -22,6 +22,7 @@
  * \brief Implementation of the Function class.
  */
 
+#include <algorithm>
 #include "function.hh"
 
 namespace optimization
@@ -29,13 +30,21 @@ namespace optimization
   Function::Function (unsigned n, value_type inf) throw ()
     : n (n),
       infinity (inf),
+      bound (std::make_pair (-inf, inf)),
       argBounds (n),
+      scale (1.),
+      argScales (n),
       linearity (NON_LINEAR)
   {
-    bound = std::make_pair (-inf, inf);
+    // A positive infinite is required.
+    assert (inf > 0.);
 
+    // Initialize bound.
     for (bounds_t::iterator it = argBounds.begin (); it != argBounds.end (); ++it)
       *it = std::make_pair (-inf, inf);
+
+    // Initialize scale.
+    std::fill (argScales.begin (), argScales.end (), 1.);
   }
 
   Function::~Function () throw ()
@@ -53,4 +62,33 @@ namespace optimization
   {
     return hessian_t ();
   }
+
+  Function::bound_t
+  Function::makeBound (value_type l, value_type u) const
+    throw ()
+  {
+    return std::make_pair (l, u);
+  }
+
+  Function::bound_t
+  Function::makeBound () const
+    throw ()
+  {
+    return std::make_pair (-infinity, infinity);
+  }
+
+  Function::bound_t
+  Function::makeUpperBound (value_type u) const
+  throw ()
+  {
+    return makeBound (-infinity, u);
+  }
+
+  Function::bound_t
+  Function::makeLowerBound (value_type l) const
+  throw ()
+  {
+    return makeBound (l, infinity);
+  }
+
 } // end of namespace optimization

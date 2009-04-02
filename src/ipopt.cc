@@ -103,6 +103,13 @@ namespace optimization
                               Number* g_scaling)
         throw ()
       {
+        use_x_scaling = true, use_g_scaling = true;
+
+        memcpy (x_scaling, &solver_.problem.function.argScales[0], n * sizeof (double));
+
+        for (Index i = 0; i < m; ++i)
+          g_scaling[i] = solver_.problem.constraints[i]->scale;
+
         return false;
       }
 
@@ -139,13 +146,24 @@ namespace optimization
         assert (solver_.problem.constraints.size () - m == 0);
 
         //FIXME: handle all modes.
-        assert(init_x == true);
-        assert(init_z == false);
         assert(init_lambda == false);
 
-        if (solver_.problem.start.empty () && !!init_x)
-          solver_.result_ =
-            SolverError ("Ipopt method needs a starting point.");
+        // Set bound multipliers.
+        if (init_z)
+          {
+            //FIXME: for now, if required, scale is one.
+            //When do we need something else?
+            for (Index i = 0; i < n; ++i)
+              z_L[i] = 1., z_U[i] = 1.;
+          }
+
+        // Set the starting point.
+        if (solver_.problem.start.empty () && init_x)
+          {
+            solver_.result_ =
+              SolverError ("Ipopt method needs a starting point.");
+            return false;
+          }
         if (solver_.problem.start.empty ())
           return true;
 
@@ -156,6 +174,14 @@ namespace optimization
       virtual bool
       get_warm_start_iterate (IteratesVector& warm_start_iterate) throw ()
       {
+        //FIXME: implement this.
+        //IteratesVector is defined in src/Algorithm/IteratesVector.hpp
+        //and is not distributed (not a distributed header).
+        //Hence, seems difficult to manipulate this type.
+        //Idea 1: offer the possibility either to retrive this data after
+        //solving a problem.
+        //Idea 2: creating this type manually from problem + rough guess
+        //(or previous solution).
         return false;
       }
 
@@ -350,6 +376,7 @@ namespace optimization
       virtual Index
       get_number_of_nonlinear_variables () throw ()
       {
+        //FIXME: implement this.
         return -1;
       }
 
@@ -358,6 +385,7 @@ namespace optimization
                                        Index* pos_nonlin_vars)
         throw ()
       {
+        //FIXME: implement this.
         return false;
       }
 
