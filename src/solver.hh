@@ -27,7 +27,7 @@
 # include <boost/utility.hpp>
 # include <boost/variant/variant.hpp>
 
-# include <optimization-fwd.hh>
+# include <fwd.hh>
 # include <function.hh>
 
 namespace optimization
@@ -46,6 +46,9 @@ namespace optimization
   struct NoSolution {};
 
   /// Generic solver class.
+  /// A solver class takes a Problem as input and try to solve it
+  /// when the getMinimum method is called.
+  /// It will not be resolved as long as reset is not called.
   class Solver : public boost::noncopyable
   {
   public:
@@ -84,6 +87,8 @@ namespace optimization
     /// it has not yet been solved).
     virtual result_t getMinimum () throw () = 0;
 
+    // TODO: shouldn't be a pointer as problem might be modified,
+    // behind solver's back.
     /// Problem which has to be solved.
     const Problem& problem;
 

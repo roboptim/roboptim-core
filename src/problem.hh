@@ -26,7 +26,7 @@
 # include <vector>
 # include <boost/shared_ptr.hpp>
 
-# include <optimization-fwd.hh>
+# include <fwd.hh>
 # include <function.hh>
 
 namespace optimization
@@ -34,13 +34,23 @@ namespace optimization
   /// Define an optimization problem.
   struct Problem
   {
+    /// Smart pointer for function arrays.
     typedef boost::shared_ptr<Function> functionPtr_t;
+    /// Vector of functions which symbolizes constraints.
     typedef std::vector<functionPtr_t> constraints_t;
 
+    /// Constructor.
     Problem (const Function&) throw ();
+
+    /// Destructor.
     ~Problem () throw ();
 
+    /// Function which has to be minimized.
     const Function& function;
+
+    /// Constraints.
+    /// Fast to compute constraints should be first
+    /// (as they are usually evaluted first).
     constraints_t constraints;
 
     /// Starting point.

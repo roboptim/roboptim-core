@@ -1,5 +1,14 @@
 2009-04-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Rename optimization-fwd.hh into fwd.hh, document.
+	* src/Makefile.am: Rename fwd.
+	* src/function.hh: Document.
+	* src/fwd.hh: Rename from src/optimization-fwd.hh.
+	* src/problem.hh,
+	* src/solver.hh: Document.
+
+2009-04-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Enhance functions with scale and bounds easier to manage.
 	* src/function.cc,
 	* src/function.hh: Add scale, make bounds easier to handle.

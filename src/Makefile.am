@@ -4,7 +4,7 @@ include $(top_srcdir)/build-aux/init.mk
 AM_CXXFLAGS += $(WARNING_CXXFLAGS)
 
 include_HEADERS =					\
-				optimization-fwd.hh	\
+				fwd.hh			\
 				solver.hh		\
 				dummy.hh		\
 				ipopt.hh		\

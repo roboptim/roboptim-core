@@ -30,7 +30,7 @@
 # include <boost/numeric/ublas/vector.hpp>
 # include <boost/optional/optional.hpp>
 
-# include <optimization-fwd.hh>
+# include <fwd.hh>
 
 namespace optimization
 {
