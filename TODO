@@ -4,8 +4,10 @@
 ** Detect Ipopt properly.
 ** Detect CFSQP properly, choose a linking policy (license problem?).
 
-* Remove duplicated code for array copy in cfsqp.cc and ipopt.cc.
-
 * Choose a consistant, scalable linking policy (one lib per solver?).
 
 * Clean, fix filenames, prepare for distribution (header names, etc.).
+
+* Unify enum naming.
+
+* Factorize assertions in bridges.
