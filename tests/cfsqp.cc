@@ -42,7 +42,7 @@ int run_test ()
 
 
   // Initialize solver
-  CFSQPSolver solver (pb);
+  CFSQPSolver solver (pb, 2);
 
   // Compute the minimum and retrieve the result.
   CFSQPSolver::result_t res = solver.getMinimum ();

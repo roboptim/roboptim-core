@@ -37,6 +37,19 @@ namespace optimization
 
   namespace detail
   {
+    TNLP::LinearityType cfsqp_tag (Function::Linearity l)
+    {
+      switch (l)
+        {
+        case Function::LINEAR:
+          return TNLP::LINEAR;
+        case Function::QUADRATIC:
+        case Function::NON_LINEAR:
+          return TNLP::NON_LINEAR;
+        }
+      assert (0);
+    }
+
     /// Ipopt non linear problem definition.
     struct MyTNLP : public TNLP
     {
@@ -57,6 +70,7 @@ namespace optimization
         index_style = TNLP::C_STYLE;
         return true;
       }
+
       virtual bool
       get_bounds_info (Index n, Number* x_l, Number* x_u,
                        Index m, Number* g_l, Number* g_u)
@@ -82,10 +96,43 @@ namespace optimization
       }
 
       virtual bool
-      get_starting_point(Index n, bool init_x, Number* x,
-                         bool init_z, Number* z_L, Number* z_U,
-                         Index m, bool init_lambda,
-                         Number* lambda)
+      get_scaling_parameters (Number& obj_scaling,
+                              bool& use_x_scaling, Index n,
+                              Number* x_scaling,
+                              bool& use_g_scaling, Index m,
+                              Number* g_scaling)
+        throw ()
+      {
+        return false;
+      }
+
+      virtual bool
+      get_variables_linearity (Index n, LinearityType* var_types) throw ()
+      {
+        assert (solver_.problem.function.n - n == 0);
+
+        //FIXME: detect from problem.
+        for (Index i = 0; i < n; ++i)
+          var_types[i] = cfsqp_tag (solver_.problem.function.linearity);
+        return true;
+      }
+
+      virtual bool
+      get_constraints_linearity (Index m, LinearityType* const_types) throw ()
+      {
+        assert (solver_.problem.constraints.size () - m == 0);
+
+        //FIXME: detect from problem.
+        for (Index i = 0; i < m; ++i)
+          const_types[i] = cfsqp_tag (solver_.problem.constraints[i]->linearity);
+        return true;
+      }
+
+      virtual bool
+      get_starting_point (Index n, bool init_x, Number* x,
+                          bool init_z, Number* z_L, Number* z_U,
+                          Index m, bool init_lambda,
+                          Number* lambda)
         throw ()
       {
         assert (solver_.problem.function.n - n == 0);
@@ -107,6 +154,12 @@ namespace optimization
       }
 
       virtual bool
+      get_warm_start_iterate (IteratesVector& warm_start_iterate) throw ()
+      {
+        return false;
+      }
+
+      virtual bool
       eval_f (Index n, const Number* x, bool new_x, Number& obj_value)
         throw ()
       {
@@ -119,7 +172,7 @@ namespace optimization
       }
 
       virtual bool
-      eval_grad_f(Index n, const Number* x, bool new_x, Number* grad_f)
+      eval_grad_f (Index n, const Number* x, bool new_x, Number* grad_f)
         throw ()
       {
         assert (solver_.problem.function.n - n == 0);
@@ -134,8 +187,8 @@ namespace optimization
       }
 
       virtual bool
-      eval_g(Index n, const Number* x, bool new_x,
-             Index m, Number* g)
+      eval_g (Index n, const Number* x, bool new_x,
+              Index m, Number* g)
         throw ()
       {
         assert (solver_.problem.function.n - n == 0);
@@ -197,7 +250,7 @@ namespace optimization
                             const IpoptSolver::vector_t& x,
                             Number obj_factor,
                             const Number* lambda)
-
+        throw ()
       {
         typedef Problem::constraints_t::const_iterator citer_t;
 
@@ -277,6 +330,35 @@ namespace optimization
         Solver::vector_t arr (n);
         array_to_vector (arr, x);
         solver_.result_ = arr;
+      }
+
+      virtual bool
+      intermediate_callback (AlgorithmMode mode,
+                             Index iter, Number obj_value,
+                             Number inf_pr, Number inf_du,
+                             Number mu, Number d_norm,
+                             Number regularization_size,
+                             Number alpha_du, Number alpha_pr,
+                             Index ls_trials,
+                             const IpoptData* ip_data,
+                             IpoptCalculatedQuantities* ip_cq)
+        throw ()
+      {
+        return true;
+      }
+
+      virtual Index
+      get_number_of_nonlinear_variables () throw ()
+      {
+        return -1;
+      }
+
+      virtual bool
+      get_list_of_nonlinear_variables (Index num_nonlin_vars,
+                                       Index* pos_nonlin_vars)
+        throw ()
+      {
+        return false;
       }
 
       IpoptSolver& solver_;

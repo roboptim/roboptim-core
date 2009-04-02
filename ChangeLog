@@ -1,3 +1,14 @@
+2009-04-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add linearity tag to functions.
+	* src/cfsqp.cc,
+	* src/cfsqp.hh: Expose CFSQP iprint (verbosity) level.
+	* src/function.cc,
+	* src/function.hh: Add linearity tag.
+	* src/ipopt.cc: Start handling linearity, put a dummy
+        implementation of all Ipopt virtual methods.
+	* tests/cfsqp.cc: Make test more verbose for now.
+
 2009-04-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Enhance CFSQP gradient handling.

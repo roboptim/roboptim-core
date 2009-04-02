@@ -117,8 +117,9 @@ namespace optimization
 
   }
 
-  CFSQPSolver::CFSQPSolver (const Problem& pb) throw ()
-    : Solver (pb)
+  CFSQPSolver::CFSQPSolver (const Problem& pb, int iprint) throw ()
+    : Solver (pb),
+      iprint_ (iprint)
   {
   }
 
@@ -157,7 +158,6 @@ namespace optimization
     int ncsrn = 0;
     int mesh_pts[1];
     int mode = 100;
-    int iprint = 0;
     int miter = 500;
     int inform = 0;
     double bignd = std::numeric_limits<Function::value_type>::infinity ();
@@ -174,7 +174,6 @@ namespace optimization
     fct_t constr = detail::constr;
     grad_t gradob = detail::gradob;
     grad_t gradcn = detail::gradcn;
-    void* cd = this;
 
     // Initialize bounds.
     initialize_bounds (bl, bu);
@@ -183,11 +182,10 @@ namespace optimization
     if (!problem.start.empty ())
       memcpy (x, &problem.start[0], nparam * sizeof (Function::value_type));
 
-
     cfsqp (nparam, nf, nfsr, nineqn, nineq, neqn, neq, ncsrl,  ncsrn,
-           mesh_pts, mode,  iprint, miter, &inform, bignd, eps, epseqn,
+           mesh_pts, mode,  iprint_, miter, &inform, bignd, eps, epseqn,
            udelta, bl, bu, x, f, g, lambda,
-           obj, constr, gradob, gradcn, cd);
+           obj, constr, gradob, gradcn, this);
 
     if (inform == 0)
       {

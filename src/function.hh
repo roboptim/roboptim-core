@@ -67,6 +67,14 @@ namespace optimization
     /// Value that symbolizes infinity.
     const value_type infinity;
 
+    /// Linearity tag.
+    enum Linearity
+      {
+        LINEAR,
+        QUADRATIC,
+        NON_LINEAR
+      };
+
     /// Constructor.
     /// \param n function arity
     /// \param infinity value that encodes infinity
@@ -88,6 +96,9 @@ namespace optimization
 
     /// Arguments bounds.
     bounds_t argBounds;
+
+    /// Function linearity.
+    Linearity linearity;
   };
 } // end of namespace optimization
 

@@ -29,7 +29,8 @@ namespace optimization
   Function::Function (unsigned n, value_type inf) throw ()
     : n (n),
       infinity (inf),
-      argBounds (n)
+      argBounds (n),
+      linearity (NON_LINEAR)
   {
     bound = std::make_pair (-inf, inf);
 

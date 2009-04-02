@@ -24,6 +24,7 @@
 
 #ifndef OPTIMIZATION_CFSQP_HH
 # define OPTIMIZATION_CFSQP_HH
+# include <string>
 # include <solver.hh>
 
 namespace optimization
@@ -33,15 +34,17 @@ namespace optimization
   {
   public:
     /// Constructor.
-    explicit CFSQPSolver (const Problem&) throw ();
+    explicit CFSQPSolver (const Problem&, int = 0) throw ();
     /// Destructor.
     virtual ~CFSQPSolver () throw ();
     /// Return the default solver error.
     virtual result_t getMinimum () throw ();
-
   private:
     /// Initialize bounds.
     void initialize_bounds (double* bl, double* bu) const throw ();
+
+    /// Logging level.
+    int iprint_;
   };
 
 } // end of namespace optimization
