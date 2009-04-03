@@ -1,5 +1,15 @@
 2009-04-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make Ipopt detection/usage more robust.
+	* build-aux/ipopt.m4: Fix macro to be able to directly
+        detect Ipopt if installed system-wide.
+	* src/ipopt.cc,
+	* src/ipopt.hh,
+	* tests/ipopt.cc: Fix Ipopt includes to make it easier
+        to use if installed system-wide.
+
+2009-04-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make configure detect solvers.
 	* README: Document how to build a shared library from CFSQP.
 	* TODO: Update, reorganize.

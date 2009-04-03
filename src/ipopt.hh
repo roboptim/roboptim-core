@@ -24,7 +24,7 @@
 
 #ifndef OPTIMIZATION_IPOPT_HH
 # define OPTIMIZATION_IPOPT_HH
-# include <IpSmartPtr.hpp>
+# include <coin/IpSmartPtr.hpp>
 # include <solver.hh>
 
 /// Ipopt classes.

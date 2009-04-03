@@ -20,7 +20,7 @@
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/variant/get.hpp>
 
-#include <IpIpoptApplication.hpp>
+#include <coin/IpIpoptApplication.hpp>
 
 #include <ipopt.hh>
 #include <problem.hh>

@@ -24,8 +24,8 @@
 
 #include <cassert>
 
-#include <IpIpoptApplication.hpp>
-#include <IpTNLP.hpp>
+#include <coin/IpIpoptApplication.hpp>
+#include <coin/IpTNLP.hpp>
 
 #include "ipopt.hh"
 #include "problem.hh"

@@ -47,8 +47,8 @@ AC_DEFUN([IPOPT_LIB],
 # ------------------------------------------------------------------
 # Try to detect the library headers.
 AC_DEFUN([IPOPT_HEADERS],
-[AC_CHECK_HEADER([IpIpoptApplication.hpp], $1, $2)
-AC_CHECK_HEADER([IpTNLP.hpp], $1, $2)
+[AC_CHECK_HEADER([coin/IpIpoptApplication.hpp], $1, $2)
+AC_CHECK_HEADER([coin/IpTNLP.hpp], $1, $2)
 ]) # LIB_IPOPT_HEADERS
 
 
