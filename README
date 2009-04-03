@@ -1,3 +1,30 @@
                                                                 -*- outline -*-
 
-* FIXME
+* Why configure does not detect CFSQP?
+
+CFSQP is always distributed as a C header and source file.  As a result, you
+will have to build yourself a library to use CFSQP with liboptimization.
+
+Copy cfsqp.c qld.c and cfsqpusr.h in a directory and type:
+$ g++ cfsqp.c qld.c -shared -fPIC -o libcfsqp.so
+
+Then, make sure that gcc search for headers/libraries in this directory. For
+instance, you can call configure with additional parameters:
+
+$ cd liboptimization
+$ mkdir _build && cd _build
+$ ../configure CPPFLAGS=-I/path/to/cfsqp LDFLAGS=-L/path/to/cfsqp
+
+
+* Where is the library documentation?
+
+This README only covers configure/building issues, for more information
+regarding this library usage, please refer to the Doxygen documentation.
+
+If you have configured the package as explained in the first section, go
+into you ``_build'' directory and type:
+
+$ make doc
+
+To view the HTML documentation: go in the ``doc/html'' directory and open the
+``index.html'' file with your favorite internet browser.

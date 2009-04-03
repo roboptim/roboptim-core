@@ -18,15 +18,22 @@ check_PROGRAMS = simple-test
 simple_test_SOURCES = simple-test.cc $(COMMON_SOURCES)
 simple_test_LDADD = $(top_builddir)/src/liboptimization.la
 
+
 # Ipopt
+if IPOPT
 check_PROGRAMS += ipopt
 ipopt_SOURCES = ipopt.cc $(COMMON_SOURCES)
 ipopt_LDADD = $(top_builddir)/src/liboptimization.la
+endif
+
 
 # CFSQP
+if CFSQP
 check_PROGRAMS += cfsqp
 cfsqp_SOURCES = cfsqp.cc $(COMMON_SOURCES)
 cfsqp_LDADD = $(top_builddir)/src/liboptimization.la
+endif
+
 
 
 .PHONY: generate-reference

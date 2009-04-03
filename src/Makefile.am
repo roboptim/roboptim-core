@@ -7,8 +7,6 @@ include_HEADERS =					\
 				fwd.hh			\
 				solver.hh		\
 				dummy.hh		\
-				ipopt.hh		\
-				cfsqp.hh		\
 				function.hh		\
 				problem.hh		\
 				util.hh
@@ -19,11 +17,24 @@ liboptimization_la_SOURCES = 				\
 				doc.hh			\
 				solver.cc		\
 				dummy.cc		\
-				ipopt.cc		\
-				cfsqp.cc		\
 				function.cc		\
 				problem.cc		\
 				util.cc
 
-liboptimization_la_LIBADD = -lipopt -lgfortran -lcfsqp
-liboptimization_la_LDFLAGS = -pthread
+liboptimization_la_LIBADD =
+liboptimization_la_LDFLAGS =
+liboptimization_la_CXXFLAGS =
+
+if IPOPT
+ include_HEADERS += ipopt.hh
+ liboptimization_la_SOURCES += ipopt.cc
+ liboptimization_la_CXXFLAGS += $(PTHREAD_CFLAGS)
+ liboptimization_la_LDFLAGS += $(IPOPT_LDFLAGS)
+ liboptimization_la_LIBADD += $(IPOPT_LIBADD) $(PTHREAD_LIBS)
+endif
+
+if CFSQP
+ include_HEADERS += cfsqp.hh
+ liboptimization_la_SOURCES += cfsqp.cc
+ liboptimization_la_LIBADD += $(CFSQP_LIBADD)
+endif

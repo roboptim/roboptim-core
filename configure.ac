@@ -55,6 +55,13 @@ BOOST_OPTIONAL
 BOOST_UTILITY
 BOOST_VARIANT
 
+# Search for solvers (optional deps).
+#  CFSQP
+CFSQP_ARG_WITH
+#  Ipopt
+IPOPT_ARG_WITH
+
+
 ## ------------ ##
 ## Test-suite.  ##
 ## ------------ ##

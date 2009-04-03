@@ -25,7 +25,7 @@ AT_COPYRIGHT(
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
 
-# Class mechanism test.
+# Include test cases.
 m4_include([simple-test.at])
 m4_include([ipopt.at])
 m4_include([cfsqp.at])

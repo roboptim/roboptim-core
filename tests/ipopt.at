@@ -19,8 +19,12 @@ AT_SETUP([Check Ipopt bridge.])
 
 AT_TESTED([ipopt])
 
-cp $abs_srcdir/ipopt.stdout expout
-AT_CHECK([ipopt], [0], [expout], [ignore])
+m4_ifset([IPOPT], [
+   cp $abs_srcdir/ipopt.stdout expout
+   AT_CHECK([ipopt], [0], [expout], [ignore])
+],[
+   AT_CHECK([return 77])
+])
 
 AT_CLEANUP
 

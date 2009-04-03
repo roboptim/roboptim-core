@@ -18,10 +18,14 @@
 AT_SETUP([Check CFSQPSolver.])
 
 AT_TESTED([cfsqp])
-AT_XFAIL_IF([true]) #FIXME: CFSQP is not yet ready.
 
-cp $abs_srcdir/cfsqp.stdout expout
-AT_CHECK([cfsqp], [0], [expout], [ignore])
+m4_ifset([CFSQP], [
+   AT_XFAIL_IF([true]) #FIXME: CFSQP is not yet ready.
+   cp $abs_srcdir/cfsqp.stdout expout
+   AT_CHECK([cfsqp], [0], [expout], [ignore])
+],[
+   AT_CHECK([return 77])
+])
 
 AT_CLEANUP
 

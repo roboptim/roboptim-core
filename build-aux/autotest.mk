@@ -74,7 +74,8 @@ clean-local:
 	test ! -f $(TESTSUITE) || $(SHELL) $(TESTSUITE) --clean
 	rm -f -r autom4te.cache
 
-$(TESTSUITE): $(PACKAGE_M4_IN) $(srcdir)/testsuite.at $(TESTSUITE_AT)
+$(TESTSUITE): $(PACKAGE_M4_IN) $(srcdir)/testsuite.at $(TESTSUITE_AT) \
+	      $(top_srcdir)/configure
 	$(AUTOTEST) -I '$(srcdir)' -I'$(top_builddir)/tests' $@.at -o $@.tmp
 	mv $@.tmp $@
 

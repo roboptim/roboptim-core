@@ -1,13 +1,13 @@
                                                                 -*- outline -*-
 
-* Detect solvers headers and compile/test only available solvers.
-** Detect Ipopt properly.
-** Detect CFSQP properly, choose a linking policy (license problem?).
+* Building chain
+** Replace main symbols by real ones in build-aux/ipopt.m4, build-aux/cfsqp.m4
+** Make sure that solvers are detected correctly.
+** One convenience library per solver?
+** Prepare for distribution (header names, etc.).
 
-* Choose a consistant, scalable linking policy (one lib per solver?).
+* Coding style
+** Unify enum naming.
 
-* Clean, fix filenames, prepare for distribution (header names, etc.).
-
-* Unify enum naming.
-
-* Factorize assertions in bridges.
+* Source
+** Factorize assertions in bridges.
