@@ -26,8 +26,8 @@
 
 namespace optimization
 {
-  DummySolver::DummySolver (const Problem& pb) throw ()
-    : Solver (pb)
+  DummySolver::DummySolver (const Function& f) throw ()
+    : C0Solver (f)
   {
     result_ = SolverError ("The dummy solver always fail.");
   }
@@ -40,6 +40,31 @@ namespace optimization
   DummySolver::getMinimum () throw ()
   {
     return result_;
+  }
+
+  void
+  DummySolver::addLinearConstraint (const LinearFunction&) throw ()
+  {
+  }
+
+  void
+  DummySolver::addQuadraticConstraint (const QuadraticFunction&) throw ()
+  {
+  }
+
+  void
+  DummySolver::addC2Constraint (const TwiceDerivableFunction&) throw ()
+  {
+  }
+
+  void
+  DummySolver::addC1Constraint (const DerivableFunction&) throw ()
+  {
+  }
+
+  void
+  DummySolver::addC0Constraint (const Function&) throw ()
+  {
   }
 
 } // end of namespace optimization

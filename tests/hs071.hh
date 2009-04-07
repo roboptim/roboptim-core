@@ -23,9 +23,9 @@
 
 using namespace optimization;
 
-struct F : public Function
+struct F : public TwiceDerivableFunction
 {
-  F () : Function (4)
+  F () : TwiceDerivableFunction (4)
   {
     // Set bound for all variables.
     // 1. < x_i < 5. (x_i in [1.;5.])
@@ -78,10 +78,10 @@ struct F : public Function
   }
 };
 
-struct G0 : public Function
+struct G0 : public TwiceDerivableFunction
 {
   G0 ()
-    : Function (4)
+    : TwiceDerivableFunction (4)
   {
     bound.first = 25.;
   }
@@ -131,10 +131,10 @@ struct G0 : public Function
   }
 };
 
-struct G1 : public Function
+struct G1 : public TwiceDerivableFunction
 {
   G1 ()
-    : Function (4)
+    : TwiceDerivableFunction (4)
   {
     bound.first = 40.;
     bound.second = 40.;

@@ -23,7 +23,6 @@
 #include <coin/IpIpoptApplication.hpp>
 
 #include <ipopt.hh>
-#include <problem.hh>
 
 #include "common.hh"
 #include "hs071.hh"
@@ -31,21 +30,18 @@
 int run_test ()
 {
   F f;
-  Problem pb = Problem (f);
-
-  // Set the starting point.
-  Function::vector_t start (pb.function.n);
-  start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
-  pb.start = start;
-
-  pb.constraints.push_back (Problem::functionPtr_t (new G0 ()));
-  pb.constraints.push_back (Problem::functionPtr_t (new G1 ()));
+  G0 g0;
+  G1 g1;
 
   // Initialize solver
-  IpoptSolver solver (pb);
+  IpoptSolver solver (f);
+  solver.constraints.push_back (&g0);
+  solver.constraints.push_back (&g1);
 
-  // Log everything.
-  solver.getApplication ()->OpenOutputFile ("ipopt.log", Ipopt::J_ALL);
+  // Set the starting point.
+  Function::vector_t start (f.n);
+  start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
+  solver.start = start;
 
   // Compute the minimum and retrieve the result.
   IpoptSolver::result_t res = solver.getMinimum ();
@@ -64,7 +60,7 @@ int run_test ()
   // Display the result.
   std::cout << "A solution has been found: " << std::endl;
   std::cout << result << std::endl;
-  std::cout << "f(*x) = " << pb.function (result) << std::endl;
+  std::cout << "f(*x) = " << solver.getFunction () (result) << std::endl;
   return 0;
 }
 

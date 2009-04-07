@@ -33,8 +33,7 @@ namespace optimization
       bound (std::make_pair (-inf, inf)),
       argBounds (n),
       scale (1.),
-      argScales (n),
-      linearity (NON_LINEAR)
+      argScales (n)
   {
     // A positive infinite is required.
     assert (inf > 0.);
@@ -49,18 +48,6 @@ namespace optimization
 
   Function::~Function () throw ()
   {
-  }
-
-  Function::gradient_t
-  Function::gradient (const vector_t&) const throw ()
-  {
-    return gradient_t ();
-  }
-
-  Function::hessian_t
-  Function::hessian (const vector_t&) const throw ()
-  {
-    return hessian_t ();
   }
 
   Function::bound_t
@@ -89,6 +76,31 @@ namespace optimization
   throw ()
   {
     return makeBound (l, infinity);
+  }
+
+
+  DerivableFunction::DerivableFunction (size_type n, value_type infinity)
+    throw ()
+    : Function (n, infinity)
+  {
+  }
+
+  TwiceDerivableFunction::TwiceDerivableFunction
+  (size_type n, value_type infinity)
+    throw ()
+    : DerivableFunction (n, infinity)
+  {
+  }
+
+  QuadraticFunction::QuadraticFunction (size_type n, value_type infinity)
+    throw ()
+    : TwiceDerivableFunction (n, infinity)
+  {
+  }
+
+  LinearFunction::LinearFunction (size_type n, value_type infinity) throw ()
+    : QuadraticFunction (n, infinity)
+  {
   }
 
 } // end of namespace optimization

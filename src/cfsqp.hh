@@ -30,15 +30,23 @@
 namespace optimization
 {
   /// CFSQP solver.
-  class CFSQPSolver : public Solver
+  class CFSQPSolver : public C1Solver
   {
   public:
     /// Constructor.
-    explicit CFSQPSolver (const Problem&, int = 0) throw ();
+    explicit CFSQPSolver (const TwiceDerivableFunction&, int = 0) throw ();
     /// Destructor.
     virtual ~CFSQPSolver () throw ();
     /// Return the default solver error.
     virtual result_t getMinimum () throw ();
+
+    virtual void addLinearConstraint (const LinearFunction&) throw ();
+    virtual void addQuadraticConstraint (const QuadraticFunction&) throw ();
+    virtual void addC1Constraint (const DerivableFunction&) throw ();
+    virtual void addC2Constraint (const TwiceDerivableFunction&) throw ();
+
+    //FIXME: make private.
+    std::vector<const DerivableFunction*> constraints;
   private:
     /// Initialize bounds.
     void initialize_bounds (double* bl, double* bu) const throw ();

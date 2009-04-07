@@ -28,7 +28,6 @@
 
 # include <boost/numeric/ublas/matrix.hpp>
 # include <boost/numeric/ublas/vector.hpp>
-# include <boost/optional/optional.hpp>
 
 # include <fwd.hh>
 
@@ -50,11 +49,6 @@ namespace optimization
     /// Matrix type.
     typedef ublas::matrix<value_type> matrix_t;
 
-    /// Gradient type.
-    typedef boost::optional<vector_t> gradient_t;
-    /// Hessian type.
-    typedef boost::optional<matrix_t> hessian_t;
-
     /// Bound type (lower, upper).
     /// Use -infinity / +infinity to disable a bound.
     typedef std::pair<value_type, value_type> bound_t;
@@ -69,14 +63,6 @@ namespace optimization
     /// Value that symbolizes infinity.
     const value_type infinity;
 
-    /// Linearity tag.
-    enum Linearity
-      {
-        LINEAR,
-        QUADRATIC,
-        NON_LINEAR
-      };
-
     /// Constructor.
     /// \param n function arity
     /// \param infinity value that encodes infinity
@@ -88,10 +74,6 @@ namespace optimization
 
     /// Function.
     virtual value_type operator () (const vector_t&) const throw () = 0;
-    /// Gradient.
-    virtual gradient_t gradient (const vector_t&) const throw ();
-    /// Hessian.
-    virtual hessian_t hessian (const vector_t&) const throw ();
 
     /// Construct a bound from a lower and upper bound.
     bound_t makeBound (value_type, value_type) const throw ();
@@ -112,10 +94,45 @@ namespace optimization
     double scale;
     /// Arguments' scales.
     scales_t argScales;
-
-    /// Function linearity.
-    Linearity linearity;
   };
+
+  struct DerivableFunction : public Function
+  {
+    /// Gradient type.
+    typedef vector_t gradient_t;
+
+    DerivableFunction (size_type n, value_type infinity =
+                       std::numeric_limits<value_type>::infinity ()) throw ();
+
+    /// Gradient.
+    virtual gradient_t gradient (const vector_t&) const throw () = 0;
+  };
+
+  struct TwiceDerivableFunction : public DerivableFunction
+  {
+    /// Hessian type.
+    typedef matrix_t hessian_t;
+
+    TwiceDerivableFunction (size_type n, value_type infinity =
+                            std::numeric_limits<value_type>::infinity ())
+      throw ();
+
+    /// Hessian.
+    virtual hessian_t hessian (const vector_t&) const throw () = 0;
+  };
+
+  struct QuadraticFunction : public TwiceDerivableFunction
+  {
+    QuadraticFunction (size_type n, value_type infinity =
+                       std::numeric_limits<value_type>::infinity ()) throw ();
+  };
+
+  struct LinearFunction : public QuadraticFunction
+  {
+    LinearFunction (size_type n, value_type infinity =
+                    std::numeric_limits<value_type>::infinity ()) throw ();
+  };
+
 } // end of namespace optimization
 
 #endif //! OPTIMIZATION_FUNCTION_HH

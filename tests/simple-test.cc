@@ -20,7 +20,6 @@
 
 #include "common.hh"
 #include <dummy.hh>
-#include <problem.hh>
 
 using namespace optimization;
 
@@ -41,9 +40,8 @@ struct F : public Function
 
 int run_test ()
 {
-  Problem pb = Problem (F ());
-
-  solver_t solver (pb);
+  F f;
+  solver_t solver (f);
   solver_t::result_t res = solver.getMinimum ();
   boost::get<SolverError> (res);
 

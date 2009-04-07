@@ -29,15 +29,21 @@
 namespace optimization
 {
   /// Dummy solver which always fails.
-  class DummySolver : public Solver
+  class DummySolver : public C0Solver
   {
   public:
     /// Constructor.
-    explicit DummySolver (const Problem&) throw ();
+    explicit DummySolver (const Function&) throw ();
     /// Destructor.
     virtual ~DummySolver () throw ();
     /// Return the default solver error.
     virtual result_t getMinimum () throw ();
+
+    virtual void addLinearConstraint (const LinearFunction&) throw ();
+    virtual void addQuadraticConstraint (const QuadraticFunction&) throw ();
+    virtual void addC2Constraint (const TwiceDerivableFunction&) throw ();
+    virtual void addC1Constraint (const DerivableFunction&) throw ();
+    virtual void addC0Constraint (const Function&) throw ();
   };
 
 } // end of namespace optimization

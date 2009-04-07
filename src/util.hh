@@ -24,7 +24,6 @@
 #ifndef OPTIMIZATION_UTIL_HH
 # define OPTIMIZATION_UTIL_HH
 # include <function.hh>
-# include <problem.hh>
 
 namespace optimization
 {
@@ -37,9 +36,19 @@ namespace optimization
     void array_to_vector (Function::vector_t& dst, const Function::value_type* src);
 
     /// Merge gradients from several functions (each gradient is a line).
-    void jacobian_from_gradients (Function::matrix_t&,
-                                  const Problem::constraints_t&,
-                                  const Function::vector_t&);
+    template <typename T>
+    void
+    jacobian_from_gradients (DerivableFunction::matrix_t& jac,
+                             const std::vector<const T*>& c,
+                             const DerivableFunction::vector_t& x)
+    {
+      for (unsigned i = 0; i < jac.size1 (); ++i)
+        {
+          DerivableFunction::gradient_t grad = c[i]->gradient (x);
+          for (unsigned j = 0; j < jac.size2 (); ++j)
+            jac (i, j) = grad[j];
+        }
+    }
 
   }; // end of namespace detail.
 }; // end of namespace optimization.

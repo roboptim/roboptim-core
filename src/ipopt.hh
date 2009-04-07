@@ -43,22 +43,31 @@ namespace optimization
   };
 
   /// Ipopt based solver.
-  class IpoptSolver : public Solver
+  class IpoptSolver : public C2Solver
   {
   public:
     friend class detail::MyTNLP;
 
+    typedef std::vector<const TwiceDerivableFunction*> constraints_t;
+
     /// Constructor.
-    explicit IpoptSolver (const Problem&) throw ();
+    explicit IpoptSolver (const TwiceDerivableFunction&) throw ();
     /// Destructor.
     virtual ~IpoptSolver () throw ();
 
     /// Returns the minimum and solve the problem using Ipopt if necessary.
     virtual result_t getMinimum () throw ();
 
+    virtual void addLinearConstraint (const optimization::LinearFunction&) throw ();
+    virtual void addQuadraticConstraint (const optimization::QuadraticFunction&) throw ();
+    virtual void addC2Constraint (const optimization::TwiceDerivableFunction&) throw ();
+
     /// Get Ipopt Application object for Ipopt specific tuning.
     virtual Ipopt::SmartPtr<Ipopt::IpoptApplication> getApplication ()
       throw ();
+
+    constraints_t constraints;
+
   private:
     /// Smart pointer to the Ipopt non linear problem description.
     Ipopt::SmartPtr<Ipopt::TNLP> nlp_;

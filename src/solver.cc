@@ -29,19 +29,90 @@
 
 namespace optimization
 {
-  Solver::Solver (const Problem& pb) throw ()
-    : problem (pb),
-      result_ (NoSolution ())
+  LinearSolver::LinearSolver (const Function& f) throw ()
+    : result_ (NoSolution ()),
+      function_ (f)
   {
   }
 
-  Solver::~Solver () throw ()
+  LinearSolver::~LinearSolver () throw ()
   {
   }
 
   void
-  Solver::reset () throw ()
+  LinearSolver::reset () throw ()
   {
     result_ = NoSolution ();
   }
+
+  const LinearSolver::function_t&
+  LinearSolver::getFunction () const throw ()
+  {
+    return static_cast<const function_t&> (function_);
+  }
+
+
+  QuadraticSolver::QuadraticSolver (const Function& f) throw ()
+    : LinearSolver (f)
+  {
+  }
+
+  QuadraticSolver::~QuadraticSolver () throw ()
+  {
+  }
+
+  const QuadraticSolver::function_t&
+  QuadraticSolver::getFunction () const throw ()
+  {
+    return static_cast<const function_t&> (LinearSolver::getFunction ());
+  }
+
+
+  C2Solver::C2Solver (const Function& f) throw ()
+    : QuadraticSolver (f)
+  {
+  }
+
+  C2Solver::~C2Solver () throw ()
+  {
+  }
+
+  const C2Solver::function_t&
+  C2Solver::getFunction () const throw ()
+  {
+    return static_cast<const function_t&> (LinearSolver::getFunction ());
+  }
+
+
+  C1Solver::C1Solver (const Function& f) throw ()
+    : C2Solver (f)
+  {
+  }
+
+  C1Solver::~C1Solver () throw ()
+  {
+  }
+
+  const C1Solver::function_t&
+  C1Solver::getFunction () const throw ()
+  {
+    return static_cast<const function_t&> (LinearSolver::getFunction ());
+  }
+
+
+  C0Solver::C0Solver (const Function& f) throw ()
+    : C1Solver (f)
+  {
+  }
+
+  C0Solver::~C0Solver () throw ()
+  {
+  }
+
+  const C0Solver::function_t&
+  C0Solver::getFunction () const throw ()
+  {
+    return static_cast<const function_t&> (LinearSolver::getFunction ());
+  }
+
 } // end of namespace optimization

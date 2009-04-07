@@ -49,18 +49,5 @@ namespace optimization
       for (std::size_t i = 0; i < dst.size (); ++i)
         assert (dst[i] == src[i]);
     }
-
-    void
-    jacobian_from_gradients (Function::matrix_t& jac,
-                             const Problem::constraints_t& c,
-                             const Function::vector_t& x)
-    {
-      for (unsigned i = 0; i < jac.size1 (); ++i)
-        {
-          Function::gradient_t grad = c[i]->gradient (x);
-          for (unsigned j = 0; j < jac.size2 (); ++j)
-            jac (i, j) = (*grad)[j];
-        }
-    }
   }; // end of namespace detail.
 }; // end of namespace optimization.

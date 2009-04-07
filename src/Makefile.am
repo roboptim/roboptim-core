@@ -8,7 +8,6 @@ include_HEADERS =					\
 				solver.hh		\
 				dummy.hh		\
 				function.hh		\
-				problem.hh		\
 				util.hh
 
 lib_LTLIBRARIES = liboptimization.la
@@ -18,7 +17,6 @@ liboptimization_la_SOURCES = 				\
 				solver.cc		\
 				dummy.cc		\
 				function.cc		\
-				problem.cc		\
 				util.cc
 
 liboptimization_la_LIBADD =

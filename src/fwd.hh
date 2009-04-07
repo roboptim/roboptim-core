@@ -27,9 +27,17 @@
 namespace optimization
 {
   class Function;
-  class Problem;
+  class DerivableFunction;
+  class TwiceDerivableFunction;
+  class QuadraticFunction;
+  class LinearFunction;
 
-  class Solver;
+  class LinearSolver;
+  class QuadraticSolver;
+  class C2Solver;
+  class C1Solver;
+  class C0Solver;
+
 
   class CFSQPSolver;
   class DummySolver;

@@ -26,7 +26,6 @@
 
 #include "cfsqp.hh"
 #include "function.hh"
-#include "problem.hh"
 #include "util.hh"
 
 namespace optimization
@@ -44,7 +43,7 @@ namespace optimization
 
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
-      *fj = solver->problem.function (x_);
+      *fj = solver->getFunction () (x_);
     }
 
     /// CFSQP constraints function.
@@ -58,14 +57,14 @@ namespace optimization
       array_to_vector (x_, x);
 
       int j_ = (j < 2) ? 0 : (j - 1)/2;
-      *gj = (*solver->problem.constraints [j_]) (x_);
+      *gj = (*solver->constraints [j_]) (x_);
 
       if (j % 2 == 0)
         // g(x) >= b, -g(x) + b <= 0
-        *gj = -*gj + solver->problem.constraints [j_]->bound.first;
+        *gj = -*gj + solver->constraints [j_]->bound.first;
       else
         // g(x) <= b, g(x) - b <= 0
-        *gj = *gj - solver->problem.constraints [j_]->bound.second;
+        *gj = *gj - solver->constraints [j_]->bound.second;
     }
 
     /// CFSQP objective function gradient.
@@ -79,15 +78,8 @@ namespace optimization
 
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
-      Function::gradient_t grad = solver->problem.function.gradient (x_);
-
-      if (!grad)
-        {
-          ::grobfd (nparam, j, x, gradf, dummy, cd);
-          return;
-        }
-
-      vector_to_array (gradf, *grad);
+      DerivableFunction::gradient_t grad = solver->getFunction ().gradient (x_);
+      vector_to_array (gradf, grad);
     }
 
     /// CFSQP constraints function gradient.
@@ -103,22 +95,15 @@ namespace optimization
 
       int j_ = (j < 2) ? 0 : (j - 1)/2;
 
-      Function::gradient_t grad =
-        solver->problem.constraints[j_]->gradient (x_);
-
-      if (!grad)
-        {
-          ::grcnfd (nparam, j, x, gradgj, dummy, cd);
-          return;
-        }
-
-      vector_to_array (gradgj, *grad);
+      DerivableFunction::gradient_t grad =
+        solver->constraints[j_]->gradient (x_);
+      vector_to_array (gradgj, grad);
     }
 
   }
 
-  CFSQPSolver::CFSQPSolver (const Problem& pb, int iprint) throw ()
-    : Solver (pb),
+  CFSQPSolver::CFSQPSolver (const TwiceDerivableFunction& f, int iprint) throw ()
+    : C1Solver (f),
       iprint_ (iprint)
   {
   }
@@ -133,8 +118,8 @@ namespace optimization
     typedef Function::bounds_t::const_iterator citer_t;
 
     Function::size_type i = 0;
-    for (citer_t it = problem.function.argBounds.begin ();
-         it != problem.function.argBounds.end (); ++it)
+    for (citer_t it = getFunction ().argBounds.begin ();
+         it != getFunction ().argBounds.end (); ++it)
       {
         bl[i] = (*it).first, bu[i] = (*it).second;
         ++i;
@@ -147,11 +132,11 @@ namespace optimization
     if (result_.which () != SOLVER_NO_SOLUTION)
       return result_;
 
-    int nparam = problem.function.n;
+    int nparam = getFunction ().n;
     int nf = 1; //FIXME: only one objective function.
     int nfsr = 0;
-    int nineqn = 2 * problem.constraints.size ();
-    int nineq = 2 * problem.constraints.size ();
+    int nineqn = 2 * constraints.size ();
+    int nineq = 2 * constraints.size ();
     int neqn = 0;
     int neq = 0;
     int ncsrl = 0;
@@ -168,8 +153,8 @@ namespace optimization
     double bu[nparam];
     double x[nparam];
     double f[1];
-    double g[2 * problem.constraints.size ()];
-    double lambda[nparam + 1 + 2 * problem.constraints.size ()];
+    double g[2 * constraints.size ()];
+    double lambda[nparam + 1 + 2 * constraints.size ()];
     fct_t obj = detail::obj;
     fct_t constr = detail::constr;
     grad_t gradob = detail::gradob;
@@ -179,8 +164,8 @@ namespace optimization
     initialize_bounds (bl, bu);
 
     // Copy starting point.
-    if (!problem.start.empty ())
-      memcpy (x, &problem.start[0], nparam * sizeof (Function::value_type));
+    if (!start.empty ())
+      memcpy (x, &start[0], nparam * sizeof (Function::value_type));
 
     cfsqp (nparam, nf, nfsr, nineqn, nineq, neqn, neq, ncsrl,  ncsrn,
            mesh_pts, mode,  iprint_, miter, &inform, bignd, eps, epseqn,
@@ -197,6 +182,30 @@ namespace optimization
       result_ = SolverError ("CFSQP has failed.");
 
     return result_;
+  }
+
+  void
+  CFSQPSolver::addLinearConstraint (const LinearFunction& f) throw ()
+  {
+    constraints.push_back (&f);
+  }
+
+  void
+  CFSQPSolver::addQuadraticConstraint (const QuadraticFunction& f) throw ()
+  {
+    constraints.push_back (&f);
+  }
+
+  void
+  CFSQPSolver::addC1Constraint (const DerivableFunction& f) throw ()
+  {
+    constraints.push_back (&f);
+  }
+
+  void
+  CFSQPSolver::addC2Constraint (const TwiceDerivableFunction& f) throw ()
+  {
+    constraints.push_back (&f);
   }
 
 } // end of namespace optimization

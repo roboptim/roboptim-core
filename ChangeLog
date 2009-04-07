@@ -1,3 +1,27 @@
+2009-04-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Implement new interface.
+	* src/Makefile.am: Remove problem source and header.
+	* src/cfsqp.cc,
+	* src/cfsqp.hh,
+	* src/dummy.cc,
+	* src/dummy.hh: Move bridges to new interfaces.
+	* src/function.cc,
+	* src/function.hh: Define a function hierarchy.
+	* src/fwd.hh: Fix pre declarations.
+	* src/ipopt.cc,
+	* src/ipopt.hh: Move bridge to new interface.
+	* src/problem.cc: Remove.
+	* src/problem.hh: Remove.
+	* src/solver.cc,
+	* src/solver.hh: Define a solver hierarchy.
+	* src/util.cc,
+	* src/util.hh,
+	* tests/cfsqp.cc,
+	* tests/hs071.hh,
+	* tests/ipopt.cc,
+	* tests/simple-test.cc: Fix to use new interface.
+
 2009-04-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Make Ipopt detection/usage more robust.
