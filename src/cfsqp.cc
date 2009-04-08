@@ -17,16 +17,14 @@
 
 
 /**
- * \file src/cfsqp.cc
- *
  * \brief Implementation of the CFSQP module.
  */
 #include <limits>
 #include <cfsqpusr.h>
 
-#include "cfsqp.hh"
-#include "function.hh"
-#include "util.hh"
+#include "liboptimization/cfsqp.hh"
+#include "liboptimization/function.hh"
+#include "liboptimization/util.hh"
 
 namespace optimization
 {

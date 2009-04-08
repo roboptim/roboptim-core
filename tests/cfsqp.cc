@@ -20,7 +20,7 @@
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/variant/get.hpp>
 
-#include <cfsqp.hh>
+#include <liboptimization/cfsqp.hh>
 
 #include "common.hh"
 #include "hs071.hh"

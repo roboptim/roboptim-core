@@ -17,15 +17,13 @@
 
 
 /**
- * \file src/ipopt.hh
- *
  * \brief Declaration of the IpoptSolver class.
  */
 
 #ifndef OPTIMIZATION_IPOPT_HH
 # define OPTIMIZATION_IPOPT_HH
 # include <coin/IpSmartPtr.hpp>
-# include <solver.hh>
+# include <liboptimization/solver.hh>
 
 /// Ipopt classes.
 namespace Ipopt

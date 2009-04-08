@@ -19,7 +19,7 @@
 #ifndef OPTIMIZATION_TESTS_HS071_HH
 # define OPTIMIZATION_TESTS_HS071_HH
 # include <utility>
-# include <function.hh>
+# include <liboptimization/function.hh>
 
 using namespace optimization;
 

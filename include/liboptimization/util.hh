@@ -17,33 +17,30 @@
 
 
 /**
- * \file src/util.hxx
- *
- * \brief Useful procedures (templated) implementation.
+ * \brief Useful procedures declaration.
  */
-#ifndef OPTIMIZATION_UTIL_HXX
-# define OPTIMIZATION_UTIL_HXX
-# include <function.hh>
+#ifndef OPTIMIZATION_UTIL_HH
+# define OPTIMIZATION_UTIL_HH
+# include <liboptimization/function.hh>
 
 namespace optimization
 {
   namespace detail
   {
+    /// Copy the content of a uBLAS vector into a C array.
+    void vector_to_array (Function::value_type* dst, const Function::vector_t& src);
+
+    /// Copy the content of a C array into a uBLAS vector.
+    void array_to_vector (Function::vector_t& dst, const Function::value_type* src);
+
+    /// Merge gradients from several functions (each gradient is a line).
     template <typename T>
     void
     jacobian_from_gradients (DerivableFunction::matrix_t& jac,
                              const std::vector<const T*>& c,
-                             const DerivableFunction::vector_t& x)
-    {
-      for (unsigned i = 0; i < jac.size1 (); ++i)
-        {
-          DerivableFunction::gradient_t grad = c[i]->gradient (x);
-          for (unsigned j = 0; j < jac.size2 (); ++j)
-            jac (i, j) = grad[j];
-        }
-    }
-
+                             const DerivableFunction::vector_t& x);
   }; // end of namespace detail.
 }; // end of namespace optimization.
 
-#endif //! OPTIMIZATION_UTIL_HXX
+# include <liboptimization/util.hxx>
+#endif //! OPTIMIZATION_UTIL_HH

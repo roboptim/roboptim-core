@@ -16,8 +16,6 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file src/solver.hh
- *
  * \brief Declaration of the Solver class.
  */
 
@@ -27,8 +25,8 @@
 # include <boost/utility.hpp>
 # include <boost/variant/variant.hpp>
 
-# include <fwd.hh>
-# include <problem.hh>
+# include <liboptimization/fwd.hh>
+# include <liboptimization/problem.hh>
 
 namespace optimization
 {
@@ -108,5 +106,5 @@ namespace optimization
 
 } // end of namespace optimization
 
-# include <solver.hxx>
+# include <liboptimization/solver.hxx>
 #endif //! OPTIMIZATION_SOLVER_HH

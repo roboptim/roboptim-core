@@ -17,12 +17,10 @@
 
 
 /**
- * \file src/dummy.cc
- *
  * \brief Implementation of the dummy module (always fail).
  */
 
-#include "dummy.hh"
+#include "liboptimization/dummy.hh"
 
 namespace optimization
 {

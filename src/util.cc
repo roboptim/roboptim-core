@@ -17,14 +17,12 @@
 
 
 /**
- * \file src/util.cc
- *
  * \brief Useful procedures.
  */
 
 #include <boost/numeric/ublas/matrix.hpp>
 
-#include "util.hh"
+#include "liboptimization/util.hh"
 
 namespace optimization
 {

@@ -7,20 +7,8 @@ doc: html
 html-local: Doxyfile
 	$(DOXYGEN)
 
-edit = sed -e "s|@ID@|$$Id|" \
-	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g' \
-	   -e 's,@PACKAGE_TARNAME\@,$(PACKAGE_TARNAME),g' \
-	   -e 's,@PACKAGE_VERSION\@,$(PACKAGE_VERSION),g' \
-	   -e 's,@top_builddir\@,$(top_builddir),g' \
-	   -e 's,@top_srcdir\@,$(top_srcdir),g'
-
-EXTRA_DIST = Doxyfile.in
-CLEANFILES = Doxyfile
-
-# Use sed to generate Doxyfile.
-Doxyfile: $(top_srcdir)/ChangeLog $(srcdir)/Doxyfile.in
-	Id=`grep '^\$$Id' $(top_srcdir)/ChangeLog`; \
-	$(edit) $(srcdir)/Doxyfile.in >Doxyfile
+EXTRA_DIST = Doxyfile.in header.html footer.html package.css
+CLEANFILES = $(PACKAGE_TARNAME).doxytag
 
 clean-local:
 	rm -rf html latex
@@ -29,9 +17,9 @@ install-data-local: install-doxygen-html
 uninstall-local: uninstall-doxygen-html
 
 install-doxygen-html: html-local
-	$(MKDIR_P) "$(DESTDIR)$(htmldir)"
-	cp -rf html/* "$(DESTDIR)$(htmldir)"
-	cd "$(DESTDIR)$(htmldir)" && ./installdox -q
+	$(MKDIR_P) "$(DESTDIR)$(htmldir)/html"
+	cp -rf html/* "$(DESTDIR)$(htmldir)/html"
+	$(INSTALL_DATA) $(PACKAGE_TARNAME).doxytag "$(DESTDIR)$(htmldir)/html"
 
 uninstall-doxygen-html:
 	rm -rf "$(DESTDIR)$(htmldir)"

@@ -1,5 +1,43 @@
 2009-04-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix package distribution.
+	* Makefile.am: Add include to subdirs.
+	* build-aux/init.mk: Search in distributed headers.
+	* build-aux/pkg-config.pc.in: Import from packageCreate.
+	* configure.ac: Generate Makefile in include.
+	* doc/Doxyfile.in,
+	* doc/Makefile.am: Import from packageCreate.
+	* doc/footer.html: New.
+	* doc/header.html: New.
+	* doc/package.css: New.
+	* include/Makefile.am: New.
+	* include/liboptimization/cfsqp.hh: Rename from src/cfsqp.hh.
+	* include/liboptimization/dummy.hh: Rename from src/dummy.hh.
+	* include/liboptimization/function.hh: Rename from src/function.hh.
+	* include/liboptimization/fwd.hh: Rename from src/fwd.hh.
+	* include/liboptimization/ipopt.hh: Rename from src/ipopt.hh.
+	* include/liboptimization/problem.hh: Rename from src/problem.hh.
+	* include/liboptimization/problem.hxx: Rename from src/problem.hxx.
+	* include/liboptimization/solver.hh: Rename from src/solver.hh.
+	* include/liboptimization/solver.hxx: Rename from src/solver.hxx.
+	* include/liboptimization/util.hh: Copy from src/util.hh.
+	* include/liboptimization/util.hxx: Rename from src/util.hxx.
+	* src/Makefile.am: Do not list distributed headers here anymore.
+	* src/cfsqp.cc,
+	* src/doc.hh,
+	* src/dummy.cc,
+	* src/function.cc,
+	* src/ipopt.cc,
+	* src/solver.cc,
+	* src/util.cc,
+	* src/util.hh,
+	* tests/cfsqp.cc,
+	* tests/hs071.hh,
+	* tests/ipopt.cc,
+	* tests/simple-test.cc: Fix include paths.
+
+2009-04-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Use new templated hierarchy.
 	* src/cfsqp.cc,
 	* src/cfsqp.hh,

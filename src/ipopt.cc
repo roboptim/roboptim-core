@@ -17,8 +17,6 @@
 
 
 /**
- * \file src/ipopt.cc
- *
  * \brief Implementation of the Ipopt class.
  */
 
@@ -27,8 +25,8 @@
 #include <coin/IpIpoptApplication.hpp>
 #include <coin/IpTNLP.hpp>
 
-#include "ipopt.hh"
-#include "util.hh"
+#include "liboptimization/ipopt.hh"
+#include "liboptimization/util.hh"
 
 namespace optimization
 {

@@ -44,5 +44,5 @@ namespace optimization
   }; // end of namespace detail.
 }; // end of namespace optimization.
 
-# include "util.hxx"
+# include <liboptimization/util.hxx>
 #endif //! OPTIMIZATION_UTIL_HH

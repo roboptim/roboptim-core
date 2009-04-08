@@ -16,8 +16,6 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file src/problem.hxx
- *
  * \brief Implementation of the Problem class.
  */
 
@@ -76,5 +74,5 @@ namespace optimization
 
 } // end of namespace optimization
 
-# include <problem.hxx>
+# include <liboptimization/problem.hxx>
 #endif //! OPTIMIZATION_PROBLEM_HH

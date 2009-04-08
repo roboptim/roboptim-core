@@ -17,15 +17,13 @@
 
 
 /**
- * \file src/cfsqp.hh
- *
  * \brief Implementation of the CFSQP module.
  */
 
 #ifndef OPTIMIZATION_CFSQP_HH
 # define OPTIMIZATION_CFSQP_HH
 # include <string>
-# include <solver.hh>
+# include <liboptimization/solver.hh>
 
 namespace optimization
 {

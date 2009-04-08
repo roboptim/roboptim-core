@@ -17,13 +17,11 @@
 
 
 /**
- * \file src/function.cc
- *
  * \brief Implementation of the Function class.
  */
 
 #include <algorithm>
-#include "function.hh"
+#include "liboptimization/function.hh"
 
 namespace optimization
 {

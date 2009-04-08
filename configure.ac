@@ -80,6 +80,7 @@ AC_CONFIG_HEADERS([config.h])
 # Create Makefiles.
 AC_CONFIG_FILES([
   Makefile
+   include/Makefile
    packages/Makefile
     packages/debian/Makefile
     packages/ebuild/Makefile
@@ -90,6 +91,8 @@ AC_CONFIG_FILES([
     tests/atlocal
     tests/package.m4
 ])
+
+AC_CONFIG_FILES([doc/Doxyfile])
 
 # Write files.
 AC_OUTPUT

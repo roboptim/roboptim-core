@@ -17,13 +17,11 @@
 
 
 /**
- * \file src/solver.cc
- *
  * \brief Implementation of the Solver class.
  */
 
 #include <cassert>
-#include "solver.hh"
+#include "liboptimization/solver.hh"
 
 namespace optimization
 {

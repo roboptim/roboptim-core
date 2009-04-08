@@ -16,8 +16,6 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file src/solver.hxx
- *
  * \brief Implementation of the Solver class.
  */
 

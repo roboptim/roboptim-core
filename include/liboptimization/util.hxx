@@ -17,33 +17,31 @@
 
 
 /**
- * \file src/dummy.hh
- *
- * \brief Implementation of the dummy module (always fail).
+ * \brief Useful procedures (templated) implementation.
  */
-
-#ifndef OPTIMIZATION_DUMMY_HH
-# define OPTIMIZATION_DUMMY_HH
-# include <solver.hh>
+#ifndef OPTIMIZATION_UTIL_HXX
+# define OPTIMIZATION_UTIL_HXX
+# include <liboptimization/function.hh>
 
 namespace optimization
 {
-  /// Dummy solver which always fails.
-  class DummySolver : public Solver<Function, Function>
+  namespace detail
   {
-  public:
-    /// Define parent's type.
-    typedef Solver<Function, Function> parent_t;
+    template <typename T>
+    void
+    jacobian_from_gradients (DerivableFunction::matrix_t& jac,
+                             const std::vector<const T*>& c,
+                             const DerivableFunction::vector_t& x)
+    {
+      for (unsigned i = 0; i < jac.size1 (); ++i)
+        {
+          DerivableFunction::gradient_t grad = c[i]->gradient (x);
+          for (unsigned j = 0; j < jac.size2 (); ++j)
+            jac (i, j) = grad[j];
+        }
+    }
 
-    /// Constructor.
-    explicit DummySolver (const problem_t&) throw ();
-    /// Destructor.
-    virtual ~DummySolver () throw ();
+  }; // end of namespace detail.
+}; // end of namespace optimization.
 
-    /// Implement the solve algorithm.
-    virtual void solve () throw ();
-  };
-
-} // end of namespace optimization
-
-#endif //! OPTIMIZATION_DUMMY_HH
+#endif //! OPTIMIZATION_UTIL_HXX

@@ -16,8 +16,6 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file src/function.hh
- *
  * \brief Declaration of the Function class.
  */
 
@@ -29,7 +27,7 @@
 # include <boost/numeric/ublas/matrix.hpp>
 # include <boost/numeric/ublas/vector.hpp>
 
-# include <fwd.hh>
+# include <liboptimization/fwd.hh>
 
 namespace optimization
 {

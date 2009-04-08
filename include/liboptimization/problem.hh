@@ -16,16 +16,14 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file src/problem.hh
- *
  * \brief Declaration of the Problem class.
  */
 
 #ifndef OPTIMIZATION_PROBLEM_HH
 # define OPTIMIZATION_PROBLEM_HH
 # include <boost/optional.hpp>
-# include <fwd.hh>
-# include <function.hh>
+# include <liboptimization/fwd.hh>
+# include <liboptimization/function.hh>
 
 namespace optimization
 {
@@ -57,5 +55,5 @@ namespace optimization
   };
 } // end of namespace optimization
 
-# include <problem.hxx>
+# include <liboptimization/problem.hxx>
 #endif //! OPTIMIZATION_PROBLEM_HH

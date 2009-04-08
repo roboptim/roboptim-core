@@ -22,7 +22,7 @@
 
 #include <coin/IpIpoptApplication.hpp>
 
-#include <ipopt.hh>
+#include <liboptimization/ipopt.hh>
 
 #include "common.hh"
 #include "hs071.hh"

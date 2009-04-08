@@ -15,39 +15,33 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
-#include <boost/variant/get.hpp>
 
-#include "common.hh"
-#include <liboptimization/dummy.hh>
+/**
+ * \brief Implementation of the dummy module (always fail).
+ */
 
-using namespace optimization;
+#ifndef OPTIMIZATION_DUMMY_HH
+# define OPTIMIZATION_DUMMY_HH
+# include <liboptimization/solver.hh>
 
-typedef DummySolver solver_t;
-
-struct F : public Function
+namespace optimization
 {
-  F () : Function (4)
-  {}
-
-  virtual value_type operator () (const vector_t& x) const throw ()
+  /// Dummy solver which always fails.
+  class DummySolver : public Solver<Function, Function>
   {
-    return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
-  }
+  public:
+    /// Define parent's type.
+    typedef Solver<Function, Function> parent_t;
 
-  // No gradient, hessian.
-};
+    /// Constructor.
+    explicit DummySolver (const problem_t&) throw ();
+    /// Destructor.
+    virtual ~DummySolver () throw ();
 
-int run_test ()
-{
-  F f;
-  Problem<Function, Function> pb (f);
+    /// Implement the solve algorithm.
+    virtual void solve () throw ();
+  };
 
-  solver_t solver (pb);
-  solver_t::result_t res = solver.getMinimum ();
-  boost::get<SolverError> (res);
+} // end of namespace optimization
 
-  return 0;
-}
-
-GENERATE_TEST ()
+#endif //! OPTIMIZATION_DUMMY_HH
