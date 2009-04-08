@@ -44,6 +44,7 @@ namespace optimization
       return TNLP::NON_LINEAR;
     }
 
+    /// \internal
     /// Ipopt non linear problem definition.
     struct MyTNLP : public TNLP
     {

@@ -21,7 +21,7 @@
  */
 #ifndef OPTIMIZATION_UTIL_HH
 # define OPTIMIZATION_UTIL_HH
-# include <liboptimization/function.hh>
+# include <liboptimization/derivable-function.hh>
 
 namespace optimization
 {

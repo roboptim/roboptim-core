@@ -15,39 +15,24 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * \brief Implementation of the Solver class.
+ * \brief Declaration of the LinearFunction class.
  */
 
-#include <cassert>
-#include "liboptimization/solver.hh"
+#ifndef OPTIMIZATION_LINEAR_FUNCTION_HH
+# define OPTIMIZATION_LINEAR_FUNCTION_HH
+# include <limits>
+# include <liboptimization/quadratic-function.hh>
 
 namespace optimization
 {
-  GenericSolver::GenericSolver () throw ()
-    : result_ (NoSolution ())
+  class LinearFunction : public QuadraticFunction
   {
-  }
+  public:
+    LinearFunction (size_type n, value_type infinity =
+                    std::numeric_limits<value_type>::infinity ()) throw ();
+  };
 
-  GenericSolver::~GenericSolver () throw ()
-  {
-  }
+}; // end of namespace optimization
 
-  void
-  GenericSolver::reset () throw ()
-  {
-    result_ = NoSolution ();
-  }
-
-  const GenericSolver::result_t&
-  GenericSolver::getMinimum () throw ()
-  {
-    if (result_.which () != SOLVER_NO_SOLUTION)
-      return result_;
-    solve ();
-    assert (result_.which () != SOLVER_NO_SOLUTION);
-    return result_;
-  }
-
-} // end of namespace optimization
+#endif //! OPTIMIZATION_LINEAR_FUNCTION_HH

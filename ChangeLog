@@ -1,5 +1,51 @@
 2009-04-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Split files and document the library.
+	* Makefile.am: Reorder subdirs to explore headers first.
+	* doc/Doxyfile.in: Fix documentation output.
+	* doc/header.html,
+	* doc/package.css: Fix CSS bug (header not imported in tree frame).
+	* include/Makefile.am: Add new headers.
+	* include/liboptimization/cfsqp.hh: Fix includes.
+	* include/liboptimization/derivable-function.hh: Copy from
+        include/liboptimization/dummy.hh.
+	* include/liboptimization/dummy.hh: Fix includes.
+	* include/liboptimization/function.hh: Split.
+	* include/liboptimization/fwd.hh: Declare NoSolution here.
+	* include/liboptimization/generic-solver.hh: Copy from
+        include/liboptimization/solver.hh.
+	* include/liboptimization/ipopt.hh: Fix includes.
+	* include/liboptimization/linear-function.hh: Copy
+        from include/liboptimization/fwd.hh.
+	* include/liboptimization/problem.hh: Add missing semi-colon.
+	* include/liboptimization/problem.hxx: Add missing semi-colon.
+	* include/liboptimization/quadratic-function.hh: Copy from
+        include/liboptimization/fwd.hh.
+	* include/liboptimization/solver-error.hh: Copy from
+        include/liboptimization/fwd.hh.
+	* include/liboptimization/solver.hh: Split.
+	* include/liboptimization/solver.hxx: Add missing semi-colon.
+	* include/liboptimization/twice-derivable-function.hh: Copy from
+        include/liboptimization/dummy.hh.
+	* include/liboptimization/util.hh: Fix include.
+	* src/Makefile.am: Fix sources list.
+	* src/derivable-function.cc: Copy from
+        include/liboptimization/solver.hxx.
+	* src/doc.hh: Document.
+	* src/function.cc: Split.
+	* src/generic-solver.cc: Rename from src/solver.cc.
+	* src/ipopt.cc: Fix includes.
+	* src/linear-function.cc: Copy from include/liboptimization/solver.hxx.
+	* src/quadratic-function.cc: Copy from
+        include/liboptimization/solver.hxx.
+	* src/solver-error.cc: Copy from include/liboptimization/fwd.hh.
+	* src/twice-derivable-function.cc: Copy from
+        include/liboptimization/solver.hxx.
+	* src/util.hh: Remove.
+	* tests/hs071.hh: Fix includes.
+
+2009-04-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix package distribution.
 	* Makefile.am: Add include to subdirs.
 	* build-aux/init.mk: Search in distributed headers.

@@ -47,6 +47,6 @@ namespace optimization
     int iprint_;
   };
 
-} // end of namespace optimization
+}; // end of namespace optimization
 
 #endif //! OPTIMIZATION_CFSQP_HH

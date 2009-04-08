@@ -34,8 +34,9 @@ namespace optimization
   namespace ublas = boost::numeric::ublas;
 
   /// \brief Define a mathematical function.
-  struct Function
+  class Function
   {
+  public:
     /// Values type.
     typedef double value_type;
     /// Size type.
@@ -94,43 +95,6 @@ namespace optimization
     scales_t argScales;
   };
 
-  struct DerivableFunction : public Function
-  {
-    /// Gradient type.
-    typedef vector_t gradient_t;
-
-    DerivableFunction (size_type n, value_type infinity =
-                       std::numeric_limits<value_type>::infinity ()) throw ();
-
-    /// Gradient.
-    virtual gradient_t gradient (const vector_t&) const throw () = 0;
-  };
-
-  struct TwiceDerivableFunction : public DerivableFunction
-  {
-    /// Hessian type.
-    typedef matrix_t hessian_t;
-
-    TwiceDerivableFunction (size_type n, value_type infinity =
-                            std::numeric_limits<value_type>::infinity ())
-      throw ();
-
-    /// Hessian.
-    virtual hessian_t hessian (const vector_t&) const throw () = 0;
-  };
-
-  struct QuadraticFunction : public TwiceDerivableFunction
-  {
-    QuadraticFunction (size_type n, value_type infinity =
-                       std::numeric_limits<value_type>::infinity ()) throw ();
-  };
-
-  struct LinearFunction : public QuadraticFunction
-  {
-    LinearFunction (size_type n, value_type infinity =
-                    std::numeric_limits<value_type>::infinity ()) throw ();
-  };
-
-} // end of namespace optimization
+}; // end of namespace optimization
 
 #endif //! OPTIMIZATION_FUNCTION_HH

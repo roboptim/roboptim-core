@@ -4,8 +4,8 @@ ACLOCAL_AMFLAGS = -I build-aux
 SUBDIRS = 		\
 	doc		\
 	packages	\
-	src		\
 	include		\
+	src		\
 	tests
 
 

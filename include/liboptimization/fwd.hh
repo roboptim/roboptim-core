@@ -24,6 +24,10 @@
 
 namespace optimization
 {
+  /// \brief Returned by GenericSolver::getMinimum if no solution can be
+  /// found (but no error has been encountered during the process).
+  struct NoSolution {};
+
   class Function;
   class DerivableFunction;
   class TwiceDerivableFunction;
@@ -42,6 +46,6 @@ namespace optimization
   class IpoptSolver;
 
   class SolverError;
-} // end of namespace optimization.
+}; // end of namespace optimization.
 
 #endif //! OPTIMIZATION_FWD_HH

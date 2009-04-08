@@ -5,12 +5,17 @@ AM_CXXFLAGS += $(WARNING_CXXFLAGS)
 
 lib_LTLIBRARIES = liboptimization.la
 
-liboptimization_la_SOURCES = 				\
-				doc.hh			\
-				solver.cc		\
-				dummy.cc		\
-				function.cc		\
-				util.cc
+liboptimization_la_SOURCES = 		\
+	doc.hh				\
+	derivable-function.cc		\
+	dummy.cc			\
+	function.cc			\
+	generic-solver.cc		\
+	linear-function.cc		\
+	quadratic-function.cc		\
+	solver-error.cc			\
+	twice-derivable-function.cc	\
+	util.cc
 
 liboptimization_la_LIBADD =
 liboptimization_la_LDFLAGS =

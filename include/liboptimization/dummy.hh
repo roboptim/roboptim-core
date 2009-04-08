@@ -42,6 +42,6 @@ namespace optimization
     virtual void solve () throw ();
   };
 
-} // end of namespace optimization
+}; // end of namespace optimization
 
 #endif //! OPTIMIZATION_DUMMY_HH

@@ -17,32 +17,82 @@
 
 /**
 
-   \mainpage
+   \mainpage liboptimization user manual
 
    \section intro Introduction
 
    liboptimization defines a C++ common interface to several non linear problem
    solvers.
 
-   The package is composed of a base class called optimization::Solver and
+   The package is composed of a base class called optimization::GenericSolver and
    several sub-classes which transform the problem in order to pass it to an
    external solver.
 
 
    The interface relies heavily on Boost for:
    <ul>
-   <li>function definition (Boost.Function),</li>
    <li>advanced typing (Boost.Optional and Boost.Variant),</li>
    <li>matrix manipulation (Boost.uBLAS).</li>
    </ul>
 
+   To get basic knowledge about the library, you might want to check out the
+   \ref quickstart page.
 
-   \section tutorial Tutorial
 
-   Here is a complete example of using Ipopt to solve a problem.
+   Table of content:
+   - \subpage quickstart
+   - \subpage faq
+   - \subpage design
+   - \subpage bridge
+*/
+
+
+/**
+   \page quickstart Quick start
+
+   Solving a problem is done through several steps:
+
+   - Define your cost function by deriving one kind of function, depending
+   on whether or not you want to provide a jacobian and/or a hessian.
+   - Define your constraints functions in the same manner.
+   - Build an instance of problem matching your requirements.
+   - Use one of the solvers to solve your problem.
+
+
+   The following example defines a cost function F and two constraints G0 and G1.
+
+   \section cost Defining the cost function.
+
+   The library contains the following hierarchy of functions:
+   - optimization::Function
+   - optimization::DerivableFunction
+   - optimization::TwiceDerivableFunction
+   - optimization::QuadraticFunction
+   - optimization::LinearFunction
+
+   When defining a new function, you have to derive your new function from one
+   of those classes. Depending on the class you derive from, you will be have
+   to implement one or several methods:
+
+   - operator () that returns the function's result has to be defined for all
+   functions.
+   - getGradient () which returns the function's gradient is to be
+   defined for DerivableFunction and its subclasses.
+   - getHessian () for TwiceDerivableFunction functions and its subclasses.
+
+   It is usually recommended to derive from the deepest possible class of the
+   hierarchy (deriving from TwiceDerivableFunction is better than
+   DerivableFunction).
+
+   Keep in mind that the type of the function represents the amount of
+   information the solver will get, not the real nature of a function (it is
+   possible to avoid defining a hessian by deriving from DerivableFunction,
+   even if you function can be derived twice).
+
+   In the following sample, a TwiceDerivableFunction will be defined.
 
    \code
-struct F : public Function
+class F : public TwiceDerivableFunction
 {
   F () : Function (4)
   {
@@ -96,8 +146,19 @@ struct F : public Function
     return h;
   }
 };
+   \endcode
 
-struct G0 : public Function
+   \section constraints Defining the constraints.
+
+   A constraints is no different from a cost function and
+   can be defined in the same way than a cost function.
+
+   The following sample defines two constraints which are
+   twice derivable functions.
+
+
+   \code
+class G0 : public TwiceDerivableFunction
 {
   G0 ()
     : Function (4)
@@ -122,7 +183,7 @@ struct G0 : public Function
   }
 };
 
-struct G1 : public Function
+class G1 : public TwiceDerivableFunction
 {
   G1 ()
     : Function (4)
@@ -146,18 +207,34 @@ struct G1 : public Function
     return grad;
   }
 };
+   \endcode
 
+   \section problem Building the problem and solving it.
+
+   The last part of this tutorial covers how to build a problem and
+   solve it. The steps are:
+
+   - Instanciate your functions (cost functions and constraints).
+   - Pass them to the problem.
+   - Optional: set a starting point.
+   - Instanciate a solver which solves your class of problem.
+   - Solve the problem by calling getMinimum.
+
+   \code
 int main ()
 {
-  Problem pb = Problem (F ());
+  F f;
+  G0 g0;
+  G1 g1;
 
-  // Set the starting point.
-  Function::vector_t start (pb.function.n);
+  Problem<TwiceDerivableFunction, TwiceDerivableFunction> pb (f);
+  pb.getConstraints ().push_back (&g0);
+  pb.getConstraints ().push_back (&g1);
+
+  // Set the starting point (optional).
+  Function::vector_t start (f.n);
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
-  pb.start = start;
-
-  pb.constraints.push_back (Problem::functionPtr_t (new G0 ()));
-  pb.constraints.push_back (Problem::functionPtr_t (new G1 ()));
+  pb.getStartingPoint () = start;
 
   // Initialize solver
   IpoptSolver solver (pb);
@@ -168,7 +245,8 @@ int main ()
   // Check if the minimization has succeed.
   if (res.which () != IpoptSolver::SOLVER_VALUE)
     {
-      // Solver has failed.
+      std::cout << "A solution should have been found. Failing..."
+                << std::endl;
       return 1;
     }
 
@@ -178,27 +256,29 @@ int main ()
   // Display the result.
   std::cout << "A solution has been found: " << std::endl;
   std::cout << result << std::endl;
-  std::cout << "f(*x) = " << pb.function (result) << std::endl;
+  std::cout << "f(*x) = " << solver.getProblem ().getFunction () (result) << std::endl;
   return 0;
 }
    \endcode
+*/
 
-   \section faq Frequently Asked Questions (FAQ)
+/**
+   \page faq Frequently Asked Questions (FAQ)
 
-   \subsection avl_solvers What solvers are currently available?
+   \section avl_solvers What solvers are currently available?
 
    Supported solvers are:
    <ul>
    <li><a href="https://projects.coin-or.org/Ipopt/">Ipopt</a></li>
+   <li><a href="http://www.aemdesign.com/">CFSQP</a></li>
    </ul>
 
    Solvers we plan to support in the future:
    <ul>
-   <li><a href="http://www.aemdesign.com/">CFSQP</a></li>
-   <li><a href="http://vxl.sourceforge.net/">VXL/VNL</a></li>
+   <li><a href="http://vxl.sourceforge.net/">Optimization algorithms from VXL/VNL</a></li>
    </ul>
 
-   \subsection boost_optvar What are those Optional and Variant types?
+   \section boost_optvar What are those Optional and Variant types?
 
    An optional type is a templated class which modelize the possibility
    in C++ to have "no value" in a variable.
@@ -251,6 +331,28 @@ int main ()
    documentation</a> for more information.
 */
 
+
+/**
+   \page design Design choices and libraries' internals
+
+   TO BE DONE
+
+   \section fct The function hierarchy
+   \section pb The problem class
+   \section slv The solver hierarchy
+*/
+
+
+/**
+   \page bridge How to link the library with a new solver?
+
+   TO BE DONE
+
+   \section slv How to extend the solver hierarchy?
+   \section tutorial Intregrating a solver step by step.
+*/
+
+
 /*!
   \namespace optimization
 
@@ -258,6 +360,7 @@ int main ()
 
   The namespace gathers all the classes of this library.
 */
+
 
 /*!
   \namespace optimization::detail

@@ -72,7 +72,7 @@ namespace optimization
     return startingPoint_;
   }
 
-} // end of namespace optimization
+}; // end of namespace optimization
 
 # include <liboptimization/problem.hxx>
 #endif //! OPTIMIZATION_PROBLEM_HH

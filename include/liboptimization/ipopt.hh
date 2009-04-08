@@ -24,6 +24,7 @@
 # define OPTIMIZATION_IPOPT_HH
 # include <coin/IpSmartPtr.hpp>
 # include <liboptimization/solver.hh>
+# include <liboptimization/twice-derivable-function.hh>
 
 /// Ipopt classes.
 namespace Ipopt
@@ -66,6 +67,6 @@ namespace optimization
     Ipopt::SmartPtr<Ipopt::IpoptApplication> app_;
   };
 
-} // end of namespace optimization
+}; // end of namespace optimization
 
 #endif //! OPTIMIZATION_IPOPT_HH

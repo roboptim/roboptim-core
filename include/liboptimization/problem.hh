@@ -53,7 +53,7 @@ namespace optimization
     startingPoint_t startingPoint_;
     constraints_t constraints_;
   };
-} // end of namespace optimization
+}; // end of namespace optimization
 
 # include <liboptimization/problem.hxx>
 #endif //! OPTIMIZATION_PROBLEM_HH

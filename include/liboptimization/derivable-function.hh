@@ -16,33 +16,30 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \brief Implementation of the Solver class.
+ * \brief Declaration of the DerivableFunction class.
  */
 
-#ifndef OPTIMIZATION_SOLVER_HXX
-# define OPTIMIZATION_SOLVER_HXX
+#ifndef OPTIMIZATION_DERIVABLE_FUNCTION_HH
+# define OPTIMIZATION_DERIVABLE_FUNCTION_HH
+# include <limits>
+
+# include <liboptimization/function.hh>
 
 namespace optimization
 {
-  template <typename F, typename C>
-  Solver<F, C>::Solver (const problem_t& pb) throw ()
-    : GenericSolver (),
-      problem_ (pb)
+  class DerivableFunction : public Function
   {
-  }
+  public:
+    /// Gradient type.
+    typedef vector_t gradient_t;
 
-  template <typename F, typename C>
-  Solver<F, C>::~Solver () throw ()
-  {
-  }
+    DerivableFunction (size_type n, value_type infinity =
+                       std::numeric_limits<value_type>::infinity ()) throw ();
 
-  template <typename F, typename C>
-  const typename Solver<F, C>::problem_t&
-  Solver<F, C>::getProblem () const throw ()
-  {
-    return problem_;
-  }
+    /// Gradient.
+    virtual gradient_t gradient (const vector_t&) const throw () = 0;
+  };
 
 }; // end of namespace optimization
 
-#endif //! OPTIMIZATION_SOLVER_HH
+#endif //! OPTIMIZATION_DERIVABLE_FUNCTION_HH

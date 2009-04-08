@@ -16,33 +16,24 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \brief Implementation of the Solver class.
+ * \brief Declaration of the QuadraticFunction class.
  */
 
-#ifndef OPTIMIZATION_SOLVER_HXX
-# define OPTIMIZATION_SOLVER_HXX
+#ifndef OPTIMIZATION_QUADRATIC_FUNCTION_HH
+# define OPTIMIZATION_QUADRATIC_FUNCTION_HH
+# include <limits>
+
+# include <liboptimization/twice-derivable-function.hh>
 
 namespace optimization
 {
-  template <typename F, typename C>
-  Solver<F, C>::Solver (const problem_t& pb) throw ()
-    : GenericSolver (),
-      problem_ (pb)
+  class QuadraticFunction : public TwiceDerivableFunction
   {
-  }
-
-  template <typename F, typename C>
-  Solver<F, C>::~Solver () throw ()
-  {
-  }
-
-  template <typename F, typename C>
-  const typename Solver<F, C>::problem_t&
-  Solver<F, C>::getProblem () const throw ()
-  {
-    return problem_;
-  }
+  public:
+    QuadraticFunction (size_type n, value_type infinity =
+                    std::numeric_limits<value_type>::infinity ()) throw ();
+  };
 
 }; // end of namespace optimization
 
-#endif //! OPTIMIZATION_SOLVER_HH
+#endif //! OPTIMIZATION_QUADRATIC_FUNCTION_HH

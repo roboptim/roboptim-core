@@ -15,34 +15,39 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
+
 /**
- * \brief Implementation of the Solver class.
+ * \brief Implementation of the GenericSolver class.
  */
 
-#ifndef OPTIMIZATION_SOLVER_HXX
-# define OPTIMIZATION_SOLVER_HXX
+#include <cassert>
+#include "liboptimization/generic-solver.hh"
 
 namespace optimization
 {
-  template <typename F, typename C>
-  Solver<F, C>::Solver (const problem_t& pb) throw ()
-    : GenericSolver (),
-      problem_ (pb)
+  GenericSolver::GenericSolver () throw ()
+    : result_ (NoSolution ())
   {
   }
 
-  template <typename F, typename C>
-  Solver<F, C>::~Solver () throw ()
+  GenericSolver::~GenericSolver () throw ()
   {
   }
 
-  template <typename F, typename C>
-  const typename Solver<F, C>::problem_t&
-  Solver<F, C>::getProblem () const throw ()
+  void
+  GenericSolver::reset () throw ()
   {
-    return problem_;
+    result_ = NoSolution ();
+  }
+
+  const GenericSolver::result_t&
+  GenericSolver::getMinimum () throw ()
+  {
+    if (result_.which () != SOLVER_NO_SOLUTION)
+      return result_;
+    solve ();
+    assert (result_.which () != SOLVER_NO_SOLUTION);
+    return result_;
   }
 
 }; // end of namespace optimization
-
-#endif //! OPTIMIZATION_SOLVER_HH

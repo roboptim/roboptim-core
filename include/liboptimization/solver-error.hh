@@ -16,33 +16,22 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \brief Implementation of the Solver class.
+ * \brief Declaration of the SolverError class.
  */
 
-#ifndef OPTIMIZATION_SOLVER_HXX
-# define OPTIMIZATION_SOLVER_HXX
+#ifndef OPTIMIZATION_SOLVER_ERROR_HH
+# define OPTIMIZATION_SOLVER_ERROR_HH
+# include <stdexcept>
 
 namespace optimization
 {
-  template <typename F, typename C>
-  Solver<F, C>::Solver (const problem_t& pb) throw ()
-    : GenericSolver (),
-      problem_ (pb)
+  /// \brief Base error.
+  /// All other errors inherits this class.
+  struct SolverError : public std::runtime_error
   {
-  }
-
-  template <typename F, typename C>
-  Solver<F, C>::~Solver () throw ()
-  {
-  }
-
-  template <typename F, typename C>
-  const typename Solver<F, C>::problem_t&
-  Solver<F, C>::getProblem () const throw ()
-  {
-    return problem_;
-  }
+    explicit SolverError (const std::string& arg) throw ();
+  };
 
 }; // end of namespace optimization
 
-#endif //! OPTIMIZATION_SOLVER_HH
+#endif //! OPTIMIZATION_SOLVER_ERROR_HH

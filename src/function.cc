@@ -76,29 +76,4 @@ namespace optimization
     return makeBound (l, infinity);
   }
 
-
-  DerivableFunction::DerivableFunction (size_type n, value_type infinity)
-    throw ()
-    : Function (n, infinity)
-  {
-  }
-
-  TwiceDerivableFunction::TwiceDerivableFunction
-  (size_type n, value_type infinity)
-    throw ()
-    : DerivableFunction (n, infinity)
-  {
-  }
-
-  QuadraticFunction::QuadraticFunction (size_type n, value_type infinity)
-    throw ()
-    : TwiceDerivableFunction (n, infinity)
-  {
-  }
-
-  LinearFunction::LinearFunction (size_type n, value_type infinity) throw ()
-    : QuadraticFunction (n, infinity)
-  {
-  }
-
 } // end of namespace optimization
