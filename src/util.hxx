@@ -15,35 +15,35 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \file src/fwd.hh
- *
- * \brief Forward declarations.
- */
 
-#ifndef OPTIMIZATION_FWD_HH
-# define OPTIMIZATION_FWD_HH
+/**
+ * \file src/util.hxx
+ *
+ * \brief Useful procedures (templated) implementation.
+ */
+#ifndef OPTIMIZATION_UTIL_HXX
+# define OPTIMIZATION_UTIL_HXX
+# include <function.hh>
 
 namespace optimization
 {
-  class Function;
-  class DerivableFunction;
-  class TwiceDerivableFunction;
-  class QuadraticFunction;
-  class LinearFunction;
+  namespace detail
+  {
+    template <typename T>
+    void
+    jacobian_from_gradients (DerivableFunction::matrix_t& jac,
+                             const std::vector<const T*>& c,
+                             const DerivableFunction::vector_t& x)
+    {
+      for (unsigned i = 0; i < jac.size1 (); ++i)
+        {
+          DerivableFunction::gradient_t grad = c[i]->gradient (x);
+          for (unsigned j = 0; j < jac.size2 (); ++j)
+            jac (i, j) = grad[j];
+        }
+    }
 
-  template <typename F, typename C = F>
-  class Problem;
+  }; // end of namespace detail.
+}; // end of namespace optimization.
 
-  class GenericSolver;
-  template <typename F, typename C = F>
-  class Solver;
-
-  class CFSQPSolver;
-  class DummySolver;
-  class IpoptSolver;
-
-  class SolverError;
-} // end of namespace optimization.
-
-#endif //! OPTIMIZATION_FWD_HH
+#endif //! OPTIMIZATION_UTIL_HXX

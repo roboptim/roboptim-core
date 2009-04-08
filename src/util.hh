@@ -40,17 +40,9 @@ namespace optimization
     void
     jacobian_from_gradients (DerivableFunction::matrix_t& jac,
                              const std::vector<const T*>& c,
-                             const DerivableFunction::vector_t& x)
-    {
-      for (unsigned i = 0; i < jac.size1 (); ++i)
-        {
-          DerivableFunction::gradient_t grad = c[i]->gradient (x);
-          for (unsigned j = 0; j < jac.size2 (); ++j)
-            jac (i, j) = grad[j];
-        }
-    }
-
+                             const DerivableFunction::vector_t& x);
   }; // end of namespace detail.
 }; // end of namespace optimization.
 
+# include "util.hxx"
 #endif //! OPTIMIZATION_UTIL_HH

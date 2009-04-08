@@ -23,96 +23,33 @@
  */
 
 #include <cassert>
-#include <algorithm>
-
 #include "solver.hh"
 
 namespace optimization
 {
-  LinearSolver::LinearSolver (const Function& f) throw ()
-    : result_ (NoSolution ()),
-      function_ (f)
+  GenericSolver::GenericSolver () throw ()
+    : result_ (NoSolution ())
   {
   }
 
-  LinearSolver::~LinearSolver () throw ()
+  GenericSolver::~GenericSolver () throw ()
   {
   }
 
   void
-  LinearSolver::reset () throw ()
+  GenericSolver::reset () throw ()
   {
     result_ = NoSolution ();
   }
 
-  const LinearSolver::function_t&
-  LinearSolver::getFunction () const throw ()
+  const GenericSolver::result_t&
+  GenericSolver::getMinimum () throw ()
   {
-    return static_cast<const function_t&> (function_);
-  }
-
-
-  QuadraticSolver::QuadraticSolver (const Function& f) throw ()
-    : LinearSolver (f)
-  {
-  }
-
-  QuadraticSolver::~QuadraticSolver () throw ()
-  {
-  }
-
-  const QuadraticSolver::function_t&
-  QuadraticSolver::getFunction () const throw ()
-  {
-    return static_cast<const function_t&> (LinearSolver::getFunction ());
-  }
-
-
-  C2Solver::C2Solver (const Function& f) throw ()
-    : QuadraticSolver (f)
-  {
-  }
-
-  C2Solver::~C2Solver () throw ()
-  {
-  }
-
-  const C2Solver::function_t&
-  C2Solver::getFunction () const throw ()
-  {
-    return static_cast<const function_t&> (LinearSolver::getFunction ());
-  }
-
-
-  C1Solver::C1Solver (const Function& f) throw ()
-    : C2Solver (f)
-  {
-  }
-
-  C1Solver::~C1Solver () throw ()
-  {
-  }
-
-  const C1Solver::function_t&
-  C1Solver::getFunction () const throw ()
-  {
-    return static_cast<const function_t&> (LinearSolver::getFunction ());
-  }
-
-
-  C0Solver::C0Solver (const Function& f) throw ()
-    : C1Solver (f)
-  {
-  }
-
-  C0Solver::~C0Solver () throw ()
-  {
-  }
-
-  const C0Solver::function_t&
-  C0Solver::getFunction () const throw ()
-  {
-    return static_cast<const function_t&> (LinearSolver::getFunction ());
+    if (result_.which () != SOLVER_NO_SOLUTION)
+      return result_;
+    solve ();
+    assert (result_.which () != SOLVER_NO_SOLUTION);
+    return result_;
   }
 
 } // end of namespace optimization

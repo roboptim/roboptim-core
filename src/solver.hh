@@ -28,7 +28,7 @@
 # include <boost/variant/variant.hpp>
 
 # include <fwd.hh>
-# include <function.hh>
+# include <problem.hh>
 
 namespace optimization
 {
@@ -45,8 +45,8 @@ namespace optimization
   /// found (but no error has been encountered during the process).
   struct NoSolution {};
 
-  /// Solver for linear problems.
-  class LinearSolver : public boost::noncopyable
+  /// Abstract interface satisfied by all solvers.
+  class GenericSolver : public boost::noncopyable
   {
   public:
     /// Define the kind of solution which has been found.
@@ -65,148 +65,48 @@ namespace optimization
     /// Result type.
     typedef boost::variant<NoSolution, vector_t, SolverError> result_t;
 
-    /// Function type.
-    typedef LinearFunction function_t;
-
-
      /// \defgroup ctor Constructors and destructors.
     /// \{
     /// Main constructor.
-    /// \param pb Problem.
-    explicit LinearSolver (const Function&) throw ();
+    explicit GenericSolver () throw ();
 
     /// Destructor.
-    virtual ~LinearSolver () throw ();
+    virtual ~GenericSolver () throw ();
     /// \}
 
     /// Reset the internal mechanism to force the solution to be
     /// re-computed next time getMinimum is called.
     void reset () throw ();
 
-    /// Returns the function that has to be minimized.
-    const function_t& getFunction () const throw ();
+    /// Solve the problem.
+    /// Called automatically by getMinimum if required.
+    virtual void solve () throw () = 0;
 
     /// Returns the function minimum (and solve the problem, if
     /// it has not yet been solved).
-    virtual result_t getMinimum () throw () = 0;
-
-    /// Add a linear constraint.
-    virtual void addLinearConstraint (const function_t&) throw () = 0;
-
-    /// Starting point.
-    vector_t start;
-
+    const result_t& getMinimum () throw ();
   protected:
     /// Result of minimization.
     result_t result_;
-
-  private:
-    // TODO: shouldn't be a pointer as problem might be modified,
-    // behind solver's back.
-    /// Cost function.
-    const Function& function_;
   };
 
-
-  /// Solve Quadratic problems.
-  class QuadraticSolver : public LinearSolver
+  template <typename F, typename C>
+  class Solver : public GenericSolver
   {
   public:
-    /// Function type.
-    typedef QuadraticFunction function_t;
+    typedef Problem<F, C> problem_t;
 
-    /// \defgroup ctor Constructors and destructors.
-    /// \{
-    /// Main constructor.
-    /// \param pb Problem.
-    explicit QuadraticSolver (const Function&) throw ();
+    explicit Solver (const problem_t&) throw ();
+    ~Solver () throw ();
 
-    /// Destructor.
-    virtual ~QuadraticSolver () throw ();
-    /// \}
-
-    /// Returns the function that has to be minimized.
-    const function_t& getFunction () const throw ();
-
-    /// Add a quadratic constraint.
-    virtual void addQuadraticConstraint (const function_t&) throw () = 0;
+    const problem_t& getProblem () const throw ();
+  protected:
+    const problem_t& problem_;
   };
 
-  /// Solve C2 problems.
-  class C2Solver : public QuadraticSolver
-  {
-  public:
-    /// Function type.
-    typedef TwiceDerivableFunction function_t;
 
-    /// \defgroup ctor Constructors and destructors.
-    /// \{
-    /// Main constructor.
-    /// \param pb Problem.
-    explicit C2Solver (const Function&) throw ();
-
-    /// Destructor.
-    virtual ~C2Solver () throw ();
-    /// \}
-
-    /// Returns the function that has to be minimized.
-    const function_t& getFunction () const throw ();
-
-    /// Add a C2 constraint.
-    virtual void addC2Constraint (const function_t&) throw () = 0;
-
-  };
-
-  /// Solve C1 problems.
-  class C1Solver : public C2Solver
-  {
-  public:
-    /// Function type.
-    typedef DerivableFunction function_t;
-
-    /// \defgroup ctor Constructors and destructors.
-    /// \{
-    /// Main constructor.
-    /// \param pb Problem.
-    explicit C1Solver (const Function&) throw ();
-
-    /// Destructor.
-    virtual ~C1Solver () throw ();
-    /// \}
-
-    /// Returns the function that has to be minimized.
-    const function_t& getFunction () const throw ();
-
-    /// Add a C1 constraint.
-    virtual void addC1Constraint (const function_t&) throw () = 0;
-
-  };
-
-  /// Solve C0 problems.
-  class C0Solver : public C1Solver
-  {
-  public:
-    /// Function type.
-    typedef Function function_t;
-
-    /// \defgroup ctor Constructors and destructors.
-    /// \{
-    /// Main constructor.
-    /// \param pb Problem.
-    explicit C0Solver (const Function&) throw ();
-
-    /// Destructor.
-    virtual ~C0Solver () throw ();
-    /// \}
-
-    /// Returns the function that has to be minimized.
-    const function_t& getFunction () const throw ();
-
-    /// Add a C0 constraint.
-    virtual void addC0Constraint (const function_t&) throw () = 0;
-
-  };
 
 } // end of namespace optimization
 
+# include <solver.hxx>
 #endif //! OPTIMIZATION_SOLVER_HH

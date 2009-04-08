@@ -16,34 +16,35 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \file src/fwd.hh
+ * \file src/solver.hxx
  *
- * \brief Forward declarations.
+ * \brief Implementation of the Solver class.
  */
 
-#ifndef OPTIMIZATION_FWD_HH
-# define OPTIMIZATION_FWD_HH
+#ifndef OPTIMIZATION_SOLVER_HXX
+# define OPTIMIZATION_SOLVER_HXX
 
 namespace optimization
 {
-  class Function;
-  class DerivableFunction;
-  class TwiceDerivableFunction;
-  class QuadraticFunction;
-  class LinearFunction;
+  template <typename F, typename C>
+  Solver<F, C>::Solver (const problem_t& pb) throw ()
+    : GenericSolver (),
+      problem_ (pb)
+  {
+  }
 
-  template <typename F, typename C = F>
-  class Problem;
+  template <typename F, typename C>
+  Solver<F, C>::~Solver () throw ()
+  {
+  }
 
-  class GenericSolver;
-  template <typename F, typename C = F>
-  class Solver;
+  template <typename F, typename C>
+  const typename Solver<F, C>::problem_t&
+  Solver<F, C>::getProblem () const throw ()
+  {
+    return problem_;
+  }
 
-  class CFSQPSolver;
-  class DummySolver;
-  class IpoptSolver;
+} // end of namespace optimization
 
-  class SolverError;
-} // end of namespace optimization.
-
-#endif //! OPTIMIZATION_FWD_HH
+#endif //! OPTIMIZATION_SOLVER_HH

@@ -41,7 +41,9 @@ struct F : public Function
 int run_test ()
 {
   F f;
-  solver_t solver (f);
+  Problem<Function, Function> pb (f);
+
+  solver_t solver (pb);
   solver_t::result_t res = solver.getMinimum ();
   boost::get<SolverError> (res);
 
