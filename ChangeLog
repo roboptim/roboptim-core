@@ -1,5 +1,20 @@
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Implement problem conversion.
+	* build-aux/boost.m4,
+	* configure.ac: Search for Boost.MPL.
+	* include/Makefile.am: Add problem-converter to header list.
+	* include/liboptimization/problem-converter.hh: New.
+	* include/liboptimization/problem-converter.hxx: New.
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx: Implement generic
+        copy constructors.
+	* include/liboptimization/solver.hh,
+	* include/liboptimization/solver.hxx: Convert problem if
+        the providen one is not of the expected complexity.
+
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add script that uploads documentation to AIST server.
 	* configure.ac: Generate the shell script.
 	* doc/aist-upload.sh.in: New.

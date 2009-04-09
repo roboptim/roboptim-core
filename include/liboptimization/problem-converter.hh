@@ -16,42 +16,25 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \brief Implementation of the Solver class.
+ * \brief Declaration of the problem_converter function.
  */
 
-#ifndef OPTIMIZATION_SOLVER_HXX
-# define OPTIMIZATION_SOLVER_HXX
-# include <liboptimization/problem-converter.hh>
+#ifndef OPTIMIZATION_PROBLEM_CONVERTER_HH
+# define OPTIMIZATION_PROBLEM_CONVERTER_HH
+# include <stdexcept>
+# include <boost/static_assert.hpp>
+# include <boost/type_traits/is_convertible.hpp>
+
+# include <liboptimization/fwd.hh>
+# include <liboptimization/problem.hh>
 
 namespace optimization
 {
-  template <typename F, typename C>
-  Solver<F, C>::Solver (const problem_t& pb) throw ()
-    : GenericSolver (),
-      problem_ (pb)
-  {
-  }
-
-  template <typename F, typename C>
-  template <typename F_, typename C_>
-  Solver<F, C>::Solver (const Problem<F_, C_>& pb) throw ()
-    : GenericSolver (),
-      problem_ (problem_converter<Problem<F_, C_> > (pb))
-  {
-  }
-
-  template <typename F, typename C>
-  Solver<F, C>::~Solver () throw ()
-  {
-  }
-
-  template <typename F, typename C>
-  const typename Solver<F, C>::problem_t&
-  Solver<F, C>::problem () const throw ()
-  {
-    return problem_;
-  }
-
+  /// Try to convert a problem of a type to another type.
+  /// If fail, throw a std::bad_cast.
+  template <typename PBSRC, typename PBDST>
+  PBDST problem_converter (const PBSRC& src) throw (std::bad_cast);
 }; // end of namespace optimization
 
-#endif //! OPTIMIZATION_SOLVER_HH
+# include <liboptimization/problem-converter.hxx>
+#endif //! OPTIMIZATION_PROBLEM_CONVERTER_HH

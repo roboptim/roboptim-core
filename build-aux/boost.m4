@@ -485,6 +485,12 @@ AC_DEFUN([BOOST_HASH],
 AC_DEFUN([BOOST_LAMBDA],
 [BOOST_FIND_HEADER([boost/lambda/lambda.hpp])])
 
+# BOOST_MPL()
+# --------------
+# Look for Boost.MPL
+AC_DEFUN([BOOST_MPL],
+[BOOST_FIND_HEADER([boost/mpl/void_fwd.hpp])])
+
 
 # BOOST_OPTIONAL()
 # ----------------

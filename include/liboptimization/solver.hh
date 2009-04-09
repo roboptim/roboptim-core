@@ -41,6 +41,10 @@ namespace optimization
     typedef Problem<F, C> problem_t;
 
     explicit Solver (const problem_t&) throw ();
+
+    template <typename F_, typename C_>
+    explicit Solver (const Problem<F_, C_>&) throw ();
+
     ~Solver () throw ();
 
     const problem_t& problem () const throw ();

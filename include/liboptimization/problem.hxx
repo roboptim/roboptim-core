@@ -37,6 +37,29 @@ namespace optimization
   {
   }
 
+  // Copy constructor.
+  template <typename F, typename C>
+  Problem<F, C>::Problem (const Problem<F, C>& pb) throw ()
+    : function_ (pb.function_),
+      startingPoint_ (pb.startingPoint_),
+      constraints_ (pb.constraints_)
+  {
+  }
+
+  // Copy constructor (convert from another class of problem).
+  template <typename F, typename C>
+  template <typename F_, typename C_>
+  Problem<F, C>::Problem (const Problem<F_, C_>& pb) throw ()
+    : function_ (pb.function_),
+      startingPoint_ (pb.startingPoint_),
+      constraints_ (pb.constraints_)
+  {
+    // Check that F is a subtype of F_.
+    BOOST_STATIC_ASSERT((boost::is_convertible<F*, F_*>::value));
+    // Check that C is a subtype of C_.
+    BOOST_STATIC_ASSERT((boost::is_convertible<C*, C_*>::value));
+  }
+
   template <typename F, typename C>
   const typename Problem<F, C>::function_t&
   Problem<F, C>::function () const throw ()

@@ -43,6 +43,14 @@ namespace optimization
     typedef boost::optional<Function::vector_t> startingPoint_t;
 
     explicit Problem (const function_t&) throw ();
+
+    /// Copy constructor.
+    explicit Problem (const Problem<F, C>&) throw ();
+
+    /// Copy constructor (convert from another class of problem).
+    template <typename F_, typename C_>
+    explicit Problem (const Problem<F_, C_>&) throw ();
+
     ~Problem () throw ();
 
     const function_t& function () const throw ();
