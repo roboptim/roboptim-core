@@ -1,3 +1,9 @@
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Document.
+	* doc/Doxyfile.in: Use amssymb package in LateX formulas.
+	* src/doc.hh: Add problem definition in quick start.
+
 2009-04-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Split files and document the library.

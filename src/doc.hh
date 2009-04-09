@@ -61,6 +61,18 @@
 
    The following example defines a cost function F and two constraints G0 and G1.
 
+   \section problem Problem definition
+
+   The problem that will be solved is:
+
+   \f$min_{x \in \mathbb{R}^4} x_1 x_4 (x_1 + x_2 + x_3) + x_3\f$
+
+   \ldots with the following constraints:
+
+   - \f$x_1 x_2 x_3 x_4 \geq 25\f$
+   - \f$x_1^2 + x_2^2 + x_3^2 + x_4^2 = 40\f$
+   - \f$1 \leq x_1, x_2, x_3, x_4 \leq 5\f$
+
    \section cost Defining the cost function.
 
    The library contains the following hierarchy of functions:
