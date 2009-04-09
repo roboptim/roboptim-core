@@ -20,6 +20,7 @@
  * \brief Useful procedures.
  */
 
+#include <cstring>
 #include <boost/numeric/ublas/matrix.hpp>
 
 #include "liboptimization/util.hh"

@@ -1,5 +1,11 @@
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix mingw portability issues.
+	* src/util.cc: Include cstring for memcpy.
+	* tests/common.hh: Declaring run_test is needed for mingw.
+
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Document.
 	* doc/Doxyfile.in: Use amssymb package in LateX formulas.
 	* src/doc.hh: Add problem definition in quick start.
