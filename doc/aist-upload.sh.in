@@ -1,0 +1,54 @@
+#! /bin/sh
+##########
+# README #
+##########
+#
+# Upload the generated Doxygen documentation to AIST web page.
+# Requires ``wput'', ``which'' and basic shell features.
+#
+# To use this script, set the AIST_USERNAME environement
+# variable with your AIST ID:
+#
+# $ setenv AIST_USERNAME=X12345
+# or
+# $ export AIST_USERNAME=X12345
+# ...depending on the shell you use.
+#
+# Then launch the script. It will prompt for your password
+# and upload the documentation in a @PACKAGE_TARNAME@ folder.
+
+
+WPUT=$(which wput)
+
+if test "x$WPUT" = x; then
+ echo "wput can not be bound. Please add it to your path.";
+ exit 1
+fi
+
+if test "x$AIST_USERNAME" = x; then
+ echo -n "AIST_USERNAME environment variable not set, "
+ echo "please define it to your AIST ID.";
+ exit 2
+fi
+
+if test "x$AIST_PWD" = x; then
+ echo -n "Please type your AIST password: ";
+ oldmodes=$(stty -g);
+ stty -echo;
+ read -r AIST_PWD;
+ stty $oldmodes;
+ echo ""
+fi
+
+echo "Uploading documentation to AIST server, please wait.";
+$WPUT --basename html html/* --quiet \
+    ftp://$AIST_USERNAME:$AIST_PWD@upload.aist.go.jp/@PACKAGE_TARNAME@/
+ret="$?"
+
+if $ret -eq 0; then
+ echo "Done. Exiting";
+else
+ echo "Upload has failed.";
+fi;
+
+exit $ret

@@ -1,5 +1,11 @@
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add script that uploads documentation to AIST server.
+	* configure.ac: Generate the shell script.
+	* doc/aist-upload.sh.in: New.
+
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Normalize public interface.
 	* include/liboptimization/generic-solver.hh,
 	* include/liboptimization/problem.hh,

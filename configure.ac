@@ -94,5 +94,7 @@ AC_CONFIG_FILES([
 
 AC_CONFIG_FILES([doc/Doxyfile])
 
+AC_CONFIG_FILES([doc/aist-upload.sh], [chmod +x doc/aist-upload.sh])
+
 # Write files.
 AC_OUTPUT
