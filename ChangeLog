@@ -1,5 +1,11 @@
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix upload script.
+	* doc/aist-upload.sh.in: For wput, returning 1 is
+        not an error.
+
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Copy problem into the solver.
 	* include/liboptimization/solver.hh: Copy the problem.
 	* include/liboptimization/solver.hxx: Do not convert

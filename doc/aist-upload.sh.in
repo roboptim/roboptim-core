@@ -40,13 +40,14 @@ if test "x$AIST_PWD" = x; then
  echo ""
 fi
 
+
 echo "Uploading documentation to AIST server, please wait.";
 $WPUT --basename html html/* --quiet \
-    ftp://$AIST_USERNAME:$AIST_PWD@upload.aist.go.jp/@PACKAGE_TARNAME@/
-ret="$?"
-
-if $ret -eq 0; then
+    ftp://$AIST_USERNAME:$AIST_PWD@upload.aist.go.jp/liboptimization/;
+ret="$?";
+if test 0 -eq "$ret" || test 1 -eq "$ret"; then
  echo "Done. Exiting";
+ exit 0
 else
  echo "Upload has failed.";
 fi;
