@@ -27,11 +27,11 @@
 namespace optimization
 {
   /// Dummy solver which always fails.
-  class DummySolver : public Solver<Function, Function>
+  class DummySolver : public Solver<Function, const Function*>
   {
   public:
     /// Define parent's type.
-    typedef Solver<Function, Function> parent_t;
+    typedef Solver<Function, const Function*> parent_t;
 
     /// Constructor.
     explicit DummySolver (const problem_t&) throw ();

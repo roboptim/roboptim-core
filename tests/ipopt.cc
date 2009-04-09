@@ -33,7 +33,7 @@ int run_test ()
   G0 g0;
   G1 g1;
 
-  Problem<TwiceDerivableFunction, TwiceDerivableFunction> pb (f);
+  IpoptSolver::problem_t pb (f);
   pb.getConstraints ().push_back (&g0);
   pb.getConstraints ().push_back (&g1);
 

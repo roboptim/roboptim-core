@@ -17,7 +17,7 @@
 
 /**
 
-   \mainpage liboptimization user manual
+   \mainpage User manual
 
    \section intro Introduction
 

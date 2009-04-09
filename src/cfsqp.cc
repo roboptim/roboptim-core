@@ -22,6 +22,10 @@
 #include <limits>
 #include <cfsqpusr.h>
 
+#include <boost/static_assert.hpp>
+#include <boost/type_traits/is_convertible.hpp>
+#include <boost/variant/apply_visitor.hpp>
+
 #include "liboptimization/cfsqp.hh"
 #include "liboptimization/function.hh"
 #include "liboptimization/util.hh"
@@ -33,6 +37,57 @@ namespace optimization
 
   namespace detail
   {
+    class EvalConstraintVisitor : public boost::static_visitor<Function::value_type>
+    {
+    public:
+      explicit EvalConstraintVisitor (const Function::vector_t& x, int j)
+        : x_ (x),
+          j_ (j)
+      {}
+
+      template <typename C>
+      Function::value_type
+      operator () (const C* c)
+      {
+        BOOST_STATIC_ASSERT((boost::is_convertible<C*, Function*>::value));
+
+        Function::value_type res = (*c) (x_);
+
+        if (j_ % 2 == 0)
+          // g(x) >= b, -g(x) + b <= 0
+          res = -res + c->bound.first;
+        else
+          // g(x) <= b, g(x) - b <= 0
+          res = res - c->bound.second;
+        return res;
+      }
+
+    private:
+      const Function::vector_t& x_;
+      int j_;
+    };
+
+    class EvalGradientConstraintVisitor : public boost::static_visitor<Function::vector_t>
+    {
+    public:
+      explicit EvalGradientConstraintVisitor (const Function::vector_t& x)
+        : x_ (x)
+      {}
+
+      template <typename C>
+      Function::vector_t
+      operator () (const C* c)
+      {
+        BOOST_STATIC_ASSERT((boost::is_convertible<C*, Function*>::value));
+
+        return c->gradient (x_);
+      }
+
+    private:
+      const Function::vector_t& x_;
+    };
+
+
     /// CFSQP objective function.
     void obj (int nparam, int j , double* x, double* fj, void* cd)
     {
@@ -55,14 +110,10 @@ namespace optimization
       array_to_vector (x_, x);
 
       int j_ = (j < 2) ? 0 : (j - 1)/2;
-      *gj = (*solver->getProblem ().getConstraints () [j_]) (x_);
 
-      if (j % 2 == 0)
-        // g(x) >= b, -g(x) + b <= 0
-        *gj = -*gj + solver->getProblem ().getConstraints () [j_]->bound.first;
-      else
-        // g(x) <= b, g(x) - b <= 0
-        *gj = *gj - solver->getProblem ().getConstraints () [j_]->bound.second;
+      EvalConstraintVisitor v (x_, j);
+      *gj = boost::apply_visitor
+        (v, solver->getProblem ().getConstraints () [j_]);
     }
 
     /// CFSQP objective function gradient.
@@ -93,8 +144,10 @@ namespace optimization
 
       int j_ = (j < 2) ? 0 : (j - 1)/2;
 
+      EvalGradientConstraintVisitor v (x_);
+
       DerivableFunction::gradient_t grad =
-        solver->getProblem ().getConstraints ()[j_]->gradient (x_);
+        boost::apply_visitor (v, solver->getProblem ().getConstraints ()[j_]);
       vector_to_array (gradgj, grad);
     }
 
@@ -159,7 +212,7 @@ namespace optimization
     initialize_bounds (bl, bu);
 
     // Copy starting point.
-    if (!getProblem ().getStartingPoint ())
+    if (!!getProblem ().getStartingPoint ())
       detail::vector_to_array (x, *getProblem ().getStartingPoint ());
 
     cfsqp (nparam, nf, nfsr, nineqn, nineq, neqn, neq, ncsrl,  ncsrn,

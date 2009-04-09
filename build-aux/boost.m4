@@ -35,6 +35,8 @@
 # find the Boost headers of a given (optional) minimum version and it will
 # define BOOST_CPPFLAGS accordingly.  It will add an option --with-boost to
 # your configure so that users can specify non standard locations.
+# If the user's environment contains BOOST_ROOT and --with-boost was not
+# specified, --with-boost=$BOOST_ROOT is implicitly used.
 # For more README and documentation, go to http://repo.or.cz/w/boost.m4.git
 # Note: THESE MACROS ASSUME THAT YOU USE LIBTOOL.  If you don't, don't worry,
 # simply read the README, it will show you what to do step by step.
@@ -83,6 +85,17 @@ boost_version_req=`expr "$[1]" '*' 100000 + "$[2]" '*' 100 + "$[3]"`
 AC_ARG_WITH([boost],
    [AS_HELP_STRING([--with-boost=DIR],
                    [prefix of Boost $1 @<:@guess@:>@])])dnl
+AC_ARG_VAR([BOOST_ROOT],[Location of Boost installation])dnl
+# If BOOST_ROOT is set and the user has not provided a value to
+# --with-boost, then treat BOOST_ROOT as if it the user supplied it.
+if test x"$BOOST_ROOT" != x; then
+  if test x"$with_boost" = x; then
+    AC_MSG_NOTICE([Detected BOOST_ROOT; continuing with --with-boost=$BOOST_ROOT])
+    with_boost=$BOOST_ROOT
+  else
+    AC_MSG_NOTICE([Detected BOOST_ROOT=$BOOST_ROOT, but overridden by --with-boost=$with_boost])
+  fi
+fi
 AC_SUBST([DISTCHECK_CONFIGURE_FLAGS],
          ["$DISTCHECK_CONFIGURE_FLAGS '--with-boost=$with_boost'"])
 boost_save_CPPFLAGS=$CPPFLAGS
@@ -98,7 +111,7 @@ m4_pattern_allow([^BOOST_VERSION$])dnl
 # error Boost headers version < $boost_version_req
 #endif
 ]])])
-      # If the user provided a value to --with-boost, use it and only it.
+    # If the user provided a value to --with-boost, use it and only it.
     case $with_boost in #(
       ''|yes) set x '' /opt/local/include /usr/local/include /opt/include \
                  /usr/include C:/Boost/include;; #(
@@ -548,6 +561,13 @@ BOOST_FIND_HEADER([boost/shared_ptr.hpp])
 ])
 
 
+# BOOST_STATICASSERT()
+# --------------------
+# Look for Boost.StaticAssert
+AC_DEFUN([BOOST_STATICASSERT],
+[BOOST_FIND_HEADER([boost/static_assert.hpp])])
+
+
 # BOOST_STRING_ALGO()
 # -------------------
 # Look for Boost.StringAlgo
@@ -631,6 +651,13 @@ BOOST_FIND_HEADER([boost/logic/tribool.hpp])
 # Look for Boost.Tuple
 AC_DEFUN([BOOST_TUPLE],
 [BOOST_FIND_HEADER([boost/tuple/tuple.hpp])])
+
+
+# BOOST_TYPETRAITS()
+# --------------------
+# Look for Boost.TypeTraits
+AC_DEFUN([BOOST_TYPETRAITS],
+[BOOST_FIND_HEADER([boost/type_traits.hpp])])
 
 
 # BOOST_UTILITY()

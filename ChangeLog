@@ -1,5 +1,24 @@
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Split linear/non-linear constraints in CFSQP.
+	* build-aux/boost.m4: Detect Boost.StaticAssert and Boost.TypeTraits.
+	* configure.ac: Search for Boost.StaticAssert and Boost.TypeTraits.
+	* include/liboptimization/cfsqp.hh, Split linear/non-linear constraints using
+        Boost.Variant.
+	* include/liboptimization/dummy.hh,
+	* include/liboptimization/ipopt.hh,
+	* include/liboptimization/problem.hh: Inherit now from Solver<F, const C*>
+        instead of Solver<F, C> before (required to allow Variant constraints).
+	* include/liboptimization/solver.hh: Fix constraints type.
+	* src/cfsqp.cc: Implement linear/non-linear constraints splitting.
+	* src/doc.hh: Fix main page name.
+	* tests/cfsqp.cc,
+	* tests/ipopt.cc,
+	* tests/simple-test.cc: Make tests more robust by using problem_t
+        instead of specifying its type explicitly.
+
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix mingw portability issues.
 	* src/util.cc: Include cstring for memcpy.
 	* tests/common.hh: Declaring run_test is needed for mingw.

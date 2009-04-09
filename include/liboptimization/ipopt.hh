@@ -43,11 +43,11 @@ namespace optimization
 
   /// Ipopt based solver.
   class IpoptSolver : public Solver<TwiceDerivableFunction,
-                                    TwiceDerivableFunction>
+                                    const TwiceDerivableFunction*>
   {
   public:
     friend class detail::MyTNLP;
-    typedef Solver<TwiceDerivableFunction, TwiceDerivableFunction> parent_t;
+    typedef Solver<TwiceDerivableFunction, const TwiceDerivableFunction*> parent_t;
 
     /// Constructor.
     explicit IpoptSolver (const problem_t&) throw ();

@@ -23,15 +23,24 @@
 #ifndef OPTIMIZATION_CFSQP_HH
 # define OPTIMIZATION_CFSQP_HH
 # include <string>
+# include <boost/variant.hpp>
+# include <liboptimization/derivable-function.hh>
+# include <liboptimization/linear-function.hh>
 # include <liboptimization/solver.hh>
 
 namespace optimization
 {
   /// CFSQP solver.
-  class CFSQPSolver : public Solver<DerivableFunction, DerivableFunction>
+  class CFSQPSolver : public Solver<DerivableFunction,
+                                    boost::variant<const DerivableFunction*,
+                                                   const LinearFunction*> >
   {
   public:
-    typedef Solver<DerivableFunction, DerivableFunction> parent_t;
+    /// Variant of both Linear and NonLinear functions.
+    typedef boost::variant<const DerivableFunction*,
+                           const LinearFunction*> constraint_t;
+
+    typedef Solver<DerivableFunction, constraint_t> parent_t;
 
     /// Constructor.
     explicit CFSQPSolver (const problem_t&, int = 0) throw ();

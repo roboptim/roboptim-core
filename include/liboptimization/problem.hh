@@ -22,6 +22,9 @@
 #ifndef OPTIMIZATION_PROBLEM_HH
 # define OPTIMIZATION_PROBLEM_HH
 # include <boost/optional.hpp>
+# include <boost/static_assert.hpp>
+# include <boost/type_traits/is_convertible.hpp>
+
 # include <liboptimization/fwd.hh>
 # include <liboptimization/function.hh>
 
@@ -30,11 +33,12 @@ namespace optimization
   template <typename F, typename C>
   class Problem
   {
+    BOOST_STATIC_ASSERT((boost::is_convertible<F*, Function*>::value));
   public:
     typedef F function_t;
     typedef C constraint_t;
 
-    typedef std::vector<const constraint_t*> constraints_t;
+    typedef std::vector<constraint_t> constraints_t;
     typedef boost::optional<Function::vector_t> startingPoint_t;
 
     explicit Problem (const function_t&) throw ();
