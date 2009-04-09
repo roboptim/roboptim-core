@@ -42,6 +42,14 @@ public:
   }
 };
 
+// Check that a problem has really been copied.
+#define CHECK_COPY(A, B)                                                \
+  assert (&(A).function () == &(B).function ());                        \
+  assert ((A).constraints ().size () == (B).constraints ().size ());    \
+                                                                        \
+  for (unsigned i = 0; i < (A).constraints ().size (); ++i)             \
+    assert ((A).constraints ()[i] == (B).constraints ()[i])
+
 int run_test ()
 {
   typedef Problem<DerivableFunction, const DerivableFunction*> problemSrc_t;
@@ -50,14 +58,18 @@ int run_test ()
   F f;
 
   problemSrc_t pbSrc (f);
-  problemDst_t pbDst (pbSrc);
 
-  // Check that the problem has really been copied.
-  assert (&pbSrc.function () == &pbDst.function ());
-  assert (pbSrc.constraints ().size () == pbDst.constraints ().size ());
+  // Check with same type.
+  {
+    problemSrc_t pbDst (pbSrc);
+    CHECK_COPY(pbSrc, pbDst);
+  }
 
-  for (unsigned i = 0; i < pbSrc.constraints ().size (); ++i)
-    assert (pbSrc.constraints ()[i] == pbDst.constraints ()[i]);
+  // Check with a more general type.
+  {
+    problemDst_t pbDst (pbSrc);
+    CHECK_COPY(pbSrc, pbDst);
+  }
 
   return 0;
 }
