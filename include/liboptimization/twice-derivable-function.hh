@@ -27,6 +27,7 @@
 
 namespace optimization
 {
+  /// Define a function which is derivable twice.
   struct TwiceDerivableFunction : public DerivableFunction
   {
     /// Hessian type.

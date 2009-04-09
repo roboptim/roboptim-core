@@ -27,6 +27,7 @@
 
 namespace optimization
 {
+  /// Define a derivable function.
   class DerivableFunction : public Function
   {
   public:

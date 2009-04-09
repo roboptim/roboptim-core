@@ -31,6 +31,7 @@
 
 namespace optimization
 {
+  /// Define a solver for a class of problem.
   template <typename F, typename C>
   class Solver : public GenericSolver
   {

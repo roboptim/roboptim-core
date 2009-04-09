@@ -37,6 +37,8 @@ namespace optimization
 
   namespace detail
   {
+    /// \internal
+    /// Evaluate a constraint.
     class EvalConstraintVisitor : public boost::static_visitor<Function::value_type>
     {
     public:
@@ -67,6 +69,8 @@ namespace optimization
       int j_;
     };
 
+    /// \internal
+    /// Evaluate a constraint's gradient.
     class EvalGradientConstraintVisitor : public boost::static_visitor<Function::vector_t>
     {
     public:

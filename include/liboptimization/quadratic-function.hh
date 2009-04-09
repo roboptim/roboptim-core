@@ -27,6 +27,7 @@
 
 namespace optimization
 {
+  /// Define a quadratic function.
   class QuadraticFunction : public TwiceDerivableFunction
   {
   public:

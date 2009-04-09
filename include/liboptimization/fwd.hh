@@ -26,7 +26,7 @@ namespace optimization
 {
   /// \brief Returned by GenericSolver::getMinimum if no solution can be
   /// found (but no error has been encountered during the process).
-  struct NoSolution {};
+  class NoSolution {};
 
   class Function;
   class DerivableFunction;

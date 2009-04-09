@@ -29,4 +29,11 @@ namespace optimization
   {
   }
 
+  LinearFunction::hessian_t
+  LinearFunction::hessian (const vector_t&) const throw ()
+  {
+    LinearFunction::hessian_t h (n, n);
+    h.clear ();
+    return h;
+  }
 } // end of namespace optimization

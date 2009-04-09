@@ -26,11 +26,14 @@
 
 namespace optimization
 {
+  /// Define a linear function.
   class LinearFunction : public QuadraticFunction
   {
   public:
     LinearFunction (size_type n, value_type infinity =
                     std::numeric_limits<value_type>::infinity ()) throw ();
+
+    virtual hessian_t hessian (const vector_t&) const throw ();
   };
 
 }; // end of namespace optimization

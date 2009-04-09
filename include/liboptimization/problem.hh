@@ -30,6 +30,7 @@
 
 namespace optimization
 {
+  /// Define a problem in a generic way.
   template <typename F, typename C>
   class Problem
   {

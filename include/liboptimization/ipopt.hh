@@ -38,6 +38,7 @@ namespace optimization
 {
   namespace detail
   {
+    /// \internal
     class MyTNLP;
   };
 
