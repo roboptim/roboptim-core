@@ -36,6 +36,9 @@ namespace optimization
     // A positive infinite is required.
     assert (inf > 0.);
 
+    // Positive size is required.
+    assert (n >= 0);
+
     // Initialize bound.
     for (bounds_t::iterator it = argBounds.begin (); it != argBounds.end (); ++it)
       *it = std::make_pair (-inf, inf);

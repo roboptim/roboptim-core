@@ -21,6 +21,8 @@
 
 #ifndef OPTIMIZATION_PROBLEM_HXX
 # define OPTIMIZATION_PROBLEM_HXX
+# include <algorithm>
+# include <boost/type_traits/remove_pointer.hpp>
 
 namespace optimization
 {
@@ -52,12 +54,18 @@ namespace optimization
   Problem<F, C>::Problem (const Problem<F_, C_>& pb) throw ()
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
-      constraints_ (pb.constraints_)
+      constraints_ ()
   {
     // Check that F is a subtype of F_.
-    BOOST_STATIC_ASSERT((boost::is_convertible<F*, F_*>::value));
+    BOOST_STATIC_ASSERT((boost::is_convertible<F_*, F*>::value));
     // Check that C is a subtype of C_.
-    BOOST_STATIC_ASSERT((boost::is_convertible<C*, C_*>::value));
+
+    typedef typename boost::remove_pointer<C_>::type rpC_;
+    typedef typename boost::remove_pointer<C>::type rpC;
+    BOOST_STATIC_ASSERT((boost::is_convertible<rpC_*, rpC*>::value));
+
+    std::copy (pb.constraints_.begin (), pb.constraints_.end (),
+               constraints_.begin ());
   }
 
   template <typename F, typename C>

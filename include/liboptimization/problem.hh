@@ -36,6 +36,9 @@ namespace optimization
   {
     BOOST_STATIC_ASSERT((boost::is_convertible<F*, Function*>::value));
   public:
+    template <typename F_, typename C_>
+    friend class Problem;
+
     typedef F function_t;
     typedef C constraint_t;
 

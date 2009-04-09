@@ -18,6 +18,7 @@
 
 #ifndef OPTIMIZATION_TESTS_COMMON_HH
 # define OPTIMIZATION_TESTS_COMMON_HH
+# include <iostream>
 # include <stdexcept>
 # include "config.h"
 

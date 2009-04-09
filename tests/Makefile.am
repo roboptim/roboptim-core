@@ -18,6 +18,11 @@ check_PROGRAMS = simple-test
 simple_test_SOURCES = simple-test.cc $(COMMON_SOURCES)
 simple_test_LDADD = $(top_builddir)/src/liboptimization.la
 
+# problem-cc
+check_PROGRAMS += problem-cc
+problem_cc_SOURCES = problem-cc.cc $(COMMON_SOURCES)
+problem_cc_LDADD = $(top_builddir)/src/liboptimization.la
+
 
 # Ipopt
 if IPOPT

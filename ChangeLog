@@ -1,5 +1,18 @@
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Check static problem conversion through copy constructor.
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx: Fix problem conversion.
+	* src/function.cc: Check that the problem arity is positive.
+	* tests/Makefile.am: Add new test.
+	* tests/common.hh: Include iostream.
+	* tests/problem-cc.at: Copy from tests/testsuite.at.
+	* tests/problem-cc.cc: New.
+	* tests/problem-cc.stdout: New.
+	* tests/testsuite.at: Include new test.
+
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix upload script.
 	* doc/aist-upload.sh.in: For wput, returning 1 is
         not an error.
