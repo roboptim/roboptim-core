@@ -38,7 +38,7 @@ namespace optimization
 
   template <typename F, typename C>
   const typename Solver<F, C>::problem_t&
-  Solver<F, C>::getProblem () const throw ()
+  Solver<F, C>::problem () const throw ()
   {
     return problem_;
   }

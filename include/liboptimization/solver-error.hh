@@ -27,8 +27,9 @@ namespace optimization
 {
   /// \brief Base error.
   /// All other errors inherits this class.
-  struct SolverError : public std::runtime_error
+  class SolverError : public std::runtime_error
   {
+  public:
     explicit SolverError (const std::string& arg) throw ();
   };
 

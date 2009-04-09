@@ -1,5 +1,24 @@
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Normalize public interface.
+	* include/liboptimization/generic-solver.hh,
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx,
+	* include/liboptimization/solver-error.hh,
+	* include/liboptimization/solver.hh,
+	* include/liboptimization/solver.hxx,
+	* include/liboptimization/twice-derivable-function.hh,
+	* src/cfsqp.cc,
+	* src/doc.hh,
+	* src/generic-solver.cc,
+	* src/ipopt.cc,
+	* tests/cfsqp.cc,
+	* tests/ipopt.cc,
+	* tests/simple-test.cc: Replace getXxx method by xxx.
+        Replace struct by class.
+
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement LinearFunction::hessian.
 	* .gitignore: Ignore _build* directories (useful for cross-compiling).
 	* include/liboptimization/derivable-function.hh,

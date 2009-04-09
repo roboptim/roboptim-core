@@ -45,13 +45,13 @@ namespace optimization
     explicit Problem (const function_t&) throw ();
     ~Problem () throw ();
 
-    const function_t& getFunction () const throw ();
+    const function_t& function () const throw ();
 
-    const constraints_t& getConstraints () const throw ();
-    constraints_t& getConstraints () throw ();
+    const constraints_t& constraints () const throw ();
+    constraints_t& constraints () throw ();
 
-    startingPoint_t& getStartingPoint () throw ();
-    const startingPoint_t& getStartingPoint () const throw ();
+    startingPoint_t& startingPoint () throw ();
+    const startingPoint_t& startingPoint () const throw ();
 
   private:
     const function_t& function_;

@@ -39,35 +39,35 @@ namespace optimization
 
   template <typename F, typename C>
   const typename Problem<F, C>::function_t&
-  Problem<F, C>::getFunction () const throw ()
+  Problem<F, C>::function () const throw ()
   {
     return function_;
   }
 
   template <typename F, typename C>
   typename Problem<F, C>::constraints_t&
-  Problem<F, C>::getConstraints () throw ()
+  Problem<F, C>::constraints () throw ()
   {
     return constraints_;
   }
 
   template <typename F, typename C>
   const typename Problem<F, C>::constraints_t&
-  Problem<F, C>::getConstraints () const throw ()
+  Problem<F, C>::constraints () const throw ()
   {
     return constraints_;
   }
 
   template <typename F, typename C>
   typename Problem<F, C>::startingPoint_t&
-  Problem<F, C>::getStartingPoint () throw ()
+  Problem<F, C>::startingPoint () throw ()
   {
     return startingPoint_;
   }
 
   template <typename F, typename C>
   const typename Problem<F, C>::startingPoint_t&
-  Problem<F, C>::getStartingPoint () const throw ()
+  Problem<F, C>::startingPoint () const throw ()
   {
     return startingPoint_;
   }

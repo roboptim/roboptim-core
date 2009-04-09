@@ -100,7 +100,7 @@ namespace optimization
 
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
-      *fj = solver->getProblem ().getFunction () (x_);
+      *fj = solver->problem ().function () (x_);
     }
 
     /// CFSQP constraints function.
@@ -117,7 +117,7 @@ namespace optimization
 
       EvalConstraintVisitor v (x_, j);
       *gj = boost::apply_visitor
-        (v, solver->getProblem ().getConstraints () [j_]);
+        (v, solver->problem ().constraints () [j_]);
     }
 
     /// CFSQP objective function gradient.
@@ -131,7 +131,7 @@ namespace optimization
 
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
-      DerivableFunction::gradient_t grad = solver->getProblem ().getFunction ().gradient (x_);
+      DerivableFunction::gradient_t grad = solver->problem ().function ().gradient (x_);
       vector_to_array (gradf, grad);
     }
 
@@ -151,7 +151,7 @@ namespace optimization
       EvalGradientConstraintVisitor v (x_);
 
       DerivableFunction::gradient_t grad =
-        boost::apply_visitor (v, solver->getProblem ().getConstraints ()[j_]);
+        boost::apply_visitor (v, solver->problem ().constraints ()[j_]);
       vector_to_array (gradgj, grad);
     }
 
@@ -173,8 +173,8 @@ namespace optimization
     typedef Function::bounds_t::const_iterator citer_t;
 
     Function::size_type i = 0;
-    for (citer_t it = getProblem ().getFunction ().argBounds.begin ();
-         it != getProblem ().getFunction ().argBounds.end (); ++it)
+    for (citer_t it = problem ().function ().argBounds.begin ();
+         it != problem ().function ().argBounds.end (); ++it)
       {
         bl[i] = (*it).first, bu[i] = (*it).second;
         ++i;
@@ -184,11 +184,11 @@ namespace optimization
   void
   CFSQPSolver::solve () throw ()
   {
-    int nparam = getProblem ().getFunction ().n;
+    int nparam = problem ().function ().n;
     int nf = 1; //FIXME: only one objective function.
     int nfsr = 0;
-    int nineqn = 2 * getProblem ().getConstraints ().size ();
-    int nineq = 2 * getProblem ().getConstraints ().size ();
+    int nineqn = 2 * problem ().constraints ().size ();
+    int nineq = 2 * problem ().constraints ().size ();
     int neqn = 0;
     int neq = 0;
     int ncsrl = 0;
@@ -205,8 +205,8 @@ namespace optimization
     double bu[nparam];
     double x[nparam];
     double f[1];
-    double g[2 * getProblem ().getConstraints ().size ()];
-    double lambda[nparam + 1 + 2 * getProblem ().getConstraints ().size ()];
+    double g[2 * problem ().constraints ().size ()];
+    double lambda[nparam + 1 + 2 * problem ().constraints ().size ()];
     fct_t obj = detail::obj;
     fct_t constr = detail::constr;
     grad_t gradob = detail::gradob;
@@ -216,8 +216,8 @@ namespace optimization
     initialize_bounds (bl, bu);
 
     // Copy starting point.
-    if (!!getProblem ().getStartingPoint ())
-      detail::vector_to_array (x, *getProblem ().getStartingPoint ());
+    if (!!problem ().startingPoint ())
+      detail::vector_to_array (x, *problem ().startingPoint ());
 
     cfsqp (nparam, nf, nfsr, nineqn, nineq, neqn, neq, ncsrl,  ncsrn,
            mesh_pts, mode,  iprint_, miter, &inform, bignd, eps, epseqn,

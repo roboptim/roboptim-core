@@ -41,7 +41,7 @@ namespace optimization
   }
 
   const GenericSolver::result_t&
-  GenericSolver::getMinimum () throw ()
+  GenericSolver::minimum () throw ()
   {
     if (result_.which () != SOLVER_NO_SOLUTION)
       return result_;

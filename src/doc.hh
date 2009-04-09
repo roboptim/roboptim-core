@@ -88,9 +88,9 @@
 
    - operator () that returns the function's result has to be defined for all
    functions.
-   - getGradient () which returns the function's gradient is to be
+   - gradient () which returns the function's gradient is to be
    defined for DerivableFunction and its subclasses.
-   - getHessian () for TwiceDerivableFunction functions and its subclasses.
+   - hessian () for TwiceDerivableFunction functions and its subclasses.
 
    It is usually recommended to derive from the deepest possible class of the
    hierarchy (deriving from TwiceDerivableFunction is better than
@@ -230,7 +230,7 @@ class G1 : public TwiceDerivableFunction
    - Pass them to the problem.
    - Optional: set a starting point.
    - Instanciate a solver which solves your class of problem.
-   - Solve the problem by calling getMinimum.
+   - Solve the problem by calling minimum.
 
    \code
 int main ()
@@ -240,19 +240,19 @@ int main ()
   G1 g1;
 
   Problem<TwiceDerivableFunction, TwiceDerivableFunction> pb (f);
-  pb.getConstraints ().push_back (&g0);
-  pb.getConstraints ().push_back (&g1);
+  pb.constraints ().push_back (&g0);
+  pb.constraints ().push_back (&g1);
 
   // Set the starting point (optional).
   Function::vector_t start (f.n);
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
-  pb.getStartingPoint () = start;
+  pb.startingPoint () = start;
 
   // Initialize solver
   IpoptSolver solver (pb);
 
   // Compute the minimum and retrieve the result.
-  IpoptSolver::result_t res = solver.getMinimum ();
+  IpoptSolver::result_t res = solver.minimum ();
 
   // Check if the minimization has succeed.
   if (res.which () != IpoptSolver::SOLVER_VALUE)
@@ -268,7 +268,7 @@ int main ()
   // Display the result.
   std::cout << "A solution has been found: " << std::endl;
   std::cout << result << std::endl;
-  std::cout << "f(*x) = " << solver.getProblem ().getFunction () (result) << std::endl;
+  std::cout << "f(*x) = " << solver.problem ().function () (result) << std::endl;
   return 0;
 }
    \endcode

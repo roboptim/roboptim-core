@@ -43,7 +43,7 @@ namespace optimization
     explicit Solver (const problem_t&) throw ();
     ~Solver () throw ();
 
-    const problem_t& getProblem () const throw ();
+    const problem_t& problem () const throw ();
   protected:
     const problem_t& problem_;
   };

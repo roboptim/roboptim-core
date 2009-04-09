@@ -44,7 +44,7 @@ int run_test ()
   DummySolver::problem_t pb (f);
 
   solver_t solver (pb);
-  solver_t::result_t res = solver.getMinimum ();
+  solver_t::result_t res = solver.minimum ();
   boost::get<SolverError> (res);
 
   return 0;

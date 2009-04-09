@@ -28,8 +28,9 @@
 namespace optimization
 {
   /// Define a function which is derivable twice.
-  struct TwiceDerivableFunction : public DerivableFunction
+  class TwiceDerivableFunction : public DerivableFunction
   {
+  public:
     /// Hessian type.
     typedef matrix_t hessian_t;
 

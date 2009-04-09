@@ -70,7 +70,7 @@ namespace optimization
 
     /// Returns the function minimum (and solve the problem, if
     /// it has not yet been solved).
-    const result_t& getMinimum () throw ();
+    const result_t& minimum () throw ();
   protected:
     /// Result of minimization.
     result_t result_;
