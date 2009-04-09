@@ -36,7 +36,7 @@ namespace optimization
   template <typename F_, typename C_>
   Solver<F, C>::Solver (const Problem<F_, C_>& pb) throw ()
     : GenericSolver (),
-      problem_ (problem_converter<Problem<F_, C_> > (pb))
+      problem_ (pb)
   {
   }
 

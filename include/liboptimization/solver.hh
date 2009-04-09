@@ -49,7 +49,7 @@ namespace optimization
 
     const problem_t& problem () const throw ();
   protected:
-    const problem_t& problem_;
+    const problem_t problem_;
   };
 
 

@@ -1,5 +1,13 @@
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Copy problem into the solver.
+	* include/liboptimization/solver.hh: Copy the problem.
+	* include/liboptimization/solver.hxx: Do not convert
+        dynamically a problem implicitly.
+	* src/doc.hh: Fix typo.
+
+2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement problem conversion.
 	* build-aux/boost.m4,
 	* configure.ac: Search for Boost.MPL.
