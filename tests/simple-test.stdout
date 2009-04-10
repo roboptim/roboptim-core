@@ -3,13 +3,15 @@ Result bound: (-inf, inf)
 Arguments bounds (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
 Result scale: 1
 Arguments scale: 1, 1, 1, 1
-No constraints
+No constraints.
 No starting point.
+Infinity value: inf
 ---
 Function
 Result bound: (-inf, inf)
 Arguments bounds (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
 Result scale: 1
 Arguments scale: 1, 1, 1, 1
-No constraints
+No constraints.
 No starting point.
+Infinity value: inf

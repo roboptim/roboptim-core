@@ -1,5 +1,13 @@
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make constraints access more generic in a Problem class.
+	* include/liboptimization/problem.hxx: Acces constraint through macro.
+	* tests/cfsqp.stdout
+	* tests/ipopt.stdout
+	* tests/simple-test.stdout: Update output.
+
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Display value of infinity for problem in pretty-printing.
 	* include/liboptimization/problem.hxx: Here.
 

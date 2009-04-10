@@ -66,4 +66,5 @@ Result scale: 1
 Arguments scale: 1, 1, 1, 1
 Number of constraints: 2
 Starting point: [4](1,5,5,1)
+Infinity value: inf
 A solution should have been found. Failing...

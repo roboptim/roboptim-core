@@ -27,6 +27,54 @@
 # include <boost/type_traits/remove_pointer.hpp>
 # include <boost/variant.hpp>
 # include <boost/variant/get.hpp>
+# include <boost/variant/apply_visitor.hpp>
+
+// Allow generic constraints access (independently of C's type).
+# define DECL_ACCESS_CONSTRAINT(UNIQ_ID, RET_TYPE, DOIT)        \
+  namespace detail                                              \
+  {                                                             \
+    template <typename T>                                       \
+    RET_TYPE impl_ac_##UNIQ_ID (const T* t);                    \
+                                                                \
+    template <typename T>                                       \
+    RET_TYPE impl_ac_##UNIQ_ID (const T& t);                    \
+                                                                \
+    struct ImplVisitor##UNIQ_ID                                 \
+      : public boost::static_visitor<RET_TYPE>                  \
+    {                                                           \
+      template <typename T>                                     \
+        RET_TYPE operator () (T& t)                             \
+      {                                                         \
+        return impl_ac_##UNIQ_ID (t);                           \
+      }                                                         \
+    };                                                          \
+                                                                \
+    template <typename T1, typename T2>                         \
+      RET_TYPE                                                  \
+      impl_ac_##UNIQ_ID (const boost::variant<T1, T2>& variant) \
+    {                                                           \
+      ImplVisitor##UNIQ_ID v;                                   \
+      return boost::apply_visitor (v, variant);                 \
+    }                                                           \
+                                                                \
+    template <typename T>                                       \
+      RET_TYPE                                                  \
+    impl_ac_##UNIQ_ID (const T* pt)                             \
+    {                                                           \
+      assert (!!pt);                                            \
+      return impl_ac_##UNIQ_ID (*pt);                           \
+    }                                                           \
+                                                                \
+    template <typename T>                                       \
+      RET_TYPE                                                  \
+      impl_ac_##UNIQ_ID (const T& t)                            \
+    {                                                           \
+      DOIT;                                                     \
+    }                                                           \
+  }
+
+#define ACCESS_CONSTRAINT(UNIQ_ID, C)           \
+  detail::impl_ac_##UNIQ_ID (C)
 
 namespace optimization
 {
@@ -114,39 +162,7 @@ namespace optimization
     return startingPoint_;
   }
 
-
-  namespace detail
-  {
-    template <typename T1, typename T2>
-    Function::value_type
-    impl_get_infinity (const boost::variant<T1, T2>& variant)
-    {
-      switch (variant.which ())
-        {
-        case 0:
-          return boost::get<T1> (variant)->infinity;
-        case 1:
-          return boost::get<T2> (variant)->infinity;
-        default:
-          assert (0);
-        }
-    }
-
-    template <typename T>
-    Function::value_type
-    impl_get_infinity (const T* t)
-    {
-      return t->infinity;
-    }
-
-    template <typename T>
-    Function::value_type
-    impl_get_infinity (const T& t)
-    {
-      return t.infinity;
-    }
-  }
-
+  DECL_ACCESS_CONSTRAINT(get_infinity, Function::value_type, return t.infinity);
   template <typename F, typename C>
   typename Problem<F, C>::function_t::value_type
   Problem<F, C>::infinity () const throw ()
@@ -155,7 +171,7 @@ namespace optimization
     typedef typename constraints_t::const_iterator citer_t;
     for (citer_t it = constraints_.begin ();
          it != constraints_.end (); ++it)
-      res = std::min (res, detail::impl_get_infinity (*it));
+      res = std::min (res, ACCESS_CONSTRAINT(get_infinity, *it));
     return res;
   }
 
@@ -175,7 +191,7 @@ namespace optimization
     {
       return o << t;
     }
-  }
+  };
 
   template <typename F, typename C>
   std::ostream&
@@ -218,6 +234,10 @@ namespace optimization
     return pb.print (o);
   }
 }; // end of namespace optimization
+
+
+# undef DECL_ACCESS_CONSTRAINT
+# undef ACCESS_CONSTRAINT
 
 # include <liboptimization/problem.hxx>
 #endif //! OPTIMIZATION_PROBLEM_HH
