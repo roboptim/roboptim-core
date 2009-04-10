@@ -33,7 +33,14 @@
    <ul>
    <li>advanced typing (Boost.Optional and Boost.Variant),</li>
    <li>matrix manipulation (Boost.uBLAS).</li>
+   <li>and meta-programming (Boost.StaticAssert, Boost.TypeTraits, Boost.MPL).</li>
    </ul>
+
+   New users might want to check out the idea behind Boost.Optional and Boost.Variant
+   are these types are present in the public interface.
+
+   Users do not have to know about meta-programming to use this library.
+
 
    To get basic knowledge about the library, you might want to check out the
    \ref quickstart page.

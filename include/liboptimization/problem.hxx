@@ -128,13 +128,6 @@ namespace optimization
   }
 
   template <typename F, typename C>
-  typename Problem<F, C>::constraints_t&
-  Problem<F, C>::constraints () throw ()
-  {
-    return constraints_;
-  }
-
-  template <typename F, typename C>
   const typename Problem<F, C>::constraints_t&
   Problem<F, C>::constraints () const throw ()
   {
@@ -143,8 +136,9 @@ namespace optimization
 
   template <typename F, typename C>
   void
-  Problem<F, C>::addConstraint (const C& x) throw ()
+  Problem<F, C>::addConstraint (const C& x) throw (std::runtime_error)
   {
+    checkBounds (x), checkScales (x);
     constraints_.push_back (x);
   }
 
@@ -232,6 +226,39 @@ namespace optimization
   operator<< (std::ostream& o, const Problem<F, C>& pb)
   {
     return pb.print (o);
+  }
+
+  DECL_ACCESS_CONSTRAINT(get_arg_bounds, const Function::bounds_t&, return t.argBounds);
+  template <typename F, typename C>
+  void
+  Problem<F, C>::checkBounds (const C& x) const throw (std::runtime_error)
+  {
+    typedef typename constraints_t::const_iterator citer_t;
+    for (citer_t it = constraints_.begin ();
+         it != constraints_.end (); ++it)
+      {
+        const Function::bounds_t& ab = ACCESS_CONSTRAINT(get_arg_bounds, *it);
+        for (unsigned i = 0; i < ab.size (); ++i)
+          if (ab[i].first > function_.argBounds[i].first
+              || ab[i].second < function_.argBounds[i].second)
+            throw std::runtime_error ("Invalid constraint (invalid bounds).");
+      }
+  }
+
+  DECL_ACCESS_CONSTRAINT(get_arg_scales, const Function::scales_t&, return t.argScales);
+  template <typename F, typename C>
+  void
+  Problem<F, C>::checkScales (const C& x) const throw (std::runtime_error)
+  {
+    typedef typename constraints_t::const_iterator citer_t;
+    for (citer_t it = constraints_.begin ();
+         it != constraints_.end (); ++it)
+      {
+        const Function::scales_t& ab = ACCESS_CONSTRAINT(get_arg_scales, *it);
+        for (unsigned i = 0; i < ab.size (); ++i)
+          if (ab[i] != function_.argScales[i])
+            throw std::runtime_error ("Invalid constraint (invalid scales).");
+      }
   }
 }; // end of namespace optimization
 

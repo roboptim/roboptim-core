@@ -22,6 +22,7 @@
 #ifndef OPTIMIZATION_PROBLEM_HH
 # define OPTIMIZATION_PROBLEM_HH
 # include <iostream>
+# include <stdexcept>
 # include <boost/optional.hpp>
 # include <boost/static_assert.hpp>
 # include <boost/type_traits/is_base_of.hpp>
@@ -60,8 +61,7 @@ namespace optimization
     const function_t& function () const throw ();
 
     const constraints_t& constraints () const throw ();
-    constraints_t& constraints () throw ();
-    void addConstraint (const C&) throw ();
+    void addConstraint (const C&) throw (std::runtime_error);
 
     startingPoint_t& startingPoint () throw ();
     const startingPoint_t& startingPoint () const throw ();
@@ -72,6 +72,15 @@ namespace optimization
     typename function_t::value_type infinity () const throw ();
 
     std::ostream& print (std::ostream& o) const throw ();
+
+    /// Check if the constraints argument's bounds are compatible
+    /// with the cost function's arguments bounds.
+    /// Ie: g_l < f_l and g_u > f_u.
+    void checkBounds (const C&) const throw (std::runtime_error);
+
+    /// Check if the constraints argument's scales are identical
+    /// to cost function's arguments scales.
+    void checkScales (const C&) const throw (std::runtime_error);
   private:
     const function_t& function_;
     startingPoint_t startingPoint_;

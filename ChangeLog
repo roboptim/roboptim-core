@@ -1,5 +1,12 @@
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Check for compatible bounds/scales on constraints.
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx: Check arguments and scales.
+	* src/doc.hh: More documentation about Boost dependencies.
+
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make constraints access more generic in a Problem class.
 	* include/liboptimization/problem.hxx: Acces constraint through macro.
 	* tests/cfsqp.stdout
