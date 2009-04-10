@@ -1,5 +1,27 @@
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add indentation in pretty-printing.
+	* include/Makefile.am: Add indent.hh.
+	* include/liboptimization/indent.hh: Copy from
+        src/derivable-function.cc.
+	* include/liboptimization/ipopt.hh: Rename getApplication into
+         getIpoptApplication.
+	* include/liboptimization/problem.hxx: Indent in print ().
+	* src/Makefile.am: Add indent.cc.
+	* src/cfsqp.cc: Fix bigbnd.
+	* src/derivable-function.cc,
+	* src/function.cc: Indent in print ().
+	* src/indent.cc: New.
+	* src/ipopt.cc: Rename getApplication into getIpoptApplication.
+	* src/linear-function.cc,
+	* src/quadratic-function.cc,
+	* src/twice-derivable-function.cc: Indent in print ().
+	* tests/cfsqp.stdout,
+	* tests/ipopt.stdout,
+	* tests/simple-test.stdout: Regenerate test suite reference.
+
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Check for compatible bounds/scales on constraints.
 	* include/liboptimization/problem.hh,
 	* include/liboptimization/problem.hxx: Check arguments and scales.

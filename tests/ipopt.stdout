@@ -1,21 +1,22 @@
-Twice derivable function
+Problem:
+  Twice derivable function
 Result bound: (-inf, inf)
 Arguments bounds (1, 5), (1, 5), (1, 5), (1, 5)
 Result scale: 1
 Arguments scale: 1, 1, 1, 1
-Number of constraints: 2
-Twice derivable function
+  Number of constraints: 2
+  Twice derivable function
 Result bound: (25, inf)
 Arguments bounds (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
 Result scale: 1
 Arguments scale: 1, 1, 1, 1
-Twice derivable function
+  Twice derivable function
 Result bound: (40, 40)
 Arguments bounds (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
 Result scale: 1
 Arguments scale: 1, 1, 1, 1
-Starting point: [4](1,5,5,1)
-Infinity value: inf
+  Starting point: [4](1,5,5,1)
+  Infinity value: inf
 A solution has been found: 
 [4](1,4.743,3.82115,1.37941)
 f(*x) = 14.5723

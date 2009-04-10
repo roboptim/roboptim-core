@@ -17,31 +17,32 @@
 
 
 /**
- * \brief Implementation of the TwiceDerivableFunction class.
+ * \brief Declaration of indentation related methods.
  */
 
-#include "liboptimization/twice-derivable-function.hh"
-#include "liboptimization/indent.hh"
-#include "liboptimization/util.hh"
+#ifndef OPTIMIZATION_INDENT_HH
+# define OPTIMIZATION_INDENT_HH
+# include <iosfwd>
 
 namespace optimization
 {
-  TwiceDerivableFunction::TwiceDerivableFunction
-  (size_type n, value_type infinity)
-    throw ()
-    : DerivableFunction (n, infinity)
-  {
-  }
+  /// Increment the indentation.
+  std::ostream& incindent (std::ostream& o);
 
-  std::ostream&
-  TwiceDerivableFunction::print (std::ostream& o) const throw ()
-  {
-    return o << incindent
-             << "Twice derivable function" << std::endl
-             << "Result bound: " << bound << std::endl
-             << "Arguments bounds " << argBounds << std::endl
-             << "Result scale: " << scale << std::endl
-             << "Arguments scale: " << argScales
-             << decindent;
-  }
-} // end of namespace optimization
+  /// Decrement the indentation.
+  std::ostream& decindent (std::ostream& o);
+
+  /// Reset the indentation.
+  std::ostream& resetindent (std::ostream& o);
+
+  /// Print an end of line, then set the indentation.
+  std::ostream& iendl (std::ostream& o);
+
+  /// Increment the indentation, print an end of line, and set the indentation.
+  std::ostream& incendl (std::ostream& o);
+
+  /// Decrement the indentation, print an end of line, and set the indentation.
+  std::ostream& decendl (std::ostream& o);
+}
+
+#endif // !MISC_INDENT_HH

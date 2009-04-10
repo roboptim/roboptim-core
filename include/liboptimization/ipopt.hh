@@ -59,7 +59,7 @@ namespace optimization
     virtual void solve () throw ();
 
     /// Get Ipopt Application object for Ipopt specific tuning.
-    virtual Ipopt::SmartPtr<Ipopt::IpoptApplication> getApplication ()
+    virtual Ipopt::SmartPtr<Ipopt::IpoptApplication> getIpoptApplication ()
       throw ();
   private:
     /// Smart pointer to the Ipopt non linear problem description.

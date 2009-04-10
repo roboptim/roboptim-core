@@ -29,6 +29,8 @@
 # include <boost/variant/get.hpp>
 # include <boost/variant/apply_visitor.hpp>
 
+# include <liboptimization/indent.hh>
+
 // Allow generic constraints access (independently of C's type).
 # define DECL_ACCESS_CONSTRAINT(UNIQ_ID, RET_TYPE, DOIT)        \
   namespace detail                                              \
@@ -110,8 +112,8 @@ namespace optimization
   {
     // Check that F is a subtype of F_.
     BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
-    // Check that C is a subtype of C_.
 
+    // Check that C is a subtype of C_.
     typedef typename boost::remove_pointer<C_>::type rpC_;
     typedef typename boost::remove_pointer<C>::type rpC;
     BOOST_STATIC_ASSERT((boost::is_base_of<rpC, rpC_>::value));
@@ -191,8 +193,9 @@ namespace optimization
   std::ostream&
   Problem<F, C>::print (std::ostream& o) const throw ()
   {
+    o << "Problem:" << incendl;
     // Function.
-    o << function () << std::endl;
+    o << function () << iendl;
 
     // Constraints.
     if (constraints ().empty ())
@@ -206,19 +209,19 @@ namespace optimization
            it != constraints ().end ();
            ++it)
         {
-          o << std::endl;
+          o << iendl;
           detail::impl_print (o, *it);
         }
 
     // Starting point.
     if (startingPoint_)
-      o << std::endl << "Starting point: " << *startingPoint_;
+      o << iendl << "Starting point: " << *startingPoint_;
     else
-      o << std::endl << "No starting point.";
+      o << iendl << "No starting point.";
 
     // Infinity.
-    o << std::endl << "Infinity value: " << infinity ();
-    return o;
+    o << iendl << "Infinity value: " << infinity ();
+    return o << decindent;
   }
 
   template <typename F, typename C>

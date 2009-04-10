@@ -11,6 +11,7 @@ liboptimization_la_SOURCES = 		\
 	dummy.cc			\
 	function.cc			\
 	generic-solver.cc		\
+	indent.cc			\
 	linear-function.cc		\
 	quadratic-function.cc		\
 	solver-error.cc			\

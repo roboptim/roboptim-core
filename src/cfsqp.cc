@@ -197,7 +197,7 @@ namespace optimization
     int mode = 100;
     int miter = 500;
     int inform = 0;
-    double bignd = problem ().infinity ();
+    double bignd = 1e10;
     double eps = 1e-8;
     double epseqn = 1e-8;
     double udelta = 1e-8;

@@ -415,7 +415,7 @@ namespace optimization
   }
 
   Ipopt::SmartPtr<Ipopt::IpoptApplication>
-  IpoptSolver::getApplication () throw ()
+  IpoptSolver::getIpoptApplication () throw ()
   {
     return app_;
   }

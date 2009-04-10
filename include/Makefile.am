@@ -7,6 +7,7 @@ nobase_include_HEADERS =				\
 	liboptimization/function.hh			\
 	liboptimization/fwd.hh				\
 	liboptimization/generic-solver.hh		\
+	liboptimization/indent.hh			\
 	liboptimization/linear-function.hh		\
 	liboptimization/problem.hh			\
 	liboptimization/problem.hxx			\

@@ -33,7 +33,7 @@
  step                	   2.50000000000000e-01
  d0norm              	   5.65685424949238e+00
  ktnorm              	   5.65685424949238e+00
- ncallg                                      13
+ ncallg                                      14
 
  iteration                                    2
  inform                                       4
@@ -50,7 +50,7 @@
  step                	   2.22044604925031e-16
  d0norm              	   4.24688008800061e+00
  ktnorm              	   2.27690013868040e+01
- ncallg                                      69
+ ncallg                                      70
 
 
 Error : Step size has been smaller than the computed
@@ -59,12 +59,13 @@ machine precision !!
 
 Error: No feasible point is found for nonlinear inequality
 constraints and linear equality constraints
-Twice derivable function
+Problem:
+  Twice derivable function
 Result bound: (-inf, inf)
 Arguments bounds (1, 5), (1, 5), (1, 5), (1, 5)
 Result scale: 1
 Arguments scale: 1, 1, 1, 1
-Number of constraints: 2
-Starting point: [4](1,5,5,1)
-Infinity value: inf
+  Number of constraints: 2
+  Starting point: [4](1,5,5,1)
+  Infinity value: inf
 A solution should have been found. Failing...
