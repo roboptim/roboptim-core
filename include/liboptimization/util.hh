@@ -43,7 +43,13 @@ namespace optimization
   }; // end of namespace detail.
 
   template <typename T1, typename T2>
-  std::ostream& operator<< (std::ostream&, boost::variant<T1, T2>&);
+  std::ostream& operator<< (std::ostream&, const boost::variant<T1, T2>&);
+
+  template <typename T>
+  std::ostream& operator<< (std::ostream&, const std::vector<T>&);
+
+  template <typename T1, typename T2>
+  std::ostream& operator<< (std::ostream&, const std::pair<T1, T2>&);
 }; // end of namespace optimization.
 
 # include <liboptimization/util.hxx>

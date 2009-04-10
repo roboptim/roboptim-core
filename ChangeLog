@@ -1,5 +1,20 @@
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Enhance pretty-printing.
+	* include/liboptimization/util.hh,
+	* include/liboptimization/util.hxx: Print
+        vectors and pairs in a generic way.
+	* src/derivable-function.cc,
+	* src/function.cc,
+	* src/linear-function.cc,
+	* src/quadratic-function.cc,
+	* src/twice-derivable-function.cc: Update print method.
+	* tests/cfsqp.stdout,
+	* tests/ipopt.stdout,
+	* tests/simple-test.stdout: Update reference output.
+
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add addConstraint to Problem, enhance Problem pretty-printing.
 	* include/liboptimization/problem.hh,
 	* include/liboptimization/problem.hxx: Add addConstraint and

@@ -21,6 +21,7 @@
  */
 
 #include "liboptimization/quadratic-function.hh"
+#include "liboptimization/util.hh"
 
 namespace optimization
 {
@@ -33,6 +34,10 @@ namespace optimization
   std::ostream&
   QuadraticFunction::print (std::ostream& o) const throw ()
   {
-    return o << "Quadratic function";
+    return o << "Quadratic function" << std::endl
+             << "Result bound: " << bound << std::endl
+             << "Arguments bounds " << argBounds << std::endl
+             << "Result scale: " << scale << std::endl
+             << "Arguments scale: " << argScales;
   }
 } // end of namespace optimization

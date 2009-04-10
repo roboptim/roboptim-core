@@ -60,5 +60,10 @@ machine precision !!
 Error: No feasible point is found for nonlinear inequality
 constraints and linear equality constraints
 Twice derivable function
+Result bound: (-inf, inf)
+Arguments bounds (1, 5), (1, 5), (1, 5), (1, 5)
+Result scale: 1
+Arguments scale: 1, 1, 1, 1
 Number of constraints: 2
+Starting point: [4](1,5,5,1)
 A solution should have been found. Failing...

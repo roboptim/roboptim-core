@@ -63,11 +63,34 @@ namespace optimization
   }; // end of namespace detail.
 
   template <typename T1, typename T2>
-  std::ostream& operator<< (std::ostream& o, boost::variant<T1, T2>& var)
+  std::ostream& operator<< (std::ostream& o, const boost::variant<T1, T2>& var)
   {
     detail::GenVariantPrintVisitor pv (o);
     boost::apply_visitor (pv, var);
     return o;
+  }
+
+  template <typename T>
+  std::ostream& operator<< (std::ostream& o, const std::vector<T>& vect)
+  {
+    typedef typename std::vector<T>::const_iterator citer_t;
+
+    if (vect.empty ())
+        return o << "Empty vector";
+
+    citer_t it = vect.begin ();
+    o << *it;
+    ++it;
+
+    for (; it != vect.end (); ++it)
+      o << ", " << *it;
+    return o;
+  }
+
+  template <typename T1, typename T2>
+  std::ostream& operator<< (std::ostream& o, const std::pair<T1, T2>& p)
+  {
+    return o << "(" << p.first << ", " << p.second << ")";
   }
 
 }; // end of namespace optimization.
