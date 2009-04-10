@@ -1,5 +1,10 @@
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Display value of infinity for problem in pretty-printing.
+	* include/liboptimization/problem.hxx: Here.
+
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Enhance variant pretty printing.
 	* include/liboptimization/util.hxx: Handle variant
         on pointers.

@@ -181,14 +181,16 @@ namespace optimization
   std::ostream&
   Problem<F, C>::print (std::ostream& o) const throw ()
   {
+    // Function.
     o << function () << std::endl;
+
+    // Constraints.
     if (constraints ().empty ())
-      o << "No constraints";
+      o << "No constraints.";
     else
       o << "Number of constraints: " << constraints ().size ();
 
     typedef typename constraints_t::const_iterator citer_t;
-
     if (boost::is_pointer<C> ())
       for (citer_t it = constraints ().begin ();
            it != constraints ().end ();
@@ -197,10 +199,15 @@ namespace optimization
           o << std::endl;
           detail::impl_print (o, *it);
         }
+
+    // Starting point.
     if (startingPoint_)
       o << std::endl << "Starting point: " << *startingPoint_;
     else
       o << std::endl << "No starting point.";
+
+    // Infinity.
+    o << std::endl << "Infinity value: " << infinity ();
     return o;
   }
 
