@@ -21,6 +21,7 @@
 
 #ifndef OPTIMIZATION_PROBLEM_HH
 # define OPTIMIZATION_PROBLEM_HH
+# include <iostream>
 # include <boost/optional.hpp>
 # include <boost/static_assert.hpp>
 # include <boost/type_traits/is_base_of.hpp>
@@ -64,11 +65,15 @@ namespace optimization
     startingPoint_t& startingPoint () throw ();
     const startingPoint_t& startingPoint () const throw ();
 
+    std::ostream& print (std::ostream& o) const throw ();
   private:
     const function_t& function_;
     startingPoint_t startingPoint_;
     constraints_t constraints_;
   };
+
+  template <typename F, typename C>
+  std::ostream& operator<< (std::ostream& o, const Problem<F, C>& pb);
 }; // end of namespace optimization
 
 # include <liboptimization/problem.hxx>

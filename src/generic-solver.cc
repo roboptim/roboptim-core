@@ -50,4 +50,16 @@ namespace optimization
     return result_;
   }
 
+  std::ostream&
+  GenericSolver::print (std::ostream& o) const throw ()
+  {
+    o << "Generic Solver";
+    return o;
+  }
+
+  std::ostream&
+  operator<< (std::ostream& o, const GenericSolver& gs)
+  {
+    return gs.print (o);
+  }
 }; // end of namespace optimization

@@ -36,4 +36,10 @@ namespace optimization
     h.clear ();
     return h;
   }
+
+  std::ostream&
+  LinearFunction::print (std::ostream& o) const throw ()
+  {
+    return o << "Linear function";
+  }
 } // end of namespace optimization

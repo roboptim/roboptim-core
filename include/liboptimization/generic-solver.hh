@@ -71,11 +71,15 @@ namespace optimization
     /// Returns the function minimum (and solve the problem, if
     /// it has not yet been solved).
     const result_t& minimum () throw ();
+
+    /// Print function that may be overrided to be more specific.
+    virtual std::ostream& print (std::ostream&) const throw ();
   protected:
     /// Result of minimization.
     result_t result_;
   };
 
+  std::ostream& operator<< (std::ostream&, const GenericSolver&);
 }; // end of namespace optimization
 
 #endif //! OPTIMIZATION_GENERIC_SOLVER_HH

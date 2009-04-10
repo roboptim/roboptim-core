@@ -33,6 +33,8 @@ namespace optimization
   public:
     QuadraticFunction (size_type n, value_type infinity =
                     std::numeric_limits<value_type>::infinity ()) throw ();
+
+    virtual std::ostream& print (std::ostream&) const throw ();
   };
 
 }; // end of namespace optimization

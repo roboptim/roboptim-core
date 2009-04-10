@@ -51,6 +51,12 @@ namespace optimization
     return problem_;
   }
 
+  template <typename F, typename C>
+  std::ostream&
+  Solver<F, C>::print (std::ostream& o) const throw ()
+  {
+    return o << problem_;
+  }
 }; // end of namespace optimization
 
 #endif //! OPTIMIZATION_SOLVER_HH

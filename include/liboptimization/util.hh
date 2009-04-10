@@ -21,6 +21,7 @@
  */
 #ifndef OPTIMIZATION_UTIL_HH
 # define OPTIMIZATION_UTIL_HH
+# include <boost/variant.hpp>
 # include <liboptimization/derivable-function.hh>
 
 namespace optimization
@@ -40,6 +41,9 @@ namespace optimization
                              const std::vector<const T*>& c,
                              const DerivableFunction::vector_t& x);
   }; // end of namespace detail.
+
+  template <typename T1, typename T2>
+  std::ostream& operator<< (std::ostream&, boost::variant<T1, T2>&);
 }; // end of namespace optimization.
 
 # include <liboptimization/util.hxx>

@@ -79,4 +79,16 @@ namespace optimization
     return makeBound (l, infinity);
   }
 
+  std::ostream&
+  Function::print (std::ostream& o) const throw ()
+  {
+    o << "Function";
+    return o;
+  }
+
+  std::ostream&
+  operator<< (std::ostream& o, const Function& f)
+  {
+    return f.print (o);
+  }
 } // end of namespace optimization

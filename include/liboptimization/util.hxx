@@ -21,6 +21,8 @@
  */
 #ifndef OPTIMIZATION_UTIL_HXX
 # define OPTIMIZATION_UTIL_HXX
+# include <boost/variant/apply_visitor.hpp>
+
 # include <liboptimization/function.hh>
 
 namespace optimization
@@ -41,7 +43,33 @@ namespace optimization
         }
     }
 
+
+    struct GenVariantPrintVisitor : public boost::static_visitor<void>
+    {
+      GenVariantPrintVisitor (std::ostream& o)
+        : o_ (o)
+      {}
+
+      template <typename T>
+      void operator () (T& value)
+      {
+        o_ << value;
+      }
+
+    private:
+      std::ostream& o_;
+    };
+
   }; // end of namespace detail.
+
+  template <typename T1, typename T2>
+  std::ostream& operator<< (std::ostream& o, boost::variant<T1, T2>& var)
+  {
+    detail::GenVariantPrintVisitor pv (o);
+    boost::apply_visitor (pv, var);
+    return o;
+  }
+
 }; // end of namespace optimization.
 
 #endif //! OPTIMIZATION_UTIL_HXX

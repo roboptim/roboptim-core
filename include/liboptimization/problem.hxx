@@ -22,6 +22,7 @@
 #ifndef OPTIMIZATION_PROBLEM_HXX
 # define OPTIMIZATION_PROBLEM_HXX
 # include <algorithm>
+# include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
 
 namespace optimization
@@ -103,6 +104,52 @@ namespace optimization
     return startingPoint_;
   }
 
+  namespace detail
+  {
+    template <typename T>
+    std::ostream&
+    impl_print (std::ostream& o, const T* t)
+    {
+      return o << *t;
+    }
+
+    template <typename T>
+    std::ostream&
+    impl_print (std::ostream& o, const T& t)
+    {
+      return o << t;
+    }
+  }
+
+  template <typename F, typename C>
+  std::ostream&
+  Problem<F, C>::print (std::ostream& o) const throw ()
+  {
+    o << function () << std::endl;
+    if (constraints ().empty ())
+      o << "No constraints";
+    else
+      o << "Number of constraints: " << constraints ().size ();
+
+    typedef typename constraints_t::const_iterator citer_t;
+
+    if (boost::is_pointer<C> ())
+      for (citer_t it = constraints ().begin ();
+           it != constraints ().end ();
+           ++it)
+        {
+          o << std::endl;
+          detail::impl_print (o, *it);
+        }
+    return o;
+  }
+
+  template <typename F, typename C>
+  std::ostream&
+  operator<< (std::ostream& o, const Problem<F, C>& pb)
+  {
+    return pb.print (o);
+  }
 }; // end of namespace optimization
 
 # include <liboptimization/problem.hxx>

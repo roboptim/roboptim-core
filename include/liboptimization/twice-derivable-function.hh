@@ -40,6 +40,8 @@ namespace optimization
 
     /// Hessian.
     virtual hessian_t hessian (const vector_t&) const throw () = 0;
+
+    virtual std::ostream& print (std::ostream&) const throw ();
   };
 
 }; // end of namespace optimization

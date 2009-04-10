@@ -30,4 +30,9 @@ namespace optimization
   {
   }
 
+  std::ostream&
+  QuadraticFunction::print (std::ostream& o) const throw ()
+  {
+    return o << "Quadratic function";
+  }
 } // end of namespace optimization

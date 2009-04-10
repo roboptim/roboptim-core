@@ -39,6 +39,8 @@ namespace optimization
 
     /// Gradient.
     virtual gradient_t gradient (const vector_t&) const throw () = 0;
+
+    virtual std::ostream& print (std::ostream&) const throw ();
   };
 
 }; // end of namespace optimization

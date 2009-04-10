@@ -31,4 +31,9 @@ namespace optimization
   {
   }
 
+  std::ostream&
+  TwiceDerivableFunction::print (std::ostream& o) const throw ()
+  {
+    return o << "Twice derivable function";
+  }
 } // end of namespace optimization

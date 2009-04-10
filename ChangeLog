@@ -1,5 +1,35 @@
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Implement I/O for functions, problems and solvers.
+	* include/liboptimization/cfsqp.hh,
+	* include/liboptimization/derivable-function.hh,
+	* include/liboptimization/function.hh,
+	* include/liboptimization/generic-solver.hh,
+	* include/liboptimization/linear-function.hh,
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx,
+	* include/liboptimization/quadratic-function.hh,
+	* include/liboptimization/solver.hh,
+	* include/liboptimization/solver.hxx,
+	* include/liboptimization/twice-derivable-function.hh,
+	* include/liboptimization/util.hh,
+	* include/liboptimization/util.hxx,
+	* src/derivable-function.cc,
+	* src/function.cc,
+	* src/generic-solver.cc,
+	* src/linear-function.cc,
+	* src/quadratic-function.cc,
+	* src/twice-derivable-function.cc: Overload operator<<
+        and define print method to enable instance printing.
+	* tests/cfsqp.cc,
+	* tests/ipopt.cc,
+	* tests/simple-test.cc: Print solver.
+	* tests/cfsqp.stdout,
+	* tests/ipopt.stdout,
+	* tests/simple-test.stdout: Regenerate output.
+
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove problem_converter. Enhance type checks.
 	* include/Makefile.am: Remove.
 	* include/liboptimization/problem-converter.hh: Remove.

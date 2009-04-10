@@ -21,6 +21,7 @@
 
 #ifndef OPTIMIZATION_FUNCTION_HH
 # define OPTIMIZATION_FUNCTION_HH
+# include <iostream>
 # include <limits>
 # include <utility>
 
@@ -83,6 +84,8 @@ namespace optimization
     /// Construct a bound from an upper bound.
     bound_t makeUpperBound (value_type) const throw ();
 
+    virtual std::ostream& print (std::ostream&) const throw ();
+
     /// Function bounds.
     bound_t bound;
 
@@ -95,6 +98,7 @@ namespace optimization
     scales_t argScales;
   };
 
+  std::ostream& operator<< (std::ostream&, const Function&);
 }; // end of namespace optimization
 
 #endif //! OPTIMIZATION_FUNCTION_HH

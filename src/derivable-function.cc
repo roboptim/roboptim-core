@@ -30,4 +30,10 @@ namespace optimization
   {
   }
 
+  std::ostream&
+  DerivableFunction::print (std::ostream& o) const throw ()
+  {
+    return o << "Derivable function";
+  }
+
 } // end of namespace optimization

@@ -27,6 +27,7 @@
 # include <liboptimization/derivable-function.hh>
 # include <liboptimization/linear-function.hh>
 # include <liboptimization/solver.hh>
+# include <liboptimization/util.hh>
 
 namespace optimization
 {

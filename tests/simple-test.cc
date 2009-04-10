@@ -47,6 +47,13 @@ int run_test ()
   solver_t::result_t res = solver.minimum ();
   boost::get<SolverError> (res);
 
+  std::cout << pb << std::endl
+            << "---" << std::endl
+            << solver << std::endl;
+
+  GenericSolver* gs = &solver;
+  boost::get<SolverError> (gs->minimum ());
+
   return 0;
 }
 

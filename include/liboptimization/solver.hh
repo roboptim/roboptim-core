@@ -48,6 +48,8 @@ namespace optimization
     ~Solver () throw ();
 
     const problem_t& problem () const throw ();
+
+    virtual std::ostream& print (std::ostream&) const throw ();
   protected:
     const problem_t problem_;
   };

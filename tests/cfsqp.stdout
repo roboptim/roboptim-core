@@ -1,1 +1,64 @@
+
+
+  CFSQP Version 2.5d (Released February 1998) 
+          Copyright (c) 1993 --- 1998       
+           C.T. Lawrence, J.L. Zhou         
+                and A.L. Tits               
+             All Rights Reserved            
+
+ The given initial point is infeasible for inequality
+ constraints and linear equality constraints:
+                     	   1.00000000000000e+00
+ 			   5.00000000000000e+00
+ 			   5.00000000000000e+00
+ 			   1.00000000000000e+00
+ objectives
+ 			                   -inf
+ 			   0.00000000000000e+00
+ 			   1.20000000000000e+01
+ 			  -1.20000000000000e+01
+ objmax              	   1.20000000000000e+01
+ 
+ iteration                                    1
+ x                   	   1.00000000000000e+00
+ 			   4.00000000000000e+00
+ 			   4.00000000000000e+00
+ 			   1.00000000000000e+00
+ objectives
+ 			                   -inf
+ 			   9.00000000000000e+00
+ 			  -6.00000000000000e+00
+ 			   6.00000000000000e+00
+ objmax              	   9.00000000000000e+00
+ step                	   2.50000000000000e-01
+ d0norm              	   5.65685424949238e+00
+ ktnorm              	   5.65685424949238e+00
+ ncallg                                      13
+
+ iteration                                    2
+ inform                                       4
+ x                   	   1.00000000000000e+00
+ 			   4.00000000000000e+00
+ 			   4.00000000000000e+00
+ 			   1.00000000000000e+00
+ objectives
+ 			                   -inf
+ 			   9.00000000000001e+00
+ 			  -3.54274241522903e+01
+ 			   3.54274241522903e+01
+ objmax              	   9.00000000000000e+00
+ step                	   2.22044604925031e-16
+ d0norm              	   4.24688008800061e+00
+ ktnorm              	   2.27690013868040e+01
+ ncallg                                      69
+
+
+Error : Step size has been smaller than the computed
+machine precision !!
+
+
+Error: No feasible point is found for nonlinear inequality
+constraints and linear equality constraints
+Twice derivable function
+Number of constraints: 2
 A solution should have been found. Failing...

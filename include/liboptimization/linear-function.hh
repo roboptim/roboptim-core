@@ -34,6 +34,8 @@ namespace optimization
                     std::numeric_limits<value_type>::infinity ()) throw ();
 
     virtual hessian_t hessian (const vector_t&) const throw ();
+
+    virtual std::ostream& print (std::ostream&) const throw ();
   };
 
 }; // end of namespace optimization

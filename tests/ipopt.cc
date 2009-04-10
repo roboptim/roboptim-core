@@ -48,6 +48,9 @@ int run_test ()
   // Compute the minimum and retrieve the result.
   IpoptSolver::result_t res = solver.minimum ();
 
+  // Display solver information.
+  std::cout << solver << std::endl;
+
   // Check if the minimization has succeed.
   if (res.which () != IpoptSolver::SOLVER_VALUE)
     {
