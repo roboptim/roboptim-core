@@ -61,6 +61,7 @@ namespace optimization
 
     const constraints_t& constraints () const throw ();
     constraints_t& constraints () throw ();
+    void addConstraint (const C&) throw ();
 
     startingPoint_t& startingPoint () throw ();
     const startingPoint_t& startingPoint () const throw ();

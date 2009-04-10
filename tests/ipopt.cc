@@ -34,8 +34,8 @@ int run_test ()
   G1 g1;
 
   IpoptSolver::problem_t pb (f);
-  pb.constraints ().push_back (&g0);
-  pb.constraints ().push_back (&g1);
+  pb.addConstraint (&g0);
+  pb.addConstraint (&g1);
 
   // Set the starting point.
   Function::vector_t start (f.n);

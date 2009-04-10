@@ -1,5 +1,15 @@
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add addConstraint to Problem, enhance Problem pretty-printing.
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx: Add addConstraint and
+        implement it. Enhance pretty printing (display starting point).
+	* tests/cfsqp.cc,
+	* tests/ipopt.cc: Use addConstraint
+	* tests/simple-test.cc: Document.
+
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement I/O for functions, problems and solvers.
 	* include/liboptimization/cfsqp.hh,
 	* include/liboptimization/derivable-function.hh,

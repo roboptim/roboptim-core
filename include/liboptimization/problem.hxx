@@ -22,6 +22,7 @@
 #ifndef OPTIMIZATION_PROBLEM_HXX
 # define OPTIMIZATION_PROBLEM_HXX
 # include <algorithm>
+# include <boost/numeric/ublas/io.hpp>
 # include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
 
@@ -91,6 +92,13 @@ namespace optimization
   }
 
   template <typename F, typename C>
+  void
+  Problem<F, C>::addConstraint (const C& x) throw ()
+  {
+    constraints_.push_back (x);
+  }
+
+  template <typename F, typename C>
   typename Problem<F, C>::startingPoint_t&
   Problem<F, C>::startingPoint () throw ()
   {
@@ -141,6 +149,10 @@ namespace optimization
           o << std::endl;
           detail::impl_print (o, *it);
         }
+    if (startingPoint_)
+      o << std::endl << "Starting point: " << *startingPoint_;
+    else
+      o << std::endl << "No starting point.";
     return o;
   }
 
