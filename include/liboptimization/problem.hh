@@ -23,7 +23,7 @@
 # define OPTIMIZATION_PROBLEM_HH
 # include <boost/optional.hpp>
 # include <boost/static_assert.hpp>
-# include <boost/type_traits/is_convertible.hpp>
+# include <boost/type_traits/is_base_of.hpp>
 
 # include <liboptimization/fwd.hh>
 # include <liboptimization/function.hh>
@@ -34,7 +34,7 @@ namespace optimization
   template <typename F, typename C>
   class Problem
   {
-    BOOST_STATIC_ASSERT((boost::is_convertible<F*, Function*>::value));
+    BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
   public:
     template <typename F_, typename C_>
     friend class Problem;

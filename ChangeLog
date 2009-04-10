@@ -1,3 +1,16 @@
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Remove problem_converter. Enhance type checks.
+	* include/Makefile.am: Remove.
+	* include/liboptimization/problem-converter.hh: Remove.
+	* include/liboptimization/problem-converter.hxx: Remove.
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx
+	* include/liboptimization/solver.hh,
+	* include/liboptimization/solver.hxx,
+	* src/cfsqp.cc: Use is_base_of instead of is_convertible.
+	* tests/Makefile.am: Distribute missing test files.
+
 2009-04-09  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Enhance copy constructor check for Problem class.

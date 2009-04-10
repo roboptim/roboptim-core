@@ -21,7 +21,6 @@
 
 #ifndef OPTIMIZATION_SOLVER_HXX
 # define OPTIMIZATION_SOLVER_HXX
-# include <liboptimization/problem-converter.hh>
 
 namespace optimization
 {

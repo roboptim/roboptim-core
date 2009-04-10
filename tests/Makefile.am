@@ -64,10 +64,12 @@ generate-reference:
 TESTSUITE_AT =					\
 	simple-test.at				\
 	ipopt.at				\
-	cfsqp.at
+	cfsqp.at				\
+	problem-cc.at
 
 # Distribute reference files.
 EXTRA_DIST +=					\
 	simple-test.stdout			\
 	ipopt.stdout				\
-	cfsqp.stdout
+	cfsqp.stdout				\
+	problem-cc.stdout

@@ -22,7 +22,7 @@
 #ifndef OPTIMIZATION_SOLVER_HH
 # define OPTIMIZATION_SOLVER_HH
 # include <boost/static_assert.hpp>
-# include <boost/type_traits/is_convertible.hpp>
+# include <boost/type_traits/is_base_of.hpp>
 
 # include <liboptimization/fwd.hh>
 # include <liboptimization/function.hh>
@@ -35,7 +35,7 @@ namespace optimization
   template <typename F, typename C>
   class Solver : public GenericSolver
   {
-    BOOST_STATIC_ASSERT((boost::is_convertible<F*, Function*>::value));
+    BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
   public:
 
     typedef Problem<F, C> problem_t;

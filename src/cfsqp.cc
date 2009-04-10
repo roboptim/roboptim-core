@@ -23,7 +23,7 @@
 #include <cfsqpusr.h>
 
 #include <boost/static_assert.hpp>
-#include <boost/type_traits/is_convertible.hpp>
+#include <boost/type_traits/is_base_of.hpp>
 #include <boost/variant/apply_visitor.hpp>
 
 #include "liboptimization/cfsqp.hh"
@@ -51,7 +51,7 @@ namespace optimization
       Function::value_type
       operator () (const C* c)
       {
-        BOOST_STATIC_ASSERT((boost::is_convertible<C*, Function*>::value));
+        BOOST_STATIC_ASSERT((boost::is_base_of<Function, C>::value));
 
         Function::value_type res = (*c) (x_);
 
@@ -82,7 +82,7 @@ namespace optimization
       Function::vector_t
       operator () (const C* c)
       {
-        BOOST_STATIC_ASSERT((boost::is_convertible<C*, Function*>::value));
+        BOOST_STATIC_ASSERT((boost::is_base_of<Function, C>::value));
 
         return c->gradient (x_);
       }

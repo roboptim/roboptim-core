@@ -10,8 +10,6 @@ nobase_include_HEADERS =				\
 	liboptimization/linear-function.hh		\
 	liboptimization/problem.hh			\
 	liboptimization/problem.hxx			\
-	liboptimization/problem-converter.hh		\
-	liboptimization/problem-converter.hxx		\
 	liboptimization/quadratic-function.hh		\
 	liboptimization/solver-error.hh			\
 	liboptimization/solver.hh			\

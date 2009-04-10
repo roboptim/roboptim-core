@@ -57,12 +57,12 @@ namespace optimization
       constraints_ ()
   {
     // Check that F is a subtype of F_.
-    BOOST_STATIC_ASSERT((boost::is_convertible<F_*, F*>::value));
+    BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
     // Check that C is a subtype of C_.
 
     typedef typename boost::remove_pointer<C_>::type rpC_;
     typedef typename boost::remove_pointer<C>::type rpC;
-    BOOST_STATIC_ASSERT((boost::is_convertible<rpC_*, rpC*>::value));
+    BOOST_STATIC_ASSERT((boost::is_base_of<rpC, rpC_>::value));
 
     std::copy (pb.constraints_.begin (), pb.constraints_.end (),
                constraints_.begin ());
