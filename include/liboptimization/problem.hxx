@@ -25,6 +25,8 @@
 # include <boost/numeric/ublas/io.hpp>
 # include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
+# include <boost/variant.hpp>
+# include <boost/variant/get.hpp>
 
 namespace optimization
 {
@@ -111,6 +113,52 @@ namespace optimization
   {
     return startingPoint_;
   }
+
+
+  namespace detail
+  {
+    template <typename T1, typename T2>
+    Function::value_type
+    impl_get_infinity (const boost::variant<T1, T2>& variant)
+    {
+      switch (variant.which ())
+        {
+        case 0:
+          return boost::get<T1> (variant)->infinity;
+        case 1:
+          return boost::get<T2> (variant)->infinity;
+        default:
+          assert (0);
+        }
+    }
+
+    template <typename T>
+    Function::value_type
+    impl_get_infinity (const T* t)
+    {
+      return t->infinity;
+    }
+
+    template <typename T>
+    Function::value_type
+    impl_get_infinity (const T& t)
+    {
+      return t.infinity;
+    }
+  }
+
+  template <typename F, typename C>
+  typename Problem<F, C>::function_t::value_type
+  Problem<F, C>::infinity () const throw ()
+  {
+    Function::value_type res = function_.infinity;
+    typedef typename constraints_t::const_iterator citer_t;
+    for (citer_t it = constraints_.begin ();
+         it != constraints_.end (); ++it)
+      res = std::min (res, detail::impl_get_infinity (*it));
+    return res;
+  }
+
 
   namespace detail
   {

@@ -66,6 +66,11 @@ namespace optimization
     startingPoint_t& startingPoint () throw ();
     const startingPoint_t& startingPoint () const throw ();
 
+    /// Compute the problem infinity.
+    /// which is the minimum of cost function and constraints
+    /// infinities.
+    typename function_t::value_type infinity () const throw ();
+
     std::ostream& print (std::ostream& o) const throw ();
   private:
     const function_t& function_;

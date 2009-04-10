@@ -1,5 +1,12 @@
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Compute problem infinity.
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx: Implement infinity method.
+	* src/cfsqp.cc: Use Problem::infinity method.
+
+2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Enhance pretty-printing.
 	* include/liboptimization/util.hh,
 	* include/liboptimization/util.hxx: Print
