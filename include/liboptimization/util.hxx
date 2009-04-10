@@ -51,9 +51,18 @@ namespace optimization
       {}
 
       template <typename T>
-      void operator () (T& value)
+      void operator () (const T& value)
       {
         o_ << value;
+      }
+
+      template <typename T>
+      void operator () (const T* value)
+      {
+        if (!value)
+          o_ << "Null pointer";
+        else
+          o_ << *value;
       }
 
     private:
