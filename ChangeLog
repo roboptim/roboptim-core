@@ -1,5 +1,11 @@
 2009-04-11  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add getter/setter for CFSQP.
+	* include/liboptimization/cfsqp.hh,
+	* src/cfsqp.cc: Here.
+
+2009-04-11  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement NumericQuadraticFunction and NumericLinearFunction.
 	* include/Makefile.am: Add new headers.
 	* include/liboptimization/linear-function.hh: Remove hessian.

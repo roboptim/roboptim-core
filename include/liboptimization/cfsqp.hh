@@ -49,12 +49,46 @@ namespace optimization
     virtual ~CFSQPSolver () throw ();
     /// Solve the problem.
     virtual void solve () throw ();
+
+    int& mode () throw ();
+    const int& mode () const throw ();
+
+    int& iprint () throw ();
+    const int& iprint () const throw ();
+
+    int& miter () throw ();
+    const int& miter () const throw ();
+
+    double& bigbnd () throw ();
+    const double& bigbnd () const throw ();
+
+    double& eps () throw ();
+    const double& eps () const throw ();
+
+    double& epseqn () throw ();
+    const double& epseqn () const throw ();
+
+    double& udelta () throw ();
+    const double& udelta () const throw ();
+
   private:
     /// Initialize bounds.
     void initialize_bounds (double* bl, double* bu) const throw ();
 
+    /// CFSQP mode.
+    int mode_;
     /// Logging level.
     int iprint_;
+    /// Number of iterations.
+    int miter_;
+    /// Symbolizes infinity.
+    double bigbnd_;
+    /// Final norm requirement for the Newton direction.
+    double eps_;
+    /// Maximum violation of nonlinear equality constraint.
+    double epseqn_;
+    /// Perturbation size used in finite difference.
+    double udelta_;
   };
 
 }; // end of namespace optimization
