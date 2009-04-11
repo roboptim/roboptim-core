@@ -15,25 +15,35 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * \brief Implementation of the LinearFunction class.
+ * \brief Declaration of the NumericLinearFunction class.
  */
 
-#include "liboptimization/linear-function.hh"
-#include "liboptimization/indent.hh"
-#include "liboptimization/util.hh"
+#ifndef OPTIMIZATION_NUMERIC_LINEAR_FUNCTION_HH
+# define OPTIMIZATION_NUMERIC_LINEAR_FUNCTION_HH
+
+# include <liboptimization/linear-function.hh>
 
 namespace optimization
 {
-  LinearFunction::LinearFunction (size_type n) throw ()
-    : QuadraticFunction (n)
+  /// Define a quadratic function.
+  class NumericLinearFunction : public LinearFunction
   {
-  }
+  public:
+    NumericLinearFunction (const vector_t&, value_type)
+      throw ();
 
-  std::ostream&
-  LinearFunction::print (std::ostream& o) const throw ()
-  {
-    return o << "Linear function";
-  }
-} // end of namespace optimization
+    virtual value_type operator () (const vector_t&) const throw ();
+    virtual gradient_t gradient (const vector_t&) const throw ();
+    virtual hessian_t hessian (const vector_t&) const throw ();
+
+    virtual std::ostream& print (std::ostream&) const throw ();
+
+  private:
+    vector_t a_;
+    value_type b_;
+  };
+
+}; // end of namespace optimization
+
+#endif //! OPTIMIZATION_QUADRATIC_FUNCTION_HH

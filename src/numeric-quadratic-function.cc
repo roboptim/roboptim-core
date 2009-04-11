@@ -1,0 +1,71 @@
+// Copyright (C) 2009 by Thomas Moulard, FIXME.
+//
+// This file is part of the liboptimization.
+//
+// liboptimization is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// liboptimization is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * \brief Implementation of the NumericQuadraticFunction class.
+ */
+
+#include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+
+
+#include <liboptimization/indent.hh>
+#include <liboptimization/numeric-quadratic-function.hh>
+
+namespace optimization
+{
+  NumericQuadraticFunction::NumericQuadraticFunction (const matrix_t& a,
+                                                      const vector_t& b)
+    throw ()
+    : QuadraticFunction (a.size1 ()),
+      a_ (a),
+      b_ (b)
+  {
+    assert (a.size1 () == a.size2 () && a.size2 () == b.size ());
+  }
+
+  NumericQuadraticFunction::value_type
+  NumericQuadraticFunction::operator () (const vector_t& x) const throw ()
+  {
+    using namespace boost::numeric::ublas;
+    return inner_prod (prod (trans (x), a_), x) + inner_prod (trans (b_), x);
+  }
+
+  NumericQuadraticFunction::gradient_t
+  NumericQuadraticFunction::gradient (const vector_t& x) const throw ()
+  {
+    using namespace boost::numeric::ublas;
+    return prod (x, a_);
+  }
+
+  NumericQuadraticFunction::hessian_t
+  NumericQuadraticFunction::hessian (const vector_t& x) const throw ()
+  {
+    return a_;
+  }
+
+  std::ostream&
+  NumericQuadraticFunction::print (std::ostream& o) const throw ()
+  {
+    return o << "Numeric quadratic function" << incindent << iendl
+             << "A = " << a_ << iendl
+             << "B = " << b_
+             << decindent;
+  }
+
+} // end of namespace optimization

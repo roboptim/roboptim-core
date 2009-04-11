@@ -15,25 +15,43 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <iostream>
+#include <boost/numeric/ublas/io.hpp>
 
-/**
- * \brief Implementation of the LinearFunction class.
- */
+#include <liboptimization/numeric-linear-function.hh>
+#include "common.hh"
 
-#include "liboptimization/linear-function.hh"
-#include "liboptimization/indent.hh"
-#include "liboptimization/util.hh"
+using namespace optimization;
 
-namespace optimization
+typedef DummySolver solver_t;
+
+int run_test ()
 {
-  LinearFunction::LinearFunction (size_type n) throw ()
-    : QuadraticFunction (n)
-  {
-  }
+  NumericLinearFunction::vector_t a (5);
+  NumericLinearFunction::value_type b = 1.;
+  NumericLinearFunction::vector_t x (5);
 
-  std::ostream&
-  LinearFunction::print (std::ostream& o) const throw ()
-  {
-    return o << "Linear function";
-  }
-} // end of namespace optimization
+  a[0] = 1.2;
+  a[1] = 3.4;
+  a[2] = 5.6;
+  a[3] = 7.8;
+
+  NumericLinearFunction f (a, b);
+
+  std::cout << f << std::endl;
+
+  x[0] = 0.1;
+  x[1] = 1.2;
+  x[2] = 2.3;
+  x[3] = 3.4;
+  x[4] = 4.5;
+
+  std::cout << "f(x) = " << f (x) << std::endl;
+  std::cout << "G(x) = " << f.gradient (x) << std::endl;
+  std::cout << "H(x) = " << f.hessian (x) << std::endl;
+
+  return 0;
+}
+
+
+GENERATE_TEST ()

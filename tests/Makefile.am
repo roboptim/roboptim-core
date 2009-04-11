@@ -23,6 +23,17 @@ check_PROGRAMS += problem-cc
 problem_cc_SOURCES = problem-cc.cc $(COMMON_SOURCES)
 problem_cc_LDADD = $(top_builddir)/src/liboptimization.la
 
+# numeric-linear-function
+check_PROGRAMS += numeric-linear-function
+numeric_linear_function_SOURCES = numeric-linear-function.cc $(COMMON_SOURCES)
+numeric_linear_function_LDADD = $(top_builddir)/src/liboptimization.la
+
+# numeric-quadratic-function
+check_PROGRAMS += numeric-quadratic-function
+numeric_quadratic_function_SOURCES = numeric-quadratic-function.cc \
+	$(COMMON_SOURCES)
+numeric_quadratic_function_LDADD = $(top_builddir)/src/liboptimization.la
+
 
 # Ipopt
 if IPOPT
@@ -65,6 +76,8 @@ TESTSUITE_AT =					\
 	simple-test.at				\
 	ipopt.at				\
 	cfsqp.at				\
+	numeric-linear-function.at		\
+	numeric-quadratic-function.at		\
 	problem-cc.at
 
 # Distribute reference files.
@@ -72,4 +85,9 @@ EXTRA_DIST +=					\
 	simple-test.stdout			\
 	ipopt.stdout				\
 	cfsqp.stdout				\
+	numeric-linear-function.stdout		\
+	numeric-quadratic-function.stdout	\
 	problem-cc.stdout
+
+
+

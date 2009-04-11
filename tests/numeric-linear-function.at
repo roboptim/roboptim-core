@@ -15,20 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
-## ----------------------- ##
-## Launch the test suite.  ##
-## ----------------------- ##
+AT_SETUP([Check NumericLinearFunction.])
 
-AT_INIT([Main library])
-AT_COPYRIGHT(
-[Copyright (C) 2009 Thomas Moulard, FIXME
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
+AT_TESTED([numeric-linear-function])
 
-# Include test cases.
-m4_include([simple-test.at])
-m4_include([ipopt.at])
-m4_include([cfsqp.at])
-m4_include([numeric-linear-function.at])
-m4_include([numeric-quadratic-function.at])
-m4_include([problem-cc.at])
+cp $abs_srcdir/numeric-linear-function.stdout expout
+AT_CHECK([numeric-linear-function], [0], [expout], [ignore])
+
+AT_CLEANUP
+
+# End of numeric-linear-function.at

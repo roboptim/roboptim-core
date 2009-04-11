@@ -9,6 +9,8 @@ nobase_include_HEADERS =				\
 	liboptimization/generic-solver.hh		\
 	liboptimization/indent.hh			\
 	liboptimization/linear-function.hh		\
+	liboptimization/numeric-quadratic-function.hh	\
+	liboptimization/numeric-linear-function.hh	\
 	liboptimization/problem.hh			\
 	liboptimization/problem.hxx			\
 	liboptimization/quadratic-function.hh		\

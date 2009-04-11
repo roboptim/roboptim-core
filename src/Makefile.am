@@ -13,6 +13,8 @@ liboptimization_la_SOURCES = 		\
 	generic-solver.cc		\
 	indent.cc			\
 	linear-function.cc		\
+	numeric-linear-function.cc	\
+	numeric-quadratic-function.cc	\
 	quadratic-function.cc		\
 	solver-error.cc			\
 	twice-derivable-function.cc	\

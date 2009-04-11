@@ -1,5 +1,28 @@
 2009-04-11  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Implement NumericQuadraticFunction and NumericLinearFunction.
+	* include/Makefile.am: Add new headers.
+	* include/liboptimization/linear-function.hh: Remove hessian.
+	* include/liboptimization/numeric-linear-function.hh: Copy from
+        include/liboptimization/linear-function.hh.
+	* include/liboptimization/numeric-quadratic-function.hh: Copy from
+        include/liboptimization/linear-function.hh.
+	* src/Makefile.am: Add new source files.
+	* src/linear-function.cc: Remove hessian implementation.
+	* src/numeric-linear-function.cc: New.
+	* src/numeric-quadratic-function.cc: New.
+	* tests/Makefile.am: Add new tests.
+	* tests/numeric-linear-function.at: Copy from tests/testsuite.at.
+	* tests/numeric-linear-function.cc: Copy from
+        include/liboptimization/linear-function.hh.
+	* tests/numeric-linear-function.stdout: New.
+	* tests/numeric-quadratic-function.at: Copy from tests/testsuite.at.
+	* tests/numeric-quadratic-function.cc: New.
+	* tests/numeric-quadratic-function.stdout: New.
+	* tests/testsuite.at: Include new tests.
+
+2009-04-11  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Move bounds/scales from Function to Problem.
 	* include/liboptimization/function.hh: Move bounds/scales to...
 	* include/liboptimization/problem.hh,
