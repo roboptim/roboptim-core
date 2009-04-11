@@ -35,13 +35,7 @@ namespace optimization
   std::ostream&
   DerivableFunction::print (std::ostream& o) const throw ()
   {
-    return o << incindent
-             << "Derivable function" << iendl
-             << "Result bound: " << bound << iendl
-             << "Arguments bounds " << argBounds << iendl
-             << "Result scale: " << scale << iendl
-             << "Arguments scale: " << argScales
-             << decindent;
+    return o << "Derivable function";
   }
 
 } // end of namespace optimization

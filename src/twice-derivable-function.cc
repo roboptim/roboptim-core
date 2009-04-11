@@ -35,12 +35,6 @@ namespace optimization
   std::ostream&
   TwiceDerivableFunction::print (std::ostream& o) const throw ()
   {
-    return o << incindent
-             << "Twice derivable function" << std::endl
-             << "Result bound: " << bound << std::endl
-             << "Arguments bounds " << argBounds << std::endl
-             << "Result scale: " << scale << std::endl
-             << "Arguments scale: " << argScales
-             << decindent;
+    return o << "Twice derivable function";
   }
 } // end of namespace optimization

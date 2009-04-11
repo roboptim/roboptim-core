@@ -42,12 +42,6 @@ namespace optimization
   std::ostream&
   LinearFunction::print (std::ostream& o) const throw ()
   {
-    return o << incindent
-             << "Linear function" << iendl
-             << "Result bound: " << bound << iendl
-             << "Arguments bounds " << argBounds << iendl
-             << "Result scale: " << scale << iendl
-             << "Arguments scale: " << argScales
-             << decindent;
+    return o << "Linear function";
   }
 } // end of namespace optimization

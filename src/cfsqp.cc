@@ -42,8 +42,11 @@ namespace optimization
     class EvalConstraintVisitor : public boost::static_visitor<Function::value_type>
     {
     public:
-      explicit EvalConstraintVisitor (const Function::vector_t& x, int j)
-        : x_ (x),
+      explicit EvalConstraintVisitor (const CFSQPSolver::problem_t& pb,
+                                      const Function::vector_t& x,
+                                      int j)
+        : pb_ (pb),
+          x_ (x),
           j_ (j)
       {}
 
@@ -57,14 +60,15 @@ namespace optimization
 
         if (j_ % 2 == 0)
           // g(x) >= b, -g(x) + b <= 0
-          res = -res + c->bound.first;
+          res = -res + pb_.bounds ()[j_/2].first;
         else
           // g(x) <= b, g(x) - b <= 0
-          res = res - c->bound.second;
+          res = res - pb_.bounds ()[j_/2].second;
         return res;
       }
 
     private:
+      const CFSQPSolver::problem_t& pb_;
       const Function::vector_t& x_;
       int j_;
     };
@@ -115,7 +119,7 @@ namespace optimization
 
       int j_ = (j < 2) ? 0 : (j - 1)/2;
 
-      EvalConstraintVisitor v (x_, j);
+      EvalConstraintVisitor v (solver->problem (), x_, j);
       *gj = boost::apply_visitor
         (v, solver->problem ().constraints () [j_]);
     }
@@ -170,11 +174,11 @@ namespace optimization
   void
   CFSQPSolver::initialize_bounds (double* bl, double* bu) const throw ()
   {
-    typedef Function::bounds_t::const_iterator citer_t;
+    typedef problem_t::bounds_t::const_iterator citer_t;
 
     Function::size_type i = 0;
-    for (citer_t it = problem ().function ().argBounds.begin ();
-         it != problem ().function ().argBounds.end (); ++it)
+    for (citer_t it = problem ().argBounds ().begin ();
+         it != problem ().argBounds ().end (); ++it)
       {
         bl[i] = (*it).first, bu[i] = (*it).second;
         ++i;

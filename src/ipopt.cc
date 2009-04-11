@@ -21,6 +21,7 @@
  */
 
 #include <cassert>
+#include <cstring>
 
 #include <coin/IpIpoptApplication.hpp>
 #include <coin/IpTNLP.hpp>
@@ -74,19 +75,14 @@ namespace optimization
         assert (solver_.problem ().function ().n - n == 0);
         assert (solver_.problem ().constraints ().size () - m == 0);
 
-        {
-          typedef Function::bounds_t::const_iterator citer_t;
-          for (citer_t it = solver_.problem ().function ().argBounds.begin ();
-               it != solver_.problem ().function ().argBounds.end (); ++it)
-              *(x_l++) = (*it).first, *(x_u++) = (*it).second;
-        }
+        typedef IpoptSolver::problem_t::bounds_t::const_iterator citer_t;
+        for (citer_t it = solver_.problem ().argBounds ().begin ();
+             it != solver_.problem ().argBounds ().end (); ++it)
+          *(x_l++) = (*it).first, *(x_u++) = (*it).second;
 
-        {
-          typedef IpoptSolver::problem_t::constraints_t::const_iterator citer_t;
-          for (citer_t it = solver_.problem ().constraints ().begin ();
-               it != solver_.problem ().constraints ().end (); ++it)
-            *(g_l++) = (*it)->bound.first, *(g_u++) = (*it)->bound.second;
-        }
+        for (citer_t it = solver_.problem ().bounds ().begin ();
+             it != solver_.problem ().bounds ().end (); ++it)
+          *(g_l++) = (*it).first, *(g_u++) = (*it).second;
         return true;
       }
 
@@ -100,10 +96,11 @@ namespace optimization
       {
         use_x_scaling = true, use_g_scaling = true;
 
-        memcpy (x_scaling, &solver_.problem ().function ().argScales[0], n * sizeof (double));
+        memcpy (x_scaling, &solver_.problem ().argScales ()[0],
+                n * sizeof (double));
 
         for (Index i = 0; i < m; ++i)
-          g_scaling[i] = solver_.problem ().constraints ()[i]->scale;
+          g_scaling[i] = solver_.problem ().scales ()[i];
 
         return false;
       }

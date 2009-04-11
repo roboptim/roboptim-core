@@ -32,13 +32,7 @@ int run_test ()
   G1 g1;
 
   CFSQPSolver::problem_t pb (f);
-  pb.addConstraint (&g0);
-  pb.addConstraint (&g1);
-
-  // Set the starting point.
-  Function::vector_t start (f.n);
-  start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
-  pb.startingPoint () = start;
+  initialize_problem (pb, g0, g1);
 
   // Initialize solver
   CFSQPSolver solver (pb, 2);

@@ -27,10 +27,6 @@ struct F : public TwiceDerivableFunction
 {
   F () : TwiceDerivableFunction (4)
   {
-    // Set bound for all variables.
-    // 1. < x_i < 5. (x_i in [1.;5.])
-    for (size_type i = 0; i < n; ++i)
-      argBounds[i] = std::make_pair(1., 5.);
   }
 
   virtual value_type
@@ -83,7 +79,6 @@ struct G0 : public TwiceDerivableFunction
   G0 ()
     : TwiceDerivableFunction (4)
   {
-    bound.first = 25.;
   }
 
   virtual value_type
@@ -136,8 +131,6 @@ struct G1 : public TwiceDerivableFunction
   G1 ()
     : TwiceDerivableFunction (4)
   {
-    bound.first = 40.;
-    bound.second = 40.;
   }
 
   virtual value_type
@@ -184,5 +177,24 @@ struct G1 : public TwiceDerivableFunction
     return h;
   }
 };
+
+
+template <typename T>
+void initialize_problem (T& pb, const G0& g0, const G1& g1)
+{
+  // Set bound for all variables.
+  // 1. < x_i < 5. (x_i in [1.;5.])
+  for (Function::size_type i = 0; i < pb.function ().n; ++i)
+    pb.argBounds ()[i] = T::makeBound (1., 5.);
+
+  // Add constraints.
+  pb.addConstraint (&g0, T::makeUpperBound (25.));
+  pb.addConstraint (&g1, T::makeBound (40., 40.));
+
+  // Set the starting point.
+  Function::vector_t start (pb.function ().n);
+  start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
+  pb.startingPoint () = start;
+}
 
 #endif //! OPTIMIZATION_TESTS_HS071_HH

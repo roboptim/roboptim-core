@@ -35,12 +35,6 @@ namespace optimization
   std::ostream&
   QuadraticFunction::print (std::ostream& o) const throw ()
   {
-    return o << incindent
-             << "Quadratic function" << iendl
-             << "Result bound: " << bound << iendl
-             << "Arguments bounds " << argBounds << iendl
-             << "Result scale: " << scale << iendl
-             << "Arguments scale: " << argScales
-             << decindent;
+    return o << "Quadratic function";
   }
 } // end of namespace optimization

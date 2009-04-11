@@ -49,15 +49,6 @@ namespace optimization
     /// Matrix type.
     typedef ublas::matrix<value_type> matrix_t;
 
-    /// Bound type (lower, upper).
-    /// Use -infinity / +infinity to disable a bound.
-    typedef std::pair<value_type, value_type> bound_t;
-    /// Vector of bound.
-    typedef std::vector<bound_t> bounds_t;
-
-    /// Scale vector.
-    typedef std::vector<value_type> scales_t;
-
     /// Function arity.
     const size_type n;
 
@@ -78,42 +69,8 @@ namespace optimization
     /// Function.
     virtual value_type operator () (const vector_t&) const throw () = 0;
 
-    /// Construct a bound from a lower and upper bound.
-    static bound_t makeBound (value_type l, value_type u) throw ()
-    {
-      return std::make_pair (l, u);
-    }
-
-    /// Construct an infinite bound.
-    static bound_t makeInfiniteBound () throw ()
-    {
-      return std::make_pair (-infinity (), infinity  ());
-    }
-
-    /// Construct a bound from a lower bound.
-    static bound_t makeLowerBound (value_type u) throw ()
-    {
-      return makeBound (-infinity  (), u);
-    }
-
-    /// Construct a bound from an upper bound.
-    static bound_t makeUpperBound (value_type l) throw ()
-    {
-      return makeBound (l, infinity  ());
-    }
-
+    /// Display function type.
     virtual std::ostream& print (std::ostream&) const throw ();
-
-    /// Function bounds.
-    bound_t bound;
-
-    /// Arguments bounds.
-    bounds_t argBounds;
-
-    /// Result scale.
-    double scale;
-    /// Arguments' scales.
-    scales_t argScales;
   };
 
   std::ostream& operator<< (std::ostream&, const Function&);

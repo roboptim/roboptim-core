@@ -30,53 +30,7 @@
 # include <boost/variant/apply_visitor.hpp>
 
 # include <liboptimization/indent.hh>
-
-// Allow generic constraints access (independently of C's type).
-# define DECL_ACCESS_CONSTRAINT(UNIQ_ID, RET_TYPE, DOIT)        \
-  namespace detail                                              \
-  {                                                             \
-    template <typename T>                                       \
-    RET_TYPE impl_ac_##UNIQ_ID (const T* t);                    \
-                                                                \
-    template <typename T>                                       \
-    RET_TYPE impl_ac_##UNIQ_ID (const T& t);                    \
-                                                                \
-    struct ImplVisitor##UNIQ_ID                                 \
-      : public boost::static_visitor<RET_TYPE>                  \
-    {                                                           \
-      template <typename T>                                     \
-        RET_TYPE operator () (T& t)                             \
-      {                                                         \
-        return impl_ac_##UNIQ_ID (t);                           \
-      }                                                         \
-    };                                                          \
-                                                                \
-    template <typename T1, typename T2>                         \
-      RET_TYPE                                                  \
-      impl_ac_##UNIQ_ID (const boost::variant<T1, T2>& variant) \
-    {                                                           \
-      ImplVisitor##UNIQ_ID v;                                   \
-      return boost::apply_visitor (v, variant);                 \
-    }                                                           \
-                                                                \
-    template <typename T>                                       \
-      RET_TYPE                                                  \
-    impl_ac_##UNIQ_ID (const T* pt)                             \
-    {                                                           \
-      assert (!!pt);                                            \
-      return impl_ac_##UNIQ_ID (*pt);                           \
-    }                                                           \
-                                                                \
-    template <typename T>                                       \
-      RET_TYPE                                                  \
-      impl_ac_##UNIQ_ID (const T& t)                            \
-    {                                                           \
-      DOIT;                                                     \
-    }                                                           \
-  }
-
-#define ACCESS_CONSTRAINT(UNIQ_ID, C)           \
-  detail::impl_ac_##UNIQ_ID (C)
+# include <liboptimization/util.hh>
 
 namespace optimization
 {
@@ -84,8 +38,16 @@ namespace optimization
   Problem<F, C>::Problem (const function_t& f) throw ()
     : function_ (f),
       startingPoint_ (),
-      constraints_ ()
+      constraints_ (),
+      bounds_ (),
+      argBounds_ (f.n),
+      scales_ (),
+      argScales_ (f.n)
   {
+    // Initialize bound.
+    std::fill (argBounds_.begin (), argBounds_.end (), makeInfiniteBound ());
+    // Initialize scale.
+    std::fill (argScales_.begin (), argScales_.end (), 1.);
   }
 
   template <typename F, typename C>
@@ -98,7 +60,11 @@ namespace optimization
   Problem<F, C>::Problem (const Problem<F, C>& pb) throw ()
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
-      constraints_ (pb.constraints_)
+      constraints_ (pb.constraints_),
+      bounds_ (pb.bounds_),
+      argBounds_ (pb.argBounds_),
+      scales_ (pb.scales_),
+      argScales_ (pb.argScales_)
   {
   }
 
@@ -108,7 +74,11 @@ namespace optimization
   Problem<F, C>::Problem (const Problem<F_, C_>& pb) throw ()
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
-      constraints_ ()
+      constraints_ (),
+      bounds_ (pb.bounds_),
+      argBounds_ (pb.argBounds_),
+      scales_ (pb.scales_),
+      argScales_ (pb.argScales_)
   {
     // Check that F is a subtype of F_.
     BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
@@ -138,10 +108,20 @@ namespace optimization
 
   template <typename F, typename C>
   void
-  Problem<F, C>::addConstraint (const C& x) throw (std::runtime_error)
+  Problem<F, C>::addConstraint (const C& x, value_type s)
+    throw (std::runtime_error)
   {
-    checkBounds (x), checkScales (x);
+    addConstraint (x, makeInfiniteBound (), s);
+  }
+
+  template <typename F, typename C>
+  void
+  Problem<F, C>::addConstraint (const C& x, bound_t b, value_type s)
+    throw (std::runtime_error)
+  {
     constraints_.push_back (x);
+    bounds_.push_back (b);
+    scales_.push_back (s);
   }
 
   template <typename F, typename C>
@@ -158,6 +138,49 @@ namespace optimization
     return startingPoint_;
   }
 
+  template <typename F, typename C>
+  const typename Problem<F, C>::bounds_t&
+  Problem<F, C>::bounds () const throw ()
+  {
+    return bounds_;
+  }
+
+  template <typename F, typename C>
+  typename Problem<F, C>::bounds_t&
+  Problem<F, C>::argBounds () throw ()
+  {
+    return argBounds_;
+  }
+
+  template <typename F, typename C>
+  const typename Problem<F, C>::bounds_t&
+  Problem<F, C>::argBounds () const throw ()
+  {
+    return argBounds_;
+  }
+
+  template <typename F, typename C>
+  const typename Problem<F, C>::scales_t&
+  Problem<F, C>::scales () const throw ()
+  {
+    return scales_;
+  }
+
+  template <typename F, typename C>
+  typename Problem<F, C>::scales_t&
+  Problem<F, C>::argScales () throw ()
+  {
+    return argScales_;
+  }
+
+  template <typename F, typename C>
+  const typename Problem<F, C>::scales_t&
+  Problem<F, C>::argScales () const throw ()
+  {
+    return argScales_;
+  }
+
+
   namespace detail
   {
     template <typename T>
@@ -173,7 +196,7 @@ namespace optimization
     {
       return o << t;
     }
-  };
+  }
 
   template <typename F, typename C>
   std::ostream&
@@ -183,6 +206,11 @@ namespace optimization
     // Function.
     o << function () << iendl;
 
+    // Arguments' bounds.
+    o << "Argument's bounds: " << argBounds () << iendl;
+    // Arguments' scales.
+    o << "Argument's scales: " << argScales () << iendl;
+
     // Constraints.
     if (constraints ().empty ())
       o << "No constraints.";
@@ -190,13 +218,17 @@ namespace optimization
       o << "Number of constraints: " << constraints ().size ();
 
     typedef typename constraints_t::const_iterator citer_t;
+    unsigned i = 0;
     if (boost::is_pointer<C> ())
       for (citer_t it = constraints ().begin ();
            it != constraints ().end ();
-           ++it)
+           ++it, ++i)
         {
-          o << iendl;
-          detail::impl_print (o, *it);
+          o << iendl << incindent
+            << "Constraint " << i << incindent << iendl
+            << "Bounds: " << bounds ()[i] << iendl
+            << "Scales: " << scales ()[i] << iendl
+            << decindent << decindent;
         }
 
     // Starting point.
@@ -207,6 +239,11 @@ namespace optimization
 
     // Infinity.
     o << iendl << "Infinity value (for all functions): " << Function::infinity ();
+
+    // Arguments' bounds.
+    // Arguments' scales.
+
+
     return o << decindent;
   }
 
@@ -216,44 +253,7 @@ namespace optimization
   {
     return pb.print (o);
   }
-
-  DECL_ACCESS_CONSTRAINT(get_arg_bounds, const Function::bounds_t&, return t.argBounds);
-  template <typename F, typename C>
-  void
-  Problem<F, C>::checkBounds (const C& x) const throw (std::runtime_error)
-  {
-    typedef typename constraints_t::const_iterator citer_t;
-    for (citer_t it = constraints_.begin ();
-         it != constraints_.end (); ++it)
-      {
-        const Function::bounds_t& ab = ACCESS_CONSTRAINT(get_arg_bounds, *it);
-        for (unsigned i = 0; i < ab.size (); ++i)
-          if (ab[i].first > function_.argBounds[i].first
-              || ab[i].second < function_.argBounds[i].second)
-            throw std::runtime_error ("Invalid constraint (invalid bounds).");
-      }
-  }
-
-  DECL_ACCESS_CONSTRAINT(get_arg_scales, const Function::scales_t&, return t.argScales);
-  template <typename F, typename C>
-  void
-  Problem<F, C>::checkScales (const C& x) const throw (std::runtime_error)
-  {
-    typedef typename constraints_t::const_iterator citer_t;
-    for (citer_t it = constraints_.begin ();
-         it != constraints_.end (); ++it)
-      {
-        const Function::scales_t& ab = ACCESS_CONSTRAINT(get_arg_scales, *it);
-        for (unsigned i = 0; i < ab.size (); ++i)
-          if (ab[i] != function_.argScales[i])
-            throw std::runtime_error ("Invalid constraint (invalid scales).");
-      }
-  }
 }; // end of namespace optimization
-
-
-# undef DECL_ACCESS_CONSTRAINT
-# undef ACCESS_CONSTRAINT
 
 # include <liboptimization/problem.hxx>
 #endif //! OPTIMIZATION_PROBLEM_HH

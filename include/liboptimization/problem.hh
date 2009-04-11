@@ -41,11 +41,26 @@ namespace optimization
     template <typename F_, typename C_>
     friend class Problem;
 
+    /// Function type.
     typedef F function_t;
+    /// Constraint's type.
     typedef C constraint_t;
 
+    // Import function's value_type type.
+    typedef typename function_t::value_type value_type;
+
+    /// Constraints are represented as a vector of constraints.
     typedef std::vector<constraint_t> constraints_t;
+    /// Optional vector defines a starting point.
     typedef boost::optional<Function::vector_t> startingPoint_t;
+
+    /// Bound type (lower, upper).
+    /// Use -infinity / +infinity to disable a bound.
+    typedef std::pair<value_type, value_type> bound_t;
+    /// Vector of bound.
+    typedef std::vector<bound_t> bounds_t;
+    /// Scale vector.
+    typedef std::vector<value_type> scales_t;
 
     explicit Problem (const function_t&) throw ();
 
@@ -61,25 +76,65 @@ namespace optimization
     const function_t& function () const throw ();
 
     const constraints_t& constraints () const throw ();
-    void addConstraint (const C&) throw (std::runtime_error);
+
+    void addConstraint (const C&, value_type = 1.)
+      throw (std::runtime_error);
+    void addConstraint (const C&, bound_t, value_type = 1.)
+      throw (std::runtime_error);
 
     startingPoint_t& startingPoint () throw ();
     const startingPoint_t& startingPoint () const throw ();
 
+    const bounds_t& bounds () const throw ();
+    bounds_t& argBounds () throw ();
+    const bounds_t& argBounds () const throw ();
+
+    const scales_t& scales () const throw ();
+    scales_t& argScales () throw ();
+    const scales_t& argScales () const throw ();
+
     std::ostream& print (std::ostream& o) const throw ();
 
-    /// Check if the constraints argument's bounds are compatible
-    /// with the cost function's arguments bounds.
-    /// Ie: g_l < f_l and g_u > f_u.
-    void checkBounds (const C&) const throw (std::runtime_error);
+    /// Construct a bound from a lower and upper bound.
+    static bound_t makeBound (value_type l, value_type u) throw ()
+    {
+      return std::make_pair (l, u);
+    }
 
-    /// Check if the constraints argument's scales are identical
-    /// to cost function's arguments scales.
-    void checkScales (const C&) const throw (std::runtime_error);
+    /// Construct an infinite bound.
+    static bound_t makeInfiniteBound () throw ()
+    {
+      return std::make_pair (-Function::infinity (), Function::infinity  ());
+    }
+
+    /// Construct a bound from a lower bound.
+    static bound_t makeLowerBound (value_type u) throw ()
+    {
+      return makeBound (-Function::infinity  (), u);
+    }
+
+    /// Construct a bound from an upper bound.
+    static bound_t makeUpperBound (value_type l) throw ()
+    {
+      return makeBound (l, Function::infinity  ());
+    }
+
   private:
+    // Objective function.
     const function_t& function_;
+    // Starting point.
     startingPoint_t startingPoint_;
+    // Vector of constraints.
     constraints_t constraints_;
+
+    /// Constraints bounds.
+    bounds_t bounds_;
+    /// Arguments bounds.
+    bounds_t argBounds_;
+    /// Constraints scale.
+    scales_t scales_;
+    /// Arguments' scales.
+    scales_t argScales_;
   };
 
   template <typename F, typename C>

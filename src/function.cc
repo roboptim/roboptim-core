@@ -20,7 +20,6 @@
  * \brief Implementation of the Function class.
  */
 
-#include <algorithm>
 #include "liboptimization/function.hh"
 #include "liboptimization/indent.hh"
 #include "liboptimization/util.hh"
@@ -28,21 +27,10 @@
 namespace optimization
 {
   Function::Function (unsigned n) throw ()
-    : n (n),
-      bound (makeInfiniteBound ()),
-      argBounds (n),
-      scale (1.),
-      argScales (n)
+    : n (n)
   {
     // Positive size is required.
     assert (n >= 0);
-
-    // Initialize bound.
-    for (bounds_t::iterator it = argBounds.begin (); it != argBounds.end (); ++it)
-      *it = makeInfiniteBound ();
-
-    // Initialize scale.
-    std::fill (argScales.begin (), argScales.end (), 1.);
   }
 
   Function::~Function () throw ()
@@ -52,13 +40,7 @@ namespace optimization
   std::ostream&
   Function::print (std::ostream& o) const throw ()
   {
-    return o << incindent
-             << "Function" << iendl
-             << "Result bound: " << bound << iendl
-             << "Arguments bounds " << argBounds << iendl
-             << "Result scale: " << scale << iendl
-             << "Arguments scale: " << argScales
-             << decindent;
+    return o << "Function";
   }
 
   std::ostream&
