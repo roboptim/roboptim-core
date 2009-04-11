@@ -26,8 +26,8 @@
 
 namespace optimization
 {
-  LinearFunction::LinearFunction (size_type n, value_type infinity) throw ()
-    : QuadraticFunction (n, infinity)
+  LinearFunction::LinearFunction (size_type n) throw ()
+    : QuadraticFunction (n)
   {
   }
 

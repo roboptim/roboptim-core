@@ -27,23 +27,19 @@
 
 namespace optimization
 {
-  Function::Function (unsigned n, value_type inf) throw ()
+  Function::Function (unsigned n) throw ()
     : n (n),
-      infinity (inf),
-      bound (std::make_pair (-inf, inf)),
+      bound (makeInfiniteBound ()),
       argBounds (n),
       scale (1.),
       argScales (n)
   {
-    // A positive infinite is required.
-    assert (inf > 0.);
-
     // Positive size is required.
     assert (n >= 0);
 
     // Initialize bound.
     for (bounds_t::iterator it = argBounds.begin (); it != argBounds.end (); ++it)
-      *it = std::make_pair (-inf, inf);
+      *it = makeInfiniteBound ();
 
     // Initialize scale.
     std::fill (argScales.begin (), argScales.end (), 1.);
@@ -51,34 +47,6 @@ namespace optimization
 
   Function::~Function () throw ()
   {
-  }
-
-  Function::bound_t
-  Function::makeBound (value_type l, value_type u) const
-    throw ()
-  {
-    return std::make_pair (l, u);
-  }
-
-  Function::bound_t
-  Function::makeBound () const
-    throw ()
-  {
-    return std::make_pair (-infinity, infinity);
-  }
-
-  Function::bound_t
-  Function::makeUpperBound (value_type u) const
-  throw ()
-  {
-    return makeBound (-infinity, u);
-  }
-
-  Function::bound_t
-  Function::makeLowerBound (value_type l) const
-  throw ()
-  {
-    return makeBound (l, infinity);
   }
 
   std::ostream&

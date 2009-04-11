@@ -158,20 +158,6 @@ namespace optimization
     return startingPoint_;
   }
 
-  DECL_ACCESS_CONSTRAINT(get_infinity, Function::value_type, return t.infinity);
-  template <typename F, typename C>
-  typename Problem<F, C>::function_t::value_type
-  Problem<F, C>::infinity () const throw ()
-  {
-    Function::value_type res = function_.infinity;
-    typedef typename constraints_t::const_iterator citer_t;
-    for (citer_t it = constraints_.begin ();
-         it != constraints_.end (); ++it)
-      res = std::min (res, ACCESS_CONSTRAINT(get_infinity, *it));
-    return res;
-  }
-
-
   namespace detail
   {
     template <typename T>
@@ -220,7 +206,7 @@ namespace optimization
       o << iendl << "No starting point.";
 
     // Infinity.
-    o << iendl << "Infinity value: " << infinity ();
+    o << iendl << "Infinity value (for all functions): " << Function::infinity ();
     return o << decindent;
   }
 

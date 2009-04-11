@@ -31,8 +31,7 @@ namespace optimization
   class QuadraticFunction : public TwiceDerivableFunction
   {
   public:
-    QuadraticFunction (size_type n, value_type infinity =
-                    std::numeric_limits<value_type>::infinity ()) throw ();
+    QuadraticFunction (size_type n) throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };

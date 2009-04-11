@@ -26,10 +26,9 @@
 
 namespace optimization
 {
-  TwiceDerivableFunction::TwiceDerivableFunction
-  (size_type n, value_type infinity)
+  TwiceDerivableFunction::TwiceDerivableFunction (size_type n)
     throw ()
-    : DerivableFunction (n, infinity)
+    : DerivableFunction (n)
   {
   }
 

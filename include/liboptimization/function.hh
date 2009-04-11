@@ -60,14 +60,17 @@ namespace optimization
 
     /// Function arity.
     const size_type n;
-    /// Value that symbolizes infinity.
-    const value_type infinity;
+
+    /// Get the value that symbolizes infinity.
+    static const value_type infinity () throw ()
+    {
+      return std::numeric_limits<Function::value_type>::infinity ();
+    }
 
     /// Constructor.
     /// \param n function arity
     /// \param infinity value that encodes infinity
-    Function (size_type n, value_type infinity =
-              std::numeric_limits<value_type>::infinity ()) throw ();
+    Function (size_type n) throw ();
 
     /// Destructor.
     virtual ~Function () throw ();
@@ -76,13 +79,28 @@ namespace optimization
     virtual value_type operator () (const vector_t&) const throw () = 0;
 
     /// Construct a bound from a lower and upper bound.
-    bound_t makeBound (value_type, value_type) const throw ();
+    static bound_t makeBound (value_type l, value_type u) throw ()
+    {
+      return std::make_pair (l, u);
+    }
+
     /// Construct an infinite bound.
-    bound_t makeBound () const throw ();
+    static bound_t makeInfiniteBound () throw ()
+    {
+      return std::make_pair (-infinity (), infinity  ());
+    }
+
     /// Construct a bound from a lower bound.
-    bound_t makeLowerBound (value_type) const throw ();
+    static bound_t makeLowerBound (value_type u) throw ()
+    {
+      return makeBound (-infinity  (), u);
+    }
+
     /// Construct a bound from an upper bound.
-    bound_t makeUpperBound (value_type) const throw ();
+    static bound_t makeUpperBound (value_type l) throw ()
+    {
+      return makeBound (l, infinity  ());
+    }
 
     virtual std::ostream& print (std::ostream&) const throw ();
 

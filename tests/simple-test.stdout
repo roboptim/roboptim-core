@@ -6,7 +6,7 @@ Problem:
     Arguments scale: 1, 1, 1, 1
   No constraints.
   No starting point.
-  Infinity value: inf
+  Infinity value (for all functions): inf
 ---
 Problem:
   Function
@@ -16,4 +16,4 @@ Problem:
     Arguments scale: 1, 1, 1, 1
   No constraints.
   No starting point.
-  Infinity value: inf
+  Infinity value (for all functions): inf

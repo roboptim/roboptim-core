@@ -26,9 +26,9 @@
 
 namespace optimization
 {
-  QuadraticFunction::QuadraticFunction (size_type n, value_type infinity)
+  QuadraticFunction::QuadraticFunction (size_type n)
     throw ()
-    : TwiceDerivableFunction (n, infinity)
+    : TwiceDerivableFunction (n)
   {
   }
 

@@ -34,8 +34,7 @@ namespace optimization
     /// Gradient type.
     typedef vector_t gradient_t;
 
-    DerivableFunction (size_type n, value_type infinity =
-                       std::numeric_limits<value_type>::infinity ()) throw ();
+    DerivableFunction (size_type n) throw ();
 
     /// Gradient.
     virtual gradient_t gradient (const vector_t&) const throw () = 0;

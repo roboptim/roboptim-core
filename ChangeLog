@@ -1,3 +1,23 @@
+2009-04-11  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Detect infinity value automatically.
+	* include/liboptimization/derivable-function.hh: Fix constructor.
+	* include/liboptimization/function.hh: Make infinity a static
+        method.
+	* include/liboptimization/linear-function.hh: Fix constructor.
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/problem.hxx: Remove infinity computation.
+	* include/liboptimization/quadratic-function.hh,
+	* include/liboptimization/twice-derivable-function.hh,
+	* src/derivable-function.cc: Fix constructor.
+	* src/function.cc: Fix constructor, use makeBound in implementation.
+	* src/linear-function.cc,
+	* src/quadratic-function.cc,
+	* src/twice-derivable-function.cc: Fix constructor.
+	* tests/cfsqp.stdout,
+	* tests/ipopt.stdout,
+	* tests/simple-test.stdout: Update test suite.
+
 2009-04-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add indentation in pretty-printing.

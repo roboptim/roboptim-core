@@ -30,8 +30,7 @@ namespace optimization
   class LinearFunction : public QuadraticFunction
   {
   public:
-    LinearFunction (size_type n, value_type infinity =
-                    std::numeric_limits<value_type>::infinity ()) throw ();
+    LinearFunction (size_type n) throw ();
 
     virtual hessian_t hessian (const vector_t&) const throw ();
 
