@@ -47,6 +47,8 @@ int run_test ()
   if (res.which () != CFSQPSolver::SOLVER_VALUE)
     {
       std::cout << "A solution should have been found. Failing..."
+                << std::endl
+                << boost::get<SolverError> (res).what ()
                 << std::endl;
       return 1;
     }

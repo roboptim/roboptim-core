@@ -55,7 +55,8 @@ int run_test ()
 
   // Try to get the minimum from a GenericSolver*
   GenericSolver* gs = &solver;
-  boost::get<SolverError> (gs->minimum ());
+  std::cout << boost::get<SolverError> (gs->minimum ()).what ()
+            << std::endl;
 
   return 0;
 }

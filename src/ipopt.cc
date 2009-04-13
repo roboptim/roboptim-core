@@ -197,7 +197,8 @@ namespace optimization
 
         IpoptSolver::vector_t x_ (n);
         array_to_vector (x_, x);
-        DerivableFunction::gradient_t grad = solver_.problem ().function ().gradient (x_);
+        DerivableFunction::gradient_t grad =
+          solver_.problem ().function ().gradient (x_);
         vector_to_array(grad_f, grad);
         return true;
       }
@@ -250,7 +251,8 @@ namespace optimization
             array_to_vector (x_, x);
             Function::matrix_t jac (solver_.problem ().constraints ().size (),
                                     solver_.problem ().function ().n);
-            jacobian_from_gradients<TwiceDerivableFunction> (jac, solver_.problem ().constraints (), x_);
+            jacobian_from_gradients<TwiceDerivableFunction>
+              (jac, solver_.problem ().constraints (), x_);
 
             int idx = 0;
             for (int i = 0; i < m; ++i)

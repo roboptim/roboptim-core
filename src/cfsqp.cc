@@ -228,15 +228,73 @@ namespace optimization
            udelta_, bl, bu, x, f, g, lambda,
            obj, constr, gradob, gradcn, this);
 
-    if (inform == 0)
+    switch (inform)
       {
-        Result res (nparam, 1);
-        detail::array_to_vector (res.x, x);
-        res.value (0) = f[0];
-        result_ = res;
+        // Normal termination.
+      case 0:
+        {
+          Result res (nparam, 1);
+          detail::array_to_vector (res.x, x);
+          res.value (0) = f[0];
+          result_ = res;
+          break;
+        }
+
+      case 1:
+        result_ = SolverError ("Infeasible guess for linear constraints.");
+        break;
+
+      case 2:
+        result_ =
+          SolverError
+          ("Infeasible guess for linear and non-linear constraints.");
+        break;
+
+      case 3:
+        result_ =
+          SolverError
+          ("Max iteration has been reached.");
+        break;
+
+      case 4:
+        result_ =
+          SolverError
+          ("Failed to find a new iterate.");
+        break;
+
+      case 5:
+        result_ =
+          SolverError
+          ("Failed to construct d0.");
+        break;
+
+      case 6:
+        result_ =
+          SolverError
+          ("Failed to construct d1.");
+        break;
+
+      case 7:
+        result_ =
+          SolverError
+          ("Input data are not consistent.");
+        break;
+
+      case 8:
+        result_ =
+          SolverError
+          ("New iterate equivalent to previous one.");
+        break;
+
+      case 9:
+        result_ =
+          SolverError
+          ("One penalty parameter has exceeded bigbng.");
+        break;
+
+      default:
+        result_ = SolverError ("CFSQP has failed.");
       }
-    else
-      result_ = SolverError ("CFSQP has failed.");
   }
 
   int&

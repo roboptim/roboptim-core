@@ -1,5 +1,16 @@
 2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fill SolverError with a complete message in CFSQP bridge.
+	* src/cfsqp.cc: Put a real error message into returned SolverErro.
+	* src/ipopt.cc: Enfore 80 columns.
+	* tests/cfsqp.cc: Print error if necessary.
+	* tests/cfsqp.stdout: Regenerate output.
+	* tests/ipopt.cc: Print error if necessary.
+	* tests/simple-test.cc: Print returned error.
+	* tests/simple-test.stdout: Regenerate output.
+
+2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix documentation style.
 	* doc/Doxyfile.in: Add new stylesheets.
         Remove collaboration diagram.

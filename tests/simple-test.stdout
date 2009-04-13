@@ -13,3 +13,4 @@ Problem:
   No constraints.
   No starting point.
   Infinity value (for all functions): inf
+The dummy solver always fail.
