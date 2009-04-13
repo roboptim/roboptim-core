@@ -92,7 +92,7 @@ AC_DEFUN([IPOPT_ARG_WITH],
     ])
 
   # Define a boolean indicating whether or not the package has been found.
-  AM_CONDITIONAL([IPOPT],
+  AM_CONDITIONAL([HAVE_IPOPT],
                  [test "x$with_ipopt" != xno && \
 		  test "x$ipopt_fail" != xyes])
 ]) # IPOPT_ARG_WITH

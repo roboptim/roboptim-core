@@ -36,7 +36,7 @@ numeric_quadratic_function_LDADD = $(top_builddir)/src/liboptimization.la
 
 
 # Ipopt
-if IPOPT
+if HAVE_IPOPT
 check_PROGRAMS += ipopt
 ipopt_SOURCES = ipopt.cc $(COMMON_SOURCES)
 ipopt_LDADD = $(top_builddir)/src/liboptimization.la
@@ -44,7 +44,7 @@ endif
 
 
 # CFSQP
-if CFSQP
+if HAVE_CFSQP
 check_PROGRAMS += cfsqp
 cfsqp_SOURCES = cfsqp.cc $(COMMON_SOURCES)
 cfsqp_LDADD = $(top_builddir)/src/liboptimization.la

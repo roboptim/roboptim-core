@@ -20,7 +20,8 @@ AT_SETUP([Check Problem copy constructor.])
 AT_TESTED([problem-cc])
 
 cp $abs_srcdir/problem-cc.stdout expout
-AT_CHECK([problem-cc], [0], [expout], [ignore])
+AT_CHECK([$CHECK_PREFIX `which problem-cc`],
+         [0], [expout], [ignore])
 
 AT_CLEANUP
 

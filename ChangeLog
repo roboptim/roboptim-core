@@ -1,3 +1,24 @@
+2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add the possibility to run test suite with external tools.
+	* README: Document how to use the test suite with
+        Valgrind.
+	* build-aux/cfsqp.m4,
+	* build-aux/ipopt.m4: Rename IPOPT/CFSQP into
+        HAVE_IPOPT/HAVE_CFSQP to avoid unexpected expansion.
+	* include/Makefile.am: Use HAVE_IPOPT/HAVE_CFSQP.
+	* src/Makefile.am: Use HAVE_IPOPT/HAVE_CFSQP.
+	* tests/Makefile.am: Use HAVE_IPOPT/HAVE_CFSQP.
+	* tests/atlocal.in: Import CHECK_PREFIX.
+	* tests/cfsqp.at,
+	* tests/ipopt.at,
+	* tests/numeric-linear-function.at,
+	* tests/numeric-quadratic-function.at,
+	* tests/problem-cc.at,
+	* tests/simple-test.at: Prefix launched commands by
+        CHECK_PREFIX.
+	* tests/testsuite.at: Reorganize test suite by group.
+
 2009-04-11  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add getter/setter for CFSQP.

@@ -20,3 +20,5 @@
 
 # Add test binaries to PATH.
 PATH=@abs_builddir@:$PATH
+
+CHECK_PREFIX=$CHECK_PREFIX

@@ -20,7 +20,8 @@ AT_SETUP([Check DummySolver.])
 AT_TESTED([simple-test])
 
 cp $abs_srcdir/simple-test.stdout expout
-AT_CHECK([simple-test], [0], [expout], [ignore])
+AT_CHECK([$CHECK_PREFIX `which simple-test`],
+         [0], [expout], [ignore])
 
 AT_CLEANUP
 

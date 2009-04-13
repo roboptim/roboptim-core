@@ -19,16 +19,21 @@
 ## Launch the test suite.  ##
 ## ----------------------- ##
 
-AT_INIT([Main library])
+AT_INIT([Main test suite])
 AT_COPYRIGHT(
 [Copyright (C) 2009 Thomas Moulard, FIXME
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
 
-# Include test cases.
-m4_include([simple-test.at])
-m4_include([ipopt.at])
-m4_include([cfsqp.at])
-m4_include([numeric-linear-function.at])
-m4_include([numeric-quadratic-function.at])
-m4_include([problem-cc.at])
+AT_BANNER([Shared tests])
+ m4_include([simple-test.at])
+ m4_include([numeric-linear-function.at])
+ m4_include([numeric-quadratic-function.at])
+ m4_include([problem-cc.at])
+
+AT_BANNER([Cfsqp])
+ m4_include([cfsqp.at])
+
+
+AT_BANNER([Ipopt])
+ m4_include([ipopt.at])

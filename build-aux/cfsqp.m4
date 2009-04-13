@@ -82,7 +82,7 @@ AC_DEFUN([CFSQP_ARG_WITH],
     ])
 
   # Define a boolean indicating whether or not the package has been found.
-  AM_CONDITIONAL([CFSQP],
+  AM_CONDITIONAL([HAVE_CFSQP],
                  [test "x$with_cfsqp" != xno && \
 		  test "x$cfsqp_fail" != xyes])
 ]) # CFSQP_ARG_WITH

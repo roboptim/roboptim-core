@@ -20,7 +20,8 @@ AT_SETUP([Check NumericLinearFunction.])
 AT_TESTED([numeric-linear-function])
 
 cp $abs_srcdir/numeric-linear-function.stdout expout
-AT_CHECK([numeric-linear-function], [0], [expout], [ignore])
+AT_CHECK([$CHECK_PREFIX `which numeric-linear-function`],
+         [0], [expout], [ignore])
 
 AT_CLEANUP
 

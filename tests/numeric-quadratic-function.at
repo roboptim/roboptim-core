@@ -20,7 +20,8 @@ AT_SETUP([Check NumericQuadraticFunction.])
 AT_TESTED([numeric-quadratic-function])
 
 cp $abs_srcdir/numeric-quadratic-function.stdout expout
-AT_CHECK([numeric-quadratic-function], [0], [expout], [ignore])
+AT_CHECK([$CHECK_PREFIX `which numeric-quadratic-function`],
+         [0], [expout], [ignore])
 
 AT_CLEANUP
 

@@ -21,10 +21,10 @@ nobase_include_HEADERS =				\
 	liboptimization/util.hh				\
 	liboptimization/util.hxx
 
-if CFSQP
+if HAVE_CFSQP
  nobase_include_HEADERS += liboptimization/cfsqp.hh
 endif
 
-if IPOPT
+if HAVE_IPOPT
  nobase_include_HEADERS += liboptimization/ipopt.hh
 endif

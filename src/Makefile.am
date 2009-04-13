@@ -24,14 +24,14 @@ liboptimization_la_LIBADD =
 liboptimization_la_LDFLAGS =
 liboptimization_la_CXXFLAGS =
 
-if IPOPT
+if HAVE_IPOPT
  liboptimization_la_SOURCES += ipopt.cc
  liboptimization_la_CXXFLAGS += $(PTHREAD_CFLAGS)
  liboptimization_la_LDFLAGS += $(IPOPT_LDFLAGS)
  liboptimization_la_LIBADD += $(IPOPT_LIBADD) $(PTHREAD_LIBS)
 endif
 
-if CFSQP
+if HAVE_CFSQP
  liboptimization_la_SOURCES += cfsqp.cc
  liboptimization_la_LIBADD += $(CFSQP_LIBADD)
 endif
