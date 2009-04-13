@@ -29,4 +29,15 @@ namespace optimization
   {
   }
 
-}; // end of namespace optimization
+  std::ostream&
+  SolverError::print (std::ostream& o) const throw ()
+  {
+    return o << "Solver error:" << what ();
+  }
+
+  std::ostream& operator<< (std::ostream& o, const SolverError& s)
+  {
+    return s.print (o);
+  }
+
+} // end of namespace optimization

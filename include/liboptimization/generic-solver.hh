@@ -27,6 +27,7 @@
 
 # include <liboptimization/fwd.hh>
 # include <liboptimization/problem.hh>
+# include <liboptimization/result.hh>
 # include <liboptimization/solver-error.hh>
 
 namespace optimization
@@ -41,6 +42,8 @@ namespace optimization
       SOLVER_NO_SOLUTION,
       /// Solution has been found.
       SOLVER_VALUE,
+      /// Solution has been found but some problems happened.
+      SOLVER_VALUE_WARNINGS,
       /// The solver failed to found a solution.
       SOLVER_ERROR
     };
@@ -49,7 +52,10 @@ namespace optimization
     typedef Function::vector_t vector_t;
 
     /// Result type.
-    typedef boost::variant<NoSolution, vector_t, SolverError> result_t;
+    typedef boost::variant<NoSolution,
+                           Result,
+                           ResultWithWarnings,
+                           SolverError> result_t;
 
      /// \defgroup ctor Constructors and destructors.
     /// \{
@@ -80,6 +86,6 @@ namespace optimization
   };
 
   std::ostream& operator<< (std::ostream&, const GenericSolver&);
-}; // end of namespace optimization
+} // end of namespace optimization
 
 #endif //! OPTIMIZATION_GENERIC_SOLVER_HH

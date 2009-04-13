@@ -344,9 +344,11 @@ namespace optimization
             return;
           }
 
-        IpoptSolver::vector_t arr (n);
-        array_to_vector (arr, x);
-        solver_.result_ = arr;
+        Result res (n);
+        array_to_vector (res.x, x);
+        array_to_vector (res.lambda, lambda);
+        res.value = obj_value;
+        solver_.result_ = res;
       }
 
       virtual bool

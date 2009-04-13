@@ -19,7 +19,10 @@ AT_SETUP([Check Ipopt bridge.])
 
 AT_TESTED([ipopt])
 
-AT_CHECK([ipopt || exit 77], [0], [ignore], [ignore])
+AT_CHECK([if test x`which ipopt` = x; then
+ exit 77; else
+ true; fi], [0], [ignore], [ignore])
+
 cp $abs_srcdir/ipopt.stdout expout
 AT_CHECK([$CHECK_PREFIX `which ipopt`], [0], [expout], [ignore])
 

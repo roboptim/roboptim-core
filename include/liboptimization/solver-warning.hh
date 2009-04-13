@@ -16,40 +16,21 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \brief Forward declarations.
+ * \brief Declaration of the SolverWarning class.
  */
 
-#ifndef OPTIMIZATION_FWD_HH
-# define OPTIMIZATION_FWD_HH
+#ifndef OPTIMIZATION_SOLVER_WARNING_HH
+# define OPTIMIZATION_SOLVER_WARNING_HH
+# include <liboptimization/solver-error.hh>
 
 namespace optimization
 {
-  /// \brief Returned by GenericSolver::getMinimum if no solution can be
-  /// found (but no error has been encountered during the process).
-  class NoSolution {};
+  class SolverWarning : public SolverError
+  {
+    explicit SolverWarning (const std::string& arg) throw ();
 
-  class Function;
-  class DerivableFunction;
-  class TwiceDerivableFunction;
-  class QuadraticFunction;
-  class LinearFunction;
+    virtual std::ostream& print (std::ostream&) const throw ();
+  };
+} // end of namespace optimization
 
-  template <typename F, typename C = F>
-  class Problem;
-
-  class GenericSolver;
-  template <typename F, typename C = F>
-  class Solver;
-
-  class CFSQPSolver;
-  class DummySolver;
-  class IpoptSolver;
-
-  class Result;
-  class ResultWithWarnings;
-
-  class SolverError;
-  class SolverWarning;
-}; // end of namespace optimization.
-
-#endif //! OPTIMIZATION_FWD_HH
+#endif //! OPTIMIZATION_SOLVER_ERROR_HH

@@ -21,6 +21,7 @@
 
 #ifndef OPTIMIZATION_SOLVER_ERROR_HH
 # define OPTIMIZATION_SOLVER_ERROR_HH
+# include <iostream>
 # include <stdexcept>
 
 namespace optimization
@@ -31,8 +32,11 @@ namespace optimization
   {
   public:
     explicit SolverError (const std::string& arg) throw ();
+
+    virtual std::ostream& print (std::ostream&) const throw ();
   };
 
-}; // end of namespace optimization
+  std::ostream& operator<< (std::ostream&, const SolverError&);
+} // end of namespace optimization
 
 #endif //! OPTIMIZATION_SOLVER_ERROR_HH

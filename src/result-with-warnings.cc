@@ -16,40 +16,31 @@
 // along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * \brief Forward declarations.
+ * \brief Implementation of the Result class.
  */
 
-#ifndef OPTIMIZATION_FWD_HH
-# define OPTIMIZATION_FWD_HH
+#include <iostream>
+#include <vector>
+
+#include <boost/numeric/ublas/io.hpp>
+
+#include <liboptimization/function.hh>
+#include <liboptimization/indent.hh>
+#include <liboptimization/result.hh>
+#include <liboptimization/solver-warning.hh>
+#include <liboptimization/util.hh>
 
 namespace optimization
 {
-  /// \brief Returned by GenericSolver::getMinimum if no solution can be
-  /// found (but no error has been encountered during the process).
-  class NoSolution {};
+  std::ostream&
+  ResultWithWarnings::print (std::ostream& o) const throw ()
+  {
+    Result::print (o);
+    return o << incindent << "Warnings: " << warnings << decindent;
+  }
 
-  class Function;
-  class DerivableFunction;
-  class TwiceDerivableFunction;
-  class QuadraticFunction;
-  class LinearFunction;
+  ResultWithWarnings::~ResultWithWarnings () throw ()
+  {
+  }
 
-  template <typename F, typename C = F>
-  class Problem;
-
-  class GenericSolver;
-  template <typename F, typename C = F>
-  class Solver;
-
-  class CFSQPSolver;
-  class DummySolver;
-  class IpoptSolver;
-
-  class Result;
-  class ResultWithWarnings;
-
-  class SolverError;
-  class SolverWarning;
-}; // end of namespace optimization.
-
-#endif //! OPTIMIZATION_FWD_HH
+} // end of namespace optimization

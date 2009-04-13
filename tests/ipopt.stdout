@@ -14,5 +14,8 @@ Problem:
   Starting point: [4](1,5,5,1)
   Infinity value (for all functions): inf
 A solution has been found: 
-[4](1,4.743,3.82115,1.37941)
-f(*x) = 14.5723
+Result: 
+  Dimension: 4
+  X: [4](1,4.743,3.82115,1.37941)
+  Value: 14.5723
+  Lambda: [4](-0.552294,0.161469,5.30531e-313,25)

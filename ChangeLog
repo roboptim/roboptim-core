@@ -1,5 +1,32 @@
 2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Handle results with/without warnings.
+	* include/liboptimization/fwd.hh: Predeclare new classes.
+	* include/liboptimization/generic-solver.hh: result_t
+        changed to no solution/result/result with warnings/error.
+	* include/liboptimization/result-with-warnings.hh: Copy from
+        include/liboptimization/solver-error.hh.
+	* include/liboptimization/result.hh: New.
+	* include/liboptimization/solver-error.hh: Make SolverError
+        printable.
+	* include/liboptimization/solver-warning.hh: Copy from
+        include/liboptimization/solver-error.hh.
+	* src/Makefile.am: Add new source files.
+	* src/cfsqp.cc: Fix bridge.
+	* src/generic-solver.cc: Restyle.
+	* src/ipopt.cc: Fix bridge.
+	* src/result-with-warnings.cc: Copy from src/solver-error.cc.
+	* src/result.cc: New.
+	* src/solver-error.cc: Make SolverError printable.
+	* src/solver-warning.cc: Copy from src/solver-error.cc.
+	* tests/cfsqp.at: Fix CFSQP detection.
+	* tests/cfsqp.cc: Fix test case.
+	* tests/ipopt.at: Fix IPOPT detection.
+	* tests/ipopt.cc: Fix test case.
+	* tests/ipopt.stdout: Regenerate output.
+
+2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add the possibility to run test suite with external tools.
 	* README: Document how to use the test suite with
         Valgrind.

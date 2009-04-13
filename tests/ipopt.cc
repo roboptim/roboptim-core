@@ -54,12 +54,11 @@ int run_test ()
     }
 
   // Get the result.
-  IpoptSolver::vector_t& result = boost::get<IpoptSolver::vector_t> (res);
+  Result& result = boost::get<Result> (res);
 
   // Display the result.
   std::cout << "A solution has been found: " << std::endl;
   std::cout << result << std::endl;
-  std::cout << "f(*x) = " << solver.problem ().function () (result) << std::endl;
   return 0;
 }
 

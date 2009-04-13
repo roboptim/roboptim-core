@@ -47,6 +47,7 @@ namespace optimization
       return result_;
     solve ();
     assert (result_.which () != SOLVER_NO_SOLUTION);
+
     return result_;
   }
 

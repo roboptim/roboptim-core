@@ -230,9 +230,9 @@ namespace optimization
 
     if (inform == 0)
       {
-        Function::vector_t x_ (nparam);
-        detail::array_to_vector (x_, x);
-        result_ = x_;
+        Result res (nparam);
+        detail::array_to_vector (res.x, x);
+        result_ = res;
       }
     else
       result_ = SolverError ("CFSQP has failed.");

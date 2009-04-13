@@ -19,7 +19,9 @@ AT_SETUP([Check CFSQPSolver.])
 
 AT_TESTED([cfsqp])
 
-AT_CHECK([cfsqp || exit 77], [0], [ignore], [ignore])
+AT_CHECK([if test x`which cfsqp` = x; then
+ exit 77; else
+ true; fi], [0], [ignore], [ignore])
 
 AT_XFAIL_IF([true]) #FIXME: CFSQP is not yet ready.
 cp $abs_srcdir/cfsqp.stdout expout

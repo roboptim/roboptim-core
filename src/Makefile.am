@@ -16,7 +16,10 @@ liboptimization_la_SOURCES = 		\
 	numeric-linear-function.cc	\
 	numeric-quadratic-function.cc	\
 	quadratic-function.cc		\
+	result.cc			\
+	result-with-warnings.cc		\
 	solver-error.cc			\
+	solver-warning.cc		\
 	twice-derivable-function.cc	\
 	util.cc
 
