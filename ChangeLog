@@ -1,5 +1,21 @@
 2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix NumericQuadraticFunction / NumericLinearFunction.
+	* include/liboptimization/linear-function.hh: Compute hessian.
+	* include/liboptimization/numeric-linear-function.hh: Remove
+        hessian computation.
+	* include/liboptimization/numeric-quadratic-function.hh: Use
+        a symmetric matrix.
+	* src/linear-function.cc: Compute hessian.
+	* src/numeric-linear-function.cc: Move hessian computation in
+        LinearFunction.
+	* src/numeric-quadratic-function.cc: Fix computation bugs.
+	* tests/numeric-quadratic-function.cc: Fix test case
+        to use a symmetric matrix.
+	* tests/numeric-quadratic-function.stdout: Update reference.
+
+2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add explicit error message in IPOPT.
 	* include/liboptimization/result-with-warnings.hh: Use
         a direct instance of SolverWarning for now.

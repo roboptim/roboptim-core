@@ -35,7 +35,6 @@ namespace optimization
 
     virtual vector_t operator () (const vector_t&) const throw ();
     virtual gradient_t gradient (const vector_t&) const throw ();
-    virtual hessian_t hessian (const vector_t&) const throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
 

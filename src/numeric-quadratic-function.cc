@@ -39,6 +39,7 @@ namespace optimization
     assert (a.size1 () == a.size2 () && a.size2 () == b.size ());
   }
 
+  // 1/2 * x^T * A * x + b^T * x
   NumericQuadraticFunction::vector_t
   NumericQuadraticFunction::operator () (const vector_t& x) const throw ()
   {
@@ -46,17 +47,19 @@ namespace optimization
 
     vector_t res (1);
     res (0) = inner_prod
-      (prod (trans (x), a_), x) + inner_prod (trans (b_), x);
+      (prod (trans (x), a_), x) / 2 + inner_prod (trans (b_), x);
     return res;
   }
 
+  // x * A + b
   NumericQuadraticFunction::gradient_t
   NumericQuadraticFunction::gradient (const vector_t& x) const throw ()
   {
     using namespace boost::numeric::ublas;
-    return prod (x, a_);
+    return prod (x, a_) + b_;
   }
 
+  // A
   NumericQuadraticFunction::hessian_t
   NumericQuadraticFunction::hessian (const vector_t& x) const throw ()
   {

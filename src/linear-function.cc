@@ -31,6 +31,15 @@ namespace optimization
   {
   }
 
+  LinearFunction::hessian_t
+  LinearFunction::hessian (const vector_t&) const throw ()
+  {
+    using namespace boost::numeric::ublas;
+    hessian_t h (n, n);
+    h.clear ();
+    return h;
+  }
+
   std::ostream&
   LinearFunction::print (std::ostream& o) const throw ()
   {

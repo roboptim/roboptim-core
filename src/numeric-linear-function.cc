@@ -37,6 +37,7 @@ namespace optimization
   {
   }
 
+  // A * x + b
   NumericLinearFunction::vector_t
   NumericLinearFunction::operator () (const vector_t& x) const throw ()
   {
@@ -46,19 +47,11 @@ namespace optimization
     return res;
   }
 
+  // A
   NumericLinearFunction::gradient_t
   NumericLinearFunction::gradient (const vector_t&) const throw ()
   {
     return a_;
-  }
-
-  NumericLinearFunction::hessian_t
-  NumericLinearFunction::hessian (const vector_t&) const throw ()
-  {
-    using namespace boost::numeric::ublas;
-    hessian_t h (n, n);
-    h.clear ();
-    return h;
   }
 
   std::ostream&

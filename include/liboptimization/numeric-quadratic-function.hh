@@ -21,11 +21,14 @@
 
 #ifndef OPTIMIZATION_NUMERIC_QUADRATIC_FUNCTION_HH
 # define OPTIMIZATION_NUMERIC_QUADRATIC_FUNCTION_HH
+# include <boost/numeric/ublas/symmetric.hpp>
 
 # include <liboptimization/quadratic-function.hh>
 
 namespace optimization
 {
+  namespace ublas = boost::numeric::ublas;
+
   /// Define a quadratic function.
   class NumericQuadraticFunction : public QuadraticFunction
   {
@@ -39,7 +42,7 @@ namespace optimization
 
     virtual std::ostream& print (std::ostream&) const throw ();
   private:
-    matrix_t a_;
+    ublas::symmetric_matrix<double, ublas::lower> a_;
     vector_t b_;
   };
 
