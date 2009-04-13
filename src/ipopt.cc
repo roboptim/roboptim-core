@@ -339,18 +339,71 @@ namespace optimization
         assert (solver_.problem ().function ().n - n == 0);
         assert (solver_.problem ().constraints ().size () - m == 0);
 
-        if (status != SUCCESS)
+        switch (status)
           {
-            //FIXME: put a more precise error message.
-            solver_.result_ = SolverError ("Ipopt failed to minimize.");
-            return;
-          }
+          case SUCCESS:
+            {
+              Result res (n, 1);
+              array_to_vector (res.x, x);
+              array_to_vector (res.lambda, lambda);
+              res.value (0) = obj_value;
+              solver_.result_ = res;
+              break;
+            }
 
-        Result res (n, 1);
-        array_to_vector (res.x, x);
-        array_to_vector (res.lambda, lambda);
-        res.value (0) = obj_value;
-        solver_.result_ = res;
+          case MAXITER_EXCEEDED:
+            solver_.result_ = SolverError ("Max iteration exceeded.");
+            break;
+
+          case STOP_AT_TINY_STEP:
+            solver_.result_ = SolverError
+              ("Algorithm proceeds with very little progress.");
+            break;
+
+          case STOP_AT_ACCEPTABLE_POINT:
+            {
+              ResultWithWarnings res (n, 1);
+              array_to_vector (res.x, x);
+              array_to_vector (res.lambda, lambda);
+              res.value (0) = obj_value;
+              res.warnings.push_back (SolverWarning ("Acceptable point."));
+              solver_.result_ = res;
+              break;
+            }
+
+          case LOCAL_INFEASIBILITY:
+            solver_.result_ = SolverError
+              ("Algorithm converged to a point of local infeasibility.");
+            break;
+
+          case USER_REQUESTED_STOP:
+            // Should never happen.
+            assert (0);
+            break;
+
+          case DIVERGING_ITERATES:
+            solver_.result_ = SolverError ("Iterate diverges.");
+            break;
+
+          case RESTORATION_FAILURE:
+            solver_.result_ = SolverError ("Restoration phase failed.");
+            break;
+
+          case ERROR_IN_STEP_COMPUTATION:
+            solver_.result_ =
+              SolverError
+("Unrecoverable error while IPOPT tried to compute the search direction.");
+            break;
+
+          case INVALID_NUMBER_DETECTED:
+            solver_.result_ =
+              SolverError ("IPOPT received an invalid number.");
+            break;
+
+          case INTERNAL_ERROR:
+            solver_.result_ = SolverError ("Unknown internal error.");
+            break;
+          }
       }
 
       virtual bool

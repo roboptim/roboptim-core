@@ -1,5 +1,14 @@
 2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add explicit error message in IPOPT.
+	* include/liboptimization/result-with-warnings.hh: Use
+        a direct instance of SolverWarning for now.
+	* include/liboptimization/solver-warning.hh: Add missing public.
+	* src/ipopt.cc: Return an explicit error message if a problem
+        occurs.
+
+2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fill SolverError with a complete message in CFSQP bridge.
 	* src/cfsqp.cc: Put a real error message into returned SolverErro.
 	* src/ipopt.cc: Enfore 80 columns.

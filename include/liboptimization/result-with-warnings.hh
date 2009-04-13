@@ -25,6 +25,7 @@
 
 # include <liboptimization/fwd.hh>
 # include <liboptimization/result.hh>
+# include <liboptimization/solver-warning.hh>
 
 namespace optimization
 {
@@ -38,7 +39,7 @@ namespace optimization
       throw ();
     ~ResultWithWarnings () throw ();
 
-    std::vector<SolverWarning*> warnings;
+    std::vector<SolverWarning> warnings;
 
     virtual std::ostream& print (std::ostream& o) const throw ();
   };

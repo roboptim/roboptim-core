@@ -27,6 +27,7 @@ namespace optimization
 {
   class SolverWarning : public SolverError
   {
+  public:
     explicit SolverWarning (const std::string& arg) throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
