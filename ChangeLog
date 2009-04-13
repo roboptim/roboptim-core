@@ -1,5 +1,14 @@
 2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix documentation style.
+	* doc/Doxyfile.in: Add new stylesheets.
+        Remove collaboration diagram.
+	* doc/Makefile.am: Distribute new stylesheets.
+	* doc/doxygen.css: New.
+	* doc/tabs.css: New.
+
+2009-04-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add m in Function (represents the result's size).
 	* include/Makefile.am: Distribute new headers.
 	* include/liboptimization/derivable-function.hh:

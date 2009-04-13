@@ -7,7 +7,8 @@ doc: html
 html-local: Doxyfile
 	$(DOXYGEN)
 
-EXTRA_DIST = Doxyfile.in header.html footer.html package.css
+EXTRA_DIST = Doxyfile.in header.html footer.html \
+	package.css doxygen.css tabs.css
 CLEANFILES = $(PACKAGE_TARNAME).doxytag
 
 clean-local:
