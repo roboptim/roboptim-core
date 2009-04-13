@@ -56,7 +56,7 @@ namespace optimization
       {
         BOOST_STATIC_ASSERT((boost::is_base_of<Function, C>::value));
 
-        Function::value_type res = (*c) (x_);
+        Function::value_type res = (*c) (x_)[0];
 
         if (j_ % 2 == 0)
           // g(x) >= b, -g(x) + b <= 0
@@ -104,7 +104,7 @@ namespace optimization
 
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
-      *fj = solver->problem ().function () (x_);
+      *fj = solver->problem ().function () (x_)[0];
     }
 
     /// CFSQP constraints function.
@@ -230,8 +230,9 @@ namespace optimization
 
     if (inform == 0)
       {
-        Result res (nparam);
+        Result res (nparam, 1);
         detail::array_to_vector (res.x, x);
+        res.value (0) = f[0];
         result_ = res;
       }
     else

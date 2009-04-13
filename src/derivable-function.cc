@@ -26,9 +26,9 @@
 
 namespace optimization
 {
-  DerivableFunction::DerivableFunction (size_type n)
+  DerivableFunction::DerivableFunction (size_type n, size_type m)
     throw ()
-    : Function (n)
+    : Function (n, m)
   {
   }
 

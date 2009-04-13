@@ -14,7 +14,10 @@ nobase_include_HEADERS =				\
 	liboptimization/problem.hh			\
 	liboptimization/problem.hxx			\
 	liboptimization/quadratic-function.hh		\
+	liboptimization/result.hh			\
+	liboptimization/result-with-warnings.hh		\
 	liboptimization/solver-error.hh			\
+	liboptimization/solver-warning.hh		\
 	liboptimization/solver.hh			\
 	liboptimization/solver.hxx			\
 	liboptimization/twice-derivable-function.hh	\

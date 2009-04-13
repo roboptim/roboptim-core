@@ -33,7 +33,7 @@ namespace optimization
     NumericQuadraticFunction (const matrix_t&, const vector_t&)
       throw ();
 
-    virtual value_type operator () (const vector_t&) const throw ();
+    virtual vector_t operator () (const vector_t&) const throw ();
     virtual gradient_t gradient (const vector_t&) const throw ();
     virtual hessian_t hessian (const vector_t&) const throw ();
 

@@ -39,11 +39,15 @@ namespace optimization
     assert (a.size1 () == a.size2 () && a.size2 () == b.size ());
   }
 
-  NumericQuadraticFunction::value_type
+  NumericQuadraticFunction::vector_t
   NumericQuadraticFunction::operator () (const vector_t& x) const throw ()
   {
     using namespace boost::numeric::ublas;
-    return inner_prod (prod (trans (x), a_), x) + inner_prod (trans (b_), x);
+
+    vector_t res (1);
+    res (0) = inner_prod
+      (prod (trans (x), a_), x) + inner_prod (trans (b_), x);
+    return res;
   }
 
   NumericQuadraticFunction::gradient_t

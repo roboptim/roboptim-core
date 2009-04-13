@@ -33,6 +33,9 @@ namespace optimization
   class ResultWithWarnings : public Result
   {
   public:
+    explicit ResultWithWarnings (const Function::size_type,
+                                 const Function::size_type = 1)
+      throw ();
     ~ResultWithWarnings () throw ();
 
     std::vector<SolverWarning*> warnings;

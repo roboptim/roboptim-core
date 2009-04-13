@@ -24,13 +24,15 @@ using namespace optimization;
 struct F : public DerivableFunction
 {
 public:
-  F () throw () : DerivableFunction (1)
+  F () throw () : DerivableFunction (1, 1)
   {}
 
-  virtual value_type
+  virtual vector_t
   operator () (const vector_t&) const throw ()
   {
-    return 0.;
+    vector_t res (m);
+    res.clear ();
+    return res;
   }
 
   virtual gradient_t

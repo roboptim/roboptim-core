@@ -49,8 +49,11 @@ namespace optimization
     /// Matrix type.
     typedef ublas::matrix<value_type> matrix_t;
 
-    /// Function arity.
+    /// Problem dimension.
     const size_type n;
+
+    /// Result dimension.
+    const size_type m;
 
     /// Get the value that symbolizes infinity.
     static const value_type infinity () throw ()
@@ -60,14 +63,14 @@ namespace optimization
 
     /// Constructor.
     /// \param n function arity
-    /// \param infinity value that encodes infinity
-    Function (size_type n) throw ();
+    /// \param m result size
+    Function (size_type n, size_type m = 1) throw ();
 
     /// Destructor.
     virtual ~Function () throw ();
 
     /// Function.
-    virtual value_type operator () (const vector_t&) const throw () = 0;
+    virtual vector_t operator () (const vector_t&) const throw () = 0;
 
     /// Display function type.
     virtual std::ostream& print (std::ostream&) const throw ();

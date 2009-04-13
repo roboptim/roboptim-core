@@ -185,7 +185,7 @@ namespace optimization
 
         IpoptSolver::vector_t x_ (n);
         array_to_vector (x_, x);
-        obj_value = solver_.problem ().function () (x_);
+        obj_value = solver_.problem ().function () (x_)[0];
         return true;
       }
 
@@ -219,7 +219,7 @@ namespace optimization
         int i = 0;
         for (citer_t it = solver_.problem ().constraints ().begin ();
              it != solver_.problem ().constraints ().end (); ++it, ++i)
-          g_[i] = (**it) (x_);
+          g_[i] = (**it) (x_)[0];
         vector_to_array(g, g_);
         return true;
       }
@@ -344,10 +344,10 @@ namespace optimization
             return;
           }
 
-        Result res (n);
+        Result res (n, 1);
         array_to_vector (res.x, x);
         array_to_vector (res.lambda, lambda);
-        res.value = obj_value;
+        res.value (0) = obj_value;
         solver_.result_ = res;
       }
 

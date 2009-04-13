@@ -31,17 +31,19 @@ namespace optimization
   NumericLinearFunction::NumericLinearFunction (const vector_t& a,
                                                 value_type b)
     throw ()
-    : LinearFunction (a.size ()),
+    : LinearFunction (a.size (), 1),
       a_ (a),
       b_ (b)
   {
   }
 
-  NumericLinearFunction::value_type
+  NumericLinearFunction::vector_t
   NumericLinearFunction::operator () (const vector_t& x) const throw ()
   {
     using namespace boost::numeric::ublas;
-    return inner_prod (a_, x) + b_;
+    vector_t res (1);
+    res(0) = inner_prod (a_, x) + b_;
+    return res;
   }
 
   NumericLinearFunction::gradient_t

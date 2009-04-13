@@ -34,7 +34,7 @@ namespace optimization
     /// Hessian type.
     typedef matrix_t hessian_t;
 
-    TwiceDerivableFunction (size_type n) throw ();
+    TwiceDerivableFunction (size_type n, size_type m = 1) throw ();
 
     /// Hessian.
     virtual hessian_t hessian (const vector_t&) const throw () = 0;

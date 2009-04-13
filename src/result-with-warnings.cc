@@ -26,12 +26,19 @@
 
 #include <liboptimization/function.hh>
 #include <liboptimization/indent.hh>
-#include <liboptimization/result.hh>
+#include <liboptimization/result-with-warnings.hh>
 #include <liboptimization/solver-warning.hh>
 #include <liboptimization/util.hh>
 
 namespace optimization
 {
+  ResultWithWarnings::ResultWithWarnings (const Function::size_type n,
+                                          const Function::size_type m)
+    throw ()
+    : Result (n, m)
+  {
+  }
+
   std::ostream&
   ResultWithWarnings::print (std::ostream& o) const throw ()
   {

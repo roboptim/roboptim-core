@@ -25,14 +25,16 @@ using namespace optimization;
 
 struct F : public TwiceDerivableFunction
 {
-  F () : TwiceDerivableFunction (4)
+  F () : TwiceDerivableFunction (4, 1)
   {
   }
 
-  virtual value_type
+  virtual vector_t
   operator () (const vector_t& x) const throw ()
   {
-    return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
+    vector_t res (m);
+    res (0) = x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
+    return res;
   }
 
   virtual gradient_t
@@ -77,14 +79,16 @@ struct F : public TwiceDerivableFunction
 struct G0 : public TwiceDerivableFunction
 {
   G0 ()
-    : TwiceDerivableFunction (4)
+    : TwiceDerivableFunction (4, 1)
   {
   }
 
-  virtual value_type
+  virtual vector_t
   operator () (const vector_t& x) const throw ()
   {
-    return x[0] * x[1] * x[2] * x[3];
+    vector_t res (m);
+    res (0) = x[0] * x[1] * x[2] * x[3];
+    return res;
   }
 
   virtual gradient_t
@@ -129,14 +133,16 @@ struct G0 : public TwiceDerivableFunction
 struct G1 : public TwiceDerivableFunction
 {
   G1 ()
-    : TwiceDerivableFunction (4)
+    : TwiceDerivableFunction (4, 1)
   {
   }
 
-  virtual value_type
+  virtual vector_t
   operator () (const vector_t& x) const throw ()
   {
-    return x[0]*x[0] + x[1]*x[1] + x[2]*x[2] + x[3]*x[3];
+    vector_t res (m);
+    res (0) = x[0]*x[0] + x[1]*x[1] + x[2]*x[2] + x[3]*x[3];
+    return res;
   }
 
   virtual gradient_t

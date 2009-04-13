@@ -30,7 +30,7 @@ namespace optimization
   class LinearFunction : public QuadraticFunction
   {
   public:
-    LinearFunction (size_type n) throw ();
+    LinearFunction (size_type n, size_type m = 1) throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };

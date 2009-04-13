@@ -31,16 +31,19 @@
 
 namespace optimization
 {
-  Result::Result (const Function::size_type n_) throw ()
+  Result::Result (const Function::size_type n_,
+                  const Function::size_type m_) throw ()
     : n (n_),
+      m (m_),
       x (n),
-      value (),
+      value (m),
       lambda (n)
   {
   }
 
   Result::Result (const Result& r) throw ()
     : n (r.n),
+      m (r.m),
       x (r.x),
       value (r.value),
       lambda (r.lambda)

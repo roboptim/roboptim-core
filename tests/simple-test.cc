@@ -27,12 +27,14 @@ typedef DummySolver solver_t;
 
 struct F : public Function
 {
-  F () : Function (4)
+  F () : Function (4, 1)
   {}
 
-  virtual value_type operator () (const vector_t& x) const throw ()
+  virtual vector_t operator () (const vector_t& x) const throw ()
   {
-    return x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
+    vector_t res (m);
+    res (0) = x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
+    return res;
   }
 
   // No gradient, hessian.

@@ -32,7 +32,8 @@ namespace optimization
   class Result
   {
   public:
-    explicit Result (const Function::size_type n_) throw ();
+    explicit Result (const Function::size_type,
+                     const Function::size_type = 1) throw ();
     explicit Result (const Result&) throw ();
     Result* operator= (const Result& r) throw ();
     virtual ~Result () throw ();
@@ -40,25 +41,13 @@ namespace optimization
     virtual std::ostream& print (std::ostream& o) const throw ();
 
     const Function::size_type n;
+    const Function::size_type m;
     Function::vector_t x;
-    Function::value_type value;
+    Function::vector_t value;
     Function::vector_t lambda;
   };
 
-  /// Retrieved when a result has been found but some problems
-  /// happened during the computation.
-  class ResultWithWarnings : public Result
-  {
-  public:
-    ~ResultWithWarnings () throw ();
-
-    std::vector<SolverWarning*> warnings;
-
-    virtual std::ostream& print (std::ostream& o) const throw ();
-  };
-
   std::ostream& operator<< (std::ostream& o, const Result& r);
-
 } // end of namespace optimization
 
 #endif //! OPTIMIZATION_RESULT_HH

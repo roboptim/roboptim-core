@@ -28,7 +28,9 @@
 # include <liboptimization/fwd.hh>
 # include <liboptimization/problem.hh>
 # include <liboptimization/result.hh>
+# include <liboptimization/result-with-warnings.hh>
 # include <liboptimization/solver-error.hh>
+# include <liboptimization/solver-warning.hh>
 
 namespace optimization
 {

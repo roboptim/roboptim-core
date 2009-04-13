@@ -26,11 +26,12 @@
 
 namespace optimization
 {
-  Function::Function (unsigned n) throw ()
-    : n (n)
+  Function::Function (size_type n, size_type m) throw ()
+    : n (n),
+      m (m)
   {
     // Positive size is required.
-    assert (n >= 0);
+    assert (n >= 0 && m >= 0);
   }
 
   Function::~Function () throw ()
