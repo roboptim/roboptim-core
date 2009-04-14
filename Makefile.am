@@ -19,7 +19,7 @@ all:
 
 # Pkg-config generation
 PKG_CONFIG_FILE = @PACKAGE_TARNAME@.pc
-PKG_DIR="$(DESTDIR)$(libdir)/pkg-config/"
+PKG_DIR="$(DESTDIR)$(libdir)/pkgconfig/"
 
 edit = sed -e "s|@prefix\@|$(prefix)|" \
            -e 's,@exec_prefix\@,$(exec_prefix),g' \
