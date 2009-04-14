@@ -28,6 +28,7 @@
 
 #include "liboptimization/cfsqp.hh"
 #include "liboptimization/function.hh"
+#include "liboptimization/indent.hh"
 #include "liboptimization/util.hh"
 
 namespace optimization
@@ -37,65 +38,6 @@ namespace optimization
 
   namespace detail
   {
-    /// \internal
-    /// Evaluate a constraint.
-    class EvalConstraintVisitor : public boost::static_visitor<Function::value_type>
-    {
-    public:
-      explicit EvalConstraintVisitor (const CFSQPSolver::problem_t& pb,
-                                      const Function::vector_t& x,
-                                      int j)
-        : pb_ (pb),
-          x_ (x),
-          j_ (j)
-      {}
-
-      template <typename C>
-      Function::value_type
-      operator () (const C* c)
-      {
-        BOOST_STATIC_ASSERT((boost::is_base_of<Function, C>::value));
-
-        Function::value_type res = (*c) (x_)[0];
-
-        if (j_ % 2 == 0)
-          // g(x) >= b, -g(x) + b <= 0
-          res = -res + pb_.bounds ()[j_/2].first;
-        else
-          // g(x) <= b, g(x) - b <= 0
-          res = res - pb_.bounds ()[j_/2].second;
-        return res;
-      }
-
-    private:
-      const CFSQPSolver::problem_t& pb_;
-      const Function::vector_t& x_;
-      int j_;
-    };
-
-    /// \internal
-    /// Evaluate a constraint's gradient.
-    class EvalGradientConstraintVisitor : public boost::static_visitor<Function::vector_t>
-    {
-    public:
-      explicit EvalGradientConstraintVisitor (const Function::vector_t& x)
-        : x_ (x)
-      {}
-
-      template <typename C>
-      Function::vector_t
-      operator () (const C* c)
-      {
-        BOOST_STATIC_ASSERT((boost::is_base_of<Function, C>::value));
-
-        return c->gradient (x_);
-      }
-
-    private:
-      const Function::vector_t& x_;
-    };
-
-
     /// CFSQP objective function.
     void obj (int nparam, int j , double* x, double* fj, void* cd)
     {
@@ -107,35 +49,98 @@ namespace optimization
       *fj = solver->problem ().function () (x_)[0];
     }
 
+
+    double
+    evaluate_inequality (double x, bool is_lower, double l, double u)
+    {
+      if (is_lower)
+        // g(x) >= b, -g(x) + b <= 0
+        return -x + l;
+      else
+        // g(x) <= b, g(x) - b <= 0
+        return x - u;
+    }
+
     /// CFSQP constraints function.
     void constr (int nparam, int j,
                  double* x, double* gj, void* cd)
     {
-      assert (cd);
+      assert (cd && !!gj && !!x && nparam >= 0 && j > 0 && j <= nparam);
       CFSQPSolver* solver = static_cast<CFSQPSolver*> (cd);
 
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
 
-      int j_ = (j < 2) ? 0 : (j - 1)/2;
+      // Decrement j to have C style indexation (0...size - 1).
+      j--;
 
-      EvalConstraintVisitor v (solver->problem (), x_, j);
-      *gj = boost::apply_visitor
-        (v, solver->problem ().constraints () [j_]);
+      // Constraint index in the generic representation.
+      int j_ = solver->cfsqpConstraints ()[j].first;
+
+      if (0 <= j && j < solver->nineqn ())
+        {
+          const DerivableFunction& f =
+            *boost::get<const DerivableFunction*>
+            (solver->problem ().constraints ()[j_]);
+          Function::vector_t res = f (x_);
+          *gj = evaluate_inequality
+            (res (0),
+             solver->cfsqpConstraints ()[j].second,
+             solver->problem ().bounds ()[j_].first,
+             solver->problem ().bounds ()[j_].second);
+          return;
+        }
+
+      if (solver->nineqn () <= j && j < solver->nineq () - solver->nineqn ())
+        {
+          const LinearFunction& f =
+            *boost::get<const LinearFunction*>
+            (solver->problem ().constraints ()[j_]);
+          Function::vector_t res = f (x_);
+          *gj = evaluate_inequality
+            (res (0),
+             solver->cfsqpConstraints ()[j].second,
+             solver->problem ().bounds ()[j_].first,
+             solver->problem ().bounds ()[j_].second);
+          return;
+        }
+
+      j -= solver->nineq ();
+      assert (j >= 0);
+      if (0 <= j && j < solver->neqn ())
+        {
+          const DerivableFunction& f =
+            *boost::get<const DerivableFunction*>
+            (solver->problem ().constraints ()[j_]);
+          Function::vector_t res = f (x_);
+          *gj = res (0) - solver->problem ().bounds ()[j_].first;
+          return;
+        }
+
+      if (solver->neqn () <= j && j < solver->neq () - solver->neqn ())
+        {
+          const LinearFunction& f =
+            *boost::get<const LinearFunction*>
+            (solver->problem ().constraints ()[j_]);
+          Function::vector_t res = f (x_);
+          *gj = res (0) - solver->problem ().bounds ()[j_].first;
+          return;
+        }
+      assert (0);
     }
 
     /// CFSQP objective function gradient.
     void gradob (int nparam, int j,
                  double* x, double* gradf, fct_t dummy, void* cd)
     {
-      assert (cd);
-      assert (j == 1);
+      assert (nparam >= 0 && j == 1 && !!x && !!gradf && !!cd);
 
       CFSQPSolver* solver = static_cast<CFSQPSolver*> (cd);
 
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
-      DerivableFunction::gradient_t grad = solver->problem ().function ().gradient (x_);
+      DerivableFunction::gradient_t grad =
+        solver->problem ().function ().gradient (x_);
       vector_to_array (gradf, grad);
     }
 
@@ -143,19 +148,35 @@ namespace optimization
     void gradcn (int nparam, int j,
                  double* x, double* gradgj, fct_t dummy, void* cd)
     {
-      assert (cd);
+      assert (nparam >= 0 && j > 0 && j <= nparam && !!x && !!gradgj && !!cd);
 
       CFSQPSolver* solver = static_cast<CFSQPSolver*> (cd);
 
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
 
-      int j_ = (j < 2) ? 0 : (j - 1)/2;
+      Function::vector_t grad (nparam);
 
-      EvalGradientConstraintVisitor v (x_);
+      // Decrement j to have C style indexation (0...size - 1).
+      j--;
+      // Constraint index in the generic representation.
+      int j_ = solver->cfsqpConstraints ()[j].first;
 
-      DerivableFunction::gradient_t grad =
-        boost::apply_visitor (v, solver->problem ().constraints ()[j_]);
+      if (solver->problem ().constraints ()[j_].which () == 0)
+        {
+          const DerivableFunction& f =
+            *boost::get<const DerivableFunction*>
+            (solver->problem ().constraints ()[j_]);
+          grad = f.gradient (x_);
+        }
+      else
+        {
+          const LinearFunction& f =
+            *boost::get<const LinearFunction*>
+            (solver->problem ().constraints ()[j_]);
+          grad = f.gradient (x_);
+        }
+
       vector_to_array (gradgj, grad);
     }
 
@@ -163,14 +184,59 @@ namespace optimization
 
   CFSQPSolver::CFSQPSolver (const problem_t& pb, int iprint) throw ()
     : parent_t (pb),
+      nineq_ (0),
+      nineqn_ (0),
+      neq_ (0),
+      neqn_ (0),
       mode_ (100),
       iprint_ (iprint),
       miter_ (500),
       bigbnd_ (1e10),
       eps_ (1e-8),
       epseqn_ (1e-8),
-      udelta_ (1e-8)
+      udelta_ (1e-8),
+      cfsqpConstraints_ ()
   {
+    // Add non-linear inequalities.
+    for (unsigned i = 0; i < problem ().constraints ().size (); ++i)
+      if (problem ().constraints ()[i].which () == 0)
+        if (problem ().bounds ()[i].first != problem ().bounds ()[i].second)
+          {
+            if (problem ().bounds ()[i].first != Function::infinity ())
+              cfsqpConstraints_.push_back (std::make_pair (i, true));
+            if (problem ().bounds ()[i].second != Function::infinity ())
+              cfsqpConstraints_.push_back (std::make_pair (i, false));
+          }
+    nineqn_ = cfsqpConstraints_.size ();
+
+    // Add linear inequalities.
+    for (unsigned i = 0; i < problem ().constraints ().size (); ++i)
+      if (problem ().constraints ()[i].which () == 1)
+        if (problem ().bounds ()[i].first != problem ().bounds ()[i].second)
+          {
+            if (problem ().bounds ()[i].first != Function::infinity ())
+              cfsqpConstraints_.push_back (std::make_pair (i, true));
+            if (problem ().bounds ()[i].second != Function::infinity ())
+              cfsqpConstraints_.push_back (std::make_pair (i, false));
+          }
+    nineq_ = cfsqpConstraints_.size ();
+
+    // Add non-linear equalities.
+    for (unsigned i = 0; i < problem ().constraints ().size (); ++i)
+      if (problem ().constraints ()[i].which () == 0)
+        if (problem ().bounds ()[i].first == problem ().bounds ()[i].second)
+          cfsqpConstraints_.push_back (std::make_pair (i, true));
+    neqn_ = cfsqpConstraints_.size () - nineq_;
+
+    // Add linear equalities.
+    for (unsigned i = 0; i < problem ().constraints ().size (); ++i)
+      if (problem ().constraints ()[i].which () == 1)
+        if (problem ().bounds ()[i].first == problem ().bounds ()[i].second)
+          cfsqpConstraints_.push_back (std::make_pair (i, true));
+    neq_ = cfsqpConstraints_.size () - nineq_;
+
+    assert (nineq_ >= nineqn_);
+    assert (neq_ >= neqn_);
   }
 
   CFSQPSolver::~CFSQPSolver () throw ()
@@ -194,23 +260,20 @@ namespace optimization
   void
   CFSQPSolver::solve () throw ()
   {
-    int nparam = problem ().function ().n;
-    int nf = 1; //FIXME: only one objective function.
-    int nfsr = 0;
-    int nineqn = 2 * problem ().constraints ().size ();
-    int nineq = 2 * problem ().constraints ().size ();
-    int neqn = 0;
-    int neq = 0;
-    int ncsrl = 0;
-    int ncsrn = 0;
+    const int nparam = problem ().function ().n;
+    const int nf = 1; //FIXME: only one objective function.
+    const int nfsr = 0;
+
+    const int ncsrl = 0;
+    const int ncsrn = 0;
     int mesh_pts[1];
     int inform = 0;
     double bl[nparam];
     double bu[nparam];
     double x[nparam];
     double f[1];
-    double g[2 * problem ().constraints ().size ()];
-    double lambda[nparam + 1 + 2 * problem ().constraints ().size ()];
+    double g[nineq_ + neq_];
+    double lambda[nparam + 1 + nineq_ + neq_];
     fct_t obj = detail::obj;
     fct_t constr = detail::constr;
     grad_t gradob = detail::gradob;
@@ -223,7 +286,7 @@ namespace optimization
     if (!!problem ().startingPoint ())
       detail::vector_to_array (x, *problem ().startingPoint ());
 
-    cfsqp (nparam, nf, nfsr, nineqn, nineq, neqn, neq, ncsrl,  ncsrn,
+    cfsqp (nparam, nf, nfsr, nineqn_, nineq_, neqn_, neq_, ncsrl,  ncsrn,
            mesh_pts, mode_,  iprint_, miter_, &inform, bigbnd_, eps_, epseqn_,
            udelta_, bl, bu, x, f, g, lambda,
            obj, constr, gradob, gradcn, this);
@@ -236,6 +299,7 @@ namespace optimization
           Result res (nparam, 1);
           detail::array_to_vector (res.x, x);
           res.value (0) = f[0];
+          //FIXME: lambda?
           result_ = res;
           break;
         }
@@ -297,19 +361,43 @@ namespace optimization
       }
   }
 
-  int&
-  CFSQPSolver::mode () throw ()
+
+  const std::vector<std::pair<int, bool> >&
+  CFSQPSolver::cfsqpConstraints () const throw ()
   {
-    reset ();
-    return mode_;
+    return cfsqpConstraints_;
   }
+
+  const int&
+  CFSQPSolver::nineqn () const throw ()
+  {
+    return nineqn_;
+  }
+
+  const int&
+  CFSQPSolver::nineq () const throw ()
+  {
+    return nineq_;
+  }
+
+  const int&
+  CFSQPSolver::neqn () const throw ()
+  {
+    return neqn_;
+  }
+
+  const int&
+  CFSQPSolver::neq () const throw ()
+  {
+    return neq_;
+  }
+
 
   const int&
   CFSQPSolver::mode () const throw ()
   {
     return mode_;
   }
-
 
   int&
   CFSQPSolver::iprint () throw ()
@@ -388,6 +476,28 @@ namespace optimization
   CFSQPSolver::udelta () const throw ()
   {
     return udelta_;
+  }
+
+  std::ostream&
+  CFSQPSolver::print (std::ostream& o) const throw ()
+  {
+    parent_t::print (o);
+
+    o << iendl << "CFSQP specific variables: " << incindent << iendl
+      << "Nineq: " << nineq () << iendl
+      << "Nineqn: " << nineqn () << iendl
+      << "Neq: " << neq () << iendl
+      << "Neqn: " << neqn () << iendl
+      << "Mode: " << mode () << iendl
+      << "Iprint: " << iprint () << iendl
+      << "Miter: " << miter () << iendl
+      << "Bigbnd: " << bigbnd () << iendl
+      << "Eps: " << eps () << iendl
+      << "Epseqn: " << epseqn () << iendl
+      << "Udelta: " << udelta () << iendl
+      << "CFSQP constraints: " << cfsqpConstraints ();
+
+    return o;
   }
 
 } // end of namespace optimization

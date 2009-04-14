@@ -22,7 +22,11 @@
 
 #ifndef OPTIMIZATION_CFSQP_HH
 # define OPTIMIZATION_CFSQP_HH
+# include <iostream>
 # include <string>
+# include <utility>
+# include <vector>
+
 # include <boost/variant.hpp>
 # include <liboptimization/derivable-function.hh>
 # include <liboptimization/linear-function.hh>
@@ -50,6 +54,15 @@ namespace optimization
     /// Solve the problem.
     virtual void solve () throw ();
 
+
+    const std::vector<std::pair<int, bool> >& cfsqpConstraints ()
+      const throw ();
+
+    const int& nineq () const throw ();
+    const int& nineqn () const throw ();
+    const int& neq () const throw ();
+    const int& neqn () const throw ();
+
     int& mode () throw ();
     const int& mode () const throw ();
 
@@ -71,10 +84,19 @@ namespace optimization
     double& udelta () throw ();
     const double& udelta () const throw ();
 
+    virtual std::ostream& print (std::ostream&) const throw ();
   private:
     /// Initialize bounds.
     void initialize_bounds (double* bl, double* bu) const throw ();
 
+    /// Number of non linear inegality constraints (including linear ones).
+    int nineq_;
+    /// Number of linear inegality constraints.
+    int nineqn_;
+    /// Number of non linear equality constraints (including linear ones).
+    int neq_;
+    /// Number of linear equality constraints.
+    int neqn_;
     /// CFSQP mode.
     int mode_;
     /// Logging level.
@@ -89,6 +111,8 @@ namespace optimization
     double epseqn_;
     /// Perturbation size used in finite difference.
     double udelta_;
+
+    std::vector<std::pair<int, bool> > cfsqpConstraints_;
   };
 
 }; // end of namespace optimization

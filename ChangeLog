@@ -1,5 +1,11 @@
 2009-04-14  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Handle linearity and equality in CFSQP.
+	* include/liboptimization/cfsqp.hh: Make some CFSQP arguments attributes.
+	* src/cfsqp.cc: Handle linearity/equality in CFSQP.
+
+2009-04-14  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix constraints display in Problem::print.
 	* include/liboptimization/problem.hxx: Here.
 
