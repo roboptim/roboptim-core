@@ -462,10 +462,72 @@ namespace optimization
   IpoptSolver::solve () throw ()
   {
     ApplicationReturnStatus status = app_->Initialize ("");
-    if (status != Solve_Succeeded)
-      //FIXME: put a more precise error message.
-      result_ = SolverError ("Ipopt application failed to initialize.");
-    app_->OptimizeTNLP (nlp_);
+
+    switch (status)
+      {
+      case Solve_Succeeded:
+        app_->OptimizeTNLP (nlp_);
+        break;
+
+      case Solved_To_Acceptable_Level:
+        //FIXME: turn that into a ResultWithWarnings.
+        app_->OptimizeTNLP (nlp_);
+        break;
+      case Infeasible_Problem_Detected:
+        result_ = SolverError ("Ipopt: infeasible problem detected.");
+        break;
+      case Search_Direction_Becomes_Too_Small:
+        result_ = SolverError ("Ipopt: search direction too small.");
+        break;
+      case Diverging_Iterates:
+        result_ = SolverError ("Ipopt: diverging iterates.");
+        break;
+      case User_Requested_Stop:
+        // Should never happen.
+        assert (0);
+        break;
+      case Feasible_Point_Found:
+        //FIXME: turn that into a ResultWithWarnings.
+        app_->OptimizeTNLP (nlp_);
+        break;
+
+      case Maximum_Iterations_Exceeded:
+        result_ = SolverError ("Ipopt: maximum iterations exceeded.");
+        break;
+      case Restoration_Failed:
+        result_ = SolverError ("Ipopt: restoration failed.");
+        break;
+      case Error_In_Step_Computation:
+        result_ = SolverError ("Ipopt: error in step computation.");
+        break;
+      case Not_Enough_Degrees_Of_Freedom:
+        result_ = SolverError ("Ipopt: not enough degrees of freedom.");
+        break;
+      case Invalid_Problem_Definition:
+        //FIXME: replace by assert (0)?
+        result_ = SolverError ("Ipopt: invalid problem definition.");
+        break;
+      case Invalid_Option:
+        result_ = SolverError ("Ipopt: invalid option.");
+        break;
+      case Invalid_Number_Detected:
+        result_ = SolverError ("Ipopt: invalid number detected.");
+        break;
+
+      case Unrecoverable_Exception:
+        result_ = SolverError ("Ipopt: unrecoverable exception.");
+        break;
+      case NonIpopt_Exception_Thrown:
+        // Should never happen.
+        assert (0);
+        break;
+      case Insufficient_Memory:
+        result_ = SolverError ("Ipopt: insufficient memory.");
+        break;
+      case Internal_Error:
+        result_ = SolverError ("Ipopt: internal error.");
+        break;
+      }
   }
 
   Ipopt::SmartPtr<Ipopt::IpoptApplication>
