@@ -219,17 +219,16 @@ namespace optimization
 
     typedef typename constraints_t::const_iterator citer_t;
     unsigned i = 0;
-    if (boost::is_pointer<C> ())
-      for (citer_t it = constraints ().begin ();
-           it != constraints ().end ();
-           ++it, ++i)
-        {
-          o << iendl << incindent
-            << "Constraint " << i << incindent << iendl
-            << "Bounds: " << bounds ()[i] << iendl
-            << "Scales: " << scales ()[i] << iendl
-            << decindent << decindent;
-        }
+    for (citer_t it = constraints ().begin ();
+         it != constraints ().end ();
+         ++it, ++i)
+      {
+        o << iendl << incindent
+          << "Constraint " << i << incindent << iendl
+          << "Bounds: " << bounds ()[i] << iendl
+          << "Scales: " << scales ()[i] << iendl
+          << decindent << decindent;
+      }
 
     // Starting point.
     if (startingPoint_)
