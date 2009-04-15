@@ -43,7 +43,7 @@ namespace optimization
   ResultWithWarnings::print (std::ostream& o) const throw ()
   {
     Result::print (o);
-    return o << incindent << "Warnings: " << warnings << decindent;
+    return o << incindent << iendl << "Warnings: " << warnings << decindent;
   }
 
   ResultWithWarnings::~ResultWithWarnings () throw ()

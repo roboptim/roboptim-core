@@ -296,19 +296,44 @@ namespace optimization
            udelta_, bl, bu, x, f, g, lambda,
            obj, constr, gradob, gradcn, this);
 
+    Result res (nparam, 1);
+    detail::array_to_vector (res.x, x);
+    res.value (0) = f[0];
+    //FIXME: lambda?
+
+    ResultWithWarnings resw (nparam, 1);
+    detail::array_to_vector (resw.x, x);
+    resw.value (0) = f[0];
+    //FIXME: lambda?
+
     switch (inform)
       {
         // Normal termination.
       case 0:
-        {
-          Result res (nparam, 1);
-          detail::array_to_vector (res.x, x);
-          res.value (0) = f[0];
-          //FIXME: lambda?
-          result_ = res;
-          break;
-        }
+        result_ = res;
+        break;
 
+        // Warnings.
+      case 3:
+        resw.warnings.push_back (SolverWarning
+                                 ("Max iteration has been reached."));
+        result_ = resw;
+        break;
+
+      case 4:
+        resw.warnings.push_back (SolverWarning
+                                 ("Failed to find a new iterate."));
+        result_ = resw;
+        break;
+
+      case 8:
+        resw.warnings.push_back (SolverWarning
+                                 ("New iterate equivalent to previous one."));
+        result_ = resw;
+        break;
+
+
+        // Errors.
       case 1:
         result_ = SolverError ("Infeasible guess for linear constraints.");
         break;
@@ -317,18 +342,6 @@ namespace optimization
         result_ =
           SolverError
           ("Infeasible guess for linear and non-linear constraints.");
-        break;
-
-      case 3:
-        result_ =
-          SolverError
-          ("Max iteration has been reached.");
-        break;
-
-      case 4:
-        result_ =
-          SolverError
-          ("Failed to find a new iterate.");
         break;
 
       case 5:
@@ -347,12 +360,6 @@ namespace optimization
         result_ =
           SolverError
           ("Input data are not consistent.");
-        break;
-
-      case 8:
-        result_ =
-          SolverError
-          ("New iterate equivalent to previous one.");
         break;
 
       case 9:

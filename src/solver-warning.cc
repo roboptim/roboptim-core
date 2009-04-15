@@ -32,6 +32,6 @@ namespace optimization
   std::ostream&
   SolverWarning::print (std::ostream& o) const throw ()
   {
-    return o << "Solver warning:" << what ();
+    return o << what ();
   }
 } // end of namespace optimization

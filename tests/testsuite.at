@@ -36,7 +36,7 @@ CHECK_STDOUT([problem-cc], [Check problem copy constructor.])
 
 
 AT_BANNER([Cfsqp])
-CHECK_STDOUT_SKIPPABLE([cfsqp], [Check CFSQPSolver.], [true])
+CHECK_STDOUT_SKIPPABLE([cfsqp], [Check CFSQPSolver.])
 
 
 AT_BANNER([Ipopt])

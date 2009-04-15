@@ -1,5 +1,15 @@
 2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Tag some errors as warnings in CFSQP bridge.
+	* src/cfsqp.cc: Tag some errors as warnings.
+	* src/result-with-warnings.cc: Fix display.
+	* src/solver-warning.cc: Fix display.
+	* tests/cfsqp.cc: Expect now a ResultWithWarnings.
+	* tests/cfsqp.stdout: Generate output.
+	* tests/testsuite.at: CFSQP test not tagged as xfail anymore.
+
+2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove trailing semi-colon.
 	* include/liboptimization/cfsqp.hh,
 	* include/liboptimization/derivable-function.hh,

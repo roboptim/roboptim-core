@@ -35,7 +35,7 @@ int run_test ()
   initialize_problem (pb, g0, g1);
 
   // Initialize solver
-  CFSQPSolver solver (pb, 2);
+  CFSQPSolver solver (pb);
 
   // Compute the minimum and retrieve the result.
   CFSQPSolver::result_t res = solver.minimum ();
@@ -44,7 +44,7 @@ int run_test ()
   std::cout << solver << std::endl;
 
   // Check if the minimization has succeed.
-  if (res.which () != CFSQPSolver::SOLVER_VALUE)
+  if (res.which () != CFSQPSolver::SOLVER_VALUE_WARNINGS)
     {
       std::cout << "A solution should have been found. Failing..."
                 << std::endl
@@ -54,7 +54,7 @@ int run_test ()
     }
 
   // Get the result.
-  Result& result = boost::get<Result> (res);
+  Result& result = boost::get<ResultWithWarnings> (res);
 
   // Display the result.
   std::cout << "A solution has been found: " << std::endl;

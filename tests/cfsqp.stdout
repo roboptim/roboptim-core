@@ -1,46 +1,3 @@
-
-
-  CFSQP Version 2.5d (Released February 1998) 
-          Copyright (c) 1993 --- 1998       
-           C.T. Lawrence, J.L. Zhou         
-                and A.L. Tits               
-             All Rights Reserved            
-
-The given initial point is feasible for inequality
-         constraints and linear equality constraints:
-                     	   1.00000000000000e+00
- 			   5.00000000000000e+00
- 			   5.00000000000000e+00
- 			   1.00000000000000e+00
- objectives
- 			   1.20000000000000e+01
- constraints
- 			   0.00000000000000e+00
- 			  -1.20000000000000e+01
- 
- iteration                                    1
- inform                                       4
- x                   	   1.00000000000000e+00
- 			   5.00000000000000e+00
- 			   5.00000000000000e+00
- 			   1.00000000000000e+00
- objectives
- 			   1.20000000000000e+01
- constraints
- 			   0.00000000000000e+00
- 			  -1.20000000000000e+01
- SNECV               	   1.20000000000000e+01
- step                	   2.22044604925031e-16
- d0norm              	   1.10453610171873e+00
- ktnorm              	   1.10453610171873e+00
- ncallf                                       2
- ncallg                                      57
-
-
-Error : Step size has been smaller than the computed
-machine precision !!
-
-
 Problem:
   Twice derivable function
   Argument's bounds: (1, 5), (1, 5), (1, 5), (1, 5)
@@ -62,12 +19,17 @@ CFSQP specific variables:
   Neq: 1
   Neqn: 1
   Mode: 100
-  Iprint: 2
+  Iprint: 0
   Miter: 500
   Bigbnd: 1e+10
   Eps: 1e-08
   Epseqn: 1e-08
   Udelta: 1e-08
   CFSQP constraints: (0, 1), (1, 1)
-A solution should have been found. Failing...
-Failed to find a new iterate.
+A solution has been found: 
+Result: 
+    Dimension: 4
+    X: [4](1,5,5,1)
+    Value: [1](12)
+    Lambda: [4](5,5,5,5)
+    Warnings: Failed to find a new iterate.
