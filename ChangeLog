@@ -1,5 +1,14 @@
 2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix lambda copy in Result class.
+	* src/cfsqp.cc,
+	* src/ipopt.cc: Fix lambda copy.
+	* src/result.cc: By default, the lambda vector is empty.
+	* tests/cfsqp.stdout,
+	* tests/ipopt-test.stdout: Regenerate reference.
+
+2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Tag some errors as warnings in CFSQP bridge.
 	* src/cfsqp.cc: Tag some errors as warnings.
 	* src/result-with-warnings.cc: Fix display.

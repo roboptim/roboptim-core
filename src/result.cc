@@ -37,7 +37,7 @@ namespace optimization
       m (m_),
       x (n),
       value (m),
-      lambda (n)
+      lambda ()
   {
   }
 

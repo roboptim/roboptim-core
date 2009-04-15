@@ -1,0 +1,21 @@
+Problem:
+  Twice derivable function
+  Argument's bounds: (1, 5), (1, 5), (1, 5), (1, 5)
+  Argument's scales: 1, 1, 1, 1
+  Number of constraints: 2
+  Constraint 0
+      Bounds: (25, inf)
+      Scales: 1
+      
+  Constraint 1
+      Bounds: (40, 40)
+      Scales: 1
+      
+  Starting point: [4](1,5,5,1)
+  Infinity value (for all functions): inf
+A solution has been found: 
+Result: 
+  Dimension: 4
+  X: [4](1,4.743,3.82115,1.37941)
+  Value: [1](14.5723)
+  Lambda: [2](-0.552294,0.161469)

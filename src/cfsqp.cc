@@ -299,11 +299,13 @@ namespace optimization
     Result res (nparam, 1);
     detail::array_to_vector (res.x, x);
     res.value (0) = f[0];
+    res.lambda.resize (problem ().constraints ().size ());
     //FIXME: lambda?
 
     ResultWithWarnings resw (nparam, 1);
     detail::array_to_vector (resw.x, x);
     resw.value (0) = f[0];
+    res.lambda.resize (problem ().constraints ().size ());
     //FIXME: lambda?
 
     switch (inform)

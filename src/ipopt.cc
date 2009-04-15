@@ -105,8 +105,7 @@ namespace optimization
 
         for (Index i = 0; i < m; ++i)
           g_scaling[i] = solver_.problem ().scales ()[i];
-
-        return false;
+        return true;
       }
 
       virtual bool
@@ -349,6 +348,7 @@ namespace optimization
             {
               Result res (n, 1);
               array_to_vector (res.x, x);
+              res.lambda.resize (m);
               array_to_vector (res.lambda, lambda);
               res.value (0) = obj_value;
               solver_.result_ = res;
@@ -456,6 +456,8 @@ namespace optimization
     app_->Options ()->SetNumericValue ("tol", 1e-7);
     app_->Options ()->SetStringValue ("mu_strategy", "adaptive");
     app_->Options ()->SetStringValue ("output_file", "");
+
+    //app_->Options ()->SetStringValue ("nlp_scaling_method", "user-scaling");
   }
 
   IpoptSolver::~IpoptSolver () throw ()

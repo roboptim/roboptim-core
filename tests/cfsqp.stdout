@@ -31,5 +31,5 @@ Result:
     Dimension: 4
     X: [4](1,5,5,1)
     Value: [1](12)
-    Lambda: [4](5,5,5,5)
+    Lambda: [0]()
     Warnings: Failed to find a new iterate.
