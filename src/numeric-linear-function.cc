@@ -28,13 +28,14 @@
 
 namespace optimization
 {
-  NumericLinearFunction::NumericLinearFunction (const vector_t& a,
-                                                value_type b)
+  NumericLinearFunction::NumericLinearFunction (const matrix_t& a,
+                                                const vector_t& b)
     throw ()
-    : LinearFunction (a.size (), 1),
+    : LinearFunction (a.size2 (), a.size1 ()),
       a_ (a),
       b_ (b)
   {
+    assert (b.size () == m);
   }
 
   // A * x + b
@@ -42,16 +43,25 @@ namespace optimization
   NumericLinearFunction::operator () (const vector_t& x) const throw ()
   {
     using namespace boost::numeric::ublas;
-    vector_t res (1);
-    res(0) = inner_prod (a_, x) + b_;
-    return res;
+    vector_t res (m);
+    return prod (a_, x) + b_;
   }
 
   // A
-  NumericLinearFunction::gradient_t
-  NumericLinearFunction::gradient (const vector_t&) const throw ()
+  NumericLinearFunction::jacobian_t
+  NumericLinearFunction::jacobian (const vector_t&) const throw ()
   {
     return a_;
+  }
+
+  // A(i)
+  NumericLinearFunction::gradient_t
+  NumericLinearFunction::gradient (const vector_t&, int i) const throw ()
+  {
+    gradient_t grad (n);
+    for (unsigned j = 0; j < n; ++i)
+      grad[j] = a_ (i, j);
+    return grad;
   }
 
   std::ostream&

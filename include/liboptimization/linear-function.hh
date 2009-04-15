@@ -32,7 +32,7 @@ namespace optimization
   public:
     LinearFunction (size_type n, size_type m = 1) throw ();
 
-    hessian_t hessian (const vector_t&) const throw ();
+    virtual hessian_t hessian (const vector_t&, int) const throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };

@@ -197,8 +197,9 @@ namespace optimization
 
         IpoptSolver::vector_t x_ (n);
         array_to_vector (x_, x);
-        DerivableFunction::gradient_t grad =
-          solver_.problem ().function ().gradient (x_);
+
+        Function::vector_t grad =
+          solver_.problem ().function ().gradient (x_, 0);
         vector_to_array(grad_f, grad);
         return true;
       }
@@ -273,13 +274,13 @@ namespace optimization
         typedef IpoptSolver::problem_t::constraints_t::const_iterator citer_t;
 
         TwiceDerivableFunction::hessian_t fct_h =
-          solver_.problem ().function ().hessian (x);
+          solver_.problem ().function ().hessian (x, 0);
         h = obj_factor * fct_h;
 
         int i = 0;
         for (citer_t it = solver_.problem ().constraints ().begin ();
              it != solver_.problem ().constraints ().end (); ++it)
-          h += lambda[i++] * (*it)->hessian (x);
+          h += lambda[i++] * (*it)->hessian (x, 0);
       }
 
       virtual bool

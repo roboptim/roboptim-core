@@ -140,7 +140,7 @@ namespace optimization
       Function::vector_t x_ (nparam);
       array_to_vector (x_, x);
       DerivableFunction::gradient_t grad =
-        solver->problem ().function ().gradient (x_);
+        solver->problem ().function ().gradient (x_, 0);
       vector_to_array (gradf, grad);
     }
 
@@ -167,16 +167,15 @@ namespace optimization
           const DerivableFunction& f =
             *boost::get<const DerivableFunction*>
             (solver->problem ().constraints ()[j_]);
-          grad = f.gradient (x_);
+          grad = f.gradient (x_, 0);
         }
       else
         {
           const LinearFunction& f =
             *boost::get<const LinearFunction*>
             (solver->problem ().constraints ()[j_]);
-          grad = f.gradient (x_);
+          grad = f.gradient (x_, 0);
         }
-
       vector_to_array (gradgj, grad);
     }
 

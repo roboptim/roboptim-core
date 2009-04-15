@@ -37,7 +37,6 @@ int run_test ()
   a(3, 0) = 1.4, a(3, 1) = 2.4, a(3, 2) = 3.4, a(3, 3) = 4.4, a(3, 4) = 4.5;
   a(4, 0) = 1.5, a(4, 1) = 2.5, a(4, 2) = 3.5, a(4, 3) = 4.5, a(4, 4) = 5.5;
 
-
   b[0] = 2.1;
   b[1] = 4.3;
   b[2] = 6.5;
@@ -54,8 +53,9 @@ int run_test ()
   x[4] = 4.5;
 
   std::cout << "f(x) = " << f (x) << std::endl;
-  std::cout << "G(x) = " << f.gradient (x) << std::endl;
-  std::cout << "H(x) = " << f.hessian (x) << std::endl;
+  std::cout << "J(x) = " << f.jacobian (x) << std::endl;
+  std::cout << "G(x) = " << f.gradient (x, 0) << std::endl;
+  std::cout << "H(x) = " << f.hessian (x, 0) << std::endl;
 
   return 0;
 }

@@ -1,3 +1,30 @@
+2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add support for R^n -> R^m functions.
+	* include/liboptimization/derivable-function.hh: Add jacobian/gradient.
+	* include/liboptimization/linear-function.hh: Fix hessian prototype.
+	* include/liboptimization/numeric-linear-function.hh: Implement R^n -> R^m.
+	* include/liboptimization/numeric-quadratic-function.hh: Fix gradient, hessian
+        prototypes.
+	* include/liboptimization/twice-derivable-function.hh: Fix hessian
+        prototype.
+	* include/liboptimization/util.hh,
+	* include/liboptimization/util.hxx: Fix jacobian_from_gradients prototype.
+	* src/cfsqp.cc: Fix gradient use.
+	* src/derivable-function.cc: Implement jacobian from gradient.
+	* src/ipopt.cc: Fix gradient/hessian usage.
+	* src/linear-function.cc: Fix hessian definition.
+	* src/numeric-linear-function.cc: Implement jacobian/gradient.
+	* src/numeric-quadratic-function.cc: Implement hessian.
+	* tests/cfsqp.stdout,
+	* tests/hs071.hh,
+	* tests/numeric-linear-function.cc,
+	* tests/numeric-linear-function.stdout,
+	* tests/numeric-quadratic-function.cc,
+	* tests/numeric-quadratic-function.stdout,
+	* tests/problem-cc.cc: Update test suites to use new gradient, jacobian
+        and hessian definitions.
+
 2009-04-14  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Handle linearity and equality in CFSQP.

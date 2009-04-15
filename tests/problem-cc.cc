@@ -36,9 +36,9 @@ public:
   }
 
   virtual gradient_t
-  gradient (const vector_t& x) const throw ()
+  gradient (const vector_t& x, int) const throw ()
   {
-    vector_t grad (n);
+    gradient_t grad (n);
     grad.clear ();
     return grad;
   }

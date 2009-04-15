@@ -33,11 +33,16 @@ namespace optimization
   public:
     /// Gradient type.
     typedef vector_t gradient_t;
+    /// Jacobian type.
+    typedef matrix_t jacobian_t;
 
     DerivableFunction (size_type n, size_type m = 1) throw ();
 
+    /// Jacobian.
+    virtual jacobian_t jacobian (const vector_t&) const throw ();
+
     /// Gradient.
-    virtual gradient_t gradient (const vector_t&) const throw () = 0;
+    virtual gradient_t gradient (const vector_t&, int) const throw () = 0;
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };

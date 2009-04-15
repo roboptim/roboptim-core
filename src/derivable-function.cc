@@ -32,6 +32,19 @@ namespace optimization
   {
   }
 
+  DerivableFunction::jacobian_t
+  DerivableFunction::jacobian (const vector_t& x) const throw ()
+  {
+    jacobian_t jac (m, n);
+    for (unsigned i = 0; i < m; ++i)
+      {
+        gradient_t grad = gradient (x, i);
+        for (unsigned j = 0; j < n; ++j)
+          jac (i, j) = grad[j];
+      }
+    return jac;
+  }
+
   std::ostream&
   DerivableFunction::print (std::ostream& o) const throw ()
   {

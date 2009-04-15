@@ -37,7 +37,7 @@ namespace optimization
     TwiceDerivableFunction (size_type n, size_type m = 1) throw ();
 
     /// Hessian.
-    virtual hessian_t hessian (const vector_t&) const throw () = 0;
+    virtual hessian_t hessian (const vector_t&, int) const throw () = 0;
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };

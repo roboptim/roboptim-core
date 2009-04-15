@@ -6,18 +6,17 @@
                 and A.L. Tits               
              All Rights Reserved            
 
- The given initial point is infeasible for inequality
- constraints and linear equality constraints:
+The given initial point is feasible for inequality
+         constraints and linear equality constraints:
                      	   1.00000000000000e+00
  			   5.00000000000000e+00
  			   5.00000000000000e+00
  			   1.00000000000000e+00
  objectives
- 			                   -inf
- 			   1.50000000000000e+01
  			   1.20000000000000e+01
- 			  -5.20000000000000e+01
- objmax              	   1.50000000000000e+01
+ constraints
+ 			   0.00000000000000e+00
+ 			  -1.20000000000000e+01
  
  iteration                                    1
  inform                                       4
@@ -26,29 +25,49 @@
  			   5.00000000000000e+00
  			   1.00000000000000e+00
  objectives
- 			                   -inf
- 			   1.50000000000000e+01
- 			  -3.60000000000000e+01
- 			  -5.20000000000000e+01
- objmax              	   1.50000000000000e+01
+ 			   1.20000000000000e+01
+ constraints
+ 			   0.00000000000000e+00
+ 			  -1.20000000000000e+01
+ SNECV               	   1.20000000000000e+01
  step                	   2.22044604925031e-16
- d0norm              	   5.65685424949238e+00
- ktnorm              	   5.65685424949238e+00
- ncallg                                      59
+ d0norm              	   1.10453610171873e+00
+ ktnorm              	   1.10453610171873e+00
+ ncallf                                       2
+ ncallg                                      57
 
 
 Error : Step size has been smaller than the computed
 machine precision !!
 
 
-Error: No feasible point is found for nonlinear inequality
-constraints and linear equality constraints
 Problem:
   Twice derivable function
   Argument's bounds: (1, 5), (1, 5), (1, 5), (1, 5)
   Argument's scales: 1, 1, 1, 1
   Number of constraints: 2
+  Constraint 0
+      Bounds: (25, inf)
+      Scales: 1
+      
+  Constraint 1
+      Bounds: (40, 40)
+      Scales: 1
+      
   Starting point: [4](1,5,5,1)
   Infinity value (for all functions): inf
+CFSQP specific variables: 
+  Nineq: 1
+  Nineqn: 1
+  Neq: 1
+  Neqn: 1
+  Mode: 100
+  Iprint: 2
+  Miter: 500
+  Bigbnd: 1e+10
+  Eps: 1e-08
+  Epseqn: 1e-08
+  Udelta: 1e-08
+  CFSQP constraints: (0, 1), (1, 1)
 A solution should have been found. Failing...
-Infeasible guess for linear and non-linear constraints.
+Failed to find a new iterate.

@@ -38,9 +38,9 @@ struct F : public TwiceDerivableFunction
   }
 
   virtual gradient_t
-  gradient (const vector_t& x) const throw ()
+  gradient (const vector_t& x, int) const throw ()
   {
-    vector_t grad (n);
+    gradient_t grad (n);
 
     grad[0] = x[0] * x[3] + x[3] * (x[0] + x[1] + x[2]);
     grad[1] = x[0] * x[3];
@@ -50,7 +50,7 @@ struct F : public TwiceDerivableFunction
   }
 
   virtual hessian_t
-  hessian (const vector_t& x) const throw ()
+  hessian (const vector_t& x, int) const throw ()
   {
     matrix_t h (n, n);
     h (0, 0) = 2 * x[3];
@@ -92,9 +92,9 @@ struct G0 : public TwiceDerivableFunction
   }
 
   virtual gradient_t
-  gradient (const vector_t& x) const throw ()
+  gradient (const vector_t& x, int) const throw ()
   {
-    vector_t grad (n);
+    gradient_t grad (n);
 
     grad[0] = x[1] * x[2] * x[3];
     grad[1] = x[0] * x[2] * x[3];
@@ -104,7 +104,7 @@ struct G0 : public TwiceDerivableFunction
   }
 
   virtual hessian_t
-  hessian (const vector_t& x) const throw ()
+  hessian (const vector_t& x, int) const throw ()
   {
     matrix_t h (n, n);
     h (0, 0) = 0.;
@@ -146,9 +146,9 @@ struct G1 : public TwiceDerivableFunction
   }
 
   virtual gradient_t
-  gradient (const vector_t& x) const throw ()
+  gradient (const vector_t& x, int) const throw ()
   {
-    vector_t grad (n);
+    gradient_t grad (n);
 
     grad[0] = 2 * x[0];
     grad[1] = 2 * x[1];
@@ -158,7 +158,7 @@ struct G1 : public TwiceDerivableFunction
   }
 
   virtual hessian_t
-  hessian (const vector_t& x) const throw ()
+  hessian (const vector_t& x, int) const throw ()
   {
     matrix_t h (n, n);
     h (0, 0) = 2.;

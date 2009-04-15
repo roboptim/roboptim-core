@@ -32,7 +32,7 @@ namespace optimization
   NumericQuadraticFunction::NumericQuadraticFunction (const matrix_t& a,
                                                       const vector_t& b)
     throw ()
-    : QuadraticFunction (a.size1 ()),
+    : QuadraticFunction (a.size1 (), 1),
       a_ (a),
       b_ (b)
   {
@@ -53,7 +53,7 @@ namespace optimization
 
   // x * A + b
   NumericQuadraticFunction::gradient_t
-  NumericQuadraticFunction::gradient (const vector_t& x) const throw ()
+  NumericQuadraticFunction::gradient (const vector_t& x, int) const throw ()
   {
     using namespace boost::numeric::ublas;
     return prod (x, a_) + b_;
@@ -61,7 +61,7 @@ namespace optimization
 
   // A
   NumericQuadraticFunction::hessian_t
-  NumericQuadraticFunction::hessian (const vector_t& x) const throw ()
+  NumericQuadraticFunction::hessian (const vector_t&, int) const throw ()
   {
     return a_;
   }

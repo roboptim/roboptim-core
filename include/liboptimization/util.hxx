@@ -37,9 +37,9 @@ namespace optimization
     {
       for (unsigned i = 0; i < jac.size1 (); ++i)
         {
-          DerivableFunction::gradient_t grad = c[i]->gradient (x);
+          DerivableFunction::jacobian_t grad = c[i]->jacobian (x);
           for (unsigned j = 0; j < jac.size2 (); ++j)
-            jac (i, j) = grad[j];
+            jac (i, j) = grad(0, j);
         }
     }
 

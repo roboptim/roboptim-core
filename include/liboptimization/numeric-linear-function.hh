@@ -30,17 +30,18 @@ namespace optimization
   class NumericLinearFunction : public LinearFunction
   {
   public:
-    NumericLinearFunction (const vector_t&, value_type)
-      throw ();
+    NumericLinearFunction (const matrix_t&, const vector_t&) throw ();
 
     virtual vector_t operator () (const vector_t&) const throw ();
-    virtual gradient_t gradient (const vector_t&) const throw ();
+
+    virtual gradient_t gradient (const vector_t&, int) const throw ();
+    virtual jacobian_t jacobian (const vector_t&) const throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
 
   private:
-    vector_t a_;
-    value_type b_;
+    matrix_t a_;
+    vector_t b_;
   };
 
 }; // end of namespace optimization

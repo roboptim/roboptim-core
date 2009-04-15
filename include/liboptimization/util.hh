@@ -35,6 +35,7 @@ namespace optimization
     void array_to_vector (Function::vector_t& dst, const Function::value_type* src);
 
     /// Merge gradients from several functions (each gradient is a line).
+    /// The first line of the jacobian is the only one used.
     template <typename T>
     void
     jacobian_from_gradients (DerivableFunction::matrix_t& jac,

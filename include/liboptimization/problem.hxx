@@ -44,6 +44,9 @@ namespace optimization
       scales_ (),
       argScales_ (f.n)
   {
+    // Check that in the objective function m = 1 (R^n -> R).
+    assert (f.m == 1);
+
     // Initialize bound.
     std::fill (argBounds_.begin (), argBounds_.end (), makeInfiniteBound ());
     // Initialize scale.

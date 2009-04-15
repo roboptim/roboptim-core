@@ -27,14 +27,16 @@ typedef DummySolver solver_t;
 
 int run_test ()
 {
-  NumericLinearFunction::vector_t a (5);
-  NumericLinearFunction::value_type b = 1.;
+  NumericLinearFunction::matrix_t a (1, 5);
+  NumericLinearFunction::vector_t b (1);
   NumericLinearFunction::vector_t x (5);
 
-  a[0] = 1.2;
-  a[1] = 3.4;
-  a[2] = 5.6;
-  a[3] = 7.8;
+  a(0, 0) = 1.2;
+  a(0, 1) = 3.4;
+  a(0, 2) = 5.6;
+  a(0, 3) = 7.8;
+
+  b[0] = 1.;
 
   NumericLinearFunction f (a, b);
 
@@ -47,8 +49,7 @@ int run_test ()
   x[4] = 4.5;
 
   std::cout << "f(x) = " << f (x) << std::endl;
-  std::cout << "G(x) = " << f.gradient (x) << std::endl;
-  std::cout << "H(x) = " << f.hessian (x) << std::endl;
+  std::cout << "J(x) = " << f.jacobian (x) << std::endl;
 
   return 0;
 }
