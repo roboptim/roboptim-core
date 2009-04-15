@@ -31,7 +31,7 @@ namespace Ipopt
 {
   class TNLP;
   class IpoptApplication;
-}; // end of namespace Ipopt
+} // end of namespace Ipopt
 
 
 namespace optimization
@@ -68,6 +68,6 @@ namespace optimization
     Ipopt::SmartPtr<Ipopt::IpoptApplication> app_;
   };
 
-}; // end of namespace optimization
+} // end of namespace optimization
 
 #endif //! OPTIMIZATION_IPOPT_HH

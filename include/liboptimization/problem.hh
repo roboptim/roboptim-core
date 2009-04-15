@@ -139,7 +139,7 @@ namespace optimization
 
   template <typename F, typename C>
   std::ostream& operator<< (std::ostream& o, const Problem<F, C>& pb);
-}; // end of namespace optimization
+} // end of namespace optimization
 
 # include <liboptimization/problem.hxx>
 #endif //! OPTIMIZATION_PROBLEM_HH

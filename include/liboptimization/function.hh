@@ -77,6 +77,6 @@ namespace optimization
   };
 
   std::ostream& operator<< (std::ostream&, const Function&);
-}; // end of namespace optimization
+} // end of namespace optimization
 
 #endif //! OPTIMIZATION_FUNCTION_HH

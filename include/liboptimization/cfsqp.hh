@@ -115,6 +115,6 @@ namespace optimization
     std::vector<std::pair<int, bool> > cfsqpConstraints_;
   };
 
-}; // end of namespace optimization
+} // end of namespace optimization
 
 #endif //! OPTIMIZATION_CFSQP_HH

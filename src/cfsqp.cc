@@ -38,6 +38,7 @@ namespace optimization
 
   namespace detail
   {
+    /// \internal
     /// CFSQP objective function.
     void obj (int nparam, int j , double* x, double* fj, void* cd)
     {
@@ -50,6 +51,8 @@ namespace optimization
     }
 
 
+    /// \internal
+    /// Evaluate an inequality defined from lower/upper bounds.
     double
     evaluate_inequality (double x, bool is_lower, double l, double u)
     {
@@ -61,6 +64,7 @@ namespace optimization
         return x - u;
     }
 
+    /// \internal
     /// CFSQP constraints function.
     void constr (int nparam, int j,
                  double* x, double* gj, void* cd)
@@ -129,6 +133,7 @@ namespace optimization
       assert (0);
     }
 
+    /// \internal
     /// CFSQP objective function gradient.
     void gradob (int nparam, int j,
                  double* x, double* gradf, fct_t dummy, void* cd)
@@ -144,6 +149,7 @@ namespace optimization
       vector_to_array (gradf, grad);
     }
 
+    /// \internal
     /// CFSQP constraints function gradient.
     void gradcn (int nparam, int j,
                  double* x, double* gradgj, fct_t dummy, void* cd)

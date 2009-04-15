@@ -42,6 +42,6 @@ namespace optimization
     virtual std::ostream& print (std::ostream&) const throw ();
   };
 
-}; // end of namespace optimization
+} // end of namespace optimization
 
 #endif //! OPTIMIZATION_TWICE_DERIVABLE_FUNCTION_HH

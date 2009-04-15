@@ -35,11 +35,15 @@ namespace optimization
 
   namespace detail
   {
+    /// \internal
+    /// Set "linear" tag to linear functions.
     TNLP::LinearityType cfsqp_tag (const LinearFunction& f)
     {
       return TNLP::LINEAR;
     }
 
+    /// \internal
+    /// Set "non_linear" tag to non linear functions.
     TNLP::LinearityType cfsqp_tag (const Function& f)
     {
       return TNLP::NON_LINEAR;
@@ -439,7 +443,7 @@ namespace optimization
 
       IpoptSolver& solver_;
     };
-  }; // end of namespace detail
+  } // end of namespace detail
 
   using namespace detail;
 

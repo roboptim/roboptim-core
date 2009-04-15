@@ -63,4 +63,4 @@ namespace optimization
   {
     return gs.print (o);
   }
-}; // end of namespace optimization
+} // end of namespace optimization

@@ -50,6 +50,6 @@ namespace optimization
 
   class SolverError;
   class SolverWarning;
-}; // end of namespace optimization.
+} // end of namespace optimization.
 
 #endif //! OPTIMIZATION_FWD_HH

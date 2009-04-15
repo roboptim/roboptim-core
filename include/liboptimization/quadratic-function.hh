@@ -36,6 +36,6 @@ namespace optimization
     virtual std::ostream& print (std::ostream&) const throw ();
   };
 
-}; // end of namespace optimization
+} // end of namespace optimization
 
 #endif //! OPTIMIZATION_QUADRATIC_FUNCTION_HH

@@ -48,5 +48,5 @@ namespace optimization
       for (std::size_t i = 0; i < dst.size (); ++i)
         assert (dst[i] == src[i]);
     }
-  }; // end of namespace detail.
-}; // end of namespace optimization.
+  } // end of namespace detail.
+} // end of namespace optimization.

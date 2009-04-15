@@ -54,9 +54,7 @@ namespace optimization
     const problem_t problem_;
   };
 
-
-
-}; // end of namespace optimization
+} // end of namespace optimization
 
 # include <liboptimization/solver.hxx>
 #endif //! OPTIMIZATION_SOLVER_HH

@@ -1,5 +1,27 @@
 2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Remove trailing semi-colon.
+	* include/liboptimization/cfsqp.hh,
+	* include/liboptimization/derivable-function.hh,
+	* include/liboptimization/dummy.hh,
+	* include/liboptimization/function.hh,
+	* include/liboptimization/fwd.hh,
+	* include/liboptimization/ipopt.hh,
+	* include/liboptimization/linear-function.hh,
+	* include/liboptimization/numeric-linear-function.hh,
+	* include/liboptimization/numeric-quadratic-function.hh,
+	* include/liboptimization/problem.hh,
+	* include/liboptimization/quadratic-function.hh,
+	* include/liboptimization/solver.hh,
+	* include/liboptimization/twice-derivable-function.hh,
+	* include/liboptimization/util.hh,
+	* src/cfsqp.cc,
+	* src/generic-solver.cc,
+	* src/ipopt.cc,
+	* src/util.cc: Here.
+
+2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Facotize test suite.
 	* build-aux/autotest.at: New.
 	* build-aux/autotest.mk: Add a dependency on the test

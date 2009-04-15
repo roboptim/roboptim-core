@@ -28,12 +28,15 @@ namespace optimization
 {
   namespace detail
   {
+    /// \internal
     /// Copy the content of a uBLAS vector into a C array.
     void vector_to_array (Function::value_type* dst, const Function::vector_t& src);
 
+    /// \internal
     /// Copy the content of a C array into a uBLAS vector.
     void array_to_vector (Function::vector_t& dst, const Function::value_type* src);
 
+    /// \internal
     /// Merge gradients from several functions (each gradient is a line).
     /// The first line of the jacobian is the only one used.
     template <typename T>
@@ -41,7 +44,7 @@ namespace optimization
     jacobian_from_gradients (DerivableFunction::matrix_t& jac,
                              const std::vector<const T*>& c,
                              const DerivableFunction::vector_t& x);
-  }; // end of namespace detail.
+  } // end of namespace detail.
 
   template <typename T1, typename T2>
   std::ostream& operator<< (std::ostream&, const boost::variant<T1, T2>&);
@@ -51,7 +54,7 @@ namespace optimization
 
   template <typename T1, typename T2>
   std::ostream& operator<< (std::ostream&, const std::pair<T1, T2>&);
-}; // end of namespace optimization.
+} // end of namespace optimization.
 
 # include <liboptimization/util.hxx>
 #endif //! OPTIMIZATION_UTIL_HH

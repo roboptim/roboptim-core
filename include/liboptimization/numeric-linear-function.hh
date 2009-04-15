@@ -44,6 +44,6 @@ namespace optimization
     vector_t b_;
   };
 
-}; // end of namespace optimization
+} // end of namespace optimization
 
 #endif //! OPTIMIZATION_QUADRATIC_FUNCTION_HH
