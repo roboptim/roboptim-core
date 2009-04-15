@@ -13,10 +13,10 @@ CLEANFILES += atconfig
 # Source which are shared by all tests.
 COMMON_SOURCES = common.hh hs071.hh
 
-# simple-test
-check_PROGRAMS = simple-test
-simple_test_SOURCES = simple-test.cc $(COMMON_SOURCES)
-simple_test_LDADD = $(top_builddir)/src/liboptimization.la
+# simple
+check_PROGRAMS = simple
+simple_SOURCES = simple.cc $(COMMON_SOURCES)
+simple_LDADD = $(top_builddir)/src/liboptimization.la
 
 # problem-cc
 check_PROGRAMS += problem-cc
@@ -37,9 +37,11 @@ numeric_quadratic_function_LDADD = $(top_builddir)/src/liboptimization.la
 
 # Ipopt
 if HAVE_IPOPT
-check_PROGRAMS += ipopt
-ipopt_SOURCES = ipopt.cc $(COMMON_SOURCES)
-ipopt_LDADD = $(top_builddir)/src/liboptimization.la
+# Do not call the binary ipopt as Ipopt might also install a binary
+# with that name.
+check_PROGRAMS += ipopt-test
+ipopt_test_SOURCES = ipopt.cc $(COMMON_SOURCES)
+ipopt_test_LDADD = $(top_builddir)/src/liboptimization.la
 endif
 
 
@@ -72,22 +74,11 @@ generate-reference:
 # Test suite.  #
 # ------------ #
 
-TESTSUITE_AT =					\
-	simple-test.at				\
-	ipopt.at				\
-	cfsqp.at				\
-	numeric-linear-function.at		\
-	numeric-quadratic-function.at		\
-	problem-cc.at
-
 # Distribute reference files.
 EXTRA_DIST +=					\
-	simple-test.stdout			\
-	ipopt.stdout				\
+	simple.stdout				\
+	ipopt-test.stdout			\
 	cfsqp.stdout				\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
 	problem-cc.stdout
-
-
-

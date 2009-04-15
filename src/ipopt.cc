@@ -121,7 +121,6 @@ namespace optimization
       {
         assert (solver_.problem ().constraints ().size () - m == 0);
 
-        //FIXME: detect from problem.
         for (Index i = 0; i < m; ++i)
           const_types[i] = cfsqp_tag (*solver_.problem ().constraints ()[i]);
         return true;

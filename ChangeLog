@@ -1,5 +1,26 @@
 2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Facotize test suite.
+	* build-aux/autotest.at: New.
+	* build-aux/autotest.mk: Add a dependency on the test
+        suite to build-aux/autotest.at.
+	* src/ipopt.cc: Remove unwanted fixme.
+	* tests/Makefile.am: Rename simple-test into simple
+        and ipopt into ipopt-test to avoid name clash.
+	* tests/cfsqp.at: Remove.
+	* tests/ipopt-test.stdout: New.
+	* tests/ipopt.at: Remove.
+	* tests/ipopt.stdout: Remove.
+	* tests/numeric-linear-function.at: Remove.
+	* tests/numeric-quadratic-function.at: Remove.
+	* tests/problem-cc.at: Remove.
+	* tests/simple-test.at: Remove.
+	* tests/simple.cc: Rename from tests/simple-test.cc.
+	* tests/simple.stdout: Rename from tests/simple-test.stdout.
+	* tests/testsuite.at: Facotize and fix test suite.
+
+2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add support for R^n -> R^m functions.
 	* include/liboptimization/derivable-function.hh: Add jacobian/gradient.
 	* include/liboptimization/linear-function.hh: Fix hessian prototype.

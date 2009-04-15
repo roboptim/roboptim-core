@@ -48,7 +48,7 @@
 
 
 # Define how autom4te is called to generate the testsuite file.
-AUTOTEST = $(AUTOM4TE) --language=autotest
+AUTOTEST = $(AUTOM4TE) --language=autotest -Wall
 
 # Package following files.
 EXTRA_DIST += atlocal testsuite.at $(TESTSUITE) $(TESTSUITE_AT)
@@ -58,6 +58,9 @@ TESTSUITE = $(srcdir)/testsuite
 
 # Define where package.m4.in is located.
 PACKAGE_M4_IN=$(top_srcdir)/tests/package.m4.in
+
+# Define m4 dependencies.
+TESTSUITE_AT = $(top_srcdir)/build-aux/autotest.at
 
 
 # ----- #
@@ -76,7 +79,8 @@ clean-local:
 
 $(TESTSUITE): $(PACKAGE_M4_IN) $(srcdir)/testsuite.at $(TESTSUITE_AT) \
 	      $(top_srcdir)/configure
-	$(AUTOTEST) -I '$(srcdir)' -I'$(top_builddir)/tests' $@.at -o $@.tmp
+	$(AUTOTEST) -I'$(srcdir)' -I'$(top_srcdir)/build-aux' \
+	-I'$(top_builddir)/tests' $@.at -o $@.tmp
 	mv $@.tmp $@
 
 atconfig: $(top_builddir)/config.status

@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
 
+m4_include([autotest.at])
+
 ## ----------------------- ##
 ## Launch the test suite.  ##
 ## ----------------------- ##
@@ -26,14 +28,18 @@ This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
 
 AT_BANNER([Shared tests])
- m4_include([simple-test.at])
- m4_include([numeric-linear-function.at])
- m4_include([numeric-quadratic-function.at])
- m4_include([problem-cc.at])
+CHECK_STDOUT([simple], [Check basic features.])
+CHECK_STDOUT([numeric-linear-function], [Check numeric linear functions.])
+CHECK_STDOUT([numeric-quadratic-function],
+             [Check numeric quadratic functions.])
+CHECK_STDOUT([problem-cc], [Check problem copy constructor.])
+
 
 AT_BANNER([Cfsqp])
- m4_include([cfsqp.at])
+CHECK_STDOUT_SKIPPABLE([cfsqp], [Check CFSQPSolver.], [true])
 
 
 AT_BANNER([Ipopt])
- m4_include([ipopt.at])
+CHECK_STDOUT_SKIPPABLE([ipopt-test], [Check IpoptSolver.])
+
+# End of testsuite.at
