@@ -1,5 +1,10 @@
 2009-04-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document libraries design and how to add a new solver.
+	* src/doc.hh: Here.
+
+2009-04-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Enhance Doxygen documentation.
 	* doc/Doxyfile.in: Fix include path, do not embed code,
         extract static methods, make dot run faster, add dynamic
