@@ -1,3 +1,11 @@
+2009-04-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Enhance Doxygen documentation.
+	* doc/Doxyfile.in: Fix include path, do not embed code,
+        extract static methods, make dot run faster, add dynamic
+        sections in generated documentation.
+	* doc/Makefile.am: Copy default Doxygen stylesheets.
+
 2009-04-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix lambda copy in Result class.
