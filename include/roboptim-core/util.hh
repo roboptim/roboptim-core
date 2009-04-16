@@ -1,19 +1,19 @@
-// Copyright (C) 2009 by Thomas Moulard, FIXME.
+// Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
 //
-// This file is part of the liboptimization.
+// This file is part of the roboptim.
 //
-// liboptimization is free software: you can redistribute it and/or modify
+// roboptim is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// liboptimization is distributed in the hope that it will be useful,
+// roboptim is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
+// along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 
 /**
@@ -22,9 +22,9 @@
 #ifndef OPTIMIZATION_UTIL_HH
 # define OPTIMIZATION_UTIL_HH
 # include <boost/variant.hpp>
-# include <liboptimization/derivable-function.hh>
+# include <roboptim-core/derivable-function.hh>
 
-namespace optimization
+namespace roboptim
 {
   namespace detail
   {
@@ -54,7 +54,7 @@ namespace optimization
 
   template <typename T1, typename T2>
   std::ostream& operator<< (std::ostream&, const std::pair<T1, T2>&);
-} // end of namespace optimization.
+} // end of namespace roboptim.
 
-# include <liboptimization/util.hxx>
+# include <roboptim-core/util.hxx>
 #endif //! OPTIMIZATION_UTIL_HH

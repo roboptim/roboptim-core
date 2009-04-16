@@ -1,4 +1,4 @@
-Name: liboptimization
+Name: roboptim
 Summary: Generic optimization library.
 Vendor: FIXME
 Version: 0.1

@@ -1,19 +1,19 @@
-// Copyright (C) 2009 by Thomas Moulard, FIXME.
+// Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
 //
-// This file is part of the liboptimization.
+// This file is part of the roboptim.
 //
-// liboptimization is free software: you can redistribute it and/or modify
+// roboptim is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// liboptimization is distributed in the hope that it will be useful,
+// roboptim is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
+// along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
 
@@ -21,7 +21,7 @@
 
    \section intro Introduction
 
-   liboptimization defines a C++ common interface to several non linear problem
+   RobOptim Core defines a C++ common interface to several non linear problem
    solvers.
 
    The package is composed of a base class called optimization::GenericSolver and
@@ -59,7 +59,7 @@
    and enhancement proposals are highly welcomed.
 
    To report a bug, please go this package's
-   <a href="http://www.assembla.com/wiki/show/liboptimization/">web page</a>.
+   <a href="http://www.assembla.com/wiki/show/roboptim/">web page</a>.
 
    To discuss about this package, please use
    <a href="https://sympa.laas.fr/sympa/info/humanoid-optim">humanoid-optim@laas.fr</a>.
@@ -729,7 +729,7 @@ int run_test ()
 
 
 /*!
-  \namespace optimization
+  \namespace roboptim
 
   \brief Main namespace
 
@@ -738,7 +738,7 @@ int run_test ()
 
 
 /*!
-  \namespace optimization::detail
+  \namespace roboptim::detail
 
   \brief Implementation namespace
 

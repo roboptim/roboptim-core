@@ -1,19 +1,19 @@
-// Copyright (C) 2009 by Thomas Moulard, FIXME.
+// Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
 //
-// This file is part of the liboptimization.
+// This file is part of the roboptim.
 //
-// liboptimization is free software: you can redistribute it and/or modify
+// roboptim is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// liboptimization is distributed in the hope that it will be useful,
+// roboptim is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
+// along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * \brief Declaration of the TwiceDerivableFunction class.
@@ -23,9 +23,9 @@
 # define OPTIMIZATION_TWICE_DERIVABLE_FUNCTION_HH
 # include <limits>
 
-# include <liboptimization/derivable-function.hh>
+# include <roboptim-core/derivable-function.hh>
 
-namespace optimization
+namespace roboptim
 {
   /// Define a function which is derivable twice.
   class TwiceDerivableFunction : public DerivableFunction
@@ -42,6 +42,6 @@ namespace optimization
     virtual std::ostream& print (std::ostream&) const throw ();
   };
 
-} // end of namespace optimization
+} // end of namespace roboptim
 
 #endif //! OPTIMIZATION_TWICE_DERIVABLE_FUNCTION_HH

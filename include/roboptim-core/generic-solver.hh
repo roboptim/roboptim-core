@@ -1,19 +1,19 @@
-// Copyright (C) 2009 by Thomas Moulard, FIXME.
+// Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
 //
-// This file is part of the liboptimization.
+// This file is part of the roboptim.
 //
-// liboptimization is free software: you can redistribute it and/or modify
+// roboptim is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// liboptimization is distributed in the hope that it will be useful,
+// roboptim is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with liboptimization.  If not, see <http://www.gnu.org/licenses/>.
+// along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * \brief Declaration of the GenericSolver class.
@@ -25,14 +25,14 @@
 # include <boost/utility.hpp>
 # include <boost/variant/variant.hpp>
 
-# include <liboptimization/fwd.hh>
-# include <liboptimization/problem.hh>
-# include <liboptimization/result.hh>
-# include <liboptimization/result-with-warnings.hh>
-# include <liboptimization/solver-error.hh>
-# include <liboptimization/solver-warning.hh>
+# include <roboptim-core/fwd.hh>
+# include <roboptim-core/problem.hh>
+# include <roboptim-core/result.hh>
+# include <roboptim-core/result-with-warnings.hh>
+# include <roboptim-core/solver-error.hh>
+# include <roboptim-core/solver-warning.hh>
 
-namespace optimization
+namespace roboptim
 {
   /// Abstract interface satisfied by all solvers.
   class GenericSolver : public boost::noncopyable
@@ -88,6 +88,6 @@ namespace optimization
   };
 
   std::ostream& operator<< (std::ostream&, const GenericSolver&);
-} // end of namespace optimization
+} // end of namespace roboptim
 
 #endif //! OPTIMIZATION_GENERIC_SOLVER_HH

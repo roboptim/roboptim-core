@@ -5,8 +5,8 @@ AC_PREREQ([2.59])
 ## --------------------- ##
 ## Package configuration ##
 ## --------------------- ##
-AC_INIT([Generic optimization library], [0.1], [thomas.moulard@gmail.com],
-             [liboptimization])
+AC_INIT([RobOptim core library], [0.1], [thomas.moulard@gmail.com],
+        [roboptim-core])
 
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([build-aux])

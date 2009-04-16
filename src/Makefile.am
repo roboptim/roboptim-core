@@ -3,9 +3,9 @@ include $(top_srcdir)/build-aux/init.mk
 # Add available warnings flags.
 AM_CXXFLAGS += $(WARNING_CXXFLAGS)
 
-lib_LTLIBRARIES = liboptimization.la
+lib_LTLIBRARIES = libroboptim-core.la
 
-liboptimization_la_SOURCES = 		\
+libroboptim_core_la_SOURCES = 		\
 	doc.hh				\
 	derivable-function.cc		\
 	dummy.cc			\
@@ -23,18 +23,18 @@ liboptimization_la_SOURCES = 		\
 	twice-derivable-function.cc	\
 	util.cc
 
-liboptimization_la_LIBADD =
-liboptimization_la_LDFLAGS =
-liboptimization_la_CXXFLAGS =
+libroboptim_core_la_LIBADD =
+libroboptim_core_la_LDFLAGS =
+libroboptim_core_la_CXXFLAGS =
 
 if HAVE_IPOPT
- liboptimization_la_SOURCES += ipopt.cc
- liboptimization_la_CXXFLAGS += $(PTHREAD_CFLAGS)
- liboptimization_la_LDFLAGS += $(IPOPT_LDFLAGS)
- liboptimization_la_LIBADD += $(IPOPT_LIBADD) $(PTHREAD_LIBS)
+ libroboptim_core_la_SOURCES += ipopt.cc
+ libroboptim_core_la_CXXFLAGS += $(PTHREAD_CFLAGS)
+ libroboptim_core_la_LDFLAGS += $(IPOPT_LDFLAGS)
+ libroboptim_core_la_LIBADD += $(IPOPT_LIBADD) $(PTHREAD_LIBS)
 endif
 
 if HAVE_CFSQP
- liboptimization_la_SOURCES += cfsqp.cc
- liboptimization_la_LIBADD += $(CFSQP_LIBADD)
+ libroboptim_core_la_SOURCES += cfsqp.cc
+ libroboptim_core_la_LIBADD += $(CFSQP_LIBADD)
 endif

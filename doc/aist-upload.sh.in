@@ -43,7 +43,7 @@ fi
 
 echo "Uploading documentation to AIST server, please wait.";
 $WPUT --basename html html/* --quiet \
-    ftp://$AIST_USERNAME:$AIST_PWD@upload.aist.go.jp/liboptimization/;
+    ftp://$AIST_USERNAME:$AIST_PWD@upload.aist.go.jp/roboptim/;
 ret="$?";
 if test 0 -eq "$ret" || test 1 -eq "$ret"; then
  echo "Done. Exiting";
