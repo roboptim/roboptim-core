@@ -1,0 +1,9 @@
+2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	* changelog,
+	* ChangeLog,
+	* compat,
+	* control,
+	* copyright,
+	* docs,
+	* rules: Initial release.

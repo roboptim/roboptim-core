@@ -1,10 +1,10 @@
-Name: roboptim
+Name: roboptim-core
 Summary: Generic optimization library.
 Vendor: FIXME
 Version: 0.1
 Release: 1
 License: LGPL
-URL: http://FIXME/%{name}
+URL: http://roboptim.sourceforge.net/
 Group: Development/Tools
 Source: %{name}-%{version}.tar.gz
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
@@ -30,7 +30,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-#FIXME
 %{_datadir}/doc/%{name}-%{version}/*
+%{_libdir}/*
+%{_includedir}/*
 
 %changelog

@@ -1,5 +1,16 @@
 2009-04-17  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix package building mechanism.
+	* build-aux/deb.mk: Fix dpkg command.
+	* packages/debian/ChangeLog,
+	* packages/debian/changelog: Fill ChangeLog's.
+	* packages/debian/control: Fix package definition.
+	* packages/debian/copyright: Add date.
+	* packages/debian/rules: Make executable.
+	* packages/rpm/roboptim-core.spec: Fix package definition.
+
+2009-04-17  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Enhance documentation generation.
 	* Makefile.am: Use configure detected sed.
 	* configure.ac: Search for sed, mkdir, doxygen.

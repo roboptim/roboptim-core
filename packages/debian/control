@@ -1,11 +1,11 @@
-Source: roboptim
+Source: roboptim-core
 Section: devel
 Priority: optional
 Maintainer: Thomas Moulard <thomas.moulard@gmail.com>
 Build-Depends-Indep: debhelper (>= 4.0.0), autotools-dev
 Standards-Version: 3.6.2
 
-Package: roboptim
+Package: roboptim-core
 Architecture: all
 Depends: ${shlibs:Depends}
 Description: Generic optimization library.

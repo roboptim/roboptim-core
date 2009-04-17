@@ -1,5 +1,5 @@
-roboptim (0.1-1) unstable; urgency=low
+roboptim-core (0.1-1) unstable; urgency=low
 
   * Initial release.
 
- -- Thomas Moulard <thomas.moulard@gmail.com>  FIXME
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 17 April 2009 14:29:00 +0900

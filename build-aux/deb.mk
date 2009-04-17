@@ -1,6 +1,6 @@
 include $(top_srcdir)/build-aux/init.mk
 
-DPKG_BUILDPACKAGE = dpkg-buildpackage -rfakeroot -us -uc
+DPKG_BUILDPACKAGE = dpkg-buildpackage -rfakeroot -us -uc -d
 distdir = $(PACKAGE)-$(VERSION)
 DIST_ARCHIVE = $(distdir).tar.gz
 
