@@ -1,5 +1,10 @@
 2009-04-17  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix Gentoo ebuild for release 0.1.
+	* packages/ebuild/roboptim-core-0.1.ebuild: Fix package URL.
+
+2009-04-17  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix package building mechanism.
 	* build-aux/deb.mk: Fix dpkg command.
 	* packages/debian/ChangeLog,

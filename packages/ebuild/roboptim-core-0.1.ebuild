@@ -5,8 +5,8 @@
 inherit eutils base
 
 DESCRIPTION="Generic optimization library"
-HOMEPAGE="http://FIXME"
-SRC_URI="http://FIXME/${P}.tar.gz"
+HOMEPAGE="http://roboptim.sourceforge.net/"
+SRC_URI="mirror://sourceforge/roboptim/${P}.tar.bz2"
 
 LICENSE="LGPL-3"
 SLOT="0"
