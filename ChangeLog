@@ -1,5 +1,13 @@
 2009-04-17  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Prepare release 0.1.
+	* AUTHORS: Update authors.
+	* NEWS: Fill NEWS for release 0.1.
+	* README: Add project's home page URL.
+	* TODO: Replace by a link to the ticket's system.
+
+2009-04-17  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix package information.
 	* configure.ac: Fix contact e-mail.
 	* roboptim-core.m4: Fix package name.

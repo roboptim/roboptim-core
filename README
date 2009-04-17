@@ -1,5 +1,8 @@
                                                                 -*- outline -*-
 
+For general information about the project, please refer to its homepage:
+http://roboptim.sourceforge.net
+
 * Why configure does not detect CFSQP?
 
 CFSQP is always distributed as a C header and source file.  As a result, you

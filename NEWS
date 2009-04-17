@@ -1,4 +1,6 @@
                                                                 -*- outline -*-
 
-New in 0.1, FIXME:
-* First release.
+New in 0.1, 04/17/2009:
+* Shared interface definition.
+* Implementation of the CFSQP bridge.
+* Implementation of the Ipopt bridge.

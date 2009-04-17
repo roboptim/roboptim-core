@@ -1,13 +1,3 @@
                                                                 -*- outline -*-
 
-* Building chain
-** Replace main symbols by real ones in build-aux/ipopt.m4, build-aux/cfsqp.m4
-** Make sure that solvers are detected correctly.
-** One convenience library per solver?
-** Prepare for distribution (header names, etc.).
-
-* Coding style
-** Unify enum naming.
-
-* Source
-** Factorize assertions in bridges.
+See http://apps.sourceforge.net/trac/roboptim/report/1

@@ -1,4 +1,17 @@
 This package was written by and with the assistance of
 
+* Florent Lamiraux              florent@laas.fr
+- Interface design.
+
 * Thomas Moulard                thomas.moulard@gmail.com
 - Package creation.
+- Interface implementation.
+- CFSQP bridge implementation.
+- Ipopt bridge implementation.
+
+* Olivier Stasse                olivier.stasse@aist.go.jp
+- Interface design.
+
+* Pierre-Brice Wieber           pierre-brice.wieber@inrialpes.fr
+- Interface design.
+- CFSQP integration.
