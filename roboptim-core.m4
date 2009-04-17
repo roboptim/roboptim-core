@@ -32,32 +32,32 @@
 # You can copy it into your software's aux dir and call the following
 # macro to check for the library.
 #
-# LIBOPTIMIZATION_LIB: check for the library
-# LIBOPTIMIZATION_LIB: check for the headers
+# ROBOPTIM_CORE_LIB: check for the library
+# ROBOPTIM_CORE_LIB: check for the headers
 # LIBOPTIMZATION_LIB_ARG_WITH: add an optional dependency on the
 # package using AC_ARG_WITH.
 #
 # You probably want to use the first two macros with AC_MSG_FAILURE
 # to add a hard dependency on the library.
 
-m4_pattern_forbid([^LIBOPTIMIZATION_])
+m4_pattern_forbid([^ROBOPTIM_CORE_])
 
-# LIBOPTIMIZATION_LIB([action-if-found], [action-if-not-found])
+# ROBOPTIM_CORE_LIB([action-if-found], [action-if-not-found])
 # --------------------------------------------------------------
 # Try to detect the library.
-AC_DEFUN([LIBOPTIMIZATION_LIB],
+AC_DEFUN([ROBOPTIM_CORE_LIB],
 [AC_CHECK_LIB([optimization], [main], $1, $2)
 ]) # LIB_OPTIMIZATION_LIB
 
 # LIB_OPTIMIZATION_HEADERS([action-if-found], [action-if-not-found])
 # ------------------------------------------------------------------
 # Try to detect the library headers.
-AC_DEFUN([LIBOPTIMIZATION_HEADERS],
+AC_DEFUN([ROBOPTIM_CORE_HEADERS],
 [AC_CHECK_HEADERS([optimization.hh], $1, $2)
 ]) # LIB_OPTIMIZATION_HEADERS
 
 
-# LIBOPTIMIZATION_LIB_ARG_WITH
+# ROBOPTIM_CORE_LIB_ARG_WITH
 # ------------------------------
 # Add an optional dependency toward roboptim.
 AC_DEFUN([LIB_OPTIMIZATION_ARG_WITH],
@@ -70,7 +70,7 @@ AC_DEFUN([LIB_OPTIMIZATION_ARG_WITH],
 
   AC_SUBST([DISTCHECK_CONFIGURE_FLAGS],
            ["$DISTCHECK_CONFIGURE_FLAGS \
-	   '--with-roboptim=$with_liboptimization'"])
+	   '--with-roboptim=$with_roboptim-core'"])
 
   optimization_fail=no
   AS_IF([test "x$with_roboptim" != xno],
@@ -92,7 +92,7 @@ AC_DEFUN([LIB_OPTIMIZATION_ARG_WITH],
       AS_IF([test "x$with_roboptim" = xyes && \
              test "x$roboptim_fail" = xyes],
         [AC_MSG_FAILURE(
-        [roboptim test failed (--without-liboptimization to disable)])
+        [roboptim test failed (--without-roboptim-core to disable)])
         ])
     ])
 

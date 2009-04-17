@@ -59,10 +59,10 @@
    and enhancement proposals are highly welcomed.
 
    To report a bug, please go this package's
-   <a href="http://www.assembla.com/wiki/show/roboptim/">web page</a>.
+   <a href="http://roboptim.sourceforge.net/">web page</a>.
 
-   To discuss about this package, please use
-   <a href="https://sympa.laas.fr/sympa/info/humanoid-optim">humanoid-optim@laas.fr</a>.
+   To discuss about this package, please use <a
+   href="https://lists.sourceforge.net/mailman/listinfo/roboptim-user">roboptim-user@lists.sourceforge.net</a>.
 */
 
 
