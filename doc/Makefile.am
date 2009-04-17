@@ -1,16 +1,13 @@
-DOXYGEN = doxygen
-
 .PHONY: doc html install-doxygen-html uninstall-doxygen-html
 
 doc: html
 
 html-local: Doxyfile
 	$(DOXYGEN)
-#	cp $(top_srcdir)/doc/doxygen.css $(top_srcdir)/doc/tabs.css \
-#	$(top_builddir)/doc/html
 
 EXTRA_DIST = Doxyfile.in header.html footer.html \
-	package.css doxygen.css tabs.css
+	package.css doxygen.css tabs.css sf-upload.sh.in
+
 CLEANFILES = $(PACKAGE_TARNAME).doxytag
 
 clean-local:
