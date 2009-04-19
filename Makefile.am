@@ -10,7 +10,7 @@ SUBDIRS = 		\
 
 
 # Provide bootstrap with the generated package.
-EXTRA_DIST = bootstrap $(PACKAGE_TARNAME).m4
+EXTRA_DIST = bootstrap build-aux/bootstrap $(PACKAGE_TARNAME).m4
 
 
 # Nothing to do in this directory.
