@@ -1,3 +1,8 @@
+2009-04-20  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix pkg-config library name.
+	* build-aux/pkg-config.pc.in: Here.
+
 2009-04-19  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Distribute build-aux/bootstrap.

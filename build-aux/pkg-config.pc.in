@@ -9,5 +9,5 @@ Name: @PACKAGE@
 Description:
 Version: @VERSION@
 Requires:
-Libs: -L${libdir} -loptimization
+Libs: -L${libdir} -lroboptim-core
 Cflags: -I${includedir}
