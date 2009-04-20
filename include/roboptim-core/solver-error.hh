@@ -19,8 +19,8 @@
  * \brief Declaration of the SolverError class.
  */
 
-#ifndef OPTIMIZATION_SOLVER_ERROR_HH
-# define OPTIMIZATION_SOLVER_ERROR_HH
+#ifndef ROBOPTIM_CORE_SOLVER_ERROR_HH
+# define ROBOPTIM_CORE_SOLVER_ERROR_HH
 # include <iostream>
 # include <stdexcept>
 
@@ -39,4 +39,4 @@ namespace roboptim
   std::ostream& operator<< (std::ostream&, const SolverError&);
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_SOLVER_ERROR_HH
+#endif //! ROBOPTIM_CORE_SOLVER_ERROR_HH

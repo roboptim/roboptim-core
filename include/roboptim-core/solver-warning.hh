@@ -19,8 +19,8 @@
  * \brief Declaration of the SolverWarning class.
  */
 
-#ifndef OPTIMIZATION_SOLVER_WARNING_HH
-# define OPTIMIZATION_SOLVER_WARNING_HH
+#ifndef ROBOPTIM_CORE_SOLVER_WARNING_HH
+# define ROBOPTIM_CORE_SOLVER_WARNING_HH
 # include <roboptim-core/solver-error.hh>
 
 namespace roboptim
@@ -34,4 +34,4 @@ namespace roboptim
   };
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_SOLVER_ERROR_HH
+#endif //! ROBOPTIM_CORE_SOLVER_ERROR_HH

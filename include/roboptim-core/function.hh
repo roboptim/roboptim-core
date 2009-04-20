@@ -19,8 +19,8 @@
  * \brief Declaration of the Function class.
  */
 
-#ifndef OPTIMIZATION_FUNCTION_HH
-# define OPTIMIZATION_FUNCTION_HH
+#ifndef ROBOPTIM_CORE_FUNCTION_HH
+# define ROBOPTIM_CORE_FUNCTION_HH
 # include <iostream>
 # include <limits>
 # include <utility>
@@ -79,4 +79,4 @@ namespace roboptim
   std::ostream& operator<< (std::ostream&, const Function&);
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_FUNCTION_HH
+#endif //! ROBOPTIM_CORE_FUNCTION_HH

@@ -19,8 +19,8 @@
  * \brief Declaration of the Result class.
  */
 
-#ifndef OPTIMIZATION_RESULT_HH
-# define OPTIMIZATION_RESULT_HH
+#ifndef ROBOPTIM_CORE_RESULT_HH
+# define ROBOPTIM_CORE_RESULT_HH
 # include <iostream>
 # include <vector>
 
@@ -50,4 +50,4 @@ namespace roboptim
   std::ostream& operator<< (std::ostream& o, const Result& r);
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_RESULT_HH
+#endif //! ROBOPTIM_CORE_RESULT_HH

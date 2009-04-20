@@ -20,8 +20,8 @@
  * \brief Implementation of the CFSQP module.
  */
 
-#ifndef OPTIMIZATION_CFSQP_HH
-# define OPTIMIZATION_CFSQP_HH
+#ifndef ROBOPTIM_CORE_CFSQP_HH
+# define ROBOPTIM_CORE_CFSQP_HH
 # include <iostream>
 # include <string>
 # include <utility>
@@ -117,4 +117,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_CFSQP_HH
+#endif //! ROBOPTIM_CORE_CFSQP_HH

@@ -19,8 +19,8 @@
  * \brief Implementation of the Problem class.
  */
 
-#ifndef OPTIMIZATION_PROBLEM_HXX
-# define OPTIMIZATION_PROBLEM_HXX
+#ifndef ROBOPTIM_CORE_PROBLEM_HXX
+# define ROBOPTIM_CORE_PROBLEM_HXX
 # include <algorithm>
 # include <boost/numeric/ublas/io.hpp>
 # include <boost/type_traits/is_pointer.hpp>
@@ -258,4 +258,4 @@ namespace roboptim
 }; // end of namespace roboptim
 
 # include <roboptim-core/problem.hxx>
-#endif //! OPTIMIZATION_PROBLEM_HH
+#endif //! ROBOPTIM_CORE_PROBLEM_HH

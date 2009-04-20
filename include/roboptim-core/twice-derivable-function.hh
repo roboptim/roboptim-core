@@ -19,8 +19,8 @@
  * \brief Declaration of the TwiceDerivableFunction class.
  */
 
-#ifndef OPTIMIZATION_TWICE_DERIVABLE_FUNCTION_HH
-# define OPTIMIZATION_TWICE_DERIVABLE_FUNCTION_HH
+#ifndef ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH
+# define ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH
 # include <limits>
 
 # include <roboptim-core/derivable-function.hh>
@@ -44,4 +44,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_TWICE_DERIVABLE_FUNCTION_HH
+#endif //! ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH

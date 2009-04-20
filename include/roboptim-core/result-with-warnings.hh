@@ -19,8 +19,8 @@
  * \brief Declaration of the ResultWithWarnings class.
  */
 
-#ifndef OPTIMIZATION_RESULT_WITH_WARNINGS_HH
-# define OPTIMIZATION_RESULT_WITH_WARNINGS_HH
+#ifndef ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH
+# define ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH
 # include <vector>
 
 # include <roboptim-core/fwd.hh>
@@ -46,4 +46,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_RESULT_WITH_WARNINGS_HH
+#endif //! ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH

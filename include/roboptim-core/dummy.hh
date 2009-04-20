@@ -20,8 +20,8 @@
  * \brief Implementation of the dummy module (always fail).
  */
 
-#ifndef OPTIMIZATION_DUMMY_HH
-# define OPTIMIZATION_DUMMY_HH
+#ifndef ROBOPTIM_CORE_DUMMY_HH
+# define ROBOPTIM_CORE_DUMMY_HH
 # include <roboptim-core/solver.hh>
 
 namespace roboptim
@@ -44,4 +44,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_DUMMY_HH
+#endif //! ROBOPTIM_CORE_DUMMY_HH

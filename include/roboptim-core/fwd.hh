@@ -19,8 +19,8 @@
  * \brief Forward declarations.
  */
 
-#ifndef OPTIMIZATION_FWD_HH
-# define OPTIMIZATION_FWD_HH
+#ifndef ROBOPTIM_CORE_FWD_HH
+# define ROBOPTIM_CORE_FWD_HH
 
 namespace roboptim
 {
@@ -52,4 +52,4 @@ namespace roboptim
   class SolverWarning;
 } // end of namespace roboptim.
 
-#endif //! OPTIMIZATION_FWD_HH
+#endif //! ROBOPTIM_CORE_FWD_HH

@@ -19,8 +19,8 @@
  * \brief Declaration of the Problem class.
  */
 
-#ifndef OPTIMIZATION_PROBLEM_HH
-# define OPTIMIZATION_PROBLEM_HH
+#ifndef ROBOPTIM_CORE_PROBLEM_HH
+# define ROBOPTIM_CORE_PROBLEM_HH
 # include <iostream>
 # include <stdexcept>
 # include <boost/optional.hpp>
@@ -142,4 +142,4 @@ namespace roboptim
 } // end of namespace roboptim
 
 # include <roboptim-core/problem.hxx>
-#endif //! OPTIMIZATION_PROBLEM_HH
+#endif //! ROBOPTIM_CORE_PROBLEM_HH

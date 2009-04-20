@@ -19,8 +19,8 @@
 /**
  * \brief Useful procedures declaration.
  */
-#ifndef OPTIMIZATION_UTIL_HH
-# define OPTIMIZATION_UTIL_HH
+#ifndef ROBOPTIM_CORE_UTIL_HH
+# define ROBOPTIM_CORE_UTIL_HH
 # include <boost/variant.hpp>
 # include <roboptim-core/derivable-function.hh>
 
@@ -57,4 +57,4 @@ namespace roboptim
 } // end of namespace roboptim.
 
 # include <roboptim-core/util.hxx>
-#endif //! OPTIMIZATION_UTIL_HH
+#endif //! ROBOPTIM_CORE_UTIL_HH

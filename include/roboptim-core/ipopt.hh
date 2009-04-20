@@ -20,8 +20,8 @@
  * \brief Declaration of the IpoptSolver class.
  */
 
-#ifndef OPTIMIZATION_IPOPT_HH
-# define OPTIMIZATION_IPOPT_HH
+#ifndef ROBOPTIM_CORE_IPOPT_HH
+# define ROBOPTIM_CORE_IPOPT_HH
 # include <coin/IpSmartPtr.hpp>
 # include <roboptim-core/solver.hh>
 # include <roboptim-core/twice-derivable-function.hh>
@@ -70,4 +70,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_IPOPT_HH
+#endif //! ROBOPTIM_CORE_IPOPT_HH

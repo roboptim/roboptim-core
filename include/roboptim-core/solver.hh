@@ -19,8 +19,8 @@
  * \brief Declaration of the Solver class.
  */
 
-#ifndef OPTIMIZATION_SOLVER_HH
-# define OPTIMIZATION_SOLVER_HH
+#ifndef ROBOPTIM_CORE_SOLVER_HH
+# define ROBOPTIM_CORE_SOLVER_HH
 # include <boost/static_assert.hpp>
 # include <boost/type_traits/is_base_of.hpp>
 
@@ -57,4 +57,4 @@ namespace roboptim
 } // end of namespace roboptim
 
 # include <roboptim-core/solver.hxx>
-#endif //! OPTIMIZATION_SOLVER_HH
+#endif //! ROBOPTIM_CORE_SOLVER_HH

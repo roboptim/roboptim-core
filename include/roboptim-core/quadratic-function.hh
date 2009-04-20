@@ -19,8 +19,8 @@
  * \brief Declaration of the QuadraticFunction class.
  */
 
-#ifndef OPTIMIZATION_QUADRATIC_FUNCTION_HH
-# define OPTIMIZATION_QUADRATIC_FUNCTION_HH
+#ifndef ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH
+# define ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH
 # include <limits>
 
 # include <roboptim-core/twice-derivable-function.hh>
@@ -38,4 +38,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_QUADRATIC_FUNCTION_HH
+#endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH

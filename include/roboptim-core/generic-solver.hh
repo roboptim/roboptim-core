@@ -19,8 +19,8 @@
  * \brief Declaration of the GenericSolver class.
  */
 
-#ifndef OPTIMIZATION_GENERIC_SOLVER_HH
-# define OPTIMIZATION_GENERIC_SOLVER_HH
+#ifndef ROBOPTIM_CORE_GENERIC_SOLVER_HH
+# define ROBOPTIM_CORE_GENERIC_SOLVER_HH
 # include <stdexcept>
 # include <boost/utility.hpp>
 # include <boost/variant/variant.hpp>
@@ -90,4 +90,4 @@ namespace roboptim
   std::ostream& operator<< (std::ostream&, const GenericSolver&);
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_GENERIC_SOLVER_HH
+#endif //! ROBOPTIM_CORE_GENERIC_SOLVER_HH

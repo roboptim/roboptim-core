@@ -19,8 +19,8 @@
 /**
  * \brief Useful procedures (templated) implementation.
  */
-#ifndef OPTIMIZATION_UTIL_HXX
-# define OPTIMIZATION_UTIL_HXX
+#ifndef ROBOPTIM_CORE_UTIL_HXX
+# define ROBOPTIM_CORE_UTIL_HXX
 # include <boost/variant/apply_visitor.hpp>
 
 # include <roboptim-core/function.hh>
@@ -104,4 +104,4 @@ namespace roboptim
 
 }; // end of namespace roboptim.
 
-#endif //! OPTIMIZATION_UTIL_HXX
+#endif //! ROBOPTIM_CORE_UTIL_HXX

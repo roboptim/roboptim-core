@@ -19,8 +19,8 @@
  * \brief Implementation of the Solver class.
  */
 
-#ifndef OPTIMIZATION_SOLVER_HXX
-# define OPTIMIZATION_SOLVER_HXX
+#ifndef ROBOPTIM_CORE_SOLVER_HXX
+# define ROBOPTIM_CORE_SOLVER_HXX
 
 namespace roboptim
 {
@@ -59,4 +59,4 @@ namespace roboptim
   }
 }; // end of namespace roboptim
 
-#endif //! OPTIMIZATION_SOLVER_HH
+#endif //! ROBOPTIM_CORE_SOLVER_HH

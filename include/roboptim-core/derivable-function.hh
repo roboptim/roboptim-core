@@ -19,8 +19,8 @@
  * \brief Declaration of the DerivableFunction class.
  */
 
-#ifndef OPTIMIZATION_DERIVABLE_FUNCTION_HH
-# define OPTIMIZATION_DERIVABLE_FUNCTION_HH
+#ifndef ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH
+# define ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH
 # include <limits>
 
 # include <roboptim-core/function.hh>
@@ -49,4 +49,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! OPTIMIZATION_DERIVABLE_FUNCTION_HH
+#endif //! ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH

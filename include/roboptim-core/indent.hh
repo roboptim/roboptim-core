@@ -20,8 +20,8 @@
  * \brief Declaration of indentation related methods.
  */
 
-#ifndef OPTIMIZATION_INDENT_HH
-# define OPTIMIZATION_INDENT_HH
+#ifndef ROBOPTIM_CORE_INDENT_HH
+# define ROBOPTIM_CORE_INDENT_HH
 # include <iosfwd>
 
 namespace roboptim
