@@ -33,7 +33,7 @@ fi
 
 echo "Uploading documentation to SourceForge server, please wait.";
 $rsync -avP -e ssh @abs_builddir@/html/ \
-    $SF_USERNAME,roboptim@web.sourceforge.net:htdocs/doc/HEAD/
+    $SF_USERNAME,roboptim@web.sourceforge.net:htdocs/doc/core/HEAD/
 ret="$?";
 if test 0 -eq "$ret"; then
  echo "Done. Exiting";

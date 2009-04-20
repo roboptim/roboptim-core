@@ -1,5 +1,10 @@
 2009-04-20  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix documentation upload script.
+	* doc/sf-upload.sh.in: Here.
+
+2009-04-20  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Debug RobOptim core m4 macro.
 	* build-aux/ipopt.m4: Restyle.
 	* roboptim-core.m4: Fix various errors.
