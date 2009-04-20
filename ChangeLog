@@ -1,5 +1,11 @@
 2009-04-20  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Debug RobOptim core m4 macro.
+	* build-aux/ipopt.m4: Restyle.
+	* roboptim-core.m4: Fix various errors.
+
+2009-04-20  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix include guards.
 	* include/roboptim-core/cfsqp.hh,
 	* include/roboptim-core/derivable-function.hh,

@@ -30,7 +30,6 @@ m4_pattern_forbid([^IPOPT_])
 # --------------------------------------------------------------
 # Try to detect the library.
 AC_DEFUN([IPOPT_LIB],
-
 [
  #FIXME: insert a valid symbol.
  # Need gfortran library to work.
@@ -42,6 +41,7 @@ AC_DEFUN([IPOPT_LIB],
  #FIXME: replace symbol by CreateIpoptProblem
  AC_SEARCH_LIBS([main], [ipopt], $1, $2)
 ]) # LIB_IPOPT_LIB
+
 
 # IPOPT_HEADERS([action-if-found], [action-if-not-found])
 # ------------------------------------------------------------------

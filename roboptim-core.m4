@@ -43,61 +43,73 @@
 m4_pattern_forbid([^ROBOPTIM_CORE_])
 
 # ROBOPTIM_CORE_LIB([action-if-found], [action-if-not-found])
-# --------------------------------------------------------------
+# -----------------------------------------------------------
 # Try to detect the library.
 AC_DEFUN([ROBOPTIM_CORE_LIB],
-[AC_CHECK_LIB([optimization], [main], $1, $2)
-]) # LIB_OPTIMIZATION_LIB
+[#FIXME: insert a valid symbol.
+ # Need gfortran library to work.
+ AC_SEARCH_LIBS([main], [gfortran], $1, $2)
 
-# LIB_OPTIMIZATION_HEADERS([action-if-found], [action-if-not-found])
-# ------------------------------------------------------------------
+ # Detect pthread.
+ ACX_PTHREAD
+
+ LIBS="$PTHREAD_LIBS $LIBS"
+ CXXFLAGS="$CXXFLAGS $PTHREAD_CFLAGS"
+
+ # Check for roboptim-core.
+ AC_CHECK_LIB([roboptim-core], [main], $1, $2)
+]) # ROBOPTIM_CORE_LIB
+
+
+# ROBOPTIM_CORE_HEADERS([action-if-found], [action-if-not-found])
+# ---------------------------------------------------------------
 # Try to detect the library headers.
 AC_DEFUN([ROBOPTIM_CORE_HEADERS],
-[AC_CHECK_HEADERS([optimization.hh], $1, $2)
-]) # LIB_OPTIMIZATION_HEADERS
+[AC_CHECK_HEADERS([roboptim-core/fwd.hh], $1, $2)
+]) # ROBOPTIM_CORE_HEADERS
 
 
 # ROBOPTIM_CORE_LIB_ARG_WITH
 # ------------------------------
 # Add an optional dependency toward roboptim.
-AC_DEFUN([LIB_OPTIMIZATION_ARG_WITH],
+AC_DEFUN([ROBOPTIM_CORE_LIB_ARG_WITH],
 [
-  AC_ARG_WITH([roboptim],
-  [AS_HELP_STRING([--with-roboptim],
-    [enable roboptim support])],
+  AC_ARG_WITH([roboptim-core],
+  [AS_HELP_STRING([--with-roboptim-core],
+    [enable RobOptim core support])],
   [],
-  [with_roboptim=check])
+  [with_roboptim_core=check])
 
   AC_SUBST([DISTCHECK_CONFIGURE_FLAGS],
            ["$DISTCHECK_CONFIGURE_FLAGS \
-	   '--with-roboptim=$with_roboptim-core'"])
+	   '--with-roboptim-core=$with_roboptim-core'"])
 
-  optimization_fail=no
-  AS_IF([test "x$with_roboptim" != xno],
+  roboptim_core_fail=no
+  AS_IF([test "x$with_roboptim_core" != xno],
     [
       # Search for roboptim library.
-      LIB_OPTIMIZATION_LIB([], [roboptim_fail=yes])
+      LIB_OPTIMIZATION_LIB(, [roboptim_core_fail=yes])
 
       # Search for roboptim headers.
-      LIB_OPTIMIZATION_HEADERS([], [roboptim_fail=yes])
+      LIB_OPTIMIZATION_HEADERS(, [roboptim_core_fail=yes])
 
       # If both tests are OK, add the library and define the CPP symbol.
-      AS_IF([test "x$roboptim_faild" = xno],
+      AS_IF([test "x$roboptim_core_fail" = xno],
 	[AC_SUBST([LIB_OPTIMIZATION], ["-loptimization"])
 	 AC_DEFINE([HAVE_LIB_OPTIMIZATION], [1],
-                   [Define if you have roboptim])])
+                   [Define if you have roboptim_core])])
 
       # If the support was explicitly required, but detection has failed,
       # this is a fatal error.
-      AS_IF([test "x$with_roboptim" = xyes && \
-             test "x$roboptim_fail" = xyes],
+      AS_IF([test "x$with_roboptim_core" = xyes && \
+             test "x$roboptim_core_fail" = xyes],
         [AC_MSG_FAILURE(
-        [roboptim test failed (--without-roboptim-core to disable)])
+        [roboptim_core test failed (--without-roboptim-core to disable)])
         ])
     ])
 
   # Define a boolean indicating whether or not the package has been found.
   AM_CONDITIONAL([LIB_OPTIMIZATION],
-                 [test "x$with_roboptim" != xno && \
-		  test "x$roboptim_fail" != xyes])
-]) # LIB_OPTIMIZATION_ARG_WITH
+                 [test "x$with_roboptim_core" != xno && \
+		  test "x$roboptim_core_fail" != xyes])
+]) # ROBOPTIM_CORE_LIB_ARG_WITH
