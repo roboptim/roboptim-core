@@ -1,3 +1,14 @@
+2009-04-22  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add n-times-derivable to function hierarchy.
+	* include/Makefile.am: Add new header files.
+	* include/roboptim-core/n-times-derivable-function.hh: New.
+	* include/roboptim-core/n-times-derivable-function.hxx: New.
+	* tests/Makefile.am: Compile/distribute new test.
+	* tests/n-times-derivable-function.cc: New.
+	* tests/n-times-derivable-function.stdout: New.
+	* tests/testsuite.at: Include new test.
+
 2009-04-20  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix documentation upload script.

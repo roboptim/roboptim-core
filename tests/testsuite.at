@@ -33,6 +33,7 @@ CHECK_STDOUT([numeric-linear-function], [Check numeric linear functions.])
 CHECK_STDOUT([numeric-quadratic-function],
              [Check numeric quadratic functions.])
 CHECK_STDOUT([problem-cc], [Check problem copy constructor.])
+CHECK_STDOUT([n-times-derivable-function], [Check N times derivable function.])
 
 
 AT_BANNER([Cfsqp])

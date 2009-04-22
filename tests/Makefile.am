@@ -34,6 +34,12 @@ numeric_quadratic_function_SOURCES = numeric-quadratic-function.cc \
 	$(COMMON_SOURCES)
 numeric_quadratic_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# n-times-derivable-function
+check_PROGRAMS += n-times-derivable-function
+n_times_derivable_function_SOURCES = n-times-derivable-function.cc \
+	$(COMMON_SOURCES)
+n_times_derivable_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 
 # Ipopt
 if HAVE_IPOPT
@@ -81,4 +87,5 @@ EXTRA_DIST +=					\
 	cfsqp.stdout				\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
+	n-times-derivable.stdout		\
 	problem-cc.stdout
