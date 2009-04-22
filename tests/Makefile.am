@@ -87,5 +87,5 @@ EXTRA_DIST +=					\
 	cfsqp.stdout				\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
-	n-times-derivable.stdout		\
+	n-times-derivable-function.stdout	\
 	problem-cc.stdout

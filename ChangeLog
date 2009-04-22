@@ -1,5 +1,10 @@
 2009-04-22  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix typo in test suite.
+	* tests/Makefile.am: Here.
+
+2009-04-22  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add n-times-derivable to function hierarchy.
 	* include/Makefile.am: Add new header files.
 	* include/roboptim-core/n-times-derivable-function.hh: New.
