@@ -264,5 +264,4 @@ namespace roboptim
      @}
   */
 }; // end of namespace roboptim
-# include <roboptim-core/problem.hxx>
 #endif //! ROBOPTIM_CORE_PROBLEM_HH

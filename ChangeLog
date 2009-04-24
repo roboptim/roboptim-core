@@ -1,5 +1,9 @@
 2009-04-24  Florent Lamiraux  <florent@laas.fr>
 
+	Remove auto-inclusion.
+
+2009-04-24  Florent Lamiraux  <florent@laas.fr>
+
 	Define modules in documentation.
 
 2009-04-22  Thomas Moulard  <thomas.moulard@gmail.com>
