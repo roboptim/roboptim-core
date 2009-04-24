@@ -24,6 +24,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_solver
+     @{
+  */
+
   template <typename F, typename C>
   Solver<F, C>::Solver (const problem_t& pb) throw ()
     : GenericSolver (),
@@ -57,6 +62,8 @@ namespace roboptim
   {
     return o << problem_;
   }
+  /**
+     @}
+  */
 }; // end of namespace roboptim
-
 #endif //! ROBOPTIM_CORE_SOLVER_HH

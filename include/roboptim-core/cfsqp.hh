@@ -35,6 +35,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_solver
+     @{
+  */
+
   /// CFSQP solver.
   class CFSQPSolver : public Solver<DerivableFunction,
                                     boost::variant<const DerivableFunction*,
@@ -114,6 +119,10 @@ namespace roboptim
 
     std::vector<std::pair<int, bool> > cfsqpConstraints_;
   };
+
+/**
+   @}
+*/
 
 } // end of namespace roboptim
 

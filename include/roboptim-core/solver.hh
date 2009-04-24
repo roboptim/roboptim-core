@@ -31,6 +31,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_problem
+     @{
+  */
+
   /// Define a solver for a class of problem.
   template <typename F, typename C>
   class Solver : public GenericSolver
@@ -53,8 +58,9 @@ namespace roboptim
   protected:
     const problem_t problem_;
   };
-
+  /**
+     @}
+  */
 } // end of namespace roboptim
-
 # include <roboptim-core/solver.hxx>
 #endif //! ROBOPTIM_CORE_SOLVER_HH

@@ -25,8 +25,13 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
+
   /// \brief Define a \f$\mathbb{R} \rightarrow \mathbb{R}^m\f$ function,
-  /// derivable n times (n > 2).
+  /// derivable n times (n >= 2).
   template <unsigned DerivabilityOrder>
   class NTimesDerivableFunction : public TwiceDerivableFunction
   {
@@ -47,7 +52,9 @@ namespace roboptim
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };
+  /**
+     @}
+  */
 }
-
 # include <roboptim-core/n-times-derivable-function.hxx>
 #endif //! ROBOPTIM_TRAJECTORY_N_TIMES_DERIVABLE_HH

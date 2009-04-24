@@ -745,3 +745,15 @@ int run_test ()
   The namespace gathers implementation details which are of no-concern
   for the end user of this library.
 */
+
+/**
+\defgroup roboptim_function Mathematical functions
+*/
+
+/**
+\defgroup roboptim_problem Optimization problems
+*/
+
+/**
+\defgroup roboptim_solver Optimization solvers
+*/

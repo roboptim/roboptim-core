@@ -27,6 +27,10 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
   namespace ublas = boost::numeric::ublas;
 
   /// Define a quadratic function.
@@ -45,7 +49,9 @@ namespace roboptim
     ublas::symmetric_matrix<double, ublas::lower> a_;
     vector_t b_;
   };
+/**
+   @}
+*/
 
 } // end of namespace roboptim
-
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH

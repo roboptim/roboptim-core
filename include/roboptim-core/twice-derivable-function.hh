@@ -27,6 +27,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
+
   /// Define a function which is derivable twice.
   class TwiceDerivableFunction : public DerivableFunction
   {
@@ -42,6 +47,9 @@ namespace roboptim
     virtual std::ostream& print (std::ostream&) const throw ();
   };
 
-} // end of namespace roboptim
+  /**
+     @}
+  */
 
+} // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH

@@ -32,6 +32,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_problem
+     @{
+  */
+
   /// Define a problem in a generic way.
   template <typename F, typename C>
   class Problem
@@ -139,7 +144,9 @@ namespace roboptim
 
   template <typename F, typename C>
   std::ostream& operator<< (std::ostream& o, const Problem<F, C>& pb);
+  /**
+     @}
+  */
 } // end of namespace roboptim
-
 # include <roboptim-core/problem.hxx>
 #endif //! ROBOPTIM_CORE_PROBLEM_HH

@@ -26,6 +26,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
+
   /// Define a quadratic function.
   class NumericLinearFunction : public LinearFunction
   {
@@ -43,7 +48,8 @@ namespace roboptim
     matrix_t a_;
     vector_t b_;
   };
-
+  /**
+     @}
+  */
 } // end of namespace roboptim
-
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH

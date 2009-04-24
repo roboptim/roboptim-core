@@ -26,6 +26,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
+
   /// Define a linear function.
   class LinearFunction : public QuadraticFunction
   {
@@ -36,7 +41,8 @@ namespace roboptim
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };
-
+  /**
+     @}
+  */
 } // end of namespace roboptim
-
 #endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HH

@@ -27,6 +27,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
+
   /// Define a quadratic function.
   class QuadraticFunction : public TwiceDerivableFunction
   {
@@ -35,7 +40,8 @@ namespace roboptim
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };
-
+  /**
+     @}
+  */
 } // end of namespace roboptim
-
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH

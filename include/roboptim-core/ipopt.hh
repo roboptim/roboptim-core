@@ -42,6 +42,11 @@ namespace roboptim
     class MyTNLP;
   };
 
+  /**
+     \addtogroup roboptim_problem
+     @{
+  */
+
   /// Ipopt based solver.
   class IpoptSolver : public Solver<TwiceDerivableFunction,
                                     const TwiceDerivableFunction*>
@@ -67,7 +72,9 @@ namespace roboptim
     /// Smtart pointer to the Ipopt application instance.
     Ipopt::SmartPtr<Ipopt::IpoptApplication> app_;
   };
+  /**
+     @}
+  */
 
 } // end of namespace roboptim
-
 #endif //! ROBOPTIM_CORE_IPOPT_HH

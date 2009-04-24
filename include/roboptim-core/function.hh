@@ -34,6 +34,11 @@ namespace roboptim
 {
   namespace ublas = boost::numeric::ublas;
 
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
+
   /// \brief Define a mathematical function.
   class Function
   {
@@ -77,6 +82,10 @@ namespace roboptim
   };
 
   std::ostream& operator<< (std::ostream&, const Function&);
+  /**
+     @}
+  */
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_FUNCTION_HH

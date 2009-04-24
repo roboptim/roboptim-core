@@ -24,6 +24,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
+
   template <unsigned dorder>
   NTimesDerivableFunction<dorder>::NTimesDerivableFunction (size_type m)
     throw ()
@@ -79,6 +84,8 @@ namespace roboptim
     o << "Function derivable " << derivabilityOrder << " times.";
     return o;
   }
+/**
+   @}
+*/
 }
-
 #endif //! ROBOPTIM_CORE_N_TIMES_DERIVABLE_HXX

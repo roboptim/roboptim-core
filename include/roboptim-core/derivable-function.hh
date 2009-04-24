@@ -27,6 +27,10 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_function
+     @{
+  */
   /// Define a derivable function.
   class DerivableFunction : public Function
   {
@@ -46,7 +50,9 @@ namespace roboptim
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };
+/**
+   @}
+*/
 
 } // end of namespace roboptim
-
 #endif //! ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH

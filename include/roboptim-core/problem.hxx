@@ -34,6 +34,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_problem
+     @{
+  */
+
   template <typename F, typename C>
   Problem<F, C>::Problem (const function_t& f) throw ()
     : function_ (f),
@@ -255,7 +260,9 @@ namespace roboptim
   {
     return pb.print (o);
   }
+  /**
+     @}
+  */
 }; // end of namespace roboptim
-
 # include <roboptim-core/problem.hxx>
 #endif //! ROBOPTIM_CORE_PROBLEM_HH

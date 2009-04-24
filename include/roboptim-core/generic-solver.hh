@@ -34,6 +34,11 @@
 
 namespace roboptim
 {
+  /**
+     \addtogroup roboptim_solver
+     @{
+  */
+
   /// Abstract interface satisfied by all solvers.
   class GenericSolver : public boost::noncopyable
   {
@@ -59,7 +64,7 @@ namespace roboptim
                            ResultWithWarnings,
                            SolverError> result_t;
 
-     /// \defgroup ctor Constructors and destructors.
+     /// \name Constructors and destructors.
     /// \{
     /// Main constructor.
     explicit GenericSolver () throw ();
@@ -88,6 +93,10 @@ namespace roboptim
   };
 
   std::ostream& operator<< (std::ostream&, const GenericSolver&);
+  /**
+     @}
+  */
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_GENERIC_SOLVER_HH
