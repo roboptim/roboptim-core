@@ -1,5 +1,10 @@
 2009-04-28  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Debian needs a changelog with no tabs.
+	* packages/debian/changelog: Replace tabs by two spaces.
+
+2009-04-28  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix various mistakes in deb package generation.
 	* THANKS: New.
 	* build-aux/deb.mk: Add clean rule, split deb rule.
