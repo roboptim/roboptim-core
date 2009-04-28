@@ -1,5 +1,14 @@
+roboptim-core (0.1-2) unstable; urgency=low
+
+	* Add missing files.
+	* More meta-information.
+	* Add Boost dependency.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Tue, 28 Apr 2009 20:25:27 +0900
+
+
 roboptim-core (0.1-1) unstable; urgency=low
 
-  * Initial release.
+	* Initial release.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 17 April 2009 14:29:00 +0900
