@@ -1,3 +1,10 @@
+2009-04-29  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix debian package.
+	* packages/debian/ChangeLog,
+	* packages/debian/changelog,
+	* packages/debian/control: Fix Boost dependency.
+
 2009-04-28  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Debian needs a changelog with no tabs.

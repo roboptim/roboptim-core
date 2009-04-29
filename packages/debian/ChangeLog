@@ -1,6 +1,10 @@
+2009-04-29  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	* control: Fix Boost dependency.
+
 2009-04-28  Thomas Moulard  <thomas.moulard@gmail.com>
 
-	* control: Add Boost dependency and more meta information. 
+	* control: Add Boost dependency and more meta information.
 
 2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
 
