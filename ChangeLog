@@ -5,6 +5,11 @@
 	* packages/debian/changelog,
 	* packages/debian/control: Fix Boost dependency.
 
+2009-04-28  Anthony Mallet  <anthony.mallet@laas.fr>
+
+        Fix caracter class complement in boost.m4 by replacing the
+        bash-specific `^' construct with a standard `!'.
+
 2009-04-28  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Debian needs a changelog with no tabs.
