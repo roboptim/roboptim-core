@@ -1,3 +1,9 @@
+2009-04-30  Florent Lamiraux  <florent@laas.fr>
+
+	Fix boost inclusion.
+	* build-aux/init.mk: add BOOST_CPPFLAGS to AM_CPPFLAGS. 
+          Useful when boost is in non-standard paths.
+
 2009-04-29  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix debian package.
