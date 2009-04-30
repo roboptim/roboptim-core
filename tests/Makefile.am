@@ -40,6 +40,18 @@ n_times_derivable_function_SOURCES = n-times-derivable-function.cc \
 	$(COMMON_SOURCES)
 n_times_derivable_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# visualization-gnuplot-simple
+check_PROGRAMS += visualization-gnuplot-simple
+visualization_gnuplot_simple_SOURCES = visualization-gnuplot-simple.cc \
+	$(COMMON_SOURCES)
+visualization_gnuplot_simple_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+# visualization-gnuplot-function
+check_PROGRAMS += visualization-gnuplot-function
+visualization_gnuplot_function_SOURCES = visualization-gnuplot-function.cc \
+	$(COMMON_SOURCES)
+visualization_gnuplot_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 
 # Ipopt
 if HAVE_IPOPT
@@ -88,4 +100,6 @@ EXTRA_DIST +=					\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
 	n-times-derivable-function.stdout	\
-	problem-cc.stdout
+	problem-cc.stdout			\
+	visualization-gnuplot-simple.stdout	\
+	visualization-gnuplot-function.stdout

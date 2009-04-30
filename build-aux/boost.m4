@@ -451,6 +451,13 @@ AC_DEFUN([BOOST_FUNCTION],
 [BOOST_FIND_HEADER([boost/function.hpp])])
 
 
+# BOOST_FUSTION()
+# ----------------
+# Look for Boost.Fusion
+AC_DEFUN([BOOST_FUSION],
+[BOOST_FIND_HEADER([boost/fusion/include/vector.hpp])])
+
+
 # BOOST_GRAPH([PREFERRED-RT-OPT])
 # -------------------------------
 # Look for Boost.Graphs.  For the documentation of PREFERRED-RT-OPT, see the

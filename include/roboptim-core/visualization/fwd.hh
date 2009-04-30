@@ -15,38 +15,39 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * \brief Implementation of the Function class.
+ * \brief Visualization forward declarations.
  */
 
-#include "roboptim-core/function.hh"
-#include "roboptim-core/indent.hh"
-#include "roboptim-core/util.hh"
+#ifndef ROBOPTIM_CORE_VISUALIZATION_FWD_HH
+# define ROBOPTIM_CORE_VISUALIZATION_FWD_HH
 
 namespace roboptim
 {
-  Function::Function (size_type n, size_type m) throw ()
-    : n (n),
-      m (m)
+  namespace visualization
   {
-    // Positive size is required.
-    assert (n > 0 && m > 0);
-  }
+    class Gnuplot;
 
-  Function::~Function () throw ()
-  {
-  }
+    namespace gnuplot
+    {
+      class Command;
 
-  std::ostream&
-  Function::print (std::ostream& o) const throw ()
-  {
-    return o << "Function";
-  }
+      class comment;
+      class clear;
+      class pwd;
+      class quit;
+      class replot;
+      class reread;
+      class reset;
 
-  std::ostream&
-  operator<< (std::ostream& o, const Function& f)
-  {
-    return f.print (o);
-  }
-} // end of namespace roboptim
+      class cd;
+      class help;
+
+      class plot;
+
+    } // end of namespace gnuplot.
+
+  } // end of namespace visualization.
+} // end of namespace roboptim.
+
+#endif //! ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_HH

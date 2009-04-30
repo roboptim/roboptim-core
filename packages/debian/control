@@ -8,7 +8,7 @@ Homepage: http://roboptim.sourceforge.net/
 
 Package: roboptim-core
 Architecture: i386
-Depends: libboost-dev (>= 1.34)
+Depends: libboost-dev (>= 1.35)
 Description: RobOptim core defines a standard C++ interface
  to define non-linear optimization problems independently
  of a specific solver.

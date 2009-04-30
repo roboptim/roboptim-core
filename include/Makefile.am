@@ -33,3 +33,10 @@ endif
 if HAVE_IPOPT
  nobase_include_HEADERS += roboptim-core/ipopt.hh
 endif
+
+# Visualization
+nobase_include_HEADERS +=				\
+	roboptim-core/visualization/fwd.hh		\
+	roboptim-core/visualization/gnuplot.hh		\
+	roboptim-core/visualization/gnuplot-commands.hh	\
+	roboptim-core/visualization/gnuplot-function.hh

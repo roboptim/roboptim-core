@@ -38,3 +38,6 @@ if HAVE_CFSQP
  libroboptim_core_la_SOURCES += cfsqp.cc
  libroboptim_core_la_LIBADD += $(CFSQP_LIBADD)
 endif
+
+libroboptim_core_la_SOURCES += 		\
+	visualization/gnuplot.cc

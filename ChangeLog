@@ -1,3 +1,25 @@
+2009-04-30  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add Gnuplot generation.
+	* build-aux/boost.m4: Add support for Boost.Fusion.
+	* configure.ac: Search for Boost.Fusion and Boost.Format.
+	* include/Makefile.am: Distribute new headers.
+	* include/roboptim-core/visualization/fwd.hh: Copy from src/function.cc.
+	* include/roboptim-core/visualization/gnuplot-commands.hh: New.
+	* include/roboptim-core/visualization/gnuplot-function.hh: New.
+	* include/roboptim-core/visualization/gnuplot.hh: New.
+	* packages/debian/control: Depends on Boost 1.35.
+	* src/Makefile.am: Compile new files.
+	* src/function.cc: Assert if n or m is 0.
+	* src/visualization/gnuplot.cc: New.
+	* tests/Makefile.am: Add new tests.
+	* tests/ipopt-test.stdout: Regenerate.
+	* tests/testsuite.at: Run new tests.
+	* tests/visualization-gnuplot-function.cc: New.
+	* tests/visualization-gnuplot-function.stdout: New.
+	* tests/visualization-gnuplot-simple.cc: Copy from src/function.cc.
+	* tests/visualization-gnuplot-simple.stdout: New.
+
 2009-04-30  Florent Lamiraux  <florent@laas.fr>
 
 	Fix boost inclusion.

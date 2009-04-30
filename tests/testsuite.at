@@ -34,6 +34,8 @@ CHECK_STDOUT([numeric-quadratic-function],
              [Check numeric quadratic functions.])
 CHECK_STDOUT([problem-cc], [Check problem copy constructor.])
 CHECK_STDOUT([n-times-derivable-function], [Check N times derivable function.])
+CHECK_STDOUT([visualization-gnuplot-simple], [Check Gnuplot visualization.])
+CHECK_STDOUT([visualization-gnuplot-simple], [Check Gnuplot functions visualization.])
 
 
 AT_BANNER([Cfsqp])

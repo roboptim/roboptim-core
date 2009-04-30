@@ -15,38 +15,28 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <iostream>
 
-/**
- * \brief Implementation of the Function class.
- */
+#include "common.hh"
+#include <roboptim-core/visualization/gnuplot.hh>
+#include <roboptim-core/visualization/gnuplot-commands.hh>
 
-#include "roboptim-core/function.hh"
-#include "roboptim-core/indent.hh"
-#include "roboptim-core/util.hh"
+using namespace roboptim;
+using namespace roboptim::visualization;
 
-namespace roboptim
+
+int run_test ()
 {
-  Function::Function (size_type n, size_type m) throw ()
-    : n (n),
-      m (m)
-  {
-    // Positive size is required.
-    assert (n > 0 && m > 0);
-  }
+  using namespace roboptim::visualization::gnuplot;
+  Gnuplot gnuplot = Gnuplot::make_gnuplot ();
 
-  Function::~Function () throw ()
-  {
-  }
+  std::cout
+    << (gnuplot
+	<< comment ("Hello, world!")
+	<< cd ("/tmp")
+	<< reset
+	);
+  return 0;
+}
 
-  std::ostream&
-  Function::print (std::ostream& o) const throw ()
-  {
-    return o << "Function";
-  }
-
-  std::ostream&
-  operator<< (std::ostream& o, const Function& f)
-  {
-    return f.print (o);
-  }
-} // end of namespace roboptim
+GENERATE_TEST ()
