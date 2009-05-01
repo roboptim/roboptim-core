@@ -22,9 +22,7 @@
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_FUNCTION_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_FUNCTION_HH
 # include <boost/format.hpp>
-# include <boost/fusion/include/sequence.hpp>
-# include <boost/fusion/sequence.hpp>
-# include <boost/fusion/container/vector/vector.hpp>
+# include <boost/tuple/tuple.hpp>
 
 # include <roboptim-core/function.hh>
 
@@ -34,18 +32,17 @@ namespace roboptim
   {
     namespace gnuplot
     {
-      using namespace boost::fusion;
-      typedef vector<Function::value_type,
-		     Function::value_type,
-		     Function::value_type> discreteInterval_t;
+      typedef boost::tuple<Function::value_type,
+			   Function::value_type,
+			   Function::value_type> discreteInterval_t;
 
 
       Command plot (const Function& f, discreteInterval_t window)
       {
 	assert (f.n == 1);
 
-	assert (at_c<0> (window) < at_c<1> (window)
-		&& at_c<2> (window) > 0.);
+	assert (boost::get<0> (window) < boost::get<1> (window)
+		&& boost::get<2> (window) > 0.);
 	//FIXME: compare with arg bounds?
 
 	std::string str = "plot '-' with line";
@@ -57,8 +54,8 @@ namespace roboptim
 	Function::vector_t x (f.n);
 	for (unsigned i = 0; i < f.m; ++i)
 	  {
-	    for (double t = at_c<0> (window); t < at_c<1> (window);
-		 t += at_c<2> (window))
+	    for (double t = boost::get<0> (window); t < boost::get<1> (window);
+		 t += boost::get<2> (window))
 	      {
 		x[0] = t;
 		Function::vector_t res = f (x);
@@ -75,16 +72,16 @@ namespace roboptim
       {
 	assert (f.n == 1 && f.m == 2);
 
-	assert (at_c<0> (window) < at_c<1> (window)
-		&& at_c<2> (window) > 0.);
+	assert (boost::get<0> (window) < boost::get<1> (window)
+		&& boost::get<2> (window) > 0.);
 	//FIXME: compare with arg bounds?
 
 	std::string str = "plot '-' with line\n";
 
 	Function::vector_t x (f.n);
 
-	for (double t = at_c<0> (window); t < at_c<1> (window);
-	     t += at_c<2> (window))
+	for (double t = boost::get<0> (window); t < boost::get<1> (window);
+	     t += boost::get<2> (window))
 	  {
 	    x[0] = t;
 	    Function::vector_t res = f (x);

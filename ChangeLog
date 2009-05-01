@@ -1,5 +1,14 @@
 2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Use Boost.Tuple instead of Boost.Fusion.
+	Rationale: Last LTS Ubuntu (8.04 Hardy) packages Boost 1.34.1, not 1.35
+	which is required for Boost.Fusion.
+	* configure.ac: Chec Boost.Tuple instead of Boost.Tuple.
+	* include/roboptim-core/visualization/gnuplot-function.hh:
+	Fix implementation.
+
+2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make NTimesDerivables<N> inherits from NTimesDerivable<N-1>.
 	* include/roboptim-core/n-times-derivable-function.hh,
 	* include/roboptim-core/n-times-derivable-function.hxx:
