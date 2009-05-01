@@ -1,5 +1,10 @@
 2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Change back package dependency to Boost 1.34.
+	* packages/debian/control: Here.
+
+2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Use Boost.Tuple instead of Boost.Fusion.
 	Rationale: Last LTS Ubuntu (8.04 Hardy) packages Boost 1.34.1, not 1.35
 	which is required for Boost.Fusion.
