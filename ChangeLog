@@ -1,5 +1,14 @@
 2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make NTimesDerivables<N> inherits from NTimesDerivable<N-1>.
+	* include/roboptim-core/n-times-derivable-function.hh,
+	* include/roboptim-core/n-times-derivable-function.hxx:
+	Add an explicit instanciation for N=2 and change the
+	general case to make it inherits from N-1.
+	* tests/visualization-gnuplot-function.cc: Restyle.
+
+2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Replace MKDIR_P by mkdir_p.
 	* Makefile.am,
 	* build-aux/ebuild.mk,

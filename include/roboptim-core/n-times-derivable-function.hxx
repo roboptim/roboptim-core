@@ -30,50 +30,8 @@ namespace roboptim
   */
 
   template <unsigned dorder>
-  NTimesDerivableFunction<dorder>::NTimesDerivableFunction (size_type m)
-    throw ()
-    : TwiceDerivableFunction (1, m)
-  {
-  }
-
-  template <unsigned dorder>
   NTimesDerivableFunction<dorder>::~NTimesDerivableFunction () throw ()
   {
-  }
-
-  template <unsigned dorder>
-  typename NTimesDerivableFunction<dorder>::vector_t
-  NTimesDerivableFunction<dorder>::operator () (const vector_t& x) const
-    throw ()
-  {
-    assert (x.size () == 1);
-    return operator () (x[0]);
-  }
-
-  template <unsigned dorder>
-  typename NTimesDerivableFunction<dorder>::gradient_t
-  NTimesDerivableFunction<dorder>::gradient (const vector_t& x, int i) const
-    throw ()
-  {
-    assert (x.size () == 1);
-    vector_t d = derivative (x[0], 1);
-
-    vector_t res (1);
-    res[0] = d[i];
-    return res;
-  }
-
-  template <unsigned dorder>
-  typename NTimesDerivableFunction<dorder>::hessian_t
-  NTimesDerivableFunction<dorder>::hessian (const vector_t& x, int i)
-    const throw ()
-  {
-    hessian_t hessian (1, 1);
-
-    vector_t dd = derivative (x[0], 2);
-    hessian (0, 0) = dd[i];
-
-    return hessian;
   }
 
   template <unsigned dorder>
@@ -84,6 +42,7 @@ namespace roboptim
     o << "Function derivable " << derivabilityOrder << " times.";
     return o;
   }
+
 /**
    @}
 */
