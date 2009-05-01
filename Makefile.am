@@ -40,7 +40,7 @@ install-data-local: install-pkg-config
 uninstall-local: uninstall-pkg-config
 
 install-pkg-config: $(PACKAGE_TARNAME).pc
-	$(MKDIR_P) $(PKG_DIR)
+	$(mkdir_p) $(PKG_DIR)
 	cp "$(PKG_CONFIG_FILE)" $(PKG_DIR)
 
 uninstall-pkg-config:

@@ -1,5 +1,13 @@
 2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Replace MKDIR_P by mkdir_p.
+	* Makefile.am,
+	* build-aux/ebuild.mk,
+	* build-aux/rpm.mk,
+	* doc/Makefile.am: Here.
+
+2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove trailing whitespace in generated Gnuplot script.
 	* include/roboptim-core/visualization/gnuplot-commands.hh:
 	Remove trailing whitespace if set is called without a value.

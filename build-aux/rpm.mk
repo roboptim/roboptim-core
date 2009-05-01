@@ -30,11 +30,11 @@ install-rpm-tree:
 	  echo "Please define RPM_TREE.";	\
           exit 1;				\
 	fi
-	$(MKDIR_P) $$RPM_TREE/BUILD
-	$(MKDIR_P) $$RPM_TREE/RPMS
-	$(MKDIR_P) $$RPM_TREE/SOURCES
-	$(MKDIR_P) $$RPM_TREE/SPECS
-	$(MKDIR_P) $$RPM_TREE/SRPMS
+	$(mkdir_p) $$RPM_TREE/BUILD
+	$(mkdir_p) $$RPM_TREE/RPMS
+	$(mkdir_p) $$RPM_TREE/SOURCES
+	$(mkdir_p) $$RPM_TREE/SPECS
+	$(mkdir_p) $$RPM_TREE/SRPMS
 
 install-rpm-tarball:
 	@if test "x$$RPM_TREE" = "x"; then	\

@@ -18,7 +18,7 @@ install-ebuild:
 	 echo "to the portage root you want to install the ebuild into.";\
 	else								 \
          DIR="$$PORTAGE_ROOT/$(EBUILD_CATEGORY)/$(PACKAGE)";		 \
-	 $(MKDIR_P) $$DIR/files;					 \
+	 $(mkdir_p) $$DIR/files;					 \
 	 for i in `echo "$(EXTRA_DIST)" | sed 's/ /\n/g'`; do		 \
 	  cp "$(srcdir)/$$i" "$$DIR";					 \
 	  if test x`echo "$$i" | grep "\.ebuild$$"` = "x$$i"; then	 \
