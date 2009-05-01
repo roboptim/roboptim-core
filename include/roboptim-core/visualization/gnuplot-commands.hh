@@ -78,6 +78,8 @@ namespace roboptim
       Command
       set (const char* var, const char* value = "") throw ()
       {
+	if (!*value)
+	  return Command ((boost::format ("set %1%") % var).str ());
 	return Command ((boost::format ("set %1% %2%") % var % value).str ());
       }
 

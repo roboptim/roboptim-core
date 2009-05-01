@@ -1,5 +1,12 @@
 2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Remove trailing whitespace in generated Gnuplot script.
+	* include/roboptim-core/visualization/gnuplot-commands.hh:
+	Remove trailing whitespace if set is called without a value.
+	* tests/visualization-gnuplot-function.stdout: Regenerate.
+
+2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Enhance Gnuplot generation.
 	* include/roboptim-core/visualization/gnuplot-commands.hh:
 	Implement unset.
