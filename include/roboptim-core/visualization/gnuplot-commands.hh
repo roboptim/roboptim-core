@@ -76,9 +76,15 @@ namespace roboptim
       }
 
       Command
-      set (const char* var, const char* value) throw ()
+      set (const char* var, const char* value = "") throw ()
       {
 	return Command ((boost::format ("set %1% %2%") % var % value).str ());
+      }
+
+      Command
+      unset (const char* var) throw ()
+      {
+	return Command ((boost::format ("unset %1%") % var).str ());
       }
 
       Command
@@ -96,7 +102,6 @@ namespace roboptim
 
       GNUPLOT_STR_COMMAND(cd, path, path)
       GNUPLOT_STR_COMMAND(help, topic = "", topic)
-
 
 # undef GNUPLOT_STR_COMMAND
 # undef GNUPLOT_UNARY_COMMAND

@@ -43,15 +43,15 @@ struct Square : public Function
 struct Circle : public Function
 {
   explicit Circle (double r = 1.)
-    : Function (2, 2),
+    : Function (1, 2),
       r_ (r)
   {
   }
   vector_t operator () (const vector_t& x) const throw ()
   {
-    vector_t res (n);
-    res[0] = cos (x[0]);
-    res[1] = sin (x[1]);
+    vector_t res (m);
+    res[0] = sin (x[0]) * r_;
+    res[1] = cos (x[0]) * r_;
     return res;
   }
 
@@ -65,13 +65,18 @@ int run_test ()
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot ();
 
   Square square;
-  discreteInterval_t interval (-10., 10., 0.01);
+  discreteInterval_t intervalS (-10., 10., 0.01);
+
+  Circle circle;
+  discreteInterval_t intervalC (0., 2 * M_PI, 0.01);
 
   std::cout
     << (gnuplot
 	<< comment ("Hello, world (complex)!")
-	<< set ("term", "x11 enhanced persist")
-	<< plot (square, interval)
+	<< set ("multiplot")
+	<< plot (square, intervalS)
+	<< plot_xy (circle, intervalC)
+	<< unset ("multiplot")
 	);
   return 0;
 }

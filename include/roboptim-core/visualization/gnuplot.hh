@@ -46,7 +46,7 @@ namespace roboptim
       static Gnuplot make_interactive_gnuplot () throw ()
       {
 	Gnuplot gp;
-	gp.push_command (gnuplot::set ("terminal", "x11 enhanced persist"));
+	gp.push_command (gnuplot::set ("terminal", "wxt persist"));
 	return gp;
       }
 

@@ -32,6 +32,7 @@ int run_test ()
 
   std::cout
     << (gnuplot
+	<< set ("term", "x11 enhanced persist")
 	<< comment ("Hello, world!")
 	<< cd ("/tmp")
 	<< reset

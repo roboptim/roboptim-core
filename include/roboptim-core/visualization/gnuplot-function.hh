@@ -54,7 +54,7 @@ namespace roboptim
 	  str += ", '-' with line";
 	str += "\n";
 
-	Function::vector_t x (1);
+	Function::vector_t x (f.n);
 	for (unsigned i = 0; i < f.m; ++i)
 	  {
 	    for (double t = at_c<0> (window); t < at_c<1> (window);
@@ -73,30 +73,24 @@ namespace roboptim
 
       Command plot_xy (const Function& f, discreteInterval_t window)
       {
-	assert (f.n == 2);
+	assert (f.n == 1 && f.m == 2);
 
 	assert (at_c<0> (window) < at_c<1> (window)
 		&& at_c<2> (window) > 0.);
 	//FIXME: compare with arg bounds?
 
-	std::string str = "plot '-' with line";
+	std::string str = "plot '-' with line\n";
 
-	for (unsigned i = 1; i < f.m; ++i)
-	  str += ", '-' with line";
-	str += "\n";
+	Function::vector_t x (f.n);
 
-	Function::vector_t x (1);
-	for (unsigned i = 0; i < f.m; ++i)
+	for (double t = at_c<0> (window); t < at_c<1> (window);
+	     t += at_c<2> (window))
 	  {
-	    for (double t = at_c<0> (window); t < at_c<1> (window);
-		 t += at_c<2> (window))
-	      {
-		x[0] = t;
-		Function::vector_t res = f (x);
-		str += (boost::format ("%1% %2%\n") % res[0] % res [1]).str ();
-	      }
-	    str += "e\n";
+	    x[0] = t;
+	    Function::vector_t res = f (x);
+	    str += (boost::format ("%1% %2%\n") % res[0] % res [1]).str ();
 	  }
+	str += "e\n";
 
 	return Command (str);
       }

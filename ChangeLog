@@ -1,3 +1,17 @@
+2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Enhance Gnuplot generation.
+	* include/roboptim-core/visualization/gnuplot-commands.hh:
+	Implement unset.
+	* include/roboptim-core/visualization/gnuplot-function.hh:
+	Debug plot_xy.
+	* include/roboptim-core/visualization/gnuplot.hh: Use
+	wxt terminal by default in interactive mode.
+	* tests/visualization-gnuplot-function.cc: Check set command.
+	* tests/visualization-gnuplot-function.stdout: Regenerate.
+	* tests/visualization-gnuplot-simple.cc: Check plot_xy.
+	* tests/visualization-gnuplot-simple.stdout: Regenerate.
+
 2009-04-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add Gnuplot generation.
