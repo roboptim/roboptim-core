@@ -16,8 +16,8 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "common.hh"
-#include <roboptim-core/derivable-function.hh>
-#include <roboptim-core/problem.hh>
+#include <roboptim/core/derivable-function.hh>
+#include <roboptim/core/problem.hh>
 
 using namespace roboptim;
 

@@ -23,7 +23,7 @@
 #include <iomanip>
 #include <ostream>
 
-#include "roboptim-core/indent.hh"
+#include "roboptim/core/indent.hh"
 
 namespace roboptim
 {

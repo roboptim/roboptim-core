@@ -35,6 +35,9 @@ CHECK_STDOUT([numeric-quadratic-function],
 CHECK_STDOUT([problem-cc], [Check problem copy constructor.])
 CHECK_STDOUT([n-times-derivable-function], [Check N times derivable function.])
 
+AT_BANNER([Plug-in mechanism])
+CHECK_STDOUT([plugin], [Load dummy plug-in dynamically.])
+
 AT_BANNER([Visualization (Gnuplot)])
 CHECK_STDOUT([visualization-gnuplot-simple], [Check Gnuplot visualization.])
 CHECK_STDOUT([visualization-gnuplot-simple], [Check Gnuplot functions visualization.])

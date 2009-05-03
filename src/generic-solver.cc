@@ -21,7 +21,7 @@
  */
 
 #include <cassert>
-#include "roboptim-core/generic-solver.hh"
+#include "roboptim/core/generic-solver.hh"
 
 namespace roboptim
 {

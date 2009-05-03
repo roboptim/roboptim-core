@@ -18,8 +18,8 @@
 #include <iostream>
 
 #include "common.hh"
-#include <roboptim-core/visualization/gnuplot.hh>
-#include <roboptim-core/visualization/gnuplot-commands.hh>
+#include <roboptim/core/visualization/gnuplot.hh>
+#include <roboptim/core/visualization/gnuplot-commands.hh>
 
 using namespace roboptim;
 using namespace roboptim::visualization;

@@ -20,9 +20,9 @@
  * \brief Implementation of the TwiceDerivableFunction class.
  */
 
-#include "roboptim-core/twice-derivable-function.hh"
-#include "roboptim-core/indent.hh"
-#include "roboptim-core/util.hh"
+#include "roboptim/core/twice-derivable-function.hh"
+#include "roboptim/core/indent.hh"
+#include "roboptim/core/util.hh"
 
 namespace roboptim
 {

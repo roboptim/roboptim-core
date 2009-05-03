@@ -23,7 +23,7 @@
 #include <cstring>
 #include <boost/numeric/ublas/matrix.hpp>
 
-#include "roboptim-core/util.hh"
+#include "roboptim/core/util.hh"
 
 namespace roboptim
 {

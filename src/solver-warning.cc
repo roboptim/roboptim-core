@@ -20,7 +20,7 @@
  * \brief Implementation of the SolverWarning class.
  */
 
-#include "roboptim-core/solver-warning.hh"
+#include "roboptim/core/solver-warning.hh"
 
 namespace roboptim
 {

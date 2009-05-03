@@ -1,5 +1,119 @@
 2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Implement plug-in mechanism.
+	* .gitignore: Do not allow libltdl to be committed.
+	* Makefile.am: Remove packages, add libltdl from SUBDIRS.
+	* build-aux/argz.m4: New.
+	* build-aux/init.mk: Restyle.
+	* build-aux/ltdl.m4: New.
+	* configure.ac: Search for libltdl.
+	* include/Makefile.am: Add new headers.
+	* include/roboptim/core/derivable-function.hh:
+	Rename from include/roboptim-core/derivable-function.hh.
+	* include/roboptim/core/function.hh:
+	Rename from include/roboptim-core/function.hh.
+	* include/roboptim/core/fwd.hh:
+	Rename from include/roboptim-core/fwd.hh.
+	* include/roboptim/core/generic-solver.hh:
+	Rename from include/roboptim-core/generic-solver.hh.
+	* include/roboptim/core/indent.hh:
+	Rename from include/roboptim-core/indent.hh.
+	* include/roboptim/core/linear-function.hh:
+	Rename from include/roboptim-core/linear-function.hh.
+	* include/roboptim/core/n-times-derivable-function.hh:
+	Rename from include/roboptim-core/n-times-derivable-function.hh.
+	* include/roboptim/core/n-times-derivable-function.hxx:
+	Rename from include/roboptim-core/n-times-derivable-function.hxx.
+	* include/roboptim/core/numeric-linear-function.hh:
+	Rename from include/roboptim-core/numeric-linear-function.hh.
+	* include/roboptim/core/numeric-quadratic-function.hh:
+	Rename from include/roboptim-core/numeric-quadratic-function.hh.
+	* include/roboptim/core/plugin/dummy.hh:
+	Rename from include/roboptim-core/dummy.hh.
+	* include/roboptim/core/problem.hh:
+	Rename from include/roboptim-core/problem.hh.
+	* include/roboptim/core/problem.hxx:
+	Rename from include/roboptim-core/problem.hxx.
+	* include/roboptim/core/quadratic-function.hh:
+	Rename from include/roboptim-core/quadratic-function.hh.
+	* include/roboptim/core/result-with-warnings.hh:
+	Rename from include/roboptim-core/result-with-warnings.hh.
+	* include/roboptim/core/result.hh:
+	Rename from include/roboptim-core/result.hh.
+	* include/roboptim/core/solver-error.hh:
+	Rename from include/roboptim-core/solver-error.hh.
+	* include/roboptim/core/solver-factory.hh: New.
+	* include/roboptim/core/solver-factory.hxx: New.
+	* include/roboptim/core/solver-warning.hh:
+	Rename from include/roboptim-core/solver-warning.hh.
+	* include/roboptim/core/solver.hh:
+	Rename from include/roboptim-core/solver.hh.
+	* include/roboptim/core/solver.hxx:
+	Rename from include/roboptim-core/solver.hxx.
+	* include/roboptim/core/twice-derivable-function.hh:
+	Rename from include/roboptim-core/twice-derivable-function.hh.
+	* include/roboptim/core/util.hh:
+	Rename from include/roboptim-core/util.hh.
+	* include/roboptim/core/util.hxx:
+	Rename from include/roboptim-core/util.hxx.
+	* include/roboptim/core/visualization/fwd.hh:
+	Rename from include/roboptim-core/visualization/fwd.hh.
+	* include/roboptim/core/visualization/gnuplot-commands.hh:
+	Rename from include/roboptim-core/visualization/gnuplot-commands.hh.
+	* include/roboptim/core/visualization/gnuplot-function.hh:
+	Rename from include/roboptim-core/visualization/gnuplot-function.hh.
+	* include/roboptim/core/visualization/gnuplot.hh:
+	Rename from include/roboptim-core/visualization/gnuplot.hh.
+	* packages/Makefile.am: Remove.
+	* packages/debian/ChangeLog: Remove.
+	* packages/debian/Makefile.am: Remove.
+	* packages/debian/changelog: Remove.
+	* packages/debian/compat: Remove.
+	* packages/debian/control: Remove.
+	* packages/debian/copyright: Remove.
+	* packages/debian/docs: Remove.
+	* packages/debian/rules: Remove.
+	* packages/ebuild/ChangeLog: Remove.
+	* packages/ebuild/Makefile.am: Remove.
+	* packages/ebuild/metadata.xml: Remove.
+	* packages/ebuild/roboptim-core-0.1.ebuild: Remove.
+	* packages/ebuild/roboptim-core-9999.ebuild: Remove.
+	* packages/rpm/ChangeLog: Remove.
+	* packages/rpm/Makefile.am: Remove.
+	* packages/rpm/roboptim-core.spec: Remove.
+	* src/Makefile.am: Rename dummy.cc into roboptim-core-dummy-plugin.cc.
+	* src/derivable-function.cc,
+	* src/function.cc,
+	* src/generic-solver.cc,
+	* src/indent.cc,
+	* src/linear-function.cc,
+	* src/numeric-linear-function.cc,
+	* src/numeric-quadratic-function.cc,
+	* src/quadratic-function.cc,
+	* src/result-with-warnings.cc,
+	* src/result.cc: Fix include path.
+	* src/roboptim-core-dummy-plugin.cc: Rename from src/dummy.cc.
+	* src/solver-error.cc,
+	* src/solver-warning.cc,
+	* src/twice-derivable-function.cc,
+	* src/util.cc,
+	* src/visualization/gnuplot.cc: Fix include path.
+	* tests/Makefile.am: Add plugin test.
+	* tests/atlocal.in: Remove useless line.
+	* tests/hs071.hh,
+	* tests/n-times-derivable-function.cc,
+	* tests/numeric-linear-function.cc,
+	* tests/numeric-quadratic-function.cc: Fix include path.
+	* tests/plugin.cc: Copy from tests/simple.cc.
+	* tests/plugin.stdout: New.
+	* tests/problem-cc.cc,
+	* tests/simple.cc: Fix include path.
+	* tests/testsuite.at: Add plugin test.
+	* tests/visualization-gnuplot-function.cc,
+	* tests/visualization-gnuplot-simple.cc: Fix include path.
+
+2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove roboptim-core Ipopt and CFSQP bridges.
 	* Makefile.am: Distribute THANKS and TODO.
 	* build-aux/acx_pthread.m4: Remove.

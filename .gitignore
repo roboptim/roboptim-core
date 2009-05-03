@@ -28,3 +28,4 @@ tests/testsuite
 +committed/
 ,*
 testsuite.log
+libltdl*

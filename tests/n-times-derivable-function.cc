@@ -16,7 +16,7 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "common.hh"
-#include <roboptim-core/n-times-derivable-function.hh>
+#include <roboptim/core/n-times-derivable-function.hh>
 
 using namespace roboptim;
 

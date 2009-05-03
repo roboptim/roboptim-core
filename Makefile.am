@@ -2,8 +2,8 @@
 ACLOCAL_AMFLAGS = -I build-aux
 
 SUBDIRS = 		\
+	libltdl		\
 	doc		\
-	packages	\
 	include		\
 	src		\
 	tests

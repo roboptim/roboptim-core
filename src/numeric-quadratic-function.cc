@@ -24,8 +24,8 @@
 #include <boost/numeric/ublas/vector.hpp>
 
 
-#include <roboptim-core/indent.hh>
-#include <roboptim-core/numeric-quadratic-function.hh>
+#include <roboptim/core/indent.hh>
+#include <roboptim/core/numeric-quadratic-function.hh>
 
 namespace roboptim
 {

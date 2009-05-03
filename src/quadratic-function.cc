@@ -20,9 +20,9 @@
  * \brief Implementation of the QuadraticFunction class.
  */
 
-#include "roboptim-core/quadratic-function.hh"
-#include "roboptim-core/indent.hh"
-#include "roboptim-core/util.hh"
+#include "roboptim/core/quadratic-function.hh"
+#include "roboptim/core/indent.hh"
+#include "roboptim/core/util.hh"
 
 namespace roboptim
 {

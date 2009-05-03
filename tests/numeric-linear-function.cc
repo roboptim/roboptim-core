@@ -18,7 +18,7 @@
 #include <iostream>
 #include <boost/numeric/ublas/io.hpp>
 
-#include <roboptim-core/numeric-linear-function.hh>
+#include <roboptim/core/numeric-linear-function.hh>
 #include "common.hh"
 
 using namespace roboptim;

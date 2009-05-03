@@ -14,8 +14,10 @@ CLEANFILES += atconfig
 COMMON_SOURCES = common.hh hs071.hh
 
 # simple
+# Link the dummy solver with this test to bypass the plug-in system.
 check_PROGRAMS = simple
-simple_SOURCES = simple.cc $(COMMON_SOURCES)
+simple_SOURCES = simple.cc $(top_builddir)/src/roboptim-core-dummy-plugin.cc \
+		$(COMMON_SOURCES)
 simple_LDADD = $(top_builddir)/src/libroboptim-core.la
 
 # problem-cc
@@ -39,6 +41,11 @@ check_PROGRAMS += n-times-derivable-function
 n_times_derivable_function_SOURCES = n-times-derivable-function.cc \
 	$(COMMON_SOURCES)
 n_times_derivable_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+# plugin
+check_PROGRAMS += plugin
+plugin_SOURCES = plugin.cc $(COMMON_SOURCES)
+plugin_LDADD = $(top_builddir)/src/libroboptim-core.la
 
 # visualization-gnuplot-simple
 check_PROGRAMS += visualization-gnuplot-simple
@@ -79,6 +86,7 @@ EXTRA_DIST +=					\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
 	n-times-derivable-function.stdout	\
+	plugin.stdout				\
 	problem-cc.stdout			\
 	visualization-gnuplot-simple.stdout	\
 	visualization-gnuplot-function.stdout

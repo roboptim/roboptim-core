@@ -19,7 +19,7 @@
 #include <boost/variant/get.hpp>
 
 #include "common.hh"
-#include <roboptim-core/dummy.hh>
+#include <roboptim/core/plugin/dummy.hh>
 
 using namespace roboptim;
 

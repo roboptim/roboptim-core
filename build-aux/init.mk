@@ -20,4 +20,4 @@ AM_CPPFLAGS += -I$(top_builddir)/src -I$(top_srcdir)/src
 AM_CPPFLAGS += -I$(top_srcdir)/include
 
 # Add boost include dir
-AM_CPPFLAGS+=${BOOST_CPPFLAGS}
+AM_CPPFLAGS += $(BOOST_CPPFLAGS)

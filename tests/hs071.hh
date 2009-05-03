@@ -19,7 +19,7 @@
 #ifndef OPTIMIZATION_TESTS_HS071_HH
 # define OPTIMIZATION_TESTS_HS071_HH
 # include <utility>
-# include <roboptim-core/twice-derivable-function.hh>
+# include <roboptim/core/twice-derivable-function.hh>
 
 using namespace roboptim;
 

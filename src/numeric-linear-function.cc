@@ -23,8 +23,8 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 
-#include <roboptim-core/indent.hh>
-#include <roboptim-core/numeric-linear-function.hh>
+#include <roboptim/core/indent.hh>
+#include <roboptim/core/numeric-linear-function.hh>
 
 namespace roboptim
 {

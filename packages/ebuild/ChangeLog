@@ -1,7 +1,0 @@
-2009-03-24  Thomas Moulard  <thomas.moulard@gmail.com>
-
-	* ChangeLog,
-	* roboptim-0.1.ebuild,
-	* roboptim-9999.ebuild,
-	* Makefile.am,
-	* metadata.xml: Initial work.

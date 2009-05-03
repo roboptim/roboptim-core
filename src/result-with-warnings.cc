@@ -24,11 +24,11 @@
 
 #include <boost/numeric/ublas/io.hpp>
 
-#include <roboptim-core/function.hh>
-#include <roboptim-core/indent.hh>
-#include <roboptim-core/result-with-warnings.hh>
-#include <roboptim-core/solver-warning.hh>
-#include <roboptim-core/util.hh>
+#include <roboptim/core/function.hh>
+#include <roboptim/core/indent.hh>
+#include <roboptim/core/result-with-warnings.hh>
+#include <roboptim/core/solver-warning.hh>
+#include <roboptim/core/util.hh>
 
 namespace roboptim
 {

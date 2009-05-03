@@ -9,7 +9,7 @@ AC_INIT([RobOptim core library], [0.1], [roboptim-user@lists.sourceforge.net],
         [roboptim-core])
 
 # Auxiliary files.
-AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_AUX_DIR([build-aux], [libltdl/config])
 
 # Automake.
 AM_INIT_AUTOMAKE([1.9.6 dist-bzip2 -Wall nostdinc])
@@ -40,6 +40,9 @@ JRL_CXX_WARNINGS([[-Wall],
                    [-Wmissing-declarations],
                    [-Wnested-externs]])
 
+# Macros are stored in build-aux.
+AC_CONFIG_MACRO_DIR([build-aux])
+
 ## ------------------- ##
 ## Additionnal tools.  ##
 ## ------------------- ##
@@ -52,8 +55,13 @@ AC_ARG_VAR([DOXYGEN], [the Doxygen documentation generation program])
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
 
 # Search for Libtool.
-AC_CONFIG_MACRO_DIR([build-aux])
+LT_INIT([dlopen])
 AC_PROG_LIBTOOL
+
+# Add ltdl support
+LT_CONFIG_LTDL_DIR([libltdl])
+LTDL_INIT
+
 
 # Search for Boost
 BOOST_FORMAT
@@ -64,13 +72,6 @@ BOOST_TUPLE
 BOOST_TYPETRAITS
 BOOST_UTILITY
 BOOST_VARIANT
-
-# Search for solvers (optional deps).
-#  CFSQP
-#CFSQP_ARG_WITH
-#  Ipopt
-#IPOPT_ARG_WITH
-
 
 ## ------------ ##
 ## Test-suite.  ##
@@ -91,10 +92,6 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
   Makefile
    include/Makefile
-   packages/Makefile
-    packages/debian/Makefile
-    packages/ebuild/Makefile
-    packages/rpm/Makefile
    src/Makefile
    doc/Makefile
    tests/Makefile

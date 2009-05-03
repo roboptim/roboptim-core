@@ -20,7 +20,7 @@
  * \brief Implementation of the SolverError class.
  */
 
-#include "roboptim-core/solver-error.hh"
+#include "roboptim/core/solver-error.hh"
 
 namespace roboptim
 {

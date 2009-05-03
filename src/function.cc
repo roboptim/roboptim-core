@@ -20,9 +20,9 @@
  * \brief Implementation of the Function class.
  */
 
-#include "roboptim-core/function.hh"
-#include "roboptim-core/indent.hh"
-#include "roboptim-core/util.hh"
+#include "roboptim/core/function.hh"
+#include "roboptim/core/indent.hh"
+#include "roboptim/core/util.hh"
 
 namespace roboptim
 {
