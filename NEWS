@@ -1,5 +1,10 @@
                                                                 -*- outline -*-
 
+New in 0.2, FIXME:
+* New plug-in system
+* Can export functions to Gnuplot.
+* New N times derivable function.
+
 New in 0.1, 04/17/2009:
 * Shared interface definition.
 * Implementation of the CFSQP bridge.
