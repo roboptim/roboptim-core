@@ -1,6 +1,6 @@
                                                                 -*- outline -*-
 
-New in 0.2, FIXME:
+New in 0.2, 2009-05-03:
 * New plug-in system
 * Can export functions to Gnuplot.
 * New N times derivable function.

@@ -1,5 +1,10 @@
 2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Update NEWS.
+	* NEWS: Here.
+
+2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove hs071.hh.
 	Remove this file as complex optimization problems
 	are now checked in the plug-ins.
