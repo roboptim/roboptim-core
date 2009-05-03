@@ -1,3 +1,26 @@
+2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Remove roboptim-core Ipopt and CFSQP bridges.
+	* Makefile.am: Distribute THANKS and TODO.
+	* build-aux/acx_pthread.m4: Remove.
+	* build-aux/cfsqp.m4: Remove.
+	* build-aux/ipopt.m4: Remove.
+	* configure.ac: Do not search for Solvers anymore.
+	* include/Makefile.am: Remove deleted headers.
+	* include/roboptim-core/cfsqp.hh: Remove.
+	* include/roboptim-core/fwd.hh: Remove solvers predeclaration.
+	* include/roboptim-core/ipopt.hh: Remove.
+	* src/Makefile.am: Remove deleted sources.
+	* src/cfsqp.cc: Remove.
+	* src/ipopt.cc: Remove.
+	* src/visualization/gnuplot.cc: Add a missing return statement.
+	* tests/Makefile.am: Remove tests on solvers.
+	* tests/cfsqp.cc: Remove.
+	* tests/cfsqp.stdout: Remove.
+	* tests/ipopt-test.stdout: Remove.
+	* tests/ipopt.cc: Remove.
+	* tests/testsuite.at: Remove tests on solvers.
+
 2009-05-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Change back package dependency to Boost 1.34.

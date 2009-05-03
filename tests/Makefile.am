@@ -53,25 +53,6 @@ visualization_gnuplot_function_SOURCES = visualization-gnuplot-function.cc \
 visualization_gnuplot_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
 
-# Ipopt
-if HAVE_IPOPT
-# Do not call the binary ipopt as Ipopt might also install a binary
-# with that name.
-check_PROGRAMS += ipopt-test
-ipopt_test_SOURCES = ipopt.cc $(COMMON_SOURCES)
-ipopt_test_LDADD = $(top_builddir)/src/libroboptim-core.la
-endif
-
-
-# CFSQP
-if HAVE_CFSQP
-check_PROGRAMS += cfsqp
-cfsqp_SOURCES = cfsqp.cc $(COMMON_SOURCES)
-cfsqp_LDADD = $(top_builddir)/src/libroboptim-core.la
-endif
-
-
-
 .PHONY: generate-reference
 
 # Re-generate reference outputs.
@@ -95,8 +76,6 @@ generate-reference:
 # Distribute reference files.
 EXTRA_DIST +=					\
 	simple.stdout				\
-	ipopt-test.stdout			\
-	cfsqp.stdout				\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
 	n-times-derivable-function.stdout	\

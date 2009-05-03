@@ -23,21 +23,5 @@ libroboptim_core_la_SOURCES = 		\
 	twice-derivable-function.cc	\
 	util.cc
 
-libroboptim_core_la_LIBADD =
-libroboptim_core_la_LDFLAGS =
-libroboptim_core_la_CXXFLAGS =
-
-if HAVE_IPOPT
- libroboptim_core_la_SOURCES += ipopt.cc
- libroboptim_core_la_CXXFLAGS += $(PTHREAD_CFLAGS)
- libroboptim_core_la_LDFLAGS += $(IPOPT_LDFLAGS)
- libroboptim_core_la_LIBADD += $(IPOPT_LIBADD) $(PTHREAD_LIBS)
-endif
-
-if HAVE_CFSQP
- libroboptim_core_la_SOURCES += cfsqp.cc
- libroboptim_core_la_LIBADD += $(CFSQP_LIBADD)
-endif
-
 libroboptim_core_la_SOURCES += 		\
 	visualization/gnuplot.cc

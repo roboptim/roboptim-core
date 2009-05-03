@@ -41,9 +41,7 @@ namespace roboptim
   template <typename F, typename C = F>
   class Solver;
 
-  class CFSQPSolver;
   class DummySolver;
-  class IpoptSolver;
 
   class Result;
   class ResultWithWarnings;

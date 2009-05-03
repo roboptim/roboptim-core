@@ -27,22 +27,16 @@ AT_COPYRIGHT(
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
 
-AT_BANNER([Shared tests])
+AT_BANNER([Main features])
 CHECK_STDOUT([simple], [Check basic features.])
 CHECK_STDOUT([numeric-linear-function], [Check numeric linear functions.])
 CHECK_STDOUT([numeric-quadratic-function],
              [Check numeric quadratic functions.])
 CHECK_STDOUT([problem-cc], [Check problem copy constructor.])
 CHECK_STDOUT([n-times-derivable-function], [Check N times derivable function.])
+
+AT_BANNER([Visualization (Gnuplot)])
 CHECK_STDOUT([visualization-gnuplot-simple], [Check Gnuplot visualization.])
 CHECK_STDOUT([visualization-gnuplot-simple], [Check Gnuplot functions visualization.])
-
-
-AT_BANNER([Cfsqp])
-CHECK_STDOUT_SKIPPABLE([cfsqp], [Check CFSQPSolver.])
-
-
-AT_BANNER([Ipopt])
-CHECK_STDOUT_SKIPPABLE([ipopt-test], [Check IpoptSolver.])
 
 # End of testsuite.at

@@ -53,6 +53,7 @@ namespace roboptim
 
       for (citer_t it = commands_.begin (); it != commands_.end (); ++it)
 	o << it->command () << std::endl;
+      return o;
     }
 
     Gnuplot&

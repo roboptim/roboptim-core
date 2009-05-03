@@ -26,14 +26,6 @@ nobase_include_HEADERS =				\
 	roboptim-core/util.hh				\
 	roboptim-core/util.hxx
 
-if HAVE_CFSQP
- nobase_include_HEADERS += roboptim-core/cfsqp.hh
-endif
-
-if HAVE_IPOPT
- nobase_include_HEADERS += roboptim-core/ipopt.hh
-endif
-
 # Visualization
 nobase_include_HEADERS +=				\
 	roboptim-core/visualization/fwd.hh		\

@@ -67,9 +67,9 @@ BOOST_VARIANT
 
 # Search for solvers (optional deps).
 #  CFSQP
-CFSQP_ARG_WITH
+#CFSQP_ARG_WITH
 #  Ipopt
-IPOPT_ARG_WITH
+#IPOPT_ARG_WITH
 
 
 ## ------------ ##
