@@ -22,7 +22,7 @@
 # You should have received a copy of the GNU General Public License
 # along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-# serial 1
+# serial 2
 
 # ------ #
 # README #
@@ -32,84 +32,22 @@
 # You can copy it into your software's aux dir and call the following
 # macro to check for the library.
 #
-# ROBOPTIM_CORE_LIB: check for the library
-# ROBOPTIM_CORE_LIB: check for the headers
-# LIBOPTIMZATION_LIB_ARG_WITH: add an optional dependency on the
-# package using AC_ARG_WITH.
-#
-# You probably want to use the first two macros with AC_MSG_FAILURE
-# to add a hard dependency on the library.
+# ROBOPTIM_CORE_PKG_CONFIG: add a hard dependency against roboptim-core
+# using pkg-config.
 
-m4_pattern_forbid([^ROBOPTIM_CORE_])
+m4_pattern_forbid([^ROBOPTIM_CORE])
 
-# ROBOPTIM_CORE_LIB([action-if-found], [action-if-not-found])
-# -----------------------------------------------------------
-# Try to detect the library.
-AC_DEFUN([ROBOPTIM_CORE_LIB],
-[#FIXME: insert a valid symbol.
- # Need gfortran library to work.
- AC_SEARCH_LIBS([main], [gfortran], $1, $2)
-
- # Detect pthread.
- ACX_PTHREAD
-
- LIBS="$PTHREAD_LIBS $LIBS"
- CXXFLAGS="$CXXFLAGS $PTHREAD_CFLAGS"
-
- # Check for roboptim-core.
- AC_CHECK_LIB([roboptim-core], [main], $1, $2)
-]) # ROBOPTIM_CORE_LIB
-
-
-# ROBOPTIM_CORE_HEADERS([action-if-found], [action-if-not-found])
-# ---------------------------------------------------------------
-# Try to detect the library headers.
-AC_DEFUN([ROBOPTIM_CORE_HEADERS],
-[AC_CHECK_HEADERS([roboptim-core/fwd.hh], $1, $2)
-]) # ROBOPTIM_CORE_HEADERS
-
-
-# ROBOPTIM_CORE_LIB_ARG_WITH
-# ------------------------------
-# Add an optional dependency toward roboptim.
-AC_DEFUN([ROBOPTIM_CORE_LIB_ARG_WITH],
+# ROBOPTIM_CORE_PKG_CONFIG([REQUIRED_VERSION])
+# --------------------------------------------
+# Search for roboptim-core using pkg-config.
+# REQUIRED_VERSION represent how to check the version.
+# Example: ``roboptim-core >= 0.1''
+AC_DEFUN([ROBOPTIM_CORE_PKG_CONFIG],
 [
-  AC_ARG_WITH([roboptim-core],
-  [AS_HELP_STRING([--with-roboptim-core],
-    [enable RobOptim core support])],
-  [],
-  [with_roboptim_core=check])
+PKG_CHECK_MODULES([ROBOPTIMCORE], m4_default($1, roboptim-core))
 
-  AC_SUBST([DISTCHECK_CONFIGURE_FLAGS],
-           ["$DISTCHECK_CONFIGURE_FLAGS \
-	   '--with-roboptim-core=$with_roboptim-core'"])
-
-  roboptim_core_fail=no
-  AS_IF([test "x$with_roboptim_core" != xno],
-    [
-      # Search for roboptim library.
-      LIB_OPTIMIZATION_LIB(, [roboptim_core_fail=yes])
-
-      # Search for roboptim headers.
-      LIB_OPTIMIZATION_HEADERS(, [roboptim_core_fail=yes])
-
-      # If both tests are OK, add the library and define the CPP symbol.
-      AS_IF([test "x$roboptim_core_fail" = xno],
-	[AC_SUBST([LIB_OPTIMIZATION], ["-loptimization"])
-	 AC_DEFINE([HAVE_LIB_OPTIMIZATION], [1],
-                   [Define if you have roboptim_core])])
-
-      # If the support was explicitly required, but detection has failed,
-      # this is a fatal error.
-      AS_IF([test "x$with_roboptim_core" = xyes && \
-             test "x$roboptim_core_fail" = xyes],
-        [AC_MSG_FAILURE(
-        [roboptim_core test failed (--without-roboptim-core to disable)])
-        ])
-    ])
-
-  # Define a boolean indicating whether or not the package has been found.
-  AM_CONDITIONAL([LIB_OPTIMIZATION],
-                 [test "x$with_roboptim_core" != xno && \
-		  test "x$roboptim_core_fail" != xyes])
-]) # ROBOPTIM_CORE_LIB_ARG_WITH
+ROBOPTIMCORE_DOCDIR=`$PKG_CONFIG roboptim-core --variable=docdir`
+AC_SUBST([ROBOPTIMCORE_DOCDIR])
+AC_SUBST([ROBOPTIMCORE_CFLAGS])
+AC_SUBST([ROBOPTIMCORE_LIBS])
+]) # ROBOPTIM_CORE_PKG_CONFIG

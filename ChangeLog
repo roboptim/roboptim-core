@@ -1,5 +1,10 @@
 2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Use pkg-config to detect roboptim-core.
+	* roboptim-core.m4: Here.
+
+2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update NEWS.
 	* NEWS: Here.
 
