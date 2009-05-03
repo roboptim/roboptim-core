@@ -11,7 +11,7 @@ EXTRA_DIST += package.m4.in
 CLEANFILES += atconfig
 
 # Source which are shared by all tests.
-COMMON_SOURCES = common.hh hs071.hh
+COMMON_SOURCES = common.hh
 
 # simple
 # Link the dummy solver with this test to bypass the plug-in system.

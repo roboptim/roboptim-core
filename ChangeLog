@@ -1,5 +1,13 @@
 2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Remove hs071.hh.
+	Remove this file as complex optimization problems
+	are now checked in the plug-ins.
+	* tests/Makefile.am: Remove hs071.hh from distributed files.
+	* tests/hs071.hh: Remove.
+
+2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Move bound_t/bounds_t, discreteInterval_t definition into Function.
 	* include/roboptim/core/function.hh:
 	Move bound_t/bounds_t and discreteInterval_t definition here
