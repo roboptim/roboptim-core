@@ -53,7 +53,8 @@ namespace roboptim
     assert (f.m == 1);
 
     // Initialize bound.
-    std::fill (argBounds_.begin (), argBounds_.end (), makeInfiniteBound ());
+    std::fill (argBounds_.begin (), argBounds_.end (),
+	       Function::makeInfiniteBound ());
     // Initialize scale.
     std::fill (argScales_.begin (), argScales_.end (), 1.);
   }
@@ -119,7 +120,7 @@ namespace roboptim
   Problem<F, C>::addConstraint (const C& x, value_type s)
     throw (std::runtime_error)
   {
-    addConstraint (x, makeInfiniteBound (), s);
+    addConstraint (x, Function::makeInfiniteBound (), s);
   }
 
   template <typename F, typename C>
@@ -127,6 +128,7 @@ namespace roboptim
   Problem<F, C>::addConstraint (const C& x, bound_t b, value_type s)
     throw (std::runtime_error)
   {
+    assert (b.first <= b.second);
     constraints_.push_back (x);
     bounds_.push_back (b);
     scales_.push_back (s);

@@ -45,6 +45,52 @@ int run_test ()
   F f;
   DummySolver::problem_t pb (f);
 
+  // Check that the problem is well formed.
+  assert (&pb.function () == &f);
+  assert (pb.constraints ().size () == 0);
+  assert (!pb.startingPoint ());
+
+  Function::vector_t x (4);
+  x.clear ();
+  pb.startingPoint () = x;
+  assert (pb.startingPoint ()
+	  && pb.startingPoint ()->size () == 4);
+
+  assert (pb.bounds ().size () == 0);
+  assert (pb.argBounds ().size () == 4);
+  assert (pb.argBounds ()[0] == Function::makeInfiniteBound ()
+	  && pb.argBounds ()[1] == Function::makeInfiniteBound ()
+	  && pb.argBounds ()[2] == Function::makeInfiniteBound ()
+	  && pb.argBounds ()[3] == Function::makeInfiniteBound ());
+
+
+  assert (pb.scales ().size () == 0);
+  assert (pb.argScales ().size () == 4);
+  assert (pb.argScales ()[0] == 1.
+	  && pb.argScales ()[1] == 1.
+	  && pb.argScales ()[2] == 1.
+	  && pb.argScales ()[3] == 1.);
+
+  F f2;
+  pb.addConstraint (&f2, 2.2);
+  assert (pb.constraints ().size () == 1);
+  assert (&pb.constraints ()[0] != 0);
+  assert (pb.bounds ().size () == 1);
+  assert (pb.bounds ()[0] == Function::makeInfiniteBound ());
+  assert (pb.scales ().size () == 1);
+  assert (pb.scales ()[0] == 2.2);
+
+  F f3;
+  pb.addConstraint (&f3, Function::makeBound (0., 5.), 3.5);
+  assert (pb.constraints ().size () == 2);
+  assert (&pb.constraints ()[1] != 0);
+  assert (pb.bounds ().size () == 2);
+  assert (pb.bounds ()[1] == Function::makeBound (0., 5.));
+  assert (pb.scales ().size () == 2);
+  assert (pb.scales ()[1] == 3.5);
+
+
+  // Try to solve it with the DummySolver (direct instantiation, no plug-in).
   solver_t solver (pb);
   solver_t::result_t res = solver.minimum ();
   boost::get<SolverError> (res);

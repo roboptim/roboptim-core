@@ -27,6 +27,7 @@
 
 # include <boost/numeric/ublas/matrix.hpp>
 # include <boost/numeric/ublas/vector.hpp>
+# include <boost/tuple/tuple.hpp>
 
 # include <roboptim/core/fwd.hh>
 
@@ -60,11 +61,54 @@ namespace roboptim
     /// Result dimension.
     const size_type m;
 
+    /// Bound type (lower, upper).
+    /// Use -infinity / +infinity to disable a bound.
+    typedef std::pair<value_type, value_type> bound_t;
+    /// Vector of bound.
+    typedef std::vector<bound_t> bounds_t;
+
+    typedef boost::tuple<value_type,
+			 value_type,
+			 value_type> discreteInterval_t;
+
     /// Get the value that symbolizes infinity.
     static const value_type infinity () throw ()
     {
       return std::numeric_limits<Function::value_type>::infinity ();
     }
+
+    /// Construct a bound from a lower and upper bound.
+    static bound_t makeBound (value_type l, value_type u) throw ()
+    {
+      assert (l <= u);
+      return std::make_pair (l, u);
+    }
+
+    /// Construct an infinite bound.
+    static bound_t makeInfiniteBound () throw ()
+    {
+      return std::make_pair (-Function::infinity (), Function::infinity  ());
+    }
+
+    /// Construct a bound from a lower bound.
+    static bound_t makeLowerBound (value_type u) throw ()
+    {
+      return makeBound (-Function::infinity  (), u);
+    }
+
+    /// Construct a bound from an upper bound.
+    static bound_t makeUpperBound (value_type l) throw ()
+    {
+      return makeBound (l, Function::infinity  ());
+    }
+
+    static discreteInterval_t makeDiscreteInterval (value_type min,
+						    value_type max,
+						    value_type step)
+    {
+      return discreteInterval_t (min, max, step);
+    }
+
 
     /// Constructor.
     /// \param n function arity

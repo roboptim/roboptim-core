@@ -1,5 +1,19 @@
 2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Move bound_t/bounds_t, discreteInterval_t definition into Function.
+	* include/roboptim/core/function.hh:
+	Move bound_t/bounds_t and discreteInterval_t definition here
+	with the associated methods.
+	* include/roboptim/core/problem.hh: Remove bound/bounds_t definition
+	and associated methods.
+	* include/roboptim/core/problem.hxx: Fix makeInfiniteBound calls.
+	* include/roboptim/core/visualization/gnuplot-function.hh:
+	Remove discreteInterval_t definition.
+	* tests/simple.cc: Check that the problem is always well-formed.
+	* tests/simple.stdout: Regenerate.
+
+2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Use pkg-config to detect roboptim-core.
 	* roboptim-core.m4: Here.
 

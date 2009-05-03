@@ -56,14 +56,13 @@ namespace roboptim
 
     /// Constraints are represented as a vector of constraints.
     typedef std::vector<constraint_t> constraints_t;
+
     /// Optional vector defines a starting point.
     typedef boost::optional<Function::vector_t> startingPoint_t;
 
-    /// Bound type (lower, upper).
-    /// Use -infinity / +infinity to disable a bound.
-    typedef std::pair<value_type, value_type> bound_t;
-    /// Vector of bound.
-    typedef std::vector<bound_t> bounds_t;
+    typedef Function::bound_t bound_t;
+    typedef Function::bounds_t bounds_t;
+
     /// Scale vector.
     typedef std::vector<value_type> scales_t;
 
@@ -100,29 +99,6 @@ namespace roboptim
 
     std::ostream& print (std::ostream& o) const throw ();
 
-    /// Construct a bound from a lower and upper bound.
-    static bound_t makeBound (value_type l, value_type u) throw ()
-    {
-      return std::make_pair (l, u);
-    }
-
-    /// Construct an infinite bound.
-    static bound_t makeInfiniteBound () throw ()
-    {
-      return std::make_pair (-Function::infinity (), Function::infinity  ());
-    }
-
-    /// Construct a bound from a lower bound.
-    static bound_t makeLowerBound (value_type u) throw ()
-    {
-      return makeBound (-Function::infinity  (), u);
-    }
-
-    /// Construct a bound from an upper bound.
-    static bound_t makeUpperBound (value_type l) throw ()
-    {
-      return makeBound (l, Function::infinity  ());
-    }
 
   private:
     // Objective function.

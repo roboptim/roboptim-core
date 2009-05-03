@@ -2,15 +2,31 @@ Problem:
   Function
   Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Argument's scales: 1, 1, 1, 1
-  No constraints.
-  No starting point.
+  Number of constraints: 2
+  Constraint 0
+      Bounds: (-inf, inf)
+      Scales: 2.2
+      
+  Constraint 1
+      Bounds: (0, 5)
+      Scales: 3.5
+      
+  Starting point: [4](0,0,0,0)
   Infinity value (for all functions): inf
 ---
 Problem:
   Function
   Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Argument's scales: 1, 1, 1, 1
-  No constraints.
-  No starting point.
+  Number of constraints: 2
+  Constraint 0
+      Bounds: (-inf, inf)
+      Scales: 2.2
+      
+  Constraint 1
+      Bounds: (0, 5)
+      Scales: 3.5
+      
+  Starting point: [4](0,0,0,0)
   Infinity value (for all functions): inf
 The dummy solver always fail.

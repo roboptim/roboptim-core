@@ -22,7 +22,6 @@
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_FUNCTION_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_FUNCTION_HH
 # include <boost/format.hpp>
-# include <boost/tuple/tuple.hpp>
 
 # include <roboptim/core/function.hh>
 
@@ -32,9 +31,7 @@ namespace roboptim
   {
     namespace gnuplot
     {
-      typedef boost::tuple<Function::value_type,
-			   Function::value_type,
-			   Function::value_type> discreteInterval_t;
+      typedef Function::discreteInterval_t discreteInterval_t;
 
 
       Command plot (const Function& f, discreteInterval_t window)
