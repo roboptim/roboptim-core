@@ -27,7 +27,7 @@ libroboptim_core_la_SOURCES += 		\
 	visualization/gnuplot.cc
 
 libroboptim_core_la_LIBADD = $(LIBLTDL)
-
+libroboptim_core_la_LDFLAGS = -version-info 1:1:0
 
 roboptim_core_dummy_plugin_la_SOURCES = roboptim-core-dummy-plugin.cc
-roboptim_core_dummy_plugin_la_LDFLAGS = -module
+roboptim_core_dummy_plugin_la_LDFLAGS = -module -version-info 1:1:0

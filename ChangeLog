@@ -1,5 +1,14 @@
 2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Update version number to 0.2.
+	* configure.ac: Increment version number.
+	* src/Makefile.am: Update version-info.
+	* tests/visualization-gnuplot-function.stdout,
+	* tests/visualization-gnuplot-simple.stdout:
+	Regenerate from reference.
+
+2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement plug-in mechanism.
 	* .gitignore: Do not allow libltdl to be committed.
 	* Makefile.am: Remove packages, add libltdl from SUBDIRS.
