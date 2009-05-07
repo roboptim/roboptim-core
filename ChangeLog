@@ -1,5 +1,70 @@
 2009-05-07  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Remove Autotools generated files.
+	* .gitignore: Add filter.
+	* build-aux/argz.m4: Remove.
+	* build-aux/config.guess: Remove.
+	* build-aux/config.sub: Remove.
+	* build-aux/depcomp: Remove.
+	* build-aux/install-sh: Remove.
+	* build-aux/libtool.m4: Remove.
+	* build-aux/ltdl.m4: Remove.
+	* build-aux/ltmain.sh: Remove.
+	* build-aux/ltoptions.m4: Remove.
+	* build-aux/ltsugar.m4: Remove.
+	* build-aux/ltversion.m4: Remove.
+	* build-aux/lt~obsolete.m4: Remove.
+	* build-aux/missing: Remove.
+	* configure.ac: Remove buggy line.
+	* libltdl/COPYING.LIB: Remove.
+	* libltdl/Makefile.am: Remove.
+	* libltdl/README: Remove.
+	* libltdl/argz.c: Remove.
+	* libltdl/argz_.h: Remove.
+	* libltdl/config-h.in: Remove.
+	* libltdl/config-h.in~: Remove.
+	* libltdl/config/compile: Remove.
+	* libltdl/config/config.guess: Remove.
+	* libltdl/config/config.sub: Remove.
+	* libltdl/config/depcomp: Remove.
+	* libltdl/config/install-sh: Remove.
+	* libltdl/config/ltmain.sh: Remove.
+	* libltdl/config/missing: Remove.
+	* libltdl/configure.ac: Remove.
+	* libltdl/libltdl/lt__alloc.h: Remove.
+	* libltdl/libltdl/lt__dirent.h: Remove.
+	* libltdl/libltdl/lt__glibc.h: Remove.
+	* libltdl/libltdl/lt__private.h: Remove.
+	* libltdl/libltdl/lt__strl.h: Remove.
+	* libltdl/libltdl/lt_dlloader.h: Remove.
+	* libltdl/libltdl/lt_error.h: Remove.
+	* libltdl/libltdl/lt_system.h: Remove.
+	* libltdl/libltdl/slist.h: Remove.
+	* libltdl/loaders/dld_link.c: Remove.
+	* libltdl/loaders/dlopen.c: Remove.
+	* libltdl/loaders/dyld.c: Remove.
+	* libltdl/loaders/load_add_on.c: Remove.
+	* libltdl/loaders/loadlibrary.c: Remove.
+	* libltdl/loaders/preopen.c: Remove.
+	* libltdl/loaders/shl_load.c: Remove.
+	* libltdl/lt__alloc.c: Remove.
+	* libltdl/lt__dirent.c: Remove.
+	* libltdl/lt__strl.c: Remove.
+	* libltdl/lt_dlloader.c: Remove.
+	* libltdl/lt_error.c: Remove.
+	* libltdl/ltdl.c: Remove.
+	* libltdl/ltdl.h: Remove.
+	* libltdl/m4/argz.m4: Remove.
+	* libltdl/m4/libtool.m4: Remove.
+	* libltdl/m4/ltdl.m4: Remove.
+	* libltdl/m4/ltoptions.m4: Remove.
+	* libltdl/m4/ltsugar.m4: Remove.
+	* libltdl/m4/ltversion.m4: Remove.
+	* libltdl/m4/lt~obsolete.m4: Remove.
+	* libltdl/slist.c: Remove.
+
+2009-05-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Commit m4 files to prevent having old Autoconf recreating them.
 	* .gitignore: Remove protection.
 	* build-aux/config.guess: New.
