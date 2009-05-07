@@ -1,5 +1,22 @@
 2009-05-07  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Commit m4 files to prevent having old Autoconf recreating them.
+	* .gitignore: Remove protection.
+	* build-aux/config.guess: New.
+	* build-aux/config.sub: New.
+	* build-aux/depcomp: New.
+	* build-aux/install-sh: New.
+	* build-aux/libtool.m4: New.
+	* build-aux/ltdl.m4: New.
+	* build-aux/ltmain.sh: New.
+	* build-aux/ltoptions.m4: New.
+	* build-aux/ltsugar.m4: New.
+	* build-aux/ltversion.m4: New.
+	* build-aux/lt~obsolete.m4: New.
+	* build-aux/missing: New.
+
+2009-05-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Commit libltdl.
 	autoreconf-1.50 (Ubuntu Hardy) is not generating libltdl
 	properly, so one have to add it.
