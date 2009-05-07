@@ -1,3 +1,10 @@
+2009-05-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Remove generated m4 file.
+	* .gitignore: Make sure this file does not get committed
+	again.
+	* build-aux/ltdl.m4: Remove.
+
 2009-05-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Update NEWS.

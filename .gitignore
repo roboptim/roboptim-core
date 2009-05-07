@@ -8,6 +8,7 @@ build-aux/config.sub
 build-aux/depcomp
 build-aux/install-sh
 build-aux/libtool.m4
+build-aux/ltdl.m4
 build-aux/ltmain.sh
 build-aux/ltoptions.m4
 build-aux/ltsugar.m4
