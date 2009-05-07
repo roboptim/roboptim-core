@@ -1,5 +1,60 @@
 2009-05-07  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Commit libltdl.
+	autoreconf-1.50 (Ubuntu Hardy) is not generating libltdl
+	properly, so one have to add it.
+	* .gitignore: Remove the filter preventing to
+	commit libltdl.
+	* configure.ac: Fix AC_CONFIG_AUX_DIR call.
+	* libltdl/COPYING.LIB: New.
+	* libltdl/Makefile.am: New.
+	* libltdl/README: New.
+	* libltdl/argz.c: New.
+	* libltdl/argz_.h: New.
+	* libltdl/config-h.in: New.
+	* libltdl/config-h.in~: New.
+	* libltdl/config/compile: New.
+	* libltdl/config/config.guess: New.
+	* libltdl/config/config.sub: New.
+	* libltdl/config/depcomp: New.
+	* libltdl/config/install-sh: New.
+	* libltdl/config/ltmain.sh: New.
+	* libltdl/config/missing: New.
+	* libltdl/configure.ac: New.
+	* libltdl/libltdl/lt__alloc.h: New.
+	* libltdl/libltdl/lt__dirent.h: New.
+	* libltdl/libltdl/lt__glibc.h: New.
+	* libltdl/libltdl/lt__private.h: New.
+	* libltdl/libltdl/lt__strl.h: New.
+	* libltdl/libltdl/lt_dlloader.h: New.
+	* libltdl/libltdl/lt_error.h: New.
+	* libltdl/libltdl/lt_system.h: New.
+	* libltdl/libltdl/slist.h: New.
+	* libltdl/loaders/dld_link.c: New.
+	* libltdl/loaders/dlopen.c: New.
+	* libltdl/loaders/dyld.c: New.
+	* libltdl/loaders/load_add_on.c: New.
+	* libltdl/loaders/loadlibrary.c: New.
+	* libltdl/loaders/preopen.c: New.
+	* libltdl/loaders/shl_load.c: New.
+	* libltdl/lt__alloc.c: New.
+	* libltdl/lt__dirent.c: New.
+	* libltdl/lt__strl.c: New.
+	* libltdl/lt_dlloader.c: New.
+	* libltdl/lt_error.c: New.
+	* libltdl/ltdl.c: New.
+	* libltdl/ltdl.h: New.
+	* libltdl/m4/argz.m4: New.
+	* libltdl/m4/libtool.m4: New.
+	* libltdl/m4/ltdl.m4: New.
+	* libltdl/m4/ltoptions.m4: New.
+	* libltdl/m4/ltsugar.m4: New.
+	* libltdl/m4/ltversion.m4: New.
+	* libltdl/m4/lt~obsolete.m4: New.
+	* libltdl/slist.c: New.
+
+2009-05-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove generated m4 file.
 	* .gitignore: Make sure this file does not get committed
 	again.

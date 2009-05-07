@@ -9,7 +9,8 @@ AC_INIT([RobOptim core library], [0.2], [roboptim-user@lists.sourceforge.net],
         [roboptim-core])
 
 # Auxiliary files.
-AC_CONFIG_AUX_DIR([build-aux], [libltdl/config])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_AUX_DIR([libltdl/config])
 
 # Automake.
 AM_INIT_AUTOMAKE([1.9.6 dist-bzip2 -Wall nostdinc])
