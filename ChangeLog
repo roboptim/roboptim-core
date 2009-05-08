@@ -1,3 +1,8 @@
+2009-05-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add ltdl include directory to CPPFLAGS.
+	* src/Makefile.am: Here.
+
 2009-05-07  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Remove Autotools generated files.

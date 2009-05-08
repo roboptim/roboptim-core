@@ -1,5 +1,8 @@
 include $(top_srcdir)/build-aux/init.mk
 
+# Add ltdl include dir.
+AM_CPPFLAGS += $(INCLTDL)
+
 # Add available warnings flags.
 AM_CXXFLAGS += $(WARNING_CXXFLAGS)
 
