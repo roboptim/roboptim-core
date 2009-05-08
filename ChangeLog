@@ -1,5 +1,11 @@
 2009-05-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add ltdl headers to CPPFLAGS everywhere.
+	* build-aux/init.mk: Move AM_CPPFLAGS modification from here...
+	* src/Makefile.am: ...to here.
+
+2009-05-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add ltdl include directory to CPPFLAGS.
 	* src/Makefile.am: Here.
 
