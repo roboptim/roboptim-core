@@ -47,6 +47,7 @@ namespace roboptim
       };
 
 # define GNUPLOT_UNARY_COMMAND(NAME)		\
+      Command NAME () throw ();			\
       Command					\
       NAME () throw ()				\
       {						\
@@ -54,6 +55,7 @@ namespace roboptim
       }
 
 # define GNUPLOT_STR_COMMAND(NAME, FARG, ARG)	\
+      Command NAME (const char* ARG) throw ();  \
       Command					\
       NAME (const char* FARG) throw ()		\
       {						\
@@ -66,6 +68,11 @@ namespace roboptim
 	  }					\
 	return Command (command);		\
       }
+
+      Command comment (const char*) throw ();
+      Command set (const char*, const char*) throw ();
+      Command unset (const char*) throw ();
+      Command show (const char*, const char*) throw ();
 
       Command
       comment (const char* content) throw ()

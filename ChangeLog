@@ -1,3 +1,10 @@
+2009-05-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Predeclare functions.
+	* include/roboptim/core/visualization/gnuplot-commands.hh,
+	* src/roboptim-core-dummy-plugin.cc: Predeclare functions to
+	remove some GCC warnings.
+
 2009-05-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add ltdl headers to CPPFLAGS everywhere.

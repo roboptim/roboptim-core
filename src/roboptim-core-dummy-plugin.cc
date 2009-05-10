@@ -48,6 +48,9 @@ extern "C"
   using namespace roboptim;
   typedef DummySolver::parent_t solver_t;
 
+  solver_t* create (const DummySolver::problem_t& pb);
+  void destroy (solver_t* p);
+
   solver_t* create (const DummySolver::problem_t& pb)
   {
     return new DummySolver (pb);
