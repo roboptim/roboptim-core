@@ -33,6 +33,9 @@ namespace roboptim
     {
       typedef Function::discreteInterval_t discreteInterval_t;
 
+      Command plot (const Function&, discreteInterval_t);
+      Command plot_xy (const Function&, discreteInterval_t);
+
 
       Command plot (const Function& f, discreteInterval_t window)
       {
