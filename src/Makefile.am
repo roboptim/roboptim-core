@@ -25,7 +25,8 @@ libroboptim_core_la_SOURCES = 		\
 	util.cc
 
 libroboptim_core_la_SOURCES += 		\
-	visualization/gnuplot.cc
+	visualization/gnuplot.cc	\
+	visualization/gnuplot-commands.cc
 
 libroboptim_core_la_LIBADD = $(LIBLTDL)
 libroboptim_core_la_LDFLAGS = -version-info 1:1:0

@@ -21,7 +21,7 @@
 
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_COMMANDS_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_COMMANDS_HH
-# include <boost/format.hpp>
+# include <string>
 
 namespace roboptim
 {
@@ -32,91 +32,29 @@ namespace roboptim
       class Command
       {
       public:
-	explicit Command (std::string cmd) throw ()
-	  : command_ (cmd)
-	{}
-
-	~Command () throw () {}
-
-	const std::string& command () const throw ()
-	{
-	  return command_;
-	}
+	explicit Command (std::string cmd) throw ();
+	~Command () throw ();
+	const std::string& command () const throw ();
       protected:
 	std::string command_;
       };
 
-# define GNUPLOT_UNARY_COMMAND(NAME)		\
-      Command NAME () throw ();			\
-      Command					\
-      NAME () throw ()				\
-      {						\
-	return Command (#NAME);			\
-      }
-
-# define GNUPLOT_STR_COMMAND(NAME, FARG, ARG)	\
-      Command NAME (const char* ARG) throw ();  \
-      Command					\
-      NAME (const char* FARG) throw ()		\
-      {						\
-	std::string command = #NAME;		\
-	if (*ARG != 0)				\
-	  {					\
-	    command += " '";			\
-	    command += ARG;			\
-	    command += "'";			\
-	  }					\
-	return Command (command);		\
-      }
-
       Command comment (const char*) throw ();
-      Command set (const char*, const char*) throw ();
+      Command set (const char*, const char*  = "") throw ();
       Command unset (const char*) throw ();
       Command show (const char*, const char*) throw ();
 
-      Command
-      comment (const char* content) throw ()
-      {
-	std::string str = "#";
-	str += content;
-	return Command (str);
-      }
+      Command clear () throw ();
+      Command pwd () throw ();
+      Command quit () throw ();
+      Command replot () throw ();
+      Command reread () throw ();
+      Command reset () throw ();
 
-      Command
-      set (const char* var, const char* value = "") throw ()
-      {
-	if (!*value)
-	  return Command ((boost::format ("set %1%") % var).str ());
-	return Command ((boost::format ("set %1% %2%") % var % value).str ());
-      }
-
-      Command
-      unset (const char* var) throw ()
-      {
-	return Command ((boost::format ("unset %1%") % var).str ());
-      }
-
-      Command
-      show (const char* var, const char* value) throw ()
-      {
-	return Command ((boost::format ("show %1% %2%") % var % value).str ());
-      }
-
-      GNUPLOT_UNARY_COMMAND (clear)
-      GNUPLOT_UNARY_COMMAND (pwd)
-      GNUPLOT_UNARY_COMMAND (quit)
-      GNUPLOT_UNARY_COMMAND (replot)
-      GNUPLOT_UNARY_COMMAND (reread)
-      GNUPLOT_UNARY_COMMAND (reset)
-
-      GNUPLOT_STR_COMMAND(cd, path, path)
-      GNUPLOT_STR_COMMAND(help, topic = "", topic)
-
-# undef GNUPLOT_STR_COMMAND
-# undef GNUPLOT_UNARY_COMMAND
+      Command cd (const char*) throw ();
+      Command help (const char* = "") throw ();
 
     } // end of namespace gnuplot.
-
   } // end of namespace visualization.
 } // end of namespace roboptim.
 

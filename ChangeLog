@@ -1,5 +1,15 @@
 2009-05-20  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Move gnuplot commands in a separate compilation unit.
+	* include/roboptim/core/visualization/gnuplot-commands.hh: Move
+	implementation into source file.
+	* src/Makefile.am: Compile new file.
+	* src/visualization/gnuplot-commands.cc:
+	Copy from include/roboptim/core/visualization/gnuplot-commands.hh.
+	* src/visualization/gnuplot.cc: Add missing include.
+
+2009-05-20  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement simple gradient computation/check by finite difference.
 	* include/Makefile.am: Distribute new headers.
 	* include/roboptim/core/derivable-function.hh: Restyle.

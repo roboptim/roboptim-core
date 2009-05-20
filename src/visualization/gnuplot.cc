@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <iostream>
+
 #include <roboptim/core/visualization/gnuplot.hh>
 #include <roboptim/core/visualization/gnuplot-commands.hh>
 #include <roboptim/core/indent.hh>
