@@ -1,5 +1,11 @@
 2009-05-20  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Distribute missing stdout file.
+	* tests/Makefile.am: Distribute finite-difference-gradient
+	stdout file.
+
+2009-05-20  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add checks on finite difference gradient.
 	* tests/finite-difference-gradient.cc: Here.
 	* tests/finite-difference-gradient.stdout: Regenerate.

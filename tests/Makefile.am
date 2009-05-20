@@ -87,11 +87,12 @@ generate-reference:
 
 # Distribute reference files.
 EXTRA_DIST +=					\
-	simple.stdout				\
+	finite-difference-gradient.stdout	\
+	n-times-derivable-function.stdout	\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
-	n-times-derivable-function.stdout	\
 	plugin.stdout				\
 	problem-cc.stdout			\
-	visualization-gnuplot-simple.stdout	\
-	visualization-gnuplot-function.stdout
+	simple.stdout				\
+	visualization-gnuplot-function.stdout	\
+	visualization-gnuplot-simple.stdout
