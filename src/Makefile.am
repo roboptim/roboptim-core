@@ -9,6 +9,7 @@ lib_LTLIBRARIES = libroboptim-core.la 		\
 libroboptim_core_la_SOURCES = 		\
 	doc.hh				\
 	derivable-function.cc		\
+	finite-difference-gradient.cc	\
 	function.cc			\
 	generic-solver.cc		\
 	indent.cc			\

@@ -47,6 +47,11 @@ check_PROGRAMS += plugin
 plugin_SOURCES = plugin.cc $(COMMON_SOURCES)
 plugin_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# finite-difference-gradient
+check_PROGRAMS += finite-difference-gradient
+finite_difference_gradient_SOURCES = finite-difference-gradient.cc $(COMMON_SOURCES)
+finite_difference_gradient_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # visualization-gnuplot-simple
 check_PROGRAMS += visualization-gnuplot-simple
 visualization_gnuplot_simple_SOURCES = visualization-gnuplot-simple.cc \

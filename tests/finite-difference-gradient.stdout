@@ -1,0 +1,160 @@
+Check gradient at x = -10
+Good
+[1](-20)
+[1](-19.9999)
+Bad
+[1](-8)
+[1](-19.9999)
+
+Check gradient at x = -9
+Good
+[1](-18)
+[1](-17.9999)
+Bad
+[1](-3)
+[1](-17.9999)
+
+Check gradient at x = -8
+Good
+[1](-16)
+[1](-15.9999)
+Bad
+[1](2)
+[1](-15.9999)
+
+Check gradient at x = -7
+Good
+[1](-14)
+[1](-13.9999)
+Bad
+[1](7)
+[1](-13.9999)
+
+Check gradient at x = -6
+Good
+[1](-12)
+[1](-11.9999)
+Bad
+[1](12)
+[1](-11.9999)
+
+Check gradient at x = -5
+Good
+[1](-10)
+[1](-9.9999)
+Bad
+[1](17)
+[1](-9.9999)
+
+Check gradient at x = -4
+Good
+[1](-8)
+[1](-7.9999)
+Bad
+[1](22)
+[1](-7.9999)
+
+Check gradient at x = -3
+Good
+[1](-6)
+[1](-5.9999)
+Bad
+[1](27)
+[1](-5.9999)
+
+Check gradient at x = -2
+Good
+[1](-4)
+[1](-3.9999)
+Bad
+[1](32)
+[1](-3.9999)
+
+Check gradient at x = -1
+Good
+[1](-2)
+[1](-1.9999)
+Bad
+[1](37)
+[1](-1.9999)
+
+Check gradient at x = 0
+Good
+[1](0)
+[1](0.0001)
+Bad
+[1](42)
+[1](0.0001)
+
+Check gradient at x = 1
+Good
+[1](2)
+[1](2.0001)
+Bad
+[1](47)
+[1](2.0001)
+
+Check gradient at x = 2
+Good
+[1](4)
+[1](4.0001)
+Bad
+[1](52)
+[1](4.0001)
+
+Check gradient at x = 3
+Good
+[1](6)
+[1](6.0001)
+Bad
+[1](57)
+[1](6.0001)
+
+Check gradient at x = 4
+Good
+[1](8)
+[1](8.0001)
+Bad
+[1](62)
+[1](8.0001)
+
+Check gradient at x = 5
+Good
+[1](10)
+[1](10.0001)
+Bad
+[1](67)
+[1](10.0001)
+
+Check gradient at x = 6
+Good
+[1](12)
+[1](12.0001)
+Bad
+[1](72)
+[1](12.0001)
+
+Check gradient at x = 7
+Good
+[1](14)
+[1](14.0001)
+Bad
+[1](77)
+[1](14.0001)
+
+Check gradient at x = 8
+Good
+[1](16)
+[1](16.0001)
+Bad
+[1](82)
+[1](16.0001)
+
+Check gradient at x = 9
+Good
+[1](18)
+[1](18.0001)
+Bad
+[1](87)
+[1](18.0001)
+

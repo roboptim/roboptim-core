@@ -5,6 +5,7 @@ nobase_include_HEADERS =				\
 	roboptim/core/derivable-function.hh		\
 	roboptim/core/function.hh			\
 	roboptim/core/fwd.hh				\
+	roboptim/core/finite-difference-gradient.hh	\
 	roboptim/core/generic-solver.hh			\
 	roboptim/core/indent.hh				\
 	roboptim/core/linear-function.hh		\

@@ -50,6 +50,7 @@ namespace roboptim
 
     virtual std::ostream& print (std::ostream&) const throw ();
   };
+
 /**
    @}
 */

@@ -1,3 +1,16 @@
+2009-05-20  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Implement simple gradient computation/check by finite difference.
+	* include/Makefile.am: Distribute new headers.
+	* include/roboptim/core/derivable-function.hh: Restyle.
+	* include/roboptim/core/finite-difference-gradient.hh: New.
+	* src/Makefile.am: Compile new source.
+	* src/finite-difference-gradient.cc: New.
+	* tests/Makefile.am: Add new test.
+	* tests/finite-difference-gradient.cc: New.
+	* tests/finite-difference-gradient.stdout: New.
+	* tests/testsuite.at: Run new test.
+
 2009-05-14  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix warnings.
