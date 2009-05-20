@@ -1,5 +1,11 @@
 2009-05-20  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add checks on finite difference gradient.
+	* tests/finite-difference-gradient.cc: Here.
+	* tests/finite-difference-gradient.stdout: Regenerate.
+
+2009-05-20  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Move gnuplot commands in a separate compilation unit.
 	* include/roboptim/core/visualization/gnuplot-commands.hh: Move
 	implementation into source file.
