@@ -1,3 +1,11 @@
+2009-05-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Do not package libltdl.
+	Use libltdl library.
+	* Makefile.am: Remove libltdl directory recursion.
+	* build-aux/init.mk: Remove libltdl include directory.
+	* configure.ac: Remove libltdl macro.
+
 2009-05-20  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Distribute missing stdout file.

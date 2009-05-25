@@ -55,12 +55,11 @@ AC_ARG_VAR([DOXYGEN], [the Doxygen documentation generation program])
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
 
 # Search for Libtool.
-LT_INIT([dlopen])
 AC_PROG_LIBTOOL
 
-# Add ltdl support
-LT_CONFIG_LTDL_DIR([libltdl])
-LTDL_INIT
+# Search for libltdl.
+AC_CHECK_LIB([ltdl], [lt_dladvise_init], [],
+		     [AC_MSG_ERROR([installed libltdl is too old])])
 
 
 # Search for Boost
