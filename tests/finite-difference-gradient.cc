@@ -36,18 +36,16 @@ struct FGood : public DerivableFunction
   FGood () : DerivableFunction (1, 1)
   {}
 
-  virtual vector_t operator () (const vector_t& x) const throw ()
+  void impl_compute (result_t& result,
+		     const argument_t& argument) const throw ()
   {
-    vector_t res (m);
-    res (0) = x[0] * x[0];
-    return res;
+    result (0) = argument[0] * argument[0];
   }
 
-  virtual gradient_t gradient (const vector_t& x, int) const throw ()
+  void impl_gradient (gradient_t& gradient,
+		      const argument_t& argument, int) const throw ()
   {
-    vector_t res (n);
-    res (0) = 2 * x[0];
-    return res;
+    gradient (0) = 2 * argument[0];
   }
 };
 
@@ -57,18 +55,16 @@ struct FBad : public DerivableFunction
   FBad () : DerivableFunction (1, 1)
   {}
 
-  virtual vector_t operator () (const vector_t& x) const throw ()
+  void impl_compute (result_t& result,
+		     const argument_t& argument) const throw ()
   {
-    vector_t res (m);
-    res (0) = x[0] * x[0];
-    return res;
+    result (0) = argument[0] * argument[0];
   }
 
-  virtual gradient_t gradient (const vector_t& x, int) const throw ()
+  void impl_gradient (result_t& result,
+		      const vector_t& argument, int) const throw ()
   {
-    vector_t res (n);
-    res (0) = 5 * x[0] + 42;
-    return res;
+    result (0) = 5 * argument[0] + 42;
   }
 };
 
@@ -78,18 +74,16 @@ struct Polynomial : public DerivableFunction
   Polynomial () : DerivableFunction (1, 1)
   {}
 
-  virtual vector_t operator () (const vector_t& x) const throw ()
+  void impl_compute (result_t& result,
+		     const argument_t& argument) const throw ()
   {
-    vector_t res (m);
-    res (0) = -24 * x[0] * x[0] + 33 * x[0] + 5;
-    return res;
+    result (0) = -24 * argument[0] * argument[0] + 33 * argument[0] + 5;
   }
 
-  virtual gradient_t gradient (const vector_t& x, int) const throw ()
+  void impl_gradient (gradient_t& gradient,
+		      const argument_t& argument, int) const throw ()
   {
-    vector_t res (n);
-    res (0) = -42 * x[0] + 33;
-    return res;
+    gradient (0) = -42 * argument[0] + 33;
   }
 };
 
@@ -99,32 +93,30 @@ struct SquareXY : public DerivableFunction
   SquareXY () : DerivableFunction (1, 2)
   {}
 
-  virtual vector_t operator () (const vector_t& x) const throw ()
+  void impl_compute (result_t& result,
+		     const argument_t& argument) const throw ()
   {
-    vector_t res (m);
-    res (0) = sin (x[0]);
-    res (1) = cos (x[0]);
-    return res;
+    result (0) = sin (argument[0]);
+    result (1) = cos (argument[0]);
   }
 
-  virtual gradient_t gradient (const vector_t& x, int i) const throw ()
+  void impl_gradient (result_t& result,
+		      const argument_t& argument,
+		      int idFunction) const throw ()
   {
-    vector_t res (n);
-    switch (i)
+    switch (idFunction)
       {
       case 0:
-	res (0) = cos (x[0]);
+	result (0) = cos (argument[0]);
 	break;
 
       case 1:
-	res (0) = -sin (x[0]);
+	result (0) = -sin (argument[0]);
 	break;
 
       default:
 	assert (0);
       }
-
-    return res;
   }
 };
 
@@ -133,19 +125,18 @@ struct Times : public DerivableFunction
   Times () : DerivableFunction (2, 1)
   {}
 
-  virtual vector_t operator () (const vector_t& x) const throw ()
+  void impl_compute (result_t& result,
+		     const vector_t& argument) const throw ()
   {
-    vector_t res (m);
-    res (0) = x[0] * x[1];
-    return res;
+    result (0) = argument[0] * argument[1];
   }
 
-  virtual gradient_t gradient (const vector_t& x, int i) const throw ()
+  void impl_gradient (gradient_t& gradient,
+		      const argument_t& argument,
+		      int idFunction) const throw ()
   {
-    vector_t res (n);
-    res (0) = x[1];
-    res (1) = x[0];
-    return res;
+    gradient (0) = argument[1];
+    gradient (1) = argument[0];
   }
 };
 

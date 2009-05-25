@@ -39,7 +39,7 @@ namespace roboptim
 
       Command plot (const Function& f, discreteInterval_t window)
       {
-	assert (f.n == 1);
+	assert (f.inputSize () == 1);
 
 	assert (boost::get<0> (window) < boost::get<1> (window)
 		&& boost::get<2> (window) > 0.);
@@ -47,12 +47,12 @@ namespace roboptim
 
 	std::string str = "plot '-' with line";
 
-	for (unsigned i = 1; i < f.m; ++i)
+	for (unsigned i = 1; i < f.outputSize (); ++i)
 	  str += ", '-' with line";
 	str += "\n";
 
-	Function::vector_t x (f.n);
-	for (unsigned i = 0; i < f.m; ++i)
+	Function::vector_t x (f.inputSize ());
+	for (unsigned i = 0; i < f.outputSize (); ++i)
 	  {
 	    for (double t = boost::get<0> (window); t < boost::get<1> (window);
 		 t += boost::get<2> (window))
@@ -70,7 +70,7 @@ namespace roboptim
 
       Command plot_xy (const Function& f, discreteInterval_t window)
       {
-	assert (f.n == 1 && f.m == 2);
+	assert (f.inputSize () == 1 && f.outputSize () == 2);
 
 	assert (boost::get<0> (window) < boost::get<1> (window)
 		&& boost::get<2> (window) > 0.);
@@ -78,7 +78,7 @@ namespace roboptim
 
 	std::string str = "plot '-' with line\n";
 
-	Function::vector_t x (f.n);
+	Function::vector_t x (f.inputSize ());
 
 	for (double t = boost::get<0> (window); t < boost::get<1> (window);
 	     t += boost::get<2> (window))

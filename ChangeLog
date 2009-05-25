@@ -1,5 +1,35 @@
 2009-05-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Improve readibility and safety of the function's hierarchy.
+	* include/roboptim/core/derivable-function.hh,
+	* include/roboptim/core/finite-difference-gradient.hh,
+	* include/roboptim/core/function.hh,
+	* include/roboptim/core/linear-function.hh,
+	* include/roboptim/core/n-times-derivable-function.hh,
+	* include/roboptim/core/numeric-linear-function.hh,
+	* include/roboptim/core/numeric-quadratic-function.hh,
+	* include/roboptim/core/problem.hxx,
+	* include/roboptim/core/twice-derivable-function.hh,
+	* include/roboptim/core/visualization/gnuplot-function.hh,
+	* src/derivable-function.cc,
+	* src/finite-difference-gradient.cc,
+	* src/function.cc,
+	* src/linear-function.cc,
+	* src/numeric-linear-function.cc,
+	* src/numeric-quadratic-function.cc:
+	Split operator (), jacobian, gradient into seperate interface
+	and implementation methods.
+	* src/Makefile.am: Remove libltdl variable.
+	* tests/finite-difference-gradient.cc: Use new interface.
+	* tests/finite-difference-gradient.stdout: Regenerate.
+	* tests/n-times-derivable-function.cc,
+	* tests/plugin.cc,
+	* tests/problem-cc.cc,
+	* tests/simple.cc,
+	* tests/visualization-gnuplot-function.cc: Use new interface.
+
+2009-05-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Do not package libltdl.
 	Use libltdl library.
 	* Makefile.am: Remove libltdl directory recursion.

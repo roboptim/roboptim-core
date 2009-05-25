@@ -30,11 +30,11 @@ struct F : public Function
   F () : Function (4, 1)
   {}
 
-  virtual vector_t operator () (const vector_t& x) const throw ()
+  void impl_compute (result_t& result,
+		     const argument_t& argument) const throw ()
   {
-    vector_t res (m);
-    res (0) = x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
-    return res;
+    result (0) = argument[0] * argument[3]
+      * (argument[0] + argument[1] + argument[2]) + argument[3];
   }
 
   // No gradient, hessian.

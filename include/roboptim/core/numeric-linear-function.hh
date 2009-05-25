@@ -36,13 +36,14 @@ namespace roboptim
   {
   public:
     NumericLinearFunction (const matrix_t&, const vector_t&) throw ();
-
-    virtual vector_t operator () (const vector_t&) const throw ();
-
-    virtual gradient_t gradient (const vector_t&, int) const throw ();
-    virtual jacobian_t jacobian (const vector_t&) const throw ();
+    ~NumericLinearFunction () throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
+
+  protected:
+    void impl_compute (result_t& , const vector_t&) const throw ();
+    void impl_gradient (gradient_t&, const vector_t&, int = 0) const throw ();
+    void impl_jacobian (jacobian_t&, const vector_t&) const throw ();
 
   private:
     matrix_t a_;

@@ -32,17 +32,17 @@ namespace roboptim
   {
   }
 
-  DerivableFunction::jacobian_t
-  DerivableFunction::jacobian (const vector_t& x) const throw ()
+  void
+  DerivableFunction::impl_jacobian (jacobian_t& jacobian,
+				    const argument_t& argument)
+    const throw ()
   {
-    jacobian_t jac (m, n);
-    for (unsigned i = 0; i < m; ++i)
+    for (unsigned i = 0; i < outputSize (); ++i)
       {
-        gradient_t grad = gradient (x, i);
-        for (unsigned j = 0; j < n; ++j)
-          jac (i, j) = grad[j];
+        gradient_t grad = gradient (argument, i);
+        for (unsigned j = 0; j < inputSize (); ++j)
+          jacobian (i, j) = grad[j];
       }
-    return jac;
   }
 
   std::ostream&

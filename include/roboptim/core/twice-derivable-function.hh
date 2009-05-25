@@ -22,6 +22,9 @@
 #ifndef ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH
 # include <limits>
+# include <utility>
+
+# include <boost/numeric/ublas/symmetric.hpp>
 
 # include <roboptim/core/derivable-function.hh>
 
@@ -37,14 +40,59 @@ namespace roboptim
   {
   public:
     /// Hessian type.
-    typedef matrix_t hessian_t;
+    typedef ublas::symmetric_matrix<value_type, ublas::lower> hessian_t;
 
-    TwiceDerivableFunction (size_type n, size_type m = 1) throw ();
+    /// Hessian size type.
+    typedef std::pair<value_type, value_type> hessianSize_t;
+
+
+    /// Return the size of a hessian.
+    hessianSize_t hessianSize () const throw ()
+    {
+      return std::make_pair (inputSize (), inputSize ());
+    }
+
+    /// Check if a hessian is valid (check sizes).
+    bool isValidHessian (const hessian_t& hessian) const throw ()
+    {
+      return hessian.size1 () == this->hessianSize ().first
+	&& hessian.size2 () == this->hessianSize ().second;
+    }
+
+
+    /// Compute the hessian.
+    hessian_t hessian (const argument_t& argument,
+		       int functionId) const throw ()
+    {
+      hessian_t hessian (hessianSize ().first, hessianSize ().second);
+      hessian.clear ();
+      this->hessian (hessian, argument, functionId);
+      return hessian;
+    }
+
+    /// Compute the hessian.
+    void hessian (hessian_t& hessian,
+		  const argument_t& argument,
+		  int functionId = 0) const throw ()
+    {
+      assert (isValidHessian (hessian));
+      this->impl_hessian (hessian, argument, functionId);
+      assert (isValidHessian (hessian));
+    }
+
+
+    /// Display the function.
+    virtual std::ostream& print (std::ostream&) const throw ();
+
+  protected:
+    /// Constructor.
+    TwiceDerivableFunction (size_type inputSize,
+			    size_type outputSize = 1) throw ();
 
     /// Hessian.
-    virtual hessian_t hessian (const vector_t&, int) const throw () = 0;
-
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual void impl_hessian (hessian_t& hessian,
+			       const argument_t& argument,
+			       int functionId = 0) const throw () = 0;
   };
 
   /**

@@ -25,19 +25,17 @@ struct F : public NTimesDerivableFunction<10>
   F () : NTimesDerivableFunction<10> (4)
   {}
 
-  virtual vector_t operator () (double x) const throw ()
+  virtual void impl_compute (result_t& result, double) const throw ()
   {
-    vector_t res (m);
-    res.clear ();
-    return res;
+    result.clear ();
   }
 
-  virtual vector_t derivative (double x, size_type order = 1) const throw ()
+  virtual void impl_derivative (gradient_t& derivative,
+				double,
+				size_type order = 1) const throw ()
   {
-    assert (order > derivabilityOrder);
-    vector_t res (m);
-    res.clear ();
-    return res;
+    assert (order <= derivabilityOrder);
+    derivative.clear ();
   }
 };
 

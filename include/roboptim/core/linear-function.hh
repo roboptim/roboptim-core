@@ -37,9 +37,11 @@ namespace roboptim
   public:
     LinearFunction (size_type n, size_type m = 1) throw ();
 
-    virtual hessian_t hessian (const vector_t&, int) const throw ();
-
     virtual std::ostream& print (std::ostream&) const throw ();
+  protected:
+    void impl_hessian (hessian_t& hessian,
+		       const argument_t& argument,
+		       int functionId = 0) const throw ();
   };
   /**
      @}

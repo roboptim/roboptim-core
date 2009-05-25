@@ -40,11 +40,16 @@ namespace roboptim
     NumericQuadraticFunction (const matrix_t&, const vector_t&)
       throw ();
 
-    virtual vector_t operator () (const vector_t&) const throw ();
-    virtual gradient_t gradient (const vector_t&, int) const throw ();
-    virtual hessian_t hessian (const vector_t&, int) const throw ();
+    ~NumericQuadraticFunction () throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
+
+  protected:
+    void impl_compute (result_t& , const vector_t&) const throw ();
+    void impl_gradient (gradient_t&, const vector_t&, int = 0) const throw ();
+    void impl_hessian (hessian_t& hessian,
+		       const argument_t& argument,
+		       int functionId = 0) const throw ();
   private:
     ublas::symmetric_matrix<double, ublas::lower> a_;
     vector_t b_;

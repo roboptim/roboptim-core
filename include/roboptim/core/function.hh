@@ -55,11 +55,12 @@ namespace roboptim
     /// Matrix type.
     typedef ublas::matrix<value_type> matrix_t;
 
-    /// Problem dimension.
-    const size_type n;
+    /// Result type.
+    typedef vector_t result_t;
 
-    /// Result dimension.
-    const size_type m;
+    /// Argument type.
+    typedef vector_t argument_t;
+
 
     /// Bound type (lower, upper).
     /// Use -infinity / +infinity to disable a bound.
@@ -110,19 +111,68 @@ namespace roboptim
     }
 
 
+
+    /// Destructor.
+    virtual ~Function () throw ();
+
+
+    /// Evaluate the function.
+    result_t operator () (const argument_t& argument) const throw ()
+    {
+      result_t result (outputSize ());
+      result.clear ();
+      (*this) (result, argument);
+      return result;
+    }
+
+    /// Evaluate the function.
+    void operator () (result_t& result, const argument_t& argument)
+      const throw ()
+    {
+      assert (isValidResult (result));
+      this->impl_compute (result, argument);
+      assert (isValidResult (result));
+    }
+
+    /// Check the given result is valid (check sizes),
+    bool isValidResult (const result_t& result) const throw ()
+    {
+      return result.size () == outputSize ();
+    }
+
+    /// Return the input size.
+    size_type inputSize () const throw ()
+    {
+      return inputSize_;
+    }
+
+    /// Return the result's size.
+    size_type  outputSize () const throw ()
+    {
+      return outputSize_;
+    }
+
+    /// Display function type.
+    virtual std::ostream& print (std::ostream&) const throw ();
+
+
+  protected:
     /// Constructor.
     /// \param n function arity
     /// \param m result size
     Function (size_type n, size_type m = 1) throw ();
 
-    /// Destructor.
-    virtual ~Function () throw ();
 
-    /// Function.
-    virtual vector_t operator () (const vector_t&) const throw () = 0;
+    /// Evaluate the function, has to be implemented in concrete class.
+    virtual void impl_compute (result_t&, const argument_t&)
+      const throw () = 0;
 
-    /// Display function type.
-    virtual std::ostream& print (std::ostream&) const throw ();
+  private:
+    /// Problem dimension.
+    const size_type inputSize_;
+
+    /// Result dimension.
+    const size_type outputSize_;
   };
 
   std::ostream& operator<< (std::ostream&, const Function&);

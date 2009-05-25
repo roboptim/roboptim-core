@@ -27,20 +27,15 @@ public:
   F () throw () : DerivableFunction (1, 1)
   {}
 
-  virtual vector_t
-  operator () (const vector_t&) const throw ()
+  void impl_compute (result_t& result, const argument_t&) const throw ()
   {
-    vector_t res (m);
-    res.clear ();
-    return res;
+    result.clear ();
   }
 
-  virtual gradient_t
-  gradient (const vector_t& x, int) const throw ()
+  void impl_gradient (gradient_t& gradient,
+		      const argument_t& argument, int) const throw ()
   {
-    gradient_t grad (n);
-    grad.clear ();
-    return grad;
+    gradient.clear ();
   }
 };
 

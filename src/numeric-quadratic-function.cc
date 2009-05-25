@@ -39,31 +39,42 @@ namespace roboptim
     assert (a.size1 () == a.size2 () && a.size2 () == b.size ());
   }
 
+
+  NumericQuadraticFunction::~NumericQuadraticFunction () throw ()
+  {
+  }
+
+
   // 1/2 * x^T * A * x + b^T * x
-  NumericQuadraticFunction::vector_t
-  NumericQuadraticFunction::operator () (const vector_t& x) const throw ()
+  void
+  NumericQuadraticFunction::impl_compute (result_t& result,
+					  const argument_t& argument)
+    const throw ()
   {
     using namespace boost::numeric::ublas;
 
-    vector_t res (1);
-    res (0) = inner_prod
-      (prod (trans (x), a_), x) / 2 + inner_prod (trans (b_), x);
-    return res;
+    result (0) = inner_prod
+      (prod (trans (argument), a_), argument) / 2
+      + inner_prod (trans (b_), argument);
   }
 
   // x * A + b
-  NumericQuadraticFunction::gradient_t
-  NumericQuadraticFunction::gradient (const vector_t& x, int) const throw ()
+  void
+  NumericQuadraticFunction::impl_gradient (result_t& result,
+					   const argument_t& x,
+					   int) const throw ()
   {
     using namespace boost::numeric::ublas;
-    return prod (x, a_) + b_;
+    noalias (result) = prod (x, a_) + b_;
   }
 
   // A
-  NumericQuadraticFunction::hessian_t
-  NumericQuadraticFunction::hessian (const vector_t&, int) const throw ()
+  void
+  NumericQuadraticFunction::impl_hessian (hessian_t& hessian,
+					  const argument_t&,
+					  int) const throw ()
   {
-    return a_;
+    hessian = a_;
   }
 
   std::ostream&

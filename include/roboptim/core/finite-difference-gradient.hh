@@ -27,22 +27,23 @@
 
 namespace roboptim
 {
-  /// \brief Compute automatically a gradient with finite difference.
+  /// \brief Compute automatically a gradient with finite differences.
   class FiniteDifferenceGradient : public DerivableFunction
   {
   public:
     FiniteDifferenceGradient (const Function&, value_type = 1e-4) throw ();
     ~FiniteDifferenceGradient () throw ();
 
-    vector_t operator () (const vector_t&) const throw ();
-    gradient_t gradient (const vector_t&, int) const throw ();
-
   protected:
+    void impl_compute (result_t&, const argument_t&) const throw ();
+    void impl_gradient (gradient_t&, const argument_t&, int) const throw ();
+
     const Function& adaptee_;
     const value_type epsilon_;
   };
 
-  /// Default threshold is 1%
+  /// Check if a gradient is valid by comparing the distance between its
+  /// gradient and an automatically computed finite difference gradient.
   bool checkGradient (DerivableFunction&,
 		      int,
 		      const Function::vector_t&,

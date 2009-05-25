@@ -35,33 +35,40 @@ namespace roboptim
       a_ (a),
       b_ (b)
   {
-    assert (b.size () == m);
+    assert (b.size () == outputSize ());
   }
 
+  NumericLinearFunction::~NumericLinearFunction () throw ()
+  {
+  }
+
+
   // A * x + b
-  NumericLinearFunction::vector_t
-  NumericLinearFunction::operator () (const vector_t& x) const throw ()
+  void
+  NumericLinearFunction::impl_compute (result_t& result,
+				       const argument_t& argument)
+    const throw ()
   {
     using namespace boost::numeric::ublas;
-    vector_t res (m);
-    return prod (a_, x) + b_;
+    noalias (result) = prod (a_, argument) + b_;
   }
 
   // A
-  NumericLinearFunction::jacobian_t
-  NumericLinearFunction::jacobian (const vector_t&) const throw ()
+  void
+  NumericLinearFunction::impl_jacobian (jacobian_t& jacobian,
+					const argument_t&) const throw ()
   {
-    return a_;
+    jacobian = this->a_;
   }
 
   // A(i)
-  NumericLinearFunction::gradient_t
-  NumericLinearFunction::gradient (const vector_t&, int i) const throw ()
+  void
+  NumericLinearFunction::impl_gradient (gradient_t& gradient,
+					const argument_t& argument,
+					int idFunction) const throw ()
   {
-    gradient_t grad (n);
-    for (unsigned j = 0; j < n; ++i)
-      grad[j] = a_ (i, j);
-    return grad;
+    for (unsigned j = 0; j < inputSize (); ++j)
+      gradient[j] = a_ (idFunction, j);
   }
 
   std::ostream&

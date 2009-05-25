@@ -41,43 +41,54 @@ namespace roboptim
   public:
     static const size_type derivabilityOrder = 2;
 
-    NTimesDerivableFunction (size_type m = 1) throw ()
-      : TwiceDerivableFunction (1, m)
-    {}
 
     virtual ~NTimesDerivableFunction () throw ()
     {}
 
-    virtual vector_t operator () (const vector_t& x) const throw ()
+
+    /// Evaluate the function at a given point.
+    result_t operator () (double argument) const
+      throw ()
     {
-      assert (x.size () == 1);
-      return operator () (x[0]);
+      result_t result (outputSize ());
+      (*this) (result, argument);
+      return result;
     }
 
-    virtual vector_t operator () (double) const throw () = 0;
 
-    virtual gradient_t gradient (const vector_t& x, int i = 0) const throw ()
+    /// Evaluate the function at a given point.
+    void operator () (result_t& result, double argument) const throw ()
     {
-      assert (x.size () == 1);
-      vector_t d = derivative (x[0], 1);
-
-      vector_t res (1);
-      res[0] = d[i];
-      return res;
+      assert (isValidResult (result));
+      this->impl_compute (result, argument);
+      assert (isValidResult (result));
     }
 
-    virtual hessian_t hessian (const vector_t& x, int i) const throw ()
+
+    /// Compute the derivative of the function at a certain order
+    /// and for a given point.
+    gradient_t derivative (double argument, size_type order = 1) const
+      throw ()
     {
-      hessian_t hessian (1, 1);
-
-      vector_t dd = derivative (x[0], 2);
-      hessian (0, 0) = dd[i];
-
-      return hessian;
+      gradient_t derivative (gradientSize ());
+      this->derivative (derivative, argument, order);
+      return derivative;
     }
 
-    virtual vector_t derivative (double x, size_type order = 1) const
-      throw () = 0;
+
+    /// Compute the derivative of the function at a certain order
+    /// and for a given point.
+    void derivative (gradient_t derivative,
+		     double argument,
+		     size_type order = 1) const
+      throw ()
+    {
+      assert (order <= derivabilityOrder
+	      && isValidGradient (derivative));
+      this->impl_derivative (derivative, argument, order);
+      assert (isValidGradient (derivative));
+    }
+
 
     virtual std::ostream& print (std::ostream& o) const throw ()
     {
@@ -85,6 +96,51 @@ namespace roboptim
       return o;
     }
 
+  protected:
+    /// Constructor.
+    NTimesDerivableFunction (size_type outputSize = 1) throw ()
+      : TwiceDerivableFunction (1, outputSize)
+    {}
+
+    /// Implement the generic evaluation method, as required by the Function
+    /// class, using the specific operator () method declared in this class.
+    void impl_compute (result_t& result, const argument_t& argument)
+      const throw ()
+    {
+      (*this) (result, argument[0]);
+    }
+
+    /// Evaluate the function, has to be implemented by the concrete class.
+    virtual void impl_compute (result_t&, double) const throw () = 0;
+
+    /// Implement the generic gradient computation method, as required by
+    /// the DerivableFunction class, using the derivative method declared
+    /// in this class.
+    void impl_gradient (gradient_t& gradient,
+			const argument_t& argument,
+			int functionId = 0) const throw ()
+    {
+      assert (functionId == 0);
+      this->derivative (gradient, argument[0], 1);
+    }
+
+
+    /// Derivative computation, has to be implemented in concrete class.
+    virtual void impl_derivative (gradient_t& derivative,
+				  double argument,
+				  size_type order = 1) const throw () = 0;
+
+    void impl_hessian (hessian_t& hessian,
+		       const argument_t& argument,
+		       int functionId = 0) const throw ()
+    {
+      assert (functionId == 0);
+
+      gradient_t gradient (gradientSize ());
+      this->derivative (gradient, argument[0], 2);
+
+      hessian (0, 0) = gradient[functionId];
+    }
   };
 
   /// \brief Define a \f$\mathbb{R} \rightarrow \mathbb{R}^m\f$ function,
@@ -99,14 +155,15 @@ namespace roboptim
     typedef Function::size_type size_type;
     static const size_type derivabilityOrder = DerivabilityOrder;
 
-    NTimesDerivableFunction (size_type m = 1) throw ()
-    : NTimesDerivableFunction<DerivabilityOrder - 1> (m)
-    {
-    }
-
     virtual ~NTimesDerivableFunction () throw ();
 
     virtual std::ostream& print (std::ostream&) const throw ();
+
+  protected:
+    /// Constructor.
+    NTimesDerivableFunction (size_type m = 1) throw ()
+      : NTimesDerivableFunction<DerivabilityOrder - 1> (m)
+    {}
   };
 
   /**

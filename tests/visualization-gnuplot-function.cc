@@ -33,11 +33,11 @@ struct Square : public Function
     : Function (1, 1)
   {
   }
-  vector_t operator () (const vector_t& x) const throw ()
+
+  void impl_compute (result_t& result,
+		     const argument_t& argument) const throw ()
   {
-    vector_t res (n);
-    res[0] = x[0] * x[0];
-    return res;
+    result[0] = argument[0] * argument[0];
   }
 };
 
@@ -48,12 +48,12 @@ struct Circle : public Function
       r_ (r)
   {
   }
-  vector_t operator () (const vector_t& x) const throw ()
+
+  void impl_compute (result_t& result,
+		     const argument_t& argument) const throw ()
   {
-    vector_t res (m);
-    res[0] = sin (x[0]) * r_;
-    res[1] = cos (x[0]) * r_;
-    return res;
+    result[0] = sin (argument[0]) * r_;
+    result[1] = cos (argument[0]) * r_;
   }
 
   double r_;

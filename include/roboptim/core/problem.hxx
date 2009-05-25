@@ -45,12 +45,12 @@ namespace roboptim
       startingPoint_ (),
       constraints_ (),
       bounds_ (),
-      argBounds_ (f.n),
+      argBounds_ (f.inputSize ()),
       scales_ (),
-      argScales_ (f.n)
+      argScales_ (f.inputSize ())
   {
     // Check that in the objective function m = 1 (R^n -> R).
-    assert (f.m == 1);
+    assert (f.outputSize () == 1);
 
     // Initialize bound.
     std::fill (argBounds_.begin (), argBounds_.end (),

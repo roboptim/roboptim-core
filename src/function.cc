@@ -26,12 +26,12 @@
 
 namespace roboptim
 {
-  Function::Function (size_type n, size_type m) throw ()
-    : n (n),
-      m (m)
+  Function::Function (size_type inputSize, size_type outputSize) throw ()
+    : inputSize_ (inputSize),
+      outputSize_ (outputSize)
   {
     // Positive size is required.
-    assert (n > 0 && m > 0);
+    assert (inputSize > 0 && outputSize > 0);
   }
 
   Function::~Function () throw ()
