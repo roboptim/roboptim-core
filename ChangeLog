@@ -1,5 +1,10 @@
 2009-05-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix libltdl detection.
+	* configure.ac: Here.
+
+2009-05-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Improve readibility and safety of the function's hierarchy.
 	* include/roboptim/core/derivable-function.hh,
 	* include/roboptim/core/finite-difference-gradient.hh,

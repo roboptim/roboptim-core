@@ -58,7 +58,7 @@ AC_CHECK_PROGS([DOXYGEN], [doxygen])
 AC_PROG_LIBTOOL
 
 # Search for libltdl.
-AC_CHECK_LIB([ltdl], [lt_dladvise_init], [],
+AC_CHECK_LIB([ltdl], [lt_dlopen], [],
 		     [AC_MSG_ERROR([installed libltdl is too old])])
 
 
