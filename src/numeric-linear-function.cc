@@ -75,8 +75,8 @@ namespace roboptim
   NumericLinearFunction::print (std::ostream& o) const throw ()
   {
     return o << "Numeric linear function" << incindent << iendl
-             << "A = " << a_ << iendl
-             << "B = " << b_
+             << "A = " << this->a_ << iendl
+             << "B = " << this->b_
              << decindent;
   }
 
