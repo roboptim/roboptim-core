@@ -20,6 +20,11 @@ simple_SOURCES = simple.cc $(top_builddir)/src/roboptim-core-dummy-plugin.cc \
 		$(COMMON_SOURCES)
 simple_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# result
+check_PROGRAMS += result
+result_SOURCES = result.cc $(COMMON_SOURCES)
+result_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # problem-cc
 check_PROGRAMS += problem-cc
 problem_cc_SOURCES = problem-cc.cc $(COMMON_SOURCES)
@@ -93,6 +98,7 @@ EXTRA_DIST +=					\
 	numeric-quadratic-function.stdout	\
 	plugin.stdout				\
 	problem-cc.stdout			\
+	result.stdout				\
 	simple.stdout				\
 	visualization-gnuplot-function.stdout	\
 	visualization-gnuplot-simple.stdout

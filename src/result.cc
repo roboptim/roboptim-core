@@ -31,33 +31,17 @@
 
 namespace roboptim
 {
-  Result::Result (const Function::size_type n_,
-                  const Function::size_type m_) throw ()
-    : n (n_),
-      m (m_),
-      x (n),
-      value (m),
+  Result::Result (const size_type inputSize_,
+                  const size_type outputSize_) throw ()
+    : inputSize (inputSize_),
+      outputSize (outputSize_),
+      x (inputSize),
+      value (outputSize),
       lambda ()
   {
     x.clear ();
     value.clear ();
     lambda.clear ();
-  }
-
-  Result::Result (const Result& r) throw ()
-    : n (r.n),
-      m (r.m),
-      x (r.x),
-      value (r.value),
-      lambda (r.lambda)
-  {
-  }
-
-  Result*
-  Result::operator= (const Result& r) throw ()
-  {
-    delete this;
-    return new Result (r);
   }
 
   Result::~Result () throw ()
@@ -68,7 +52,7 @@ namespace roboptim
   Result::print (std::ostream& o) const throw ()
   {
     o << "Result: " << incindent << iendl
-      << "Dimension: " << n << iendl
+      << "Size (input, output): " << inputSize << ", " << outputSize << iendl
       << "X: " << x << iendl
       << "Value: " << value << iendl
       << "Lambda: " << lambda

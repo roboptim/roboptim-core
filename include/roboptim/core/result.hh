@@ -32,19 +32,20 @@ namespace roboptim
   class Result
   {
   public:
-    explicit Result (const Function::size_type,
-                     const Function::size_type = 1) throw ();
-    explicit Result (const Result&) throw ();
-    Result* operator= (const Result& r) throw ();
+    typedef Function::size_type size_type;
+    typedef Function::vector_t vector_t;
+
+    explicit Result (const size_type,
+                     const size_type = 1) throw ();
     virtual ~Result () throw ();
 
     virtual std::ostream& print (std::ostream& o) const throw ();
 
-    const Function::size_type n;
-    const Function::size_type m;
-    Function::vector_t x;
-    Function::vector_t value;
-    Function::vector_t lambda;
+    size_type inputSize;
+    size_type outputSize;
+    vector_t x;
+    vector_t value;
+    vector_t lambda;
   };
 
   std::ostream& operator<< (std::ostream& o, const Result& r);

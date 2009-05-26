@@ -35,6 +35,7 @@ CHECK_STDOUT([numeric-quadratic-function],
 CHECK_STDOUT([problem-cc], [Check problem copy constructor.])
 CHECK_STDOUT([n-times-derivable-function], [Check N times derivable function.])
 CHECK_STDOUT([finite-difference-gradient], [Check finite difference gradient.])
+CHECK_STDOUT([result], [Check Result class.])
 
 AT_BANNER([Plug-in mechanism])
 CHECK_STDOUT([plugin], [Load dummy plug-in dynamically.])

@@ -1,5 +1,17 @@
 2009-05-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Clean and check result class.
+	* include/roboptim/core/result.hh: Unconst and rename
+	n and m attributes.
+	* src/result.cc: Change implementation in consequence,
+	enhance display.
+	* tests/Makefile.am: Compile new test.
+	* tests/result.cc: New.
+	* tests/result.stdout: New.
+	* tests/testsuite.at: Run new test.
+
+2009-05-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove use of unitialized memory.
 	* src/result.cc: Clear all vectors in Result constructor.
 
