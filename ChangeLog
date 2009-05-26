@@ -1,5 +1,10 @@
 2009-05-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix n-times-derivable-function gradient.
+	* include/roboptim/core/n-times-derivable-function.hh: Here.
+
+2009-05-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix derivative vector size.
 	* include/roboptim/core/n-times-derivable-function.hh:
 	Fix derivative vector size and corresponding checks.
