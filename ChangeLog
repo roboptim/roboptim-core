@@ -1,5 +1,11 @@
 2009-05-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix derivative vector size.
+	* include/roboptim/core/n-times-derivable-function.hh:
+	Fix derivative vector size and corresponding checks.
+
+2009-05-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Clean and check result class.
 	* include/roboptim/core/result.hh: Unconst and rename
 	n and m attributes.

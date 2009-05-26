@@ -46,6 +46,19 @@ namespace roboptim
     {}
 
 
+    /// Return the size of the derivative vector.
+    size_type derivativeSize () const throw ()
+    {
+      return outputSize ();
+    }
+
+    /// Check if a derivative is valid (check sizes).
+    bool isValidDerivative (const gradient_t& derivative) const throw ()
+    {
+      return derivative.size () == this->derivativeSize ();
+    }
+
+
     /// Evaluate the function at a given point.
     result_t operator () (double argument) const
       throw ()
@@ -70,7 +83,7 @@ namespace roboptim
     gradient_t derivative (double argument, size_type order = 1) const
       throw ()
     {
-      gradient_t derivative (gradientSize ());
+      gradient_t derivative (derivativeSize ());
       this->derivative (derivative, argument, order);
       return derivative;
     }
@@ -84,9 +97,9 @@ namespace roboptim
       throw ()
     {
       assert (order <= derivabilityOrder
-	      && isValidGradient (derivative));
+	      && isValidDerivative (derivative));
       this->impl_derivative (derivative, argument, order);
-      assert (isValidGradient (derivative));
+      assert (isValidDerivative (derivative));
     }
 
 
