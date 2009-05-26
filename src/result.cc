@@ -39,6 +39,9 @@ namespace roboptim
       value (m),
       lambda ()
   {
+    x.clear ();
+    value.clear ();
+    lambda.clear ();
   }
 
   Result::Result (const Result& r) throw ()

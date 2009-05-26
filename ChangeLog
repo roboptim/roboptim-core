@@ -1,6 +1,11 @@
 2009-05-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Remove use of unitialized memory.
+	* src/result.cc: Clear all vectors in Result constructor.
+
+2009-05-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Remove use of unitialized memory.
 	* src/numeric-linear-function.cc: Restyle.
 	* tests/numeric-linear-function.cc,
 	* tests/numeric-quadratic-function.cc: Initialize matrices properly.
