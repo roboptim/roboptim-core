@@ -93,7 +93,7 @@ namespace roboptim
 
     /// Compute the derivative of the function at a certain order
     /// and for a given point.
-    void derivative (gradient_t derivative,
+    void derivative (gradient_t& derivative,
 		     double argument,
 		     size_type order = 1) const
       throw ()
