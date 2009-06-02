@@ -34,22 +34,39 @@ namespace roboptim
     typedef solver_t* create_t (const problem_t&);
 
     if (lt_dlinit () > 0)
-      throw std::runtime_error ("Failed to initialize libltdl.");
+      throw std::runtime_error ("failed to initialize libltdl.");
 
     std::stringstream ss;
     ss << "roboptim-core-" << plugin << "-plugin";
     handle_ = lt_dlopenext (ss.str ().c_str ());
     if (!handle_)
-      throw std::runtime_error ("Failed to load plug-in.");
+      {
+	std::stringstream sserror;
+	sserror << "libltdl failed to load plug-in ``"
+		<< ss << "'', search path is ``"
+		<< lt_dlgetsearchpath ()
+		<< "'': " << lt_dlerror ();
+	throw std::runtime_error (sserror.str ().c_str ());
+      }
 
     create_t* c =
       reinterpret_cast<create_t*> (lt_dlsym (handle_, "create"));
     if (!c)
-      throw std::runtime_error ("Failed to initialize plug-in.");
+      {
+	std::stringstream sserror;
+	sserror << "libltdl failed to find symbol ``create'': "
+		<< lt_dlerror ();
+	throw std::runtime_error (sserror.str ().c_str ());
+      }
     solver_ = c (pb);
 
     if (!solver_)
-      throw std::runtime_error ("Failed to instantiate the solver.");
+      {
+	std::stringstream sserror;
+	sserror << "libltdl failed to call ``create'': "
+		<< lt_dlerror ();
+	throw std::runtime_error (sserror.str ().c_str ());
+      }
   }
 
   template <typename T>

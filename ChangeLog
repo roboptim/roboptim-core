@@ -1,3 +1,9 @@
+2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Make factory errors more verbose.
+	* include/roboptim/core/solver-factory.hxx: Display
+	libltdl errors and used arguments.
+
 2009-05-27  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix wrong signature in NTimesDerivableFunction.
