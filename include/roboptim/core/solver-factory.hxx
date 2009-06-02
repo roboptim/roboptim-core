@@ -43,9 +43,7 @@ namespace roboptim
       {
 	std::stringstream sserror;
 	sserror << "libltdl failed to load plug-in ``"
-		<< ss << "'', search path is ``"
-		<< lt_dlgetsearchpath ()
-		<< "'': " << lt_dlerror ();
+		<< ss.str () << "'': " << lt_dlerror ();
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 

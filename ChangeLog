@@ -1,5 +1,12 @@
 2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Do not display user search path.
+	Displaying the user search path is not needed as it is
+	not used by the factory.
+	* include/roboptim/core/solver-factory.hxx: Here.
+
+2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make factory errors more verbose.
 	* include/roboptim/core/solver-factory.hxx: Display
 	libltdl errors and used arguments.
