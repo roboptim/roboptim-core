@@ -6,6 +6,11 @@
 
 2009-05-27  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make pkg-config depends from configure.
+	* Makefile.am: Here.
+
+2009-05-27  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix wrong signature in NTimesDerivableFunction.
 	* include/roboptim/core/n-times-derivable-function.hh: Here.
 
