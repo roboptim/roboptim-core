@@ -55,7 +55,6 @@ AC_ARG_VAR([DOXYGEN], [the Doxygen documentation generation program])
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
 
 # Search for Libtool.
-AC_PROG_LIBTOOL
 LT_INIT([dlopen])
 
 # Search for libltdl.

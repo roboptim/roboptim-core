@@ -1,5 +1,12 @@
 2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make Libtool support more robust.
+	* Makefile.am: Regenerate Libtool related files if
+	required.
+	* configure.ac: Remove obsolete macro.
+
+2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add libtool related files.
 	* .gitignore: Remove committed file from ignore list.
 	* build-aux/config.guess: New.
