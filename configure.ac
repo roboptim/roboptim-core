@@ -56,6 +56,7 @@ AC_CHECK_PROGS([DOXYGEN], [doxygen])
 
 # Search for Libtool.
 AC_PROG_LIBTOOL
+LT_INIT([dlopen])
 
 # Search for libltdl.
 AC_CHECK_LIB([ltdl], [lt_dlopen], [],

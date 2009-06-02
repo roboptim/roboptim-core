@@ -1,5 +1,22 @@
 2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add libtool related files.
+	* .gitignore: Remove committed file from ignore list.
+	* build-aux/config.guess: New.
+	* build-aux/config.sub: New.
+	* build-aux/depcomp: New.
+	* build-aux/install-sh: New.
+	* build-aux/libtool.m4: New.
+	* build-aux/ltmain.sh: New.
+	* build-aux/ltoptions.m4: New.
+	* build-aux/ltsugar.m4: New.
+	* build-aux/ltversion.m4: New.
+	* build-aux/lt~obsolete.m4: New.
+	* build-aux/missing: New.
+	* configure.ac: Check that dlopen is available.
+
+2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Do not display user search path.
 	Displaying the user search path is not needed as it is
 	not used by the factory.
