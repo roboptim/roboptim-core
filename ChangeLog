@@ -1,5 +1,10 @@
 2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Remove force flag from autoreconf.
+	* build-aux/bootstrap: Here.
+
+2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make Libtool support more robust.
 	* Makefile.am: Regenerate Libtool related files if
 	required.
