@@ -242,7 +242,10 @@ namespace roboptim
 
     // Starting point.
     if (startingPoint_)
-      o << iendl << "Starting point: " << *startingPoint_;
+      {
+	o << iendl << "Starting point: " << *startingPoint_
+	  << iendl << "Starting value: " << function () (*startingPoint_);
+      }
     else
       o << iendl << "No starting point.";
 

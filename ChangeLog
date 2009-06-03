@@ -1,3 +1,10 @@
+2009-06-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Make problem display more verbose.
+	* include/roboptim/core/problem.hxx: Display starting value
+	if a starting point has been set.
+	* tests/simple.stdout: Regenerate.
+
 2009-06-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Remove force flag from autoreconf.

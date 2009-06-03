@@ -12,6 +12,7 @@ Problem:
       Scales: 3.5
       
   Starting point: [4](0,0,0,0)
+  Starting value: [1](0)
   Infinity value (for all functions): inf
 ---
 Problem:
@@ -28,5 +29,6 @@ Problem:
       Scales: 3.5
       
   Starting point: [4](0,0,0,0)
+  Starting value: [1](0)
   Infinity value (for all functions): inf
 The dummy solver always fail.
