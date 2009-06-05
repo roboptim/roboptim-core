@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the DerivableFunction class.
- */
-
 #ifndef ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH
 # include <limits>
@@ -28,49 +24,75 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_function
-     @{
-  */
-  /// Define a derivable function.
+  /// \addtogroup roboptim_function
+  /// @{
+
+  /// \brief Define a derivable function (\f$C^1\f$).
+  ///
+  /// A derivable function which provides a way to compute its
+  /// gradient/jacobian.
+  ///
+  /// \f[ f : x \rightarrow f(x) \f]
+  /// \f$x \in \mathbb{R}^n\f$, \f$f(x) \in \mathbb{R}^m\f$ where
+  /// \f$n\f$ is the input size and \f$m\f$ is the output size.
+  ///
+  /// Gradient computation is done through the #impl_gradient method
+  /// that has to implemented by the concrete class inheriting this
+  /// class.
+  ///
+  /// Jacobian computation is automatically done by concatenating
+  /// gradients together, however this naive implementation can be
+  /// overridden by the concrete class.
   class DerivableFunction : public Function
   {
   public:
-    /// Gradient type.
+    /// \brief Gradient type.
     typedef vector_t gradient_t;
-    /// Jacobian type.
+    /// \brief Jacobian type.
     typedef matrix_t jacobian_t;
 
-    /// Jacobian size type.
+    /// \brief Jacobian size type (pair of values).
     typedef std::pair<value_type, value_type> jacobianSize_t;
 
 
-    /// Return the gradient size.
+    /// \brief Return the gradient size.
+    ///
+    /// Gradient size is equals to the input size.
     size_t gradientSize () const throw ()
     {
       return inputSize ();
     }
 
-    /// Return the jacobian size as a pair.
+    /// \brief Return the jacobian size as a pair.
+    ///
+    /// Gradient size is equals to (output size, input size).
     jacobianSize_t jacobianSize () const throw ()
     {
       return std::make_pair (outputSize (), inputSize ());
     }
 
-    /// Check if the gradient is valid (check size).
+    /// \brief Check if the gradient is valid (check size).
+    /// \param gradient checked gradient
+    /// \return true if valid, false if not
     bool isValidGradient (const gradient_t& gradient) const throw ()
     {
-      return gradient.size () == inputSize ();
+      return gradient.size () == gradientSize ();
     }
 
-    /// Check if the jacobian is valid (check sizes).
+    /// \brief Check if the jacobian is valid (check sizes).
+    ///
+    /// \param jacobian checked jacobian
+    /// \return true if valid, false if not
     bool isValidJacobian (const jacobian_t& jacobian) const throw ()
     {
       return jacobian.size1 () == jacobianSize ().first
 	&& jacobian.size2 () == jacobianSize ().second;
     }
 
-    /// Computes the jacobian.
+    /// \brief Computes the jacobian.
+    ///
+    /// \param argument point at which the jacobian will be computed
+    /// \return jacobian matrix
     jacobian_t jacobian (const argument_t& argument) const throw ()
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
@@ -79,7 +101,10 @@ namespace roboptim
       return jacobian;
     }
 
-    /// Computes the jacobian.
+    /// \brief Computes the jacobian.
+    ///
+    /// \param jacobian jacobian will be stored in this argument
+    /// \param argument point at which the jacobian will be computed
     void jacobian (jacobian_t& jacobian, const argument_t& argument) const throw ()
     {
       assert (isValidJacobian (jacobian));
@@ -87,7 +112,10 @@ namespace roboptim
       assert (isValidJacobian (jacobian));
     }
 
-    /// Computes the gradient.
+    /// \brief Computes the gradient.
+    ///
+    /// \param argument point at which the gradient will be computed
+    /// \return gradient vector
     gradient_t gradient (const argument_t& argument,
 			 int functionId = 0) const throw ()
     {
@@ -97,7 +125,11 @@ namespace roboptim
       return gradient;
     }
 
-    /// Computes the gradient.
+    /// \brief Computes the gradient.
+    ///
+    /// \param gradient gradient will be stored in this argument
+    /// \param argument point at which the gradient will be computed
+    /// \return gradient vector
     void gradient (gradient_t& gradient,
 		   const argument_t& argument,
 		   int functionId = 0) const throw ()
@@ -107,30 +139,40 @@ namespace roboptim
       assert (isValidGradient (gradient));
     }
 
-    /// Display the function.
-    virtual std::ostream& print (std::ostream&) const throw ();
+    /// \brief Display the function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \param output stream
+    virtual std::ostream& print (std::ostream& o) const throw ();
 
   protected:
-    /// Constructor.
-    DerivableFunction (size_type n, size_type m = 1) throw ();
+    /// \brief Concrete class constructor should call this constructor.
+    ///
+    /// \param inputSize input size (argument size)
+    /// \param outputSize output size (result size)
+    DerivableFunction (size_type inputSize, size_type outputSize = 1) throw ();
 
+    /// \brief Jacobian evaluation.
+    ///
     /// Computes the jacobian, can be overridden by concrete classes.
     /// The default behavior is to compute the jacobian from the gradient.
+    /// \warning Do not call this function directly, call #jacobian instead.
     virtual void impl_jacobian (jacobian_t&, const argument_t&)
       const throw ();
 
+    /// \brief Gradient evaluation.
+    ///
     /// Compute the gradient, has to be implemented in concrete classes.
     /// The gradient is computed for a specific sub-function which id
     /// is passed through the functionId argument.
+    /// \warning Do not call this function directly, call #gradient instead.
     virtual void impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
 				int functionId = 0)
       const throw () = 0;
   };
 
-/**
-   @}
-*/
+  /// @}
 
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH

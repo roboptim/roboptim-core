@@ -1,5 +1,10 @@
 2009-06-05  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document derivable-function.
+	* include/roboptim/core/derivable-function.hh: Here.
+
+2009-06-05  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement a generic freeze constraint.
 	* include/Makefile.am: Distribute new header.
 	* include/roboptim/core/freeze.hh: New.
