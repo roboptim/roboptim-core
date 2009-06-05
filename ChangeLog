@@ -1,3 +1,15 @@
+2009-06-05  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Implement a generic freeze constraint.
+	* include/Makefile.am: Distribute new header.
+	* include/roboptim/core/freeze.hh: New.
+	* src/Makefile.am: Compile new file.
+	* src/freeze.cc: New.
+	* tests/Makefile.am: Compile new test.
+	* tests/freeze.cc: New.
+	* tests/freeze.stdout: New.
+	* tests/testsuite.at: Run new test.
+
 2009-06-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Make problem display more verbose.
@@ -598,7 +610,7 @@
 2009-04-30  Florent Lamiraux  <florent@laas.fr>
 
 	Fix boost inclusion.
-	* build-aux/init.mk: add BOOST_CPPFLAGS to AM_CPPFLAGS. 
+	* build-aux/init.mk: add BOOST_CPPFLAGS to AM_CPPFLAGS.
           Useful when boost is in non-standard paths.
 
 2009-04-29  Thomas Moulard  <thomas.moulard@gmail.com>

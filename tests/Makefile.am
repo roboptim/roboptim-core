@@ -30,6 +30,11 @@ check_PROGRAMS += problem-cc
 problem_cc_SOURCES = problem-cc.cc $(COMMON_SOURCES)
 problem_cc_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# freeze
+check_PROGRAMS += freeze
+freeze_SOURCES = freeze.cc $(COMMON_SOURCES)
+freeze_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # numeric-linear-function
 check_PROGRAMS += numeric-linear-function
 numeric_linear_function_SOURCES = numeric-linear-function.cc $(COMMON_SOURCES)
@@ -93,6 +98,7 @@ generate-reference:
 # Distribute reference files.
 EXTRA_DIST +=					\
 	finite-difference-gradient.stdout	\
+	freeze.stdout				\
 	n-times-derivable-function.stdout	\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
