@@ -1,5 +1,10 @@
 2009-06-05  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix main documentation page.
+	* src/doc.hh: Fix unrecognized html commands.
+
+2009-06-05  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Document derivable-function.
 	* include/roboptim/core/derivable-function.hh: Here.
 

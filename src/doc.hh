@@ -454,8 +454,8 @@ int run_test ()
    \section fct The function hierarchy
 
    The function hierarchy is an abstract hierarchy which defines
-   <emph>meta-function</emph> in the sense that the user has to derive from
-   these classes to define its <emph>real</emph> function.
+   <b>meta-function</b> in the sense that the user has to derive from
+   these classes to define its <b>real</b> function.
 
    \code
    struct MyLinearFunction : public LinearFunction {
@@ -543,7 +543,7 @@ int run_test ()
    but you can not go deeper.
 
    However, this transformation as any dynamic typing makes
-   <emph>forget</emph> specific information and might slow-down the
+   <b>forget</b> specific information and might slow-down the
    process. Ie: solving a linear problem as a non-linear one
    is slower than directly solving it.
 
