@@ -1,5 +1,10 @@
 2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix typo.
+	* include/roboptim/core/twice-derivable-function.hh: Fix typo.
+
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add more documentation.
 	* include/roboptim/core/derivable-function.hh,
 	* include/roboptim/core/function.hh: Add missing

@@ -33,7 +33,7 @@ namespace roboptim
   /// \addtogroup roboptim_function
   /// @{
 
-  /// /brief Define a function which is derivable twice.
+  /// \brief Define a function which is derivable twice (\f$C^2\f$).
   ///
   /// A twice derivable function is a derivable function
   /// which provides a way to compute its hessian.
