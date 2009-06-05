@@ -30,29 +30,52 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_function
-     @{
-  */
+  /// \addtogroup roboptim_function
+  /// @{
 
-  /// Define a function which is derivable twice.
+  /// /brief Define a function which is derivable twice.
+  ///
+  /// A twice derivable function is a derivable function
+  /// which provides a way to compute its hessian.
+  ///
+  /// \f[ f : x \rightarrow f(x) \f]
+  /// \f$x \in \mathbb{R}^n\f$, \f$f(x) \in \mathbb{R}^m\f$ where
+  /// \f$n\f$ is the input size and \f$m\f$ is the output size.
+  ///
+  /// Hessian computation is done through the #impl_hessian method
+  /// that has to implemented by the concrete class inheriting this
+  /// class.
+  ///
+  /// The hessian of a \f$\mathbb{R}^n \rightarrow \mathbb{R}^m\f$
+  /// function where \f$n > 1\f$ and \f$m > 1\f$ is a tensor.
+  /// To avoid this costly representation, the function is split
+  /// into \f$m\f$ \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$ functions.
+  /// See #DerivableFunction documentation for more information.
   class TwiceDerivableFunction : public DerivableFunction
   {
   public:
-    /// Hessian type.
+    /// \brief Hessian type.
+    ///
+    /// Hessians are symmetric matrices.
     typedef ublas::symmetric_matrix<value_type, ublas::lower> hessian_t;
 
-    /// Hessian size type.
+    /// \brief Hessian size type represented as a pair of values.
     typedef std::pair<value_type, value_type> hessianSize_t;
 
 
-    /// Return the size of a hessian.
+    /// \brief Return the size of a hessian.
+    ///
+    /// Hessian size is equales to (input size, input size).
+    /// \return hessian's size as a pair
     hessianSize_t hessianSize () const throw ()
     {
       return std::make_pair (inputSize (), inputSize ());
     }
 
-    /// Check if a hessian is valid (check sizes).
+    /// \brief Check if the hessian is valid (check sizes).
+    ///
+    /// \param hessian hessian that will be checked
+    /// \return true if valid, false if not
     bool isValidHessian (const hessian_t& hessian) const throw ()
     {
       return hessian.size1 () == this->hessianSize ().first
@@ -60,9 +83,14 @@ namespace roboptim
     }
 
 
-    /// Compute the hessian.
+    /// \brief Compute the hessian at a given point.
+    ///
+    /// Program will abort if the argument size is wrong.
+    /// \param argument point where the hessian will be computed
+    /// \param functionId evaluated function id in the split representation
+    /// \return computed hessian
     hessian_t hessian (const argument_t& argument,
-		       int functionId) const throw ()
+		       int functionId = 0) const throw ()
     {
       hessian_t hessian (hessianSize ().first, hessianSize ().second);
       hessian.clear ();
@@ -70,7 +98,12 @@ namespace roboptim
       return hessian;
     }
 
-    /// Compute the hessian.
+    /// \brief Compute the hessian at a given point.
+    ///
+    /// Program will abort if the argument size is wrong.
+    /// \param hessian hessian will be stored here
+    /// \param argument point where the hessian will be computed
+    /// \param functionId evaluated function id in the split representation
     void hessian (hessian_t& hessian,
 		  const argument_t& argument,
 		  int functionId = 0) const throw ()
@@ -85,19 +118,27 @@ namespace roboptim
     virtual std::ostream& print (std::ostream&) const throw ();
 
   protected:
-    /// Constructor.
+    /// \brief Concrete class constructor should call this constructor.
+    ///
+    /// \param inputSize input size (argument size)
+    /// \param outputSize output size (result size)
     TwiceDerivableFunction (size_type inputSize,
 			    size_type outputSize = 1) throw ();
 
-    /// Hessian.
+    /// \brief Hessian evaluation.
+    ///
+    /// Compute the hessian, has to be implemented in concrete classes.
+    /// The hessian is computed for a specific sub-function which id is
+    /// passed through the functionId argument.
+    /// \warning Do not call this function directly, call #hessian instead.
+    /// \param hessian hessian will be stored here
+    /// \param argument point where the hessian will be computed
+    /// \param functionId evaluated function id in the split representation
     virtual void impl_hessian (hessian_t& hessian,
 			       const argument_t& argument,
 			       int functionId = 0) const throw () = 0;
   };
 
-  /**
-     @}
-  */
-
+  /// @}
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH

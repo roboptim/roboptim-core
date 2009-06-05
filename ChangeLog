@@ -1,6 +1,15 @@
 2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add more documentation.
+	* include/roboptim/core/derivable-function.hh,
+	* include/roboptim/core/function.hh: Add missing
+	documentation and normalize some descriptions.
+	* include/roboptim/core/twice-derivable-function.hh:
+	Document all types, methods, classes.
+
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add more documentation.
 	* include/roboptim/core/derivable-function.hh: Document
 	gradient/jacobian management when output size is larger
 	than one.

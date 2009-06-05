@@ -246,6 +246,7 @@ namespace roboptim
     /// The program will abort if the argument does not have the
     /// expected size.
     /// \param argument point at which the function will be evaluated
+    /// \return computed result
     result_t operator () (const argument_t& argument) const throw ()
     {
       result_t result (outputSize ());
@@ -276,7 +277,7 @@ namespace roboptim
     virtual std::ostream& print (std::ostream&) const throw ();
 
   protected:
-    /// \brief Classes that implements a function should call this constructor.
+    /// \brief Concrete class constructor should call this constructor.
     ///
     /// \param inputSize function arity
     /// \param outputSize result size
@@ -287,6 +288,8 @@ namespace roboptim
     ///
     /// Evaluate the function, has to be implemented in concrete classes.
     /// \warning Do not call this function directly, call #operator() instead.
+    /// \param result result will be stored in this vector
+    /// \param argument point at which the function will be evaluated
     virtual void impl_compute (result_t&, const argument_t&)
       const throw () = 0;
 

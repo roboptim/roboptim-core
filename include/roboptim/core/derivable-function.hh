@@ -108,12 +108,14 @@ namespace roboptim
     /// \brief Computes the jacobian.
     ///
     /// \param argument point at which the jacobian will be computed
+    /// \param functionId evaluated function id in the split representation
     /// \return jacobian matrix
-    jacobian_t jacobian (const argument_t& argument) const throw ()
+    jacobian_t jacobian (const argument_t& argument,
+			 size_type functionId = 0) const throw ()
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
       jacobian.clear ();
-      this->jacobian (jacobian, argument);
+      this->jacobian (jacobian, argument, functionId);
       return jacobian;
     }
 
@@ -123,11 +125,13 @@ namespace roboptim
     /// or after the jacobian computation.
     /// \param jacobian jacobian will be stored in this argument
     /// \param argument point at which the jacobian will be computed
-    void jacobian (jacobian_t& jacobian, const argument_t& argument) const throw ()
+    /// \param functionId evaluated function id in the split representation
+    void jacobian (jacobian_t& jacobian, const argument_t& argument,
+		   size_type functionId = 0) const throw ()
     {
       assert (argument.size () == inputSize ());
       assert (isValidJacobian (jacobian));
-      this->impl_jacobian (jacobian, argument);
+      this->impl_jacobian (jacobian, argument, functionId);
       assert (isValidJacobian (jacobian));
     }
 
@@ -140,7 +144,7 @@ namespace roboptim
     {
       gradient_t gradient (gradientSize ());
       gradient.clear ();
-      this->gradient (gradient, argument);
+      this->gradient (gradient, argument, functionId);
       return gradient;
     }
 
@@ -181,7 +185,9 @@ namespace roboptim
     /// \warning Do not call this function directly, call #jacobian instead.
     /// \param jacobian jacobian will be store in this argument
     /// \param arg point where the jacobian will be computed
-    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
+    /// \param functionId evaluated function id in the split representation
+    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg,
+				size_type functionId = 0)
       const throw ();
 
     /// \brief Gradient evaluation.
@@ -192,9 +198,10 @@ namespace roboptim
     /// \warning Do not call this function directly, call #gradient instead.
     /// \param gradient gradient will be store in this argument
     /// \param argument point where the gradient will be computed
+    /// \param functionId evaluated function id in the split representation
     virtual void impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
-				int functionId = 0)
+				size_type functionId = 0)
       const throw () = 0;
   };
 
