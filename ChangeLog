@@ -1,3 +1,11 @@
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add more documentation.
+	* include/roboptim/core/derivable-function.hh: Document
+	gradient/jacobian management when output size is larger
+	than one.
+	* include/roboptim/core/function.hh: Document the class.
+
 2009-06-05  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix main documentation page.

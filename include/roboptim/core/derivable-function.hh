@@ -27,7 +27,7 @@ namespace roboptim
   /// \addtogroup roboptim_function
   /// @{
 
-  /// \brief Define a derivable function (\f$C^1\f$).
+  /// \brief Define an abstract derivable function (\f$C^1\f$).
   ///
   /// A derivable function which provides a way to compute its
   /// gradient/jacobian.
@@ -43,6 +43,22 @@ namespace roboptim
   /// Jacobian computation is automatically done by concatenating
   /// gradients together, however this naive implementation can be
   /// overridden by the concrete class.
+  ///
+  ///
+  /// The gradient of a \f$\mathbb{R}^n \rightarrow \mathbb{R}^m\f$
+  /// function where \f$n > 1\f$ and \f$m > 1\f$ is a matrix and its
+  /// jacobian is a tensor.
+  /// As these representations are extremely costly, RobOptim considers
+  /// these functions as \f$m\f$ \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
+  /// functions. Through that mechanism, gradients are always vectors
+  /// and jacobian are always matrices.
+  /// When the gradient or the jacobian has to be computed, one has to
+  /// precise which of the \f$m\f$ functions should be considered.
+  ///
+  /// If \f$m = 1\f$, then the function id must always be 0 and can be safely
+  /// ignored in the gradient/jacobian computation.
+  /// The class provides a default value for the function id so that these functions
+  /// do not have to explicitly set the function id.
   class DerivableFunction : public Function
   {
   public:
@@ -103,10 +119,13 @@ namespace roboptim
 
     /// \brief Computes the jacobian.
     ///
+    /// Program will abort if the jacobian size is wrong before
+    /// or after the jacobian computation.
     /// \param jacobian jacobian will be stored in this argument
     /// \param argument point at which the jacobian will be computed
     void jacobian (jacobian_t& jacobian, const argument_t& argument) const throw ()
     {
+      assert (argument.size () == inputSize ());
       assert (isValidJacobian (jacobian));
       this->impl_jacobian (jacobian, argument);
       assert (isValidJacobian (jacobian));
@@ -127,6 +146,8 @@ namespace roboptim
 
     /// \brief Computes the gradient.
     ///
+    /// Program will abort if the gradient size is wrong before
+    /// or after the gradient computation.
     /// \param gradient gradient will be stored in this argument
     /// \param argument point at which the gradient will be computed
     /// \return gradient vector
@@ -134,6 +155,7 @@ namespace roboptim
 		   const argument_t& argument,
 		   int functionId = 0) const throw ()
     {
+      assert (argument.size () == inputSize ());
       assert (isValidGradient (gradient));
       this->impl_gradient (gradient, argument, functionId);
       assert (isValidGradient (gradient));
@@ -157,7 +179,9 @@ namespace roboptim
     /// Computes the jacobian, can be overridden by concrete classes.
     /// The default behavior is to compute the jacobian from the gradient.
     /// \warning Do not call this function directly, call #jacobian instead.
-    virtual void impl_jacobian (jacobian_t&, const argument_t&)
+    /// \param jacobian jacobian will be store in this argument
+    /// \param arg point where the jacobian will be computed
+    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
       const throw ();
 
     /// \brief Gradient evaluation.
@@ -166,6 +190,8 @@ namespace roboptim
     /// The gradient is computed for a specific sub-function which id
     /// is passed through the functionId argument.
     /// \warning Do not call this function directly, call #gradient instead.
+    /// \param gradient gradient will be store in this argument
+    /// \param argument point where the gradient will be computed
     virtual void impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
 				int functionId = 0)
