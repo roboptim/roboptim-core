@@ -33,7 +33,7 @@ public:
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, int) const throw ()
+		      const argument_t& argument, size_type) const throw ()
   {
     gradient.clear ();
   }

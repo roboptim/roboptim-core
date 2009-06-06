@@ -175,7 +175,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     void impl_gradient (gradient_t& gradient,
 			const argument_t& argument,
-			int functionId = 0) const throw ()
+			size_type functionId = 0) const throw ()
     {
       assert (functionId == 0);
 
@@ -210,7 +210,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     void impl_hessian (hessian_t& hessian,
 		       const argument_t& argument,
-		       int functionId = 0) const throw ()
+		       size_type functionId = 0) const throw ()
     {
       assert (functionId == 0);
 
@@ -230,11 +230,11 @@ namespace roboptim
   {
     BOOST_STATIC_ASSERT(DerivabilityOrder > 2);
   public:
-    /// \brief Function derivability order.
-    static const size_type derivabilityOrder = DerivabilityOrder;
-
     /// \brief Import size type from function.
     typedef Function::size_type size_type;
+
+    /// \brief Function derivability order.
+    static const size_type derivabilityOrder = DerivabilityOrder;
 
     virtual ~NTimesDerivableFunction () throw ();
 

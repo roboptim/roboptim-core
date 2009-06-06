@@ -166,9 +166,9 @@ namespace roboptim
     /// \brief Arguments intervals.
     intervals_t argumentBounds_;
     /// \brief Constraints scale.
-    intervals_t scales_;
+    scales_t scales_;
     /// \brief Arguments' scales.
-    intervals_t argumentScales_;
+    scales_t argumentScales_;
   };
 
   /// Example shows problem class use.

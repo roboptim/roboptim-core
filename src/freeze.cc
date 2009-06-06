@@ -46,7 +46,7 @@ namespace roboptim
   }
 
   void
-  Freeze::impl_gradient (gradient_t& grad, const argument_t& x, int i)
+  Freeze::impl_gradient (gradient_t& grad, const argument_t& x, size_type i)
     const throw ()
   {
     grad.clear ();

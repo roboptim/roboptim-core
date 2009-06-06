@@ -34,7 +34,7 @@ namespace roboptim
   void
   LinearFunction::impl_hessian (hessian_t& hessian,
 				const vector_t&,
-				int) const throw ()
+				size_type) const throw ()
   {
     hessian.clear ();
   }

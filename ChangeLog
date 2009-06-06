@@ -1,6 +1,22 @@
 2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Document and clean.
+	* include/roboptim/core/finite-difference-gradient.hh,
+	* include/roboptim/core/freeze.hh,
+	* include/roboptim/core/linear-function.hh,
+	* include/roboptim/core/n-times-derivable-function.hh,
+	* include/roboptim/core/problem.hh,
+	* src/freeze.cc,
+	* src/linear-function.cc,
+	* tests/finite-difference-gradient.cc,
+	* tests/finite-difference-gradient.stdout,
+	* tests/problem-cc.cc,
+	* tests/simple.cc,
+	* tests/simple.stdout: Document and clean.
+
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Document and clean.
 	* include/roboptim/core/derivable-function.hh,
 	* include/roboptim/core/finite-difference-gradient.hh,
 	* include/roboptim/core/freeze.hh,

@@ -43,7 +43,7 @@ struct FGood : public DerivableFunction
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, int) const throw ()
+		      const argument_t& argument, size_type) const throw ()
   {
     gradient (0) = 2 * argument[0];
   }
@@ -62,7 +62,7 @@ struct FBad : public DerivableFunction
   }
 
   void impl_gradient (result_t& result,
-		      const vector_t& argument, int) const throw ()
+		      const vector_t& argument, size_type) const throw ()
   {
     result (0) = 5 * argument[0] + 42;
   }
@@ -81,7 +81,7 @@ struct Polynomial : public DerivableFunction
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, int) const throw ()
+		      const argument_t& argument, size_type) const throw ()
   {
     gradient (0) = -42 * argument[0] + 33;
   }
@@ -102,7 +102,7 @@ struct SquareXY : public DerivableFunction
 
   void impl_gradient (result_t& result,
 		      const argument_t& argument,
-		      int idFunction) const throw ()
+		      size_type idFunction) const throw ()
   {
     switch (idFunction)
       {
@@ -133,7 +133,7 @@ struct Times : public DerivableFunction
 
   void impl_gradient (gradient_t& gradient,
 		      const argument_t& argument,
-		      int idFunction) const throw ()
+		      size_type idFunction) const throw ()
   {
     gradient (0) = argument[1];
     gradient (1) = argument[0];

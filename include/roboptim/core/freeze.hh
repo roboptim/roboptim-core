@@ -76,7 +76,7 @@ namespace roboptim
 
   protected:
     void impl_compute (result_t& res, const argument_t& x) const throw ();
-    void impl_gradient (gradient_t& grad, const argument_t& x, int i)
+    void impl_gradient (gradient_t& grad, const argument_t& x, size_type = 0)
       const throw ();
   private:
     /// \brief Vector which defines how to freeze values.

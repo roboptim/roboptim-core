@@ -45,7 +45,7 @@ namespace roboptim
   protected:
     void impl_hessian (hessian_t& hessian,
 		       const argument_t& argument,
-		       int functionId = 0) const throw ();
+		       size_type functionId = 0) const throw ();
   };
 
   /// @}
