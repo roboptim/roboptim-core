@@ -24,30 +24,35 @@
 
 namespace roboptim
 {
-  /// \brief Returned by GenericSolver::getMinimum if no solution can be
+  /// \brief Tag a result if no solution has been found.
+  /// Returned by GenericSolver::getMinimum if no solution can be
   /// found (but no error has been encountered during the process).
+  /// It usually means that the solver has not been called to solve
+  /// the problem.
   class NoSolution {};
 
-  class Function;
+
   class DerivableFunction;
-  class TwiceDerivableFunction;
-  class QuadraticFunction;
-  class LinearFunction;
-
-  template <typename F, typename C = F>
-  class Problem;
-
-  class GenericSolver;
-  template <typename F, typename C = F>
-  class Solver;
-
   class DummySolver;
-
+  class FiniteDifferenceGradient;
+  class Freeze;
+  class Function;
+  class GenericSolver;
+  class LinearFunction;
+  class NoSolution;
+  class NumericLinearFunction;
+  class NumericQuadraticFunction;
+  class QuadraticFunction;
   class Result;
   class ResultWithWarnings;
-
   class SolverError;
+  class SolverFactory< T >;
   class SolverWarning;
+  class TwiceDerivableFunction;
+  template <typename F, typename C = F> class Problem;
+  template <typename F, typename C = F> class Solver;
+  template <unsigned DerivabilityOrder> class NTimesDerivableFunction;
+
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_FWD_HH

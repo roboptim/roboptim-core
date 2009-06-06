@@ -168,7 +168,7 @@ namespace roboptim
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
-    /// \param output stream
+    /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ();
 
   protected:

@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the Result class.
- */
-
 #ifndef ROBOPTIM_CORE_RESULT_HH
 # define ROBOPTIM_CORE_RESULT_HH
 # include <iostream>
@@ -28,26 +24,54 @@
 
 namespace roboptim
 {
-  /// \brief Result class, used to communicate the result.
+  /// \brief Represents the solution of an optimization problem.
+  ///
+  /// This class is returned by a solver if a result has been
+  /// found.
+  /// It is a set of mutable fields representing the solution
+  /// and its associated meta-information.
   class Result
   {
   public:
+    /// \brief Import size type from Function class.
     typedef Function::size_type size_type;
+    /// \brief Import vector type from Function class.
     typedef Function::vector_t vector_t;
 
-    explicit Result (const size_type,
-                     const size_type = 1) throw ();
+    /// \brief Instantiate a result and fix input/output sizes.
+    ///
+    /// \param inputSize input size value
+    /// \param outputSize output size value
+    explicit Result (const size_type inputSize, const outputSize = 1) throw ();
+
     virtual ~Result () throw ();
 
+    /// \brief Display the result on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ();
 
+    /// \brief Input size (i.e. argument size).
     size_type inputSize;
+    /// \brief Output size (i.e. result size).
     size_type outputSize;
+    /// \brief Point found by the solver.
     vector_t x;
+    /// /brief Function value at the solver found point.
     vector_t value;
+    /// /brief Lagrange multipliers.
     vector_t lambda;
   };
 
+  /// Example shows Result class use.
+  /// \example result.cc
+
+  /// \brief Override operator<< to handle result display.
+  ///
+  /// \param o output stream used for display
+  /// \param r result to be displayed
+  /// \return output stream
   std::ostream& operator<< (std::ostream& o, const Result& r);
 } // end of namespace roboptim
 

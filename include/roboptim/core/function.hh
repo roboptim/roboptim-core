@@ -146,7 +146,7 @@ namespace roboptim
     /// \return lower bound of the interval
     static double getLowerBound (const interval_t& interval) throw ()
     {
-      return interval->first;
+      return interval.first;
     }
 
     /// \brief Get the upper bound of an interval
@@ -154,7 +154,7 @@ namespace roboptim
     /// \return upper bound of the interval
     static double getUpperBound (const interval_t& interval) throw ()
     {
-      return interval->first;
+      return interval.second;
     }
 
     /// \}
@@ -273,7 +273,7 @@ namespace roboptim
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
-    /// \param output stream
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
 
   protected:
@@ -303,7 +303,7 @@ namespace roboptim
   /// @}
 
 
-  /// \brief Override operator to handle function display.
+  /// \brief Override operator<< to handle function display.
   ///
   /// \param o output stream used for display
   /// \param f function to be displayed

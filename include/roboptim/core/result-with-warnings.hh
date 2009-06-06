@@ -29,18 +29,37 @@
 
 namespace roboptim
 {
-  /// Retrieved when a result has been found but some problems
-  /// happened during the computation.
+  /// \brief Represents the solution of an optimization problem when
+  /// errors occurred during the solving process.
+  ///
+  /// This class is returned by a solver if a result has been
+  /// found, but some problems happened.
+  ///
+  /// A vector or warnings is provided in this result, otherwise the
+  /// class behaves like Result.
   class ResultWithWarnings : public Result
   {
   public:
-    explicit ResultWithWarnings (const Function::size_type,
-                                 const Function::size_type = 1)
+    /// \brief Instantiate the class from an input/output size.
+    ///
+    /// \param inputSize input size
+    /// \param outputSize output size
+    explicit ResultWithWarnings (const Function::size_type inputSize,
+                                 const Function::size_type outputSize = 1)
       throw ();
+
     ~ResultWithWarnings () throw ();
 
+    /// \brief Vector of warnings.
+    /// Each element of this vector is a potential problem that occurred during
+    /// the optimization.
     std::vector<SolverWarning> warnings;
 
+
+    /// \brief Display the result on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ();
   };
 

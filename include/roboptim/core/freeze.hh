@@ -76,10 +76,13 @@ namespace roboptim
     void impl_gradient (gradient_t& grad, const argument_t& x, int i)
       const throw ();
   private:
-    /// Vector which defines how to freeze values.
+    /// \brief Vector which defines how to freeze values.
     const frozenArguments_t frozenArguments_;
-
   };
+
+  /// Example shows freeze use.
+  /// \example freeze.cc
+
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_FREEZE_HH

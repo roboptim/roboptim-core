@@ -33,7 +33,7 @@ namespace roboptim
   /// \addtogroup roboptim_function
   /// @{
 
-  /// \brief Define a function which is derivable twice (\f$C^2\f$).
+  /// \brief Define an abstract function which is derivable twice (\f$C^2\f$).
   ///
   /// A twice derivable function is a derivable function
   /// which provides a way to compute its hessian.
@@ -114,7 +114,10 @@ namespace roboptim
     }
 
 
-    /// Display the function.
+    /// \brief Display the function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
 
   protected:
