@@ -31,10 +31,27 @@ namespace roboptim
   {
     namespace gnuplot
     {
+      /// \brief Import discrete interval type from function.
       typedef Function::discreteInterval_t discreteInterval_t;
 
-      Command plot (const Function&, discreteInterval_t);
-      Command plot_xy (const Function&, discreteInterval_t);
+      /// \brief Plot a 1D function with Gnuplot.
+      ///
+      /// Plot a 1D function in Gnuplot on a specific interval.
+      /// X axis is the function's argument, Y axis is result.
+      /// \param f function to be plotted
+      /// \param interval plot interval
+      /// \return Gnuplot command
+      Command plot (const Function& f, discreteInterval_t interval);
+
+      /// \brief Plot a 2D function with Gnuplot.
+      ///
+      /// Plot a 2D function in Gnuplot on a specific interval.
+      /// X and Y axises are the function result, the original
+      /// arguments are not displayed.
+      /// \param f function to be plotted
+      /// \param interval plot interval
+      /// \return Gnuplot command
+      Command plot_xy (const Function& f, discreteInterval_t interval);
 
 
       Command plot (const Function& f, discreteInterval_t window)

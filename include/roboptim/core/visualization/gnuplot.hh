@@ -30,19 +30,31 @@ namespace roboptim
 {
   namespace visualization
   {
+    /// \brief Gnuplot script
+    ///
+    /// This class gathers Gnuplot commands
+    /// to build a complete Gnuplot script.
+    /// Gnuplot commands can be inserted through
+    /// this object through the \c << operator
+    /// and this object can be put into an output stream
+    /// using the \c << operator.
     class Gnuplot
     {
     public:
       ~Gnuplot () throw ();
 
-      /// Instanciate a Gnuplot without setting a term.
+      /// \brief Instanciate a Gnuplot without setting a term.
+      /// \return Gnuplot instance
       static Gnuplot make_gnuplot () throw ()
       {
 	return Gnuplot ();
       }
 
-      /// Instanciate a Gnuplot suitable for interactive use.
-      /// (i.e. being seen by an user, not just rendering an image).
+      /// \brief Instanciate a Gnuplot suitable for interactive use.
+      ///
+      /// This initializes a persistent Gnuplot instance which are
+      /// suitable for user interaction.
+      /// \return Gnuplot instance
       static Gnuplot make_interactive_gnuplot () throw ()
       {
 	Gnuplot gp;
@@ -50,18 +62,42 @@ namespace roboptim
 	return gp;
       }
 
-      void push_command (gnuplot::Command) throw ();
+      /// \brief Add a new Gnuplot command to the script.
+      /// \param cmd command that will be pushed
+      void push_command (gnuplot::Command cmd) throw ();
 
+
+      /// \brief Display the Gnuplot script on the specified output stream.
+      ///
+      /// \param o output stream used for display
+      /// \return output stream
       std::ostream& print (std::ostream&) const throw ();
 
       Gnuplot& operator << (gnuplot::Command) throw ();
 
     protected:
+      /// \brief Default constructor can not be called directly.
+      ///
+      /// Use of the named constructor (see static methods) to
+      /// instantiate this class.
       explicit Gnuplot () throw ();
     private:
+      /// \brief Vector of commands.
       std::vector<gnuplot::Command> commands_;
     };
 
+    /// Example shows simple Gnuplot visualization.
+    /// \example visualization-gnuplot-simple.cc
+
+    /// Example shows function display with Gnuplot.
+    /// \example visualization-gnuplot-function.cc
+
+    /// \brief Override operator<< to handle Gnuplot command insertion.
+    ///
+    /// \tparam Gnuplot command type
+    /// \param gp Gnuplot script that will receive the new command
+    /// \param t new Gnuplot command.
+    /// \return modified Gnuplot script
     template <typename T>
     Gnuplot& operator<< (Gnuplot& gp, T t)
     {
@@ -69,7 +105,12 @@ namespace roboptim
       return gp;
     }
 
-    std::ostream& operator<< (std::ostream&, const Gnuplot&);
+    /// \brief Override operator<< to handle Gnuplot script display.
+    ///
+    /// \param o output stream used for display
+    /// \param gp Gnuplot script to be displayed
+    /// \return output stream
+    std::ostream& operator<< (std::ostream&, const Gnuplot& gp);
   } // end of namespace visualization.
 } // end of namespace roboptim.
 

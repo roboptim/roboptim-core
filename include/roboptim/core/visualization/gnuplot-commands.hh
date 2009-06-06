@@ -70,7 +70,7 @@ namespace roboptim
       /// Make a Gnuplot show command (show a variable value).
       /// \param var variable that will be shown
       /// \return Gnuplot command
-      Command show (const char*, const char*) throw ();
+      Command show (const char* var) throw ();
 
       /// \brief Make a Gnuplot clear command.
       ///

@@ -1,5 +1,13 @@
 2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document Gnuplot visualization.
+	* include/roboptim/core/visualization/gnuplot-commands.hh,
+	* include/roboptim/core/visualization/gnuplot-function.hh,
+	* include/roboptim/core/visualization/gnuplot.hh:
+	Document Gnuplot visualization.
+
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Document Gnuplot commands.
 	* include/roboptim/core/visualization/gnuplot-commands.hh: Here.
 
