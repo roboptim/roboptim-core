@@ -1,5 +1,10 @@
 2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Exclude roboptim::detail from documentation.
+	* doc/Doxyfile.in: Exclude implementation details.
+
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Document n-times-derivable.
 	* include/roboptim/core/n-times-derivable-function.hh: Document.
 
