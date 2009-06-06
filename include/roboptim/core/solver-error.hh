@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the SolverError class.
- */
-
 #ifndef ROBOPTIM_CORE_SOLVER_ERROR_HH
 # define ROBOPTIM_CORE_SOLVER_ERROR_HH
 # include <iostream>
@@ -26,17 +22,29 @@
 
 namespace roboptim
 {
-  /// \brief Base error.
-  /// All other errors inherits this class.
+  /// \brief Base exception class for solving errors.
+  /// All other exceptions classes concerning the optimization
+  /// process should inherits this class.
   class SolverError : public std::runtime_error
   {
   public:
+    /// \brief Instantiate an error from an error message.
+    /// \param arg error message.
     explicit SolverError (const std::string& arg) throw ();
 
+    /// \brief Display the error on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
   };
 
-  std::ostream& operator<< (std::ostream&, const SolverError&);
+  /// \brief Override operator<< to handle error display.
+  ///
+  /// \param o output stream used for display
+  /// \param e error to be displayed
+  /// \return output stream
+  std::ostream& operator<< (std::ostream& o, const SolverError& e);
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_SOLVER_ERROR_HH

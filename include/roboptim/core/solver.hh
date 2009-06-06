@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the Solver class.
- */
-
 #ifndef ROBOPTIM_CORE_SOLVER_HH
 # define ROBOPTIM_CORE_SOLVER_HH
 # include <boost/static_assert.hpp>
@@ -31,36 +27,74 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_problem
-     @{
-  */
+  /// \addtogroup roboptim_problem
+  /// @{
 
-  /// Define a solver for a class of problem.
+  /// \brief Solver for a specific problem class.
+  ///
+  /// This class is parametrized by two types:
+  /// the cost function type and the constraints type.
+  ///
+  /// Solver classes are immutable, the problem can
+  /// not be changed after the class instantiation.
+  ///
+  /// \tparam F cost function type
+  /// \tparam C constraints functions type
+  /// \pre F is a subtype of Function
   template <typename F, typename C>
   class Solver : public GenericSolver
   {
     BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
   public:
-
+    /// \brief Solver problem type.
+    ///
+    /// The solver can solve problems of this type.
+    /// If another kind of problem is given, a conversion will be
+    /// required.
     typedef Problem<F, C> problem_t;
 
-    explicit Solver (const problem_t&) throw ();
+    /// \brief Instantiate a solver from a problem.
+    ///
+    /// \param problem problem that should be solved
+    explicit Solver (const problem_t& problem) throw ();
 
+
+    /// \brief Instantiate a solver from a problem in a different problem class.
+    ///
+    /// This constructor is called when the problem cost function or/and
+    /// constraints type does not match solver's types.
+    ///
+    /// This is only possible if the problem provides too much information
+    /// compared to the solver requirements:
+    /// if the problem contains twice derivable function and the solver requires
+    /// only derivable function, it will work however the opposite will fail.
+    /// Problem compatibility is known at compile-time, so the failure will be
+    /// at compile-time.
+    ///
+    /// \tparam F_ original cost function type
+    /// \tparam C_ original constraints functions type
+    /// \param problem problem that should be solved
     template <typename F_, typename C_>
-    explicit Solver (const Problem<F_, C_>&) throw ();
+    explicit Solver (const Problem<F_, C_>& problem) throw ();
 
     ~Solver () throw ();
 
+    /// \brief Retrieve the problem.
+    /// \return problem this solver is solving
     const problem_t& problem () const throw ();
 
+    /// \brief Display the solver on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
   protected:
+    /// \brief Problem that will be solved.
     const problem_t problem_;
   };
-  /**
-     @}
-  */
+
+  /// @}
+
 } // end of namespace roboptim
 # include <roboptim/core/solver.hxx>
 #endif //! ROBOPTIM_CORE_SOLVER_HH

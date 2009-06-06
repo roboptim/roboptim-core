@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the GenericSolver class.
- */
-
 #ifndef ROBOPTIM_CORE_GENERIC_SOLVER_HH
 # define ROBOPTIM_CORE_GENERIC_SOLVER_HH
 # include <stdexcept>
@@ -34,16 +30,14 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_solver
-     @{
-  */
+  /// \addtogroup roboptim_solver
+  /// @{
 
-  /// Abstract interface satisfied by all solvers.
+  /// \brief Abstract interface satisfied by all solvers.
   class GenericSolver : public boost::noncopyable
   {
   public:
-    /// Define the kind of solution which has been found.
+    /// \brief Define the kind of solution which has been found.
     enum solutions {
       /// Solution has yet to be found.
       SOLVER_NO_SOLUTION,
@@ -55,47 +49,58 @@ namespace roboptim
       SOLVER_ERROR
     };
 
-    /// Vector type.
+    /// \brief Vector type imported from function class.
     typedef Function::vector_t vector_t;
 
-    /// Result type.
+    /// \brief Result type.
+    ///
+    /// Uses a Boost.Variant to represent the different possible results:
+    /// - no solution (problem not yet solved),
+    /// - result (problem has been solved successfully),
+    /// - result and warnings (problem solved but some errors happened),
+    /// - solver error (optimization has failed).
     typedef boost::variant<NoSolution,
                            Result,
                            ResultWithWarnings,
                            SolverError> result_t;
 
-     /// \name Constructors and destructors.
+    /// \name Constructors and destructors.
     /// \{
-    /// Main constructor.
     explicit GenericSolver () throw ();
-
-    /// Destructor.
     virtual ~GenericSolver () throw ();
     /// \}
 
+    /// \brief Force to restart the optimization.
     /// Reset the internal mechanism to force the solution to be
     /// re-computed next time getMinimum is called.
     void reset () throw ();
 
-    /// Solve the problem.
+    /// \brief Solve the problem.
     /// Called automatically by getMinimum if required.
     virtual void solve () throw () = 0;
 
-    /// Returns the function minimum (and solve the problem, if
-    /// it has not yet been solved).
+    /// \brief Returns the function minimum
+    /// This solves the problem automatically, if it has not yet been solved.
     const result_t& minimum () throw ();
 
-    /// Print function that may be overrided to be more specific.
+    /// \brief Display the solver on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
   protected:
-    /// Result of minimization.
+    /// /brief Optimization result.
     result_t result_;
   };
 
-  std::ostream& operator<< (std::ostream&, const GenericSolver&);
-  /**
-     @}
-  */
+  /// @}
+
+  /// \brief Override operator<< to handle solver display.
+  ///
+  /// \param o output stream used for display
+  /// \param gs solver to be displayed
+  /// \return output stream
+  std::ostream& operator<< (std::ostream&, const GenericSolver& gs);
 
 } // end of namespace roboptim
 

@@ -25,11 +25,21 @@
 
 namespace roboptim
 {
+  /// \brief Exception used for non-critical errors during optimization.
+  ///
+  /// This class is mainly used to populate the warning vector of the
+  /// ResultWithWarnings class.
   class SolverWarning : public SolverError
   {
   public:
+    /// \brief Instantiate the class with a message.
+    /// \param arg message
     explicit SolverWarning (const std::string& arg) throw ();
 
+    /// \brief Display the problem on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
   };
 } // end of namespace roboptim

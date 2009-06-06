@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the Problem class.
- */
-
 #ifndef ROBOPTIM_CORE_PROBLEM_HH
 # define ROBOPTIM_CORE_PROBLEM_HH
 # include <iostream>
@@ -32,12 +28,29 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_problem
-     @{
-  */
+  /// \addtogroup roboptim_problem
+  /// @{
 
-  /// Define a problem in a generic way.
+  /// \brief Optimization problem.
+  ///
+  /// An optimization problem is defined as:
+  /// - a cost function (\f$\mathbb{R}^n \rightarrow \mathbb{R}\f$)
+  /// - one or more constraints functions,
+  ///   (\f$\mathbb{R}^n \rightarrow \mathbb{R}^m\f$)
+  ///  associated with an interval and a scale,
+  /// - a set of intervals and scales for arguments.
+  /// .
+  ///
+  /// The goal of the optimization process is finding a point which
+  /// minimizes the cost function and which respects the constraints
+  /// (i.e. the result of some functions is inside of specific interval).
+  ///
+  /// To use the class, one has to instantiate a problem with
+  /// a reference to a cost function.
+  /// Then, constraints can be added through the addConstraint
+  /// method: a reference to a function and an interval is needed.
+  ///
+  /// The cost function is immutable.
   template <typename F, typename C>
   class Problem
   {
@@ -46,83 +59,131 @@ namespace roboptim
     template <typename F_, typename C_>
     friend class Problem;
 
-    /// Function type.
+    /// \brief Function type.
     typedef F function_t;
-    /// Constraint's type.
+    /// \brief Constraint's type.
     typedef C constraint_t;
 
-    // Import function's value_type type.
+    // \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
 
-    /// Constraints are represented as a vector of constraints.
+    /// \brief Constraints are represented as a vector of constraints.
     typedef std::vector<constraint_t> constraints_t;
 
-    /// Optional vector defines a starting point.
+    /// \brief Optional vector defines a starting point.
     typedef boost::optional<Function::vector_t> startingPoint_t;
 
     typedef Function::bound_t bound_t;
     typedef Function::bounds_t bounds_t;
 
-    /// Scale vector.
+    /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
 
+    /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
     explicit Problem (const function_t&) throw ();
 
-    /// Copy constructor.
+    /// \brief Copy constructor.
     explicit Problem (const Problem<F, C>&) throw ();
 
-    /// Copy constructor (convert from another class of problem).
+    /// \brief Copy constructor (convert from another class of problem).
     template <typename F_, typename C_>
     explicit Problem (const Problem<F_, C_>&) throw ();
 
     ~Problem () throw ();
 
+    /// \brief Retrieve cost function.
+    /// \return cost function
     const function_t& function () const throw ();
 
+    /// \brief Retrieve constraints.
+    /// \return constraints
     const constraints_t& constraints () const throw ();
 
-    void addConstraint (const C&, value_type = 1.)
-      throw (std::runtime_error);
-    void addConstraint (const C&, bound_t, value_type = 1.)
+    /// \brief Add a constraint to the problem.
+    /// \param constraint reference to the constraint to add
+    /// \param interval interval in which the constraint is satisfied
+    /// \param scale constraint scale
+    void addConstraint (const C& constraint, interval_t interval,
+			value_type scale = 1.)
       throw (std::runtime_error);
 
+    /// \brief Set the initial guess.
+    /// \return reference on the initial guess
     startingPoint_t& startingPoint () throw ();
+
+    /// \brief Get the initial guess.
+    /// \return reference on the initial guess
     const startingPoint_t& startingPoint () const throw ();
 
-    const bounds_t& bounds () const throw ();
-    bounds_t& argBounds () throw ();
-    const bounds_t& argBounds () const throw ();
+    /// \brief Retrieve constraints bounds.
+    /// \return constraints bounds
+    const intervals_t& bounds () const throw ();
 
+    /// \brief Retrieve arguments bounds.
+    /// Arguments bounds define in which interval
+    /// each argument is valid.
+    /// \return arguments bounds
+    intervals_t& argumentBounds () throw ();
+
+    /// \brief Retrieve arguments bounds.
+    /// Arguments bounds define in which interval
+    /// each argument is valid.
+    /// \return arguments bounds
+    const intervals_t& argumentBounds () const throw ();
+
+    /// \brief Retrieve constraints scales.
+    /// \return constraints scales
     const scales_t& scales () const throw ();
-    scales_t& argScales () throw ();
-    const scales_t& argScales () const throw ();
 
+    /// \brief Retrieve arguments scales.
+    /// Arguments scales define which scale is applied for
+    /// each argument.
+    /// \return arguments scales
+    scales_t& argumentScales () throw ();
+
+    /// \brief Retrieve arguments scales.
+    /// Arguments scales define which scale is applied for
+    /// each argument.
+    /// \return arguments scales
+    const scales_t& argumentScales () const throw ();
+
+    /// \brief Display the problem on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     std::ostream& print (std::ostream& o) const throw ();
 
-
   private:
-    // Objective function.
+    /// \brief Objective function.
     const function_t& function_;
-    // Starting point.
+    /// \brief Starting point.
     startingPoint_t startingPoint_;
-    // Vector of constraints.
+    /// \brief Vector of constraints.
     constraints_t constraints_;
 
-    /// Constraints bounds.
-    bounds_t bounds_;
-    /// Arguments bounds.
-    bounds_t argBounds_;
-    /// Constraints scale.
-    scales_t scales_;
-    /// Arguments' scales.
-    scales_t argScales_;
+    /// \brief Constraints intervals.
+    intervals_t bounds_;
+    /// \brief Arguments intervals.
+    intervals_t argumentBounds_;
+    /// \brief Constraints scale.
+    intervals_t scales_;
+    /// \brief Arguments' scales.
+    intervals_t argumentScales_;
   };
 
+  /// Example shows problem class use.
+  /// \example problem-cc.cc
+
+  /// @}
+
+  /// \brief Override operator<< to handle problem display.
+  ///
+  /// \param o output stream used for display
+  /// \param pb problem to be displayed
+  /// \return output stream
   template <typename F, typename C>
   std::ostream& operator<< (std::ostream& o, const Problem<F, C>& pb);
-  /**
-     @}
-  */
+
 } // end of namespace roboptim
 # include <roboptim/core/problem.hxx>
 #endif //! ROBOPTIM_CORE_PROBLEM_HH

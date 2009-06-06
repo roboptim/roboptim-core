@@ -138,6 +138,7 @@ namespace roboptim
     /// \brief Computes the gradient.
     ///
     /// \param argument point at which the gradient will be computed
+    /// \param functionId function id in split representation
     /// \return gradient vector
     gradient_t gradient (const argument_t& argument,
 			 int functionId = 0) const throw ()
@@ -154,6 +155,7 @@ namespace roboptim
     /// or after the gradient computation.
     /// \param gradient gradient will be stored in this argument
     /// \param argument point at which the gradient will be computed
+    /// \param functionId function id in split representation
     /// \return gradient vector
     void gradient (gradient_t& gradient,
 		   const argument_t& argument,

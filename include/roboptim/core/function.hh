@@ -97,7 +97,7 @@ namespace roboptim
       return std::numeric_limits<Function::value_type>::infinity ();
     }
 
-    /// Interval
+    /// \name Interval
     /// \{
 
     /// \brief Interval type (lower, upper).
@@ -128,17 +128,17 @@ namespace roboptim
     /// \brief Construct an interval from a lower bound.
     /// \param l lower bound
     /// \return interval representing \f$[l, +\infty]\f$
-    static interval_t makeLowerInterval (value_type u) throw ()
+    static interval_t makeLowerInterval (value_type l) throw ()
     {
-      return makeInterval (-Function::infinity  (), u);
+      return makeInterval (l, Function::infinity  ());
     }
 
     /// \brief Construct an interval from an upper bound.
     /// \param u upper bound
     /// \return interval representing \f$[-\infty, u]\f$
-    static interval_t makeUpperInterval (value_type l) throw ()
+    static interval_t makeUpperInterval (value_type u) throw ()
     {
-      return makeInterval (l, Function::infinity  ());
+      return makeInterval (-Function::infinity  (), u);
     }
 
     /// \brief Get the lower bound of an interval
@@ -159,7 +159,7 @@ namespace roboptim
 
     /// \}
 
-    /// Discrete interval
+    /// \name Discrete interval
     /// \{
 
     /// \brief Types representing a discrete interval.
@@ -290,7 +290,7 @@ namespace roboptim
     /// \warning Do not call this function directly, call #operator() instead.
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
-    virtual void impl_compute (result_t&, const argument_t&)
+    virtual void impl_compute (result_t& result, const argument_t& argument)
       const throw () = 0;
 
   private:

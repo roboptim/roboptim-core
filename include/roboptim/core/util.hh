@@ -29,11 +29,11 @@ namespace roboptim
   namespace detail
   {
     /// \internal
-    /// Copy the content of a uBLAS vector into a C array.
+    /// \brief Copy the content of a uBLAS vector into a C array.
     void vector_to_array (Function::value_type* dst, const Function::vector_t& src);
 
     /// \internal
-    /// Copy the content of a C array into a uBLAS vector.
+    /// \brief Copy the content of a C array into a uBLAS vector.
     void array_to_vector (Function::vector_t& dst, const Function::value_type* src);
 
     /// \internal
@@ -46,12 +46,19 @@ namespace roboptim
                              const DerivableFunction::vector_t& x);
   } // end of namespace detail.
 
+  /// \brief Display a two types boost variant.
+  /// This command will fail if T1 or T2 is not displayable
+  /// (i.e. the operator<< is not overloaded for these types).
+  /// \tparam T1 first boost variant type
+  /// \tparam T2 second boost variant type
   template <typename T1, typename T2>
   std::ostream& operator<< (std::ostream&, const boost::variant<T1, T2>&);
 
+  /// \brief Display a vector.
   template <typename T>
   std::ostream& operator<< (std::ostream&, const std::vector<T>&);
 
+  /// \brief Display a pair.
   template <typename T1, typename T2>
   std::ostream& operator<< (std::ostream&, const std::pair<T1, T2>&);
 } // end of namespace roboptim.

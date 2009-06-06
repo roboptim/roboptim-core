@@ -45,18 +45,18 @@ namespace roboptim
       startingPoint_ (),
       constraints_ (),
       bounds_ (),
-      argBounds_ (f.inputSize ()),
+      argumentBounds_ (f.inputSize ()),
       scales_ (),
-      argScales_ (f.inputSize ())
+      argumentScales_ (f.inputSize ())
   {
     // Check that in the objective function m = 1 (R^n -> R).
     assert (f.outputSize () == 1);
 
     // Initialize bound.
-    std::fill (argBounds_.begin (), argBounds_.end (),
+    std::fill (argumentBounds_.begin (), argumentBounds_.end (),
 	       Function::makeInfiniteBound ());
     // Initialize scale.
-    std::fill (argScales_.begin (), argScales_.end (), 1.);
+    std::fill (argumentScales_.begin (), argumentScales_.end (), 1.);
   }
 
   template <typename F, typename C>
@@ -71,9 +71,9 @@ namespace roboptim
       startingPoint_ (pb.startingPoint_),
       constraints_ (pb.constraints_),
       bounds_ (pb.bounds_),
-      argBounds_ (pb.argBounds_),
+      argumentBounds_ (pb.argumentBounds_),
       scales_ (pb.scales_),
-      argScales_ (pb.argScales_)
+      argumentScales_ (pb.argumentScales_)
   {
   }
 
@@ -85,9 +85,9 @@ namespace roboptim
       startingPoint_ (pb.startingPoint_),
       constraints_ (),
       bounds_ (pb.bounds_),
-      argBounds_ (pb.argBounds_),
+      argumentBounds_ (pb.argumentBounds_),
       scales_ (pb.scales_),
-      argScales_ (pb.argScales_)
+      argumentScales_ (pb.argumentScales_)
   {
     // Check that F is a subtype of F_.
     BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
@@ -117,15 +117,7 @@ namespace roboptim
 
   template <typename F, typename C>
   void
-  Problem<F, C>::addConstraint (const C& x, value_type s)
-    throw (std::runtime_error)
-  {
-    addConstraint (x, Function::makeInfiniteBound (), s);
-  }
-
-  template <typename F, typename C>
-  void
-  Problem<F, C>::addConstraint (const C& x, bound_t b, value_type s)
+  Problem<F, C>::addConstraint (const C& x, interval_t b, value_type s)
     throw (std::runtime_error)
   {
     assert (b.first <= b.second);
@@ -149,24 +141,24 @@ namespace roboptim
   }
 
   template <typename F, typename C>
-  const typename Problem<F, C>::bounds_t&
+  const typename Problem<F, C>::intervals_t&
   Problem<F, C>::bounds () const throw ()
   {
     return bounds_;
   }
 
   template <typename F, typename C>
-  typename Problem<F, C>::bounds_t&
-  Problem<F, C>::argBounds () throw ()
+  typename Problem<F, C>::intervals_t&
+  Problem<F, C>::argumentBounds () throw ()
   {
-    return argBounds_;
+    return argumentBounds_;
   }
 
   template <typename F, typename C>
-  const typename Problem<F, C>::bounds_t&
-  Problem<F, C>::argBounds () const throw ()
+  const typename Problem<F, C>::intervals_t&
+  Problem<F, C>::argumentBounds () const throw ()
   {
-    return argBounds_;
+    return argumentBounds_;
   }
 
   template <typename F, typename C>
@@ -178,16 +170,16 @@ namespace roboptim
 
   template <typename F, typename C>
   typename Problem<F, C>::scales_t&
-  Problem<F, C>::argScales () throw ()
+  Problem<F, C>::argumentScales () throw ()
   {
-    return argScales_;
+    return argumentScales_;
   }
 
   template <typename F, typename C>
   const typename Problem<F, C>::scales_t&
-  Problem<F, C>::argScales () const throw ()
+  Problem<F, C>::argumentScales () const throw ()
   {
-    return argScales_;
+    return argumentScales_;
   }
 
 
@@ -217,9 +209,9 @@ namespace roboptim
     o << function () << iendl;
 
     // Arguments' bounds.
-    o << "Argument's bounds: " << argBounds () << iendl;
+    o << "Argument's bounds: " << argumentBounds () << iendl;
     // Arguments' scales.
-    o << "Argument's scales: " << argScales () << iendl;
+    o << "Argument's scales: " << argumentScales () << iendl;
 
     // Constraints.
     if (constraints ().empty ())
