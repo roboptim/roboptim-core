@@ -83,9 +83,9 @@ namespace roboptim
       }
 
       Command
-      show (const char* var, const char* value) throw ()
+      show (const char* var) throw ()
       {
-	return Command ((boost::format ("show %1% %2%") % var % value).str ());
+	return Command ((boost::format ("show %1%") % var).str ());
       }
 
       GNUPLOT_UNARY_COMMAND (clear)
