@@ -1,5 +1,10 @@
 2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document Gnuplot commands.
+	* include/roboptim/core/visualization/gnuplot-commands.hh: Here.
+
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	More documentation.
 	* include/roboptim/core/derivable-function.hh,
 	* include/roboptim/core/function.hh,
