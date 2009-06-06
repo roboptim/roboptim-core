@@ -4,6 +4,24 @@
 	* include/roboptim/core/derivable-function.hh,
 	* include/roboptim/core/finite-difference-gradient.hh,
 	* include/roboptim/core/freeze.hh,
+	* include/roboptim/core/fwd.hh,
+	* include/roboptim/core/numeric-linear-function.hh,
+	* include/roboptim/core/numeric-quadratic-function.hh,
+	* include/roboptim/core/problem.hh,
+	* include/roboptim/core/problem.hxx,
+	* include/roboptim/core/result.hh,
+	* include/roboptim/core/twice-derivable-function.hh,
+	* src/finite-difference-gradient.cc,
+	* src/numeric-linear-function.cc,
+	* src/numeric-quadratic-function.cc:
+	Document and clean.
+
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Document and clean.
+	* include/roboptim/core/derivable-function.hh,
+	* include/roboptim/core/finite-difference-gradient.hh,
+	* include/roboptim/core/freeze.hh,
 	* include/roboptim/core/function.hh,
 	* include/roboptim/core/fwd.hh,
 	* include/roboptim/core/indent.hh,

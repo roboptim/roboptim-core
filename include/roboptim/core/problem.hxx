@@ -45,7 +45,7 @@ namespace roboptim
 
     // Initialize bound.
     std::fill (argumentBounds_.begin (), argumentBounds_.end (),
-	       Function::makeInfiniteBound ());
+	       Function::makeInfiniteInterval ());
     // Initialize scale.
     std::fill (argumentScales_.begin (), argumentScales_.end (), 1.);
   }

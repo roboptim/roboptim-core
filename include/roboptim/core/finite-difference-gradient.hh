@@ -54,7 +54,9 @@ namespace roboptim
 
   protected:
     void impl_compute (result_t&, const argument_t&) const throw ();
-    void impl_gradient (gradient_t&, const argument_t&, int) const throw ();
+    void impl_gradient (gradient_t&, const argument_t& argument, size_type = 0)
+      const throw ();
+    void impl_gradient (gradient_t&, const argument_t&, int = 0) const throw ();
 
     /// \brief Reference to the wrapped function.
     const Function& adaptee_;

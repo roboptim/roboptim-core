@@ -45,7 +45,8 @@ namespace roboptim
     ///
     /// \param inputSize input size value
     /// \param outputSize output size value
-    explicit Result (const size_type inputSize, const outputSize = 1) throw ();
+    explicit Result (const size_type inputSize,
+		     const size_type outputSize = 1) throw ();
 
     virtual ~Result () throw ();
 

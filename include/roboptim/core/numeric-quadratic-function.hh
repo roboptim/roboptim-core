@@ -59,10 +59,11 @@ namespace roboptim
 
   protected:
     void impl_compute (result_t& , const vector_t&) const throw ();
-    void impl_gradient (gradient_t&, const vector_t&, int = 0) const throw ();
+    void impl_gradient (gradient_t&, const vector_t&, size_type = 0)
+      const throw ();
     void impl_hessian (hessian_t& hessian,
 		       const argument_t& argument,
-		       int functionId = 0) const throw ();
+		       size_type functionId = 0) const throw ();
   private:
     /// \brief A matrix.
     symmetric_t a_;

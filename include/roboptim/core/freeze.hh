@@ -71,7 +71,7 @@ namespace roboptim
     template <typename F, typename C>
     void addToProblem (Problem<F, C>& pb) throw ()
     {
-      pb.addConstraint (this, Function::makeBound (-1., -1.));
+      pb.addConstraint (this, Function::makeInterval (-1., -1.));
     }
 
   protected:

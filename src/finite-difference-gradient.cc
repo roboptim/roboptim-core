@@ -48,7 +48,7 @@ namespace roboptim
   void
   FiniteDifferenceGradient::impl_gradient (gradient_t& gradient,
 					   const argument_t& argument,
-					   int idFunction) const throw ()
+					   size_type idFunction) const throw ()
   {
     assert (outputSize () - idFunction > 0);
 

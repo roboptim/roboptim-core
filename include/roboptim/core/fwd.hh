@@ -42,11 +42,11 @@ namespace roboptim
   class Result;
   class ResultWithWarnings;
   class SolverError;
-  class SolverFactory< T >;
   class SolverWarning;
   class TwiceDerivableFunction;
   template <typename F, typename C = F> class Problem;
   template <typename F, typename C = F> class Solver;
+  template <typename T> class SolverFactory;
   template <unsigned DerivabilityOrder> class NTimesDerivableFunction;
 
 } // end of namespace roboptim.

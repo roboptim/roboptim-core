@@ -29,7 +29,7 @@
 
 namespace roboptim
 {
-  NumericQuadraticFunction::NumericQuadraticFunction (const matrix_t& a,
+  NumericQuadraticFunction::NumericQuadraticFunction (const symmetric_t& a,
                                                       const vector_t& b)
     throw ()
     : QuadraticFunction (a.size1 (), 1),
@@ -62,7 +62,7 @@ namespace roboptim
   void
   NumericQuadraticFunction::impl_gradient (result_t& result,
 					   const argument_t& x,
-					   int) const throw ()
+					   size_type) const throw ()
   {
     using namespace boost::numeric::ublas;
     noalias (result) = prod (x, a_) + b_;
@@ -72,7 +72,7 @@ namespace roboptim
   void
   NumericQuadraticFunction::impl_hessian (hessian_t& hessian,
 					  const argument_t&,
-					  int) const throw ()
+					  size_type) const throw ()
   {
     hessian = a_;
   }

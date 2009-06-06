@@ -73,8 +73,8 @@ namespace roboptim
     /// \brief Optional vector defines a starting point.
     typedef boost::optional<Function::vector_t> startingPoint_t;
 
-    typedef Function::bound_t bound_t;
-    typedef Function::bounds_t bounds_t;
+    typedef Function::interval_t interval_t;
+    typedef Function::intervals_t intervals_t;
 
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;

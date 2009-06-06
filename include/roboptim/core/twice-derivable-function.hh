@@ -86,7 +86,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     /// \return computed hessian
     hessian_t hessian (const argument_t& argument,
-		       int functionId = 0) const throw ()
+		       size_type functionId = 0) const throw ()
     {
       hessian_t hessian (hessianSize ().first, hessianSize ().second);
       hessian.clear ();
@@ -102,7 +102,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     void hessian (hessian_t& hessian,
 		  const argument_t& argument,
-		  int functionId = 0) const throw ()
+		  size_type functionId = 0) const throw ()
     {
       assert (isValidHessian (hessian));
       this->impl_hessian (hessian, argument, functionId);
@@ -135,7 +135,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     virtual void impl_hessian (hessian_t& hessian,
 			       const argument_t& argument,
-			       int functionId = 0) const throw () = 0;
+			       size_type functionId = 0) const throw () = 0;
   };
 
   /// @}
