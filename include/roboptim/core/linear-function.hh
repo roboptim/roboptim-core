@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the LinearFunction class.
- */
-
 #ifndef ROBOPTIM_CORE_LINEAR_FUNCTION_HH
 # define ROBOPTIM_CORE_LINEAR_FUNCTION_HH
 # include <limits>
@@ -26,25 +22,33 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_function
-     @{
-  */
+  /// \addtogroup roboptim_function
+  /// @{
 
-  /// Define a linear function.
+  /// /brief Define a linear function.
+  ///
+  /// Inherit from this class when implementing linear functions.
   class LinearFunction : public QuadraticFunction
   {
   public:
-    LinearFunction (size_type n, size_type m = 1) throw ();
+    /// \brief Concrete class constructor should call this constructor.
+    ///
+    /// \param inputSize function arity
+    /// \param outputSize result size
+    LinearFunction (size_type inputSize, size_type outputSize = 1) throw ();
 
+    /// \brief Display the function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
   protected:
     void impl_hessian (hessian_t& hessian,
 		       const argument_t& argument,
 		       int functionId = 0) const throw ();
   };
-  /**
-     @}
-  */
+
+  /// @}
+
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HH

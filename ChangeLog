@@ -1,5 +1,11 @@
 2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document linear and quadratic functions.
+	* include/roboptim/core/linear-function.hh,
+	* include/roboptim/core/quadratic-function.hh: Document.
+
+2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Exclude roboptim::detail from documentation.
 	* doc/Doxyfile.in: Exclude implementation details.
 

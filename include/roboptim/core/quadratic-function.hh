@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the QuadraticFunction class.
- */
-
 #ifndef ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH
 # define ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH
 # include <limits>
@@ -27,21 +23,29 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_function
-     @{
-  */
+  /// \addtogroup roboptim_function
+  /// @{
 
-  /// Define a quadratic function.
+  /// \brief Define a quadratic function.
+  ///
+  /// Inherit from this class when implementing quadratic functions.
   class QuadraticFunction : public TwiceDerivableFunction
   {
   public:
-    QuadraticFunction (size_type n, size_type m = 1) throw ();
+    /// \brief Concrete class constructor should call this constructor.
+    ///
+    /// \param inputSize function arity
+    /// \param outputSize result size
+    QuadraticFunction (size_type inputSize, size_type outputSize = 1) throw ();
 
+    /// \brief Display the function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
   };
-  /**
-     @}
-  */
+
+  /// @}
+
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH
