@@ -25,6 +25,9 @@ namespace roboptim
   {
     namespace gnuplot
     {
+      /// \addtogroup roboptim_visualization
+      /// @{
+
       /// \brief Gnuplot command.
       ///
       /// A command represents a Gnuplot command.
@@ -121,6 +124,8 @@ namespace roboptim
       /// \param topic help topic
       /// \return Gnuplot command
       Command help (const char* topic = "") throw ();
+
+      /// @}
 
     } // end of namespace gnuplot.
   } // end of namespace visualization.

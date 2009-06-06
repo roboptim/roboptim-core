@@ -31,6 +31,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_problem
+  /// @{
+
   /// \brief Define a solver factory that instanciate the plug-ins.
   ///
   /// The solver factory has to be used to instantiate solvers which
@@ -78,6 +81,8 @@ namespace roboptim
     /// \brief Allocated solver.
     solver_t* solver_;
   };
+
+  /// @}
 
 } // end of namespace roboptim
 

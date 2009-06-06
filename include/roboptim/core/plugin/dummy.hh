@@ -16,29 +16,35 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 
-/**
- * \brief Implementation of the dummy module (always fail).
- */
-
 #ifndef ROBOPTIM_CORE_DUMMY_HH
 # define ROBOPTIM_CORE_DUMMY_HH
 # include <roboptim/core/solver.hh>
 
 namespace roboptim
 {
-  /// Dummy solver which always fails.
+  /// \brief Dummy solver which always fails.
+  ///
+  /// This solver always fails but is always available
+  /// as it does not rely on the plug-in mechanism.
+  ///
+  /// It is also a good starting point for users that
+  /// want to develop their own solver.
   class DummySolver : public Solver<Function, const Function*>
   {
   public:
-    /// Define parent's type.
+    /// \brief Define parent's type.
     typedef Solver<Function, const Function*> parent_t;
 
-    /// Constructor.
-    explicit DummySolver (const problem_t&) throw ();
-    /// Destructor.
+    /// \brief Build a solver from a problem.
+    /// \param problem problem that will be solved
+    explicit DummySolver (const problem_t& problem) throw ();
+
     virtual ~DummySolver () throw ();
 
-    /// Implement the solve algorithm.
+    /// \brief Implement the solve algorithm.
+    ///
+    /// Implement the solve method as required by the
+    /// #GenericSolver class.
     virtual void solve () throw ();
   };
 

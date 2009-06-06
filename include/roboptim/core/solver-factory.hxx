@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Implementation of the Solver class.
- */
-
 #ifndef ROBOPTIM_CORE_SOLVER_FACTORY_HXX
 # define ROBOPTIM_CORE_SOLVER_FACTORY_HXX
 # include <sstream>

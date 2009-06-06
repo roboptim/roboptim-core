@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Implementation of the Problem class.
- */
-
 #ifndef ROBOPTIM_CORE_PROBLEM_HXX
 # define ROBOPTIM_CORE_PROBLEM_HXX
 # include <algorithm>
@@ -34,11 +30,6 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_problem
-     @{
-  */
-
   template <typename F, typename C>
   Problem<F, C>::Problem (const function_t& f) throw ()
     : function_ (f),
@@ -257,8 +248,5 @@ namespace roboptim
   {
     return pb.print (o);
   }
-  /**
-     @}
-  */
-}; // end of namespace roboptim
+} // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_PROBLEM_HH

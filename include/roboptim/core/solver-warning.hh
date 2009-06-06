@@ -15,16 +15,15 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the SolverWarning class.
- */
-
 #ifndef ROBOPTIM_CORE_SOLVER_WARNING_HH
 # define ROBOPTIM_CORE_SOLVER_WARNING_HH
 # include <roboptim/core/solver-error.hh>
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_problem
+  /// @{
+
   /// \brief Exception used for non-critical errors during optimization.
   ///
   /// This class is mainly used to populate the warning vector of the
@@ -42,6 +41,8 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
   };
+
+  /// @}
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_SOLVER_ERROR_HH

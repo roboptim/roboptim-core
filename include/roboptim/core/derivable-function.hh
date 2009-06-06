@@ -24,7 +24,7 @@
 
 namespace roboptim
 {
-  /// \addtogroup roboptim_function
+  /// \addtogroup roboptim_meta_function
   /// @{
 
   /// \brief Define an abstract derivable function (\f$C^1\f$).

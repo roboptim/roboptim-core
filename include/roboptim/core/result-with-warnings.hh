@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the ResultWithWarnings class.
- */
-
 #ifndef ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH
 # define ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH
 # include <vector>
@@ -29,6 +25,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_problem
+  /// @{
+
   /// \brief Represents the solution of an optimization problem when
   /// errors occurred during the solving process.
   ///
@@ -62,6 +61,8 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ();
   };
+
+  /// @}
 
 } // end of namespace roboptim
 

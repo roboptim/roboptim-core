@@ -22,6 +22,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_problem
+  /// @{
+
   /// \brief Base exception class for solving errors.
   /// All other exceptions classes concerning the optimization
   /// process should inherits this class.
@@ -38,6 +41,8 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
   };
+
+  /// @}
 
   /// \brief Override operator<< to handle error display.
   ///

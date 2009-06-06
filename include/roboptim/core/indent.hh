@@ -15,11 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-
-/**
- * \brief Declaration of indentation related methods.
- */
-
 #ifndef ROBOPTIM_CORE_INDENT_HH
 # define ROBOPTIM_CORE_INDENT_HH
 # include <iosfwd>

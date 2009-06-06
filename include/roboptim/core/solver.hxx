@@ -15,20 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Implementation of the Solver class.
- */
-
 #ifndef ROBOPTIM_CORE_SOLVER_HXX
 # define ROBOPTIM_CORE_SOLVER_HXX
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_solver
-     @{
-  */
-
   template <typename F, typename C>
   Solver<F, C>::Solver (const problem_t& pb) throw ()
     : GenericSolver (),
@@ -62,8 +53,5 @@ namespace roboptim
   {
     return o << problem_;
   }
-  /**
-     @}
-  */
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_SOLVER_HH

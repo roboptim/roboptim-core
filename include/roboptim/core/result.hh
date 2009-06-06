@@ -24,6 +24,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_problem
+  /// @{
+
   /// \brief Represents the solution of an optimization problem.
   ///
   /// This class is returned by a solver if a result has been
@@ -66,6 +69,8 @@ namespace roboptim
 
   /// Example shows Result class use.
   /// \example result.cc
+
+  /// @}
 
   /// \brief Override operator<< to handle result display.
   ///

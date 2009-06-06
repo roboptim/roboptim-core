@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the NumericQuadraticFunction class.
- */
-
 #ifndef ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HH
 # define ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HH
 # include <boost/numeric/ublas/symmetric.hpp>
@@ -27,21 +23,38 @@
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_function
-     @{
-  */
   namespace ublas = boost::numeric::ublas;
 
-  /// Define a quadratic function.
+  /// \addtogroup roboptim_function
+  /// @{
+
+  /// \brief Build a quadratic function from a matrix and a vector.
+  ///
+  /// Implement a quadratic function using the general formula:
+  /// \f[f(x) = \frac{1}{2} x^t A x + b^t x\f]
+  /// where \f$A\f$ and \f$B\f$ are set when the class is instantiated.
+  ///
+  /// \note A is a symmetric matrix.
   class NumericQuadraticFunction : public QuadraticFunction
   {
   public:
-    NumericQuadraticFunction (const matrix_t&, const vector_t&)
+    /// \brief Symmetric matrix type.
+    typedef ublas::symmetric_matrix<double, ublas::lower> symmetric_t;
+
+    /// \brief Build a quadratic function from a matrix and a vector.
+    ///
+    /// See class documentation for A and b definition.
+    /// \param A A symmetric matrix
+    /// \param b b vector
+    NumericQuadraticFunction (const symmetric_t& A, const vector_t& b)
       throw ();
 
     ~NumericQuadraticFunction () throw ();
 
+    /// \brief Display the function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
 
   protected:
@@ -51,12 +64,17 @@ namespace roboptim
 		       const argument_t& argument,
 		       int functionId = 0) const throw ();
   private:
-    ublas::symmetric_matrix<double, ublas::lower> a_;
+    /// \brief A matrix.
+    symmetric_t a_;
+    /// \brief B vector.
     vector_t b_;
   };
-/**
-   @}
-*/
+
+  /// Example shows numeric quadratic function use.
+  /// \example numeric-quadratic-function.cc
+
+  /// @}
 
 } // end of namespace roboptim
+
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH

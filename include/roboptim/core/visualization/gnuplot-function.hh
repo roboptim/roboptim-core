@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Gnuplot visualization.
- */
-
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_FUNCTION_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_FUNCTION_HH
 # include <boost/format.hpp>
@@ -31,6 +27,9 @@ namespace roboptim
   {
     namespace gnuplot
     {
+      /// \addtogroup roboptim_visualization
+      /// @{
+
       /// \brief Import discrete interval type from function.
       typedef Function::discreteInterval_t discreteInterval_t;
 
@@ -109,8 +108,8 @@ namespace roboptim
 	return Command (str);
       }
 
+      /// @}
     } // end of namespace gnuplot.
-
   } // end of namespace visualization.
 } // end of namespace roboptim.
 

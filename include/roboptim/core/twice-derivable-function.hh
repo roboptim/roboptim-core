@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the TwiceDerivableFunction class.
- */
-
 #ifndef ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH
 # include <limits>
@@ -30,7 +26,7 @@
 
 namespace roboptim
 {
-  /// \addtogroup roboptim_function
+  /// \addtogroup roboptim_meta_function
   /// @{
 
   /// \brief Define an abstract function which is derivable twice (\f$C^2\f$).

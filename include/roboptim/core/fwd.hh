@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Forward declarations.
- */
-
 #ifndef ROBOPTIM_CORE_FWD_HH
 # define ROBOPTIM_CORE_FWD_HH
 

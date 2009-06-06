@@ -15,20 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Class NTimesDerivable implementation.
- */
-
 #ifndef ROBOPTIM_CORE_N_TIMES_DERIVABLE_HXX
 # define ROBOPTIM_CORE_N_TIMES_DERIVABLE_HXX
 
 namespace roboptim
 {
-  /**
-     \addtogroup roboptim_function
-     @{
-  */
-
   template <unsigned dorder>
   NTimesDerivableFunction<dorder>::~NTimesDerivableFunction () throw ()
   {
@@ -43,8 +34,5 @@ namespace roboptim
     return o;
   }
 
-/**
-   @}
-*/
 }
 #endif //! ROBOPTIM_CORE_N_TIMES_DERIVABLE_HXX

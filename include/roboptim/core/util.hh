@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-
-/**
- * \brief Useful procedures declaration.
- */
 #ifndef ROBOPTIM_CORE_UTIL_HH
 # define ROBOPTIM_CORE_UTIL_HH
 # include <boost/variant.hpp>

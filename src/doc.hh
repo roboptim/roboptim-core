@@ -746,14 +746,7 @@ int run_test ()
   for the end user of this library.
 */
 
-/**
-\defgroup roboptim_function Mathematical functions
-*/
-
-/**
-\defgroup roboptim_problem Optimization problems
-*/
-
-/**
-\defgroup roboptim_solver Optimization solvers
-*/
+/// \defgroup roboptim_meta_function Mathematical abstract functions
+/// \defgroup roboptim_function Mathematical functions
+/// \defgroup roboptim_problem Optimization problems
+/// \defgroup roboptim_solver Optimization solvers

@@ -26,6 +26,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_function
+  /// @{
+
   /// \brief Constraint that can be used to force some arguments values.
   ///
   /// This constraint expects a vector of pairs (argument id, value) to
@@ -82,6 +85,8 @@ namespace roboptim
 
   /// Example shows freeze use.
   /// \example freeze.cc
+
+  /// @}
 
 } // end of namespace roboptim.
 

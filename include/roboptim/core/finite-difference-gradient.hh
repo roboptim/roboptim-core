@@ -23,6 +23,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_function
+  /// @{
+
   /// \brief Compute automatically a gradient with finite differences.
   ///
   /// Finite difference gradient is a method to approximate a function's
@@ -77,6 +80,8 @@ namespace roboptim
 
   /// Example shows finite differences gradient use.
   /// \example finite-difference-gradient.cc
+
+  /// @}
 
 } // end of namespace roboptim
 

@@ -23,10 +23,10 @@
 
 namespace roboptim
 {
-  /// \addtogroup roboptim_function
+  /// \addtogroup roboptim_meta_function
   /// @{
 
-  /// \brief Define a quadratic function.
+  /// \brief Define an abstract quadratic function.
   ///
   /// Inherit from this class when implementing quadratic functions.
   class QuadraticFunction : public TwiceDerivableFunction

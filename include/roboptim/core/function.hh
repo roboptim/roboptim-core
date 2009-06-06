@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Declaration of the Function class.
- */
-
 #ifndef ROBOPTIM_CORE_FUNCTION_HH
 # define ROBOPTIM_CORE_FUNCTION_HH
 # include <iostream>
@@ -35,7 +31,7 @@ namespace roboptim
 {
   namespace ublas = boost::numeric::ublas;
 
-  /// \addtogroup roboptim_function
+  /// \addtogroup roboptim_meta_function
   /// @{
 
   /// \brief Define an abstract mathematical function (\f$C^0\f$).

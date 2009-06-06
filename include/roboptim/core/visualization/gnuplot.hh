@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * \brief Gnuplot visualization.
- */
-
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_HH
 # include <vector>
@@ -30,6 +26,9 @@ namespace roboptim
 {
   namespace visualization
   {
+    /// \addtogroup roboptim_visualization
+    /// @{
+
     /// \brief Gnuplot script
     ///
     /// This class gathers Gnuplot commands
@@ -104,6 +103,8 @@ namespace roboptim
       gp.push_command (t ());
       return gp;
     }
+
+    /// @}
 
     /// \brief Override operator<< to handle Gnuplot script display.
     ///
