@@ -113,6 +113,7 @@ namespace roboptim
 	  break;
 	}
       assert (0);
+      return SOLVER_ERROR;
     }
 
     /// \brief Get real result.
