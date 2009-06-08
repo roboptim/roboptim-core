@@ -20,6 +20,7 @@
 
 using namespace roboptim;
 
+// Define a 10 times derivable null function.
 struct F : public NTimesDerivableFunction<10>
 {
   F () : NTimesDerivableFunction<10> (4)
