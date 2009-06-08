@@ -1,5 +1,10 @@
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix typo.
+	* include/roboptim/core/linear-function.hh: Here.
+
+2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix Doxygen documentation.
 	* include/roboptim/core/fwd.hh,
 	* include/roboptim/core/n-times-derivable-function.hh,

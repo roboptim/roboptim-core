@@ -25,7 +25,7 @@ namespace roboptim
   /// \addtogroup roboptim_meta_function
   /// @{
 
-  /// /brief Define an abstract linear function.
+  /// \brief Define an abstract linear function.
   ///
   /// Inherit from this class when implementing linear functions.
   class LinearFunction : public QuadraticFunction
