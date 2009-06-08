@@ -97,7 +97,7 @@ namespace roboptim
     /// \brief Determine real minimum type.
     ///
     /// \return value representing result type
-    solutions mimimumType () throw ()
+    solutions minimumType () throw ()
     {
       switch (minimum ().which ())
 	{

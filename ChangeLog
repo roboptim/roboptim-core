@@ -1,5 +1,10 @@
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix typo in method name.
+	* include/roboptim/core/generic-solver.hh: Here.
+
+2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update quickstart.
 	* src/doc.hh: Here.
 
