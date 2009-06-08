@@ -21,6 +21,7 @@
 
 using namespace roboptim;
 
+// Define null function.
 struct F : public DerivableFunction
 {
 public:

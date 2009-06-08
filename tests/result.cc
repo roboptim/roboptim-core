@@ -25,6 +25,7 @@ using namespace roboptim;
 
 int run_test ()
 {
+  // Instantiate some results.
   Result result (3, 8);
 
   assert (result.x.size () == 3);

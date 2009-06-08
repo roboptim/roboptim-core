@@ -27,6 +27,7 @@ using namespace roboptim;
 using namespace roboptim::visualization;
 
 
+// Define f(x) = x * x
 struct Square : public Function
 {
   explicit Square ()
@@ -41,6 +42,7 @@ struct Square : public Function
   }
 };
 
+// Define a function that displays a circle.
 struct Circle : public Function
 {
   explicit Circle (double r = 1.)

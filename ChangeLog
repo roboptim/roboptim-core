@@ -1,5 +1,14 @@
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document tests.
+	* tests/problem-cc.cc,
+	* tests/result.cc,
+	* tests/visualization-gnuplot-function.cc,
+	* tests/visualization-gnuplot-simple.cc:
+	Document.
+
+2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Document unit test.
 	* tests/finite-difference-gradient.cc: Document,
 	fix naming, remove unneeded header inclusion.

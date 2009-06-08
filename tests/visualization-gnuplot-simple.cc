@@ -30,6 +30,7 @@ int run_test ()
   using namespace roboptim::visualization::gnuplot;
   Gnuplot gnuplot = Gnuplot::make_gnuplot ();
 
+  // Display nothing, generate just some valid Gnuplot commands.
   std::cout
     << (gnuplot
 	<< set ("term", "x11 enhanced persist")
