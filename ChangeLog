@@ -1,5 +1,11 @@
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document unit tests.
+	* tests/plugin.cc,
+	* tests/simple.cc: Document.
+
+2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Wrap Boost.Variant usage.
 	* include/roboptim/core/generic-solver.hh: Add
 	getMinimum and mimimumType methods to wrap Boost.Variant.

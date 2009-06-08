@@ -22,8 +22,10 @@
 
 using namespace roboptim;
 
+// Specify the solver that will be used.
 typedef Solver<Function, const Function*> solver_t;
 
+// Define a simple function.
 struct F : public Function
 {
   F () : Function (4, 1)
@@ -40,19 +42,28 @@ struct F : public Function
 
 int run_test ()
 {
+  // Instantiate the function and the problem.
   F f;
   solver_t::problem_t pb (f);
 
+  // Instantiate the factory using the dummy solver.
   SolverFactory<solver_t> factory ("dummy", pb);
+
+  // Retrieve a solver instance from the factory.
   solver_t& solver = factory ();
+
+  // Get the Boost.Variant minimum.
   solver_t::result_t res = solver.minimum ();
+
+  // Get the "real" minimum.
   solver.getMinimum<SolverError> ();
 
+  // Display problem and solver.
   std::cout << pb << std::endl
             << "---" << std::endl
             << solver << std::endl;
 
-  // Try to get the minimum from a GenericSolver*
+  // Try to get the minimum from a GenericSolver*.
   GenericSolver* gs = &solver;
   std::cout << gs->getMinimum <SolverError> ().what ()
             << std::endl;

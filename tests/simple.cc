@@ -16,15 +16,16 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
-#include <boost/variant/get.hpp>
 
 #include "common.hh"
 #include <roboptim/core/plugin/dummy.hh>
 
 using namespace roboptim;
 
+// Specify the solver that will be used.
 typedef DummySolver solver_t;
 
+// Define a simple function.
 struct F : public Function
 {
   F () : Function (4, 1)
@@ -42,6 +43,7 @@ struct F : public Function
 
 int run_test ()
 {
+  // Instantiate the function and the problem.
   F f;
   DummySolver::problem_t pb (f);
 
@@ -90,7 +92,7 @@ int run_test ()
             << "---" << std::endl
             << solver << std::endl;
 
-  // Try to get the minimum from a GenericSolver*
+  // Try to get the minimum from a GenericSolver*.
   GenericSolver* gs = &solver;
   std::cout << gs->getMinimum<SolverError> ().what ()
             << std::endl;
