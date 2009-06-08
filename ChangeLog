@@ -1,5 +1,13 @@
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Wrap Boost.Variant usage.
+	* include/roboptim/core/generic-solver.hh: Add
+	getMinimum and mimimumType methods to wrap Boost.Variant.
+	* tests/plugin.cc,
+	* tests/simple.cc: Update test cases.
+
+2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix typo.
 	* include/roboptim/core/linear-function.hh: Here.
 

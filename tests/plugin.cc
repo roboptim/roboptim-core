@@ -16,7 +16,6 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
-#include <boost/variant/get.hpp>
 
 #include "common.hh"
 #include <roboptim/core/solver-factory.hh>
@@ -47,7 +46,7 @@ int run_test ()
   SolverFactory<solver_t> factory ("dummy", pb);
   solver_t& solver = factory ();
   solver_t::result_t res = solver.minimum ();
-  boost::get<SolverError> (res);
+  solver.getMinimum<SolverError> ();
 
   std::cout << pb << std::endl
             << "---" << std::endl
@@ -55,7 +54,7 @@ int run_test ()
 
   // Try to get the minimum from a GenericSolver*
   GenericSolver* gs = &solver;
-  std::cout << boost::get<SolverError> (gs->minimum ()).what ()
+  std::cout << gs->getMinimum <SolverError> ().what ()
             << std::endl;
 
   return 0;

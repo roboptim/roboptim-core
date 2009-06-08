@@ -18,8 +18,10 @@
 #ifndef ROBOPTIM_CORE_GENERIC_SOLVER_HH
 # define ROBOPTIM_CORE_GENERIC_SOLVER_HH
 # include <stdexcept>
-# include <boost/utility.hpp>
+
+# include <boost/variant/get.hpp>
 # include <boost/variant/variant.hpp>
+# include <boost/utility.hpp>
 
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/problem.hh>
@@ -81,6 +83,8 @@ namespace roboptim
 
     /// \brief Returns the function minimum
     /// This solves the problem automatically, if it has not yet been solved.
+    /// \see minimumType()
+    /// \see getMinimum()
     const result_t& minimum () throw ();
 
     /// \brief Display the solver on the specified output stream.
@@ -88,6 +92,41 @@ namespace roboptim
     /// \param o output stream used for display
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
+
+
+    /// \brief Determine real minimum type.
+    ///
+    /// \return value representing result type
+    solutions mimimumType () throw ()
+    {
+      switch (minimum ().which ())
+	{
+	case 0:
+	  return SOLVER_NO_SOLUTION;
+	case 1:
+	  return SOLVER_VALUE;
+	case 2:
+	  return SOLVER_VALUE_WARNINGS;
+	case 3:
+	  return SOLVER_ERROR;
+	default:
+	  break;
+	}
+      assert (0);
+    }
+
+    /// \brief Get real result.
+    ///
+    /// Optimization results is wrapped in a Boost.Variant
+    /// class, this method has to be used to retrieve the
+    /// real result type.
+    /// \return real result
+    template <typename T>
+    const T& getMinimum () throw (boost::bad_get)
+    {
+      return boost::get<T> (minimum ());
+    }
+
   protected:
     /// /brief Optimization result.
     result_t result_;

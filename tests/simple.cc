@@ -84,7 +84,7 @@ int run_test ()
   // Try to solve it with the DummySolver (direct instantiation, no plug-in).
   solver_t solver (pb);
   solver_t::result_t res = solver.minimum ();
-  boost::get<SolverError> (res);
+  solver.getMinimum<SolverError> ();
 
   std::cout << pb << std::endl
             << "---" << std::endl
@@ -92,7 +92,7 @@ int run_test ()
 
   // Try to get the minimum from a GenericSolver*
   GenericSolver* gs = &solver;
-  std::cout << boost::get<SolverError> (gs->minimum ()).what ()
+  std::cout << gs->getMinimum<SolverError> ().what ()
             << std::endl;
 
   return 0;
