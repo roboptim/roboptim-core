@@ -1,6 +1,11 @@
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Update quickstart.
+	* src/doc.hh: Here.
+
+2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Update quickstart.
 	* src/doc.hh: Update to new interface.
 
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>

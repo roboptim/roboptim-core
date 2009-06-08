@@ -105,11 +105,11 @@
    of those classes. Depending on the class you derive from, you will be have
    to implement one or several methods:
 
-   - operator () that returns the function's result has to be defined for all
+   - impl_compute that returns the function's result has to be defined for all
    functions.
-   - gradient () which returns the function's gradient is to be
+   - impl_gradient which returns the function's gradient is to be
    defined for DerivableFunction and its subclasses.
-   - hessian () for TwiceDerivableFunction functions and its subclasses.
+   - impl_hessian for TwiceDerivableFunction functions and its subclasses.
 
    It is usually recommended to derive from the deepest possible class of the
    hierarchy (deriving from TwiceDerivableFunction is better than
