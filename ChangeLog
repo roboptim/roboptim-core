@@ -1,5 +1,12 @@
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document unit test.
+	* tests/finite-difference-gradient.cc: Document,
+	fix naming, remove unneeded header inclusion.
+	* tests/finite-difference-gradient.stdout: Regenerate.
+
+2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Document unit tests.
 	* tests/plugin.cc,
 	* tests/simple.cc: Document.

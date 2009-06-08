@@ -17,7 +17,6 @@
 
 #include <iostream>
 #include <boost/numeric/ublas/io.hpp>
-#include <boost/variant/get.hpp>
 
 #include "common.hh"
 #include <roboptim/core/finite-difference-gradient.hh>
@@ -31,6 +30,7 @@ using namespace roboptim;
 using namespace roboptim::visualization;
 using namespace roboptim::visualization::gnuplot;
 
+// Define a function with a correct gradient.
 struct FGood : public DerivableFunction
 {
   FGood () : DerivableFunction (1, 1)
@@ -49,7 +49,7 @@ struct FGood : public DerivableFunction
   }
 };
 
-
+// Define a function with a bad gradient.
 struct FBad : public DerivableFunction
 {
   FBad () : DerivableFunction (1, 1)
@@ -68,7 +68,7 @@ struct FBad : public DerivableFunction
   }
 };
 
-
+// Define a polynomial function.
 struct Polynomial : public DerivableFunction
 {
   Polynomial () : DerivableFunction (1, 1)
@@ -87,10 +87,10 @@ struct Polynomial : public DerivableFunction
   }
 };
 
-
-struct SquareXY : public DerivableFunction
+// Define a function that draws a circle.
+struct CircleXY : public DerivableFunction
 {
-  SquareXY () : DerivableFunction (1, 2)
+  CircleXY () : DerivableFunction (1, 2)
   {}
 
   void impl_compute (result_t& result,
@@ -120,6 +120,7 @@ struct SquareXY : public DerivableFunction
   }
 };
 
+// Define ``f(x,y) = x * y'' function.
 struct Times : public DerivableFunction
 {
   Times () : DerivableFunction (2, 1)
@@ -161,7 +162,7 @@ int run_test ()
 {
   FGood fg;
   FBad fb;
-  SquareXY sq;
+  CircleXY sq;
   Times times;
 
   Function::vector_t x (1);
@@ -176,7 +177,7 @@ int run_test ()
       std::cout << "# Bad" << std::endl;
       displayGradient (fb, x);
 
-      std::cout << "# Square" << std::endl;
+      std::cout << "# Circle" << std::endl;
       displayGradient (sq, x);
       displayGradient (sq, x, 1);
 
