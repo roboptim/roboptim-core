@@ -1,3 +1,28 @@
+2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix Doxygen documentation.
+	* include/roboptim/core/fwd.hh,
+	* include/roboptim/core/n-times-derivable-function.hh,
+	* include/roboptim/core/visualization/fwd.hh,
+	* src/derivable-function.cc,
+	* src/doc.hh,
+	* src/finite-difference-gradient.cc,
+	* src/function.cc,
+	* src/generic-solver.cc,
+	* src/indent.cc,
+	* src/linear-function.cc,
+	* src/numeric-linear-function.cc,
+	* src/numeric-quadratic-function.cc,
+	* src/quadratic-function.cc,
+	* src/result-with-warnings.cc,
+	* src/result.cc,
+	* src/roboptim-core-dummy-plugin.cc,
+	* src/solver-error.cc,
+	* src/solver-warning.cc,
+	* src/twice-derivable-function.cc,
+	* src/util.cc:
+	Fix Doxygen documentation and missing group definition.
+
 2009-06-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Document and clean.

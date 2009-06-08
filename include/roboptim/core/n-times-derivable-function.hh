@@ -223,7 +223,7 @@ namespace roboptim
   };
 
   /// \brief Define a \f$\mathbb{R} \rightarrow \mathbb{R}^m\f$ function,
-  /// derivable n times (n >= 2).
+  /// derivable n times (\f$n \geq 2\f$).
   template <unsigned DerivabilityOrder>
   class NTimesDerivableFunction
     : public NTimesDerivableFunction<DerivabilityOrder - 1>

@@ -15,11 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-
-/**
- * \brief Implementation of the QuadraticFunction class.
- */
-
 #include "roboptim/core/quadratic-function.hh"
 #include "roboptim/core/indent.hh"
 #include "roboptim/core/util.hh"

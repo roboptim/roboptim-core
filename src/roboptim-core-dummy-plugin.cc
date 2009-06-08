@@ -15,11 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-
-/**
- * \brief Implementation of the dummy module (always fail).
- */
-
 #include "roboptim/core/function.hh"
 #include "roboptim/core/problem.hh"
 #include "roboptim/core/plugin/dummy.hh"

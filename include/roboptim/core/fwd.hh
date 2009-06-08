@@ -21,6 +21,7 @@
 namespace roboptim
 {
   /// \brief Tag a result if no solution has been found.
+  ///
   /// Returned by GenericSolver::getMinimum if no solution can be
   /// found (but no error has been encountered during the process).
   /// It usually means that the solver has not been called to solve

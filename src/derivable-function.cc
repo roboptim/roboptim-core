@@ -16,10 +16,6 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 
-/**
- * \brief Implementation of the DerivableFunction class.
- */
-
 #include "roboptim/core/derivable-function.hh"
 #include "roboptim/core/indent.hh"
 #include "roboptim/core/util.hh"

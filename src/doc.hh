@@ -728,25 +728,24 @@ int run_test ()
 */
 
 
-/*!
-  \namespace roboptim
-
-  \brief Main namespace
-
-  The namespace gathers all the classes of this library.
-*/
+/// \namespace roboptim
+/// \brief Meta-functions, functions and solvers related classes.
 
 
-/*!
-  \namespace roboptim::detail
+/// \namespace roboptim::visualization
+/// \brief Graphic visualization
+///
+/// Visualization related code. Only Gnuplot is supported currently.
 
-  \brief Implementation namespace
 
-  The namespace gathers implementation details which are of no-concern
-  for the end user of this library.
-*/
+/// \namespace roboptim::visualization::gnuplot
+/// \brief Gnuplot rendering
+///
+/// Gnuplot display classes.
+
 
 /// \defgroup roboptim_meta_function Mathematical abstract functions
 /// \defgroup roboptim_function Mathematical functions
 /// \defgroup roboptim_problem Optimization problems
 /// \defgroup roboptim_solver Optimization solvers
+/// \defgroup roboptim_visualization Visualization
