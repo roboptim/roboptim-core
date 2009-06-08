@@ -129,16 +129,16 @@ struct F : public TwiceDerivableFunction
   {
   }
 
-  virtual vector_t
-  operator () (const vector_t& x) const throw ()
+  void
+  impl_compute (result_t& result, const argument_t& x) const throw ()
   {
     vector_t res (m);
     res (0) = x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
     return res;
   }
 
-  virtual gradient_t
-  gradient (const vector_t& x, int) const throw ()
+  void
+  impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
   {
     gradient_t grad (n);
 
@@ -149,8 +149,9 @@ struct F : public TwiceDerivableFunction
     return grad;
   }
 
-  virtual hessian_t
-  hessian (const vector_t& x, int) const throw ()
+  void
+  impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
+
   {
     matrix_t h (n, n);
     h (0, 0) = 2 * x[3];
@@ -194,16 +195,16 @@ struct G0 : public TwiceDerivableFunction
   {
   }
 
-  virtual vector_t
-  operator () (const vector_t& x) const throw ()
+  void
+  impl_compute (result_t& result, const argument_t& x) const throw ()
   {
     vector_t res (m);
     res (0) = x[0] * x[1] * x[2] * x[3];
     return res;
   }
 
-  virtual gradient_t
-  gradient (const vector_t& x, int) const throw ()
+  void
+  impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
   {
     gradient_t grad (n);
 
@@ -214,8 +215,8 @@ struct G0 : public TwiceDerivableFunction
     return grad;
   }
 
-  virtual hessian_t
-  hessian (const vector_t& x, int) const throw ()
+  void
+  impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
   {
     matrix_t h (n, n);
     h (0, 0) = 0.;
@@ -248,16 +249,16 @@ struct G1 : public TwiceDerivableFunction
   {
   }
 
-  virtual vector_t
-  operator () (const vector_t& x) const throw ()
+  void
+  impl_compute (result_t& result, const argument_t& x) const throw ()
   {
     vector_t res (m);
     res (0) = x[0]*x[0] + x[1]*x[1] + x[2]*x[2] + x[3]*x[3];
     return res;
   }
 
-  virtual gradient_t
-  gradient (const vector_t& x, int) const throw ()
+  void
+  impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
   {
     gradient_t grad (n);
 
@@ -268,8 +269,8 @@ struct G1 : public TwiceDerivableFunction
     return grad;
   }
 
-  virtual hessian_t
-  hessian (const vector_t& x, int) const throw ()
+  void
+  impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
   {
     matrix_t h (n, n);
     h (0, 0) = 2.;
@@ -341,22 +342,40 @@ int run_test ()
   std::cout << solver << std::endl;
 
   // Check if the minimization has succeed.
-  if (res.which () != CFSQPSolver::SOLVER_VALUE_WARNINGS)
+  switch (solver.minimumType ())
     {
-      std::cout << "A solution should have been found. Failing..."
-                << std::endl
-                << boost::get<SolverError> (res).what ()
-                << std::endl;
+    case SOLVER_NO_SOLUTION:
+      std::cerr << "No solution." << std::endl;
       return 1;
+    case SOLVER_ERROR:
+      std::cerr << "An error happened: "
+		<< solver.getMinimum<SolverError> ().what () << std::endl;
+      return 2;
+
+    case SOLVER_VALUE_WARNINGS:
+      {
+	// Get the ``real'' result.
+	Result& result = solver.getMinimum<ResultWithWarnings> ();
+	// Display the result.
+	std::cout << "A solution has been found (minor problems occurred): "
+		  << std::endl
+		  << result << std::endl;
+	return 0;
+      }
+    case SOLVER_VALUE:
+      {
+	// Get the ``real'' result.
+	Result& result = solver.getMinimum<Result> ();
+	// Display the result.
+	std::cout << "A solution has been found: " << std::endl;
+	std::cout << result << std::endl;
+	return 0;
+      }
     }
 
-  // Get the result.
-  Result& result = boost::get<ResultWithWarnings> (res);
-
-  // Display the result.
-  std::cout << "A solution has been found: " << std::endl;
-  std::cout << result << std::endl;
-  return 0;
+  // Should never happen.
+  assert (0);
+  return 42;
 }
    \endcode
 
