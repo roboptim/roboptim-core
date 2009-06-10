@@ -1,3 +1,5 @@
+include $(top_srcdir)/build-aux/init.mk
+
 # Search for autoconf macros in build-aux.
 ACLOCAL_AMFLAGS = -I build-aux
 
@@ -33,21 +35,7 @@ edit = $(SED) -e "s|@prefix\@|$(prefix)|"			\
               -e 's,@PACKAGE_TARNAME\@,$(PACKAGE_TARNAME),g'	\
               -e 's,@VERSION\@,$(PACKAGE_VERSION),g'
 
-@PACKAGE_TARNAME@.pc: $(srcdir)/configure $(srcdir)/build-aux/pkg-config.pc.in
-	$(edit) $(srcdir)/build-aux/pkg-config.pc.in >$@
-
-EXTRA_DIST += build-aux/pkg-config.pc.in
-CLEANFILES = $(PKG_CONFIG_FILE)
-
-install-data-local: install-pkg-config
-uninstall-local: uninstall-pkg-config
-
-install-pkg-config: $(PACKAGE_TARNAME).pc
-	$(mkdir_p) $(PKG_DIR)
-	cp "$(PKG_CONFIG_FILE)" $(PKG_DIR)
-
-uninstall-pkg-config:
-	rm "$(PKG_DIR)$(PKG_CONFIG_FILE)"
+include $(top_srcdir)/build-aux/pkg-config.mk
 
 
 # -- Generate documentation
