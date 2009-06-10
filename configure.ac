@@ -51,8 +51,8 @@ AC_CONFIG_MACRO_DIR([build-aux])
 AC_PROG_MKDIR_P
 AC_PROG_SED
 
-AC_ARG_VAR([DOXYGEN], [the Doxygen documentation generation program])
-AC_CHECK_PROGS([DOXYGEN], [doxygen])
+# Search for Doxygen.
+JRL_PROG_DOXYGEN
 
 # Search for Libtool.
 LT_INIT([dlopen])
@@ -71,6 +71,18 @@ BOOST_TUPLE
 BOOST_TYPETRAITS
 BOOST_UTILITY
 BOOST_VARIANT
+
+
+## ------------ ##
+## Pkg-config.  ##
+## ------------ ##
+
+AC_SUBST([PKGCONFIG_DESCRIPTION], ['RobOptim core library'])
+AC_SUBST([PKGCONFIG_REQUIRES], [])
+AC_SUBST([PKGCONFIG_CONFLICTS], [])
+AC_SUBST([PKGCONFIG_LIBS], [-lroboptim-core])
+AC_SUBST([PKGCONFIG_CFLAGS], [])
+
 
 ## ------------ ##
 ## Test-suite.  ##
@@ -97,10 +109,6 @@ AC_CONFIG_FILES([
     tests/atlocal
     tests/package.m4
 ])
-
-AC_CONFIG_FILES([doc/Doxyfile])
-
-AC_CONFIG_FILES([doc/sf-upload.sh], [chmod +x doc/sf-upload.sh])
 
 # Write files.
 AC_OUTPUT

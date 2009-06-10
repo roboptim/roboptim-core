@@ -16,7 +16,7 @@
 #
 # Then launch the script. It will prompt for your password
 # and upload the documentation in a @PACKAGE_TARNAME@ folder.
-
+set -e
 
 rsync=$(which rsync)
 
@@ -31,9 +31,22 @@ if test "x$SF_USERNAME" = x; then
  exit 2
 fi
 
-echo "Uploading documentation to SourceForge server, please wait.";
-$rsync -avP -e ssh @abs_builddir@/html/ \
-    $SF_USERNAME,roboptim@web.sourceforge.net:htdocs/doc/core/HEAD/
+if test "x$VERSION" = x; then
+ echo "No version set, defaulting to ``HEAD''."
+ VERSION=HEAD
+fi
+
+rsync_cmd="$rsync -avP -e ssh"
+localdir="@abs_builddir@/html/"
+remotedir="htdocs/doc/core/$VERSION"
+rsync_loghost="$SF_USERNAME,roboptim@web.sourceforge.net:"
+
+echo "Fixing local rights.";
+chmod 644 "$localdir/*"
+echo "Uploading documentation to SourceForge server.";
+$rsync_cmd "$localdir" "$rsync_loghost$remotedir"
+#echo "Fixing documentation rights.";
+#echo "cd \"$remotedir\"; chmod 644 *" | $rsync_cmd "$rsync_loghost$remotedir"
 ret="$?";
 if test 0 -eq "$ret"; then
  echo "Done. Exiting";

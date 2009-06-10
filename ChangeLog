@@ -1,3 +1,15 @@
+2009-06-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Synhronize with share.
+	* build-aux/doxygen.m4: New.
+	* build-aux/pkg-config.mk: New.
+	* build-aux/pkg-config.pc.in: Synchronize.
+	* build-aux/roboptim-core.m4: New.
+	* configure.ac: Update to use new rules.
+	* doc/Doxyfile.in,
+	* doc/Makefile.am,
+	* doc/sf-upload.sh.in: Synchronize.
+
 2009-06-08  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix compilation warning.

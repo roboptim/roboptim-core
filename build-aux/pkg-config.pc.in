@@ -6,8 +6,11 @@ datarootdir=@datarootdir@
 docdir=@datarootdir@/doc/@PACKAGE_TARNAME@
 
 Name: @PACKAGE@
-Description:
+Description: @PKGCONFIG_DESCRIPTION@
+URL: http://roboptim.sourceforge.net/
 Version: @VERSION@
-Requires:
-Libs: -L${libdir} -lroboptim-core
-Cflags: -I${includedir}
+Requires: @PKGCONFIG_REQUIRES@
+Conflicts: @PKGCONFIG_CONFLICTS@
+Libs: -L${libdir} @PKGCONFIG_LIBS@
+Libs.private:
+Cflags: -I${includedir} @PKGCONFIG_CFLAGS@
