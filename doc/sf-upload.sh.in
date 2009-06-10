@@ -38,7 +38,8 @@ fi
 
 rsync_cmd="$rsync -avP -e ssh"
 localdir="@abs_top_builddir@/doc/html/"
-remotedir="htdocs/doc/core/$VERSION"
+pkgname=$(echo '@PACKAGE_TARNAME@' | sed 's|^roboptim-||')
+remotedir="htdocs/doc/$pkgname/$VERSION"
 rsync_loghost="$SF_USERNAME,roboptim@web.sourceforge.net:"
 
 echo "Fixing local rights.";
