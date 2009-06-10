@@ -10,7 +10,10 @@ EXTRA_DIST += 				\
 	tabs.css			\
 	sf-upload.sh.in
 
-CLEANFILES += $(PACKAGE_TARNAME).doxytag
+CLEANFILES +=				\
+	$(PACKAGE_TARNAME).doxytag 	\
+	Doxyfile			\
+	config.log
 
 
 .PHONY: doc				\
@@ -51,4 +54,4 @@ uninstall-doxygen-html:
 # --- SourceForge upload script.
 # sf-upload.sh generation rule.
 sf-upload.sh: $(srcdir)/sf-upload.sh.in
-	$(top_builddir)/config.status --file="$@":"$<" && chmod u+x "$@"
+	$(top_builddir)/config.status --file="$@":"$<" && chmod 755 "$@"

@@ -32,17 +32,20 @@ if test "x$SF_USERNAME" = x; then
 fi
 
 if test "x$VERSION" = x; then
- echo "No version set, defaulting to ``HEAD''."
+ echo "No version set, defaulting to \`\`HEAD''."
  VERSION=HEAD
 fi
 
 rsync_cmd="$rsync -avP -e ssh"
-localdir="@abs_builddir@/html/"
+localdir="@abs_top_builddir@/doc/html/"
 remotedir="htdocs/doc/core/$VERSION"
 rsync_loghost="$SF_USERNAME,roboptim@web.sourceforge.net:"
 
 echo "Fixing local rights.";
-chmod 644 "$localdir/*"
+chmod 755 "$localdir"
+find "$localdir" -type d -print0 | xargs -0 chmod 755
+find "$localdir" -type f -print0 | xargs -0 chmod 644
+
 echo "Uploading documentation to SourceForge server.";
 $rsync_cmd "$localdir" "$rsync_loghost$remotedir"
 #echo "Fixing documentation rights.";

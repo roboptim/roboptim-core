@@ -1,5 +1,11 @@
 2009-06-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Synchronize with share.
+	* doc/Makefile.am,
+	* doc/sf-upload.sh.in: Synchronize.
+
+2009-06-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Synhronize with share.
 	* build-aux/doxygen.m4: New.
 	* build-aux/pkg-config.mk: New.
