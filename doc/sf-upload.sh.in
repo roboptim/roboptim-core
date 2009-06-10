@@ -49,8 +49,6 @@ find "$localdir" -type f -print0 | xargs -0 chmod 644
 
 echo "Uploading documentation to SourceForge server.";
 $rsync_cmd "$localdir" "$rsync_loghost$remotedir"
-#echo "Fixing documentation rights.";
-#echo "cd \"$remotedir\"; chmod 644 *" | $rsync_cmd "$rsync_loghost$remotedir"
 ret="$?";
 if test 0 -eq "$ret"; then
  echo "Done. Exiting";

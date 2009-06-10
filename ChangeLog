@@ -5,6 +5,11 @@
 
 2009-06-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Synchronize.
+	* doc/sf-upload.sh.in: Here.
+
+2009-06-10  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Use new pkg-config rules.
 	* Makefile.am: Here.
 
