@@ -3,7 +3,6 @@ include $(top_srcdir)/build-aux/init.mk
 # --- Distribute and install headers.
 nobase_include_HEADERS =				\
 	roboptim/core/derivable-function.hh		\
-	roboptim/core/freeze.hh				\
 	roboptim/core/function.hh			\
 	roboptim/core/fwd.hh				\
 	roboptim/core/finite-difference-gradient.hh	\

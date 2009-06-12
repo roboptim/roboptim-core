@@ -10,7 +10,6 @@ libroboptim_core_la_SOURCES = 		\
 	doc.hh				\
 	derivable-function.cc		\
 	finite-difference-gradient.cc	\
-	freeze.cc			\
 	function.cc			\
 	generic-solver.cc		\
 	indent.cc			\

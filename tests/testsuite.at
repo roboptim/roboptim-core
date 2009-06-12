@@ -33,7 +33,6 @@ CHECK_STDOUT([numeric-linear-function], [Check numeric linear functions.])
 CHECK_STDOUT([numeric-quadratic-function],
              [Check numeric quadratic functions.])
 CHECK_STDOUT([problem-cc], [Check problem copy constructor.])
-CHECK_STDOUT([freeze], [Check freeze constraint.])
 CHECK_STDOUT([n-times-derivable-function], [Check N times derivable function.])
 CHECK_STDOUT([finite-difference-gradient], [Check finite difference gradient.])
 CHECK_STDOUT([result], [Check Result class.])

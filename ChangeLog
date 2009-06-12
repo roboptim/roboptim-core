@@ -1,3 +1,15 @@
+2009-06-12  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Remove Freeze function.
+	* include/Makefile.am: Remove freeze.hh from list.
+	* include/roboptim/core/freeze.hh: Remove.
+	* src/Makefile.am: Remove freeze.cc from list.
+	* src/freeze.cc: Remove.
+	* tests/Makefile.am: Remove test.
+	* tests/freeze.cc: Remove.
+	* tests/freeze.stdout: Remove.
+	* tests/testsuite.at: Remove test.
+
 2009-06-10  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Synchronize.
