@@ -57,6 +57,11 @@ check_PROGRAMS += finite-difference-gradient
 finite_difference_gradient_SOURCES = finite-difference-gradient.cc $(COMMON_SOURCES)
 finite_difference_gradient_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# identity-function
+check_PROGRAMS += identity-function
+identity_function_SOURCES = identity-function.cc $(COMMON_SOURCES)
+identity_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # visualization-gnuplot-simple
 check_PROGRAMS += visualization-gnuplot-simple
 visualization_gnuplot_simple_SOURCES = visualization-gnuplot-simple.cc \

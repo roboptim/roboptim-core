@@ -12,6 +12,7 @@ libroboptim_core_la_SOURCES = 		\
 	finite-difference-gradient.cc	\
 	function.cc			\
 	generic-solver.cc		\
+	identity-function.cc		\
 	indent.cc			\
 	linear-function.cc		\
 	numeric-linear-function.cc	\

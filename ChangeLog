@@ -1,3 +1,14 @@
+2009-06-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Implement identity function.
+	* include/roboptim/core/identity-function.hh: New.
+	* src/Makefile.am: Add new source.
+	* src/identity-function.cc: New.
+	* tests/Makefile.am: Compile new test.
+	* tests/identity-function.cc: New.
+	* tests/identity-function.stdout: New.
+	* tests/testsuite.at: Run new test case.
+
 2009-06-12  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Remove Freeze function.
