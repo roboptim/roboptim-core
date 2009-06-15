@@ -18,6 +18,8 @@
 
 #ifndef ROBOPTIM_CORE_DUMMY_HH
 # define ROBOPTIM_CORE_DUMMY_HH
+# include <boost/mpl/vector.hpp>
+
 # include <roboptim/core/solver.hh>
 
 namespace roboptim
@@ -29,11 +31,11 @@ namespace roboptim
   ///
   /// It is also a good starting point for users that
   /// want to develop their own solver.
-  class DummySolver : public Solver<Function, const Function*>
+  class DummySolver : public Solver<Function, boost::mpl::vector<Function> >
   {
   public:
     /// \brief Define parent's type.
-    typedef Solver<Function, const Function*> parent_t;
+    typedef Solver<Function, boost::mpl::vector<Function> > parent_t;
 
     /// \brief Build a solver from a problem.
     /// \param problem problem that will be solved

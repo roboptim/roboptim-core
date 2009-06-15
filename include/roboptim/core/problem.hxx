@@ -30,8 +30,8 @@
 
 namespace roboptim
 {
-  template <typename F, typename C>
-  Problem<F, C>::Problem (const function_t& f) throw ()
+  template <typename F, typename CLIST>
+  Problem<F, CLIST>::Problem (const function_t& f) throw ()
     : function_ (f),
       startingPoint_ (),
       constraints_ (),
@@ -50,14 +50,14 @@ namespace roboptim
     std::fill (argumentScales_.begin (), argumentScales_.end (), 1.);
   }
 
-  template <typename F, typename C>
-  Problem<F, C>::~Problem () throw ()
+  template <typename F, typename CLIST>
+  Problem<F, CLIST>::~Problem () throw ()
   {
   }
 
   // Copy constructor.
-  template <typename F, typename C>
-  Problem<F, C>::Problem (const Problem<F, C>& pb) throw ()
+  template <typename F, typename CLIST>
+  Problem<F, CLIST>::Problem (const Problem<F, CLIST>& pb) throw ()
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       constraints_ (pb.constraints_),
@@ -69,9 +69,9 @@ namespace roboptim
   }
 
   // Copy constructor (convert from another class of problem).
-  template <typename F, typename C>
-  template <typename F_, typename C_>
-  Problem<F, C>::Problem (const Problem<F_, C_>& pb) throw ()
+  template <typename F, typename CLIST>
+  template <typename F_, typename CLIST_>
+  Problem<F, CLIST>::Problem (const Problem<F_, CLIST_>& pb) throw ()
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       constraints_ (),
@@ -83,32 +83,31 @@ namespace roboptim
     // Check that F is a subtype of F_.
     BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
 
-    // Check that C is a subtype of C_.
-    typedef typename boost::remove_pointer<C_>::type rpC_;
-    typedef typename boost::remove_pointer<C>::type rpC;
-    BOOST_STATIC_ASSERT((boost::is_base_of<rpC, rpC_>::value));
+    //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
 
     std::copy (pb.constraints_.begin (), pb.constraints_.end (),
                constraints_.begin ());
   }
 
-  template <typename F, typename C>
-  const typename Problem<F, C>::function_t&
-  Problem<F, C>::function () const throw ()
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::function_t&
+  Problem<F, CLIST>::function () const throw ()
   {
     return function_;
   }
 
-  template <typename F, typename C>
-  const typename Problem<F, C>::constraints_t&
-  Problem<F, C>::constraints () const throw ()
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::constraints_t&
+  Problem<F, CLIST>::constraints () const throw ()
   {
     return constraints_;
   }
 
-  template <typename F, typename C>
+  template <typename F, typename CLIST>
   void
-  Problem<F, C>::addConstraint (const C& x, interval_t b, value_type s)
+  Problem<F, CLIST>::addConstraint (constraint_t x,
+				    interval_t b,
+				    value_type s)
     throw (std::runtime_error)
   {
     assert (b.first <= b.second);
@@ -117,58 +116,58 @@ namespace roboptim
     scales_.push_back (s);
   }
 
-  template <typename F, typename C>
-  typename Problem<F, C>::startingPoint_t&
-  Problem<F, C>::startingPoint () throw ()
+  template <typename F, typename CLIST>
+  typename Problem<F, CLIST>::startingPoint_t&
+  Problem<F, CLIST>::startingPoint () throw ()
   {
     return startingPoint_;
   }
 
-  template <typename F, typename C>
-  const typename Problem<F, C>::startingPoint_t&
-  Problem<F, C>::startingPoint () const throw ()
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::startingPoint_t&
+  Problem<F, CLIST>::startingPoint () const throw ()
   {
     return startingPoint_;
   }
 
-  template <typename F, typename C>
-  const typename Problem<F, C>::intervals_t&
-  Problem<F, C>::bounds () const throw ()
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::intervals_t&
+  Problem<F, CLIST>::bounds () const throw ()
   {
     return bounds_;
   }
 
-  template <typename F, typename C>
-  typename Problem<F, C>::intervals_t&
-  Problem<F, C>::argumentBounds () throw ()
+  template <typename F, typename CLIST>
+  typename Problem<F, CLIST>::intervals_t&
+  Problem<F, CLIST>::argumentBounds () throw ()
   {
     return argumentBounds_;
   }
 
-  template <typename F, typename C>
-  const typename Problem<F, C>::intervals_t&
-  Problem<F, C>::argumentBounds () const throw ()
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::intervals_t&
+  Problem<F, CLIST>::argumentBounds () const throw ()
   {
     return argumentBounds_;
   }
 
-  template <typename F, typename C>
-  const typename Problem<F, C>::scales_t&
-  Problem<F, C>::scales () const throw ()
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::scales_t&
+  Problem<F, CLIST>::scales () const throw ()
   {
     return scales_;
   }
 
-  template <typename F, typename C>
-  typename Problem<F, C>::scales_t&
-  Problem<F, C>::argumentScales () throw ()
+  template <typename F, typename CLIST>
+  typename Problem<F, CLIST>::scales_t&
+  Problem<F, CLIST>::argumentScales () throw ()
   {
     return argumentScales_;
   }
 
-  template <typename F, typename C>
-  const typename Problem<F, C>::scales_t&
-  Problem<F, C>::argumentScales () const throw ()
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::scales_t&
+  Problem<F, CLIST>::argumentScales () const throw ()
   {
     return argumentScales_;
   }
@@ -191,9 +190,9 @@ namespace roboptim
     }
   }
 
-  template <typename F, typename C>
+  template <typename F, typename CLIST>
   std::ostream&
-  Problem<F, C>::print (std::ostream& o) const throw ()
+  Problem<F, CLIST>::print (std::ostream& o) const throw ()
   {
     o << "Problem:" << incendl;
     // Function.
@@ -242,9 +241,9 @@ namespace roboptim
     return o << decindent;
   }
 
-  template <typename F, typename C>
+  template <typename F, typename CLIST>
   std::ostream&
-  operator<< (std::ostream& o, const Problem<F, C>& pb)
+  operator<< (std::ostream& o, const Problem<F, CLIST>& pb)
   {
     return pb.print (o);
   }

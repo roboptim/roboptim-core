@@ -1,5 +1,17 @@
 2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Generalize constraint storage.
+	* include/roboptim/core/plugin/dummy.hh: Use new syntax
+	to specify constraints types.
+	* include/roboptim/core/problem.hh,
+	* include/roboptim/core/problem.hxx: Generalize constraint storage.
+	* tests/plugin.cc,
+	* tests/problem-cc.cc,
+	* tests/simple.cc: Use new syntax to specify constraints
+	types.
+
+2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix distribution.
 	* include/Makefile.am: Distribute identity-function.hh.
 	* tests/Makefile.am: Remove freeze.stdout and

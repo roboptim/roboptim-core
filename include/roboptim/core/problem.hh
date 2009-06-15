@@ -19,15 +19,47 @@
 # define ROBOPTIM_CORE_PROBLEM_HH
 # include <iostream>
 # include <stdexcept>
+
+# include <boost/mpl/transform.hpp>
 # include <boost/optional.hpp>
+# include <boost/shared_ptr.hpp>
 # include <boost/static_assert.hpp>
 # include <boost/type_traits/is_base_of.hpp>
+# include <boost/variant.hpp>
 
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/function.hh>
 
 namespace roboptim
 {
+  namespace detail
+  {
+    using namespace boost;
+    using namespace boost::mpl;
+
+    /// \brief Transform a types list into a types list of shared pointers.
+    ///
+    /// If the input list is:
+    /// \code
+    /// boost::mpl::vector<int, long>
+    /// \endcode
+    ////
+    /// then the result (type) will be:
+    /// \code
+    /// boost::mpl::vector<boost::shared_ptr<int>,
+    ///                    boost::shared_ptr<long> >
+    /// \endcode
+    ///
+    /// \tparam CLIST list that will be transformed
+    template <typename CLIST>
+    struct add_shared_ptr
+    {
+      /// \brief Result.
+      typedef typename boost::mpl::transform
+      <CLIST, typename boost::shared_ptr<boost::mpl::_1> >::type type;
+    };
+  } // end of namespace detail.
+
   /// \addtogroup roboptim_problem
   /// @{
 
@@ -51,18 +83,59 @@ namespace roboptim
   /// method: a reference to a function and an interval is needed.
   ///
   /// The cost function is immutable.
-  template <typename F, typename C>
+  ///
+  /// Constraints are stored as a Boost.Variant of smart pointers
+  /// (i.e. more precisely using a boost::shared_ptr) representing all
+  /// the different possibles constraint types.
+  ///
+  /// It is recommended to add a constraint using the following syntax:
+  /// \code
+  /// problem.addConstraint (boost::make_shared<MyConstraint> (...), ...);
+  /// \endcode
+  ///
+  /// Unlike other classes which just copy functions, pointers are used
+  /// here in order to allow sub-classes of constraints to be inserted
+  /// in the problem.
+  /// For instance, a twice derivable function can be inserted in
+  /// a problem which expects a derivable function.
+  ///
+  /// \tparam F function type
+  /// \tparam CLIST type list satisfying MPL's sequence concept
+  template <typename F, typename CLIST>
   class Problem
   {
     BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
+
+    //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
   public:
-    template <typename F_, typename C_>
+    template <typename F_, typename CLIST_>
     friend class Problem;
 
     /// \brief Function type.
+    ///
+    /// This has to be either Function or one of its
+    /// sub-classes.
     typedef F function_t;
+
     /// \brief Constraint's type.
-    typedef C constraint_t;
+    ///
+    /// Generate a Boost.Variant of shared pointers tyle from the
+    /// static constraints types list.
+    ///
+    /// For instance, if one instantiates
+    /// \code
+    ///  Problem<QuadraticFunction, vector<LinearFunction, QuadraticFunction> >
+    /// \endcode
+    /// then this type will be set to:
+    /// \code
+    /// boost::variant<boost::shared_ptr<LinearFunction>,
+    ///                boost::shared_ptr<QuadraticFunction> >
+    /// \endcode
+    ///
+    /// The meta-algorithm which add shared pointers is implemented
+    /// in detail::add_shared_pointer.
+    typedef typename boost::make_variant_over
+    <typename detail::add_shared_ptr<CLIST>::type>::type constraint_t;
 
     // \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
@@ -83,11 +156,11 @@ namespace roboptim
     explicit Problem (const function_t&) throw ();
 
     /// \brief Copy constructor.
-    explicit Problem (const Problem<F, C>&) throw ();
+    explicit Problem (const Problem<F, CLIST>&) throw ();
 
     /// \brief Copy constructor (convert from another class of problem).
-    template <typename F_, typename C_>
-    explicit Problem (const Problem<F_, C_>&) throw ();
+    template <typename F_, typename CLIST_>
+    explicit Problem (const Problem<F_, CLIST_>&) throw ();
 
     ~Problem () throw ();
 
@@ -100,10 +173,11 @@ namespace roboptim
     const constraints_t& constraints () const throw ();
 
     /// \brief Add a constraint to the problem.
-    /// \param constraint reference to the constraint to add
+    /// \param constraint the constraint that will be added
     /// \param interval interval in which the constraint is satisfied
     /// \param scale constraint scale
-    void addConstraint (const C& constraint, interval_t interval,
+    void addConstraint (constraint_t constraint,
+			interval_t interval,
 			value_type scale = 1.)
       throw (std::runtime_error);
 
@@ -181,8 +255,8 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param pb problem to be displayed
   /// \return output stream
-  template <typename F, typename C>
-  std::ostream& operator<< (std::ostream& o, const Problem<F, C>& pb);
+  template <typename F, typename CLIST>
+  std::ostream& operator<< (std::ostream& o, const Problem<F, CLIST>& pb);
 
 } // end of namespace roboptim
 # include <roboptim/core/problem.hxx>

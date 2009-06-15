@@ -16,6 +16,9 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "common.hh"
+
+#include <boost/mpl/vector.hpp>
+
 #include <roboptim/core/derivable-function.hh>
 #include <roboptim/core/problem.hh>
 
@@ -43,15 +46,13 @@ public:
 // Check that a problem has really been copied.
 #define CHECK_COPY(A, B)                                                \
   assert (&(A).function () == &(B).function ());                        \
-  assert ((A).constraints ().size () == (B).constraints ().size ());    \
-                                                                        \
-  for (unsigned i = 0; i < (A).constraints ().size (); ++i)             \
-    assert ((A).constraints ()[i] == (B).constraints ()[i])
+  assert ((A).constraints ().size () == (B).constraints ().size ());
 
 int run_test ()
 {
-  typedef Problem<DerivableFunction, const DerivableFunction*> problemSrc_t;
-  typedef Problem<Function, const Function*> problemDst_t;
+  typedef Problem<DerivableFunction, boost::mpl::vector<DerivableFunction> >
+    problemSrc_t;
+  typedef Problem<Function, boost::mpl::vector<Function> > problemDst_t;
 
   F f;
 
