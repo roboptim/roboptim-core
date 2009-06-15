@@ -98,7 +98,7 @@ generate-reference:
 # Distribute reference files.
 EXTRA_DIST +=					\
 	finite-difference-gradient.stdout	\
-	freeze.stdout				\
+	identity-function.stdout		\
 	n-times-derivable-function.stdout	\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\

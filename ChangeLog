@@ -1,3 +1,10 @@
+2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix distribution.
+	* include/Makefile.am: Distribute identity-function.hh.
+	* tests/Makefile.am: Remove freeze.stdout and
+	add identity-function.stdout.
+
 2009-06-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Implement identity function.
