@@ -28,11 +28,10 @@ namespace roboptim
   /// the problem.
   class NoSolution {};
 
-
+  class ConstantFunction;
   class DerivableFunction;
   class DummySolver;
   class FiniteDifferenceGradient;
-  class Freeze;
   class Function;
   class GenericSolver;
   class LinearFunction;

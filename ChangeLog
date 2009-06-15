@@ -1,5 +1,10 @@
 2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Update forward declarations.
+	* include/roboptim/core/fwd.hh: Add ConstantFunction.
+
+2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Generalize addConstraint.
 	* include/roboptim/core/problem.hh,
 	* include/roboptim/core/problem.hxx:
