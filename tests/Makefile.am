@@ -62,6 +62,11 @@ check_PROGRAMS += identity-function
 identity_function_SOURCES = identity-function.cc $(COMMON_SOURCES)
 identity_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# constant-function
+check_PROGRAMS += constant-function
+constant_function_SOURCES = constant-function.cc $(COMMON_SOURCES)
+constant_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # visualization-gnuplot-simple
 check_PROGRAMS += visualization-gnuplot-simple
 visualization_gnuplot_simple_SOURCES = visualization-gnuplot-simple.cc \
@@ -97,6 +102,7 @@ generate-reference:
 
 # Distribute reference files.
 EXTRA_DIST +=					\
+	constant-function.stdout		\
 	finite-difference-gradient.stdout	\
 	identity-function.stdout		\
 	n-times-derivable-function.stdout	\

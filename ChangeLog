@@ -1,5 +1,18 @@
 2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add constant function.
+	* include/Makefile.am: Distribute new headers.
+	* include/roboptim/core/constant-function.hh: New.
+	* src/Makefile.am: Compile constant function.
+	* src/constant-function.cc: New.
+	* tests/Makefile.am: Add constant function test.
+	* tests/constant-function.cc: New.
+	* tests/constant-function.stdout: New.
+	* tests/problem-cc.cc: Use constant function.
+	* tests/testsuite.at: Run test suite.
+
+2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Generalize constraint storage.
 	* include/roboptim/core/plugin/dummy.hh: Use new syntax
 	to specify constraints types.

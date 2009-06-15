@@ -15,45 +15,35 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <iostream>
+#include <boost/numeric/ublas/io.hpp>
+
 #include "common.hh"
-
-#include <boost/mpl/vector.hpp>
-
 #include <roboptim/core/constant-function.hh>
-#include <roboptim/core/derivable-function.hh>
-#include <roboptim/core/problem.hh>
 
 using namespace roboptim;
 
-// Check that a problem has really been copied.
-#define CHECK_COPY(A, B)                                                \
-  assert (&(A).function () == &(B).function ());                        \
-  assert ((A).constraints ().size () == (B).constraints ().size ());
-
 int run_test ()
 {
-  typedef Problem<DerivableFunction, boost::mpl::vector<DerivableFunction> >
-    problemSrc_t;
-  typedef Problem<Function, boost::mpl::vector<Function> > problemDst_t;
+  ConstantFunction::vector_t offset (4);
+  offset[0] = 12.;
+  offset[1] = 46.;
+  offset[2] = 2.;
+  offset[3] = -9.;
 
-  ConstantFunction::vector_t v (1);
-  v.clear ();
+  ConstantFunction cst (offset);
 
-  ConstantFunction f (v);
+  ConstantFunction::vector_t x (4);
+  x.clear ();
 
-  problemSrc_t pbSrc (f);
-
-  // Check with same type.
-  {
-    problemSrc_t pbDst (pbSrc);
-    CHECK_COPY(pbSrc, pbDst);
-  }
-
-  // Check with a more general type.
-  {
-    problemDst_t pbDst (pbSrc);
-    CHECK_COPY(pbSrc, pbDst);
-  }
+  std::cout
+    << cst << std::endl
+    << "Evaluate: " << std::endl
+    << cst (x) << std::endl
+    << "Gradient: " << std::endl
+    << cst.gradient (x) << std::endl
+    << "Jacobian: " << std::endl
+    << cst.jacobian (x) << std::endl;
 
   return 0;
 }
