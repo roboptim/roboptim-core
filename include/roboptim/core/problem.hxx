@@ -18,7 +18,6 @@
 #ifndef ROBOPTIM_CORE_PROBLEM_HXX
 # define ROBOPTIM_CORE_PROBLEM_HXX
 # include <algorithm>
-# include <boost/mpl/at.hpp>
 # include <boost/numeric/ublas/io.hpp>
 # include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
@@ -196,6 +195,44 @@ namespace roboptim
     }
   }
 
+  namespace detail
+  {
+    template <typename P>
+    struct printConstraint : public boost::static_visitor<void>
+    {
+      printConstraint (std::ostream& o,
+		       const P& problem,
+		       int i) :
+	problem_ (problem),
+	o_ (o),
+	i_ (i)
+      {}
+
+      template <typename U>
+      void operator () (const U&)
+      {
+	assert (problem_.constraints ().size () - i_ > 0);
+	using namespace boost;
+        o_ << iendl << incindent
+	   << "Constraint " << i_ << incindent << iendl
+	   << "Bounds: " << problem_.bounds ()[i_] << iendl
+	   << "Scales: " << problem_.scales ()[i_] << iendl;
+
+	if (problem_.startingPoint ())
+	  {
+	    U g = get<U> (problem_.constraints ()[i_]);
+	    o_ << "Initial value: "
+	       << (*g) (*problem_.startingPoint ()) << iendl;
+	  }
+	o_ << decindent << decindent;
+      }
+    private:
+      const P& problem_;
+      std::ostream& o_;
+      int i_;
+    };
+  } // end of namespace detail.
+
   template <typename F, typename CLIST>
   std::ostream&
   Problem<F, CLIST>::print (std::ostream& o) const throw ()
@@ -217,24 +254,10 @@ namespace roboptim
     else
       o << "Number of constraints: " << constraints ().size ();
 
-    typedef typename constraints_t::const_iterator citer_t;
-    unsigned i = 0;
-    for (citer_t it = constraints ().begin ();
-         it != constraints ().end ();
-         ++it, ++i)
+    for (unsigned i = 0; i < this->constraints ().size (); ++i)
       {
-        o << iendl << incindent
-          << "Constraint " << i << incindent << iendl
-          << "Bounds: " << bounds ()[i] << iendl
-          << "Scales: " << scales ()[i] << iendl;
-
-	if (startingPoint_)
-	  {
-	    shared_ptr<Function> g = get<shared_ptr<Function> > (*it);
-	    o << "Initial value: " << (*g) (*startingPoint_) << incindent << iendl;
-	  }
-
-	o << decindent << decindent;
+	detail::printConstraint<Problem<F, CLIST> > pc (o, *this, i);
+	boost::apply_visitor (pc, this->constraints ()[i]);
       }
 
     // Starting point.

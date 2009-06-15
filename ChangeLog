@@ -1,5 +1,11 @@
 2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix implementation.
+	* include/roboptim/core/problem.hxx: Here.
+	* tests/simple.stdout: Regenerate.
+
+2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Display initial constraints values.
 	* include/roboptim/core/problem.hxx: Display constraints initial values.
 	* src/result.cc: Restyle.
