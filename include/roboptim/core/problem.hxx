@@ -104,14 +104,19 @@ namespace roboptim
   }
 
   template <typename F, typename CLIST>
+  template <typename C>
   void
-  Problem<F, CLIST>::addConstraint (constraint_t x,
+  Problem<F, CLIST>::addConstraint (boost::shared_ptr<C> x,
 				    interval_t b,
 				    value_type s)
     throw (std::runtime_error)
   {
+    //FIXME: check that C is in CLIST.
+
+    // Check that the pointer is not null.
+    assert (!!x.get ());
     assert (b.first <= b.second);
-    constraints_.push_back (x);
+    constraints_.push_back (boost::static_pointer_cast<C> (x));
     bounds_.push_back (b);
     scales_.push_back (s);
   }

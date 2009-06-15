@@ -1,5 +1,15 @@
 2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Generalize addConstraint.
+	* include/roboptim/core/problem.hh,
+	* include/roboptim/core/problem.hxx:
+	Modify addConstraint in order to let the user
+	choose how a constraint should be considered
+	(example: consider a constraint as a linear or
+	as a non-linear function).
+
+2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add constant function.
 	* include/Makefile.am: Distribute new headers.
 	* include/roboptim/core/constant-function.hh: New.

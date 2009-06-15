@@ -90,8 +90,10 @@ namespace roboptim
   ///
   /// It is recommended to add a constraint using the following syntax:
   /// \code
-  /// problem.addConstraint (boost::make_shared<MyConstraint> (...), ...);
+  /// problem.addConstraint<C> (boost::make_shared<MyFunction> (...), ...);
   /// \endcode
+  /// where C is the constraint type and MyFunction the function type.
+  ///
   ///
   /// Unlike other classes which just copy functions, pointers are used
   /// here in order to allow sub-classes of constraints to be inserted
@@ -173,10 +175,13 @@ namespace roboptim
     const constraints_t& constraints () const throw ();
 
     /// \brief Add a constraint to the problem.
+    ///
     /// \param constraint the constraint that will be added
     /// \param interval interval in which the constraint is satisfied
     /// \param scale constraint scale
-    void addConstraint (constraint_t constraint,
+    /// \tparam C constraint type (has to be in CLIST)
+    template <typename C>
+    void addConstraint (boost::shared_ptr<C> constraint,
 			interval_t interval,
 			value_type scale = 1.)
       throw (std::runtime_error);
