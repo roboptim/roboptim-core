@@ -6,21 +6,23 @@ Problem:
   Constraint 0
       Bounds: (0, 5)
       Scales: 3.5
-      
-  Starting point: [4](0,0,0,0)
-  Starting value: [1](0)
-  Infinity value (for all functions): inf
+      Initial value: [1](0)
+        
+    Starting point: [4](0,0,0,0)
+    Starting value: [1](0)
+    Infinity value (for all functions): inf
 ---
 Problem:
-  Function
-  Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
-  Argument's scales: 1, 1, 1, 1
-  Number of constraints: 1
-  Constraint 0
-      Bounds: (0, 5)
-      Scales: 3.5
-      
-  Starting point: [4](0,0,0,0)
-  Starting value: [1](0)
-  Infinity value (for all functions): inf
+    Function
+    Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
+    Argument's scales: 1, 1, 1, 1
+    Number of constraints: 1
+    Constraint 0
+        Bounds: (0, 5)
+        Scales: 3.5
+        Initial value: [1](0)
+          
+      Starting point: [4](0,0,0,0)
+      Starting value: [1](0)
+      Infinity value (for all functions): inf
 The dummy solver always fail.

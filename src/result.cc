@@ -51,9 +51,9 @@ namespace roboptim
       << "Size (input, output): " << inputSize << ", " << outputSize << iendl
       << "X: " << x << iendl
       << "Value: " << value << iendl
-      << "Lambda: " << lambda
-      << decindent;
-    return o;
+      << "Lambda: " << lambda;
+
+    return o << decindent;
   }
 
   std::ostream& operator<< (std::ostream& o, const Result& r)

@@ -18,6 +18,7 @@
 #ifndef ROBOPTIM_CORE_PROBLEM_HXX
 # define ROBOPTIM_CORE_PROBLEM_HXX
 # include <algorithm>
+# include <boost/mpl/at.hpp>
 # include <boost/numeric/ublas/io.hpp>
 # include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
@@ -199,6 +200,8 @@ namespace roboptim
   std::ostream&
   Problem<F, CLIST>::print (std::ostream& o) const throw ()
   {
+    using namespace boost;
+
     o << "Problem:" << incendl;
     // Function.
     o << function () << iendl;
@@ -223,8 +226,15 @@ namespace roboptim
         o << iendl << incindent
           << "Constraint " << i << incindent << iendl
           << "Bounds: " << bounds ()[i] << iendl
-          << "Scales: " << scales ()[i] << iendl
-          << decindent << decindent;
+          << "Scales: " << scales ()[i] << iendl;
+
+	if (startingPoint_)
+	  {
+	    shared_ptr<Function> g = get<shared_ptr<Function> > (*it);
+	    o << "Initial value: " << (*g) (*startingPoint_) << incindent << iendl;
+	  }
+
+	o << decindent << decindent;
       }
 
     // Starting point.
@@ -238,11 +248,6 @@ namespace roboptim
 
     // Infinity.
     o << iendl << "Infinity value (for all functions): " << Function::infinity ();
-
-    // Arguments' bounds.
-    // Arguments' scales.
-
-
     return o << decindent;
   }
 
