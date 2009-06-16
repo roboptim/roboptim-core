@@ -154,6 +154,9 @@ namespace roboptim
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
 
+    /// \name Constructors and destructors.
+    /// \{
+
     /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
     explicit Problem (const function_t&) throw ();
 
@@ -166,9 +169,45 @@ namespace roboptim
 
     ~Problem () throw ();
 
+    /// \}
+
+
+    /// \name Cost function.
+    /// \{
+
     /// \brief Retrieve cost function.
     /// \return cost function
     const function_t& function () const throw ();
+
+    /// \brief Retrieve arguments bounds.
+    /// Arguments bounds define in which interval
+    /// each argument is valid.
+    /// \return arguments bounds
+    intervals_t& argumentBounds () throw ();
+
+    /// \brief Retrieve arguments bounds.
+    /// Arguments bounds define in which interval
+    /// each argument is valid.
+    /// \return arguments bounds
+    const intervals_t& argumentBounds () const throw ();
+
+    /// \brief Retrieve arguments scales.
+    /// Arguments scales define which scale is applied for
+    /// each argument.
+    /// \return arguments scales
+    scales_t& argumentScales () throw ();
+
+    /// \brief Retrieve arguments scales.
+    /// Arguments scales define which scale is applied for
+    /// each argument.
+    /// \return arguments scales
+    const scales_t& argumentScales () const throw ();
+
+    /// \}
+
+
+    /// \name Constraints.
+    /// \{
 
     /// \brief Retrieve constraints.
     /// \return constraints
@@ -186,6 +225,20 @@ namespace roboptim
 			value_type scale = 1.)
       throw (std::runtime_error);
 
+    /// \brief Retrieve constraints bounds.
+    /// \return constraints bounds
+    const intervals_t& bounds () const throw ();
+
+    /// \brief Retrieve constraints scales.
+    /// \return constraints scales
+    const scales_t& scales () const throw ();
+
+    /// \}
+
+
+    /// \name Starting point (initial guess).
+    /// \{
+
     /// \brief Set the initial guess.
     /// \return reference on the initial guess
     startingPoint_t& startingPoint () throw ();
@@ -194,37 +247,8 @@ namespace roboptim
     /// \return reference on the initial guess
     const startingPoint_t& startingPoint () const throw ();
 
-    /// \brief Retrieve constraints bounds.
-    /// \return constraints bounds
-    const intervals_t& bounds () const throw ();
+    /// \}
 
-    /// \brief Retrieve arguments bounds.
-    /// Arguments bounds define in which interval
-    /// each argument is valid.
-    /// \return arguments bounds
-    intervals_t& argumentBounds () throw ();
-
-    /// \brief Retrieve arguments bounds.
-    /// Arguments bounds define in which interval
-    /// each argument is valid.
-    /// \return arguments bounds
-    const intervals_t& argumentBounds () const throw ();
-
-    /// \brief Retrieve constraints scales.
-    /// \return constraints scales
-    const scales_t& scales () const throw ();
-
-    /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for
-    /// each argument.
-    /// \return arguments scales
-    scales_t& argumentScales () throw ();
-
-    /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for
-    /// each argument.
-    /// \return arguments scales
-    const scales_t& argumentScales () const throw ();
 
     /// \brief Display the problem on the specified output stream.
     ///

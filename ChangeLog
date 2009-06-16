@@ -1,3 +1,8 @@
+2009-06-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add sections into Problem class.
+	* include/roboptim/core/problem.hh: Here.
+
 2009-06-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix implementation.
