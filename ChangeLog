@@ -1,5 +1,11 @@
 2009-06-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Require at least Boost 1.37.
+	* configure.ac: Check that Boost version is newer
+	than 1.37 to allow the use of make_shared.
+
+2009-06-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix buildchain.
 	* Makefile.am: Remove useless rules.
 
