@@ -55,7 +55,7 @@ edit = $(SED) -e "s|@prefix\@|$(prefix)|"			\
               -e 's,@VERSION\@,$(PACKAGE_VERSION),g'
 
 EXTRA_DIST += build-aux/pkg-config.pc.in
-CLEANFILES += $(PKG_CONFIG_FILE)
+CLEANFILES += $(pkg_config_file)
 
 # pkg-config generation.
 @PACKAGE_TARNAME@.pc: $(srcdir)/build-aux/pkg-config.pc.in
@@ -67,11 +67,11 @@ install-data-local: install-pkg-config
 uninstall-local: uninstall-pkg-config
 
 install-pkg-config: $(PACKAGE_TARNAME).pc
-	$(mkdir_p) $(PKG_DIR)
-	$(install_sh_DATA) "$(PKG_CONFIG_FILE)" $(PKG_DIR)
+	$(mkdir_p) $(pkgdir)
+	$(install_sh_DATA) $(pkg_config_file) $(pkgdir)
 
 uninstall-pkg-config:
-	-rm -f "$(PKG_DIR)$(PKG_CONFIG_FILE)"
+	-rm -f "$(pkgdir)$(pkg_config_file)"
 
 # Check that the pkg-config file is generated.
 check-local: @PACKAGE_TARNAME@.pc
