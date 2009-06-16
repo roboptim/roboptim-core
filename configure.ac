@@ -63,9 +63,7 @@ AC_CHECK_LIB([ltdl], [lt_dlopen], [],
 
 
 # Search for Boost
-
-# Need 1.37 for boost::make_shared.
-BOOST_REQUIRE(1.37)
+BOOST_REQUIRE(1.34)
 BOOST_FORMAT
 BOOST_MPL
 BOOST_OPTIONAL
