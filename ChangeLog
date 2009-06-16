@@ -1,5 +1,10 @@
 2009-06-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix buildchain.
+	* Makefile.am: Remove useless rules.
+
+2009-06-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add sections into Problem class.
 	* include/roboptim/core/problem.hh: Here.
 
