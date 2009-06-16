@@ -16,7 +16,6 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
-#include <boost/make_shared.hpp>
 
 #include "common.hh"
 #include <roboptim/core/plugin/dummy.hh>
@@ -74,7 +73,8 @@ int run_test ()
 	  && pb.argumentScales ()[2] == 1.
 	  && pb.argumentScales ()[3] == 1.);
 
-  pb.addConstraint (boost::make_shared<F> (),
+  F* g = new F ();
+  pb.addConstraint (boost::shared_ptr<F> (g),
 		    Function::makeInterval (0., 5.), 3.5);
   assert (pb.constraints ().size () == 1);
   assert (&pb.constraints ()[0] != 0);
