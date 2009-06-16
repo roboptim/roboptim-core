@@ -31,8 +31,12 @@ namespace roboptim
     {
       memcpy (dst, &src[0], src.size () * sizeof (Function::value_type));
 
+      // NaN != NaN, handle this case.
       for (std::size_t i = 0; i < src.size (); ++i)
-        assert (dst[i] == src[i]);
+	if (src[i] != src[i])
+	  assert (dst[i] != dst[i]);
+	else
+	  assert (dst[i] == src[i]);
     }
 
     void
@@ -40,8 +44,12 @@ namespace roboptim
     {
       memcpy (&dst[0], src, dst.size () * sizeof (Function::value_type));
 
+      // NaN != NaN, handle this case.
       for (std::size_t i = 0; i < dst.size (); ++i)
-        assert (dst[i] == src[i]);
+	if (src[i] != src[i])
+	  assert (dst[i] != dst[i]);
+	else
+	  assert (dst[i] == src[i]);
     }
   } // end of namespace detail.
 } // end of namespace roboptim.

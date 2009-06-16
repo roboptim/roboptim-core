@@ -1,5 +1,10 @@
 2009-06-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Handle NaN in copy assertions.
+	* src/util.cc: Here.
+
+2009-06-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Do not use boost::make_shared.
 	* tests/simple.cc: Here.
 
