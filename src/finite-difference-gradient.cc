@@ -57,6 +57,10 @@ namespace roboptim
 	result_t resEps = adaptee_ (xEps);
 
 	gradient (j) = (resEps[idFunction] - res[idFunction]) / epsilon_;
+
+	// Avoid returning NaN if gradient is almost null.
+	if (gradient (j) != gradient (j))
+	  gradient (j) = 0.;
       }
   }
 

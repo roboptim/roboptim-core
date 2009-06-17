@@ -1,3 +1,9 @@
+2009-06-17  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix error in finite difference gradient.
+	* src/finite-difference-gradient.cc: Avoid returning NaN
+	if the computed difference is almost null.
+
 2009-06-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Handle NaN in copy assertions.
