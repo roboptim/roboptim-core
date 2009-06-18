@@ -40,6 +40,7 @@ namespace roboptim
 	std::stringstream sserror;
 	sserror << "libltdl failed to load plug-in ``"
 		<< ss.str () << "'': " << lt_dlerror ();
+	lt_dlexit ();
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
@@ -50,6 +51,9 @@ namespace roboptim
 	std::stringstream sserror;
 	sserror << "libltdl failed to find symbol ``create'': "
 		<< lt_dlerror ();
+
+	lt_dlclose (handle_);
+	lt_dlexit ();
 	throw std::runtime_error (sserror.str ().c_str ());
       }
     solver_ = c (pb);
@@ -59,6 +63,9 @@ namespace roboptim
 	std::stringstream sserror;
 	sserror << "libltdl failed to call ``create'': "
 		<< lt_dlerror ();
+
+	lt_dlclose (handle_);
+	lt_dlexit ();
 	throw std::runtime_error (sserror.str ().c_str ());
       }
   }
@@ -67,6 +74,7 @@ namespace roboptim
   SolverFactory<T>::~SolverFactory () throw ()
   {
     typedef void destroy_t (solver_t*);
+
     destroy_t* destructor =
       reinterpret_cast<destroy_t*> (lt_dlsym (handle_, "destroy"));
     if (destructor)
