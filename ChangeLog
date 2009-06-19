@@ -1,3 +1,14 @@
+2009-06-19  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add parametrized function class.
+	* include/Makefile.am: Distribute new header.
+	* include/roboptim/core/parametrized-function.hh: New.
+	* include/roboptim/core/parametrized-function.hxx: New.
+	* tests/Makefile.am: Compile new test.
+	* tests/parametrized-function.cc: New.
+	* tests/parametrized-function.stdout: New.
+	* tests/testsuite.at: Run new test.
+
 2009-06-18  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Make SolverFactory exception-safe.

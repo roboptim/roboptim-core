@@ -38,6 +38,7 @@ CHECK_STDOUT([finite-difference-gradient], [Check finite difference gradient.])
 CHECK_STDOUT([result], [Check Result class.])
 CHECK_STDOUT([identity-function], [Check identity function class.])
 CHECK_STDOUT([constant-function], [Check constant function class.])
+CHECK_STDOUT([parametrized-function], [Check parametrized function class.])
 
 AT_BANNER([Plug-in mechanism])
 CHECK_STDOUT([plugin], [Load dummy plug-in dynamically.])

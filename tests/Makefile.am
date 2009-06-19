@@ -47,6 +47,12 @@ n_times_derivable_function_SOURCES = n-times-derivable-function.cc \
 	$(COMMON_SOURCES)
 n_times_derivable_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# parametrized-function
+check_PROGRAMS += parametrized-function
+parametrized_function_SOURCES = parametrized-function.cc \
+	$(COMMON_SOURCES)
+parametrized_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # plugin
 check_PROGRAMS += plugin
 plugin_SOURCES = plugin.cc $(COMMON_SOURCES)
@@ -108,6 +114,7 @@ EXTRA_DIST +=					\
 	n-times-derivable-function.stdout	\
 	numeric-linear-function.stdout		\
 	numeric-quadratic-function.stdout	\
+	parametrized-function.stdout		\
 	plugin.stdout				\
 	problem-cc.stdout			\
 	result.stdout				\

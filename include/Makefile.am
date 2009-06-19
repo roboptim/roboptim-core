@@ -15,6 +15,8 @@ nobase_include_HEADERS =				\
 	roboptim/core/n-times-derivable-function.hxx	\
 	roboptim/core/numeric-quadratic-function.hh	\
 	roboptim/core/numeric-linear-function.hh	\
+	roboptim/core/parametrized-function.hh		\
+	roboptim/core/parametrized-function.hxx		\
 	roboptim/core/problem.hh			\
 	roboptim/core/problem.hxx			\
 	roboptim/core/quadratic-function.hh		\
