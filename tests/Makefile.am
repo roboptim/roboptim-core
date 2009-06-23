@@ -121,7 +121,7 @@ EXTRA_DIST +=						\
 	numeric-linear-function.stdout			\
 	numeric-quadratic-function.stdout		\
 	parametrized-function.stdout			\
-	parametrized-derivable-function.stdout		\
+	derivable-parametrized-function.stdout		\
 	plugin.stdout					\
 	problem-cc.stdout				\
 	result.stdout					\

@@ -4,6 +4,7 @@ include $(top_srcdir)/build-aux/init.mk
 nobase_include_HEADERS =				\
 	roboptim/core/constant-function.hh		\
 	roboptim/core/derivable-function.hh		\
+	roboptim/core/derivable-parametrized-function.hh\
 	roboptim/core/function.hh			\
 	roboptim/core/fwd.hh				\
 	roboptim/core/finite-difference-gradient.hh	\

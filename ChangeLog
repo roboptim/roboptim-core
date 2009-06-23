@@ -1,5 +1,11 @@
 2009-06-23  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix distribution.
+	* include/Makefile.am: Distribute missing header.
+	* tests/Makefile.am: Fix typo.
+
+2009-06-23  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement DerivableParametrizedFunction.
 	* include/roboptim/core/derivable-parametrized-function.hh: New.
 	* include/roboptim/core/parametrized-function.hh,
