@@ -1,0 +1,39 @@
+Parameter is 0
+Identity function
+  offset = [1](0)
+  
+Evaluate: 
+[1](31)
+Gradient: 
+[1](1)
+Jacobian: 
+[1,1]((1))
+Derivative w.r.t params: 
+[1,1]((1))
+
+Parameter is 3.14
+Identity function
+  offset = [1](3.14)
+  
+Evaluate: 
+[1](34.14)
+Gradient: 
+[1](1)
+Jacobian: 
+[1,1]((1))
+Derivative w.r.t params: 
+[1,1]((1))
+
+Parameter is 42
+Identity function
+  offset = [1](42)
+  
+Evaluate: 
+[1](73)
+Gradient: 
+[1](1)
+Jacobian: 
+[1,1]((1))
+Derivative w.r.t params: 
+[1,1]((1))
+

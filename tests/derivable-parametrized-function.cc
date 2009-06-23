@@ -19,20 +19,28 @@
 #include <boost/numeric/ublas/io.hpp>
 
 #include "common.hh"
-#include <roboptim/core/constant-function.hh>
-#include <roboptim/core/parametrized-function.hh>
+#include <roboptim/core/identity-function.hh>
+#include <roboptim/core/derivable-parametrized-function.hh>
 
 using namespace roboptim;
 
 // Define a simple function.
-struct ParametrizedF : public ParametrizedFunction<ConstantFunction>
+struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
 {
-  ParametrizedF () : ParametrizedFunction<ConstantFunction> (1, 1, 1)
+  ParametrizedDF () : DerivableParametrizedFunction<IdentityFunction> (1, 1, 1)
   {}
 
   result_t impl_compute (const argument_t& argument) const throw ()
   {
     return result_t (argument);
+  }
+
+  void impl_gradient (gradient_t& gradient,
+		      const argument_t& argument,
+		      size_type functionId = 0) const throw ()
+  {
+    gradient.clear ();
+    gradient[0] = 1.;
   }
 };
 
@@ -40,9 +48,9 @@ struct ParametrizedF : public ParametrizedFunction<ConstantFunction>
   {								\
     std::cout << "Parameter is " << PVALUE << std::endl;	\
     parameter[0] = (PVALUE);					\
-    ConstantFunction cst = pf (parameter);			\
+    IdentityFunction cst = pf (parameter);			\
 								\
-    ConstantFunction::vector_t x (1);				\
+    IdentityFunction::vector_t x (1);				\
     x[0] = 31.;							\
     std::cout							\
       << cst << std::endl					\
@@ -52,14 +60,16 @@ struct ParametrizedF : public ParametrizedFunction<ConstantFunction>
       << cst.gradient (x) << std::endl				\
       << "Jacobian: " << std::endl				\
       << cst.jacobian (x) << std::endl				\
+      << "Derivative w.r.t params: " << std::endl		\
+      << cst.jacobian (x) << std::endl				\
       << std::endl;						\
   }								\
 
 int run_test ()
 {
-  ParametrizedF pf;
+  ParametrizedDF pf;
 
-  ParametrizedF::argument_t parameter (1);
+  ParametrizedDF::argument_t parameter (1);
   parameter.clear ();
 
   CHECKME (0.);
@@ -68,13 +78,13 @@ int run_test ()
 
   {
     parameter[0] = 128.;
-    ConstantFunction::vector_t x (1);
+    IdentityFunction::vector_t x (1);
     x[0] = 256.;
 
     // Natural evaluation in one line.
-    ConstantFunction::result_t res = pf (parameter) (x);
+    IdentityFunction::result_t res = pf (parameter) (x);
 
-    assert (res[0] == 128.);
+    assert (res[0] == 128. + 256.);
   }
 
   return 0;

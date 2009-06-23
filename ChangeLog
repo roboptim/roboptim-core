@@ -1,3 +1,18 @@
+2009-06-23  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Implement DerivableParametrizedFunction.
+	* include/roboptim/core/derivable-parametrized-function.hh: New.
+	* include/roboptim/core/parametrized-function.hh,
+	* include/roboptim/core/parametrized-function.hxx:
+	Specify input/output sizes of inner function in constructor.
+	* tests/Makefile.am: Run new test.
+	* tests/derivable-parametrized-function.cc:
+	Copy from tests/parametrized-function.cc.
+	* tests/derivable-parametrized-function.stdout: New.
+	* tests/parametrized-function.cc: Add input/output inner
+	function size in constructor.
+	* tests/testsuite.at: Run tests.
+
 2009-06-19  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add parametrized function class.

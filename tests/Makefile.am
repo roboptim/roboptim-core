@@ -53,6 +53,12 @@ parametrized_function_SOURCES = parametrized-function.cc \
 	$(COMMON_SOURCES)
 parametrized_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# derivable-parametrized-function
+check_PROGRAMS += derivable-parametrized-function
+derivable_parametrized_function_SOURCES = derivable-parametrized-function.cc \
+	$(COMMON_SOURCES)
+derivable_parametrized_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # plugin
 check_PROGRAMS += plugin
 plugin_SOURCES = plugin.cc $(COMMON_SOURCES)
@@ -107,17 +113,18 @@ generate-reference:
 # ------------ #
 
 # Distribute reference files.
-EXTRA_DIST +=					\
-	constant-function.stdout		\
-	finite-difference-gradient.stdout	\
-	identity-function.stdout		\
-	n-times-derivable-function.stdout	\
-	numeric-linear-function.stdout		\
-	numeric-quadratic-function.stdout	\
-	parametrized-function.stdout		\
-	plugin.stdout				\
-	problem-cc.stdout			\
-	result.stdout				\
-	simple.stdout				\
-	visualization-gnuplot-function.stdout	\
+EXTRA_DIST +=						\
+	constant-function.stdout			\
+	finite-difference-gradient.stdout		\
+	identity-function.stdout			\
+	n-times-derivable-function.stdout		\
+	numeric-linear-function.stdout			\
+	numeric-quadratic-function.stdout		\
+	parametrized-function.stdout			\
+	parametrized-derivable-function.stdout		\
+	plugin.stdout					\
+	problem-cc.stdout				\
+	result.stdout					\
+	simple.stdout					\
+	visualization-gnuplot-function.stdout		\
 	visualization-gnuplot-simple.stdout

@@ -23,7 +23,8 @@
 
 # include <boost/numeric/ublas/matrix.hpp>
 # include <boost/numeric/ublas/vector.hpp>
-# include <boost/tuple/tuple.hpp>
+# include <boost/static_assert.hpp>
+# include <boost/type_traits/is_base_of.hpp>
 
 # include <roboptim/core/fwd.hh>
 
@@ -46,9 +47,12 @@ namespace roboptim
   ///
   /// Functions are pure immutable objects: evaluating a function
   /// twice at a given point <b>must</b> give the same result.
+  ///
+  /// \tparam F inner function type.
   template <typename F>
   class ParametrizedFunction
   {
+    BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
   public:
     /// \brief Import value type.
     typedef typename F::value_type value_type;
@@ -76,6 +80,16 @@ namespace roboptim
     /// \return input size
     size_type inputSize () const throw ();
 
+    /// \brief Return the function's input size (i.e. argument's vector size).
+    ///
+    /// \return input size
+    size_type functionInputSize () const throw ();
+
+    /// \brief Return the function's output size (i.e. result's vector size).
+    ///
+    /// \return output size
+    size_type functionOutputSize () const throw ();
+
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
@@ -85,8 +99,12 @@ namespace roboptim
   protected:
     /// \brief Concrete class constructor should call this constructor.
     ///
-    /// \param inputSize function arity
-    ParametrizedFunction (size_type inputSize) throw ();
+    /// \param inputSize parameter size
+    /// \param functionInputSize inner function argument size
+    /// \param functionOutputSize inner function result size
+    ParametrizedFunction (size_type inputSize,
+			  size_type functionInputSize,
+			  size_type functionOutputSize) throw ();
 
     /// \brief Function evaluation.
     ///
@@ -97,8 +115,12 @@ namespace roboptim
       const throw () = 0;
 
   private:
-    /// Problem dimension.
+    /// Parameter size.
     const size_type inputSize_;
+    /// Inner function argument vector size.
+    const size_type functionInputSize_;
+    /// Inner function result vector size.
+    const size_type functionOutputSize_;
   };
   /// @}
 
