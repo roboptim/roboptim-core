@@ -1,5 +1,12 @@
 2009-06-23  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add support for mixed derivative.
+	* include/roboptim/core/derivable-parametrized-function.hh:
+	Add support for mixed derivative.
+	* tests/derivable-parametrized-function.cc: Update test.
+
+2009-06-23  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix distribution.
 	* include/Makefile.am: Distribute missing header.
 	* tests/Makefile.am: Fix typo.

@@ -97,11 +97,12 @@ namespace roboptim
     ///
     /// \param argument point at which the jacobian will be computed
     /// \return jacobian matrix
-    jacobian_t jacobian (const argument_t& argument) const throw ()
+    jacobian_t jacobian (const argument_t& argument, size_type order = 0)
+      const throw ()
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
       jacobian.clear ();
-      this->jacobian (jacobian, argument);
+      this->jacobian (jacobian, argument, order);
       return jacobian;
     }
 
@@ -111,11 +112,12 @@ namespace roboptim
     /// or after the jacobian computation.
     /// \param jacobian jacobian will be stored in this argument
     /// \param argument inner function point argument value
-    void jacobian (jacobian_t& jacobian, const argument_t& argument) const throw ()
+    void jacobian (jacobian_t& jacobian, const argument_t& argument,
+		   size_type order = 0) const throw ()
     {
       assert (argument.size () == this->inputSize ());
       assert (this->isValidJacobian (jacobian));
-      this->impl_jacobian (jacobian, argument);
+      this->impl_jacobian (jacobian, argument, order);
       assert (this->isValidJacobian (jacobian));
     }
 
@@ -125,11 +127,12 @@ namespace roboptim
     /// \param functionId function id in split representation
     /// \return gradient vector
     gradient_t gradient (const argument_t& argument,
-			 size_type functionId = 0) const throw ()
+			 size_type functionId = 0,
+			 size_type order = 0) const throw ()
     {
       gradient_t gradient (gradientSize ());
       gradient.clear ();
-      this->gradient (gradient, argument, functionId);
+      this->gradient (gradient, argument, functionId, order);
       return gradient;
     }
 
@@ -143,11 +146,12 @@ namespace roboptim
     /// \return gradient vector
     void gradient (gradient_t& gradient,
 		   const argument_t& argument,
-		   size_type functionId = 0) const throw ()
+		   size_type functionId = 0,
+		   size_type order = 0) const throw ()
     {
       assert (argument.size () == this->inputSize ());
       assert (this->isValidGradient (gradient));
-      this->impl_gradient (gradient, argument, functionId);
+      this->impl_gradient (gradient, argument, functionId, order);
       assert (this->isValidGradient (gradient));
     }
 
@@ -204,7 +208,8 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     virtual void impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
-				size_type functionId = 0)
+				size_type functionId = 0,
+				size_type order = 0)
       const throw () = 0;
   };
 

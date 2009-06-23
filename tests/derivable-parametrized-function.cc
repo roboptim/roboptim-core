@@ -37,10 +37,19 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
 
   void impl_gradient (gradient_t& gradient,
 		      const argument_t& argument,
-		      size_type functionId = 0) const throw ()
+		      size_type functionId = 0,
+		      size_type order = 0) const throw ()
   {
     gradient.clear ();
-    gradient[0] = 1.;
+    switch (order)
+      {
+      case 0:
+	gradient[0] = 1.;
+	break;
+      case 1:
+	gradient[0] = 0.;
+	break;
+      }
   }
 };
 
