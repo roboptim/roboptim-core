@@ -1,3 +1,11 @@
+2009-06-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Display constraints final state.
+	* include/roboptim/core/result.hh: Add constraints vector
+	to store constraints final values.
+	* src/result.cc: Display constraints vector.
+	* tests/result.stdout: Regenerate.
+
 2009-06-23  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add support for mixed derivative.

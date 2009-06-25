@@ -62,9 +62,11 @@ namespace roboptim
     size_type outputSize;
     /// \brief Point found by the solver.
     vector_t x;
-    /// /brief Function value at the solver found point.
+    /// \brief Function value at the solver found point.
     vector_t value;
-    /// /brief Lagrange multipliers.
+    /// \brief Constraints final values.
+    vector_t constraints;
+    /// \brief Lagrange multipliers.
     vector_t lambda;
   };
 

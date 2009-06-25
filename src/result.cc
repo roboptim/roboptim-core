@@ -33,10 +33,12 @@ namespace roboptim
       outputSize (outputSize_),
       x (inputSize),
       value (outputSize),
+      constraints (),
       lambda ()
   {
     x.clear ();
     value.clear ();
+    constraints.clear ();
     lambda.clear ();
   }
 
@@ -51,6 +53,7 @@ namespace roboptim
       << "Size (input, output): " << inputSize << ", " << outputSize << iendl
       << "X: " << x << iendl
       << "Value: " << value << iendl
+      << "Constraints values: " << constraints << iendl
       << "Lambda: " << lambda;
 
     return o << decindent;
