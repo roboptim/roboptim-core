@@ -1,3 +1,11 @@
+2009-06-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Remove Boost.Variant display function.
+	* include/roboptim/core/util.hh,
+	* include/roboptim/core/util.hxx:
+	Remove code as this feature is already available
+	in Boost.
+
 2009-06-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Display constraints final state.

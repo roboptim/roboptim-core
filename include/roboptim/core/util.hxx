@@ -17,8 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_UTIL_HXX
 # define ROBOPTIM_CORE_UTIL_HXX
-# include <boost/variant/apply_visitor.hpp>
-
 # include <roboptim/core/function.hh>
 
 namespace roboptim
@@ -38,42 +36,7 @@ namespace roboptim
             jac (i, j) = grad(0, j);
         }
     }
-
-
-    struct GenVariantPrintVisitor : public boost::static_visitor<void>
-    {
-      GenVariantPrintVisitor (std::ostream& o)
-        : o_ (o)
-      {}
-
-      template <typename T>
-      void operator () (const T& value)
-      {
-        o_ << value;
-      }
-
-      template <typename T>
-      void operator () (const T* value)
-      {
-        if (!value)
-          o_ << "Null pointer";
-        else
-          o_ << *value;
-      }
-
-    private:
-      std::ostream& o_;
-    };
-
-  }; // end of namespace detail.
-
-  template <typename T1, typename T2>
-  std::ostream& operator<< (std::ostream& o, const boost::variant<T1, T2>& var)
-  {
-    detail::GenVariantPrintVisitor pv (o);
-    boost::apply_visitor (pv, var);
-    return o;
-  }
+  } // end of namespace detail.
 
   template <typename T>
   std::ostream& operator<< (std::ostream& o, const std::vector<T>& vect)

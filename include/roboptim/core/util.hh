@@ -17,7 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_UTIL_HH
 # define ROBOPTIM_CORE_UTIL_HH
-# include <boost/variant.hpp>
 # include <roboptim/core/derivable-function.hh>
 
 namespace roboptim
@@ -41,14 +40,6 @@ namespace roboptim
                              const std::vector<const T*>& c,
                              const DerivableFunction::vector_t& x);
   } // end of namespace detail.
-
-  /// \brief Display a two types boost variant.
-  /// This command will fail if T1 or T2 is not displayable
-  /// (i.e. the operator<< is not overloaded for these types).
-  /// \tparam T1 first boost variant type
-  /// \tparam T2 second boost variant type
-  template <typename T1, typename T2>
-  std::ostream& operator<< (std::ostream&, const boost::variant<T1, T2>&);
 
   /// \brief Display a vector.
   template <typename T>
