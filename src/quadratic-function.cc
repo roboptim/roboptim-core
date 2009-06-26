@@ -21,15 +21,20 @@
 
 namespace roboptim
 {
-  QuadraticFunction::QuadraticFunction (size_type n, size_type m)
+  QuadraticFunction::QuadraticFunction (size_type inputSize,
+					size_type outputSize,
+					std::string name)
     throw ()
-    : TwiceDerivableFunction (n, m)
+    : TwiceDerivableFunction (inputSize, outputSize, name)
   {
   }
 
   std::ostream&
   QuadraticFunction::print (std::ostream& o) const throw ()
   {
-    return o << "Quadratic function";
+    if (getName ().empty ())
+      return o << "Quadratic function";
+    else
+      return o << getName () << " (quadratic function)";
   }
 } // end of namespace roboptim

@@ -35,7 +35,10 @@ namespace roboptim
     ///
     /// \param inputSize function arity
     /// \param outputSize result size
-    LinearFunction (size_type inputSize, size_type outputSize = 1) throw ();
+    /// \param name function's name
+    LinearFunction (size_type inputSize,
+		    size_type outputSize = 1,
+		    std::string name = std::string ()) throw ();
 
     /// \brief Display the function on the specified output stream.
     ///

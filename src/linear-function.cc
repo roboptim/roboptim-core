@@ -21,8 +21,10 @@
 
 namespace roboptim
 {
-  LinearFunction::LinearFunction (size_type n, size_type m) throw ()
-    : QuadraticFunction (n, m)
+  LinearFunction::LinearFunction (size_type inputSize,
+				  size_type outputSize,
+				  std::string name) throw ()
+    : QuadraticFunction (inputSize, outputSize, name)
   {
   }
 
@@ -37,6 +39,9 @@ namespace roboptim
   std::ostream&
   LinearFunction::print (std::ostream& o) const throw ()
   {
-    return o << "Linear function";
+    if (getName ().empty ())
+      return o << "Linear function";
+    else
+      return o << getName () << " (linear function)";
   }
 } // end of namespace roboptim

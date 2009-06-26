@@ -121,8 +121,10 @@ namespace roboptim
     ///
     /// \param inputSize input size (argument size)
     /// \param outputSize output size (result size)
+    /// \param name function's name
     TwiceDerivableFunction (size_type inputSize,
-			    size_type outputSize = 1) throw ();
+			    size_type outputSize = 1,
+			    std::string name = std::string ()) throw ();
 
     /// \brief Hessian evaluation.
     ///

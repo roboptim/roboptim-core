@@ -21,15 +21,20 @@
 
 namespace roboptim
 {
-  TwiceDerivableFunction::TwiceDerivableFunction (size_type n, size_type m)
-    throw ()
-    : DerivableFunction (n, m)
+  TwiceDerivableFunction::TwiceDerivableFunction
+  (size_type inputSize,
+   size_type outputSize,
+   std::string name) throw ()
+    : DerivableFunction (inputSize, outputSize, name)
   {
   }
 
   std::ostream&
   TwiceDerivableFunction::print (std::ostream& o) const throw ()
   {
-    return o << "Twice derivable function";
+    if (getName ().empty ())
+      return o << "Twice derivable function";
+    else
+      return o << getName () << " (twice derivable function)";
   }
 } // end of namespace roboptim

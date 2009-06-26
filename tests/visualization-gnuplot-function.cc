@@ -31,7 +31,7 @@ using namespace roboptim::visualization;
 struct Square : public Function
 {
   explicit Square ()
-    : Function (1, 1)
+    : Function (1, 1, "x * x")
   {
   }
 
@@ -46,7 +46,7 @@ struct Square : public Function
 struct Circle : public Function
 {
   explicit Circle (double r = 1.)
-    : Function (1, 2),
+    : Function (1, 2, "{sin (x) * r; cos (x) * r}"),
       r_ (r)
   {
   }

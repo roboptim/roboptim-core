@@ -33,7 +33,7 @@ using namespace roboptim::visualization::gnuplot;
 // Define a function with a correct gradient.
 struct FGood : public DerivableFunction
 {
-  FGood () : DerivableFunction (1, 1)
+  FGood () : DerivableFunction (1, 1, "x * x")
   {}
 
   void impl_compute (result_t& result,
@@ -52,7 +52,7 @@ struct FGood : public DerivableFunction
 // Define a function with a bad gradient.
 struct FBad : public DerivableFunction
 {
-  FBad () : DerivableFunction (1, 1)
+  FBad () : DerivableFunction (1, 1, "x * x")
   {}
 
   void impl_compute (result_t& result,

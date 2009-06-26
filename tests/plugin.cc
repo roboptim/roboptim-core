@@ -30,7 +30,7 @@ typedef Solver<Function, boost::mpl::vector<Function> > solver_t;
 // Define a simple function.
 struct F : public Function
 {
-  F () : Function (4, 1)
+  F () : Function (4, 1, "a * d * (a + b + c) + d")
   {}
 
   void impl_compute (result_t& result, const argument_t& argument) const throw ()

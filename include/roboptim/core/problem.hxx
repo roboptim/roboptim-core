@@ -209,12 +209,13 @@ namespace roboptim
       {}
 
       template <typename U>
-      void operator () (const U&)
+      void operator () (const U& constraint)
       {
 	assert (problem_.constraints ().size () - i_ > 0);
 	using namespace boost;
         o_ << iendl << incindent
 	   << "Constraint " << i_ << incindent << iendl
+	   << *constraint << iendl
 	   << "Bounds: " << problem_.bounds ()[i_] << iendl
 	   << "Scales: " << problem_.scales ()[i_] << iendl;
 

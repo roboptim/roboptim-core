@@ -1,5 +1,34 @@
 2009-06-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add optional function name.
+	* include/roboptim/core/derivable-function.hh,
+	* include/roboptim/core/function.hh,
+	* include/roboptim/core/linear-function.hh,
+	* include/roboptim/core/n-times-derivable-function.hh,
+	* include/roboptim/core/quadratic-function.hh,
+	* include/roboptim/core/twice-derivable-function.hh:
+	Add optional function name.
+	* include/roboptim/core/problem.hxx: Display function name.
+	* src/constant-function.cc,
+	* src/derivable-function.cc,
+	* src/function.cc,
+	* src/identity-function.cc,
+	* src/linear-function.cc,
+	* src/numeric-linear-function.cc,
+	* src/numeric-quadratic-function.cc,
+	* src/quadratic-function.cc,
+	* src/twice-derivable-function.cc,
+	* tests/finite-difference-gradient.cc,
+	* tests/n-times-derivable-function.cc,
+	Add function name.
+	* tests/plugin.cc,
+	* tests/visualization-gnuplot-function.cc,
+	* tests/simple.cc: Add titles to function.
+	* tests/plugin.stdout,
+	* tests/simple.stdout: Regenerate.
+
+2009-06-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove Boost.Variant display function.
 	* include/roboptim/core/util.hh,
 	* include/roboptim/core/util.hxx:

@@ -27,7 +27,7 @@ namespace roboptim
   NumericLinearFunction::NumericLinearFunction (const matrix_t& a,
                                                 const vector_t& b)
     throw ()
-    : LinearFunction (a.size2 (), a.size1 ()),
+    : LinearFunction (a.size2 (), a.size1 (), "numeric linear function"),
       a_ (a),
       b_ (b)
   {

@@ -23,7 +23,7 @@ using namespace roboptim;
 // Define a 10 times derivable null function.
 struct F : public NTimesDerivableFunction<10>
 {
-  F () : NTimesDerivableFunction<10> (4)
+  F () : NTimesDerivableFunction<10> (4, "0")
   {}
 
   virtual void impl_compute (result_t& result, double) const throw ()

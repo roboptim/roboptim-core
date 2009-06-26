@@ -28,7 +28,7 @@ namespace roboptim
   NumericQuadraticFunction::NumericQuadraticFunction (const symmetric_t& a,
                                                       const vector_t& b)
     throw ()
-    : QuadraticFunction (a.size1 (), 1),
+    : QuadraticFunction (a.size1 (), 1, "numeric quadratic function"),
       a_ (a),
       b_ (b)
   {

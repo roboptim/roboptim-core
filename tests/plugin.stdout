@@ -1,5 +1,5 @@
 Problem:
-  Function
+  a * d * (a + b + c) + d (not derivable)
   Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Argument's scales: 1, 1, 1, 1
   No constraints.
@@ -7,7 +7,7 @@ Problem:
   Infinity value (for all functions): inf
 ---
 Problem:
-  Function
+  a * d * (a + b + c) + d (not derivable)
   Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Argument's scales: 1, 1, 1, 1
   No constraints.

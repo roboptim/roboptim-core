@@ -21,9 +21,12 @@
 
 namespace roboptim
 {
-  Function::Function (size_type inputSize, size_type outputSize) throw ()
+  Function::Function (size_type inputSize,
+		      size_type outputSize,
+		      std::string name) throw ()
     : inputSize_ (inputSize),
-      outputSize_ (outputSize)
+      outputSize_ (outputSize),
+      name_ (name)
   {
     // Positive size is required.
     assert (inputSize > 0 && outputSize > 0);
@@ -36,7 +39,10 @@ namespace roboptim
   std::ostream&
   Function::print (std::ostream& o) const throw ()
   {
-    return o << "Function";
+    if (getName ().empty ())
+      return o << "Function";
+    else
+      return o << getName  () << " (not derivable)";
   }
 
   std::ostream&

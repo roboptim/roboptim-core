@@ -138,8 +138,10 @@ namespace roboptim
     /// \brief Concrete class constructor should call this constructor.
     ///
     /// \param outputSize output size (result size)
-    NTimesDerivableFunction (size_type outputSize = 1) throw ()
-      : TwiceDerivableFunction (1, outputSize)
+    /// \param name function's name
+    NTimesDerivableFunction (size_type outputSize = 1,
+			     std::string name = std::string ()) throw ()
+      : TwiceDerivableFunction (1, outputSize, name)
     {}
 
     /// \brief Function evaluation.
@@ -248,8 +250,9 @@ namespace roboptim
     /// \brief Concrete class constructor should call this constructor.
     ///
     /// \param outputSize output size (result size)
-    NTimesDerivableFunction (size_type outputSize = 1) throw ()
-      : NTimesDerivableFunction<DerivabilityOrder - 1> (outputSize)
+    NTimesDerivableFunction (size_type outputSize = 1,
+			     std::string name = std::string ()) throw ()
+      : NTimesDerivableFunction<DerivabilityOrder - 1> (outputSize, name)
     {}
   };
 

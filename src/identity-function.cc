@@ -26,7 +26,7 @@ namespace roboptim
 {
   IdentityFunction::IdentityFunction (const vector_t& offset)
     throw ()
-    : LinearFunction (offset.size (), offset.size ()),
+    : LinearFunction (offset.size (), offset.size (), "identity function"),
       offset_ (offset)
   {
   }

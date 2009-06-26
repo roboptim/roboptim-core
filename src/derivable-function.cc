@@ -22,9 +22,11 @@
 
 namespace roboptim
 {
-  DerivableFunction::DerivableFunction (size_type n, size_type m)
+  DerivableFunction::DerivableFunction (size_type inputSize,
+					size_type outputSize,
+					std::string name)
     throw ()
-    : Function (n, m)
+    : Function (inputSize, outputSize, name)
   {
   }
 
@@ -44,7 +46,10 @@ namespace roboptim
   std::ostream&
   DerivableFunction::print (std::ostream& o) const throw ()
   {
-    return o << "Derivable function";
+    if (getName ().empty ())
+      return o << "Derivable function";
+    else
+      return o << getName () << " (derivable function)";
   }
 
 } // end of namespace roboptim

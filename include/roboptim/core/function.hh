@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_FUNCTION_HH
 # include <iostream>
 # include <limits>
+# include <string>
 # include <utility>
 
 # include <boost/numeric/ublas/matrix.hpp>
@@ -266,6 +267,14 @@ namespace roboptim
       assert (isValidResult (result));
     }
 
+    /// \brief Get function name.
+    ///
+    /// \return Function's name.
+    const std::string& getName () const throw ()
+    {
+      return name_;
+    }
+
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
@@ -277,7 +286,10 @@ namespace roboptim
     ///
     /// \param inputSize function arity
     /// \param outputSize result size
-    Function (size_type inputSize, size_type outputSize = 1) throw ();
+    /// \param name function's name
+    Function (size_type inputSize,
+	      size_type outputSize = 1,
+	      std::string name = std::string ()) throw ();
 
 
     /// \brief Function evaluation.
@@ -290,11 +302,14 @@ namespace roboptim
       const throw () = 0;
 
   private:
-    /// Problem dimension.
+    /// \brief Problem dimension.
     const size_type inputSize_;
 
-    /// Result dimension.
+    /// \brief Result dimension.
     const size_type outputSize_;
+
+    /// \brief Function name (for user-friendliness).
+    std::string name_;
   };
   /// @}
 
