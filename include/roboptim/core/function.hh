@@ -208,6 +208,35 @@ namespace roboptim
       return boost::get<2> (interval);
     }
 
+    /// \brief Iterate on an interval
+    ///
+    /// Call the functor to each discretization point of the discrete
+    /// interval.
+    /// \param interval iterval on which the method iterates
+    /// \param functor unary function that will be applied
+    /// \tparam F functor type (has to satisfy the STL unary function concept)
+    template <typename F>
+    static void foreach (const discreteInterval_t interval,
+			 F functor)
+    {
+      const value_type delta =
+	getUpperBound (interval) - getLowerBound (interval);
+      assert (delta >= 0.);
+
+      value_type n = floor (delta / getStep (interval));
+
+      for (size_type i = 0; i <= n; ++i)
+	{
+	  const value_type t =
+	    getLowerBound (interval) + i * getStep (interval);
+	  std::cout << i << std::endl;
+	  std::cout << t << std::endl;
+	  assert (getLowerBound (interval) <= t
+		  && t <= getUpperBound (interval));
+	  functor (t);
+	}
+    }
+
     /// \}
 
     /// \brief Check the given result size is valid.

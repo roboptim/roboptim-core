@@ -1,5 +1,12 @@
 2009-06-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add method to allow safe iteration on a discrete interval.
+	* include/roboptim/core/function.hh: Implement foreach.
+	* tests/simple.cc: Test foreach.
+	* tests/simple.stdout: Regenerate.
+
+2009-06-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add optional function name.
 	* include/roboptim/core/derivable-function.hh,
 	* include/roboptim/core/function.hh,

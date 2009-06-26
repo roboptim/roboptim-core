@@ -41,6 +41,27 @@ struct F : public Function
   // No gradient, hessian.
 };
 
+
+struct CountUnaryFunction
+{
+  typedef void Result;
+
+  CountUnaryFunction (int& cnt)
+    : cnt_ (cnt)
+  {}
+
+  void operator () (double x)
+  {
+    std::cout << "Discrete point: " << x
+	      << " (cnt: " << ++cnt_ << ")"
+	      << std::endl;
+  }
+
+private:
+  int& cnt_;
+};
+
+
 int run_test ()
 {
   // Instantiate the function and the problem.
@@ -97,6 +118,36 @@ int run_test ()
   GenericSolver* gs = &solver;
   std::cout << gs->getMinimum<SolverError> ().what ()
             << std::endl;
+
+
+  // Check iteration in discrete intervals.
+  {
+    int cnt = 0;
+    CountUnaryFunction count (cnt);
+
+    {
+      Function::discreteInterval_t interval (2.3, 3., 0.5);
+      Function::foreach (interval, count);
+      assert (cnt == 2);
+      std::cout << std::endl;
+    }
+
+    {
+      cnt = 0;
+      Function::discreteInterval_t interval (2., 3., 0.1);
+      Function::foreach (interval, count);
+      assert (cnt == 11);
+      std::cout << std::endl;
+    }
+
+    {
+      cnt = 0;
+      Function::discreteInterval_t interval (0.8, 10.8, 1.);
+      Function::foreach (interval, count);
+      assert (cnt == 11);
+      std::cout << std::endl;
+    }
+  }
 
   return 0;
 }
