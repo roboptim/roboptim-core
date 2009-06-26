@@ -1,5 +1,11 @@
 2009-06-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Remove debug code.
+	* include/roboptim/core/function.hh: Remove debug code.
+	* tests/simple.stdout: Regenerate.
+
+2009-06-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add method to allow safe iteration on a discrete interval.
 	* include/roboptim/core/function.hh: Implement foreach.
 	* tests/simple.cc: Test foreach.

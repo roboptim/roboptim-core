@@ -229,8 +229,6 @@ namespace roboptim
 	{
 	  const value_type t =
 	    getLowerBound (interval) + i * getStep (interval);
-	  std::cout << i << std::endl;
-	  std::cout << t << std::endl;
 	  assert (getLowerBound (interval) <= t
 		  && t <= getUpperBound (interval));
 	  functor (t);

@@ -28,78 +28,30 @@ Problem:
   Starting value: [1](0)
   Infinity value (for all functions): inf
 The dummy solver always fail.
-0
-2.3
 Discrete point: 2.3 (cnt: 1)
-1
-2.8
 Discrete point: 2.8 (cnt: 2)
 
-0
-2
 Discrete point: 2 (cnt: 1)
-1
-2.1
 Discrete point: 2.1 (cnt: 2)
-2
-2.2
 Discrete point: 2.2 (cnt: 3)
-3
-2.3
 Discrete point: 2.3 (cnt: 4)
-4
-2.4
 Discrete point: 2.4 (cnt: 5)
-5
-2.5
 Discrete point: 2.5 (cnt: 6)
-6
-2.6
 Discrete point: 2.6 (cnt: 7)
-7
-2.7
 Discrete point: 2.7 (cnt: 8)
-8
-2.8
 Discrete point: 2.8 (cnt: 9)
-9
-2.9
 Discrete point: 2.9 (cnt: 10)
-10
-3
 Discrete point: 3 (cnt: 11)
 
-0
-0.8
 Discrete point: 0.8 (cnt: 1)
-1
-1.8
 Discrete point: 1.8 (cnt: 2)
-2
-2.8
 Discrete point: 2.8 (cnt: 3)
-3
-3.8
 Discrete point: 3.8 (cnt: 4)
-4
-4.8
 Discrete point: 4.8 (cnt: 5)
-5
-5.8
 Discrete point: 5.8 (cnt: 6)
-6
-6.8
 Discrete point: 6.8 (cnt: 7)
-7
-7.8
 Discrete point: 7.8 (cnt: 8)
-8
-8.8
 Discrete point: 8.8 (cnt: 9)
-9
-9.8
 Discrete point: 9.8 (cnt: 10)
-10
-10.8
 Discrete point: 10.8 (cnt: 11)
 
