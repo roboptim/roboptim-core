@@ -35,6 +35,8 @@ AT_BANNER([Functions])
 CHECK_STDOUT([function], [Check function class.])
 CHECK_STDOUT([derivable-function], [Check derivable function class.])
 CHECK_STDOUT([twice-derivable-function], [Check twice derivable function class.])
+CHECK_STDOUT([quadratic-function], [Check quadratic function class.])
+CHECK_STDOUT([linear-function], [Check linear function class.])
 CHECK_STDOUT([numeric-linear-function], [Check numeric linear functions.])
 CHECK_STDOUT([numeric-quadratic-function],
              [Check numeric quadratic functions.])

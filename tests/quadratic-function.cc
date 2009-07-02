@@ -20,29 +20,53 @@
 #include <boost/numeric/ublas/io.hpp>
 
 #include "common.hh"
-#include <roboptim/core/function.hh>
+#include <roboptim/core/quadratic-function.hh>
 
 using namespace roboptim;
 
-struct Null : public Function
+struct Null : public QuadraticFunction
 {
-  Null () : Function (1, 1, "null function")
+  Null () : QuadraticFunction (1, 1, "null function")
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const throw ()
   {
     res.clear ();
   }
+
+  void impl_gradient (gradient_t& grad, const argument_t& argument,
+		      size_type) const throw ()
+  {
+    grad.clear ();
+  }
+
+  void impl_hessian (hessian_t& h, const argument_t& argument,
+		     size_type) const throw ()
+  {
+    h.clear ();
+  }
 };
 
-struct NoTitle : public Function
+struct NoTitle : public QuadraticFunction
 {
-  NoTitle () : Function (1, 1)
+  NoTitle () : QuadraticFunction (1, 1)
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const throw ()
   {
     res.clear ();
+  }
+
+  void impl_gradient (gradient_t& grad, const argument_t& argument,
+		      size_type) const throw ()
+  {
+    grad.clear ();
+  }
+
+  void impl_hessian (hessian_t& h, const argument_t& argument, size_type)
+    const throw ()
+  {
+    h.clear ();
   }
 };
 
@@ -51,26 +75,17 @@ int run_test ()
   Null null;
   NoTitle notitle;
 
-  Null::vector_t x (1);
-  x[0] = 42.;
-
   std::cout << null << std::endl
 	    << notitle << std::endl;
 
-  std::cout << null.inputSize () << std::endl
-	    << notitle.inputSize () << std::endl;
+  Null::vector_t x (1);
+  x[0] = 42.;
 
-  std::cout << null.outputSize () << std::endl
-	    << notitle.outputSize () << std::endl;
+  std::cout << null.gradient (x) << std::endl
+	    << notitle.gradient (x) << std::endl;
 
-  std::cout << null.getName () << std::endl
-	    << notitle.getName () << std::endl;
-
-  std::cout << null.isValidResult (null (x)) << std::endl
-	    << notitle.isValidResult (notitle (x)) << std::endl;
-
-  std::cout << null (x) << std::endl
-	    << notitle (x) << std::endl;
+  std::cout << null.hessian (x) << std::endl
+	    << notitle.hessian (x) << std::endl;
 
   return 0;
 }

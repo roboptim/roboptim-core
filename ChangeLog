@@ -1,5 +1,21 @@
 2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add checks to functions tests.
+	* tests/Makefile.am: Compile new tests and distribute new stdout files.
+	* tests/derivable-function.cc: Call more methods.
+	* tests/derivable-function.stdout: Regenerate.
+	* tests/function.cc: Call more methods.
+	* tests/function.stdout: Regenerate.
+	* tests/linear-function.cc: Copy from tests/derivable-function.cc.
+	* tests/linear-function.stdout: New.
+	* tests/quadratic-function.cc: Copy from tests/twice-derivable-function.cc.
+	* tests/quadratic-function.stdout: New.
+	* tests/testsuite.at: Run new tests.
+	* tests/twice-derivable-function.cc: Call more methods.
+	* tests/twice-derivable-function.stdout: Regenerate.
+
+2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add tests for function classes.
 	* tests/Makefile.am: Compile new tests and distribute
 	output files.

@@ -50,6 +50,16 @@ check_PROGRAMS += twice-derivable-function
 twice_derivable_function_SOURCES = twice-derivable-function.cc $(COMMON_SOURCES)
 twice_derivable_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# quadratic-function
+check_PROGRAMS += quadratic-function
+quadratic_function_SOURCES = quadratic-function.cc $(COMMON_SOURCES)
+quadratic_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+# linear-function
+check_PROGRAMS += linear-function
+linear_function_SOURCES = linear-function.cc $(COMMON_SOURCES)
+linear_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # problem-cc
 check_PROGRAMS += problem-cc
 problem_cc_SOURCES = problem-cc.cc $(COMMON_SOURCES)
@@ -145,9 +155,11 @@ EXTRA_DIST +=						\
 	function.stdout					\
 	identity-function.stdout			\
 	interval.stdout					\
+	linear-function.stdout				\
 	n-times-derivable-function.stdout		\
 	numeric-linear-function.stdout			\
 	numeric-quadratic-function.stdout		\
+	quadratic-function.stdout			\
 	parametrized-function.stdout			\
 	derivable-parametrized-function.stdout		\
 	plugin.stdout					\

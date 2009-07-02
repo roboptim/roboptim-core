@@ -20,29 +20,41 @@
 #include <boost/numeric/ublas/io.hpp>
 
 #include "common.hh"
-#include <roboptim/core/function.hh>
+#include <roboptim/core/linear-function.hh>
 
 using namespace roboptim;
 
-struct Null : public Function
+struct Null : public LinearFunction
 {
-  Null () : Function (1, 1, "null function")
+  Null () : LinearFunction (1, 1, "null function")
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const throw ()
   {
     res.clear ();
   }
+
+  void impl_gradient (gradient_t& grad, const argument_t& argument,
+		      size_type) const throw ()
+  {
+    grad.clear ();
+  }
 };
 
-struct NoTitle : public Function
+struct NoTitle : public LinearFunction
 {
-  NoTitle () : Function (1, 1)
+  NoTitle () : LinearFunction (1, 1)
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const throw ()
   {
     res.clear ();
+  }
+
+  void impl_gradient (gradient_t& grad, const argument_t& argument,
+		      size_type) const throw ()
+  {
+    grad.clear ();
   }
 };
 
@@ -51,26 +63,17 @@ int run_test ()
   Null null;
   NoTitle notitle;
 
-  Null::vector_t x (1);
-  x[0] = 42.;
-
   std::cout << null << std::endl
 	    << notitle << std::endl;
 
-  std::cout << null.inputSize () << std::endl
-	    << notitle.inputSize () << std::endl;
+  Null::vector_t x (1);
+  x[0] = 42.;
 
-  std::cout << null.outputSize () << std::endl
-	    << notitle.outputSize () << std::endl;
+  std::cout << null.gradient (x) << std::endl
+	    << notitle.gradient (x) << std::endl;
 
-  std::cout << null.getName () << std::endl
-	    << notitle.getName () << std::endl;
-
-  std::cout << null.isValidResult (null (x)) << std::endl
-	    << notitle.isValidResult (notitle (x)) << std::endl;
-
-  std::cout << null (x) << std::endl
-	    << notitle (x) << std::endl;
+  std::cout << null.hessian (x) << std::endl
+	    << notitle.hessian (x) << std::endl;
 
   return 0;
 }

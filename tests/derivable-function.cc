@@ -17,8 +17,11 @@
 
 #include <iostream>
 
+#include <boost/numeric/ublas/io.hpp>
+
 #include "common.hh"
 #include <roboptim/core/derivable-function.hh>
+#include <roboptim/core/util.hh>
 
 using namespace roboptim;
 
@@ -63,6 +66,30 @@ int run_test ()
 
   std::cout << null << std::endl
 	    << notitle << std::endl;
+
+  Null::vector_t x (1);
+  Null::gradient_t grad (null.gradientSize ());
+  x[0] = 42.;
+
+  std::cout << null.gradient (x) << std::endl
+	    << notitle.gradient (x) << std::endl;
+
+  null.gradient (grad, x);
+  std::cout << grad << std::endl;
+  notitle.gradient (grad, x);
+  std::cout << grad << std::endl;
+
+  std::cout << null.gradientSize () << std::endl
+	    << notitle.gradientSize () << std::endl;
+
+  std::cout << null.jacobianSize () << std::endl
+	    << notitle.jacobianSize () << std::endl;
+
+  std::cout << null.isValidGradient (null.gradient (x)) << std::endl
+	    << notitle.isValidGradient (notitle.gradient (x)) << std::endl;
+
+  std::cout << null.isValidJacobian (null.jacobian (x)) << std::endl
+	    << notitle.isValidJacobian (notitle.jacobian (x)) << std::endl;
 
   return 0;
 }

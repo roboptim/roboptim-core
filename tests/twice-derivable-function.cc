@@ -16,9 +16,11 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
+#include <boost/numeric/ublas/io.hpp>
 
 #include "common.hh"
 #include <roboptim/core/twice-derivable-function.hh>
+#include <roboptim/core/util.hh>
 
 using namespace roboptim;
 
@@ -75,6 +77,27 @@ int run_test ()
 
   std::cout << null << std::endl
 	    << notitle << std::endl;
+
+  Null::vector_t x (1);
+  x[0] = 42.;
+  Null::hessian_t h (null.hessianSize ().first,
+		     null.hessianSize ().second);
+
+  std::cout << null.hessian (x) << std::endl
+	    << notitle.hessian (x) << std::endl;
+
+  null.hessian (h, x);
+  std::cout << h << std::endl;
+  notitle.hessian (h, x);
+  std::cout << h << std::endl;
+
+
+  std::cout << null.hessianSize () << std::endl
+	    << notitle.hessianSize () << std::endl;
+
+  std::cout << null.isValidHessian (null.hessian (x)) << std::endl
+	    << notitle.isValidHessian (notitle.hessian (x)) << std::endl;
+
 
   return 0;
 }
