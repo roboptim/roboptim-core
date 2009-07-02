@@ -68,6 +68,8 @@ int run_test ()
   F f;
   DummySolver::problem_t pb (f);
 
+  std::cout << pb << std::endl;
+
   // Check that the problem is well formed.
   assert (&pb.function () == &f);
   assert (pb.constraints ().size () == 0);

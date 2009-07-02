@@ -1,5 +1,17 @@
 2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add more tests.
+	* tests/Makefile.am: Add interval and util tests.
+	* tests/interval.cc: New.
+	* tests/interval.stdout: New.
+	* tests/simple.cc: Show problem before adding constraints.
+	* tests/simple.stdout: Regenerate.
+	* tests/testsuite.at: Run interval and util tests.
+	* tests/util.cc: New.
+	* tests/util.stdout: New.
+
+2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Check that git is newer enough.
 	* bootstrap: Require at least git 1.5.5.
 

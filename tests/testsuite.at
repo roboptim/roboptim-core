@@ -29,6 +29,8 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.])
 
 AT_BANNER([Main features])
 CHECK_STDOUT([simple], [Check basic features.])
+CHECK_STDOUT([interval], [Check intervals.])
+CHECK_STDOUT([util], [Check misc. tools.])
 CHECK_STDOUT([numeric-linear-function], [Check numeric linear functions.])
 CHECK_STDOUT([numeric-quadratic-function],
              [Check numeric quadratic functions.])

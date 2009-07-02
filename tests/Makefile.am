@@ -20,6 +20,16 @@ simple_SOURCES = simple.cc $(top_builddir)/src/roboptim-core-dummy-plugin.cc \
 		$(COMMON_SOURCES)
 simple_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# interval
+check_PROGRAMS += interval
+interval_SOURCES = interval.cc $(COMMON_SOURCES)
+interval_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+# util
+check_PROGRAMS += util
+util_SOURCES = util.cc $(COMMON_SOURCES)
+util_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # result
 check_PROGRAMS += result
 result_SOURCES = result.cc $(COMMON_SOURCES)
@@ -117,6 +127,7 @@ EXTRA_DIST +=						\
 	constant-function.stdout			\
 	finite-difference-gradient.stdout		\
 	identity-function.stdout			\
+	interval.stdout					\
 	n-times-derivable-function.stdout		\
 	numeric-linear-function.stdout			\
 	numeric-quadratic-function.stdout		\
@@ -126,5 +137,6 @@ EXTRA_DIST +=						\
 	problem-cc.stdout				\
 	result.stdout					\
 	simple.stdout					\
+	util.stdout					\
 	visualization-gnuplot-function.stdout		\
 	visualization-gnuplot-simple.stdout
