@@ -1,5 +1,18 @@
 2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add tests for function classes.
+	* tests/Makefile.am: Compile new tests and distribute
+	output files.
+	* tests/derivable-function.cc: New.
+	* tests/derivable-function.stdout: New.
+	* tests/function.cc: New.
+	* tests/function.stdout: New.
+	* tests/testsuite.at: Run new tests.
+	* tests/twice-derivable-function.cc: New.
+	* tests/twice-derivable-function.stdout: New.
+
+2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add more tests.
 	* tests/Makefile.am: Add interval and util tests.
 	* tests/interval.cc: New.

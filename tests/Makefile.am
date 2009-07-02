@@ -35,6 +35,21 @@ check_PROGRAMS += result
 result_SOURCES = result.cc $(COMMON_SOURCES)
 result_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# function
+check_PROGRAMS += function
+function_SOURCES = function.cc $(COMMON_SOURCES)
+function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+# derivable-function
+check_PROGRAMS += derivable-function
+derivable_function_SOURCES = derivable-function.cc $(COMMON_SOURCES)
+derivable_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+# twice-derivable-function
+check_PROGRAMS += twice-derivable-function
+twice_derivable_function_SOURCES = twice-derivable-function.cc $(COMMON_SOURCES)
+twice_derivable_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # problem-cc
 check_PROGRAMS += problem-cc
 problem_cc_SOURCES = problem-cc.cc $(COMMON_SOURCES)
@@ -125,7 +140,9 @@ generate-reference:
 # Distribute reference files.
 EXTRA_DIST +=						\
 	constant-function.stdout			\
+	derivable-function.stdout			\
 	finite-difference-gradient.stdout		\
+	function.stdout					\
 	identity-function.stdout			\
 	interval.stdout					\
 	n-times-derivable-function.stdout		\
