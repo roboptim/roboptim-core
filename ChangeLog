@@ -1,3 +1,43 @@
+2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Use submodules to factorize code.
+	* .gitmodules: New.
+	* build-aux/autotest.at: Remove.
+	* build-aux/autotest.mk: Remove.
+	* build-aux/boost.m4: Remove.
+	* build-aux/bootstrap: Remove.
+	* build-aux/config.guess: Remove.
+	* build-aux/config.sub: Remove.
+	* build-aux/deb.mk: Remove.
+	* build-aux/depcomp: Remove.
+	* build-aux/doxygen.m4: Remove.
+	* build-aux/ebuild.mk: Remove.
+	* build-aux/init.mk: Remove.
+	* build-aux/install-sh: Remove.
+	* build-aux/libtool.m4: Remove.
+	* build-aux/ltmain.sh: Remove.
+	* build-aux/ltoptions.m4: Remove.
+	* build-aux/ltsugar.m4: Remove.
+	* build-aux/ltversion.m4: Remove.
+	* build-aux/lt~obsolete.m4: Remove.
+	* build-aux/missing: Remove.
+	* build-aux/move-if-change: Remove.
+	* build-aux/pkg-config.mk: Remove.
+	* build-aux/pkg-config.pc.in: Remove.
+	* build-aux/roboptim-core.m4: Remove.
+	* build-aux/rpm.mk: Remove.
+	* build-aux/warning.m4: Remove.
+	* build-aux: New.
+	* doc/Doxyfile.in: Remove.
+	* doc/Makefile.am: Remove.
+	* doc/doxygen.css: Remove.
+	* doc/footer.html: Remove.
+	* doc/header.html: Remove.
+	* doc/package.css: Remove.
+	* doc/sf-upload.sh.in: Remove.
+	* doc/tabs.css: Remove.
+	* doc: New.
+
 2009-06-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Remove debug code.

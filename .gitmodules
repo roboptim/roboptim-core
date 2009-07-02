@@ -1,0 +1,6 @@
+[submodule "build-aux"]
+	path = build-aux
+	url = sourceforge:roboptim
+[submodule "doc"]
+	path = doc
+	url = sourceforge:roboptim
