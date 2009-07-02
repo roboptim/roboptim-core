@@ -75,13 +75,50 @@ int run_test ()
   Null null;
   NoTitle notitle;
 
-  std::cout << null << std::endl
-	    << notitle << std::endl;
-
   Null::vector_t x (1);
   x[0] = 42.;
   Null::hessian_t h (null.hessianSize ().first,
 		     null.hessianSize ().second);
+  Null::gradient_t grad (null.gradientSize ());
+
+  std::cout << null << std::endl
+	    << notitle << std::endl;
+
+  std::cout << null.inputSize () << std::endl
+	    << notitle.inputSize () << std::endl;
+
+  std::cout << null.outputSize () << std::endl
+	    << notitle.outputSize () << std::endl;
+
+  std::cout << null.getName () << std::endl
+	    << notitle.getName () << std::endl;
+
+  std::cout << null.isValidResult (null (x)) << std::endl
+	    << notitle.isValidResult (notitle (x)) << std::endl;
+
+  std::cout << null (x) << std::endl
+	    << notitle (x) << std::endl;
+
+  std::cout << null.gradient (x) << std::endl
+	    << notitle.gradient (x) << std::endl;
+
+  null.gradient (grad, x);
+  std::cout << grad << std::endl;
+  notitle.gradient (grad, x);
+  std::cout << grad << std::endl;
+
+  std::cout << null.gradientSize () << std::endl
+	    << notitle.gradientSize () << std::endl;
+
+  std::cout << null.jacobianSize () << std::endl
+	    << notitle.jacobianSize () << std::endl;
+
+  std::cout << null.isValidGradient (null.gradient (x)) << std::endl
+	    << notitle.isValidGradient (notitle.gradient (x)) << std::endl;
+
+  std::cout << null.isValidJacobian (null.jacobian (x)) << std::endl
+	    << notitle.isValidJacobian (notitle.jacobian (x)) << std::endl;
+
 
   std::cout << null.hessian (x) << std::endl
 	    << notitle.hessian (x) << std::endl;

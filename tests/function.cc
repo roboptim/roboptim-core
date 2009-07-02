@@ -54,6 +54,8 @@ int run_test ()
   Null::vector_t x (1);
   x[0] = 42.;
 
+  Null::argument_t res (null.outputSize ());
+
   std::cout << null << std::endl
 	    << notitle << std::endl;
 
@@ -71,6 +73,12 @@ int run_test ()
 
   std::cout << null (x) << std::endl
 	    << notitle (x) << std::endl;
+
+  null (res, x);
+  std::cout << res << std::endl;
+
+  notitle (res, x);
+  std::cout << res << std::endl;
 
   return 0;
 }

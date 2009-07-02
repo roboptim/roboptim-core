@@ -1,5 +1,15 @@
 2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Test more function classes.
+	* tests/derivable-function.cc: Add more tests.
+	* tests/derivable-function.stdout: Regenerate.
+	* tests/function.cc: Add more tests.
+	* tests/function.stdout: Regenerate.
+	* tests/twice-derivable-function.cc: Add more tests.
+	* tests/twice-derivable-function.stdout: Regenerate.
+
+2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add checks to functions tests.
 	* tests/Makefile.am: Compile new tests and distribute new stdout files.
 	* tests/derivable-function.cc: Call more methods.

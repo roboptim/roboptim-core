@@ -64,12 +64,27 @@ int run_test ()
   Null null;
   NoTitle notitle;
 
-  std::cout << null << std::endl
-	    << notitle << std::endl;
-
   Null::vector_t x (1);
   Null::gradient_t grad (null.gradientSize ());
   x[0] = 42.;
+
+  std::cout << null << std::endl
+	    << notitle << std::endl;
+
+  std::cout << null.inputSize () << std::endl
+	    << notitle.inputSize () << std::endl;
+
+  std::cout << null.outputSize () << std::endl
+	    << notitle.outputSize () << std::endl;
+
+  std::cout << null.getName () << std::endl
+	    << notitle.getName () << std::endl;
+
+  std::cout << null.isValidResult (null (x)) << std::endl
+	    << notitle.isValidResult (notitle (x)) << std::endl;
+
+  std::cout << null (x) << std::endl
+	    << notitle (x) << std::endl;
 
   std::cout << null.gradient (x) << std::endl
 	    << notitle.gradient (x) << std::endl;
