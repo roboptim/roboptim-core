@@ -1,3 +1,8 @@
+2009-07-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Distribute missing stdout file.
+	* tests/Makefile.am: Here.
+
 2009-07-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Test more function classes.

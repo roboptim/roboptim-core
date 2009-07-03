@@ -166,6 +166,7 @@ EXTRA_DIST +=						\
 	problem-cc.stdout				\
 	result.stdout					\
 	simple.stdout					\
+	twice-derivable-function.stdout			\
 	util.stdout					\
 	visualization-gnuplot-function.stdout		\
 	visualization-gnuplot-simple.stdout
