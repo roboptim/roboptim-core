@@ -113,6 +113,11 @@ namespace roboptim
   {
     //FIXME: check that C is in CLIST.
 
+    if (x->inputSize () != this->function ().inputSize ())
+      assert (0 && "Invalid constraint (wrong input size)");
+    if (x->outputSize () != 1)
+      assert (0 && "Invalid constraint (output size is not equal to one)");
+
     // Check that the pointer is not null.
     assert (!!x.get ());
     assert (b.first <= b.second);
@@ -125,6 +130,8 @@ namespace roboptim
   typename Problem<F, CLIST>::startingPoint_t&
   Problem<F, CLIST>::startingPoint () throw ()
   {
+    if (startingPoint_ && startingPoint_->size () != this->function ().inputSize ())
+      assert (0 && "Invalid starting point (wrong size)");
     return startingPoint_;
   }
 
@@ -132,6 +139,8 @@ namespace roboptim
   const typename Problem<F, CLIST>::startingPoint_t&
   Problem<F, CLIST>::startingPoint () const throw ()
   {
+    if (startingPoint_ && startingPoint_->size () != this->function ().inputSize ())
+      assert (0 && "Invalid starting point (wrong size)");
     return startingPoint_;
   }
 

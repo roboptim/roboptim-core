@@ -1,3 +1,16 @@
+2009-07-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Check constraints and starting point sizes.
+	* include/roboptim/core/problem.hxx: Add assertion
+	so that invalid size in a constraint or starting point
+	are checked.
+
+2009-07-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add a safety check in addConstraint.
+	* include/roboptim/core/problem.hxx: Check at compile-time
+	that added constraint type is valid.
+
 2009-07-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Distribute missing stdout file.
