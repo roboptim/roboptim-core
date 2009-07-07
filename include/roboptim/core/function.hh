@@ -181,6 +181,18 @@ namespace roboptim
       return discreteInterval_t (min, max, step);
     }
 
+    /// \brief Construct a discrete interval.
+    ///
+    /// \param interval continuous interval
+    /// \param step discretization step
+    static discreteInterval_t makeDiscreteInterval (interval_t interval,
+						    value_type step)
+    {
+      return discreteInterval_t (getLowerBound (interval),
+				 getUpperBound (interval),
+				 step);
+    }
+
     /// \brief Get the lower bound of a discrete interval
     ///
     /// \param interval accessed discrete interval

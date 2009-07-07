@@ -1,5 +1,14 @@
 2009-07-07  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add method to build a discrete interval from an interval and a step.
+	* include/roboptim/core/function.hh: Add makeDiscreteInterval
+	static method that create a discrete interval from a continuous
+	interval and a step.
+	* tests/interval.cc: Check new method.
+	* tests/interval.stdout: Regenerate.
+
+2009-07-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Check constraints and starting point sizes.
 	* include/roboptim/core/problem.hxx: Add assertion
 	so that invalid size in a constraint or starting point

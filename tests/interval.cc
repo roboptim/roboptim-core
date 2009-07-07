@@ -75,8 +75,12 @@ int run_test ()
     assert (Function::getUpperBound (i2) == inf);
     assert (Function::getStep (i2) == .1);
 
+    discreteInterval_t i3 = Function::makeDiscreteInterval
+      (Function::makeInterval (1., 4.), .1);
+
     std::cout << i1 << std::endl
-	      << i2 << std::endl;
+	      << i2 << std::endl
+	      << i3 << std::endl;
 
     Function::foreach (i1, MyFunctor ());
   }
