@@ -61,7 +61,8 @@ namespace roboptim
 		&& boost::get<2> (window) > 0.);
 	//FIXME: compare with arg bounds?
 
-	std::string str = "plot '-' with line";
+	std::string str = (boost::format ("plot '-' title '%1%' with line")
+			   % f.getName ()).str ();
 
 	for (unsigned i = 1; i < f.outputSize (); ++i)
 	  str += ", '-' with line";
@@ -92,7 +93,8 @@ namespace roboptim
 		&& boost::get<2> (window) > 0.);
 	//FIXME: compare with arg bounds?
 
-	std::string str = "plot '-' with line\n";
+	std::string str = (boost::format ("plot '-' title '%1%' with line\n")
+			   % f.getName ()).str ();
 
 	Function::vector_t x (f.inputSize ());
 

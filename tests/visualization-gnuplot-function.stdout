@@ -3,7 +3,7 @@
 set terminal wxt persist
 #Hello, world (complex)!
 set multiplot
-plot '-' with line
+plot '-' title 'x * x' with line
 -10.000000 100.000000
 -9.990000 99.800100
 -9.980000 99.600400
@@ -2007,7 +2007,7 @@ plot '-' with line
 10.000000 100.000000
 e
 
-plot '-' with line
+plot '-' title '{sin (x) * r; cos (x) * r}' with line
 0.000000 1.000000
 0.010000 0.999950
 0.019999 0.999800

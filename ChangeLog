@@ -1,5 +1,14 @@
 2009-07-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Display function's names in Gnuplot.
+	* include/roboptim/core/visualization/gnuplot-function.hh:
+	Dislay function's name.
+	* tests/finite-difference-gradient.stdout,
+	* tests/visualization-gnuplot-function.stdout:
+	Regenerate.
+
+2009-07-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Use fixed point display for floating-point numbers in Gnuplot.
 	* include/roboptim/core/visualization/gnuplot-function.hh:
 	Use fixed point display.
