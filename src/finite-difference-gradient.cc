@@ -33,13 +33,8 @@ namespace roboptim
       maxDelta_ (),
       threshold_ (threshold)
   {
-    gradient_t delta = analyticalGradient - finiteDifferenceGradient;
-    for (unsigned i = 0; i < delta.size (); ++i)
-      {
-	delta[i] = fabs (delta[i]);
-	if (maxDelta_ < delta[i])
-	  maxDelta_ = delta[i];
-      }
+    using boost::numeric::ublas::norm_inf;
+    maxDelta_ = norm_inf (analyticalGradient - finiteDifferenceGradient);
   }
 
   BadGradient::~BadGradient () throw ()
@@ -54,7 +49,7 @@ namespace roboptim
       << "Finite difference gradient: " << finiteDifferenceGradient_
       << iendl
       << "Max. delta: " << maxDelta_ << iendl
-      << "Max. allowed delta): " << threshold_ << decindent;
+      << "Max. allowed delta: " << threshold_ << decindent;
     return o;
   }
 
