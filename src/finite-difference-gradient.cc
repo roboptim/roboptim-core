@@ -26,7 +26,8 @@ namespace roboptim
       adaptee_ (adaptee),
       epsilon_ (epsilon)
   {
-    assert (epsilon != 0.);
+    // Avoid meaningless values for epsilon such as 0 or NaN.
+    assert (epsilon != 0. && epsilon == epsilon);
   }
 
   FiniteDifferenceGradient::~FiniteDifferenceGradient () throw ()
@@ -57,15 +58,11 @@ namespace roboptim
 	result_t resEps = adaptee_ (xEps);
 
 	gradient (j) = (resEps[idFunction] - res[idFunction]) / epsilon_;
-
-	// Avoid returning NaN if gradient is almost null.
-	if (gradient (j) != gradient (j))
-	  gradient (j) = 0.;
       }
   }
 
 
-  bool checkGradient (DerivableFunction& function,
+  bool checkGradient (const DerivableFunction& function,
 		      int i,
 		      const Function::vector_t& x,
 		      Function::value_type threshold) throw ()

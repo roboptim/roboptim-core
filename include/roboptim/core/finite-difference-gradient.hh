@@ -49,7 +49,7 @@ namespace roboptim
     /// using finite differences.
     /// \param f function that will e wrapped
     /// \param e epsilon used in finite difference computation
-    FiniteDifferenceGradient (const Function& f, value_type e = 1e-4) throw ();
+    FiniteDifferenceGradient (const Function& f, value_type e = 1e-8) throw ();
     ~FiniteDifferenceGradient () throw ();
 
   protected:
@@ -73,10 +73,10 @@ namespace roboptim
   /// \param x point where the gradient will be evaluated
   /// \param threshold maximum tolerated error
   /// \return true if valid, false if not
-  bool checkGradient (DerivableFunction& function,
+  bool checkGradient (const DerivableFunction& function,
 		      int functionId,
 		      const Function::vector_t& x,
-		      Function::value_type threshold = .001) throw ();
+		      Function::value_type threshold = 1e-4) throw ();
 
 
   /// Example shows finite differences gradient use.
