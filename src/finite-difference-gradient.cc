@@ -15,10 +15,57 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/numeric/ublas/io.hpp>
+
+#include <roboptim/core/indent.hh>
 #include <roboptim/core/finite-difference-gradient.hh>
 
 namespace roboptim
 {
+  BadGradient::BadGradient (const vector_t& x,
+			    const gradient_t& analyticalGradient,
+			    const gradient_t& finiteDifferenceGradient,
+			    const value_type& threshold)
+    : std::runtime_error ("bad gradient"),
+      x_ (x),
+      analyticalGradient_ (analyticalGradient),
+      finiteDifferenceGradient_ (finiteDifferenceGradient),
+      maxDelta_ (),
+      threshold_ (threshold)
+  {
+    gradient_t delta = analyticalGradient - finiteDifferenceGradient;
+    for (unsigned i = 0; i < delta.size (); ++i)
+      {
+	delta[i] = fabs (delta[i]);
+	if (maxDelta_ < delta[i])
+	  maxDelta_ = delta[i];
+      }
+  }
+
+  BadGradient::~BadGradient () throw ()
+  {}
+
+  std::ostream&
+  BadGradient::print (std::ostream& o) const throw ()
+  {
+    o << this->what () << incindent << iendl
+      << "X: " << x_ << iendl
+      << "Analytical gradient: " << analyticalGradient_ << iendl
+      << "Finite difference gradient: " << finiteDifferenceGradient_
+      << iendl
+      << "Max. delta: " << maxDelta_ << iendl
+      << "Max. allowed delta): " << threshold_ << decindent;
+    return o;
+  }
+
+  std::ostream&
+  operator<< (std::ostream& o, const BadGradient& bg)
+  {
+    return bg.print (o);
+  }
+
+
+
   FiniteDifferenceGradient::FiniteDifferenceGradient (const Function& adaptee,
 						      value_type epsilon)
     throw ()
@@ -62,10 +109,11 @@ namespace roboptim
   }
 
 
-  bool checkGradient (const DerivableFunction& function,
-		      int i,
-		      const Function::vector_t& x,
-		      Function::value_type threshold) throw ()
+  bool
+  checkGradient (const DerivableFunction& function,
+		 int i,
+		 const Function::vector_t& x,
+		 Function::value_type threshold) throw ()
   {
     FiniteDifferenceGradient fdfunction (function);
     DerivableFunction::gradient_t grad = function.gradient (x, i);
@@ -75,6 +123,21 @@ namespace roboptim
       if (fabs (grad[col] - fdgrad[col]) >= threshold)
 	return false;
     return true;
+  }
+
+  void
+  checkGradientAndThrow (const DerivableFunction& function,
+			 int i,
+			 const Function::vector_t& x,
+			 Function::value_type threshold)
+    throw (BadGradient)
+  {
+    FiniteDifferenceGradient fdfunction (function);
+    DerivableFunction::gradient_t grad = function.gradient (x, i);
+    DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
+
+    if (!checkGradient (function, i, x, threshold))
+      throw BadGradient (x, grad, fdgrad, threshold);
   }
 
 } // end of namespace roboptim

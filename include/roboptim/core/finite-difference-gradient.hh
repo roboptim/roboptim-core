@@ -17,12 +17,68 @@
 
 #ifndef ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HH
 # define ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HH
+# include <stdexcept>
 # include <roboptim/core/fwd.hh>
 
 # include <roboptim/core/derivable-function.hh>
 
 namespace roboptim
 {
+  /// \brief Default threshold for checkGradient.
+  static const double finiteDifferenceThreshold = 1e-4;
+  /// \brief Default epsilon for finite difference class.
+  static const double finiteDifferenceEpsilon = 1e-8;
+
+  /// \brief Exception thrown when a gradient check fail.
+  class BadGradient : public std::runtime_error
+  {
+  public:
+    /// \brief Import vector.
+    typedef DerivableFunction::vector_t vector_t;
+    /// \brief Import gradient.
+    typedef DerivableFunction::gradient_t gradient_t;
+    /// \brief Import value_type.
+    typedef DerivableFunction::value_type value_type;
+
+    /// \brief Default constructor.
+    BadGradient (const vector_t& x,
+		 const gradient_t& analyticalGradient,
+		 const gradient_t& finiteDifferenceGradient,
+		 const value_type& threshold);
+
+    virtual ~BadGradient () throw ();
+
+    /// \brief Display the exception on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
+    virtual std::ostream& print (std::ostream& o) const throw ();
+
+
+    /// \brief Gradient has been computed for this point.
+    vector_t x_;
+
+    /// \brief Analytical gradient.
+    gradient_t analyticalGradient_;
+
+    /// \brief Gradient computed through finite differences.
+    gradient_t finiteDifferenceGradient_;
+
+    /// \brief Maximum error.
+    value_type maxDelta_;
+
+    /// \brief Allowed threshold.
+    value_type threshold_;
+  };
+
+  /// \brief Override operator<< to handle exception display.
+  ///
+  /// \param o output stream used for display
+  /// \param f function to be displayed
+  /// \return output stream
+  std::ostream& operator<< (std::ostream& o, const BadGradient& f);
+
+
   /// \addtogroup roboptim_function
   /// @{
 
@@ -49,7 +105,9 @@ namespace roboptim
     /// using finite differences.
     /// \param f function that will e wrapped
     /// \param e epsilon used in finite difference computation
-    FiniteDifferenceGradient (const Function& f, value_type e = 1e-8) throw ();
+    FiniteDifferenceGradient (const Function& f,
+			      value_type e = finiteDifferenceEpsilon)
+      throw ();
     ~FiniteDifferenceGradient () throw ();
 
   protected:
@@ -73,11 +131,19 @@ namespace roboptim
   /// \param x point where the gradient will be evaluated
   /// \param threshold maximum tolerated error
   /// \return true if valid, false if not
-  bool checkGradient (const DerivableFunction& function,
-		      int functionId,
-		      const Function::vector_t& x,
-		      Function::value_type threshold = 1e-4) throw ();
+  bool checkGradient
+  (const DerivableFunction& function,
+   int functionId,
+   const Function::vector_t& x,
+   Function::value_type threshold = finiteDifferenceThreshold)
+    throw ();
 
+  void checkGradientAndThrow
+  (const DerivableFunction& function,
+   int functionId,
+   const Function::vector_t& x,
+   Function::value_type threshold = finiteDifferenceThreshold)
+    throw (BadGradient);
 
   /// Example shows finite differences gradient use.
   /// \example finite-difference-gradient.cc
