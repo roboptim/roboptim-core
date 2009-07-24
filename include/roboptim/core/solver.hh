@@ -77,7 +77,7 @@ namespace roboptim
     template <typename F_, typename C_>
     explicit Solver (const Problem<F_, C_>& problem) throw ();
 
-    ~Solver () throw ();
+    virtual ~Solver () throw ();
 
     /// \brief Retrieve the problem.
     /// \return problem this solver is solving
