@@ -31,7 +31,8 @@ namespace roboptim
   ResultWithWarnings::ResultWithWarnings (const Function::size_type n,
                                           const Function::size_type m)
     throw ()
-    : Result (n, m)
+    : Result (n, m),
+      warnings ()
   {
   }
 
