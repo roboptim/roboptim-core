@@ -69,6 +69,7 @@ namespace roboptim
     /// \name Constructors and destructors.
     /// \{
     explicit GenericSolver () throw ();
+    explicit GenericSolver (const GenericSolver&) throw ();
     virtual ~GenericSolver () throw ();
     /// \}
 

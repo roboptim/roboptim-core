@@ -1,5 +1,11 @@
 2009-07-24  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add copy constructor for GenericSolver.
+	* include/roboptim/core/generic-solver.hh,
+	* src/generic-solver.cc: Add copy constructor.
+
+2009-07-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make Solver class destructor virtual.
 	* include/roboptim/core/solver.hh: Here.
 

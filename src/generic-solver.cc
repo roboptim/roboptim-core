@@ -25,6 +25,11 @@ namespace roboptim
   {
   }
 
+  GenericSolver::GenericSolver (const GenericSolver& solver) throw ()
+    : result_ (solver.result_)
+  {
+  }
+
   GenericSolver::~GenericSolver () throw ()
   {
   }
