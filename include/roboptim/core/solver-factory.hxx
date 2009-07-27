@@ -82,9 +82,28 @@ namespace roboptim
         destructor (solver_);
         solver_ = 0;
       }
+    else
+      {
+	std::stringstream sserror;
+	sserror << "libltdl failed to call ``destroy'': "
+		<< lt_dlerror ();
+      }
 
-    lt_dlclose (handle_);
-    lt_dlexit ();
+    if (lt_dlclose (handle_))
+      {
+	std::stringstream sserror;
+	sserror << "libltdl failed to close plug-in: "
+		<< lt_dlerror ();
+	std::cerr << sserror << std::endl;
+      }
+
+    if (lt_dlexit ())
+      {
+	std::stringstream sserror;
+	sserror << "libltdl failed to call ``create'': "
+		<< lt_dlerror ();
+	std::cerr << sserror << std::endl;
+      }
   }
 
   template <typename T>
