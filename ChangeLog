@@ -1,5 +1,11 @@
 2009-07-27  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Update submodules.
+	* .gitmodules,
+	* build-aux: Update.
+
+2009-07-27  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Do not compile plug-in with gcov support.
 	* src/Makefile.am: Here.
 
