@@ -84,6 +84,74 @@ namespace roboptim
     adaptee_ (result, argument);
   }
 
+
+  namespace detail
+  {
+    void
+    compute_deriv (const Function& adaptee,
+		   unsigned j,
+		   double h,
+		   double& result,
+		   double& round,
+		   double& trunc,
+		   const Function::argument_t& argument,
+		   Function::size_type idFunction);
+
+    /// Algorithm from the Gnu Scientific Library.
+    void
+    compute_deriv (const Function& adaptee,
+		   unsigned j,
+		   double h,
+		   double& result,
+		   double& round,
+		   double& trunc,
+		   const Function::argument_t& argument,
+		   Function::size_type idFunction)
+    {
+      /* Compute the derivative using the 5-point rule (x-h, x-h/2, x,
+	 x+h/2, x+h). Note that the central point is not used.
+
+	 Compute the error using the difference between the 5-point and
+	 the 3-point rule (x-h,x,x+h). Again the central point is not
+	 used. */
+
+      Function::argument_t xEps = argument;
+
+      xEps[j] = argument[j] - h;
+      double fm1 = adaptee (xEps)[idFunction];
+      xEps[j] = argument[j] + h;
+      double fp1 = adaptee (xEps)[idFunction];
+      xEps[j] = argument[j] - (h / 2.);
+      double fmh = adaptee (xEps)[idFunction];
+      xEps[j] = argument[j] + (h / 2.);
+      double fph = adaptee (xEps)[idFunction];
+
+      double r3 = .5 * (fp1 - fm1);
+      double r5 = (4. / 3.) * (fph - fmh) - (1. / 3.) * r3;
+
+      double e3 = (std::fabs (fp1) + std::fabs (fm1))
+	* std::numeric_limits<double>::epsilon ();
+      double e5 = 2. * (std::fabs (fph) + std::fabs (fmh))
+	* std::numeric_limits<double>::epsilon () + e3;
+
+      /* The next term is due to finite precision in x+h = O (eps * x) */
+
+      double dy =
+	std::max (std::fabs (r3 / h), std::fabs (r5 / h))
+	* (std::fabs (argument[j]) / h)
+	* std::numeric_limits<double>::epsilon ();
+
+      /* The truncation error in the r5 approximation itself is O(h^4).
+	 However, for safety, we estimate the error from r5-r3, which is
+	 O(h^2).  By scaling h we will minimise this estimated error, not
+	 the actual truncation error in r5. */
+
+      result = r5 / h;
+      trunc = std::fabs ((r5 - r3) / h); // Estimated truncation error O(h^2)
+      round = std::fabs (e5 / h) + dy; // Rounding error (cancellations)
+    }
+  }
+
   void
   FiniteDifferenceGradient::impl_gradient (gradient_t& gradient,
 					   const argument_t& argument,
@@ -91,15 +159,46 @@ namespace roboptim
   {
     assert (outputSize () - idFunction > 0);
 
-    result_t res = adaptee_ (argument);
+    value_type h = epsilon_ / 2.;
+    value_type r_0 = 0.;
+    value_type round = 0.;
+    value_type trunc = 0.;
+    value_type error = 0.;
 
-    for (unsigned j = 0; j < inputSize (); ++j)
+    for (unsigned j = 0; j < argument.size (); ++j)
       {
-	argument_t xEps = argument;
-	xEps[j] += epsilon_;
-	result_t resEps = adaptee_ (xEps);
+	detail::compute_deriv (adaptee_, j, h,
+			       r_0, round, trunc,
+			       argument, idFunction);
+	error = round + trunc;
 
-	gradient (j) = (resEps[idFunction] - res[idFunction]) / epsilon_;
+	if (round < trunc && (round > 0 && trunc > 0))
+	  {
+	    value_type r_opt = 0., round_opt = 0., trunc_opt = 0., error_opt = 0.;
+
+	    /* Compute an optimised stepsize to minimize the total error,
+	       using the scaling of the truncation error (O(h^2)) and
+	       rounding error (O(1/h)). */
+
+	    value_type h_opt =
+	      h * std::pow (round / (2. * trunc), 1. / 3.);
+
+	    detail::compute_deriv (adaptee_, j, h_opt,
+				   r_opt, round_opt, trunc_opt,
+				   argument, idFunction);
+	    error_opt = round_opt + trunc_opt;
+
+	    /* Check that the new error is smaller, and that the new derivative
+	       is consistent with the error bounds of the original estimate. */
+
+	    if (error_opt < error && std::fabs (r_opt - r_0) < 4. * error)
+	      {
+		r_0 = r_opt;
+		error = error_opt;
+	      }
+	  }
+
+	gradient (j) = r_0;
       }
   }
 
