@@ -46,7 +46,7 @@ namespace roboptim
     const throw ()
   {
     using namespace boost::numeric::ublas;
-    noalias (result) = prod (a_, argument) + b_;
+    noalias (result) = prec_prod (a_, argument) + b_;
   }
 
   // A

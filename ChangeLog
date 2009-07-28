@@ -1,3 +1,10 @@
+2009-07-28  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Compute in double precision.
+	* src/numeric-linear-function.cc,
+	* src/numeric-quadratic-function.cc: compute numeric
+	functions in double precision.
+
 2009-07-27  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Update submodules.

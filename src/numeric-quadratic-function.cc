@@ -50,8 +50,8 @@ namespace roboptim
     using namespace boost::numeric::ublas;
 
     result (0) = inner_prod
-      (prod (trans (argument), a_), argument) / 2
-      + inner_prod (trans (b_), argument);
+      (prec_prod (trans (argument), a_), argument) / 2
+      + prec_inner_prod (trans (b_), argument);
   }
 
   // x * A + b
@@ -61,7 +61,7 @@ namespace roboptim
 					   size_type) const throw ()
   {
     using namespace boost::numeric::ublas;
-    noalias (result) = prod (x, a_) + b_;
+    noalias (result) = prec_prod (x, a_) + b_;
   }
 
   // A
