@@ -16,7 +16,6 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
-#include <boost/numeric/ublas/io.hpp>
 
 #include "common.hh"
 

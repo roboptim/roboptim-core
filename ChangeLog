@@ -1,5 +1,11 @@
 2009-07-28  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Remove useless uBlas io.hpp include.
+	* tests/identity-function.cc,
+	* tests/twice-derivable-function.cc: Here.
+
+2009-07-28  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add header for i/o.
 	* include/Makefile.am: Distribute new header.
 	* include/roboptim/core/io.hh: Add required include
