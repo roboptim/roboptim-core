@@ -17,10 +17,10 @@
 
 #include <iostream>
 
-#include <boost/tuple/tuple_io.hpp>
-
 #include "common.hh"
+
 #include <roboptim/core/function.hh>
+#include <roboptim/core/io.hh>
 #include <roboptim/core/util.hh>
 
 using namespace roboptim;

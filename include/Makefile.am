@@ -11,6 +11,7 @@ nobase_include_HEADERS =				\
 	roboptim/core/generic-solver.hh			\
 	roboptim/core/identity-function.hh		\
 	roboptim/core/indent.hh				\
+	roboptim/core/io.hh				\
 	roboptim/core/linear-function.hh		\
 	roboptim/core/n-times-derivable-function.hh	\
 	roboptim/core/n-times-derivable-function.hxx	\

@@ -15,39 +15,12 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
-#include <boost/numeric/ublas/io.hpp>
+#ifndef ROBOPTIM_CORE_IO_HH
+# define ROBOPTIM_CORE_IO_HH
+# include <boost/numeric/ublas/io.hpp>
+# include <boost/optional/optional_io.hpp>
+# include <boost/tuple/tuple_io.hpp>
+# include <boost/variant/detail/variant_io.hpp>
 
-#include "common.hh"
-
-#include <roboptim/core/io.hh>
-#include <roboptim/core/identity-function.hh>
-
-using namespace roboptim;
-
-int run_test ()
-{
-  IdentityFunction::vector_t offset (4);
-  offset[0] = 12.;
-  offset[1] = 46.;
-  offset[2] = 2.;
-  offset[3] = -9.;
-
-  IdentityFunction id (offset);
-
-  IdentityFunction::vector_t x (4);
-  x.clear ();
-
-  std::cout
-    << id << std::endl
-    << "Evaluate: " << std::endl
-    << id (x) << std::endl
-    << "Gradient: " << std::endl
-    << id.gradient (x) << std::endl
-    << "Jacobian: " << std::endl
-    << id.jacobian (x) << std::endl;
-
-  return 0;
-}
-
-GENERATE_TEST ()
+# include <roboptim/core/io.hh>
+#endif //! ROBOPTIM_CORE_FWD_HH

@@ -19,6 +19,7 @@
 
 #include <boost/mpl/vector.hpp>
 
+#include <roboptim/core/io.hh>
 #include <roboptim/core/constant-function.hh>
 #include <roboptim/core/derivable-function.hh>
 #include <roboptim/core/problem.hh>

@@ -18,6 +18,8 @@
 #include <iostream>
 
 #include "common.hh"
+
+#include <roboptim/core/io.hh>
 #include <roboptim/core/util.hh>
 
 using namespace roboptim;

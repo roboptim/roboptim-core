@@ -17,9 +17,9 @@
 
 #include <iostream>
 
-#include <boost/numeric/ublas/io.hpp>
-
 #include "common.hh"
+
+#include <roboptim/core/io.hh>
 #include <roboptim/core/derivable-function.hh>
 #include <roboptim/core/util.hh>
 

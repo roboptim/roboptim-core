@@ -18,6 +18,9 @@
 #include <iostream>
 
 #include "common.hh"
+
+#include <roboptim/core/io.hh>
+
 #include <roboptim/core/visualization/gnuplot.hh>
 #include <roboptim/core/visualization/gnuplot-commands.hh>
 

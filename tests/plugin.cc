@@ -20,6 +20,8 @@
 #include <boost/mpl/vector.hpp>
 
 #include "common.hh"
+
+#include <roboptim/core/io.hh>
 #include <roboptim/core/solver-factory.hh>
 
 using namespace roboptim;

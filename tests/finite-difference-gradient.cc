@@ -16,9 +16,10 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
-#include <boost/numeric/ublas/io.hpp>
 
 #include "common.hh"
+
+#include <roboptim/core/io.hh>
 #include <roboptim/core/finite-difference-gradient.hh>
 #include <roboptim/core/indent.hh>
 

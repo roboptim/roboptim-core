@@ -1,5 +1,34 @@
 2009-07-28  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add header for i/o.
+	* include/Makefile.am: Distribute new header.
+	* include/roboptim/core/io.hh: Add required include
+	to be able to display all roboptim types.
+	* tests/constant-function.cc,
+	* tests/derivable-function.cc,
+	* tests/derivable-parametrized-function.cc,
+	* tests/finite-difference-gradient.cc,
+	* tests/function.cc,
+	* tests/identity-function.cc,
+	* tests/interval.cc,
+	* tests/linear-function.cc,
+	* tests/n-times-derivable-function.cc,
+	* tests/numeric-linear-function.cc,
+	* tests/numeric-quadratic-function.cc,
+	* tests/parametrized-function.cc,
+	* tests/plugin.cc,
+	* tests/problem-cc.cc,
+	* tests/quadratic-function.cc,
+	* tests/result.cc,
+	* tests/simple.cc,
+	* tests/twice-derivable-function.cc,
+	* tests/util.cc,
+	* tests/visualization-gnuplot-function.cc,
+	* tests/visualization-gnuplot-simple.cc: Include io.hh instead
+	of Boost i/o headers.
+
+2009-07-28  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make result variant displayable.
 	* include/roboptim/core/generic-solver.hh,
 	* src/generic-solver.cc: Overload ``<<'' operator to be able
