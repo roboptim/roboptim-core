@@ -1,5 +1,12 @@
 2009-07-28  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make result variant displayable.
+	* include/roboptim/core/generic-solver.hh,
+	* src/generic-solver.cc: Overload ``<<'' operator to be able
+	to display NoSolution objects.
+
+2009-07-28  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Enhance finite difference computation.
 	* src/finite-difference-gradient.cc: Import better
 	algorithm from GSL.

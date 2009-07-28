@@ -63,4 +63,10 @@ namespace roboptim
   {
     return gs.print (o);
   }
+
+  std::ostream&
+  operator<< (std::ostream& o, const NoSolution&)
+  {
+    return o << "no solution";
+  }
 } // end of namespace roboptim
