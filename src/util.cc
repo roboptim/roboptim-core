@@ -29,6 +29,8 @@ namespace roboptim
     void
     vector_to_array (Function::value_type* dst, const Function::vector_t& src)
     {
+      if (src.empty ())
+	return;
       memcpy (dst, &src[0], src.size () * sizeof (Function::value_type));
 
       // NaN != NaN, handle this case.
@@ -42,6 +44,8 @@ namespace roboptim
     void
     array_to_vector (Function::vector_t& dst, const Function::value_type* src)
     {
+      if (dst.empty ())
+	return;
       memcpy (&dst[0], src, dst.size () * sizeof (Function::value_type));
 
       // NaN != NaN, handle this case.
