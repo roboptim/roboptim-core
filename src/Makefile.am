@@ -38,5 +38,5 @@ roboptim_core_dummy_plugin_la_LDFLAGS = -module -version-info 1:1:0
 
 # Make sure one does not compile a plug-in with test coverage support as
 # it seems to trigger a segv at exit.
-roboptim_core_dummy_plugin_la_CXXFLAGS = \
-	`echo $(CXXFLAGS) | sed -e 's/-ftest-coverage//' -e 's/-fprofile-arcs//'`
+#roboptim_core_dummy_plugin_la_CXXFLAGS = \
+#	`echo $(CXXFLAGS) | sed -e 's/-ftest-coverage//' -e 's/-fprofile-arcs//'`
