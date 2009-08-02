@@ -7,6 +7,8 @@ lib_LTLIBRARIES = libroboptim-core.la
 
 libroboptim_core_la_SOURCES = 		\
 	constant-function.cc		\
+	debug.hh			\
+	debug.cc			\
 	doc.hh				\
 	derivable-function.cc		\
 	finite-difference-gradient.cc	\

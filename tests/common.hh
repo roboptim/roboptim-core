@@ -18,19 +18,36 @@
 
 #ifndef OPTIMIZATION_TESTS_COMMON_HH
 # define OPTIMIZATION_TESTS_COMMON_HH
+# include <roboptim/core/sys.hh>
+
+# include <fstream>
 # include <iostream>
 # include <stdexcept>
+
 # include "config.h"
+# include "debug.hh"
 
 static const int TEST_FAILED = 10;
 static const int TEST_SUCCEED = 0;
 
 int run_test ();
+void init ();
+
+
+void init ()
+{
+#ifdef CWDEBUG
+  roboptim::debug::init();
+#endif //! CWDEBUG
+}
+
 
 # define GENERATE_TEST()                                \
   int                                                   \
   main (int argc, char** argv)                          \
   {                                                     \
+    init ();						\
+							\
     if (argc == 2                                       \
         && std::string (argv[1]) == "--version")        \
       {                                                 \

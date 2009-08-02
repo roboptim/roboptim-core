@@ -3,6 +3,7 @@ include $(top_srcdir)/build-aux/init.mk
 # --- Distribute and install headers.
 nobase_include_HEADERS =				\
 	roboptim/core/constant-function.hh		\
+	roboptim/core/debug.hh				\
 	roboptim/core/derivable-function.hh		\
 	roboptim/core/derivable-parametrized-function.hh\
 	roboptim/core/function.hh			\
@@ -30,6 +31,7 @@ nobase_include_HEADERS =				\
 	roboptim/core/solver-warning.hh			\
 	roboptim/core/solver.hh				\
 	roboptim/core/solver.hxx			\
+	roboptim/core/sys.hh				\
 	roboptim/core/twice-derivable-function.hh	\
 	roboptim/core/util.hh				\
 	roboptim/core/util.hxx

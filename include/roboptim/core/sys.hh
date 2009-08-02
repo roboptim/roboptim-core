@@ -15,38 +15,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common.hh"
-
-#include <iostream>
-
-#include <roboptim/core/io.hh>
-#include <roboptim/core/constant-function.hh>
-
-using namespace roboptim;
-
-int run_test ()
-{
-  ConstantFunction::vector_t offset (4);
-  offset[0] = 12.;
-  offset[1] = 46.;
-  offset[2] = 2.;
-  offset[3] = -9.;
-
-  ConstantFunction cst (offset);
-
-  ConstantFunction::vector_t x (4);
-  x.clear ();
-
-  std::cout
-    << cst << std::endl
-    << "Evaluate: " << std::endl
-    << cst (x) << std::endl
-    << "Gradient: " << std::endl
-    << cst.gradient (x) << std::endl
-    << "Jacobian: " << std::endl
-    << cst.jacobian (x) << std::endl;
-
-  return 0;
-}
-
-GENERATE_TEST ()
+# ifdef CWDEBUG
+# ifndef _GNU_SOURCE
+#  define _GNU_SOURCE
+# endif //! _GNU_SOURCE
+# include <libcwd/sys.h>
+#endif //! CWDEBUG

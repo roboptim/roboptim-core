@@ -1,3 +1,34 @@
+2009-08-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add libcwd (C++ debugging library) support.
+	* include/Makefile.am: Distribute new header.
+	* include/roboptim/core/debug.hh: New.
+	* include/roboptim/core/sys.hh: New.
+	* src/Makefile.am: Compile new source.
+	* src/debug.cc: New.
+	* src/debug.hh: New.
+	* tests/common.hh: Initialize debugging properly.
+	* tests/constant-function.cc,
+	* tests/derivable-function.cc,
+	* tests/derivable-parametrized-function.cc,
+	* tests/finite-difference-gradient.cc,
+	* tests/function.cc,
+	* tests/identity-function.cc,
+	* tests/interval.cc,
+	* tests/linear-function.cc,
+	* tests/numeric-linear-function.cc,
+	* tests/numeric-quadratic-function.cc,
+	* tests/parametrized-function.cc,
+	* tests/plugin.cc,
+	* tests/quadratic-function.cc,
+	* tests/result.cc,
+	* tests/simple.cc,
+	* tests/twice-derivable-function.cc,
+	* tests/util.cc,
+	* tests/visualization-gnuplot-function.cc,
+	* tests/visualization-gnuplot-simple.cc:
+	Make sure common.hh is included first.
+
 2009-07-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Re-enable gcov support in plug-in.

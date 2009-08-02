@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "common.hh"
+
 #include <iostream>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/numeric-quadratic-function.hh>
-
-#include "common.hh"
 
 using namespace roboptim;
 
