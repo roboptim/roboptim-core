@@ -17,9 +17,17 @@
 
 #ifndef ROBOPTIM_CORE_DEBUG_HH
 # define ROBOPTIM_CORE_DEBUG_HH
+# include <roboptim/core/indent.hh>
 
 # ifdef CWDEBUG
 #  include <libcwd/libraries_debug.h>
+
+// Include io.hh so that debug code can display whatever they want.
+# include <roboptim/core/io.hh>
+
+# include <cassert>
+# include <iomanip>
+# include <ostream>
 
 namespace roboptim
 {
@@ -35,15 +43,27 @@ namespace roboptim
       namespace dc
       {
 	using namespace libcwd::channels::dc;
+
+	extern ::libcwd::channel_ct function;
       }
     }
   }
 }
 # endif // CWDEBUG
+
 # define RoboptimCoreDebug(STATEMENT...) \
   LibcwDebug(roboptim::debug::channels, STATEMENT)
-# define RoboptimCoreDout(cntrl, data) \
-  LibcwDout(roboptim::debug::channels, libcwd::libcw_do, cntrl, data)
+
+// Handle indentation properly.
+# define RoboptimCoreDout(cntrl, data)					     \
+  LibcwDoutScopeBegin (::roboptim::debug::channels, libcwd::libcw_do, cntrl) \
+  LibcwDoutStream << data;						     \
+  char fill = LibcwDoutStream.fill (' ');				     \
+  LibcwDoutStream << std::setw (::roboptim::indent (LibcwDoutStream))        \
+                  << ""				                             \
+                  << std::setfill (fill);				     \
+  LibcwDoutScopeEnd
+
 # define RoboptimCoreDoutFatal(cntrl, data) \
   LibcwDoutFatal(roboptim::debug::channels, libcwd::libcw_do, cntrl, data)
 # define RoboptimCoreForAllDebugChannels(STATEMENT...) \

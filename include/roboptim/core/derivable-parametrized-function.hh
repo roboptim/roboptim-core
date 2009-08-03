@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_TRAJECTORY_DERIVABLE_PARAMETRIZABLE_HH
 # define ROBOPTIM_TRAJECTORY_DERIVABLE_PARAMETRIZABLE_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <utility>
 
 # include <roboptim/core/fwd.hh>

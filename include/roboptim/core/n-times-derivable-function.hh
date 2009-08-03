@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_TRAJECTORY_N_TIMES_DERIVABLE_HH
 # define ROBOPTIM_TRAJECTORY_N_TIMES_DERIVABLE_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <boost/static_assert.hpp>
 
 # include <roboptim/core/fwd.hh>

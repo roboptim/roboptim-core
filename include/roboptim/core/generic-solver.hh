@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_GENERIC_SOLVER_HH
 # define ROBOPTIM_CORE_GENERIC_SOLVER_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <stdexcept>
 
 # include <boost/variant/get.hpp>

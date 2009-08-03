@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_HH
 # define ROBOPTIM_CORE_SOLVER_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <boost/static_assert.hpp>
 # include <boost/type_traits/is_base_of.hpp>
 

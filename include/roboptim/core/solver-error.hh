@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_ERROR_HH
 # define ROBOPTIM_CORE_SOLVER_ERROR_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <iostream>
 # include <stdexcept>
 

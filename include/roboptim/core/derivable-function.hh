@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <limits>
 # include <utility>
 
@@ -124,6 +127,8 @@ namespace roboptim
     /// \param argument point at which the jacobian will be computed
     void jacobian (jacobian_t& jacobian, const argument_t& argument) const throw ()
     {
+      RoboptimCoreDout (dc::function,
+			"Evaluating jacobian at point: " << argument);
       assert (argument.size () == inputSize ());
       assert (isValidJacobian (jacobian));
       this->impl_jacobian (jacobian, argument);
@@ -156,6 +161,10 @@ namespace roboptim
 		   const argument_t& argument,
 		   size_type functionId = 0) const throw ()
     {
+      RoboptimCoreDout (dc::function,
+			"Evaluating gradient at point: "
+			<< argument
+			<< " (function id: " << functionId << ")");
       assert (argument.size () == inputSize ());
       assert (isValidGradient (gradient));
       this->impl_gradient (gradient, argument, functionId);

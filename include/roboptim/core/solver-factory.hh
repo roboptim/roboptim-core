@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_FACTORY_HH
 # define ROBOPTIM_CORE_SOLVER_FACTORY_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <stdexcept>
 # include <string>
 

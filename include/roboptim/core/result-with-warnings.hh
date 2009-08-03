@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH
 # define ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <vector>
 
 # include <roboptim/core/fwd.hh>

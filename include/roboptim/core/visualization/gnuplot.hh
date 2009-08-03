@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <vector>
 
 # include <roboptim/core/visualization/fwd.hh>

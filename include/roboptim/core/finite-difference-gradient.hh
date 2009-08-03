@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HH
 # define ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <stdexcept>
 # include <roboptim/core/fwd.hh>
 

@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_WARNING_HH
 # define ROBOPTIM_CORE_SOLVER_WARNING_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <roboptim/core/solver-error.hh>
 
 namespace roboptim

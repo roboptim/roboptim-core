@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "debug.hh"
+
 #include <cassert>
 #include "roboptim/core/generic-solver.hh"
 
@@ -37,6 +39,7 @@ namespace roboptim
   void
   GenericSolver::reset () throw ()
   {
+    Dout (dc::notice, "Solver has been reset.");
     result_ = NoSolution ();
   }
 

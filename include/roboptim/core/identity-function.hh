@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_IDENTITY_FUNCTION_HH
 # define ROBOPTIM_CORE_IDENTITY_FUNCTION_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <roboptim/core/linear-function.hh>
 
 namespace roboptim

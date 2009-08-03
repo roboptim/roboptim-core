@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_LINEAR_FUNCTION_HH
 # define ROBOPTIM_CORE_LINEAR_FUNCTION_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <limits>
 # include <roboptim/core/quadratic-function.hh>
 

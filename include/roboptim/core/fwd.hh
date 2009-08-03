@@ -17,6 +17,8 @@
 
 #ifndef ROBOPTIM_CORE_FWD_HH
 # define ROBOPTIM_CORE_FWD_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
 
 namespace roboptim
 {

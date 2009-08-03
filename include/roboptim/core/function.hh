@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_FUNCTION_HH
 # define ROBOPTIM_CORE_FUNCTION_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <iostream>
 # include <limits>
 # include <string>
@@ -300,6 +303,8 @@ namespace roboptim
     void operator () (result_t& result, const argument_t& argument)
       const throw ()
     {
+      RoboptimCoreDout (dc::function,
+			"Evaluating function at point: " << argument);
       assert (argument.size () == inputSize ());
       assert (isValidResult (result));
       this->impl_compute (result, argument);

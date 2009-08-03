@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "debug.hh"
+
 #include <cassert>
 #include <iomanip>
 #include <ostream>
@@ -23,15 +25,11 @@
 
 namespace roboptim
 {
-  namespace
+  inline long int& indent (std::ostream& o)
   {
-    /// The current indentation level for \a o.
-    inline long int& indent (std::ostream& o)
-    {
-      // The slot to store the current indentation level.
-      static const long int indent_index = std::ios::xalloc ();
-      return o.iword (indent_index);
-    }
+    // The slot to store the current indentation level.
+    static const long int indent_index = std::ios::xalloc ();
+    return o.iword (indent_index);
   }
 
   std::ostream& incindent (std::ostream& o)

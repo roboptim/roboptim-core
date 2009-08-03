@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_IO_HH
 # define ROBOPTIM_CORE_IO_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <boost/numeric/ublas/io.hpp>
 # include <boost/optional/optional_io.hpp>
 # include <boost/tuple/tuple_io.hpp>

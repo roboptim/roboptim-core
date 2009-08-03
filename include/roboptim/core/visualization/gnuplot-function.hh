@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_FUNCTION_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_FUNCTION_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <boost/format.hpp>
 
 # include <roboptim/core/function.hh>

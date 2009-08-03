@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_COMMANDS_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_COMMANDS_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <string>
 
 namespace roboptim

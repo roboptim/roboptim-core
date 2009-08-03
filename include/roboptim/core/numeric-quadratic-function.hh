@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HH
 # define ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <boost/numeric/ublas/symmetric.hpp>
 
 # include <roboptim/core/quadratic-function.hh>

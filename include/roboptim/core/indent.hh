@@ -17,10 +17,16 @@
 
 #ifndef ROBOPTIM_CORE_INDENT_HH
 # define ROBOPTIM_CORE_INDENT_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <iosfwd>
 
 namespace roboptim
 {
+  /// \brief The current indentation level for \a o.
+  long int& indent (std::ostream& o);
+
   /// \brief Increment the indentation.
   std::ostream& incindent (std::ostream& o);
 

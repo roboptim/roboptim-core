@@ -17,6 +17,7 @@
 
 #ifndef DEBUG_HH
 # define DEBUG_HH
+# include <roboptim/core/sys.hh>
 
 # ifndef CWDEBUG
 #  include <iostream>

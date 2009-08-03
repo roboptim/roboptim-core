@@ -28,6 +28,7 @@ namespace roboptim
     {
       namespace dc
       {
+	::libcwd::channel_ct function ("FUNCTION");
       } // namespace dc
     } // namespace DEBUGCHANNELS
 

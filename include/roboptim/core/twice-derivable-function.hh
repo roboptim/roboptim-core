@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_TWICE_DERIVABLE_FUNCTION_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <limits>
 # include <utility>
 
@@ -104,6 +107,8 @@ namespace roboptim
 		  const argument_t& argument,
 		  size_type functionId = 0) const throw ()
     {
+      RoboptimCoreDout (dc::function,
+			"Evaluating hessian at point: " << argument);
       assert (isValidHessian (hessian));
       this->impl_hessian (hessian, argument, functionId);
       assert (isValidHessian (hessian));

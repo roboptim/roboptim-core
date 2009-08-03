@@ -17,6 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_UTIL_HH
 # define ROBOPTIM_CORE_UTIL_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+
 # include <roboptim/core/derivable-function.hh>
 
 namespace roboptim

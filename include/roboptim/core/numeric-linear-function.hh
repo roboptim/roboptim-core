@@ -17,6 +17,8 @@
 
 #ifndef ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HH
 # define ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HH
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
 
 # include <roboptim/core/linear-function.hh>
 
