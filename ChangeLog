@@ -1,5 +1,11 @@
 2009-08-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix a probably bug in libcwd documentation.
+	* include/roboptim/core/debug.hh: Make sure one can
+	compile roboptim-core without requiring libcwd.
+
+2009-08-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix compilation error when debug is disabled.
 	* include/roboptim/core/debug.hh: Fix compilation errors.
 
