@@ -1,5 +1,10 @@
 2009-08-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix compilation error when debug is disabled.
+	* include/roboptim/core/debug.hh: Fix compilation errors.
+
+2009-08-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Uniformize library to support libcwd.
 	* include/roboptim/core/constant-function.hh,
 	* include/roboptim/core/derivable-function.hh,

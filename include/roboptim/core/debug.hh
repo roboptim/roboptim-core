@@ -55,7 +55,8 @@ namespace roboptim
   LibcwDebug(roboptim::debug::channels, STATEMENT)
 
 // Handle indentation properly.
-# define RoboptimCoreDout(cntrl, data)					     \
+# ifdef CWDEBUG
+#  define RoboptimCoreDout(cntrl, data)					     \
   LibcwDoutScopeBegin (::roboptim::debug::channels, libcwd::libcw_do, cntrl) \
   LibcwDoutStream << data;						     \
   char fill = LibcwDoutStream.fill (' ');				     \
@@ -63,6 +64,9 @@ namespace roboptim
                   << ""				                             \
                   << std::setfill (fill);				     \
   LibcwDoutScopeEnd
+# else
+#  define RoboptimCoreDout(cntrl, data)
+# endif //! CWDEBUG
 
 # define RoboptimCoreDoutFatal(cntrl, data) \
   LibcwDoutFatal(roboptim::debug::channels, libcwd::libcw_do, cntrl, data)
