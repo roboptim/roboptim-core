@@ -1,3 +1,8 @@
+2009-08-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add new variant of foreach method.
+	* include/roboptim/core/function.hh: Here.
+
 2009-08-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix a probably bug in libcwd documentation.

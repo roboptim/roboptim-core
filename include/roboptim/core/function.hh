@@ -227,7 +227,7 @@ namespace roboptim
     ///
     /// Call the functor to each discretization point of the discrete
     /// interval.
-    /// \param interval iterval on which the method iterates
+    /// \param interval interval on which the method iterates
     /// \param functor unary function that will be applied
     /// \tparam F functor type (has to satisfy the STL unary function concept)
     template <typename F>
@@ -237,13 +237,47 @@ namespace roboptim
       const value_type delta =
 	getUpperBound (interval) - getLowerBound (interval);
       assert (delta >= 0.);
+      assert (getStep (interval) > 0.);
 
-      value_type n = floor (delta / getStep (interval));
+      value_type n = std::floor (delta / getStep (interval));
 
       for (size_type i = 0; i <= n; ++i)
 	{
-	  const value_type t =
+	  value_type t =
 	    getLowerBound (interval) + i * getStep (interval);
+	  if (t > getUpperBound (interval))
+	    t = getUpperBound (interval);
+	  assert (getLowerBound (interval) <= t
+		  && t <= getUpperBound (interval));
+	  functor (t);
+	}
+    }
+
+    /// \brief Iterate on an interval
+    ///
+    /// Call the functor regularly n times on an interval.
+    /// \param interval interval on which the method iterates
+    /// \param n number of discretization points
+    /// \param functor unary function that will be applied
+    /// \tparam F functor type (has to satisfy the STL unary function concept)
+    template <typename F>
+    static void foreach (const interval_t interval,
+			 const size_type n,
+			 F functor)
+    {
+      const value_type delta =
+	getUpperBound (interval) - getLowerBound (interval);
+      assert (delta >= 0.);
+
+      if (!n)
+	return;
+
+      for (size_type i = 0; i < n; ++i)
+	{
+	  value_type t =
+	    getLowerBound (interval) + i * (delta / (n - 1));
+	  if (t > getUpperBound (interval))
+	    t = getUpperBound (interval);
 	  assert (getLowerBound (interval) <= t
 		  && t <= getUpperBound (interval));
 	  functor (t);
