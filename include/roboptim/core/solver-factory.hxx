@@ -116,4 +116,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_SOLVER_FACTORY_HH
+#endif //! ROBOPTIM_CORE_SOLVER_FACTORY_HXX

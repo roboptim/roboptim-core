@@ -1,5 +1,10 @@
 2009-08-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix comment.
+	* include/roboptim/core/solver-factory.hxx: Here.
+
+2009-08-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add dllexport/dllimport for Windows compatibility.
 	* include/Makefile.am,
 	* include/roboptim/core/constant-function.hh,
