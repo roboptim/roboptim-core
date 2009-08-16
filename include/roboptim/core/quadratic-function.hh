@@ -32,7 +32,7 @@ namespace roboptim
   /// \brief Define an abstract quadratic function.
   ///
   /// Inherit from this class when implementing quadratic functions.
-  class QuadraticFunction : public TwiceDerivableFunction
+  class ROBOPTIM_DLLAPI QuadraticFunction : public TwiceDerivableFunction
   {
   public:
     /// \brief Concrete class constructor should call this constructor.

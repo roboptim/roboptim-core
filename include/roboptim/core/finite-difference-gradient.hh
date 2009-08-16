@@ -33,7 +33,7 @@ namespace roboptim
   static const double finiteDifferenceEpsilon = 1e-8;
 
   /// \brief Exception thrown when a gradient check fail.
-  class BadGradient : public std::runtime_error
+  class ROBOPTIM_DLLAPI BadGradient : public std::runtime_error
   {
   public:
     /// \brief Import vector.
@@ -79,7 +79,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param f function to be displayed
   /// \return output stream
-  std::ostream& operator<< (std::ostream& o, const BadGradient& f);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const BadGradient& f);
 
 
   /// \addtogroup roboptim_function
@@ -98,7 +98,7 @@ namespace roboptim
   /// \f[f'(x)\approx {f(x+\epsilon)-f(x)\over \epsilon}\f]
   /// where \f$\epsilon\f$ is a constant given when calling the class
   /// constructor.
-  class FiniteDifferenceGradient : public DerivableFunction
+  class ROBOPTIM_DLLAPI FiniteDifferenceGradient : public DerivableFunction
   {
   public:
     /// \brief Instantiate a finite differences gradient.
@@ -134,14 +134,14 @@ namespace roboptim
   /// \param x point where the gradient will be evaluated
   /// \param threshold maximum tolerated error
   /// \return true if valid, false if not
-  bool checkGradient
+  ROBOPTIM_DLLAPI bool checkGradient
   (const DerivableFunction& function,
    int functionId,
    const Function::vector_t& x,
    Function::value_type threshold = finiteDifferenceThreshold)
     throw ();
 
-  void checkGradientAndThrow
+  ROBOPTIM_DLLAPI void checkGradientAndThrow
   (const DerivableFunction& function,
    int functionId,
    const Function::vector_t& x,

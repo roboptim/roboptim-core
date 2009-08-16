@@ -39,7 +39,7 @@ namespace roboptim
   /// @{
 
   /// \brief Abstract interface satisfied by all solvers.
-  class GenericSolver : public boost::noncopyable
+  class ROBOPTIM_DLLAPI GenericSolver : public boost::noncopyable
   {
   public:
     /// \brief Define the kind of solution which has been found.
@@ -144,7 +144,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param gs solver to be displayed
   /// \return output stream
-  std::ostream& operator<< (std::ostream& o, const GenericSolver& gs);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const GenericSolver& gs);
 
 
   /// \brief Override operator<< to display ``no solution'' objects.
@@ -152,7 +152,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param ns NoSolution object, ignored
   /// \return output stream
-  std::ostream& operator<< (std::ostream& o, const NoSolution&);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const NoSolution&);
 
 } // end of namespace roboptim
 

@@ -31,7 +31,7 @@ namespace roboptim
   /// \brief Define an abstract linear function.
   ///
   /// Inherit from this class when implementing linear functions.
-  class LinearFunction : public QuadraticFunction
+  class ROBOPTIM_DLLAPI LinearFunction : public QuadraticFunction
   {
   public:
     /// \brief Concrete class constructor should call this constructor.

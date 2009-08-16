@@ -15,7 +15,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-# ifdef CWDEBUG
+#include <roboptim/core/portability.hh>
+
+#ifdef CWDEBUG
 # ifndef _GNU_SOURCE
 #  define _GNU_SOURCE
 # endif //! _GNU_SOURCE

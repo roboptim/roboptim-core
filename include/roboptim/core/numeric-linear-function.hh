@@ -32,7 +32,7 @@ namespace roboptim
   /// Implement a linear function using the general formula:
   /// \f[f(x) = A x + b\f]
   /// where \f$A\f$ and \f$b\f$ are set when the class is instantiated.
-  class NumericLinearFunction : public LinearFunction
+  class ROBOPTIM_DLLAPI NumericLinearFunction : public LinearFunction
   {
   public:
     /// \brief Build a linear function from a matrix and a vector.

@@ -51,7 +51,7 @@ namespace roboptim
 }
 # endif // CWDEBUG
 
-# define RoboptimCoreDebug(STATEMENT...) \
+# define RoboptimCoreDebug(STATEMENT) \
   LibcwDebug(roboptim::debug::channels, STATEMENT)
 
 // Handle indentation properly.
@@ -70,9 +70,9 @@ namespace roboptim
 
 # define RoboptimCoreDoutFatal(cntrl, data) \
   LibcwDoutFatal(roboptim::debug::channels, libcwd::libcw_do, cntrl, data)
-# define RoboptimCoreForAllDebugChannels(STATEMENT...) \
+# define RoboptimCoreForAllDebugChannels(STATEMENT) \
   LibcwdForAllDebugChannels(roboptim::debug::channels, STATEMENT)
-# define RoboptimCoreForAllDebugObjects(STATEMENT...) \
+# define RoboptimCoreForAllDebugObjects(STATEMENT) \
   LibcwdForAllDebugObjects(roboptim::debug::channels, STATEMENT)
 # if defined(Debug) && !defined(ROBOPTIM_CORE_INTERNAL)
 #  error The application source file (.cc or .cpp) must use '#include "debug.h"' _before_ including the header file that it includes now, that led to this error.

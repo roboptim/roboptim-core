@@ -32,7 +32,7 @@ namespace roboptim
   /// Implement a linear function using the formula:
   /// \f[f(x) = x + offset\f]
   /// where \f$A\f$ and \f$b\f$ are set when the class is instantiated.
-  class IdentityFunction : public LinearFunction
+  class ROBOPTIM_DLLAPI IdentityFunction : public LinearFunction
   {
   public:
     /// \brief Build an identity function.

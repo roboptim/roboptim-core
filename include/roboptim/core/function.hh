@@ -49,7 +49,7 @@ namespace roboptim
   ///
   /// Functions are pure immutable objects: evaluating a function
   /// twice at a given point <b>must</b> give the same result.
-  class Function
+  class ROBOPTIM_DLLAPI Function
   {
   public:
     /// \brief Values type.
@@ -397,7 +397,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param f function to be displayed
   /// \return output stream
-  std::ostream& operator<< (std::ostream& o, const Function& f);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const Function& f);
 
 
 } // end of namespace roboptim

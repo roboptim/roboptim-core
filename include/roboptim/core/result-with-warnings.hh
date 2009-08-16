@@ -39,7 +39,7 @@ namespace roboptim
   ///
   /// A vector or warnings is provided in this result, otherwise the
   /// class behaves like Result.
-  class ResultWithWarnings : public Result
+  class ROBOPTIM_DLLAPI ResultWithWarnings : public Result
   {
   public:
     /// \brief Instantiate the class from an input/output size.

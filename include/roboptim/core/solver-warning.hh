@@ -31,7 +31,7 @@ namespace roboptim
   ///
   /// This class is mainly used to populate the warning vector of the
   /// ResultWithWarnings class.
-  class SolverWarning : public SolverError
+  class ROBOPTIM_DLLAPI SolverWarning : public SolverError
   {
   public:
     /// \brief Instantiate the class with a message.

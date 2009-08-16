@@ -50,7 +50,7 @@ namespace roboptim
   /// To avoid this costly representation, the function is split
   /// into \f$m\f$ \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$ functions.
   /// See #DerivableFunction documentation for more information.
-  class TwiceDerivableFunction : public DerivableFunction
+  class ROBOPTIM_DLLAPI TwiceDerivableFunction : public DerivableFunction
   {
   public:
     /// \brief Hessian type.

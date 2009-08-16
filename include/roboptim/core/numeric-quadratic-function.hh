@@ -38,7 +38,7 @@ namespace roboptim
   /// where \f$A\f$ and \f$B\f$ are set when the class is instantiated.
   ///
   /// \note A is a symmetric matrix.
-  class NumericQuadraticFunction : public QuadraticFunction
+  class ROBOPTIM_DLLAPI NumericQuadraticFunction : public QuadraticFunction
   {
   public:
     /// \brief Symmetric matrix type.

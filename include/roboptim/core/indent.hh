@@ -25,27 +25,27 @@
 namespace roboptim
 {
   /// \brief The current indentation level for \a o.
-  long int& indent (std::ostream& o);
+  ROBOPTIM_DLLAPI long int& indent (std::ostream& o);
 
   /// \brief Increment the indentation.
-  std::ostream& incindent (std::ostream& o);
+  ROBOPTIM_DLLAPI std::ostream& incindent (std::ostream& o);
 
   /// \brief Decrement the indentation.
-  std::ostream& decindent (std::ostream& o);
+  ROBOPTIM_DLLAPI std::ostream& decindent (std::ostream& o);
 
   /// \brief Reset the indentation.
-  std::ostream& resetindent (std::ostream& o);
+  ROBOPTIM_DLLAPI std::ostream& resetindent (std::ostream& o);
 
   /// \brief Print an end of line, then set the indentation.
-  std::ostream& iendl (std::ostream& o);
+  ROBOPTIM_DLLAPI std::ostream& iendl (std::ostream& o);
 
   /// \brief Increment the indentation, print an end of line,
   /// and set the indentation.
-  std::ostream& incendl (std::ostream& o);
+  ROBOPTIM_DLLAPI std::ostream& incendl (std::ostream& o);
 
   /// \brief  Decrement the indentation, print an end of line,
   /// and set the indentation.
-  std::ostream& decendl (std::ostream& o);
+  ROBOPTIM_DLLAPI std::ostream& decendl (std::ostream& o);
 }
 
 #endif // !MISC_INDENT_HH

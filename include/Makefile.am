@@ -20,6 +20,7 @@ nobase_include_HEADERS =				\
 	roboptim/core/numeric-linear-function.hh	\
 	roboptim/core/parametrized-function.hh		\
 	roboptim/core/parametrized-function.hxx		\
+	roboptim/core/portability.hh			\
 	roboptim/core/problem.hh			\
 	roboptim/core/problem.hxx			\
 	roboptim/core/quadratic-function.hh		\

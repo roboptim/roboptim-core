@@ -32,7 +32,7 @@ namespace roboptim
   /// Implement a constant function using the formula:
   /// \f[f(x) = offset\f]
   /// where \f$offset\f$ is set when the class is instantiated.
-  class ConstantFunction : public LinearFunction
+  class ROBOPTIM_DLLAPI ConstantFunction : public LinearFunction
   {
   public:
     /// \brief Build an constant function.

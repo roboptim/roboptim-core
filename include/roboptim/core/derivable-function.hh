@@ -61,7 +61,7 @@ namespace roboptim
   /// ignored in the gradient/jacobian computation.
   /// The class provides a default value for the function id so that these functions
   /// do not have to explicitly set the function id.
-  class DerivableFunction : public Function
+  class ROBOPTIM_DLLAPI DerivableFunction : public Function
   {
   public:
     /// \brief Gradient type.
