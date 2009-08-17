@@ -1,5 +1,14 @@
 2009-08-17  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add Visual Studio solution and projects.
+	* msvc/roboptim-core-dummy-plugin/roboptim-core-dummy-plugin.vcproj: New.
+	* msvc/roboptim-core/config.h: New.
+	* msvc/roboptim-core/roboptim-core.sln: New.
+	* msvc/roboptim-core/roboptim-core.vcproj: New.
+	* msvc/simple/simple.vcproj: New.
+
+2009-08-17  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove dots in macros to ensure Windows portability.
 	* src/debug.hh: Make CPP code more portable.
 
