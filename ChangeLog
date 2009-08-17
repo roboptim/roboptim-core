@@ -1,5 +1,10 @@
 2009-08-17  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Remove dots in macros to ensure Windows portability.
+	* src/debug.hh: Make CPP code more portable.
+
+2009-08-17  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add ROBOPTIM_DLLAPI to ensure Windows portability.
 	* include/roboptim/core/util.hh: Add missing qualifier.
 
