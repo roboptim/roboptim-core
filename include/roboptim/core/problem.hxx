@@ -231,8 +231,13 @@ namespace roboptim
 	if (problem_.startingPoint ())
 	  {
 	    U g = get<U> (problem_.constraints ()[i_]);
+	    Function::vector_t x = (*g) (*problem_.startingPoint ());
 	    o_ << "Initial value: "
-	       << (*g) (*problem_.startingPoint ()) << iendl;
+	       << x;
+	    if (x[0] < Function::getLowerBound (problem_.bounds ()[i_])
+		|| x[0] > Function::getUpperBound (problem_.bounds ()[i_]))
+	      o_ << " (constraint not satisfied)";
+	    o_ << iendl;
 	  }
 	o_ << decindent << decindent;
       }
