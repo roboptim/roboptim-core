@@ -1,3 +1,9 @@
+2009-08-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Update submodules to use new SourceForge URLs.
+	* .gitmodules: Update to new URLs.
+	* bootstrap: Detect new alias.
+
 2009-08-18  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Display if constraints are satisfied or not when outputing a problem.
