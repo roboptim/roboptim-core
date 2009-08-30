@@ -3,6 +3,9 @@ This package was written by and with the assistance of
 * Florent Lamiraux              florent@laas.fr
 - Interface design.
 
+* François Keith                francois.keith@gmail.com
+- Microsoft Windows / Microsoft Visual Studio support.
+
 * Thomas Moulard                thomas.moulard@gmail.com
 - Package creation.
 - Interface implementation.
