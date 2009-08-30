@@ -1,5 +1,12 @@
 2009-08-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix error in return type.
+	* include/roboptim/core/derivable-function.hh: Use RobOptim
+	size type instead of default system size type (was triggering
+	an error with MSVC).
+
+2009-08-30  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add Francois Keith to thanks file.
 	* AUTHORS: Update.
 
