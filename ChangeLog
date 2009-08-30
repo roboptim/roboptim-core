@@ -1,3 +1,22 @@
+2009-08-30  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Enhance Microsoft Visual Studio solution and projects.
+	Introduce new installation rules and add Visual Studio
+	properties for Boost support. Compile in debug and release
+	modes.
+	Original patch by "Keith Francois" <francois.keith@gmail.com>.
+	* README: Add information about Microsoft Visual
+	Studio project.
+	* msvc/INSTALL/INSTALL.vcproj: New.
+	* msvc/INSTALL/excludedFiles.txt: New.
+	* msvc/roboptim-core/boost.vsprops: New.
+	* msvc/roboptim-core/rob_opt.vsprops: New.
+	* msvc/roboptim-core-dummy-plugin/roboptim-core-dummy-plugin.vcproj,
+	* msvc/roboptim-core/roboptim-core.sln,
+	* msvc/roboptim-core/roboptim-core.vcproj,
+	* msvc/simple/simple.vcproj: Use shared options and add integrate
+	new features.
+
 2009-08-24  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Update submodules to use new SourceForge URLs.

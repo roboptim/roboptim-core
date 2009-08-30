@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="shift_jis"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="8,00"
 	Name="roboptim-core"
 	ProjectGUID="{C6C47D7F-6793-4E24-9447-2DD0BA87BE6F}"
 	RootNamespace="roboptimcore"
-	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -20,6 +19,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			InheritedPropertySheets=".\boost.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -59,6 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile="$(OutDir)\$(ProjectName)d.dll"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -81,6 +82,9 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -88,7 +92,8 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
+			InheritedPropertySheets=".\boost.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -109,8 +114,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions=" /D &quot;BUILDING_ROBOPTIM&quot;"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\..\..\src&quot;;&quot;$(ProjectDir)\..\..\include&quot;;&quot;$(ProjectDir)&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -149,6 +156,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

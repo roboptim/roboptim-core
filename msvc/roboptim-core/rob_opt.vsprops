@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="rob_opt"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="&quot;${ROB_OPTIM_INSTALL_DIR}\include&quot;"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalLibraryDirectories="&quot;${ROB_OPTIM_INSTALL_DIR}\lib&quot;"
+	/>
+	<UserMacro
+		Name="ROB_OPTIM_INSTALL_DIR"
+		Value="&quot;C:/Libraries/roboptim&quot;"
+		PerformEnvironmentSet="true"
+	/>
+</VisualStudioPropertySheet>
