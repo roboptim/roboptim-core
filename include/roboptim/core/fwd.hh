@@ -33,6 +33,15 @@ namespace roboptim
   class ConstantFunction;
   class DerivableFunction;
   class DummySolver;
+
+  namespace finiteDifferenceGradientPolicies
+  {
+    class Simple;
+    class FivePointsRule;
+  }; // end of finiteDifferenceGradientPolicies
+
+  template <typename FdgPolicy =
+	    finiteDifferenceGradientPolicies::FivePointsRule>
   class FiniteDifferenceGradient;
   class Function;
   class GenericSolver;

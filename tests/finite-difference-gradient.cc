@@ -151,7 +151,7 @@ displayGradient (const DerivableFunction& function,
 		 const Function::vector_t& x,
 		 int i)
 {
-  FiniteDifferenceGradient fdfunction (function);
+  FiniteDifferenceGradient<> fdfunction (function);
   DerivableFunction::gradient_t grad = function.gradient (x, i);
   DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
 
@@ -200,10 +200,11 @@ int run_test ()
 
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot ();
 
-  FiniteDifferenceGradient fg_fd (fg, 10.);
+  FiniteDifferenceGradient<> fg_fd (fg, 10.);
 
   Polynomial p;
-  FiniteDifferenceGradient p_fd (p, 10.);
+  FiniteDifferenceGradient<finiteDifferenceGradientPolicies::Simple>
+    p_fd (p, 10.);
 
   Function::discreteInterval_t interval (-100., 100., 1.);
 

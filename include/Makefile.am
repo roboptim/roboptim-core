@@ -9,6 +9,7 @@ nobase_include_HEADERS =				\
 	roboptim/core/function.hh			\
 	roboptim/core/fwd.hh				\
 	roboptim/core/finite-difference-gradient.hh	\
+	roboptim/core/finite-difference-gradient.hxx	\
 	roboptim/core/generic-solver.hh			\
 	roboptim/core/identity-function.hh		\
 	roboptim/core/indent.hh				\

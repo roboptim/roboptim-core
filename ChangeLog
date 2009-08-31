@@ -1,3 +1,17 @@
+2009-08-31  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add policies to finite-difference gradients computation.
+	* include/Makefile.am: Distribute new header.
+	* include/roboptim/core/finite-difference-gradient.hh:
+	Add policies and template FiniteDifferenceGradient by them.
+	* include/roboptim/core/finite-difference-gradient.hxx: New.
+	* include/roboptim/core/fwd.hh: Update forward declaration,
+	make FivePointsRule the default policy.
+	* src/finite-difference-gradient.cc: Implement policies,
+	update free functions.
+	* tests/finite-difference-gradient.cc: Use new interface,
+	check both policies.
+
 2009-08-30  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix error in return type.

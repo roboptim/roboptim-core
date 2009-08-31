@@ -62,31 +62,6 @@ namespace roboptim
   }
 
 
-
-  FiniteDifferenceGradient::FiniteDifferenceGradient (const Function& adaptee,
-						      value_type epsilon)
-    throw ()
-    : DerivableFunction (adaptee.inputSize (), adaptee.outputSize ()),
-      adaptee_ (adaptee),
-      epsilon_ (epsilon)
-  {
-    // Avoid meaningless values for epsilon such as 0 or NaN.
-    assert (epsilon != 0. && epsilon == epsilon);
-  }
-
-  FiniteDifferenceGradient::~FiniteDifferenceGradient () throw ()
-  {
-  }
-
-  void
-  FiniteDifferenceGradient::impl_compute (result_t& result,
-					  const argument_t& argument)
-    const throw ()
-  {
-    adaptee_ (result, argument);
-  }
-
-
   namespace detail
   {
     void
@@ -154,54 +129,83 @@ namespace roboptim
     }
   }
 
-  void
-  FiniteDifferenceGradient::impl_gradient (gradient_t& gradient,
-					   const argument_t& argument,
-					   size_type idFunction) const throw ()
+  namespace finiteDifferenceGradientPolicies
   {
-    assert (outputSize () - idFunction > 0);
+    void
+    Simple::computeGradient
+    (const Function& adaptee,
+     Function::value_type epsilon,
+     Function::result_t& gradient,
+     const Function::argument_t& argument,
+     Function::value_type idFunction) const throw ()
+    {
+      typedef Function::value_type value_type;
+      assert (adaptee.outputSize () - idFunction > 0);
 
-    value_type h = epsilon_ / 2.;
-    value_type r_0 = 0.;
-    value_type round = 0.;
-    value_type trunc = 0.;
-    value_type error = 0.;
+      Function::result_t res = adaptee (argument);
+      for (unsigned j = 0; j < adaptee.inputSize (); ++j)
+	{
+	  Function::argument_t xEps = argument;
+	  xEps[j] += epsilon;
+	  Function::result_t resEps = adaptee (xEps);
+	  gradient (j) = (resEps[idFunction] - res[idFunction]) / epsilon;
+	}
+    }
 
-    for (unsigned j = 0; j < argument.size (); ++j)
-      {
-	detail::compute_deriv (adaptee_, j, h,
-			       r_0, round, trunc,
-			       argument, idFunction);
-	error = round + trunc;
+    void
+    FivePointsRule::computeGradient
+    (const Function& adaptee,
+     Function::value_type epsilon,
+     Function::result_t& gradient,
+     const Function::argument_t& argument,
+     Function::value_type idFunction) const throw ()
+    {
+      typedef Function::value_type value_type;
 
-	if (round < trunc && (round > 0 && trunc > 0))
-	  {
-	    value_type r_opt = 0., round_opt = 0., trunc_opt = 0., error_opt = 0.;
+      assert (adaptee.outputSize () - idFunction > 0);
 
-	    /* Compute an optimised stepsize to minimize the total error,
-	       using the scaling of the truncation error (O(h^2)) and
-	       rounding error (O(1/h)). */
+      value_type h = epsilon / 2.;
+      value_type r_0 = 0.;
+      value_type round = 0.;
+      value_type trunc = 0.;
+      value_type error = 0.;
 
-	    value_type h_opt =
-	      h * std::pow (round / (2. * trunc), 1. / 3.);
+      for (unsigned j = 0; j < argument.size (); ++j)
+	{
+	  detail::compute_deriv (adaptee, j, h,
+				 r_0, round, trunc,
+				 argument, idFunction);
+	  error = round + trunc;
 
-	    detail::compute_deriv (adaptee_, j, h_opt,
-				   r_opt, round_opt, trunc_opt,
-				   argument, idFunction);
-	    error_opt = round_opt + trunc_opt;
+	  if (round < trunc && (round > 0 && trunc > 0))
+	    {
+	      value_type r_opt = 0., round_opt = 0., trunc_opt = 0., error_opt = 0.;
 
-	    /* Check that the new error is smaller, and that the new derivative
-	       is consistent with the error bounds of the original estimate. */
+	      /* Compute an optimised stepsize to minimize the total error,
+		 using the scaling of the truncation error (O(h^2)) and
+		 rounding error (O(1/h)). */
 
-	    if (error_opt < error && std::fabs (r_opt - r_0) < 4. * error)
-	      {
-		r_0 = r_opt;
-		error = error_opt;
-	      }
-	  }
+	      value_type h_opt =
+		h * std::pow (round / (2. * trunc), 1. / 3.);
 
-	gradient (j) = r_0;
-      }
+	      detail::compute_deriv (adaptee, j, h_opt,
+				     r_opt, round_opt, trunc_opt,
+				     argument, idFunction);
+	      error_opt = round_opt + trunc_opt;
+
+	      /* Check that the new error is smaller, and that the new derivative
+		 is consistent with the error bounds of the original estimate. */
+
+	      if (error_opt < error && std::fabs (r_opt - r_0) < 4. * error)
+		{
+		  r_0 = r_opt;
+		  error = error_opt;
+		}
+	    }
+
+	  gradient (j) = r_0;
+	}
+    }
   }
 
 
@@ -211,7 +215,7 @@ namespace roboptim
 		 const Function::vector_t& x,
 		 Function::value_type threshold) throw ()
   {
-    FiniteDifferenceGradient fdfunction (function);
+    FiniteDifferenceGradient<> fdfunction (function);
     DerivableFunction::gradient_t grad = function.gradient (x, i);
     DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
 
@@ -228,7 +232,7 @@ namespace roboptim
 			 Function::value_type threshold)
     throw (BadGradient)
   {
-    FiniteDifferenceGradient fdfunction (function);
+    FiniteDifferenceGradient<> fdfunction (function);
     DerivableFunction::gradient_t grad = function.gradient (x, i);
     DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
 

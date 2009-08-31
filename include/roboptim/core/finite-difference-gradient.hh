@@ -81,6 +81,29 @@ namespace roboptim
   /// \return output stream
   ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const BadGradient& f);
 
+  namespace finiteDifferenceGradientPolicies
+  {
+    struct ROBOPTIM_DLLAPI Simple
+    {
+      void computeGradient
+      (const Function& adaptee,
+       Function::value_type epsilon,
+       Function::result_t& gradient,
+       const Function::argument_t& argument,
+       Function::value_type idFunction) const throw ();
+    };
+
+    struct ROBOPTIM_DLLAPI FivePointsRule
+    {
+      void computeGradient
+      (const Function& adaptee,
+       Function::value_type epsilon,
+       Function::result_t& gradient,
+       const Function::argument_t& argument,
+       Function::value_type idFunction) const throw ();
+    };
+  } // end of namespace policy.
+
 
   /// \addtogroup roboptim_function
   /// @{
@@ -98,7 +121,10 @@ namespace roboptim
   /// \f[f'(x)\approx {f(x+\epsilon)-f(x)\over \epsilon}\f]
   /// where \f$\epsilon\f$ is a constant given when calling the class
   /// constructor.
-  class ROBOPTIM_DLLAPI FiniteDifferenceGradient : public DerivableFunction
+  template <typename FdgPolicy>
+  class FiniteDifferenceGradient
+    : public DerivableFunction,
+      private FdgPolicy
   {
   public:
     /// \brief Instantiate a finite differences gradient.
@@ -155,4 +181,5 @@ namespace roboptim
 
 } // end of namespace roboptim
 
+# include <roboptim/core/finite-difference-gradient.hxx>
 #endif //! ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HH
