@@ -59,7 +59,7 @@ namespace roboptim
     typedef ublas::symmetric_matrix<value_type, ublas::lower> hessian_t;
 
     /// \brief Hessian size type represented as a pair of values.
-    typedef std::pair<value_type, value_type> hessianSize_t;
+    typedef std::pair<size_type, size_type> hessianSize_t;
 
 
     /// \brief Return the size of a hessian.

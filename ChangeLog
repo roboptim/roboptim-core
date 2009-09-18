@@ -1,5 +1,14 @@
 2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix error insize types.
+	* include/roboptim/core/derivable-parametrized-function.hh:
+	Replace size_t by size_type.
+	* include/roboptim/core/twice-derivable-function.hh:
+	Define hessian size as a pair of size and not as a pair of floating
+	points values.
+
+2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix Doxygen comments.
 	* include/roboptim/core/constant-function.hh,
 	* include/roboptim/core/derivable-function.hh,

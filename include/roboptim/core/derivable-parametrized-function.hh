@@ -64,7 +64,7 @@ namespace roboptim
     /// \brief Return the gradient size.
     ///
     /// Gradient size is equals to the input size.
-    size_t gradientSize () const throw ()
+    size_type gradientSize () const throw ()
     {
       return this->inputSize ();
     }
