@@ -1,6 +1,3 @@
 [submodule "build-aux"]
 	path = build-aux
-	url = roboptim:build-aux
-[submodule "doc"]
-	path = doc
-	url = roboptim:doc
+	url = roboptim:build-aux.git
