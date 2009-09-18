@@ -1,5 +1,10 @@
 2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Synchronize with build-aux.
+	* build-aux: Here.
+
+2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix error insize types.
 	* include/roboptim/core/derivable-parametrized-function.hh:
 	Replace size_t by size_type.
