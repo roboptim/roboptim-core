@@ -182,7 +182,7 @@ namespace roboptim
     ///
     /// \param inputSize input size (argument size)
     /// \param outputSize output size (result size)
-    /// \param function's name
+    /// \param name function's name
     DerivableFunction (size_type inputSize,
 		       size_type outputSize = 1,
 		       std::string name = std::string ()) throw ();

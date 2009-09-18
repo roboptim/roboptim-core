@@ -1,5 +1,20 @@
 2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix Doxygen comments.
+	* include/roboptim/core/constant-function.hh,
+	* include/roboptim/core/derivable-function.hh,
+	* include/roboptim/core/derivable-parametrized-function.hh,
+	* include/roboptim/core/function.hh,
+	* include/roboptim/core/generic-solver.hh,
+	* include/roboptim/core/identity-function.hh,
+	* include/roboptim/core/n-times-derivable-function.hh,
+	* include/roboptim/core/numeric-linear-function.hh,
+	* include/roboptim/core/numeric-quadratic-function.hh,
+	* include/roboptim/core/parametrized-function.hh,
+	* src/constant-function.cc: Fix Doxygen comments.
+
+2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update Doxygen generation rules.
 	* .gitmodules: Remove doc submodule.
 	* build-aux: Update to new version.

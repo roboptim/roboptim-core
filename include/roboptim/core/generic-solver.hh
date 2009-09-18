@@ -152,7 +152,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param ns NoSolution object, ignored
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const NoSolution&);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const NoSolution& ns);
 
 } // end of namespace roboptim
 

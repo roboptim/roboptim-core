@@ -111,9 +111,10 @@ namespace roboptim
 
     /// \brief Function evaluation.
     ///
-    /// Evaluate the function, has to be implemented in concrete classes.
-    /// \warning Do not call this function directly, call #operator() instead.
-    /// \param argument point at which the function will be evaluated
+    /// Evaluate the function, has to be implemented in concrete
+    /// classes.  \warning Do not call this function directly, call
+    /// #operator()(const argument_t&) const throw () instead.  \param
+    /// argument point at which the function will be evaluated
     virtual result_t impl_compute (const argument_t& argument)
       const throw () = 0;
 

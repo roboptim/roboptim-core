@@ -50,10 +50,10 @@ namespace roboptim
     virtual std::ostream& print (std::ostream&) const throw ();
 
   protected:
-    void impl_compute (result_t& , const vector_t&) const throw ();
-    void impl_gradient (gradient_t&, const vector_t&, size_type = 0)
+    void impl_compute (result_t& , const argument_t&) const throw ();
+    void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
       const throw ();
-    void impl_jacobian (jacobian_t&, const vector_t&) const throw ();
+    void impl_jacobian (jacobian_t&, const argument_t&) const throw ();
 
   private:
     /// \brief A matrix.

@@ -149,9 +149,14 @@ namespace roboptim
 
     /// \brief Function evaluation.
     ///
-    /// Implement generic function evaluation, as required by Function,
-    /// using this class evaluation method (using a double instead of a vector).
-    /// \warning Do not call this function directly, call #operator() instead.
+    /// Implement generic function evaluation, as required by
+    /// Function, using this class evaluation method (using a double
+    /// instead of a vector).
+    ///
+    /// \warning Do not call this function directly, call
+    /// #operator()(result_t&, const argument_t&) const throw ()
+    /// instead.
+    ///
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
     void impl_compute (result_t& result, const argument_t& argument)
@@ -162,10 +167,11 @@ namespace roboptim
 
     /// \brief Function evaluation.
     ///
-    /// Evaluate the function, has to be implemented in concrete classes.
-    /// \warning Do not call this function directly, call #operator() instead.
-    /// \param result result will be stored in this vector
-    /// \param t point at which the function will be evaluated
+    /// Evaluate the function, has to be implemented in concrete
+    /// classes.  \warning Do not call this function directly, call
+    /// #operator()(double) const throw () instead.  \param result
+    /// result will be stored in this vector \param t point at which
+    /// the function will be evaluated
     virtual void impl_compute (result_t& result, double t) const throw () = 0;
 
     /// \brief Gradient evaluation.
@@ -253,6 +259,7 @@ namespace roboptim
     /// \brief Concrete class constructor should call this constructor.
     ///
     /// \param outputSize output size (result size)
+    /// \param name function name
     NTimesDerivableFunction (size_type outputSize = 1,
 			     std::string name = std::string ()) throw ()
       : NTimesDerivableFunction<DerivabilityOrder - 1> (outputSize, name)

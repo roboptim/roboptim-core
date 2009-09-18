@@ -54,8 +54,8 @@ namespace roboptim
 
   void
   ConstantFunction::impl_gradient (gradient_t& gradient,
-					const argument_t& argument,
-					size_type idFunction) const throw ()
+				   const argument_t& argument,
+				   size_type idFunction) const throw ()
   {
     gradient.clear ();
   }

@@ -99,6 +99,7 @@ namespace roboptim
     /// \brief Computes the jacobian.
     ///
     /// \param argument point at which the jacobian will be computed
+    /// \param order derivation order
     /// \return jacobian matrix
     jacobian_t jacobian (const argument_t& argument, size_type order = 0)
       const throw ()
@@ -114,6 +115,7 @@ namespace roboptim
     /// Program will abort if the jacobian size is wrong before
     /// or after the jacobian computation.
     /// \param jacobian jacobian will be stored in this argument
+    /// \param order derivation order
     /// \param argument inner function point argument value
     void jacobian (jacobian_t& jacobian, const argument_t& argument,
 		   size_type order = 0) const throw ()
@@ -128,6 +130,7 @@ namespace roboptim
     ///
     /// \param argument inner function argument value
     /// \param functionId function id in split representation
+    /// \param order derivation order
     /// \return gradient vector
     gradient_t gradient (const argument_t& argument,
 			 size_type functionId = 0,
@@ -146,6 +149,7 @@ namespace roboptim
     /// \param gradient gradient will be stored in this argument
     /// \param argument inner function point argument value
     /// \param functionId function id in split representation
+    /// \param order derivation order
     /// \return gradient vector
     void gradient (gradient_t& gradient,
 		   const argument_t& argument,
@@ -209,6 +213,7 @@ namespace roboptim
     /// \param gradient gradient will be store in this argument
     /// \param argument inner function point argument value
     /// \param functionId evaluated function id in the split representation
+    /// \param order derivation order
     virtual void impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
 				size_type functionId = 0,
