@@ -1,5 +1,11 @@
 2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Document.
+	* include/roboptim/core/finite-difference-gradient.hh:
+	Document finite difference gradients policies.
+
+2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Synchronize build-aux.
 	* build-aux: Here.
 

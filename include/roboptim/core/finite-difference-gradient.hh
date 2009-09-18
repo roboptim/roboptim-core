@@ -81,8 +81,15 @@ namespace roboptim
   /// \return output stream
   ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const BadGradient& f);
 
+  /// \brief Contains finite difference gradients policies.
+  ///
+  /// Each class of this algorithm implements a finite difference
+  /// gradient computation algorithm.
   namespace finiteDifferenceGradientPolicies
   {
+    /// \brief Fast finite difference gradient computation.
+    ///
+    /// Finite difference is computed using forward difference.
     struct ROBOPTIM_DLLAPI Simple
     {
       void computeGradient
@@ -93,6 +100,10 @@ namespace roboptim
        Function::value_type idFunction) const throw ();
     };
 
+    /// \brief Precise finite difference gradient computation.
+    ///
+    /// Finite difference is computed using five-points stencil
+    /// (i.e. \f$\{x-2h, x-h, x, x+h, x+2h\}\f$).
     struct ROBOPTIM_DLLAPI FivePointsRule
     {
       void computeGradient
