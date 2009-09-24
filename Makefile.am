@@ -28,7 +28,14 @@ libtool: $(LIBTOOL_DEPS)
 
 include $(top_srcdir)/build-aux/pkg-config.mk
 
-# -- Generate documentation
+# Generate documentation.
 .PHONY: doc html
 doc html:
 	cd doc && $(MAKE) $(AM_MAKEFLAGS) $@
+
+# Update version files when needed.
+BUILT_SOURCES = $(top_srcdir)/.version
+$(top_srcdir)/.version:
+	echo $(VERSION) > $@-t && mv $@-t $@
+dist-hook:
+	echo $(VERSION) > $(distdir)/.tarball-version

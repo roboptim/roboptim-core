@@ -1,5 +1,13 @@
 2009-09-24  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Use GNU git-version-gen to manage versions.
+	* .gitignore: Add ``.version'' and ``.tarball-version''.
+	* Makefile.am: Add needed rules.
+	* configure.ac: Use build-aux/git-version-gen to get
+	version number.
+
+2009-09-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove commented Makefile rules.
 	* src/Makefile.am: Clean.
 

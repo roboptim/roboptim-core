@@ -5,7 +5,9 @@ AC_PREREQ([2.59])
 ## --------------------- ##
 ## Package configuration ##
 ## --------------------- ##
-AC_INIT([RobOptim core library], [0.2], [roboptim-user@lists.sourceforge.net],
+AC_INIT([RobOptim core library],
+	m4_esyscmd([build-aux/git-version-gen .tarball-version]),
+	[roboptim-user@lists.sourceforge.net],
         [roboptim-core])
 
 # Auxiliary files.
