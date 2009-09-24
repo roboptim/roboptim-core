@@ -33,12 +33,8 @@ libroboptim_core_la_SOURCES += 		\
 
 libroboptim_core_la_LDFLAGS = -version-info 1:1:0
 
+# Dummy plug-in.
 lib_LTLIBRARIES += roboptim-core-dummy-plugin.la
 roboptim_core_dummy_plugin_la_SOURCES = roboptim-core-dummy-plugin.cc
 roboptim_core_dummy_plugin_la_LIBADD = libroboptim-core.la
 roboptim_core_dummy_plugin_la_LDFLAGS = -module -version-info 1:1:0
-
-# Make sure one does not compile a plug-in with test coverage support as
-# it seems to trigger a segv at exit.
-#roboptim_core_dummy_plugin_la_CXXFLAGS = \
-#	`echo $(CXXFLAGS) | sed -e 's/-ftest-coverage//' -e 's/-fprofile-arcs//'`

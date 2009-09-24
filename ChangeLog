@@ -1,3 +1,8 @@
+2009-09-24  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Remove commented Makefile rules.
+	* src/Makefile.am: Clean.
+
 2009-09-18  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Document.
