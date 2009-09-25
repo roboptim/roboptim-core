@@ -1,5 +1,12 @@
 2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix version files generation.
+	* Makefile.am: Do no generate ``.version'' in a tarball (as
+	user might not have control on source directory, for instance
+	when running distcheck).
+
+2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update version automatically in test case output.
 	* build-aux: Synchronize.
 	* tests/atlocal.in: Provide version information to test suite.

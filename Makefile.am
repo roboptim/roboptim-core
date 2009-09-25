@@ -35,7 +35,12 @@ doc html:
 
 # Update version files when needed.
 BUILT_SOURCES = $(top_srcdir)/.version
+
+#  Do not generate .version in distributed tarball.
 $(top_srcdir)/.version:
-	echo $(VERSION) > $@-t && mv $@-t $@
+	if ! test -f $(top_srcdir)/.tarball-version; then	\
+	 echo $(VERSION) > $@-t && mv $@-t $@;			\
+	fi
+
 dist-hook:
 	echo $(VERSION) > $(distdir)/.tarball-version
