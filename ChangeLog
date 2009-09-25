@@ -1,3 +1,9 @@
+2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Update version automatically in test case output.
+	* build-aux: Synchronize.
+	* tests/atlocal.in: Provide version information to test suite.
+
 2009-09-24  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Use GNU git-version-gen to manage versions.
