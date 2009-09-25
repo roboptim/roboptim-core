@@ -1,4 +1,10 @@
                                                                 -*- outline -*-
+New in 0.3, 2009-09-25:
+* Finite difference gradients
+* New kinds of functions: constant, identity function.
+* Enhance display of problem, solver, functions.
+* Experimental support for parametrized functions.
+* Numerous bug fixes.
 
 New in 0.2, 2009-05-03:
 * New plug-in system
