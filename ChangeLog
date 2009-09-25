@@ -1,5 +1,10 @@
 2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Run autoupdate.
+	* configure.ac: Updated by autoupdate.
+
+2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Respect 80-columns rule.
 	* include/roboptim/core/debug.hh,
 	* include/roboptim/core/derivable-function.hh,

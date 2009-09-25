@@ -1,15 +1,15 @@
 # Don't expend macros beginning by JRL_.
 m4_pattern_forbid([^JRL_])
-AC_PREREQ([2.59])
+AC_PREREQ(2.63)
 
 ## --------------------- ##
 ## Package configuration ##
 ## --------------------- ##
 AC_INIT([RobOptim core library],
-	m4_esyscmd([build-aux/git-version-gen .tarball-version]),
-	[roboptim-user@lists.sourceforge.net],
+        [m4_esyscmd(build-aux/git-version-gen .tarball-version)],
+        [roboptim-user@lists.sourceforge.net],
         [roboptim-core],
-	[http://roboptim.sourceforge.net/])
+        [http://roboptim.sourceforge.net/])
 
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([build-aux])
