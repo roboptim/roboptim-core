@@ -1,5 +1,11 @@
 2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Simplify version updating in autotest.mk.
+	* build-aux: Synchronize.
+	* tests/atlocal.in: Simplify.
+
+2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Remove obsolete information from README.
 	* README: Here.
 

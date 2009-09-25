@@ -20,6 +20,3 @@
 
 # Add test binaries to PATH.
 PATH=@abs_builddir@:$PATH
-
-# Software version.
-export VERSION='@VERSION@'
