@@ -130,7 +130,8 @@ namespace roboptim
   typename Problem<F, CLIST>::startingPoint_t&
   Problem<F, CLIST>::startingPoint () throw ()
   {
-    if (startingPoint_ && startingPoint_->size () != this->function ().inputSize ())
+    if (startingPoint_ && startingPoint_->size ()
+	!= this->function ().inputSize ())
       assert (0 && "Invalid starting point (wrong size)");
     return startingPoint_;
   }
@@ -139,7 +140,8 @@ namespace roboptim
   const typename Problem<F, CLIST>::startingPoint_t&
   Problem<F, CLIST>::startingPoint () const throw ()
   {
-    if (startingPoint_ && startingPoint_->size () != this->function ().inputSize ())
+    if (startingPoint_ && startingPoint_->size ()
+	!= this->function ().inputSize ())
       assert (0 && "Invalid starting point (wrong size)");
     return startingPoint_;
   }
@@ -285,7 +287,8 @@ namespace roboptim
       o << iendl << "No starting point.";
 
     // Infinity.
-    o << iendl << "Infinity value (for all functions): " << Function::infinity ();
+    o << iendl << "Infinity value (for all functions): "
+      << Function::infinity ();
     return o << decindent;
   }
 

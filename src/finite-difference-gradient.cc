@@ -179,7 +179,8 @@ namespace roboptim
 
 	  if (round < trunc && (round > 0 && trunc > 0))
 	    {
-	      value_type r_opt = 0., round_opt = 0., trunc_opt = 0., error_opt = 0.;
+	      value_type r_opt = 0., round_opt = 0., trunc_opt = 0.,
+		error_opt = 0.;
 
 	      /* Compute an optimised stepsize to minimize the total error,
 		 using the scaling of the truncation error (O(h^2)) and
@@ -193,8 +194,9 @@ namespace roboptim
 				     argument, idFunction);
 	      error_opt = round_opt + trunc_opt;
 
-	      /* Check that the new error is smaller, and that the new derivative
-		 is consistent with the error bounds of the original estimate. */
+	      /* Check that the new error is smaller, and that the new
+		 derivative is consistent with the error bounds of the
+		 original estimate. */
 
 	      if (error_opt < error && std::fabs (r_opt - r_0) < 4. * error)
 		{

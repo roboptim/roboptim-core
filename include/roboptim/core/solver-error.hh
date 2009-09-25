@@ -52,7 +52,8 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param e error to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const SolverError& e);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+					    const SolverError& e);
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_SOLVER_ERROR_HH

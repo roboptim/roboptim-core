@@ -56,7 +56,8 @@ namespace roboptim
       Debug(libcw_do.set_ostream (&std::cerr));
 # endif //! LIBCWD_THREAD_SAFE
 
-      // Write a list of all existing debug channels to the default debug device.
+      // Write a list of all existing debug channels to the default
+      // debug device.
       Debug(list_channels_on (libcw_do));
     }
 
@@ -66,19 +67,22 @@ namespace roboptim
     void init ()
     {
       // You want this, unless you mix streams output with C output.
-      // Read  http://gcc.gnu.org/onlinedocs/libstdc++/27_io/howto.html#8 for an explanation.
-      // We can't use it, because other code uses printf to write to the console.
+      // Read
+      // http://gcc.gnu.org/onlinedocs/libstdc++/27_io/howto.html#8
+      // for an explanation.  We can't use it, because other code uses
+      // printf to write to the console.
       Debug(set_invisible_on ());
       // Cause "memory leaks" ([w]cin, [w]cout and [w]cerr filebuf allocations).
       std::ios::sync_with_stdio (false);
       Debug(set_invisible_off ());
 
-      // This will warn you when you are using header files that do not belong to the
-      // shared libcwd object that you linked with.
+      // This will warn you when you are using header files that do
+      // not belong to the shared libcwd object that you linked with.
       Debug(check_configuration());
 
 # if CWDEBUG_ALLOC
-      // Remove all current (pre- main) allocations from the Allocated Memory Overview.
+      // Remove all current (pre- main) allocations from the Allocated
+      // Memory Overview.
       libcwd::make_all_allocations_invisible_except (0);
 # endif
 

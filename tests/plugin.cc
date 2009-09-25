@@ -35,7 +35,8 @@ struct F : public Function
   F () : Function (4, 1, "a * d * (a + b + c) + d")
   {}
 
-  void impl_compute (result_t& result, const argument_t& argument) const throw ()
+  void impl_compute (result_t& result, const argument_t& argument)
+    const throw ()
   {
     result (0) = argument[0] * argument[3]
       * (argument[0] + argument[1] + argument[2]) + argument[3];

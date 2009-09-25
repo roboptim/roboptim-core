@@ -59,8 +59,8 @@ namespace roboptim
   ///
   /// If \f$m = 1\f$, then the function id must always be 0 and can be safely
   /// ignored in the gradient/jacobian computation.
-  /// The class provides a default value for the function id so that these functions
-  /// do not have to explicitly set the function id.
+  /// The class provides a default value for the function id so that
+  /// these functions do not have to explicitly set the function id.
   class ROBOPTIM_DLLAPI DerivableFunction : public Function
   {
   public:
@@ -125,7 +125,8 @@ namespace roboptim
     /// or after the jacobian computation.
     /// \param jacobian jacobian will be stored in this argument
     /// \param argument point at which the jacobian will be computed
-    void jacobian (jacobian_t& jacobian, const argument_t& argument) const throw ()
+    void jacobian (jacobian_t& jacobian, const argument_t& argument)
+      const throw ()
     {
       RoboptimCoreDout (dc::function,
 			"Evaluating jacobian at point: " << argument);

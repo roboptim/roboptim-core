@@ -28,11 +28,13 @@ namespace roboptim
   {
     /// \internal
     /// \brief Copy the content of a uBLAS vector into a C array.
-    ROBOPTIM_DLLAPI void vector_to_array (Function::value_type* dst, const Function::vector_t& src);
+    ROBOPTIM_DLLAPI void vector_to_array (Function::value_type* dst,
+					  const Function::vector_t& src);
 
     /// \internal
     /// \brief Copy the content of a C array into a uBLAS vector.
-    ROBOPTIM_DLLAPI void array_to_vector (Function::vector_t& dst, const Function::value_type* src);
+    ROBOPTIM_DLLAPI void array_to_vector (Function::vector_t& dst,
+					  const Function::value_type* src);
 
     /// \internal
     /// Merge gradients from several functions (each gradient is a line).

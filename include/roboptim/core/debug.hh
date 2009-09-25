@@ -75,6 +75,8 @@ namespace roboptim
 # define RoboptimCoreForAllDebugObjects(STATEMENT) \
   LibcwdForAllDebugObjects(roboptim::debug::channels, STATEMENT)
 # if defined(Debug) && !defined(ROBOPTIM_CORE_INTERNAL)
-#  error The application source file (.cc or .cpp) must use '#include "debug.h"' _before_ including the header file that it includes now, that led to this error.
+#  error The application source file (.cc or .cpp) must use	\
+  '#include "debug.h"' _before_ including the header file	\
+  that it includes now, that led to this error.
 # endif
 #endif // !ROBOPTIM_CORE_DEBUG_HH

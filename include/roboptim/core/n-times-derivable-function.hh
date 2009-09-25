@@ -211,8 +211,8 @@ namespace roboptim
 
     /// \brief Hessian evaluation.
     ///
-    /// Implement the hessian computation, as required by the TwiceDerivableFunction
-    /// class using the #derivative method.
+    /// Implement the hessian computation, as required by the
+    /// TwiceDerivableFunction class using the #derivative method.
     /// The hessian is computed for a specific sub-function which id is
     /// passed through the functionId argument.
     /// \warning Do not call this function directly, call #hessian instead.

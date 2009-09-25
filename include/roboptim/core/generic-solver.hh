@@ -144,7 +144,8 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param gs solver to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const GenericSolver& gs);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+					    const GenericSolver& gs);
 
 
   /// \brief Override operator<< to display ``no solution'' objects.
@@ -152,7 +153,8 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param ns NoSolution object, ignored
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const NoSolution& ns);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+					    const NoSolution& ns);
 
 } // end of namespace roboptim
 

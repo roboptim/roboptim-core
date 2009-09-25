@@ -33,7 +33,8 @@ namespace roboptim
 
   template <typename F>
   typename ParametrizedFunction<F>::result_t
-  ParametrizedFunction<F>::operator () (const argument_t& argument) const throw ()
+  ParametrizedFunction<F>::operator () (const argument_t& argument)
+    const throw ()
   {
     assert (argument.size () == inputSize ());
     return impl_compute (argument);

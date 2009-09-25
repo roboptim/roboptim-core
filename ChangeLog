@@ -1,5 +1,24 @@
 2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Respect 80-columns rule.
+	* include/roboptim/core/debug.hh,
+	* include/roboptim/core/derivable-function.hh,
+	* include/roboptim/core/finite-difference-gradient.hh,
+	* include/roboptim/core/finite-difference-gradient.hxx,
+	* include/roboptim/core/generic-solver.hh,
+	* include/roboptim/core/n-times-derivable-function.hh,
+	* include/roboptim/core/parametrized-function.hxx,
+	* include/roboptim/core/problem.hxx,
+	* include/roboptim/core/solver-error.hh,
+	* include/roboptim/core/util.hh,
+	* src/debug.cc,
+	* src/doc.hh,
+	* src/finite-difference-gradient.cc,
+	* tests/Makefile.am,
+	* tests/plugin.cc: Clean to make text fit on 80 columns.
+
+2009-09-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Simplify version updating in autotest.mk.
 	* build-aux: Synchronize.
 	* tests/atlocal.in: Simplify.

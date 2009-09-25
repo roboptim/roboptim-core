@@ -21,8 +21,8 @@
 namespace roboptim
 {
   template <typename FdgPolicy>
-  FiniteDifferenceGradient<FdgPolicy>::FiniteDifferenceGradient (const Function& adaptee,
-								 value_type epsilon)
+  FiniteDifferenceGradient<FdgPolicy>::FiniteDifferenceGradient
+  (const Function& adaptee, value_type epsilon)
     throw ()
     : DerivableFunction (adaptee.inputSize (), adaptee.outputSize ()),
       FdgPolicy (),
@@ -40,9 +40,8 @@ namespace roboptim
 
   template <typename FdgPolicy>
   void
-  FiniteDifferenceGradient<FdgPolicy>::impl_compute (result_t& result,
-						     const argument_t& argument)
-    const throw ()
+  FiniteDifferenceGradient<FdgPolicy>::impl_compute
+  (result_t& result, const argument_t& argument) const throw ()
   {
     adaptee_ (result, argument);
   }

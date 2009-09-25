@@ -79,7 +79,8 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param f function to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const BadGradient& f);
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+					    const BadGradient& f);
 
   /// \brief Contains finite difference gradients policies.
   ///

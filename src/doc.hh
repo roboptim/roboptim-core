@@ -24,20 +24,22 @@
    RobOptim Core defines a C++ common interface to several non linear problem
    solvers.
 
-   The package is composed of a base class called optimization::GenericSolver and
-   several sub-classes which transform the problem in order to pass it to an
-   external solver.
+   The package is composed of a base class called
+   optimization::GenericSolver and several sub-classes which transform
+   the problem in order to pass it to an external solver.
 
 
    The interface relies heavily on Boost for:
    <ul>
    <li>advanced typing (Boost.Optional and Boost.Variant),</li>
    <li>matrix manipulation (Boost.uBLAS).</li>
-   <li>and meta-programming (Boost.StaticAssert, Boost.TypeTraits, Boost.MPL).</li>
+   <li>and meta-programming
+   (Boost.StaticAssert, Boost.TypeTraits, Boost.MPL).</li>
    </ul>
 
-   New users might want to check out the idea behind Boost.Optional and Boost.Variant
-   are these types are present in the public interface.
+   New users might want to check out the idea behind Boost.Optional
+   and Boost.Variant are these types are present in the public
+   interface.
 
    Users do not have to know about meta-programming to use this library.
 
@@ -62,7 +64,8 @@
    <a href="http://roboptim.sourceforge.net/">web page</a>.
 
    To discuss about this package, please use <a
-   href="https://lists.sourceforge.net/mailman/listinfo/roboptim-user">roboptim-user@lists.sourceforge.net</a>.
+   href="https://lists.sourceforge.net/mailman/listinfo/roboptim-user"
+   >roboptim-user@lists.sourceforge.net</a>.
 */
 
 
@@ -78,7 +81,8 @@
    - Use one of the solvers to solve your problem.
 
 
-   The following example defines a cost function F and two constraints G0 and G1.
+   The following example defines a cost function F and two constraints
+   G0 and G1.
 
    \section problem Problem definition
 
@@ -379,8 +383,8 @@ int run_test ()
 }
    \endcode
 
-   This is the last piece of code needed to instantiate and resolve an optimization
-   problem with this package.
+   This is the last piece of code needed to instantiate and resolve
+   an optimization problem with this package.
 
    To see more usage examples, consider looking at the test directory of the
    project which contains the project's test suite.
@@ -399,7 +403,8 @@ int run_test ()
 
    Solvers we plan to support in the future:
    <ul>
-   <li><a href="http://vxl.sourceforge.net/">Optimization algorithms from VXL/VNL</a></li>
+   <li><a href="http://vxl.sourceforge.net/"
+   >Optimization algorithms from VXL/VNL</a></li>
    </ul>
 
    \section boost_optvar What are those Optional and Variant types?
@@ -601,7 +606,8 @@ int run_test ()
 
    <ul>
    <li><code>No_Solution</code>: represents the fact that solve has never been
-   called. A user should never retrieve an instance of <code>No_Solution</code>.</li>
+   called. A user should never retrieve an instance of <code>No_Solution</code>.
+   </li>
    <li><code>Result</code>, <code>ResultWithWarnings</code>: represents a
    <strong>valid</strong> result.  If <code>ResultWithWarnings</code> is used,
    some non-critical problem might have happened and are specified in the object
