@@ -8,7 +8,8 @@ AC_PREREQ([2.59])
 AC_INIT([RobOptim core library],
 	m4_esyscmd([build-aux/git-version-gen .tarball-version]),
 	[roboptim-user@lists.sourceforge.net],
-        [roboptim-core])
+        [roboptim-core],
+	[http://roboptim.sourceforge.net/])
 
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([build-aux])
