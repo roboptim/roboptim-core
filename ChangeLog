@@ -11,6 +11,11 @@
 2009-10-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Synchronize.
+	* build-aux: Here.
+
+2009-10-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Synchronize.
 	* Makefile.am: Include ``build-aux/git-version-gen.mk''.
 	* build-aux: Synchronize.
 
