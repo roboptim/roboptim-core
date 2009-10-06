@@ -1,3 +1,10 @@
+2009-10-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Synchronize.
+	* build-aux: Synchronize.
+	* tests/atlocal.in: Pass version to test suite
+	as required by autotest.at.
+
 2009-10-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Synchronize.

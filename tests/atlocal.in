@@ -20,3 +20,6 @@
 
 # Add test binaries to PATH.
 PATH=@abs_builddir@:$PATH
+
+# Pass current roboptim-core version to test suite.
+ROBOPTIMCORE_VERSION=@VERSION@
