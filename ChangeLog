@@ -1,5 +1,13 @@
 2009-10-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Enhance bad gradient class.
+	* include/roboptim/core/finite-difference-gradient.hh,
+	* src/finite-difference-gradient.cc: Store and display
+	in which component is the greated delta between
+	finite difference and analytical gradients.
+
+2009-10-06  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Synchronize.
 	* build-aux: Synchronize.
 	* tests/atlocal.in: Pass version to test suite

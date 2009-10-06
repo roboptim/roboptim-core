@@ -17,6 +17,7 @@
 
 #include "debug.hh"
 
+#include <limits>
 #include <boost/numeric/ublas/io.hpp>
 
 #include <roboptim/core/indent.hh>
@@ -33,10 +34,23 @@ namespace roboptim
       analyticalGradient_ (analyticalGradient),
       finiteDifferenceGradient_ (finiteDifferenceGradient),
       maxDelta_ (),
+      maxDeltaComponent_ (),
       threshold_ (threshold)
   {
-    using boost::numeric::ublas::norm_inf;
-    maxDelta_ = norm_inf (analyticalGradient - finiteDifferenceGradient);
+    assert (analyticalGradient.size () == finiteDifferenceGradient.size ());
+
+    maxDelta_ = -std::numeric_limits<Function::value_type>::infinity ();
+    for (size_type i = 0; i < analyticalGradient.size (); ++i)
+      {
+	value_type delta =
+	  std::fabs (analyticalGradient[i] - finiteDifferenceGradient[i]);
+
+	if (delta > maxDelta_)
+	  {
+	    maxDelta_ = delta;
+	    maxDeltaComponent_ = i;
+	  }
+      }
   }
 
   BadGradient::~BadGradient () throw ()
@@ -51,6 +65,7 @@ namespace roboptim
       << "Finite difference gradient: " << finiteDifferenceGradient_
       << iendl
       << "Max. delta: " << maxDelta_ << iendl
+      << "Max. delta in component: " << maxDeltaComponent_ << iendl
       << "Max. allowed delta: " << threshold_ << decindent;
     return o;
   }

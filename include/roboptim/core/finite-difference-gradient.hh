@@ -42,6 +42,8 @@ namespace roboptim
     typedef DerivableFunction::gradient_t gradient_t;
     /// \brief Import value_type.
     typedef DerivableFunction::value_type value_type;
+    /// \brief Import size_type.
+    typedef DerivableFunction::size_type size_type;
 
     /// \brief Default constructor.
     BadGradient (const vector_t& x,
@@ -69,6 +71,9 @@ namespace roboptim
 
     /// \brief Maximum error.
     value_type maxDelta_;
+
+    /// \brief Component containing the maximum error.
+    value_type maxDeltaComponent_;
 
     /// \brief Allowed threshold.
     value_type threshold_;
