@@ -1,3 +1,9 @@
+2009-10-07  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Synchronize.
+	* build-aux: Synchronize.
+	* doc/Doxyfile.extra.in: Rename from doc/Doxyfile.extra.
+
 2009-10-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Synchronize.
