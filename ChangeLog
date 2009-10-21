@@ -1,5 +1,12 @@
 2009-10-21  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Make plug-in loading more robust.
+	* include/roboptim/core/solver-factory.hxx: Check problem size
+	when loading a plug-in.
+	* src/roboptim-core-dummy-plugin.cc: Add getSizeOfProblem function.
+
+2009-10-21  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Reorganize configure.ac.
 	* configure.ac: Change macro order to enhance consistency.
 

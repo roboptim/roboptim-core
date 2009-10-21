@@ -27,6 +27,7 @@ namespace roboptim
     : handle_ (),
       solver_ ()
   {
+    typedef unsigned getsizeofproblem_t ();
     typedef solver_t* create_t (const problem_t&);
 
     if (lt_dlinit () > 0)
@@ -44,6 +45,35 @@ namespace roboptim
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
+    getsizeofproblem_t* getSizeOfProblem =
+      reinterpret_cast<getsizeofproblem_t*>
+      (lt_dlsym (handle_, "getSizeOfProblem"));
+    if (!getSizeOfProblem)
+      {
+	std::stringstream sserror;
+	sserror << "libltdl failed to find symbol ``getSizeOfProblem'': "
+		<< lt_dlerror ();
+
+	lt_dlclose (handle_);
+	lt_dlexit ();
+	throw std::runtime_error (sserror.str ().c_str ());
+      }
+
+    unsigned sizeOfProblem = getSizeOfProblem ();
+    if (sizeOfProblem != sizeof (typename solver_t::problem_t))
+      {
+	std::stringstream sserror;
+	sserror << "Application and plug-in problem type does not match"
+		<< "(size is " << sizeOfProblem
+		<< " byte(s) but " << sizeof (typename solver_t::problem_t)
+		<< " byte(s) was expected by application)";
+
+	lt_dlclose (handle_);
+	lt_dlexit ();
+	throw std::runtime_error (sserror.str ().c_str ());
+      }
+
+
     create_t* c =
       reinterpret_cast<create_t*> (lt_dlsym (handle_, "create"));
     if (!c)
@@ -56,6 +86,7 @@ namespace roboptim
 	lt_dlexit ();
 	throw std::runtime_error (sserror.str ().c_str ());
       }
+
     solver_ = c (pb);
 
     if (!solver_)
