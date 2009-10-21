@@ -63,10 +63,11 @@ namespace roboptim
     if (sizeOfProblem != sizeof (typename solver_t::problem_t))
       {
 	std::stringstream sserror;
-	sserror << "Application and plug-in problem type does not match"
-		<< "(size is " << sizeOfProblem
-		<< " byte(s) but " << sizeof (typename solver_t::problem_t)
-		<< " byte(s) was expected by application)";
+	sserror
+	  << "``Problem'' type size does not match in application and plug-in"
+	  << " (size is " << sizeOfProblem
+	  << " byte(s) but " << sizeof (typename solver_t::problem_t)
+	  << " byte(s) was expected by application)";
 
 	lt_dlclose (handle_);
 	lt_dlexit ();

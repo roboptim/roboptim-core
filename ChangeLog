@@ -1,5 +1,11 @@
 2009-10-21  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Enhance error message in solver-factory.hxx.
+	* include/roboptim/core/solver-factory.hxx:
+	Enhance error message.
+
+2009-10-21  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Make plug-in loading more robust.
 	* include/roboptim/core/solver-factory.hxx: Check problem size
 	when loading a plug-in.
