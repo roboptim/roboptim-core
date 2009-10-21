@@ -14,6 +14,9 @@ AC_INIT([RobOptim core library],
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([build-aux])
 
+# Macros are stored in build-aux.
+AC_CONFIG_MACRO_DIR([build-aux])
+
 # Automake.
 AM_INIT_AUTOMAKE([1.9.6 dist-bzip2 -Wall nostdinc])
 
@@ -42,9 +45,6 @@ JRL_CXX_WARNINGS([[-Wall],
                    [-Wbad-function-cast],
                    [-Wmissing-declarations],
                    [-Wnested-externs]])
-
-# Macros are stored in build-aux.
-AC_CONFIG_MACRO_DIR([build-aux])
 
 ## ------------------- ##
 ## Additionnal tools.  ##
