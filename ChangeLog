@@ -1,5 +1,10 @@
 2009-10-23  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Handle symbol visibility under Linux.
+	* include/roboptim/core/portability.hh: Here.
+
+2009-10-23  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add missing ROBOPTIM_DLLEXPORT.
 	* include/roboptim/core/visualization/gnuplot-commands.hh,
 	* include/roboptim/core/visualization/gnuplot.hh,

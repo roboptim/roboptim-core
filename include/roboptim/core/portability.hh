@@ -18,6 +18,8 @@
 #ifndef ROBOPTIM_CORE_PORTABILITY_HH
 # define ROBOPTIM_CORE_PORTABILITY_HH
 
+
+
 // Handle portable symbol export.
 // Defining manually which symbol should be exported is required
 // under Windows whether MinGW or MSVC is used.
@@ -25,18 +27,42 @@
 // The headers then have to be able to work in two different modes:
 // - dllexport when one is building the library,
 // - dllimport for clients using the library.
-# ifdef _WIN32
-#  define ROBOPTIM_DLLIMPORT __declspec(dllimport)
-#  define ROBOPTIM_DLLEXPORT __declspec(dllexport)
-# else
-#  define ROBOPTIM_DLLIMPORT
-#  define ROBOPTIM_DLLEXPORT
-# endif //! WIN32
+//
+// On Linux, set the visibility accordingly. If C++ symbol visibility
+// is handled by the compiler, see: http://gcc.gnu.org/wiki/Visibility
+#if defined _WIN32 || defined __CYGWIN__
+// On Microsoft Windows, use dllimport and dllexport to tag symbols.
+  #define ROBOPTIM_DLLIMPORT __declspec(dllimport)
+  #define ROBOPTIM_DLLEXPORT __declspec(dllexport)
+  #define ROBOPTIM_DLLLOCAL
+#else
+// On Linux, for GCC >= 4, tag symbols using GCC extension.
+  #if __GNUC__ >= 4
+    #define ROBOPTIM_DLLIMPORT __attribute__ ((visibility("default")))
+    #define ROBOPTIM_DLLEXPORT __attribute__ ((visibility("default")))
+    #define ROBOPTIM_DLLLOCAL  __attribute__ ((visibility("hidden")))
+  #else
+// Otherwise (GCC < 4 or another compiler is used), export everything.
+    #define ROBOPTIM_DLLIMPORT
+    #define ROBOPTIM_DLLEXPORT
+    #define ROBOPTIM_DLLLOCAL
+#endif // __GNUC__ >= 4
+#endif // defined _WIN32 || defined __CYGWIN__
 
-# ifndef BUILDING_ROBOPTIM
-#  define ROBOPTIM_DLLAPI ROBOPTIM_DLLIMPORT
-# else
-#  define ROBOPTIM_DLLAPI ROBOPTIM_DLLEXPORT
-# endif //! BUILDING_ROBOPTIM_CORE
+#ifdef ROBOPTIM_STATIC
+// If one is using the library statically, get rid of
+// extra information.
+  #define ROBOPTIM_DLLAPI
+  #define ROBOPTIM_LOCAL
+#else
+// Depending on whether one is building or using the
+// library define DLLAPI to import or export.
+  #ifdef BUILDING_ROBOPTIM
+    #define ROBOPTIM_DLLAPI ROBOPTIM_DLLEXPORT
+  #else
+    #define ROBOPTIM_DLLAPI ROBOPTIM_DLLIMPORT
+  #endif // BUILDING_ROBOPTIM
+  #define ROBOPTIM_LOCAL ROBOPTIM_DLLLOCAL
+#endif // ROBOPTIM_STATIC
 
 #endif //! ROBOPTIM_CORE_PORTABILITY_HH
