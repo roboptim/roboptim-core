@@ -40,7 +40,7 @@ namespace roboptim
     /// this object through the \c << operator
     /// and this object can be put into an output stream
     /// using the \c << operator.
-    class Gnuplot
+    class ROBOPTIM_DLLAPI Gnuplot
     {
     public:
       ~Gnuplot () throw ();
@@ -114,7 +114,7 @@ namespace roboptim
     /// \param o output stream used for display
     /// \param gp Gnuplot script to be displayed
     /// \return output stream
-    std::ostream& operator<< (std::ostream&, const Gnuplot& gp);
+    ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream&, const Gnuplot& gp);
   } // end of namespace visualization.
 } // end of namespace roboptim.
 
