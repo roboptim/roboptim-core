@@ -1,5 +1,14 @@
 2009-11-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Limit output precision when displaying a function.
+	* include/roboptim/core/visualization/gnuplot-function.hh:
+	Limit output precision to two digits.
+	* tests/finite-difference-gradient.stdout,
+	* tests/visualization-gnuplot-function.stdout,
+	* tests/visualization-gnuplot-simple.stdout: Regenerate.
+
+2009-11-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Distribute Windows related files.
 	Reported by François Keith.
 	* Makefile.am: Here.
