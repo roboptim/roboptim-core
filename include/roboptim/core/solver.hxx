@@ -51,7 +51,7 @@ namespace roboptim
   std::ostream&
   Solver<F, C>::print (std::ostream& o) const throw ()
   {
-    return o << problem_;
+    return o << this->problem_;
   }
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_SOLVER_HH

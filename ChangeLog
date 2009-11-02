@@ -1,5 +1,11 @@
 2009-11-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add ``this->'' in template code to help the compiler.
+	* include/roboptim/core/problem.hxx,
+	* include/roboptim/core/solver.hxx: Here.
+
+2009-11-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Synchronize.
 	* build-aux: Here.
 

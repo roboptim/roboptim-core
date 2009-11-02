@@ -258,18 +258,18 @@ namespace roboptim
 
     o << "Problem:" << incendl;
     // Function.
-    o << function () << iendl;
+    o << this->function () << iendl;
 
     // Arguments' bounds.
-    o << "Argument's bounds: " << argumentBounds () << iendl;
+    o << "Argument's bounds: " << this->argumentBounds () << iendl;
     // Arguments' scales.
-    o << "Argument's scales: " << argumentScales () << iendl;
+    o << "Argument's scales: " << this->argumentScales () << iendl;
 
     // Constraints.
-    if (constraints ().empty ())
+    if (this->constraints ().empty ())
       o << "No constraints.";
     else
-      o << "Number of constraints: " << constraints ().size ();
+      o << "Number of constraints: " << this->constraints ().size ();
 
     for (unsigned i = 0; i < this->constraints ().size (); ++i)
       {
@@ -281,7 +281,8 @@ namespace roboptim
     if (startingPoint_)
       {
 	o << iendl << "Starting point: " << *startingPoint_
-	  << iendl << "Starting value: " << function () (*startingPoint_);
+	  << iendl << "Starting value: "
+	  << this->function () (*startingPoint_);
       }
     else
       o << iendl << "No starting point.";
