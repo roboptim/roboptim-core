@@ -17,6 +17,9 @@ EXTRA_DIST +=	bootstrap			\
 		THANKS				\
 		TODO
 
+# Distribute Windows specific files.
+EXTRA_DIST += msvc
+
 
 # Nothing to do in this directory.
 all:
