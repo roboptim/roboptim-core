@@ -1,5 +1,10 @@
 2009-11-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Synchronize.
+	* build-aux: Here.
+
+2009-11-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Factorize rules using build-aux.
 	* Makefile.am: Use factorized rules..
 	* build-aux: Synchronize.
