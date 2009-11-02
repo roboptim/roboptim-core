@@ -4,6 +4,9 @@ include $(top_srcdir)/build-aux/autotest.mk
 # Add available warnings flags.
 AM_CXXFLAGS += $(WARNING_CXXFLAGS)
 
+# Add shared-tests headers to include path.
+AM_CPPFLAGS += -I$(srcdir)/shared-tests
+
 # Package the following files.
 EXTRA_DIST += package.m4.in
 
@@ -11,7 +14,7 @@ EXTRA_DIST += package.m4.in
 CLEANFILES += atconfig
 
 # Source which are shared by all tests.
-COMMON_SOURCES = common.hh
+COMMON_SOURCES = shared-tests/common.hh
 
 # simple
 # Link the dummy solver with this test to bypass the plug-in system.

@@ -1,3 +1,6 @@
 [submodule "build-aux"]
 	path = build-aux
 	url = roboptim:build-aux.git
+[submodule "tests/shared-tests"]
+	path = tests/shared-tests
+	url = roboptim:shared-tests

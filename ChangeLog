@@ -1,5 +1,14 @@
 2009-11-02  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Move common.hh to shared-tests submodule.
+	* .gitmodules: Register submodule.
+	* tests/Makefile.am: Fix common.hh path and add
+	shared-tests to include path.
+	* tests/common.hh: Remove.
+	* tests/shared-tests: New.
+
+2009-11-02  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Limit output precision when displaying a function.
 	* include/roboptim/core/visualization/gnuplot-function.hh:
 	Limit output precision to two digits.
