@@ -1,5 +1,11 @@
 2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix spec files.
+	* roboptim-core.spec.in: Install additional files
+	and fix dependencies.
+
+2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix spec file.
 	* roboptim-core.spec.in: Fix mistakes detected by rpmlint.
 

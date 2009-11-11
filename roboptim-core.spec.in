@@ -10,7 +10,6 @@ Source0: http://dl.sf.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: boost-devel, libtool-ltdl-devel
-Requires: pkgconfig
 
 
 %description
@@ -21,7 +20,7 @@ numerical problems with one of the many available solvers
 %package devel
 Summary: Static libraries and headers.
 Group: Development/Libraries
-Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
+Requires: @PACKAGE_TARNAME@ = %{version}-%{release}, pkgconfig
 %description devel
 The generic optimization library allows user to independently solve
 numerical problems with one of the many available solvers
@@ -60,6 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/*.so*
 %{_libdir}/pkgconfig/*
 %{_libdir}/*.a
+%{_libdir}/*.la
 %{_includedir}/*
 
 %files doc
