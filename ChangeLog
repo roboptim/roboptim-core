@@ -1,5 +1,10 @@
 2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix spec file.
+	* roboptim-core.spec.in: Fix mistakes detected by rpmlint.
+
+2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add RPM spec file.
 	* roboptim-core.spec.in: New.
 

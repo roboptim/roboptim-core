@@ -4,7 +4,7 @@ Release: 1%{?dist}
 Summary: Generic optimization library.
 
 Group: Development/Libraries
-License: LGPL
+License: LGPLv3+
 URL: http://roboptim.sourceforge.net/
 Source0: http://dl.sf.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -15,7 +15,7 @@ Requires: pkgconfig
 
 %description
 The generic optimization library allows user to independently solve
-numerical problems with one of the many available solvers.
+numerical problems with one of the many available solvers
 
 
 %package devel
@@ -24,7 +24,7 @@ Group: Development/Libraries
 Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
 %description devel
 The generic optimization library allows user to independently solve
-numerical problems with one of the many available solvers.
+numerical problems with one of the many available solvers
 
 
 %package doc
@@ -33,7 +33,7 @@ Group: Documentation
 Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
 %description doc
 The generic optimization library allows user to independently solve
-numerical problems with one of the many available solvers.
+numerical problems with one of the many available solvers
 
 
 
@@ -53,17 +53,17 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+
+%files devel
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING THANKS README NEWS
 %{_libdir}/*.so*
 %{_libdir}/pkgconfig/*
-
-%files devel
 %{_libdir}/*.a
 %{_includedir}/*
 
 %files doc
+%defattr(-,root,root,-)
 %{_datadir}/doc/%{name}-%{version}/*
 
 %post -p /sbin/ldconfig
@@ -71,5 +71,5 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 
 %changelog
-* Wed Nov 11 2009 Thomas Moulard <thomas.moulard@gmail.com>
+* Wed Nov 11 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3
 - initial work
