@@ -1,3 +1,8 @@
+2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add RPM spec file.
+	* roboptim-core.spec.in: New.
+
 2009-11-06  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add ROBOPTIM_DLLLOCAL when needed.

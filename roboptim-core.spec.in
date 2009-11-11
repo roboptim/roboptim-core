@@ -1,0 +1,75 @@
+Name: @PACKAGE_TARNAME@
+Version: @PACKAGE_VERSION@
+Release: 1%{?dist}
+Summary: Generic optimization library.
+
+Group: Development/Libraries
+License: LGPL
+URL: http://roboptim.sourceforge.net/
+Source0: http://dl.sf.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+BuildRequires: boost-devel, libtool-ltdl-devel
+Requires: pkgconfig
+
+
+%description
+The generic optimization library allows user to independently solve
+numerical problems with one of the many available solvers.
+
+
+%package devel
+Summary: Static libraries and headers.
+Group: Development/Libraries
+Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
+%description devel
+The generic optimization library allows user to independently solve
+numerical problems with one of the many available solvers.
+
+
+%package doc
+Summary: Static libraries and headers.
+Group: Documentation
+Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
+%description doc
+The generic optimization library allows user to independently solve
+numerical problems with one of the many available solvers.
+
+
+
+
+
+%prep
+%setup -q
+
+%build
+%configure --docdir=%{_datadir}/doc/%{name}-%{version}
+make %{?_smp_mflags}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root,-)
+%doc AUTHORS COPYING THANKS README NEWS
+%{_libdir}/*.so*
+%{_libdir}/pkgconfig/*
+
+%files devel
+%{_libdir}/*.a
+%{_includedir}/*
+
+%files doc
+%{_datadir}/doc/%{name}-%{version}/*
+
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
+%changelog
+* Wed Nov 11 2009 Thomas Moulard <thomas.moulard@gmail.com>
+- initial work
