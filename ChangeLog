@@ -1,5 +1,11 @@
 2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix spec file.
+	* build-aux: Synchronize.
+	* roboptim-core.spec.in: Fix description and rules.
+
+2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix spec files.
 	* roboptim-core.spec.in: Install additional files
 	and fix dependencies.

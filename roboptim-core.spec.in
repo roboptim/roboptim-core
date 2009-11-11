@@ -18,7 +18,7 @@ numerical problems with one of the many available solvers
 
 
 %package devel
-Summary: Static libraries and headers.
+Summary: Static libraries and headers
 Group: Development/Libraries
 Requires: @PACKAGE_TARNAME@ = %{version}-%{release}, pkgconfig
 %description devel
@@ -27,7 +27,7 @@ numerical problems with one of the many available solvers
 
 
 %package doc
-Summary: Static libraries and headers.
+Summary: API documentation
 Group: Documentation
 Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
 %description doc
@@ -66,9 +66,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %{_datadir}/doc/%{name}-%{version}/*
 
-%post -p /sbin/ldconfig
+%post devel -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun devel -p /sbin/ldconfig
 
 %changelog
 * Wed Nov 11 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3
