@@ -1,5 +1,10 @@
 2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Synchronize.
+	* build-aux: Synchronize.
+
+2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add rpm support.
 	* Makefile.am: Include rpm generation rule.
 	* build-aux: Synchronize.
