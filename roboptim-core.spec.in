@@ -46,11 +46,13 @@ numerical problems with one of the many available solvers
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
+#FIXME: should libraries have version numbers or not?
+# LDFLAGS="-avoid-version"
 make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT LDFLAGS="-avoid-version"
+make install DESTDIR=$RPM_BUILD_ROOT
 
 # Get rid of Libtool files as they should not be installed.
 rm $RPM_BUILD_ROOT/%{_libdir}/*.la

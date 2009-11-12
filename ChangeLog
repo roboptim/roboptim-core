@@ -1,6 +1,12 @@
 2009-11-12  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix spec file.
+	* roboptim-core.spec.in: Remove -avoid-version as it
+	is not clear whether it should be included or not.
+
+2009-11-12  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix spec file.
 	* roboptim-core.spec.in: Package all documentation
 	in documentation package.
 
