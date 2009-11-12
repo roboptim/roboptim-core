@@ -1,7 +1,7 @@
 Name: @PACKAGE_TARNAME@
 Version: @PACKAGE_VERSION@
 Release: 1%{?dist}
-Summary: Generic optimization library.
+Summary: Generic optimization library
 
 Group: Development/Libraries
 License: LGPLv3+
@@ -42,34 +42,44 @@ numerical problems with one of the many available solvers
 %setup -q
 
 %build
-%configure --docdir=%{_datadir}/doc/%{name}-%{version}
+%configure --docdir=%{_datadir}/doc/%{name}-%{version} --disable-static
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
 make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT LDFLAGS="-avoid-version"
+
+# Get rid of Libtool files as they should not be installed.
+rm $RPM_BUILD_ROOT/%{_libdir}/*.la
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
-%files devel
+%files
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING THANKS README NEWS
 %{_libdir}/*.so*
-%{_libdir}/pkgconfig/*
-%{_libdir}/*.a
-%{_libdir}/*.la
+
+%files devel
+%defattr(-,root,root,-)
 %{_includedir}/*
+%{_libdir}/pkgconfig/*
 
 %files doc
 %defattr(-,root,root,-)
 %{_datadir}/doc/%{name}-%{version}/*
 
-%post devel -p /sbin/ldconfig
-
-%postun devel -p /sbin/ldconfig
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %changelog
+* Thu Nov 12 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3.28
+- Fix rpmlint errors.
+- Handle Autotools issues (add -avoid-version and --distable-static).
+
 * Wed Nov 11 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3
 - initial work

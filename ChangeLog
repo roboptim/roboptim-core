@@ -1,3 +1,8 @@
+2009-11-12  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix spec file.
+	* roboptim-core.spec.in: Here.
+
 2009-11-11  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Synchronize.
