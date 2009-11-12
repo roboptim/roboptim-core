@@ -61,7 +61,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS COPYING THANKS README NEWS
 %{_libdir}/*.so*
 
 %files devel
@@ -71,6 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc
 %defattr(-,root,root,-)
+%doc AUTHORS COPYING THANKS README NEWS
 %{_datadir}/doc/%{name}-%{version}/*
 
 %post -p /sbin/ldconfig
