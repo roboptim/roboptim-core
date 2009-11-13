@@ -1,6 +1,12 @@
 2009-11-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix spec file.
+	* roboptim-core.spec.in: Split shared libraries
+	between user and developper packages correctly.
+
+2009-11-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix spec file.
 	* roboptim-core.spec.in: Remove extra dots in description.
 
 2009-11-13  Thomas Moulard  <thomas.moulard@gmail.com>
