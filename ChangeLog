@@ -1,3 +1,9 @@
+2009-11-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix spec file.
+	* roboptim-core.spec.in: Fix description, bundle
+	versionned so files in devel package.
+
 2009-11-12  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix spec file.

@@ -1,7 +1,7 @@
 Name: @PACKAGE_TARNAME@
 Version: @PACKAGE_VERSION@
 Release: 1%{?dist}
-Summary: Generic optimization library
+Summary: The RobOptim core C++ library
 
 Group: Development/Libraries
 License: LGPLv3+
@@ -13,26 +13,26 @@ BuildRequires: boost-devel, libtool-ltdl-devel
 
 
 %description
-The generic optimization library allows user to independently solve
-numerical problems with one of the many available solvers
+RobOptim provide C++ numerical optimization libraries for robotics.
+RobOptim core focuses on providing abstractions for optimization problem
+definition and infrastructure to allow the use of existing solvers as
+a back-end.
 
 
 %package devel
-Summary: Static libraries and headers
+Summary: The roboptim-core headers and development-related files
 Group: Development/Libraries
 Requires: @PACKAGE_TARNAME@ = %{version}-%{release}, pkgconfig
 %description devel
-The generic optimization library allows user to independently solve
-numerical problems with one of the many available solvers
+Headers and shared object symlinks for the RobOptim core C++ library.
 
 
 %package doc
-Summary: API documentation
+Summary: The RobOptim core documentation
 Group: Documentation
 Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
 %description doc
-The generic optimization library allows user to independently solve
-numerical problems with one of the many available solvers
+Documentation for the RobOptim core library.
 
 
 
@@ -63,11 +63,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%{_libdir}/*.so*
+%{_libdir}/*.so
 
 %files devel
 %defattr(-,root,root,-)
 %{_includedir}/*
+%{_libdir}/*.so.*
 %{_libdir}/pkgconfig/*
 
 %files doc
@@ -79,9 +80,9 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 
 %changelog
-* Thu Nov 12 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3.28
+* Thu Nov 12 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3.28-1
 - Fix rpmlint errors.
 - Handle Autotools issues (add -avoid-version and --distable-static).
 
-* Wed Nov 11 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3
+* Wed Nov 11 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3-1
 - initial work
