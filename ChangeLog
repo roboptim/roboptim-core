@@ -1,6 +1,11 @@
 2009-11-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix spec file.
+	* roboptim-core.spec.in: Remove extra dots in description.
+
+2009-11-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix spec file.
 	* roboptim-core.spec.in: Fix description, bundle
 	versionned so files in devel package.
 

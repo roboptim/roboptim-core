@@ -16,15 +16,15 @@ BuildRequires: boost-devel, libtool-ltdl-devel
 RobOptim provide C++ numerical optimization libraries for robotics.
 RobOptim core focuses on providing abstractions for optimization problem
 definition and infrastructure to allow the use of existing solvers as
-a back-end.
+a back-end
 
 
 %package devel
-Summary: The roboptim-core headers and development-related files
+Summary: The Roboptim core headers and development-related files
 Group: Development/Libraries
 Requires: @PACKAGE_TARNAME@ = %{version}-%{release}, pkgconfig
 %description devel
-Headers and shared object symlinks for the RobOptim core C++ library.
+Headers and shared object symlinks for the RobOptim core C++ library
 
 
 %package doc
@@ -32,7 +32,7 @@ Summary: The RobOptim core documentation
 Group: Documentation
 Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
 %description doc
-Documentation for the RobOptim core library.
+Documentation for the RobOptim core library
 
 
 
