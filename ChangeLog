@@ -1,3 +1,9 @@
+2009-11-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Normalize floating points numbers before display.
+	* include/roboptim/core/visualization/gnuplot-function.hh,
+	* include/roboptim/core/visualization/gnuplot.hh: Normalize before display.
+
 2009-11-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix spec file.

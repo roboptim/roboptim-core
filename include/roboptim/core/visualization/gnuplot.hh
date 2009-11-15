@@ -32,6 +32,18 @@ namespace roboptim
     /// \addtogroup roboptim_visualization
     /// @{
 
+    /// \brief Normalize floating point number output.
+    /// Normalization is done on all displayed floating
+    /// point numbers to get a consistent output.
+    double normalize (const double& x);
+
+    inline double normalize (const double& x)
+    {
+      if (x == -0.)
+	return 0.;
+      return x;
+    }
+
     /// \brief Gnuplot script
     ///
     /// This class gathers Gnuplot commands
