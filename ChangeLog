@@ -1,5 +1,10 @@
 2009-11-15  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Implement display normalization for vectors.
+	* include/roboptim/core/visualization/gnuplot.hh: Here.
+
+2009-11-15  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Normalize floating points numbers before display.
 	* include/roboptim/core/visualization/gnuplot-function.hh,
 	* include/roboptim/core/visualization/gnuplot.hh: Normalize before display.

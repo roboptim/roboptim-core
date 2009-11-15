@@ -37,12 +37,26 @@ namespace roboptim
     /// point numbers to get a consistent output.
     double normalize (const double& x);
 
-    inline double normalize (const double& x)
+    /// \brief Apply normalize to each element of a vector.
+    std::vector<double> normalize (const std::vector<double>& x);
+
+    inline double
+    normalize (const double& x)
     {
       if (x == -0.)
 	return 0.;
       return x;
     }
+
+    inline std::vector<double>
+    normalize (const std::vector<double>& x)
+    {
+      std::vector<double> res (x.size ());
+      for (unsigned i = 0; i < x.size (); ++i)
+	res[i] = x[i];
+      return res;
+    }
+
 
     /// \brief Gnuplot script
     ///
