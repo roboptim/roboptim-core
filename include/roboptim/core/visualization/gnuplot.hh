@@ -22,6 +22,8 @@
 
 # include <vector>
 
+# include <boost/numeric/ublas/matrix.hpp>
+
 # include <roboptim/core/visualization/fwd.hh>
 # include <roboptim/core/visualization/gnuplot-commands.hh>
 
@@ -37,8 +39,14 @@ namespace roboptim
     /// point numbers to get a consistent output.
     double normalize (const double& x);
 
-    /// \brief Apply normalize to each element of a vector.
-    std::vector<double> normalize (const std::vector<double>& x);
+    /// \brief Apply normalize to each element of a matrix.
+    boost::numeric::ublas::matrix<double>
+    normalize (const boost::numeric::ublas::matrix<double>& x);
+
+
+    /// \brief Apply normalize to each element of a container.
+    template <typename T>
+    T normalize (const T& x);
 
     inline double
     normalize (const double& x)
@@ -48,10 +56,21 @@ namespace roboptim
       return x;
     }
 
-    inline std::vector<double>
-    normalize (const std::vector<double>& x)
+    inline boost::numeric::ublas::matrix<double>
+    normalize (const boost::numeric::ublas::matrix<double>& x)
     {
-      std::vector<double> res (x.size ());
+      boost::numeric::ublas::matrix<double> res (x.size1 (), x.size2 ());
+      for (unsigned i = 0; i < x.size1 (); ++i)
+	for (unsigned j = 0; j < x.size2 (); ++j)
+	  res (i, j) = x (i, j);
+      return res;
+    }
+
+    template <typename T>
+    T
+    normalize (const T& x)
+    {
+      T res (x.size ());
       for (unsigned i = 0; i < x.size (); ++i)
 	res[i] = x[i];
       return res;
