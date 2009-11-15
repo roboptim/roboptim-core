@@ -51,7 +51,7 @@ namespace roboptim
     inline double
     normalize (const double& x)
     {
-      if (x == -0.)
+      if (std::fabs (x) < 1e-8)
 	return 0.;
       return x;
     }
@@ -62,7 +62,7 @@ namespace roboptim
       boost::numeric::ublas::matrix<double> res (x.size1 (), x.size2 ());
       for (unsigned i = 0; i < x.size1 (); ++i)
 	for (unsigned j = 0; j < x.size2 (); ++j)
-	  res (i, j) = x (i, j);
+	  res (i, j) = normalize (x (i, j));
       return res;
     }
 
@@ -72,7 +72,7 @@ namespace roboptim
     {
       T res (x.size ());
       for (unsigned i = 0; i < x.size (); ++i)
-	res[i] = x[i];
+	res[i] = normalize (x[i]);
       return res;
     }
 
