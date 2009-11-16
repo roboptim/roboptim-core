@@ -1,5 +1,11 @@
 2009-11-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix announce-gen download links.
+	* Makefile.am: Re-order included rules.
+	* build-aux: Synchronize.
+
+2009-11-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Synchronize.
 	* build-aux: Here.
 
