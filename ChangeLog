@@ -1,5 +1,10 @@
 2009-11-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Update NEWS.
+	* NEWS: Fill 0.4 release information.
+
+2009-11-16  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update release scripts.
 	* Makefile.am: Include new scripts.
 	* build-aux: Synchronize.

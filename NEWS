@@ -1,4 +1,12 @@
                                                                 -*- outline -*-
+
+New in 0.4, 2009-11-16:
+* Make plug-in loading more robust.
+* Enhanced gradient checks.
+* Handle symbol visibility under Linux properly.
+* Uniformized floating point number display.
+* Bug fix
+
 New in 0.3, 2009-09-25:
 * Finite difference gradients
 * New kinds of functions: constant, identity function.
