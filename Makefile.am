@@ -25,9 +25,15 @@ EXTRA_DIST += msvc
 all:
 
 # Include various rules...
+include $(top_srcdir)/build-aux/announce-gen.mk
+include $(top_srcdir)/build-aux/dist-sign.mk
 include $(top_srcdir)/build-aux/doc-recursive.mk
 include $(top_srcdir)/build-aux/libtool.mk
 include $(top_srcdir)/build-aux/pkg-config.mk
 include $(top_srcdir)/build-aux/git-version-gen.mk
 
 include $(top_srcdir)/build-aux/rpm.mk
+
+
+SF_PROJECT_ID=roboptim
+include $(top_srcdir)/build-aux/sf-release.mk
