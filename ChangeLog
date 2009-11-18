@@ -1,3 +1,11 @@
+2009-11-18  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix spec file.
+	Spec file validated by Koji:
+	http://koji.fedoraproject.org/koji/taskinfo?taskID=1814019
+
+	* roboptim-core.spec.in: Add missing requirement.
+
 2009-11-16  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix announce-gen download links.
