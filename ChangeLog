@@ -1,3 +1,8 @@
+2009-11-19  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Synchronize.
+	* build-aux: Synchronize.
+
 2009-11-18  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix spec file.
