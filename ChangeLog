@@ -1,3 +1,11 @@
+2009-11-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Make Libtool generate dlls on Windows.
+	* configure.ac: Add win32-dll flag to LT_INIT to
+	enable dlls building on Microsoft Windows platform.
+	It implies that the package can be compiled using
+	``-no-undefined''.
+
 2009-11-19  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Synchronize.

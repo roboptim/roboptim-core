@@ -58,7 +58,7 @@ AC_PROG_SED
 JRL_PROG_DOXYGEN
 
 # Search for Libtool.
-LT_INIT([dlopen])
+LT_INIT([dlopen win32-dll])
 
 # Search for libltdl.
 AC_CHECK_LIB([ltdl], [lt_dlopen], [],
