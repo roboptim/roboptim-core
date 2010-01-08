@@ -18,7 +18,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux])
 
 # Automake.
-AM_INIT_AUTOMAKE([1.9.6 dist-bzip2 -Wall nostdinc])
+AM_INIT_AUTOMAKE([1.9.6 dist-bzip2 -Wall nostdinc tar-ustar])
 
 ## ------------- ##
 ## C++ compiler  ##

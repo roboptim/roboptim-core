@@ -1,3 +1,12 @@
+2010-01-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Add tar-ustar support in Automake to allow long filename.
+	* configure.ac: Add tar-ustar option in AM_INIT_AUTOMAKE
+	in order to package properly files with long names such	as
+	``msvc/roboptim-core-dummy-plugin/roboptim-core-dummy-plugin.vcproj''.
+	See http://www.gnu.org/software/automake/manual/automake.html#Options
+	for more information.
+
 2009-11-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Make Libtool generate dlls on Windows.
