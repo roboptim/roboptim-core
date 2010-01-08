@@ -6,11 +6,11 @@ Summary: The RobOptim core C++ library
 Group: Development/Libraries
 License: LGPLv3+
 URL: http://roboptim.sourceforge.net/
-Source0: http://dl.sf.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
+Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: boost-devel, libtool-ltdl-devel, doxygen
-
 
 %description
 RobOptim provide C++ numerical optimization libraries for robotics.
@@ -22,7 +22,7 @@ a back-end
 %package devel
 Summary: The Roboptim core headers and development-related files
 Group: Development/Libraries
-Requires: @PACKAGE_TARNAME@ = %{version}-%{release}, pkgconfig
+Requires: %{name} = %{version}-%{release}
 %description devel
 Headers and shared object symlinks for the RobOptim core C++ library
 
@@ -30,7 +30,7 @@ Headers and shared object symlinks for the RobOptim core C++ library
 %package doc
 Summary: The RobOptim core documentation
 Group: Documentation
-Requires: @PACKAGE_TARNAME@ = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}, boost-devel, libtool-ltdl-devel
 %description doc
 Documentation for the RobOptim core library
 
@@ -52,7 +52,7 @@ make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR="$RPM_BUILD_ROOT" INSTALL="install -p"
 
 # Get rid of Libtool files as they should not be installed.
 rm $RPM_BUILD_ROOT/%{_libdir}/*.la
