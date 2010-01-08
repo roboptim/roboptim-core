@@ -10,7 +10,10 @@ Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires: boost-devel, libtool-ltdl-devel, doxygen
+BuildRequires: boost-devel, libtool-ltdl-devel
+# Require Doxygen and its dependencies.
+BuildRequires: doxygen, texlive-latex-2007, texlive-dvips-2007
+
 
 %description
 RobOptim provide C++ numerical optimization libraries for robotics.
@@ -22,7 +25,8 @@ a back-end
 %package devel
 Summary: The Roboptim core headers and development-related files
 Group: Development/Libraries
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}, boost-devel, libtool-ltdl-devel
+# pkg-config dependency is detected automatically on Fedora.
 %description devel
 Headers and shared object symlinks for the RobOptim core C++ library
 
@@ -30,7 +34,7 @@ Headers and shared object symlinks for the RobOptim core C++ library
 %package doc
 Summary: The RobOptim core documentation
 Group: Documentation
-Requires: %{name} = %{version}-%{release}, boost-devel, libtool-ltdl-devel
+Requires: %{name} = %{version}-%{release}
 %description doc
 Documentation for the RobOptim core library
 
