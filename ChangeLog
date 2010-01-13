@@ -1,5 +1,10 @@
 2010-01-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix rpm spec file.
+	* roboptim-core.spec.in: Distribute plug-in properly.
+
+2010-01-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update rpm spec file ChangeLog.
 	* roboptim-core.spec.in: Here.
 

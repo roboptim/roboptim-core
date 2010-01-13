@@ -70,13 +70,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
 %{_libdir}/%{name}/*.so.*
-
+# ``.so'' file is also needed as ltdl_openext does not consider
+# versioned plug-ins.
+%{_libdir}/%{name}/*.so
 
 %files devel
 %defattr(-,root,root,-)
 %{_includedir}/*
 %{_libdir}/*.so
-%{_libdir}/%{name}/*.so
 %{_libdir}/pkgconfig/*
 
 %files doc
