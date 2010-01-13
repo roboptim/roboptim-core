@@ -60,6 +60,7 @@ make install DESTDIR="$RPM_BUILD_ROOT" INSTALL="install -p"
 
 # Get rid of Libtool files as they should not be installed.
 rm $RPM_BUILD_ROOT/%{_libdir}/*.la
+rm $RPM_BUILD_ROOT/%{_libdir}/%{name}/*.la
 
 
 %clean
