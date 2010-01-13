@@ -1,5 +1,10 @@
 2010-01-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Synchronize.
+	* build-aux: Synchronize.
+
+2010-01-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix rpm source URL.
 	* roboptim-core.spec.in: Fix wrong source URL.
 
