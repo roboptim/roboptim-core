@@ -88,6 +88,14 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 
 %changelog
+* Wed Jan 13 2010 Thomas Moulard <thomas.moulard@gmail.com> - 0.5-1
+- Fix plug-in path (now packaged properly in a subdirectory).
+- Add missing build requirements (latex / dvips).
+- Add missing requirements (boost-devel, libtool-ltdl-devel in roboptim-devel).
+- Use "install -p" to preserve timestamps.
+- Update to release 0.5.
+- For more information see: https://bugzilla.redhat.com/show_bug.cgi?id=538820
+
 * Thu Nov 12 2009 Thomas Moulard <thomas.moulard@gmail.com> - 0.3.28-1
 - Fix rpmlint errors.
 - Handle Autotools issues (add -avoid-version and --distable-static).
