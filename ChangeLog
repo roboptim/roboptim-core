@@ -1,5 +1,10 @@
 2010-01-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix rpm source URL.
+	* roboptim-core.spec.in: Fix wrong source URL.
+
+2010-01-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix rpm spec file.
 	* roboptim-core.spec.in: Distribute plug-in properly.
 
