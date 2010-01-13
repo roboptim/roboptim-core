@@ -68,12 +68,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %{_libdir}/*.so.*
+%{_libdir}/%{name}/*.so.*
 
 
 %files devel
 %defattr(-,root,root,-)
 %{_includedir}/*
 %{_libdir}/*.so
+%{_libdir}/%{name}/*.so
 %{_libdir}/pkgconfig/*
 
 %files doc
