@@ -12,7 +12,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: boost-devel, libtool-ltdl-devel
 # Require Doxygen and its dependencies.
-BuildRequires: doxygen, texlive-latex-2007, texlive-dvips-2007
+BuildRequires: doxygen, texlive-latex, texlive-dvips
 
 
 %description

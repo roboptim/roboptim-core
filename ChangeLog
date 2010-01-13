@@ -1,5 +1,10 @@
 2010-01-13  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix rpm build requirements.
+	* roboptim-core.spec.in: Here.
+
+2010-01-13  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Build plug-in in a separate directory.
 
 	CAUTION: starting now, plug-in will be located in
