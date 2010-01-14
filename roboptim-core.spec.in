@@ -99,6 +99,10 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 
 %changelog
+* Thu Jan 14 2010 Thomas Moulard <thomas.moulard@gmail.com> - 0.5-2
+- Fix unowned directories problem.
+- Fix documentation packaging rules.
+
 * Wed Jan 13 2010 Thomas Moulard <thomas.moulard@gmail.com> - 0.5-1
 - Fix plug-in path (now packaged properly in a subdirectory).
 - Add missing build requirements (latex / dvips).
