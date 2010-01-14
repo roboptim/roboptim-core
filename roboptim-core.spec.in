@@ -12,7 +12,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: boost-devel, libtool-ltdl-devel
 # Require Doxygen and its dependencies.
-BuildRequires: doxygen, texlive-latex, texlive-dvips
+BuildRequires: doxygen, tex(latex), tex(dvips)
 
 
 %description
@@ -46,7 +46,7 @@ Documentation for the RobOptim core library
 %setup -q
 
 %build
-%configure --docdir=%{_datadir}/doc/%{name}-%{version} --disable-static
+%configure --docdir=%{_docdir}/%{name}-%{version} --disable-static
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
@@ -58,6 +58,10 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR="$RPM_BUILD_ROOT" INSTALL="install -p"
 
+# Install
+install -cpm 644 AUTHORS COPYING THANKS README NEWS \
+ $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
+
 # Get rid of Libtool files as they should not be installed.
 rm $RPM_BUILD_ROOT/%{_libdir}/*.la
 rm $RPM_BUILD_ROOT/%{_libdir}/%{name}/*.la
@@ -68,11 +72,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
+%dir %{_docdir}/%{name}-%{version}/
+
+# for COPYING, INSTALL, AUTHORS, etc.
+%{_docdir}/%{name}-%{version}/[A-Z]*
+
+# versioned shared library
 %{_libdir}/*.so.*
-%{_libdir}/%{name}/*.so.*
+
+# package whole directory:
 # ``.so'' file is also needed as ltdl_openext does not consider
 # versioned plug-ins.
-%{_libdir}/%{name}/*.so
+%{_libdir}/%{name}/
 
 %files devel
 %defattr(-,root,root,-)
@@ -82,8 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files doc
 %defattr(-,root,root,-)
-%doc AUTHORS COPYING THANKS README NEWS
-%{_datadir}/doc/%{name}-%{version}/*
+%{_docdir}/%{name}-%{version}/doxygen-html/
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
