@@ -1,3 +1,15 @@
+2010-02-25  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Implement run-time parameters management.
+	* include/roboptim/core/solver.hh,
+	* include/roboptim/core/solver.hxx:
+	Add parameters related methods.
+	* src/Makefile.am: Compile ``solver.cc''.
+	* src/roboptim-core-dummy-plugin.cc: Add dummy parameters.
+	* src/solver.cc: New.
+	* tests/plugin.stdout,
+	* tests/simple.stdout: Regenerate.
+
 2010-01-14  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add ChangeLog information to spec file.

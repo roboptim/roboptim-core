@@ -17,6 +17,8 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_HXX
 # define ROBOPTIM_CORE_SOLVER_HXX
+# include <boost/foreach.hpp>
+# include <roboptim/core/io.hh>
 
 namespace roboptim
 {
@@ -48,10 +50,42 @@ namespace roboptim
   }
 
   template <typename F, typename C>
+  const typename Solver<F, C>::parameters_t&
+  Solver<F, C>::parameters () const throw ()
+  {
+    return parameters_;
+  }
+
+  template <typename F, typename C>
+  typename Solver<F, C>::parameters_t&
+  Solver<F, C>::parameters () throw ()
+  {
+    return parameters_;
+  }
+
+  template <typename F, typename C>
+  template <typename T>
+  const T&
+  Solver<F, C>::getParameter (const std::string& key) const
+  {
+    return boost::get<T> (parameters_[key].value);
+  }
+  
+
+  template <typename F, typename C>
   std::ostream&
   Solver<F, C>::print (std::ostream& o) const throw ()
   {
-    return o << this->problem_;
+    o << incindent << "Solver:" << iendl
+      << this->problem_ << iendl
+      << "Parameters:" << incindent << iendl;
+
+    typedef const std::pair<const std::string, Parameter> const_iterator_t;
+    BOOST_FOREACH (const_iterator_t& it, parameters_)
+      o << it.first << " (" << it.second.description << ")" << ": "
+	<< it.second.value << iendl;
+    o << decindent << decindent;
+    return o;
   }
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_SOLVER_HH

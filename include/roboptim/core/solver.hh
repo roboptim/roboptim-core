@@ -20,8 +20,13 @@
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
 
+# include <map>
+# include <string>
+
 # include <boost/static_assert.hpp>
 # include <boost/type_traits/is_base_of.hpp>
+# include <boost/variant/variant.hpp>
+# include <boost/variant/get.hpp>
 
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/function.hh>
@@ -32,6 +37,19 @@ namespace roboptim
 {
   /// \addtogroup roboptim_problem
   /// @{
+
+  /// \brief Parameters type.
+  struct Parameter
+  {
+    /// \brief Allowed types for parameters.
+    typedef boost::variant<Function::value_type, int, std::string> parameterValues_t;
+
+    /// \brief Parameter description (for humans).
+    std::string description;
+
+    /// \brief Value.
+    parameterValues_t value;
+  };
 
   /// \brief Solver for a specific problem class.
   ///
@@ -55,6 +73,10 @@ namespace roboptim
     /// If another kind of problem is given, a conversion will be
     /// required.
     typedef Problem<F, C> problem_t;
+
+    /// \brief Map of parameters.
+    typedef std::map<std::string, Parameter> parameters_t;
+
 
     /// \brief Instantiate a solver from a problem.
     ///
@@ -86,6 +108,15 @@ namespace roboptim
     /// \return problem this solver is solving
     const problem_t& problem () const throw ();
 
+    /// \name Parameters
+    /// \{
+    const parameters_t& parameters () const throw ();
+    parameters_t& parameters () throw ();
+
+    template <typename T>
+    const T& getParameter (const std::string& key) const;
+    /// \}
+
     /// \brief Display the solver on the specified output stream.
     ///
     /// \param o output stream used for display
@@ -94,8 +125,18 @@ namespace roboptim
   protected:
     /// \brief Problem that will be solved.
     const problem_t problem_;
+
+    /// \brief Solver parameters (run-time configuration).
+    parameters_t parameters_;
   };
 
+  /// \brief Override operator<< to display ``parameters'' objects.
+  ///
+  /// \param o output stream used for display
+  /// \param ns NoSolution object, ignored
+  /// \return output stream
+  ROBOPTIM_DLLAPI std::ostream&
+  operator<< (std::ostream& o, const Parameter& parameter);
   /// @}
 
 } // end of namespace roboptim

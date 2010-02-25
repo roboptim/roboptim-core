@@ -26,6 +26,14 @@ namespace roboptim
   DummySolver::DummySolver (const problem_t& pb) throw ()
     : parent_t (pb)
   {
+    parameters_["dummy-parameter"].description = "dummy parameter";
+    parameters_["dummy-parameter"].value = 42.;
+
+    parameters_["dummy-parameter2"].description = "yet another dummy parameter";
+    parameters_["dummy-parameter2"].value = 3;
+
+    parameters_["dummy-parameter3"].description = "just a dummy key";
+    parameters_["dummy-parameter3"].value = "...and a dummy value!";
   }
 
   DummySolver::~DummySolver () throw ()
