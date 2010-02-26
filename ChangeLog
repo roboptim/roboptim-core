@@ -1,5 +1,13 @@
 2010-02-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix parameter code.
+	* include/roboptim/core/solver.hxx: Fix getParameter,
+	std::map::operator[] is /not/ const (!).
+	* src/solver.cc: Fix display code to remove spurious
+	pointer display (previously was displaying output stream address).
+
+2010-02-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Fix typo in source filename.
 	* src/Makefile.am: Fix typo.
 

@@ -68,9 +68,10 @@ namespace roboptim
   const T&
   Solver<F, C>::getParameter (const std::string& key) const
   {
-    return boost::get<T> (parameters_[key].value);
+    parameters_t::const_iterator it = parameters_.find (key);
+    return boost::get<T> (it->second.value);
   }
-  
+
 
   template <typename F, typename C>
   std::ostream&
