@@ -22,7 +22,7 @@ libroboptim_core_la_SOURCES = 		\
 	quadratic-function.cc		\
 	result.cc			\
 	result-with-warnings.cc		\
-	solver.c			\
+	solver.cc			\
 	solver-error.cc			\
 	solver-warning.cc		\
 	twice-derivable-function.cc	\

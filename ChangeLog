@@ -1,3 +1,8 @@
+2010-02-26  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Fix typo in source filename.
+	* src/Makefile.am: Fix typo.
+
 2010-02-25  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Implement run-time parameters management.
