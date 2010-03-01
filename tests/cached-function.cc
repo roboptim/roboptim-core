@@ -47,7 +47,7 @@ struct F : public DerivableFunction
 
 int run_test ()
 {
-  F f;
+  boost::shared_ptr<F> f (new F ());
 
   CachedFunction<DerivableFunction> cachedF (f);
 
@@ -60,7 +60,7 @@ int run_test ()
     x[0] = i;
     std::cout << cachedF (x) << std::endl;
     std::cout << cachedF (x) << std::endl;
-    assert (f (x)[0] == cachedF (x)[0]);
+    assert ((*f) (x)[0] == cachedF (x)[0]);
 
     std::cout << cachedF.gradient (x) << std::endl;
     std::cout << cachedF.gradient (x) << std::endl;

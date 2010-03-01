@@ -64,12 +64,12 @@ namespace roboptim
   } // end of anonymous namespace.
 
   template <typename T>
-  CachedFunction<T>::CachedFunction (const T& fct) throw ()
-    : T (fct.inputSize (), fct.outputSize (), cachedFunctionName (fct)),
+  CachedFunction<T>::CachedFunction (boost::shared_ptr<const T> fct) throw ()
+    : T (fct->inputSize (), fct->outputSize (), cachedFunctionName (*fct)),
       function_ (fct),
       cache_ (derivativeSize<T>::value),
-      gradientCache_ (fct.outputSize ()),
-      hessianCache_ (fct.outputSize ())
+      gradientCache_ (fct->outputSize ()),
+      hessianCache_ (fct->outputSize ())
   {
   }
 
@@ -102,7 +102,7 @@ namespace roboptim
 	return;
       }
     std::cout << "not cached" << std::endl;
-    function_ (result, argument);
+    (*function_) (result, argument);
     cache_[0][argument] = result;
   }
 
@@ -129,7 +129,7 @@ namespace roboptim
 	gradient = it->second;
 	return;
       }
-    function_.gradient (gradient, argument, functionId);
+    function_->gradient (gradient, argument, functionId);
     gradientCache_[functionId][argument] = gradient;
   }
 
@@ -168,7 +168,7 @@ namespace roboptim
 	hessian = it->second;
 	return;
       }
-    function_.hessian (hessian, argument, functionId);
+    function_->hessian (hessian, argument, functionId);
     hessianCache_[functionId][argument] = hessian;
   }
 
@@ -212,7 +212,7 @@ namespace roboptim
 	derivative = it->second;
 	return;
       }
-    function_.derivative (derivative, x, order);
+    function_->derivative (derivative, x, order);
     cache_[order][x] = derivative;
   }
 

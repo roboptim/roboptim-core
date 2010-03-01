@@ -22,10 +22,9 @@
 
 # include <map>
 
+# include <boost/shared_ptr.hpp>
+
 # include <roboptim/core/n-times-derivable-function.hh>
-
-
-#include <roboptim/core/io.hh>
 
 namespace roboptim
 {
@@ -77,7 +76,7 @@ namespace roboptim
     typedef std::map<Function::vector_t, Function::vector_t, ltvector>
       functionCache_t;
 
-    explicit CachedFunction (const T& fct) throw ();
+    explicit CachedFunction (boost::shared_ptr<const T> fct) throw ();
     ~CachedFunction () throw ();
 
     void reset () throw ();
@@ -101,7 +100,7 @@ namespace roboptim
     				  size_type order = 1) const throw ();
 
   private:
-    const T& function_;
+    boost::shared_ptr<const T> function_;
     mutable std::vector<functionCache_t> cache_;
     mutable std::vector<functionCache_t> gradientCache_;
     mutable std::vector<functionCache_t> hessianCache_;

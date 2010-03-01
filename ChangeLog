@@ -1,5 +1,12 @@
 2010-03-01  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Use shared pointers in caching proxy.
+	* include/roboptim/core/cached-function.hh,
+	* include/roboptim/core/cached-function.hxx: Use shared pointers.
+	* tests/cached-function.cc: Update.
+
+2010-03-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Implement function caching.
 	* include/Makefile.am: Distribute new header and source.
 	* include/roboptim/core/cached-function.hh: New.
