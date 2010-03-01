@@ -1,3 +1,14 @@
+2010-03-01  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Implement function caching.
+	* include/Makefile.am: Distribute new header and source.
+	* include/roboptim/core/cached-function.hh: New.
+	* include/roboptim/core/cached-function.hxx: New.
+	* tests/Makefile.am: Compile new test case.
+	* tests/cached-function.cc: New.
+	* tests/cached-function.stdout: New.
+	* tests/testsuite.at: Add new test case.
+
 2010-02-26  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix parameter code.

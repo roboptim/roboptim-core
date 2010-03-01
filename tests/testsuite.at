@@ -47,6 +47,7 @@ CHECK_STDOUT([constant-function], [Check constant function class.])
 CHECK_STDOUT([parametrized-function], [Check parametrized function class.])
 CHECK_STDOUT([derivable-parametrized-function],
 	     [Check derivable parametrized function class.])
+CHECK_STDOUT([cached-function], [Check cached-function class.])
 
 AT_BANNER([Problems])
 CHECK_STDOUT([problem-cc], [Check problem copy constructor.])

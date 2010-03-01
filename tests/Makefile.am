@@ -97,6 +97,11 @@ derivable_parametrized_function_SOURCES = derivable-parametrized-function.cc \
 	$(COMMON_SOURCES)
 derivable_parametrized_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
+# cached-function
+check_PROGRAMS += cached-function
+cached_function_SOURCES = cached-function.cc $(COMMON_SOURCES)
+cached_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
 # plugin
 check_PROGRAMS += plugin
 plugin_SOURCES = plugin.cc $(COMMON_SOURCES)
@@ -153,6 +158,7 @@ generate-reference:
 
 # Distribute reference files.
 EXTRA_DIST +=						\
+	cached-function.stdout				\
 	constant-function.stdout			\
 	derivable-function.stdout			\
 	finite-difference-gradient.stdout		\
