@@ -19,10 +19,10 @@
 
 #include <iostream>
 
-#include <roboptim/core/cached-function.hh>
 #include <roboptim/core/io.hh>
 #include <roboptim/core/derivable-function.hh>
 #include <roboptim/core/util.hh>
+#include <roboptim/core/filter/cached-function.hh>
 
 using namespace roboptim;
 

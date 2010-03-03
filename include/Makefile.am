@@ -2,8 +2,6 @@ include $(top_srcdir)/build-aux/init.mk
 
 # --- Distribute and install headers.
 nobase_include_HEADERS =				\
-	roboptim/core/cached-function.hh		\
-	roboptim/core/cached-function.hxx		\
 	roboptim/core/constant-function.hh		\
 	roboptim/core/debug.hh				\
 	roboptim/core/derivable-function.hh		\
@@ -39,6 +37,12 @@ nobase_include_HEADERS =				\
 	roboptim/core/twice-derivable-function.hh	\
 	roboptim/core/util.hh				\
 	roboptim/core/util.hxx
+
+# Function filters.
+nobase_include_HEADERS +=				\
+	roboptim/core/filter/cached-function.hh		\
+	roboptim/core/filter/cached-function.hxx
+
 
 # Built-in plug-in.
 nobase_include_HEADERS +=				\

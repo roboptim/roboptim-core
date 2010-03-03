@@ -110,5 +110,5 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-# include <roboptim/core/cached-function.hxx>
+# include <roboptim/core/filter/cached-function.hxx>
 #endif //! ROBOPTIM_CORE_CACHED_FUNCTION_HH
