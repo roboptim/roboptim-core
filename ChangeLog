@@ -1,5 +1,10 @@
 2010-03-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add root-level header to easy library use.
+	* include/roboptim/core.hh: New.
+
+2010-03-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Distribute filters in a separate sub-directory.
 	* include/Makefile.am: Fix path.
 	* include/roboptim/core/filter/cached-function.hh:
