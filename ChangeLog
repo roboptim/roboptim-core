@@ -1,5 +1,16 @@
 2010-03-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Add Split filter.
+	* include/Makefile.am: Distribute new headers.
+	* include/roboptim/core/filter/split.hh: New.
+	* include/roboptim/core/filter/split.hxx: New.
+	* tests/Makefile.am: Compile new test case.
+	* tests/split.cc: New.
+	* tests/split.stdout: New.
+	* tests/testsuite.at: Add new test case.
+
+2010-03-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Clean filter.
 	* include/roboptim/core/derivative-size.hh: New.
 	* include/roboptim/core/filter/cached-function.hh,

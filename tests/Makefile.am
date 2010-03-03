@@ -97,11 +97,6 @@ derivable_parametrized_function_SOURCES = derivable-parametrized-function.cc \
 	$(COMMON_SOURCES)
 derivable_parametrized_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 
-# cached-function
-check_PROGRAMS += cached-function
-cached_function_SOURCES = cached-function.cc $(COMMON_SOURCES)
-cached_function_LDADD = $(top_builddir)/src/libroboptim-core.la
-
 # plugin
 check_PROGRAMS += plugin
 plugin_SOURCES = plugin.cc $(COMMON_SOURCES)
@@ -122,6 +117,20 @@ identity_function_LDADD = $(top_builddir)/src/libroboptim-core.la
 check_PROGRAMS += constant-function
 constant_function_SOURCES = constant-function.cc $(COMMON_SOURCES)
 constant_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+
+
+# cached-function
+check_PROGRAMS += cached-function
+cached_function_SOURCES = cached-function.cc $(COMMON_SOURCES)
+cached_function_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+# split
+check_PROGRAMS += split
+split_SOURCES = split.cc $(COMMON_SOURCES)
+split_LDADD = $(top_builddir)/src/libroboptim-core.la
+
+
 
 # visualization-gnuplot-simple
 check_PROGRAMS += visualization-gnuplot-simple
@@ -176,6 +185,7 @@ EXTRA_DIST +=						\
 	problem-cc.stdout				\
 	result.stdout					\
 	simple.stdout					\
+	split.stdout					\
 	twice-derivable-function.stdout			\
 	util.stdout					\
 	visualization-gnuplot-function.stdout		\
