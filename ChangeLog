@@ -1,5 +1,15 @@
 2010-03-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Clean filter.
+	* include/roboptim/core/derivative-size.hh: New.
+	* include/roboptim/core/filter/cached-function.hh,
+	* include/roboptim/core/filter/cached-function.hxx:
+	Uniformize header guards.
+	* include/roboptim/core/fwd.hh: Pre-declare derivativeSize.
+	* src/doc.hh: Define new group.
+
+2010-03-03  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Add root-level header to easy library use.
 	* include/roboptim/core.hh: New.
 

@@ -771,6 +771,7 @@ int run_test ()
 
 /// \defgroup roboptim_meta_function Mathematical abstract functions
 /// \defgroup roboptim_function Mathematical functions
+/// \defgroup roboptim_filter Function filters
 /// \defgroup roboptim_problem Optimization problems
 /// \defgroup roboptim_solver Optimization solvers
 /// \defgroup roboptim_visualization Visualization

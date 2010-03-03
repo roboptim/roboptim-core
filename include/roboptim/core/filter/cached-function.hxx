@@ -15,9 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_CACHED_FUNCTION_HXX
-# define ROBOPTIM_CORE_CACHED_FUNCTION_HXX
+#ifndef ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HXX
+# define ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HXX
 # include <boost/format.hpp>
+
+# include <roboptim/core/derivative-size.hh>
 
 namespace roboptim
 {
@@ -33,33 +35,6 @@ namespace roboptim
       fmt % fct.getName ();
       return fmt.str ();
     }
-
-    template <typename T>
-    struct derivativeSize;
-
-    template <>
-    struct derivativeSize<Function>
-    {
-      static const unsigned int value = 0;
-    };
-
-    template <>
-    struct derivativeSize<DerivableFunction>
-    {
-      static const unsigned int value = 1;
-    };
-
-    template <>
-    struct derivativeSize<TwiceDerivableFunction>
-    {
-      static const unsigned int value = 2;
-    };
-
-    template <unsigned N>
-    struct derivativeSize<NTimesDerivableFunction<N> >
-    {
-      static const unsigned int value = 3;
-    };
 
   } // end of anonymous namespace.
 
@@ -218,4 +193,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_CACHED_FUNCTION_HXX
+#endif //! ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HXX

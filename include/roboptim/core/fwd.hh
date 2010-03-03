@@ -60,6 +60,9 @@ namespace roboptim
   template <typename T> class SolverFactory;
   template <unsigned DerivabilityOrder> class NTimesDerivableFunction;
 
+  template <typename T>
+  struct derivativeSize;
+
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_FWD_HH
