@@ -1,3 +1,8 @@
+2010-03-08  Thomas Moulard  <thomas.moulard@gmail.com>
+
+	Synchronize.
+	* build-aux: Synchronize.
+
 2010-03-03  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Add Split filter.
