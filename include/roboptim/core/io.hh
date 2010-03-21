@@ -21,9 +21,7 @@
 # include <roboptim/core/debug.hh>
 
 # include <boost/numeric/ublas/io.hpp>
-//# include <boost/optional/optional_io.hpp>
 # include <boost/tuple/tuple_io.hpp>
 # include <boost/variant/detail/variant_io.hpp>
 
-# include <roboptim/core/io.hh>
 #endif //! ROBOPTIM_CORE_FWD_HH

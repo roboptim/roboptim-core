@@ -1,5 +1,11 @@
 2010-03-21  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Clean I/O header.
+	* include/roboptim/core/io.hh: Remove
+	self-inclusion and commented inclusion.
+
+2010-03-21  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Update MSVC project.
 	* msvc/roboptim-core/roboptim-core.vcproj:
 	Add ``solver.cc'' to files list.
