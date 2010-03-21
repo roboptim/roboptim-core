@@ -250,9 +250,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\solver.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\twice-derivable-function.cc"
 				>
 			</File>
+
 			<File
 				RelativePath="..\..\src\util.cc"
 				>
