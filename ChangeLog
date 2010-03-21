@@ -1,5 +1,12 @@
 2010-03-21  Thomas Moulard  <thomas.moulard@gmail.com>
 
+	Fix compilation error on Windows.
+	* include/roboptim/core/portability.hh: Enable specific
+	macro to solve size_t resolution error with MSVC.
+	Reported by François Keith.
+
+2010-03-21  Thomas Moulard  <thomas.moulard@gmail.com>
+
 	Clean I/O header.
 	* include/roboptim/core/io.hh: Remove
 	self-inclusion and commented inclusion.

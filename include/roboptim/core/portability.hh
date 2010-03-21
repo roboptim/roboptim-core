@@ -65,4 +65,11 @@
   #define ROBOPTIM_LOCAL ROBOPTIM_DLLLOCAL
 #endif // ROBOPTIM_STATIC
 
+
+// Required to avoid size_t resolution error with MSVC. Triggered by
+// the boost/tuple/tuple_io.hpp inclusion in roboptim/core/io.hh.
+#ifdef _WIN32
+# define BOOST_NO_STD_LOCALE
+#endif
+
 #endif //! ROBOPTIM_CORE_PORTABILITY_HH
