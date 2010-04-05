@@ -132,7 +132,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"

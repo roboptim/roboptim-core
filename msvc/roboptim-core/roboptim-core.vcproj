@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="shift_jis"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="roboptim-core"
 	ProjectGUID="{C6C47D7F-6793-4E24-9447-2DD0BA87BE6F}"
 	RootNamespace="roboptimcore"
@@ -134,7 +134,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
@@ -257,7 +257,6 @@
 				RelativePath="..\..\src\twice-derivable-function.cc"
 				>
 			</File>
-
 			<File
 				RelativePath="..\..\src\util.cc"
 				>

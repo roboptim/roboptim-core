@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="shift_jis"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="roboptim-core-dummy-plugin"
 	ProjectGUID="{21220FE9-892A-4D20-BC45-7697DFC5242F}"
 	RootNamespace="roboptimcoredummyplugin"
@@ -132,7 +132,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
