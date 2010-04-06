@@ -6,6 +6,10 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="&quot;E:\Libraries\Boost\boost_1_36_0\include\boost-1_36&quot;;&quot;E:\Libraries\Boost\boost_1_36_0&quot;"
+		AdditionalIncludeDirectories="&quot;$(BOOST_ROOT)&quot;;$(BOOST_ROOT)/include"
+	/>
+	<UserMacro
+		Name="BOOST_ROOT"
+		Value="C:\Libraries\Boost\boost_1_39_0"
 	/>
 </VisualStudioPropertySheet>
