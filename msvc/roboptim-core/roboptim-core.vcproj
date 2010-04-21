@@ -19,7 +19,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			InheritedPropertySheets=".\boost.vsprops"
+			InheritedPropertySheets=".\roboptim-core.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -93,7 +93,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			InheritedPropertySheets=".\boost.vsprops"
+			InheritedPropertySheets=".\roboptim-core.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>

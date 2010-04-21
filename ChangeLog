@@ -1,3 +1,13 @@
+2010-04-21  Keith Francois <francois.keith@aist.go.jp>
+
+    Replace deprecated property sheet boost.vsprops by roboptim-core.vsprops
+	* msvc/roboptim-core/boost.vsprops: Remove deprecated property sheet
+	* msvc/simple/simple.vcproj: Replace the property sheet boost.vsprops 
+		by roboptim-core.vsprops, which contains more information
+		and will be installed
+	* msvc/roboptim-core/roboptim-core.vcproj,
+	* msvc/roboptim-core-dummy-plugin/roboptim-core-dummy-plugin.vcproj
+  
 2010-03-21  Thomas Moulard  <thomas.moulard@gmail.com>
 
 	Fix compilation error on Windows.
