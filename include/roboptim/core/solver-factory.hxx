@@ -21,6 +21,24 @@
 
 namespace roboptim
 {
+  // This union is here to workaround a limitation of the C++
+  // standard. There is *no* way to cast a pointer to object into a
+  // pointer to function.
+  //
+  // Unfortunately lt_dlsym is giving us a void* so we have to use
+  // this kind of trick to transform it into a pointer to function.
+  template <typename T>
+  T* unionCast(void* ptr)
+  {
+    union
+    {
+      void* ptr;
+      T* real_ptr;
+    } u;
+    u.ptr = ptr;
+    return u.real_ptr;
+  }
+
   template <typename T>
   SolverFactory<T>::SolverFactory (std::string plugin, const problem_t& pb)
   throw (std::runtime_error)
@@ -46,8 +64,7 @@ namespace roboptim
       }
 
     getsizeofproblem_t* getSizeOfProblem =
-      reinterpret_cast<getsizeofproblem_t*>
-      (lt_dlsym (handle_, "getSizeOfProblem"));
+      unionCast<getsizeofproblem_t> (lt_dlsym (handle_, "getSizeOfProblem"));
     if (!getSizeOfProblem)
       {
 	std::stringstream sserror;
@@ -76,7 +93,7 @@ namespace roboptim
 
 
     create_t* c =
-      reinterpret_cast<create_t*> (lt_dlsym (handle_, "create"));
+      unionCast<create_t> (lt_dlsym (handle_, "create"));
     if (!c)
       {
 	std::stringstream sserror;
@@ -108,7 +125,7 @@ namespace roboptim
     typedef void destroy_t (solver_t*);
 
     destroy_t* destructor =
-      reinterpret_cast<destroy_t*> (lt_dlsym (handle_, "destroy"));
+      unionCast<destroy_t> (lt_dlsym (handle_, "destroy"));
     if (destructor)
       {
         destructor (solver_);

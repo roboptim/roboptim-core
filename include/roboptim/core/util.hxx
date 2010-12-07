@@ -61,6 +61,6 @@ namespace roboptim
     return o << "(" << p.first << ", " << p.second << ")";
   }
 
-}; // end of namespace roboptim.
+} // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_UTIL_HXX

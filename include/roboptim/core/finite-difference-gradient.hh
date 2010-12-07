@@ -103,7 +103,7 @@ namespace roboptim
        Function::value_type epsilon,
        Function::result_t& gradient,
        const Function::argument_t& argument,
-       Function::value_type idFunction) const throw ();
+       Function::size_type idFunction) const throw ();
     };
 
     /// \brief Precise finite difference gradient computation.
@@ -117,7 +117,7 @@ namespace roboptim
        Function::value_type epsilon,
        Function::result_t& gradient,
        const Function::argument_t& argument,
-       Function::value_type idFunction) const throw ();
+       Function::size_type idFunction) const throw ();
     };
   } // end of namespace policy.
 

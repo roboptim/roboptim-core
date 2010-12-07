@@ -62,7 +62,7 @@ namespace roboptim
   // A(i)
   void
   NumericLinearFunction::impl_gradient (gradient_t& gradient,
-					const argument_t& argument,
+					const argument_t&,
 					size_type idFunction) const throw ()
   {
     for (unsigned j = 0; j < inputSize (); ++j)

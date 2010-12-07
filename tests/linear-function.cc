@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common.hh"
+#include "shared-tests/common.hh"
 
 #include <iostream>
 
@@ -29,12 +29,12 @@ struct Null : public LinearFunction
   Null () : LinearFunction (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const throw ()
+  void impl_compute (result_t& res, const argument_t&) const throw ()
   {
     res.clear ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t& argument,
+  void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type) const throw ()
   {
     grad.clear ();
@@ -46,12 +46,12 @@ struct NoTitle : public LinearFunction
   NoTitle () : LinearFunction (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const throw ()
+  void impl_compute (result_t& res, const argument_t&) const throw ()
   {
     res.clear ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t& argument,
+  void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type) const throw ()
   {
     grad.clear ();

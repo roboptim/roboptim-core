@@ -92,7 +92,7 @@ namespace roboptim
 
     /// \brief Get the value that symbolizes positive infinity.
     /// \return representation of positive infinity in the value type
-    static const value_type infinity () throw ()
+    static value_type infinity () throw ()
     {
       return std::numeric_limits<Function::value_type>::infinity ();
     }

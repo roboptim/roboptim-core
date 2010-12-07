@@ -38,7 +38,7 @@ namespace roboptim
   {
     class Simple;
     class FivePointsRule;
-  }; // end of finiteDifferenceGradientPolicies
+  } // end of finiteDifferenceGradientPolicies
 
   template <typename FdgPolicy =
 	    finiteDifferenceGradientPolicies::FivePointsRule>

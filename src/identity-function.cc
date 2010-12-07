@@ -57,8 +57,8 @@ namespace roboptim
 
   void
   IdentityFunction::impl_gradient (gradient_t& gradient,
-					const argument_t& argument,
-					size_type idFunction) const throw ()
+				   const argument_t& ,
+				   size_type idFunction) const throw ()
   {
     using namespace boost::numeric::ublas;
     gradient.clear ();

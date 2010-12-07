@@ -152,7 +152,7 @@ namespace roboptim
      Function::value_type epsilon,
      Function::result_t& gradient,
      const Function::argument_t& argument,
-     Function::value_type idFunction) const throw ()
+     Function::size_type idFunction) const throw ()
     {
       typedef Function::value_type value_type;
       assert (adaptee.outputSize () - idFunction > 0);
@@ -173,7 +173,7 @@ namespace roboptim
      Function::value_type epsilon,
      Function::result_t& gradient,
      const Function::argument_t& argument,
-     Function::value_type idFunction) const throw ()
+     Function::size_type idFunction) const throw ()
     {
       typedef Function::value_type value_type;
 

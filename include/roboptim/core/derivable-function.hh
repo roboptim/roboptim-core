@@ -70,7 +70,7 @@ namespace roboptim
     typedef matrix_t jacobian_t;
 
     /// \brief Jacobian size type (pair of values).
-    typedef std::pair<value_type, value_type> jacobianSize_t;
+    typedef std::pair<size_type, size_type> jacobianSize_t;
 
 
     /// \brief Return the gradient size.

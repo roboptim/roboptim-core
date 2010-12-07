@@ -23,12 +23,14 @@
 namespace roboptim
 {
   GenericSolver::GenericSolver () throw ()
-    : result_ (NoSolution ())
+    : boost::noncopyable (),
+      result_ (NoSolution ())
   {
   }
 
   GenericSolver::GenericSolver (const GenericSolver& solver) throw ()
-    : result_ (solver.result_)
+    : boost::noncopyable (),
+      result_ (solver.result_)
   {
   }
 

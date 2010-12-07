@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common.hh"
+#include "shared-tests/common.hh"
 
 #include <iostream>
 
@@ -29,7 +29,7 @@ struct Null : public Function
   Null () : Function (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const throw ()
+  void impl_compute (result_t& res, const argument_t&) const throw ()
   {
     res.clear ();
   }
@@ -40,7 +40,7 @@ struct NoTitle : public Function
   NoTitle () : Function (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const throw ()
+  void impl_compute (result_t& res, const argument_t&) const throw ()
   {
     res.clear ();
   }

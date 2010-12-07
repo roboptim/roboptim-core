@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common.hh"
+#include "shared-tests/common.hh"
 
 #include <iostream>
 
@@ -37,8 +37,8 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument,
-		      size_type functionId = 0,
+		      const argument_t&,
+		      size_type = 0,
 		      size_type order = 0) const throw ()
   {
     gradient.clear ();

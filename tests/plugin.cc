@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common.hh"
+#include "shared-tests/common.hh"
 
 #include <iostream>
 
@@ -23,6 +23,9 @@
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver-factory.hh>
+
+// Define where to look for the plug-in.
+#include "local-libdir.hh"
 
 using namespace roboptim;
 
@@ -47,6 +50,13 @@ struct F : public Function
 
 int run_test ()
 {
+  if (lt_dlsetsearchpath (LOCAL_LIBDIR))
+    {
+      std::cerr << "Failed to set search path." << std::endl;
+      return 1;
+    }
+
+
   // Instantiate the function and the problem.
   F f;
   solver_t::problem_t pb (f);

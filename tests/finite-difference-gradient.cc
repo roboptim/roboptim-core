@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "common.hh"
+#include "shared-tests/common.hh"
 
 #include <iostream>
 
@@ -135,7 +135,7 @@ struct Times : public DerivableFunction
 
   void impl_gradient (gradient_t& gradient,
 		      const argument_t& argument,
-		      size_type idFunction) const throw ()
+		      size_type) const throw ()
   {
     gradient (0) = argument[1];
     gradient (1) = argument[0];

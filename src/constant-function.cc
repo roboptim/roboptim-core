@@ -39,7 +39,7 @@ namespace roboptim
 
   void
   ConstantFunction::impl_compute (result_t& result,
-				  const argument_t& argument)
+				  const argument_t&)
     const throw ()
   {
     result = this->offset_;
@@ -54,8 +54,8 @@ namespace roboptim
 
   void
   ConstantFunction::impl_gradient (gradient_t& gradient,
-				   const argument_t& argument,
-				   size_type idFunction) const throw ()
+				   const argument_t&,
+				   size_type) const throw ()
   {
     gradient.clear ();
   }

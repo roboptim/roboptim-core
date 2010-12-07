@@ -52,8 +52,8 @@ namespace roboptim
     using namespace boost::numeric::ublas;
 
     result (0) = inner_prod
-      (prec_prod (trans (argument), a_), argument) / 2
-      + prec_inner_prod (trans (b_), argument);
+      (prod (trans (argument), a_), argument) / 2
+      + inner_prod (trans (b_), argument);
   }
 
   // x * A + b
