@@ -2,58 +2,8 @@
 
 set -e
 
-# Print an error message and exit.
-die ()
-{
-    echo >&2 "fatal: $1"
-    exit 2
-}
-
-# Properly explain how to set up a RobOptim working directory and exit.
-die_noroboptimalias ()
-{
- echo >&2 "To properly finish setting up your working directory,"
- echo >&2 "you need to define how RobOptim should connect to SourceForge."
- echo >&2 ""
- echo >&2 "If you only need read-access (which is usually what one wants):"
- echo >&2 "echo '[url \"git://roboptim.git.sourceforge.net/gitroot/roboptim/\"]"
- echo >&2 "        insteadOf = roboptim:' >> ~/.gitconfig"
- echo >&2 ""
-
- die "no \`\`roboptim:'' alias in your git configuration."
-}
-
-# Check that git version is newer enough.
-check_git_version ()
-{
-    version=`git --version | sed 's/^git version \([0-9]\.[0-9]\.[0-9]\).*$/\1/'`
-
-    if test x"$version" = x; then
-	die "failed to parse git version"
-    fi
-
-    for i in 1 2 3; do
-	wantedversion=`echo "$1" | cut -d'.' -f$i`
-	gitversion=`echo "$version" | cut -d'.' -f$i`
-
-	if test $gitversion -lt $wantedversion; then
-	    die "git version is too old (version $1 at least is required)"
-	fi
-	if test $gitversion -gt $wantedversion; then
-	    return
-	fi
-    done
-}
-
 # Make sure that the submodule are retrieved.
 if test -d ".git"; then
-    # Url rewriting has been introduced in git 1.5.5.
-    check_git_version "1.5.5"
-
-    if test x`git config -l | grep 'url\..*\.insteadof=roboptim:'` = x; then
-	die_noroboptimalias
-    fi
-
     git submodule init
     git submodule update
 fi
