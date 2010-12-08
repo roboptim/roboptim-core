@@ -25,7 +25,7 @@ SET(PROJECT_NAME roboptim-core)
 SET(PROJECT_DESCRIPTION "RobOptim core")
 SET(PROJECT_URL "http://github.com/laas/roboptim-core")
 
-SET(${PROJECT_NAME}_HEADERS
+SET(HEADERS
   include/roboptim/core/result.hh
   include/roboptim/core/identity-function.hh
   include/roboptim/core/solver-factory.hxx
@@ -89,6 +89,8 @@ IF (NOT LTDL_H_FOUND)
     "Failed to find ltdl.h, check that Libtool ltdl is installed.")
 ENDIF()
 #FIXME: check that libltdl.so is available.
+
+HEADER_INSTALL("${HEADERS}")
 
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(tests)
