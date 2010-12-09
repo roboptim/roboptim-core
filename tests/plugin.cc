@@ -24,9 +24,6 @@
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver-factory.hh>
 
-// Define where to look for the plug-in.
-#include "local-libdir.hh"
-
 using namespace roboptim;
 
 // Specify the solver that will be used.
@@ -50,13 +47,6 @@ struct F : public Function
 
 int run_test ()
 {
-  if (lt_dlsetsearchpath (LOCAL_LIBDIR))
-    {
-      std::cerr << "Failed to set search path." << std::endl;
-      return 1;
-    }
-
-
   // Instantiate the function and the problem.
   F f;
   solver_t::problem_t pb (f);

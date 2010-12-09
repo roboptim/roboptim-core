@@ -14,7 +14,7 @@
 # along with roboptim-core.  If not, see <http://www.gnu.org/licenses/>.
 
 # Generate local-libdir.hh.
-CONFIG_FILES(local-libdir.hh)
+CONFIG_FILES(shared-tests/local-libdir.hh)
 
 # Make sure local headers are found
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/tests)

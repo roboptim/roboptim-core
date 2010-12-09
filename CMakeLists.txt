@@ -76,6 +76,9 @@ SET(HEADERS
 
 SETUP_PROJECT()
 
+# Add main library to pkg-config file.
+PKG_CONFIG_APPEND_LIBS(roboptim-core)
+
 # Search for dependencies.
 SEARCH_FOR_BOOST()
 
