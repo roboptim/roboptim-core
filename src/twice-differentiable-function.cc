@@ -17,22 +17,22 @@
 
 #include "debug.hh"
 
-#include "roboptim/core/twice-derivable-function.hh"
+#include "roboptim/core/twice-differentiable-function.hh"
 #include "roboptim/core/indent.hh"
 #include "roboptim/core/util.hh"
 
 namespace roboptim
 {
-  TwiceDerivableFunction::TwiceDerivableFunction
+  TwiceDifferentiableFunction::TwiceDifferentiableFunction
   (size_type inputSize,
    size_type outputSize,
    std::string name) throw ()
-    : DerivableFunction (inputSize, outputSize, name)
+    : DifferentiableFunction (inputSize, outputSize, name)
   {
   }
 
   std::ostream&
-  TwiceDerivableFunction::print (std::ostream& o) const throw ()
+  TwiceDifferentiableFunction::print (std::ostream& o) const throw ()
   {
     if (getName ().empty ())
       return o << "Twice derivable function";

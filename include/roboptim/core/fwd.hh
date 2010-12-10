@@ -31,7 +31,7 @@ namespace roboptim
   class NoSolution {};
 
   class ConstantFunction;
-  class DerivableFunction;
+  class DifferentialeFunction;
   class DummySolver;
 
   namespace finiteDifferenceGradientPolicies
@@ -54,7 +54,7 @@ namespace roboptim
   class ResultWithWarnings;
   class SolverError;
   class SolverWarning;
-  class TwiceDerivableFunction;
+  class TwiceDifferentialeFunction;
   template <typename F, typename C = F> class Problem;
   template <typename F, typename C = F> class Solver;
   template <typename T> class SolverFactory;

@@ -17,23 +17,23 @@
 
 #include "debug.hh"
 
-#include "roboptim/core/derivable-function.hh"
+#include "roboptim/core/differentiable-function.hh"
 #include "roboptim/core/indent.hh"
 #include "roboptim/core/util.hh"
 
 namespace roboptim
 {
-  DerivableFunction::DerivableFunction (size_type inputSize,
-					size_type outputSize,
-					std::string name)
+  DifferentiableFunction::DifferentiableFunction (size_type inputSize,
+						  size_type outputSize,
+						  std::string name)
     throw ()
     : Function (inputSize, outputSize, name)
   {
   }
 
   void
-  DerivableFunction::impl_jacobian (jacobian_t& jacobian,
-				    const argument_t& argument)
+  DifferentiableFunction::impl_jacobian (jacobian_t& jacobian,
+					 const argument_t& argument)
     const throw ()
   {
     for (unsigned i = 0; i < outputSize (); ++i)
@@ -45,10 +45,10 @@ namespace roboptim
   }
 
   std::ostream&
-  DerivableFunction::print (std::ostream& o) const throw ()
+  DifferentiableFunction::print (std::ostream& o) const throw ()
   {
     if (getName ().empty ())
-      return o << "Derivable function";
+      return o << "Differentiable function";
     else
       return o << getName () << " (derivable function)";
   }

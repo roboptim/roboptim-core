@@ -42,6 +42,7 @@ SET(HEADERS
   include/roboptim/core/solver-error.hh
   include/roboptim/core/linear-function.hh
   include/roboptim/core/twice-derivable-function.hh
+  include/roboptim/core/twice-differentiable-function.hh
   include/roboptim/core/indent.hh
   include/roboptim/core/constant-function.hh
   include/roboptim/core/generic-solver.hh
@@ -52,6 +53,7 @@ SET(HEADERS
   include/roboptim/core/debug.hh
   include/roboptim/core/solver-factory.hh
   include/roboptim/core/derivable-function.hh
+  include/roboptim/core/differentiable-function.hh
   include/roboptim/core/finite-difference-gradient.hxx
   include/roboptim/core/finite-difference-gradient.hh
   include/roboptim/core/solver-warning.hh

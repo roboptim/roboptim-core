@@ -22,7 +22,7 @@ ADD_LIBRARY(roboptim-core SHARED
   debug.hh
   debug.cc
   doc.hh
-  derivable-function.cc
+  differentiable-function.cc
   finite-difference-gradient.cc
   function.cc
   generic-solver.cc
@@ -37,7 +37,7 @@ ADD_LIBRARY(roboptim-core SHARED
   solver.cc
   solver-error.cc
   solver-warning.cc
-  twice-derivable-function.cc
+  twice-differentiable-function.cc
   util.cc
 
   visualization/gnuplot.cc
