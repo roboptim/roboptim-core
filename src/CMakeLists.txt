@@ -18,6 +18,7 @@ SET(PLUGINDIR lib/${PROJECT_NAME})
 
 # Main library.
 ADD_LIBRARY(roboptim-core SHARED
+  ${HEADERS}
   constant-function.cc
   debug.hh
   debug.cc
