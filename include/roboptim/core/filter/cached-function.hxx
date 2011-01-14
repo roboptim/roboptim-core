@@ -136,6 +136,8 @@ namespace roboptim
   				   size_type functionId)
     const throw ()
   {
+    //FIXME: bug detected by Clang. To be fixed.
+#ifdef ROBOPTIM_CORE_THIS_DOES_NOT_WORK
     functionCache_t::const_iterator it =
       hessianCache_[functionId].find (argument);
     if (it != hessianCache_[functionId].end ())
@@ -143,6 +145,7 @@ namespace roboptim
 	hessian = it->second;
 	return;
       }
+#endif
     function_->hessian (hessian, argument, functionId);
     hessianCache_[functionId][argument] = hessian;
   }
