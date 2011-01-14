@@ -213,7 +213,7 @@ namespace roboptim
     {
       printConstraint (std::ostream& o,
 		       const P& problem,
-		       int i) :
+		       Function::size_type i) :
 	problem_ (problem),
 	o_ (o),
 	i_ (i)
@@ -246,7 +246,7 @@ namespace roboptim
     private:
       const P& problem_;
       std::ostream& o_;
-      int i_;
+      Function::size_type i_;
     };
   } // end of namespace detail.
 
@@ -271,7 +271,7 @@ namespace roboptim
     else
       o << "Number of constraints: " << this->constraints ().size ();
 
-    for (unsigned i = 0; i < this->constraints ().size (); ++i)
+    for (Function::size_type i = 0; i < this->constraints ().size (); ++i)
       {
 	detail::printConstraint<Problem<F, CLIST> > pc (o, *this, i);
 	boost::apply_visitor (pc, this->constraints ()[i]);

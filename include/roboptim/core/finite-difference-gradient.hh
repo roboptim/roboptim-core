@@ -96,8 +96,9 @@ namespace roboptim
     /// \brief Fast finite difference gradient computation.
     ///
     /// Finite difference is computed using forward difference.
-    struct ROBOPTIM_DLLAPI Simple
+    class ROBOPTIM_DLLAPI Simple
     {
+    public:
       void computeGradient
       (const Function& adaptee,
        Function::value_type epsilon,
@@ -110,8 +111,9 @@ namespace roboptim
     ///
     /// Finite difference is computed using five-points stencil
     /// (i.e. \f$\{x-2h, x-h, x, x+h, x+2h\}\f$).
-    struct ROBOPTIM_DLLAPI FivePointsRule
+    class ROBOPTIM_DLLAPI FivePointsRule
     {
+    public:
       void computeGradient
       (const Function& adaptee,
        Function::value_type epsilon,
@@ -179,14 +181,14 @@ namespace roboptim
   /// \return true if valid, false if not
   ROBOPTIM_DLLAPI bool checkGradient
   (const DerivableFunction& function,
-   int functionId,
+   Function::size_type functionId,
    const Function::vector_t& x,
    Function::value_type threshold = finiteDifferenceThreshold)
     throw ();
 
   ROBOPTIM_DLLAPI void checkGradientAndThrow
   (const DerivableFunction& function,
-   int functionId,
+   Function::size_type functionId,
    const Function::vector_t& x,
    Function::value_type threshold = finiteDifferenceThreshold)
     throw (BadGradient);

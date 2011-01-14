@@ -228,7 +228,7 @@ namespace roboptim
 
   bool
   checkGradient (const DerivableFunction& function,
-		 int i,
+		 Function::size_type i,
 		 const Function::vector_t& x,
 		 Function::value_type threshold) throw ()
   {
@@ -244,7 +244,7 @@ namespace roboptim
 
   void
   checkGradientAndThrow (const DerivableFunction& function,
-			 int i,
+			 Function::size_type i,
 			 const Function::vector_t& x,
 			 Function::value_type threshold)
     throw (BadGradient)

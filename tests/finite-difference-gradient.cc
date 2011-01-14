@@ -144,12 +144,12 @@ struct Times : public DerivableFunction
 
 void displayGradient (const DerivableFunction&,
 		      const Function::vector_t&,
-		      int i = 0);
+		      Function::size_type i = 0);
 
 void
 displayGradient (const DerivableFunction& function,
 		 const Function::vector_t& x,
-		 int i)
+		 Function::size_type i)
 {
   FiniteDifferenceGradient<> fdfunction (function);
   DerivableFunction::gradient_t grad = function.gradient (x, i);
