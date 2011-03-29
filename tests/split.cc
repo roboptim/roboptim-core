@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#undef NDEBUG
+
 #include "shared-tests/common.hh"
 
 #include <iostream>
