@@ -118,6 +118,22 @@ namespace roboptim
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
 
+    /// \brief Vector of interval vectors. This type is used to take
+    /// into account the fact that constraints can have output values
+    /// in \f$\mathbb{C}^{m}\f$.
+    ///
+    /// If \f$m=1\f$, then the associated interval vector contains
+    /// only one element of interval_t type.
+    typedef std::vector<intervals_t> intervalsVect_t;
+
+    /// \brief Vector of scale vectors. This type is used to take into
+    /// account the fact that constraints can have output values in
+    /// \f$\mathbb{R}^m\f$.
+    ///
+    /// If \f$m=1\f$, then the associated scale vector contains only
+    /// one element of scale_t type.
+    typedef std::vector<scales_t> scalesVect_t;
+
     /// \name Constructors and destructors.
     /// \{
 
@@ -356,6 +372,10 @@ namespace roboptim
 
     /// \brief Add a constraint to the problem.
     ///
+    /// \deprecated useful only when \f$m=1\f$, use addConstraint
+    /// (boost::shared_ptr<C> constraint, intervals_t intervals,
+    /// scales_t scales) instead.
+    ///
     /// \param constraint the constraint that will be added
     /// \param interval interval in which the constraint is satisfied
     /// \param scale constraint scale
@@ -366,13 +386,32 @@ namespace roboptim
 			value_type scale = 1.)
       throw (std::runtime_error);
 
-    /// \brief Retrieve constraints bounds.
-    /// \return constraints bounds
+    /// \brief Add a constraint to the problem.
+    ///
+    /// The constraint can be multidimensional.
+    ///
+    /// \param constraint the constraint that will be added
+    /// \param intervals interval vector in which the constraint
+    /// is satisfied
+    /// \param scale constraint scale
+    /// \tparam C constraint type (has to be in CLIST)
+    template <typename C>
+    void addConstraint (boost::shared_ptr<C> constraint,
+			intervals_t intervals,
+			scales_t scales)
+      throw (std::runtime_error);
+
     const intervals_t& bounds () const throw ();
 
-    /// \brief Retrieve constraints scales.
-    /// \return constraints scales
+    /// \brief Retrieve constraints bounds vector.
+    /// \return constraints bounds vector
+    const intervalsVect_t& boundsVector () const throw ();
+
     const scales_t& scales () const throw ();
+
+    /// \brief Retrieve constraints scales vector.
+    /// \return constraints scales vector
+    const scalesVect_t& scalesVector () const throw ();
 
     /// \}
 
@@ -405,14 +444,20 @@ namespace roboptim
     /// \brief Vector of constraints.
     constraints_t constraints_;
 
-    /// \brief Constraints intervals.
     intervals_t bounds_;
+    /// \brief Constraints intervals vector.
+    intervalsVect_t boundsVect_;
+
     /// \brief Arguments intervals.
     intervals_t argumentBounds_;
-    /// \brief Constraints scale.
+
     scales_t scales_;
+    /// \brief Constraints scales vector.
+    scalesVect_t scalesVect_;
+
     /// \brief Arguments' scales.
     scales_t argumentScales_;
+
   };
 
   /// Example shows problem class use.

@@ -188,13 +188,12 @@ namespace roboptim
       startingPoint_ (),
       constraints_ (),
       bounds_ (),
+      boundsVect_ (),
       argumentBounds_ (f.inputSize ()),
       scales_ (),
+      scalesVect_ (),
       argumentScales_ (f.inputSize ())
   {
-    // Check that in the objective function m = 1 (R^n -> R).
-    assert (f.outputSize () == 1);
-
     // Initialize bound.
     std::fill (argumentBounds_.begin (), argumentBounds_.end (),
 	       Function::makeInfiniteInterval ());
@@ -213,9 +212,9 @@ namespace roboptim
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       constraints_ (pb.constraints_),
-      bounds_ (pb.bounds_),
+      boundsVect_ (pb.boundsVect_),
       argumentBounds_ (pb.argumentBounds_),
-      scales_ (pb.scales_),
+      scalesVect_ (pb.scalesVect_),
       argumentScales_ (pb.argumentScales_)
   {
   }
@@ -227,9 +226,9 @@ namespace roboptim
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       constraints_ (),
-      bounds_ (pb.bounds_),
+      boundsVect_ (pb.boundsVect_),
       argumentBounds_ (pb.argumentBounds_),
-      scales_ (pb.scales_),
+      scalesVect_ (pb.scalesVect_),
       argumentScales_ (pb.argumentScales_)
   {
     // Check that F is a subtype of F_.
@@ -275,8 +274,44 @@ namespace roboptim
     assert (!!x.get ());
     assert (b.first <= b.second);
     constraints_.push_back (boost::static_pointer_cast<C> (x));
-    bounds_.push_back (b);
-    scales_.push_back (s);
+    intervals_t bounds;
+    bounds.push_back (b);
+    boundsVect_.push_back (bounds);
+    scales_t scales;
+    scales.push_back (s);
+    scalesVect_.push_back (scales);
+  }
+
+  template <typename F, typename CLIST>
+  template <typename C>
+  void
+  Problem<F, CLIST>::addConstraint (boost::shared_ptr<C> x,
+				    intervals_t b,
+				    scales_t s)
+    throw (std::runtime_error)
+  {
+    //FIXME: check that C is in CLIST.
+
+    if (x->inputSize () != this->function ().inputSize ())
+      assert (0 && "Invalid constraint (wrong input size)");
+    if (x->outputSize () != b.size ())
+      assert (0 && "Invalid intervals (wrong interval vector size)");
+    if (x->outputSize () != s.size ())
+      assert (0 && "Invalid scales (wrong scale vector size)");
+ 
+    // Check that the pointer is not null.
+    assert (!!x.get ());
+    constraints_.push_back (boost::static_pointer_cast<C> (x));
+
+    // Check that the bounds are correctly defined.
+    for (Function::size_type i = 0; i < x->outputSize (); ++i)
+      {
+	const interval_t& interval = b[i];
+	assert (interval.first <= interval.second);
+      }
+    boundsVect_.push_back (b);
+
+    scalesVect_.push_back (s);
   }
 
   template <typename F, typename CLIST>
@@ -307,6 +342,13 @@ namespace roboptim
   }
 
   template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::intervalsVect_t&
+  Problem<F, CLIST>::boundsVector () const throw ()
+  {
+    return boundsVect_;
+  }
+
+  template <typename F, typename CLIST>
   typename Problem<F, CLIST>::intervals_t&
   Problem<F, CLIST>::argumentBounds () throw ()
   {
@@ -325,6 +367,13 @@ namespace roboptim
   Problem<F, CLIST>::scales () const throw ()
   {
     return scales_;
+  }
+
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::scalesVect_t&
+  Problem<F, CLIST>::scalesVector () const throw ()
+  {
+    return scalesVect_;
   }
 
   template <typename F, typename CLIST>
@@ -380,8 +429,8 @@ namespace roboptim
         o_ << iendl << incindent
 	   << "Constraint " << i_ << incindent << iendl
 	   << *constraint << iendl
-	   << "Bounds: " << problem_.bounds ()[i_] << iendl
-	   << "Scales: " << problem_.scales ()[i_] << iendl;
+	   << "Bounds: " << problem_.boundsVector ()[i_] << iendl
+	   << "Scales: " << problem_.scalesVector ()[i_] << iendl;
 
 	if (problem_.startingPoint ())
 	  {
@@ -389,9 +438,15 @@ namespace roboptim
 	    Function::vector_t x = (*g) (*problem_.startingPoint ());
 	    o_ << "Initial value: "
 	       << x;
-	    if (x[0] < Function::getLowerBound (problem_.bounds ()[i_])
-		|| x[0] > Function::getUpperBound (problem_.bounds ()[i_]))
-	      o_ << " (constraint not satisfied)";
+	    for (Function::size_type j = 0; j < x.size (); ++j)
+	      {
+		if (x[j] < Function::
+		    getLowerBound ((problem_.boundsVector ()[i_])[j])
+		    || x[j] > Function::
+		    getUpperBound ((problem_.boundsVector ()[i_])[j]))
+		  o_ << " (constraint not satisfied)";
+		break;
+	      }
 	    o_ << iendl;
 	  }
 	o_ << decindent << decindent;
