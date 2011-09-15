@@ -52,7 +52,7 @@ namespace roboptim
       throw std::runtime_error ("failed to initialize libltdl.");
 
     std::stringstream ss;
-    ss << "roboptim-core-" << plugin << "-plugin";
+    ss << "roboptim-core-plugin-" << plugin;
     handle_ = lt_dlopenext (ss.str ().c_str ());
     if (!handle_)
       {
