@@ -171,7 +171,7 @@ namespace roboptim
     }
     for (unsigned i = 0; i < constraint->outputSize (); ++i)
       {
-	boost::shared_ptr<Split<C> > split = new Split<C> (constraint, i);
+	boost::shared_ptr<Split<C> > split (new Split<C> (constraint, i));
 	if (scale.empty ())
 	  problem.addConstraint (split, interval[i]);
 	else
