@@ -72,11 +72,9 @@ namespace roboptim
     functionCache_t::const_iterator it = cache_[0].find (argument);
     if (it != cache_[0].end ())
       {
-	std::cout << "cached" << std::endl;
 	result = it->second;
 	return;
       }
-    std::cout << "not cached" << std::endl;
     (*function_) (result, argument);
     cache_[0][argument] = result;
   }

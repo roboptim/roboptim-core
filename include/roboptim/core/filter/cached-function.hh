@@ -75,6 +75,8 @@ namespace roboptim
 
     typedef std::map<Function::vector_t, Function::vector_t, ltvector>
       functionCache_t;
+    typedef std::map<Function::vector_t, hessian_t, ltvector>
+      hessianCache_t;
 
     explicit CachedFunction (boost::shared_ptr<const T> fct) throw ();
     ~CachedFunction () throw ();
@@ -103,7 +105,7 @@ namespace roboptim
     boost::shared_ptr<const T> function_;
     mutable std::vector<functionCache_t> cache_;
     mutable std::vector<functionCache_t> gradientCache_;
-    mutable std::vector<functionCache_t> hessianCache_;
+    mutable std::vector<hessianCache_t> hessianCache_;
   };
 
   /// @}
