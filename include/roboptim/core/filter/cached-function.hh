@@ -41,11 +41,13 @@ namespace roboptim
 
       while (it1 != v1.end () && it2 != v2.end ())
 	{
-	  if (*it1 < *it2)
+	  if (fabs (*it1 - *it2) < Function::epsilon ())
+	    ++it1, ++it2;
+	  else if (*it1 - *it2 < - Function::epsilon ())
 	    return true;
-	  ++it1, ++it2;
+	  else return false;
 	}
-      return it1 != v1.end () && it2 == v2.end ();
+      return false;
     }
   };
 

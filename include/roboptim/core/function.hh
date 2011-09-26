@@ -89,6 +89,14 @@ namespace roboptim
     /// \brief Type of a function evaluation argument.
     typedef vector_t argument_t;
 
+    /// \brief Get the value of the machine epsilon, useful for
+    /// floating types comparison.
+
+    /// \return machine epsilon value.
+    static value_type epsilon () throw ()
+    {
+      return std::numeric_limits<Function::value_type>::epsilon ();
+    }
 
     /// \brief Get the value that symbolizes positive infinity.
     /// \return representation of positive infinity in the value type
