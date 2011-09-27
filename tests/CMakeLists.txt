@@ -58,7 +58,7 @@ ENDMACRO(ROBOPTIM_CORE_TEST)
 ADD_EXECUTABLE(simple
   ${COMMON_HEADERS}
   simple.cc
-  ${CMAKE_SOURCE_DIR}/src/roboptim-core-dummy-plugin.cc)
+  ${CMAKE_SOURCE_DIR}/src/dummy.cc)
 TARGET_LINK_LIBRARIES(simple roboptim-core ${Boost_LIBRARIES})
 
 # Basic types.
