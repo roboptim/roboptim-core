@@ -13,6 +13,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with roboptim-core.  If not, see <http://www.gnu.org/licenses/>.
 
+# Add Boost path to include directories.
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+
 # Define the directory where plug-ins will be installed.
 SET(PLUGINDIR lib/${PROJECT_NAME})
 
