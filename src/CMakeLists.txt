@@ -55,6 +55,8 @@ INSTALL(TARGETS roboptim-core DESTINATION lib)
 
 # Dummy plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy MODULE dummy.cc)
+ADD_DEPENDENCIES(roboptim-core-plugin-dummy roboptim-core)
+TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES
   PREFIX ""
   SOVERSION 1.1.0)
