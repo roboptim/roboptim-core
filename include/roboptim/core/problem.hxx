@@ -30,6 +30,157 @@
 
 namespace roboptim
 {
+  //
+  // Template specialization for problem without constraint
+  //
+  template <typename F>
+  Problem<F, boost::mpl::vector <> >::Problem (const function_t& f) throw ()
+    : function_ (f),
+      startingPoint_ (),
+      argumentBounds_ (f.inputSize ()),
+      argumentScales_ (f.inputSize ())
+  {
+    // Check that in the objective function m = 1 (R^n -> R).
+    assert (f.outputSize () == 1);
+
+    // Initialize bound.
+    std::fill (argumentBounds_.begin (), argumentBounds_.end (),
+	       Function::makeInfiniteInterval ());
+    // Initialize scale.
+    std::fill (argumentScales_.begin (), argumentScales_.end (), 1.);
+  }
+
+  // Copy constructor.
+  template <typename F>
+  Problem<F, boost::mpl::vector <> >::Problem
+  (const Problem<F, boost::mpl::vector <> >& pb) throw () :
+   function_ (pb.function_),
+   startingPoint_ (pb.startingPoint_),
+   argumentBounds_ (pb.argumentBounds_),
+   argumentScales_ (pb.argumentScales_)
+  {
+  }
+
+  // Copy constructor (convert from another class of problem).
+  template <typename F>
+  template <typename F_>
+   Problem<F, boost::mpl::vector<> >::Problem
+   (const Problem<F_, boost::mpl::vector<> >& pb) throw ()
+    : function_ (pb.function_),
+      startingPoint_ (pb.startingPoint_),
+      argumentBounds_ (pb.argumentBounds_),
+      argumentScales_ (pb.argumentScales_)
+  {
+    // Check that F is a subtype of F_.
+    BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
+
+    //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
+  }
+
+  template <typename F>
+   Problem<F, boost::mpl::vector<> >::~Problem () throw ()
+  {
+  }
+
+   template <typename F>
+  const typename Problem<F, boost::mpl::vector<> >::function_t&
+  Problem<F, boost::mpl::vector<> >::function () const throw ()
+  {
+    return function_;
+  }
+
+  template <typename F>
+  typename Problem<F, boost::mpl::vector<> >::startingPoint_t&
+  Problem<F, boost::mpl::vector<> >::startingPoint () throw ()
+  {
+    if (startingPoint_ && startingPoint_->size ()
+	!= this->function ().inputSize ())
+      assert (0 && "Invalid starting point (wrong size)");
+    return startingPoint_;
+  }
+
+  template <typename F>
+  const typename Problem<F, boost::mpl::vector<> >::startingPoint_t&
+  Problem<F, boost::mpl::vector<> >::startingPoint () const throw ()
+  {
+    if (startingPoint_ && startingPoint_->size ()
+	!= this->function ().inputSize ())
+      assert (0 && "Invalid starting point (wrong size)");
+    return startingPoint_;
+  }
+
+  template <typename F>
+  std::ostream&
+  operator<< (std::ostream& o,
+	      const Problem<F, boost::mpl::vector<> > & pb)
+  {
+    return pb.print (o);
+  }
+
+  template <typename F>
+  std::ostream&
+  Problem<F, boost::mpl::vector<> >::
+  print (std::ostream& o) const throw ()
+  {
+    using namespace boost;
+
+    o << "Problem:" << incendl;
+    // Function.
+    o << this->function () << iendl;
+
+    // Arguments' bounds.
+    o << "Argument's bounds: " << this->argumentBounds () << iendl;
+    // Arguments' scales.
+    o << "Argument's scales: " << this->argumentScales () << iendl;
+
+    // Starting point.
+    if (startingPoint_)
+      {
+	o << iendl << "Starting point: " << *startingPoint_
+	  << iendl << "Starting value: "
+	  << this->function () (*startingPoint_);
+      }
+    else
+      o << iendl << "No starting point.";
+
+    // Infinity.
+    o << iendl << "Infinity value (for all functions): "
+      << Function::infinity ();
+    return o << decindent;
+  }
+
+  template <typename F>
+  typename Problem<F, boost::mpl::vector<> >::intervals_t&
+  Problem<F, boost::mpl::vector<> >::argumentBounds () throw ()
+  {
+    return argumentBounds_;
+  }
+
+  template <typename F>
+  const typename Problem<F, boost::mpl::vector<> >::intervals_t&
+  Problem<F, boost::mpl::vector<> >::argumentBounds () const throw ()
+  {
+    return argumentBounds_;
+  }
+
+  template <typename F>
+  typename Problem<F, boost::mpl::vector<> >::scales_t&
+  Problem<F, boost::mpl::vector<> >::argumentScales () throw ()
+  {
+    return argumentScales_;
+  }
+
+  template <typename F>
+  const typename Problem<F, boost::mpl::vector<> >::scales_t&
+  Problem<F, boost::mpl::vector<> >::argumentScales () const throw ()
+  {
+    return argumentScales_;
+  }
+
+  //
+  //
+  // General template implementation
+  //
   template <typename F, typename CLIST>
   Problem<F, CLIST>::Problem (const function_t& f) throw ()
     : function_ (f),

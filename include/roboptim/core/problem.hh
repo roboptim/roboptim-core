@@ -24,6 +24,7 @@
 # include <stdexcept>
 
 # include <boost/mpl/transform.hpp>
+# include <boost/mpl/vector.hpp>
 # include <boost/optional.hpp>
 # include <boost/shared_ptr.hpp>
 # include <boost/static_assert.hpp>
@@ -63,9 +64,146 @@ namespace roboptim
     };
   } // end of namespace detail.
 
+
   /// \addtogroup roboptim_problem
   /// @{
+  /// \brief Optimization problem without constraints.
+  ///
+  /// An optimization problem is defined as:
+  /// - a cost function (\f$\mathbb{R}^n \rightarrow \mathbb{R}\f$)
+  /// - a set of intervals and scales for arguments.
+  /// .
+  ///
+  /// The goal of the optimization process is finding a point which
+  /// minimizes the cost function
+  ///
+  /// To use the class, one has to instantiate a problem with
+  /// a reference to a cost function.
+  /// method: a reference to a function and an interval is needed.
+  ///
+  /// The cost function is immutable.
+  ///
+  /// Unlike other classes which just copy functions, pointers are used
+  /// here in order to allow sub-classes of constraints to be inserted
+  /// in the problem.
+  /// For instance, a twice derivable function can be inserted in
+  /// a problem which expects a derivable function.
+  ///
+  /// \tparam F function type
+  template <typename F>
+  class Problem <F, boost::mpl::vector<> >
+  {
+    BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
 
+    //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
+  public:
+    template <typename F_, typename CLIST_>
+    friend class Problem;
+
+    /// \brief Function type.
+    ///
+    /// This has to be either Function or one of its
+    /// sub-classes.
+    typedef F function_t;
+
+    // \brief Import function's value_type type.
+    typedef typename function_t::value_type value_type;
+
+    /// \brief Optional vector defines a starting point.
+    typedef boost::optional<Function::vector_t> startingPoint_t;
+
+    typedef Function::interval_t interval_t;
+    typedef Function::intervals_t intervals_t;
+
+    /// \brief Scale vector.
+    typedef std::vector<value_type> scales_t;
+
+    /// \name Constructors and destructors.
+    /// \{
+
+    /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
+    explicit Problem (const function_t&) throw ();
+
+    /// \brief Copy constructor.
+    explicit Problem (const Problem<F, boost::mpl::vector<> >&) throw ();
+
+    /// \brief Copy constructor (convert from another class of problem).
+    template <typename F_>
+    explicit Problem (const Problem<F_, boost::mpl::vector<> >&) throw ();
+
+    ~Problem () throw ();
+
+    /// \}
+
+
+    /// \name Cost function.
+    /// \{
+
+    /// \brief Retrieve cost function.
+    /// \return cost function
+    const function_t& function () const throw ();
+
+    /// \brief Retrieve arguments bounds.
+    /// Arguments bounds define in which interval
+    /// each argument is valid.
+    /// \return arguments bounds
+    intervals_t& argumentBounds () throw ();
+
+    /// \brief Retrieve arguments bounds.
+    /// Arguments bounds define in which interval
+    /// each argument is valid.
+    /// \return arguments bounds
+    const intervals_t& argumentBounds () const throw ();
+
+    /// \brief Retrieve arguments scales.
+    /// Arguments scales define which scale is applied for
+    /// each argument.
+    /// \return arguments scales
+    scales_t& argumentScales () throw ();
+
+    /// \brief Retrieve arguments scales.
+    /// Arguments scales define which scale is applied for
+    /// each argument.
+    /// \return arguments scales
+    const scales_t& argumentScales () const throw ();
+
+    /// \}
+
+    /// \name Starting point (initial guess).
+    /// \{
+
+    /// \brief Set the initial guess.
+    /// \return reference on the initial guess
+    startingPoint_t& startingPoint () throw ();
+
+    /// \brief Get the initial guess.
+    /// \return reference on the initial guess
+    const startingPoint_t& startingPoint () const throw ();
+
+    /// \}
+
+
+    /// \brief Display the problem on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
+    std::ostream& print (std::ostream& o) const throw ();
+
+  private:
+    /// \brief Objective function.
+    const function_t& function_;
+    /// \brief Starting point.
+    startingPoint_t startingPoint_;
+
+    /// \brief Arguments intervals.
+    intervals_t argumentBounds_;
+    /// \brief Arguments' scales.
+    scales_t argumentScales_;
+  };
+
+
+  /// \addtogroup roboptim_problem
+  /// @{
   /// \brief Optimization problem.
   ///
   /// An optimization problem is defined as:
@@ -281,6 +419,15 @@ namespace roboptim
   /// \example problem-cc.cc
 
   /// @}
+
+  /// \brief Override operator<< to handle problem display.
+  ///
+  /// \param o output stream used for display
+  /// \param pb problem to be displayed
+  /// \return output stream
+  template <typename F>
+  std::ostream& operator<< (std::ostream& o,
+			    const Problem<F, boost::mpl::vector<> >& pb);
 
   /// \brief Override operator<< to handle problem display.
   ///
