@@ -36,14 +36,14 @@ namespace roboptim
     bool operator()(const Function::vector_t& v1,
 		    const Function::vector_t& v2) const
     {
-      Function::vector_t::const_iterator it1 = v1.begin ();
-      Function::vector_t::const_iterator it2 = v2.begin ();
+      Function::size_type it1 = 0;
+      Function::size_type it2 = 0;
 
-      while (it1 != v1.end () && it2 != v2.end ())
+      while (it1 != v1.size () && it2 != v2.size ())
 	{
-	  if (fabs (*it1 - *it2) < Function::epsilon ())
+	  if (fabs (v1(it1) - v2(it2)) < Function::epsilon ())
 	    ++it1, ++it2;
-	  else if (*it1 - *it2 < - Function::epsilon ())
+	  else if (v1(it1) - v2(it2) < - Function::epsilon ())
 	    return true;
 	  else return false;
 	}

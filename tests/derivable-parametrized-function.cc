@@ -41,7 +41,7 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
 		      size_type = 0,
 		      size_type order = 0) const throw ()
   {
-    gradient.clear ();
+    gradient.setZero ();
     switch (order)
       {
       case 0:
@@ -80,7 +80,7 @@ int run_test ()
   ParametrizedDF pf;
 
   ParametrizedDF::argument_t parameter (1);
-  parameter.clear ();
+  parameter.setZero ();
 
   CHECKME (0.);
   CHECKME (3.14);

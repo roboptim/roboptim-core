@@ -20,8 +20,6 @@
 #include <iostream>
 #include <vector>
 
-#include <boost/numeric/ublas/io.hpp>
-
 #include <roboptim/core/function.hh>
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/result.hh>
@@ -38,10 +36,10 @@ namespace roboptim
       constraints (),
       lambda ()
   {
-    x.clear ();
-    value.clear ();
-    constraints.clear ();
-    lambda.clear ();
+    x.setZero ();
+    value.setZero ();
+    constraints.setZero ();
+    lambda.setZero ();
   }
 
   Result::~Result () throw ()

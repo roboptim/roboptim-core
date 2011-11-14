@@ -20,6 +20,7 @@ INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
 INCLUDE(cmake/lapack.cmake)
 INCLUDE(cmake/cpack.cmake)
+INCLUDE(cmake/eigen.cmake)
 
 SET(PROJECT_NAME roboptim-core)
 SET(PROJECT_DESCRIPTION "RobOptim core")
@@ -84,6 +85,7 @@ PKG_CONFIG_APPEND_LIBS(roboptim-core)
 
 # Search for dependencies.
 SEARCH_FOR_BOOST()
+SEARCH_FOR_EIGEN()
 
 # Libtool dynamic loading
 # This project does not use Libtool directly but still uses ltdl for

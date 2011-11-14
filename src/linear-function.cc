@@ -35,7 +35,7 @@ namespace roboptim
 				const vector_t&,
 				size_type) const throw ()
   {
-    hessian.clear ();
+    setZero (hessian);
   }
 
   std::ostream&

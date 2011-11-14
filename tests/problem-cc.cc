@@ -38,7 +38,7 @@ int run_test ()
   typedef Problem<Function, boost::mpl::vector<Function> > problemDst_t;
 
   ConstantFunction::vector_t v (1);
-  v.clear ();
+  v.setZero ();
 
   ConstantFunction f (v);
 

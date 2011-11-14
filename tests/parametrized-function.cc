@@ -61,7 +61,7 @@ int run_test ()
   ParametrizedF pf;
 
   ParametrizedF::argument_t parameter (1);
-  parameter.clear ();
+  parameter.setZero ();
 
   CHECKME (0.);
   CHECKME (3.14);

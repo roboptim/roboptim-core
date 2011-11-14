@@ -17,10 +17,6 @@
 
 #include "debug.hh"
 
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/vector.hpp>
-
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/identity-function.hh>
 
@@ -42,7 +38,6 @@ namespace roboptim
 				  const argument_t& argument)
     const throw ()
   {
-    using namespace boost::numeric::ublas;
     result = argument + this->offset_;
   }
 
@@ -50,9 +45,8 @@ namespace roboptim
   IdentityFunction::impl_jacobian (jacobian_t& jacobian,
 				   const argument_t&) const throw ()
   {
-    using namespace boost::numeric::ublas;
-    jacobian = identity_matrix<value_type> (jacobianSize ().first,
-					    jacobianSize ().second);
+    jacobian.resize (jacobianSize ().first, jacobianSize ().second);
+    jacobian.setIdentity ();
   }
 
   void
@@ -60,8 +54,7 @@ namespace roboptim
 				   const argument_t& ,
 				   size_type idFunction) const throw ()
   {
-    using namespace boost::numeric::ublas;
-    gradient.clear ();
+    gradient.setZero ();
     gradient[idFunction] = 1.;
   }
 

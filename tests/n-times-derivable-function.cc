@@ -34,7 +34,7 @@ struct F : public NTimesDerivableFunction<10>
 
   virtual void impl_compute (result_t& result, double) const throw ()
   {
-    result.clear ();
+    result.setZero ();
   }
 
   virtual void impl_derivative (gradient_t& derivative,
@@ -42,7 +42,7 @@ struct F : public NTimesDerivableFunction<10>
 				size_type order = 1) const throw ()
   {
     assert (order <= derivabilityOrder);
-    derivative.clear ();
+    derivative.setZero ();
   }
 };
 

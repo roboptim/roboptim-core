@@ -24,8 +24,6 @@
 # include <limits>
 # include <utility>
 
-# include <boost/numeric/ublas/symmetric.hpp>
-
 # include <roboptim/core/derivable-function.hh>
 
 namespace roboptim
@@ -57,7 +55,7 @@ namespace roboptim
     /// \brief Hessian type.
     ///
     /// Hessians are symmetric matrices.
-    typedef ublas::symmetric_matrix<value_type, ublas::lower> hessian_t;
+    typedef matrix_t hessian_t;
 
     /// \brief Hessian size type represented as a pair of values.
     typedef std::pair<size_type, size_type> hessianSize_t;
@@ -78,8 +76,8 @@ namespace roboptim
     /// \return true if valid, false if not
     bool isValidHessian (const hessian_t& hessian) const throw ()
     {
-      return hessian.size1 () == this->hessianSize ().first
-	&& hessian.size2 () == this->hessianSize ().second;
+      return hessian.rows () == this->hessianSize ().first
+	&& hessian.cols () == this->hessianSize ().second;
     }
 
 
@@ -92,8 +90,8 @@ namespace roboptim
     hessian_t hessian (const argument_t& argument,
 		       size_type functionId = 0) const throw ()
     {
-      hessian_t hessian (hessianSize ().first, hessianSize ().second);
-      hessian.clear ();
+      hessian_t hessian (matrix_t(hessianSize ().first, hessianSize ().second));
+      setZero (hessian);
       this->hessian (hessian, argument, functionId);
       return hessian;
     }
@@ -144,6 +142,17 @@ namespace roboptim
     virtual void impl_hessian (hessian_t& hessian,
 			       const argument_t& argument,
 			       size_type functionId = 0) const throw () = 0;
+    /// \brief Set a symmetric matrix to zero
+    ///
+    /// \note there might be an eigen function to do that.
+    void setZero (hessian_t& symmetric) const
+    {
+      for (size_type r = 0; r<symmetric.rows(); r++) {
+	for (size_type c = r; c < symmetric.cols(); c++) {
+	  symmetric (r,c) = 0.;
+	}
+      }
+    }
   };
 
   /// @}

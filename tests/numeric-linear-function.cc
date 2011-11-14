@@ -32,9 +32,9 @@ int run_test ()
   NumericLinearFunction::vector_t b (1);
   NumericLinearFunction::vector_t x (5);
 
-  a.clear ();
-  b.clear ();
-  x.clear ();
+  a.setZero ();
+  b.setZero ();
+  x.setZero ();
 
   a(0, 0) = 1.2;
   a(0, 1) = 3.4;

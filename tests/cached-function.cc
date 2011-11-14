@@ -33,14 +33,14 @@ struct F : public DerivableFunction
 
   void impl_compute (result_t& res, const argument_t& argument) const throw ()
   {
-    res.clear ();
+    res.setZero ();
     res[0] = 2. * argument[0];
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type) const throw ()
   {
-    grad.clear ();
+    grad.setZero ();
     grad[0] = 2.;
   }
 };

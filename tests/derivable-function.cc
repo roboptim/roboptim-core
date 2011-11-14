@@ -32,13 +32,13 @@ struct Null : public DerivableFunction
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
   {
-    res.clear ();
+    res.setZero ();
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type) const throw ()
   {
-    grad.clear ();
+    grad.setZero ();
   }
 };
 
@@ -49,13 +49,13 @@ struct NoTitle : public DerivableFunction
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
   {
-    res.clear ();
+    res.setZero ();
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type) const throw ()
   {
-    grad.clear ();
+    grad.setZero ();
   }
 };
 

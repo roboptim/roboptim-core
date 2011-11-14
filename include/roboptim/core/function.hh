@@ -24,17 +24,16 @@
 # include <limits>
 # include <string>
 # include <utility>
+# include <vector>
 
-# include <boost/numeric/ublas/matrix.hpp>
-# include <boost/numeric/ublas/vector.hpp>
 # include <boost/tuple/tuple.hpp>
+
+# include <Eigen/Core>
 
 # include <roboptim/core/fwd.hh>
 
 namespace roboptim
 {
-  namespace ublas = boost::numeric::ublas;
-
   /// \addtogroup roboptim_meta_function
   /// @{
 
@@ -58,11 +57,6 @@ namespace roboptim
     /// used for computations.
     typedef double value_type;
 
-    /// \brief Size type.
-    ///
-    /// This type is used to represent sizes, indexes, etc.
-    typedef std::size_t size_type;
-
     /// \brief Basic vector type.
     ///
     /// This basic vector type is used each time a vector of values
@@ -71,7 +65,7 @@ namespace roboptim
     /// \attention It is good practice in RobOptim to rely on this type
     /// when a vector of values is needed instead of relying on a particular
     /// implementation.
-    typedef ublas::vector<value_type> vector_t;
+    typedef Eigen::Matrix<value_type, Eigen::Dynamic, 1> vector_t;
 
     /// \brief Basic matrix type.
     ///
@@ -81,7 +75,12 @@ namespace roboptim
     /// \attention It is good practice in RobOptim to rely on this type
     /// when a matrix of values is needed instead of relying on a particular
     /// implementation.
-    typedef ublas::matrix<value_type> matrix_t;
+    typedef Eigen::Matrix<value_type, Eigen::Dynamic, Eigen::Dynamic> matrix_t;
+
+    /// \brief Size type.
+    ///
+    /// This type is used to represent sizes, indexes, etc.
+    typedef matrix_t::Index size_type;
 
     /// \brief Type of a function evaluation result.
     typedef vector_t result_t;
@@ -331,7 +330,7 @@ namespace roboptim
     result_t operator () (const argument_t& argument) const throw ()
     {
       result_t result (outputSize ());
-      result.clear ();
+      result.setZero ();
       (*this) (result, argument);
       return result;
     }

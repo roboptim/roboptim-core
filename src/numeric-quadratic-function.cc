@@ -17,11 +17,6 @@
 
 #include "debug.hh"
 
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/vector.hpp>
-
-
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/numeric-quadratic-function.hh>
 
@@ -30,11 +25,11 @@ namespace roboptim
   NumericQuadraticFunction::NumericQuadraticFunction (const symmetric_t& a,
                                                       const vector_t& b)
     throw ()
-    : QuadraticFunction (a.size1 (), 1, "numeric quadratic function"),
+    : QuadraticFunction (a.rows (), 1, "numeric quadratic function"),
       a_ (a),
       b_ (b)
   {
-    assert (a.size1 () == a.size2 () && a.size2 () == b.size ());
+    assert (a.rows () == a.cols () && a.cols () == b.size ());
   }
 
 
@@ -49,11 +44,7 @@ namespace roboptim
 					  const argument_t& argument)
     const throw ()
   {
-    using namespace boost::numeric::ublas;
-
-    result (0) = inner_prod
-      (prod (trans (argument), a_), argument) / 2
-      + inner_prod (trans (b_), argument);
+    result (0) = .5*argument.dot(a_*argument) + argument.dot(b_);
   }
 
   // x * A + b
@@ -62,8 +53,7 @@ namespace roboptim
 					   const argument_t& x,
 					   size_type) const throw ()
   {
-    using namespace boost::numeric::ublas;
-    noalias (result) = prec_prod (x, a_) + b_;
+    result.noalias () = a_ * x + b_;
   }
 
   // A

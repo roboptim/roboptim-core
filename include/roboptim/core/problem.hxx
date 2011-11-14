@@ -19,7 +19,6 @@
 # define ROBOPTIM_CORE_PROBLEM_HXX
 # include <algorithm>
 # include <stdexcept>
-# include <boost/numeric/ublas/io.hpp>
 # include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
 # include <boost/variant.hpp>

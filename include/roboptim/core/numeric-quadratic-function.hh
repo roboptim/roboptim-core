@@ -20,14 +20,10 @@
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
 
-# include <boost/numeric/ublas/symmetric.hpp>
-
 # include <roboptim/core/quadratic-function.hh>
 
 namespace roboptim
 {
-  namespace ublas = boost::numeric::ublas;
-
   /// \addtogroup roboptim_function
   /// @{
 
@@ -42,7 +38,7 @@ namespace roboptim
   {
   public:
     /// \brief Symmetric matrix type.
-    typedef ublas::symmetric_matrix<double, ublas::lower> symmetric_t;
+    typedef matrix_t symmetric_t;
 
     /// \brief Build a quadratic function from a matrix and a vector.
     ///
