@@ -41,6 +41,7 @@ ADD_LIBRARY(roboptim-core SHARED
   solver.cc
   solver-error.cc
   solver-warning.cc
+  sum-of-c1-squares.cc
   twice-differentiable-function.cc
   util.cc
 

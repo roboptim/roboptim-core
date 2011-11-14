@@ -64,6 +64,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-commands.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/sum-of-c1-squares.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hh

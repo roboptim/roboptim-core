@@ -1,4 +1,5 @@
                                                                 -*- outline -*-
+* Add support for nonlinear least-square problems.
 
 New in 0.4, 2009-11-16:
 * Make plug-in loading more robust.
