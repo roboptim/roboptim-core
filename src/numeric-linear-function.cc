@@ -65,7 +65,7 @@ namespace roboptim
 					const argument_t&,
 					size_type idFunction) const throw ()
   {
-    for (unsigned j = 0; j < inputSize (); ++j)
+    for (size_type j = 0; j < inputSize (); ++j)
       gradient[j] = a_ (idFunction, j);
   }
 

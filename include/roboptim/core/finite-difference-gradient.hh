@@ -99,6 +99,7 @@ namespace roboptim
     class ROBOPTIM_DLLAPI Simple
     {
     public:
+      typedef Function::size_type size_type;
       void computeGradient
       (const Function& adaptee,
        Function::value_type epsilon,
@@ -114,6 +115,7 @@ namespace roboptim
     class ROBOPTIM_DLLAPI FivePointsRule
     {
     public:
+      typedef Function::size_type size_type;
       void computeGradient
       (const Function& adaptee,
        Function::value_type epsilon,

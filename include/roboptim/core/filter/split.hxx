@@ -38,7 +38,8 @@ namespace roboptim
   } // end of anonymous namespace.
 
   template <typename T>
-  Split<T>::Split (boost::shared_ptr<const T> fct, unsigned functionId) throw ()
+  Split<T>::Split (boost::shared_ptr<const T> fct,
+		   size_type functionId) throw ()
     : T (fct->inputSize (), 1, splitName (*fct, functionId)),
       function_ (fct),
       functionId_ (functionId)

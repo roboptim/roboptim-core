@@ -24,6 +24,7 @@
 
 # include <boost/numeric/ublas/matrix.hpp>
 
+# include <roboptim/core/function.hh>
 # include <roboptim/core/visualization/fwd.hh>
 # include <roboptim/core/visualization/gnuplot-commands.hh>
 
@@ -71,7 +72,7 @@ namespace roboptim
     normalize (const T& x)
     {
       T res (x.size ());
-      for (unsigned i = 0; i < x.size (); ++i)
+      for (Function::size_type i = 0; i < x.size (); ++i)
 	res[i] = normalize (x[i]);
       return res;
     }

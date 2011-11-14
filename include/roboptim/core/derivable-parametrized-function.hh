@@ -196,10 +196,10 @@ namespace roboptim
     virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
       const throw ()
     {
-      for (unsigned i = 0; i < this->functionOutputSize (); ++i)
+      for (size_type i = 0; i < this->functionOutputSize (); ++i)
 	{
 	  gradient_t grad = this->gradient (arg, i);
-	  for (unsigned j = 0; j < this->inputSize (); ++j)
+	  for (size_type j = 0; j < this->inputSize (); ++j)
 	    jacobian (i, j) = grad[j];
       }
     }

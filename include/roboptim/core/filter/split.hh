@@ -53,7 +53,8 @@ namespace roboptim
     /// \brief Import interval type.
     typedef typename DerivableFunction::interval_t interval_t;
 
-    explicit Split (boost::shared_ptr<const T> fct, unsigned functionId) throw ();
+    explicit Split (boost::shared_ptr<const T> fct,
+		    size_type functionId) throw ();
     ~Split () throw ();
 
   protected:

@@ -67,12 +67,12 @@ namespace roboptim
 	std::string str = (boost::format ("plot '-' title '%1%' with line")
 			   % f.getName ()).str ();
 
-	for (unsigned i = 1; i < f.outputSize (); ++i)
+	for (Function::size_type i = 1; i < f.outputSize (); ++i)
 	  str += ", '-' with line";
 	str += "\n";
 
 	Function::vector_t x (f.inputSize ());
-	for (unsigned i = 0; i < f.outputSize (); ++i)
+	for (Function::size_type i = 0; i < f.outputSize (); ++i)
 	  {
 	    for (double t = boost::get<0> (window); t < boost::get<1> (window);
 		 t += boost::get<2> (window))

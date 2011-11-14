@@ -158,7 +158,7 @@ namespace roboptim
       assert (adaptee.outputSize () - idFunction > 0);
 
       Function::result_t res = adaptee (argument);
-      for (unsigned j = 0; j < adaptee.inputSize (); ++j)
+      for (size_type j = 0; j < adaptee.inputSize (); ++j)
 	{
 	  Function::argument_t xEps = argument;
 	  xEps[j] += epsilon;
@@ -185,7 +185,7 @@ namespace roboptim
       value_type trunc = 0.;
       value_type error = 0.;
 
-      for (unsigned j = 0; j < argument.size (); ++j)
+      for (size_type j = 0; j < argument.size (); ++j)
 	{
 	  detail::compute_deriv (adaptee, j, h,
 				 r_0, round, trunc,
@@ -236,7 +236,7 @@ namespace roboptim
     DerivableFunction::gradient_t grad = function.gradient (x, i);
     DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
 
-    for (unsigned col = 0; col < function.inputSize (); ++col)
+    for (Function::size_type col = 0; col < function.inputSize (); ++col)
       if (fabs (grad[col] - fdgrad[col]) >= threshold)
 	return false;
     return true;

@@ -36,10 +36,10 @@ namespace roboptim
 					 const argument_t& argument)
     const throw ()
   {
-    for (unsigned i = 0; i < outputSize (); ++i)
+    for (size_type i = 0; i < outputSize (); ++i)
       {
         gradient_t grad = gradient (argument, i);
-        for (unsigned j = 0; j < inputSize (); ++j)
+        for (size_type j = 0; j < inputSize (); ++j)
           jacobian (i, j) = grad[j];
       }
   }

@@ -36,7 +36,7 @@ namespace roboptim
       memcpy (dst, &src[0], src.size () * sizeof (Function::value_type));
 
       // NaN != NaN, handle this case.
-      for (std::size_t i = 0; i < src.size (); ++i)
+      for (Function::size_type i = 0; i < src.size (); ++i)
 	if (src[i] != src[i])
 	  assert (dst[i] != dst[i]);
 	else
@@ -51,7 +51,7 @@ namespace roboptim
       memcpy (&dst[0], src, dst.size () * sizeof (Function::value_type));
 
       // NaN != NaN, handle this case.
-      for (std::size_t i = 0; i < dst.size (); ++i)
+      for (Function::size_type i = 0; i < dst.size (); ++i)
 	if (src[i] != src[i])
 	  assert (dst[i] != dst[i]);
 	else

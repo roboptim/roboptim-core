@@ -422,7 +422,7 @@ namespace roboptim
     else
       o << "Number of constraints: " << this->constraints ().size ();
 
-    for (Function::size_type i = 0; i < this->constraints ().size (); ++i)
+    for (unsigned i = 0; i < this->constraints ().size (); ++i)
       {
 	detail::printConstraint<Problem<F, CLIST> > pc (o, *this, i);
 	boost::apply_visitor (pc, this->constraints ()[i]);
