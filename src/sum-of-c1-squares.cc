@@ -77,7 +77,9 @@ namespace roboptim {
   impl_gradient(gradient_t& gradient, const argument_t& x,
 		size_type row) const throw ()
   {
-    assert (row = 0);
+    row = row; // keep unused variable warning silent.
+
+    assert (row == 0);
     computeFunction (x);
     gradient.clear ();
     for (size_t i = 0; i < value_.size(); i++) {
