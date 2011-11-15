@@ -85,7 +85,7 @@ PKG_CONFIG_APPEND_LIBS(roboptim-core)
 
 # Search for dependencies.
 SEARCH_FOR_BOOST()
-SEARCH_FOR_EIGEN()
+ADD_REQUIRED_DEPENDENCY("eigen3 >= 3.0.0")
 
 # Libtool dynamic loading
 # This project does not use Libtool directly but still uses ltdl for
