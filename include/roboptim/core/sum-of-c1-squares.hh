@@ -26,6 +26,9 @@
 # include <roboptim/core/function.hh>
 
 namespace roboptim {
+  /// \addtogroup roboptim_meta_function
+  /// @{
+
   /// \brief Sum of the squares of differentiable functions
   ///
   /// This types enables roboptim to handle Levenberg Marquardt algorithm.
@@ -39,7 +42,6 @@ namespace roboptim {
   public:
     /// @name Types
     /// @{
-    /// \brief Parent type
     typedef DerivableFunction parent_t;
     typedef parent_t::argument_t argument_t;
     typedef parent_t::jacobian_t jacobian_t;
@@ -81,5 +83,6 @@ namespace roboptim {
     /// \brief temporary variable to store gradients
     mutable gradient_t gradient_;
   }; // class Solver
+  /// @}
 } // namespace roboptim
 #endif // ROBOPTIM_CORE_SUM_OF_C1_SQUARES_HH
