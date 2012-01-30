@@ -1,4 +1,8 @@
                                                                 -*- outline -*-
+New in 1.0, 2012-01-30
+* Specialize template problem for empty vector of constraints.
+* Support for cache functions.
+* Switch to cmake.
 * Add support for nonlinear least-square problems.
 
 New in 0.4, 2009-11-16:
