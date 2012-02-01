@@ -108,6 +108,7 @@ namespace roboptim
     ParametrizedFunction (size_type inputSize,
 			  size_type functionInputSize,
 			  size_type functionOutputSize) throw ();
+    virtual ~ParametrizedFunction() {};
 
     /// \brief Function evaluation.
     ///
