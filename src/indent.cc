@@ -28,7 +28,7 @@ namespace roboptim
   inline long int& indent (std::ostream& o)
   {
     // The slot to store the current indentation level.
-    static const long int indent_index = std::ios::xalloc ();
+    static const int indent_index = std::ios::xalloc ();
     return o.iword (indent_index);
   }
 
@@ -56,7 +56,7 @@ namespace roboptim
     o << std::endl;
     // Be sure to be able to restore the stream flags.
     char fill = o.fill (' ');
-    return o << std::setw (indent (o))
+    return o << std::setw ((int)indent (o))
 	     << ""
 	     << std::setfill (fill);
   }

@@ -37,14 +37,14 @@ struct F : public DerivableFunction
   {
     res.clear ();
     for (size_type i = 0; i < outputSize (); ++i)
-      res[i] = i * argument[0];
+      res[i] = (value_type)i * argument[0];
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type functionId) const throw ()
   {
     grad.clear ();
-    grad[0] = functionId;
+    grad[0] = (value_type)functionId;
   }
 };
 

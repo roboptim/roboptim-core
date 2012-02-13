@@ -18,6 +18,7 @@
 #ifndef ROBOPTIM_CORE_PROBLEM_HXX
 # define ROBOPTIM_CORE_PROBLEM_HXX
 # include <algorithm>
+# include <stdexcept>
 # include <boost/numeric/ublas/io.hpp>
 # include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
@@ -265,9 +266,10 @@ namespace roboptim
     //FIXME: check that C is in CLIST.
 
     if (x->inputSize () != this->function ().inputSize ())
-      assert (0 && "Invalid constraint (wrong input size)");
+      throw std::runtime_error ("Invalid constraint (wrong input size)");
     if (x->outputSize () != 1)
-      assert (0 && "Invalid constraint (output size is not equal to one)");
+      throw std::runtime_error
+	("Invalid constraint (output size is not equal to one)");
 
     // Check that the pointer is not null.
     assert (!!x.get ());
@@ -283,7 +285,7 @@ namespace roboptim
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
-      assert (0 && "Invalid starting point (wrong size)");
+      throw std::runtime_error ("Invalid starting point (wrong size)");
     return startingPoint_;
   }
 
@@ -293,7 +295,7 @@ namespace roboptim
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
-      assert (0 && "Invalid starting point (wrong size)");
+      throw std::runtime_error ("Invalid starting point (wrong size)");
     return startingPoint_;
   }
 

@@ -81,7 +81,7 @@ namespace roboptim
   {
     ROBOPTIM_DLLLOCAL void
     compute_deriv (const Function& adaptee,
-		   unsigned j,
+		   Function::size_type j,
 		   double h,
 		   double& result,
 		   double& round,
@@ -92,7 +92,7 @@ namespace roboptim
     /// Algorithm from the Gnu Scientific Library.
     ROBOPTIM_DLLLOCAL void
     compute_deriv (const Function& adaptee,
-		   unsigned j,
+		   Function::size_type j,
 		   double h,
 		   double& result,
 		   double& round,

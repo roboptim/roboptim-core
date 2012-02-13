@@ -73,7 +73,7 @@ namespace roboptim
     value_type maxDelta_;
 
     /// \brief Component containing the maximum error.
-    value_type maxDeltaComponent_;
+    size_type maxDeltaComponent_;
 
     /// \brief Allowed threshold.
     value_type threshold_;

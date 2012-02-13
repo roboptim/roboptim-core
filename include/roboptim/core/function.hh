@@ -252,7 +252,7 @@ namespace roboptim
       for (size_type i = 0; i <= n; ++i)
 	{
 	  value_type t =
-	    getLowerBound (interval) + i * getStep (interval);
+	    getLowerBound (interval) + (value_type)i * getStep (interval);
 	  if (t > getUpperBound (interval))
 	    t = getUpperBound (interval);
 	  assert (getLowerBound (interval) <= t
@@ -283,7 +283,7 @@ namespace roboptim
       for (size_type i = 0; i < n; ++i)
 	{
 	  value_type t =
-	    getLowerBound (interval) + i * (delta / (n - 1));
+	    getLowerBound (interval) + (value_type)i * (delta / ((value_type)n - 1));
 	  if (t > getUpperBound (interval))
 	    t = getUpperBound (interval);
 	  assert (getLowerBound (interval) <= t

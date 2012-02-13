@@ -77,7 +77,7 @@ namespace roboptim
 
   private:
     boost::shared_ptr<const T> function_;
-    unsigned functionId_;
+    size_type functionId_;
   };
 
   template <typename P, typename C>
