@@ -43,7 +43,7 @@ struct F : public DerivableFunction
   void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type functionId) const throw ()
   {
-    grad.clear ();
+    grad.setZero ();
     grad[0] = (value_type)functionId;
   }
 };

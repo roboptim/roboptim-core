@@ -248,7 +248,7 @@ namespace roboptim
 
       value_type n = std::floor (delta / getStep (interval));
 
-      for (size_type i = 0; i <= n; ++i)
+      for (value_type i = 0.; i <= n; i += 1.)
 	{
 	  value_type t =
 	    getLowerBound (interval) + (value_type)i * getStep (interval);
