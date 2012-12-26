@@ -43,7 +43,10 @@ namespace roboptim
   template <typename FdgPolicy =
 	    finiteDifferenceGradientPolicies::FivePointsRule>
   class FiniteDifferenceGradient;
-  class Function;
+
+  template <typename T>
+  class GenericFunction;
+
   class GenericSolver;
   class LinearFunction;
   class NoSolution;

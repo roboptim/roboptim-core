@@ -147,11 +147,7 @@ namespace roboptim
     /// \note there might be an eigen function to do that.
     void setZero (hessian_t& symmetric) const
     {
-      for (size_type r = 0; r<symmetric.rows(); r++) {
-	for (size_type c = r; c < symmetric.cols(); c++) {
-	  symmetric (r,c) = 0.;
-	}
-      }
+      symmetric.setZero ();
     }
   };
 

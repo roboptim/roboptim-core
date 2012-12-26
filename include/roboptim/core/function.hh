@@ -28,7 +28,9 @@
 
 # include <boost/tuple/tuple.hpp>
 
+# define EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET
 # include <Eigen/Core>
+# include <Eigen/Sparse>
 
 # include <roboptim/core/fwd.hh>
 
@@ -36,6 +38,21 @@ namespace roboptim
 {
   /// \addtogroup roboptim_meta_function
   /// @{
+
+  /// \brief GenericFunction traits
+  ///
+  /// This helper class is used to define which types a GenericFunction
+  /// should use. The following types are required:
+  ///
+  /// - value_type scalar type used for matrix coefficients (e.g. double)
+  /// - size_type type used for indexing matrices (e.g. std::size_t)
+  /// - matrix_t the matrix type (e.g. Eigen::Matrix<double, 1, 2>)
+  /// - vector_t the used vector type
+  /// - result_t function result type (vector or matrix)
+  /// - argument_t function argument type (usually vector)
+  template <typename T>
+  struct GenericFunctionTraits
+  {};
 
   /// \brief Define an abstract mathematical function (\f$C^0\f$).
   ///
@@ -48,14 +65,21 @@ namespace roboptim
   ///
   /// Functions are pure immutable objects: evaluating a function
   /// twice at a given point <b>must</b> give the same result.
-  class ROBOPTIM_DLLAPI Function
+  ///
+  /// This function is parametrized by the matrix type used in this
+  /// function. Currently, dense (which size may be dynamic or
+  /// static and sparse Eigen matrices can be used) are supported.
+  ///
+  /// \tparam T Matrix type
+  template <typename T>
+  class GenericFunction
   {
   public:
     /// \brief Values type.
     ///
     /// Represents the numerical type (i.e. float, double, int...)
     /// used for computations.
-    typedef double value_type;
+    typedef typename GenericFunctionTraits<T>::value_type value_type;
 
     /// \brief Basic vector type.
     ///
@@ -65,7 +89,7 @@ namespace roboptim
     /// \attention It is good practice in RobOptim to rely on this type
     /// when a vector of values is needed instead of relying on a particular
     /// implementation.
-    typedef Eigen::Matrix<value_type, Eigen::Dynamic, 1> vector_t;
+    typedef typename GenericFunctionTraits<T>::vector_t vector_t;
 
     /// \brief Basic matrix type.
     ///
@@ -75,18 +99,18 @@ namespace roboptim
     /// \attention It is good practice in RobOptim to rely on this type
     /// when a matrix of values is needed instead of relying on a particular
     /// implementation.
-    typedef Eigen::Matrix<value_type, Eigen::Dynamic, Eigen::Dynamic> matrix_t;
+    typedef typename GenericFunctionTraits<T>::matrix_t  matrix_t;
 
     /// \brief Size type.
     ///
     /// This type is used to represent sizes, indexes, etc.
-    typedef matrix_t::Index size_type;
+    typedef typename GenericFunctionTraits<T>::size_type size_type;
 
     /// \brief Type of a function evaluation result.
-    typedef vector_t result_t;
+    typedef typename GenericFunctionTraits<T>::result_t result_t;
 
     /// \brief Type of a function evaluation argument.
-    typedef vector_t argument_t;
+    typedef typename GenericFunctionTraits<T>::argument_t argument_t;
 
     /// \brief Get the value of the machine epsilon, useful for
     /// floating types comparison.
@@ -94,14 +118,14 @@ namespace roboptim
     /// \return machine epsilon value.
     static value_type epsilon () throw ()
     {
-      return std::numeric_limits<Function::value_type>::epsilon ();
+      return std::numeric_limits<value_type>::epsilon ();
     }
 
     /// \brief Get the value that symbolizes positive infinity.
     /// \return representation of positive infinity in the value type
     static value_type infinity () throw ()
     {
-      return std::numeric_limits<Function::value_type>::infinity ();
+      return std::numeric_limits<value_type>::infinity ();
     }
 
     /// \name Interval
@@ -129,7 +153,7 @@ namespace roboptim
     /// \return interval representing \f$[-\infty, +\infty]\f$
     static interval_t makeInfiniteInterval () throw ()
     {
-      return std::make_pair (-Function::infinity (), Function::infinity  ());
+      return std::make_pair (-infinity (), infinity  ());
     }
 
     /// \brief Construct an interval from a lower bound.
@@ -137,7 +161,7 @@ namespace roboptim
     /// \return interval representing \f$[l, +\infty]\f$
     static interval_t makeLowerInterval (value_type l) throw ()
     {
-      return makeInterval (l, Function::infinity  ());
+      return makeInterval (l, infinity  ());
     }
 
     /// \brief Construct an interval from an upper bound.
@@ -145,7 +169,7 @@ namespace roboptim
     /// \return interval representing \f$[-\infty, u]\f$
     static interval_t makeUpperInterval (value_type u) throw ()
     {
-      return makeInterval (-Function::infinity  (), u);
+      return makeInterval (-infinity  (), u);
     }
 
     /// \brief Get the lower bound of an interval
@@ -319,7 +343,7 @@ namespace roboptim
     }
 
     /// \brief Trivial destructor.
-    virtual ~Function () throw ();
+    virtual ~GenericFunction () throw ();
 
     /// \brief Evaluate the function at a specified point.
     ///
@@ -372,7 +396,7 @@ namespace roboptim
     /// \param inputSize function arity
     /// \param outputSize result size
     /// \param name function's name
-    Function (size_type inputSize,
+    GenericFunction (size_type inputSize,
 	      size_type outputSize = 1,
 	      std::string name = std::string ()) throw ();
 
@@ -397,6 +421,68 @@ namespace roboptim
     /// \brief Function name (for user-friendliness).
     std::string name_;
   };
+
+  template <typename T>
+  GenericFunction<T>::GenericFunction (size_type inputSize,
+				    size_type outputSize,
+				    std::string name) throw ()
+    : inputSize_ (inputSize),
+      outputSize_ (outputSize),
+      name_ (name)
+  {
+    // Positive size is required.
+    assert (inputSize > 0 && outputSize > 0);
+  }
+
+  template <typename T>
+  GenericFunction<T>::~GenericFunction () throw ()
+  {
+  }
+
+  template <typename T>
+  std::ostream&
+  GenericFunction<T>::print (std::ostream& o) const throw ()
+  {
+    if (getName ().empty ())
+      return o << "Function";
+    else
+      return o << getName  () << " (not derivable)";
+  }
+
+  template <typename T>
+  std::ostream&
+  operator<< (std::ostream& o, const GenericFunction<T>& f)
+  {
+    return f.print (o);
+  }
+
+  /// \brief Tag type for functions using Eigen dense matrices.
+  struct EigenMatrixDense {};
+  /// \brief Tag type for functions using Eigen sparse matrices.
+  struct EigenMatrixSparse {};
+
+  /// \brief Trait specializing GenericFunction for Eigen dense matrices.
+  template <>
+  struct GenericFunctionTraits<EigenMatrixDense>
+  {
+    typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> matrix_t;
+    typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
+
+    typedef typename matrix_t::Index size_type;
+    typedef typename matrix_t::Scalar value_type;
+
+    typedef vector_t result_t;
+    typedef vector_t argument_t;
+  };
+
+  /// \brief Trait specializing GenericFunction for Eigen dense matrices.
+  typedef GenericFunction<EigenMatrixDense>
+  Function;
+
+  /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
+  typedef GenericFunction<EigenMatrixSparse>
+  SparseFunction;
+
   /// @}
 
 
@@ -405,9 +491,8 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param f function to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const Function& f);
-
-
+  template <typename T>
+  std::ostream& operator<< (std::ostream& o, const GenericFunction<T>& f);
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_FUNCTION_HH

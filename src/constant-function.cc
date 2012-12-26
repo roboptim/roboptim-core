@@ -24,7 +24,8 @@ namespace roboptim
 {
   ConstantFunction::ConstantFunction (const vector_t& offset)
     throw ()
-    : LinearFunction (offset.size (), offset.size (), "constant function"),
+    : LinearFunction ((size_type)offset.size (),
+		      (size_type)offset.size (), "constant function"),
       offset_ (offset)
   {
   }
