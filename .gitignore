@@ -1,6 +1,7 @@
 INSTALL
 Makefile.in
 _build*
+build*
 aclocal.m4
 autom4te.cache/
 config.h.in
