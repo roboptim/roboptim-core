@@ -475,6 +475,21 @@ namespace roboptim
     typedef vector_t argument_t;
   };
 
+  /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
+  template <>
+  struct GenericFunctionTraits<EigenMatrixSparse>
+  {
+    typedef Eigen::SparseMatrix<double> matrix_t;
+    typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
+
+    typedef typename matrix_t::Index size_type;
+    typedef typename matrix_t::Scalar value_type;
+
+    typedef vector_t result_t;
+    typedef vector_t argument_t;
+  };
+
+
   /// \brief Trait specializing GenericFunction for Eigen dense matrices.
   typedef GenericFunction<EigenMatrixDense>
   Function;
