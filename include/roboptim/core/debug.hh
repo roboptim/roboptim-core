@@ -17,66 +17,26 @@
 
 #ifndef ROBOPTIM_CORE_DEBUG_HH
 # define ROBOPTIM_CORE_DEBUG_HH
+# include <log4cxx/logger.h>
 # include <roboptim/core/indent.hh>
 
-# ifdef CWDEBUG
-#  include <libcwd/libraries_debug.h>
+# define RoboptimCoreDebug(STATEMENT)		\
+  LOG4CXX_DEBUG(log4cxx::Logger::getLogger("roboptim.core"),	\
+		STATEMENT)
 
-// Include io.hh so that debug code can display whatever they want.
-# include <roboptim/core/io.hh>
+#  define RoboptimCoreDout(cntrl, data)				\
+  LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),	\
+	       data)
 
-# include <cassert>
-# include <iomanip>
-# include <ostream>
+#define RoboptimCoreDoutFatal(cntrl, data)			\
+  LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),	\
+	       data)
 
-namespace roboptim
-{
-  namespace debug
-  {
-    /// Initialize debugging code from main ().
-    void init ();
-    // Initialize debugging code from new threads.
-    void init_thread ();
+#define RoboptimCoreForAllDebugChannels(STATEMENT)			\
+  LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),		\
+	       STATEMEMT)
+#define RoboptimCoreForAllDebugObjects(STATEMENT)		\
+  LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),	\
+	       STATEMENT)
 
-    namespace channels
-    {
-      namespace dc
-      {
-	using namespace libcwd::channels::dc;
-
-	extern ::libcwd::channel_ct function;
-      }
-    }
-  }
-}
-# endif // CWDEBUG
-
-# define RoboptimCoreDebug(STATEMENT) \
-  LibcwDebug(roboptim::debug::channels, STATEMENT)
-
-// Handle indentation properly.
-# ifdef CWDEBUG
-#  define RoboptimCoreDout(cntrl, data)					     \
-  LibcwDoutScopeBegin (::roboptim::debug::channels, libcwd::libcw_do, cntrl) \
-  LibcwDoutStream << data;						     \
-  char fill = LibcwDoutStream.fill (' ');				     \
-  LibcwDoutStream << std::setw (::roboptim::indent (LibcwDoutStream))        \
-                  << ""				                             \
-                  << std::setfill (fill);				     \
-  LibcwDoutScopeEnd
-# else
-#  define RoboptimCoreDout(cntrl, data)
-# endif //! CWDEBUG
-
-# define RoboptimCoreDoutFatal(cntrl, data) \
-  LibcwDoutFatal(roboptim::debug::channels, libcwd::libcw_do, cntrl, data)
-# define RoboptimCoreForAllDebugChannels(STATEMENT) \
-  LibcwdForAllDebugChannels(roboptim::debug::channels, STATEMENT)
-# define RoboptimCoreForAllDebugObjects(STATEMENT) \
-  LibcwdForAllDebugObjects(roboptim::debug::channels, STATEMENT)
-# if defined(Debug) && !defined(ROBOPTIM_CORE_INTERNAL)
-#  error The application source file (.cc or .cpp) must use	\
-  '#include "debug.h"' _before_ including the header file	\
-  that it includes now, that led to this error.
-# endif
 #endif // !ROBOPTIM_CORE_DEBUG_HH

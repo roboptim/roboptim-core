@@ -50,6 +50,7 @@ ADD_LIBRARY(roboptim-core SHARED
   )
 
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 TARGET_LINK_LIBRARIES(roboptim-core ltdl)
 SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 1.1.0)

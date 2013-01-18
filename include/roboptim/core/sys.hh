@@ -16,10 +16,3 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <roboptim/core/portability.hh>
-
-#ifdef CWDEBUG
-# ifndef _GNU_SOURCE
-#  define _GNU_SOURCE
-# endif //! _GNU_SOURCE
-# include <libcwd/sys.h>
-#endif //! CWDEBUG
