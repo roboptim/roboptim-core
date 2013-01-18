@@ -128,6 +128,9 @@ namespace roboptim
 
     /// \brief Solver parameters (run-time configuration).
     parameters_t parameters_;
+
+    /// \brief Pointer to function logger (see log4cxx documentation).
+    static log4cxx::LoggerPtr logger;
   };
 
   /// \brief Override operator<< to display ``parameters'' objects.

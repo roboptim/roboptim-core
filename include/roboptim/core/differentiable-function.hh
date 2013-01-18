@@ -23,6 +23,8 @@
 # include <limits>
 # include <utility>
 
+# include <log4cxx/logger.h>
+
 # include <roboptim/core/function.hh>
 
 namespace roboptim
@@ -128,8 +130,8 @@ namespace roboptim
     void jacobian (jacobian_t& jacobian, const argument_t& argument)
       const throw ()
     {
-      RoboptimCoreDout (dc::function,
-			"Evaluating jacobian at point: " << argument);
+      LOG4CXX_TRACE (logger,
+		     "Evaluating jacobian at point: " << argument);
       assert (argument.size () == inputSize ());
       assert (isValidJacobian (jacobian));
       this->impl_jacobian (jacobian, argument);
@@ -162,10 +164,10 @@ namespace roboptim
 		   const argument_t& argument,
 		   size_type functionId = 0) const throw ()
     {
-      RoboptimCoreDout (dc::function,
-			"Evaluating gradient at point: "
-			<< argument
-			<< " (function id: " << functionId << ")");
+      LOG4CXX_TRACE (logger,
+		     "Evaluating gradient at point: "
+		     << argument
+		     << " (function id: " << functionId << ")");
       assert (argument.size () == inputSize ());
       assert (isValidGradient (gradient));
       this->impl_gradient (gradient, argument, functionId);

@@ -24,6 +24,8 @@
 # include <limits>
 # include <utility>
 
+# include <log4cxx/logger.h>
+
 # include <roboptim/core/derivable-function.hh>
 
 namespace roboptim
@@ -106,8 +108,8 @@ namespace roboptim
 		  const argument_t& argument,
 		  size_type functionId = 0) const throw ()
     {
-      RoboptimCoreDout (dc::function,
-			"Evaluating hessian at point: " << argument);
+      LOG4CXX_TRACE (logger,
+		     "Evaluating hessian at point: " << argument);
       assert (isValidHessian (hessian));
       this->impl_hessian (hessian, argument, functionId);
       assert (isValidHessian (hessian));

@@ -18,10 +18,14 @@
 #include "debug.hh"
 
 #include <cassert>
+#include <log4cxx/logger.h>
 #include "roboptim/core/generic-solver.hh"
 
 namespace roboptim
 {
+  log4cxx::LoggerPtr GenericSolver::logger
+  (log4cxx::Logger::getLogger ("roboptim.solver"));
+
   GenericSolver::GenericSolver () throw ()
     : boost::noncopyable (),
       result_ (NoSolution ())
@@ -41,7 +45,7 @@ namespace roboptim
   void
   GenericSolver::reset () throw ()
   {
-    Dout (dc::notice, "Solver has been reset.");
+    LOG4CXX_INFO (logger, "Solver has been reset.");
     result_ = NoSolution ();
   }
 

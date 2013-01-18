@@ -32,6 +32,8 @@
 # include <Eigen/Core>
 # include <Eigen/Sparse>
 
+# include <log4cxx/logger.h>
+
 # include <roboptim/core/fwd.hh>
 
 namespace roboptim
@@ -368,8 +370,8 @@ namespace roboptim
     void operator () (result_t& result, const argument_t& argument)
       const throw ()
     {
-      RoboptimCoreDout (dc::function,
-			"Evaluating function at point: " << argument);
+      LOG4CXX_TRACE
+	(logger, "Evaluating function at point: " << argument);
       assert (argument.size () == inputSize ());
       assert (isValidResult (result));
       this->impl_compute (result, argument);
@@ -420,7 +422,15 @@ namespace roboptim
 
     /// \brief Function name (for user-friendliness).
     std::string name_;
+
+  protected:
+    /// \brief Pointer to function logger (see log4cxx documentation).
+    static log4cxx::LoggerPtr logger;
   };
+
+  template <typename T>
+  log4cxx::LoggerPtr GenericFunction<T>::logger
+  (log4cxx::Logger::getLogger ("roboptim"));
 
   template <typename T>
   GenericFunction<T>::GenericFunction (size_type inputSize,
