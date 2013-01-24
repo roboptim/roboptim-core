@@ -99,7 +99,8 @@ IF (NOT LTDL_H_FOUND)
   MESSAGE(FATAL_ERROR
     "Failed to find ltdl.h, check that Libtool ltdl is installed.")
 ENDIF()
-#FIXME: check that libltdl.so is available.
+#FIXME: check that libltdl.so is available instead of adding it blindly.
+PKG_CONFIG_APPEND_LIBS(ltdl)
 
 HEADER_INSTALL("${HEADERS}")
 
