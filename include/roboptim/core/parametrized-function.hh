@@ -24,8 +24,6 @@
 # include <limits>
 # include <utility>
 
-# include <boost/numeric/ublas/matrix.hpp>
-# include <boost/numeric/ublas/vector.hpp>
 # include <boost/static_assert.hpp>
 # include <boost/type_traits/is_base_of.hpp>
 
@@ -33,8 +31,6 @@
 
 namespace roboptim
 {
-  namespace ublas = boost::numeric::ublas;
-
   /// \addtogroup roboptim_meta_function
   /// @{
 

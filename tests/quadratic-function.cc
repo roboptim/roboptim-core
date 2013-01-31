@@ -31,19 +31,19 @@ struct Null : public QuadraticFunction
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
   {
-    res.clear ();
+    res.setZero ();
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type) const throw ()
   {
-    grad.clear ();
+    grad.setZero ();
   }
 
   void impl_hessian (hessian_t& h, const argument_t&,
 		     size_type) const throw ()
   {
-    h.clear ();
+    h.setZero ();
   }
 };
 
@@ -54,19 +54,19 @@ struct NoTitle : public QuadraticFunction
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
   {
-    res.clear ();
+    res.setZero ();
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type) const throw ()
   {
-    grad.clear ();
+    grad.setZero ();
   }
 
   void impl_hessian (hessian_t& h, const argument_t&, size_type)
     const throw ()
   {
-    h.clear ();
+    h.setZero ();
   }
 };
 

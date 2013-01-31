@@ -74,7 +74,7 @@ namespace roboptim
       throw ()
     {
       result_t result (outputSize ());
-      result.clear ();
+      result.setZero ();
       (*this) (result, argument);
       return result;
     }
@@ -104,7 +104,7 @@ namespace roboptim
       throw ()
     {
       gradient_t derivative (derivativeSize ());
-      derivative.clear ();
+      derivative.setZero ();
       this->derivative (derivative, argument, order);
       return derivative;
     }
@@ -191,7 +191,7 @@ namespace roboptim
       assert (functionId == 0);
 
       gradient_t derivative (derivativeSize ());
-      derivative.clear ();
+      derivative.setZero ();
 
       this->derivative (derivative, argument[0], 1);
       gradient[0] = derivative[functionId];
@@ -226,7 +226,7 @@ namespace roboptim
       assert (functionId == 0);
 
       gradient_t derivative (derivativeSize ());
-      derivative.clear ();
+      derivative.setZero ();
 
       this->derivative (derivative, argument[0], 2);
       hessian (0, 0) = derivative[functionId];

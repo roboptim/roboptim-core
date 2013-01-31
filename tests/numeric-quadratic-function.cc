@@ -32,9 +32,9 @@ int run_test ()
   NumericQuadraticFunction::vector_t b (5);
   NumericQuadraticFunction::vector_t x (5);
 
-  a.clear ();
-  b.clear ();
-  x.clear ();
+  a.setZero ();
+  b.setZero ();
+  x.setZero ();
 
   a(0, 0) = 1.1, a(0, 1) = 1.2, a(0, 2) = 1.3, a(0, 3) = 1.4, a(0, 4) = 1.5;
   a(1, 0) = 1.2, a(1, 1) = 2.2, a(1, 2) = 2.3, a(1, 3) = 2.4, a(1, 4) = 2.5;

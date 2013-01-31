@@ -20,10 +20,13 @@ INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
 INCLUDE(cmake/lapack.cmake)
 INCLUDE(cmake/cpack.cmake)
+INCLUDE(cmake/eigen.cmake)
 
 SET(PROJECT_NAME roboptim-core)
 SET(PROJECT_DESCRIPTION "RobOptim core")
 SET(PROJECT_URL "http://github.com/laas/roboptim-core")
+
+SET(CXX_DISABLE_WERROR 1)
 
 SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
@@ -84,6 +87,8 @@ PKG_CONFIG_APPEND_LIBS(roboptim-core)
 
 # Search for dependencies.
 SEARCH_FOR_BOOST()
+ADD_REQUIRED_DEPENDENCY("eigen3 >= 3.0.0")
+ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")
 
 # Libtool dynamic loading
 # This project does not use Libtool directly but still uses ltdl for
@@ -94,7 +99,8 @@ IF (NOT LTDL_H_FOUND)
   MESSAGE(FATAL_ERROR
     "Failed to find ltdl.h, check that Libtool ltdl is installed.")
 ENDIF()
-#FIXME: check that libltdl.so is available.
+#FIXME: check that libltdl.so is available instead of adding it blindly.
+PKG_CONFIG_APPEND_LIBS(ltdl)
 
 HEADER_INSTALL("${HEADERS}")
 

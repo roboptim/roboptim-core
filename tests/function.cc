@@ -31,7 +31,7 @@ struct Null : public Function
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
   {
-    res.clear ();
+    res.setZero ();
   }
 };
 
@@ -42,7 +42,7 @@ struct NoTitle : public Function
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
   {
-    res.clear ();
+    res.setZero ();
   }
 };
 

@@ -23,6 +23,8 @@
 # include <limits>
 # include <utility>
 
+# include <log4cxx/logger.h>
+
 # include <roboptim/core/function.hh>
 
 namespace roboptim
@@ -103,8 +105,8 @@ namespace roboptim
     /// \return true if valid, false if not
     bool isValidJacobian (const jacobian_t& jacobian) const throw ()
     {
-      return jacobian.size1 () == jacobianSize ().first
-	&& jacobian.size2 () == jacobianSize ().second;
+      return jacobian.rows () == jacobianSize ().first
+	&& jacobian.cols () == jacobianSize ().second;
     }
 
     /// \brief Computes the jacobian.
@@ -114,7 +116,7 @@ namespace roboptim
     jacobian_t jacobian (const argument_t& argument) const throw ()
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
-      jacobian.clear ();
+      jacobian.setZero ();
       this->jacobian (jacobian, argument);
       return jacobian;
     }
@@ -128,8 +130,8 @@ namespace roboptim
     void jacobian (jacobian_t& jacobian, const argument_t& argument)
       const throw ()
     {
-      RoboptimCoreDout (dc::function,
-			"Evaluating jacobian at point: " << argument);
+      LOG4CXX_TRACE (logger,
+		     "Evaluating jacobian at point: " << argument);
       assert (argument.size () == inputSize ());
       assert (isValidJacobian (jacobian));
       this->impl_jacobian (jacobian, argument);
@@ -145,7 +147,7 @@ namespace roboptim
 			 size_type functionId = 0) const throw ()
     {
       gradient_t gradient (gradientSize ());
-      gradient.clear ();
+      gradient.setZero ();
       this->gradient (gradient, argument, functionId);
       return gradient;
     }
@@ -162,10 +164,10 @@ namespace roboptim
 		   const argument_t& argument,
 		   size_type functionId = 0) const throw ()
     {
-      RoboptimCoreDout (dc::function,
-			"Evaluating gradient at point: "
-			<< argument
-			<< " (function id: " << functionId << ")");
+      LOG4CXX_TRACE (logger,
+		     "Evaluating gradient at point: "
+		     << argument
+		     << " (function id: " << functionId << ")");
       assert (argument.size () == inputSize ());
       assert (isValidGradient (gradient));
       this->impl_gradient (gradient, argument, functionId);

@@ -29,7 +29,8 @@ namespace roboptim
     std::string splitName (const T& fct);
 
     template <typename T>
-    std::string splitName (const T& fct, typename Split<T>::size_type functionId)
+    std::string splitName (const T& fct,
+			   typename Split<T>::size_type functionId)
     {
       boost::format fmt ("%1% (split, function Id = %2%)");
       fmt % fct.getName () % functionId;

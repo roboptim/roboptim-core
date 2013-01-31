@@ -19,10 +19,13 @@
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_HH
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
+# include <roboptim/core/function.hh>
 
 # include <vector>
 
-# include <boost/numeric/ublas/matrix.hpp>
+# define EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET
+# include <Eigen/Core>
+# include <Eigen/Sparse>
 
 # include <roboptim/core/function.hh>
 # include <roboptim/core/visualization/fwd.hh>
@@ -41,8 +44,8 @@ namespace roboptim
     double normalize (const double& x);
 
     /// \brief Apply normalize to each element of a matrix.
-    boost::numeric::ublas::matrix<double>
-    normalize (const boost::numeric::ublas::matrix<double>& x);
+    Eigen::MatrixXd
+    normalize (const Eigen::MatrixXd& x);
 
 
     /// \brief Apply normalize to each element of a container.
@@ -57,12 +60,12 @@ namespace roboptim
       return x;
     }
 
-    inline boost::numeric::ublas::matrix<double>
-    normalize (const boost::numeric::ublas::matrix<double>& x)
+    inline Eigen::MatrixXd
+    normalize (const Eigen::MatrixXd& x)
     {
-      boost::numeric::ublas::matrix<double> res (x.size1 (), x.size2 ());
-      for (unsigned i = 0; i < x.size1 (); ++i)
-	for (unsigned j = 0; j < x.size2 (); ++j)
+      Eigen::MatrixXd res (x.rows (), x.cols ());
+      for (Function::size_type i = 0; i < x.rows (); ++i)
+	for (Function::size_type j = 0; j < x.cols (); ++j)
 	  res (i, j) = normalize (x (i, j));
       return res;
     }

@@ -20,8 +20,6 @@
 #include <iostream>
 #include <vector>
 
-#include <boost/numeric/ublas/io.hpp>
-
 #include <roboptim/core/function.hh>
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/result-with-warnings.hh>

@@ -20,15 +20,6 @@
 #include "roboptim/core/sum-of-c1-squares.hh"
 
 namespace roboptim {
-  bool operator!= (const Function::vector_t& x1,
-		   const Function::vector_t& x2)
-  {
-    if (x1.size() != x2.size()) return true;
-    for (Function::size_type i=0; i<x1.size(); i++) {
-      if (x1(i) != x2(i)) return true;
-    }
-    return false;
-  }
 
   SumOfC1Squares::SumOfC1Squares (const boost::shared_ptr<DerivableFunction>&
 				  function,
@@ -39,7 +30,7 @@ namespace roboptim {
     value_.resize (function->outputSize());
     gradient_.resize (function->inputSize());
     x_.resize (function->inputSize());
-    x_.clear();
+    x_.setZero ();
     (*baseFunction_) (value_, x_);
   }
     
@@ -81,7 +72,7 @@ namespace roboptim {
 
     assert (row == 0);
     computeFunction (x);
-    gradient.clear ();
+    gradient.setZero ();
     for (size_t i = 0; i < value_.size(); i++) {
       value_t y = value_[i];
       baseFunction_->gradient(gradient_, x, i);

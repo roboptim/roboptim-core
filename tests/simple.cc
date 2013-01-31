@@ -78,7 +78,7 @@ int run_test ()
   assert (!pb.startingPoint ());
 
   Function::vector_t x (4);
-  x.clear ();
+  x.setZero ();
   pb.startingPoint () = x;
   assert (pb.startingPoint ()
 	  && pb.startingPoint ()->size () == 4);

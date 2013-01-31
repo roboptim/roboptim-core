@@ -17,10 +17,6 @@
 
 #include "debug.hh"
 
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/vector.hpp>
-
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/constant-function.hh>
 
@@ -28,7 +24,8 @@ namespace roboptim
 {
   ConstantFunction::ConstantFunction (const vector_t& offset)
     throw ()
-    : LinearFunction (offset.size (), offset.size (), "constant function"),
+    : LinearFunction ((size_type)offset.size (),
+		      (size_type)offset.size (), "constant function"),
       offset_ (offset)
   {
   }
@@ -49,7 +46,7 @@ namespace roboptim
   ConstantFunction::impl_jacobian (jacobian_t& jacobian,
 				   const argument_t&) const throw ()
   {
-    jacobian.clear ();
+    jacobian.setZero ();
   }
 
   void
@@ -57,7 +54,7 @@ namespace roboptim
 				   const argument_t&,
 				   size_type) const throw ()
   {
-    gradient.clear ();
+    gradient.setZero ();
   }
 
   std::ostream&

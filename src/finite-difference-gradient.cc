@@ -18,7 +18,6 @@
 #include "debug.hh"
 
 #include <limits>
-#include <boost/numeric/ublas/io.hpp>
 
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/finite-difference-gradient.hh>

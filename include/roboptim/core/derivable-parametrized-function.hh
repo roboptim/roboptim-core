@@ -92,8 +92,8 @@ namespace roboptim
     /// \return true if valid, false if not
     bool isValidJacobian (const jacobian_t& jacobian) const throw ()
     {
-      return jacobian.size1 () == this->jacobianSize ().first
-	&& jacobian.size2 () == this->jacobianSize ().second;
+      return jacobian.rows () == this->jacobianSize ().first
+	&& jacobian.cols () == this->jacobianSize ().second;
     }
 
     /// \brief Computes the jacobian.
@@ -105,7 +105,7 @@ namespace roboptim
       const throw ()
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
-      jacobian.clear ();
+      jacobian.setZero ();
       this->jacobian (jacobian, argument, order);
       return jacobian;
     }
@@ -137,7 +137,7 @@ namespace roboptim
 			 size_type order = 0) const throw ()
     {
       gradient_t gradient (gradientSize ());
-      gradient.clear ();
+      gradient.setZero ();
       this->gradient (gradient, argument, functionId, order);
       return gradient;
     }

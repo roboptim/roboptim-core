@@ -17,10 +17,6 @@
 
 #include "debug.hh"
 
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/vector.hpp>
-
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/numeric-linear-function.hh>
 
@@ -29,7 +25,7 @@ namespace roboptim
   NumericLinearFunction::NumericLinearFunction (const matrix_t& a,
                                                 const vector_t& b)
     throw ()
-    : LinearFunction (a.size2 (), a.size1 (), "numeric linear function"),
+    : LinearFunction (a.cols (), a.rows (), "numeric linear function"),
       a_ (a),
       b_ (b)
   {
@@ -47,8 +43,7 @@ namespace roboptim
 				       const argument_t& argument)
     const throw ()
   {
-    using namespace boost::numeric::ublas;
-    noalias (result) = prec_prod (a_, argument) + b_;
+    result.noalias () = a_* argument + b_;
   }
 
   // A

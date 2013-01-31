@@ -35,7 +35,7 @@ int run_test ()
   ConstantFunction cst (offset);
 
   ConstantFunction::vector_t x (4);
-  x.clear ();
+  x.setZero ();
 
   std::cout
     << cst << std::endl

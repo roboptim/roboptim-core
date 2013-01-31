@@ -35,7 +35,7 @@ int run_test ()
   IdentityFunction id (offset);
 
   IdentityFunction::vector_t x (4);
-  x.clear ();
+  x.setZero ();
 
   std::cout
     << id << std::endl
