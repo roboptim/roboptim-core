@@ -118,22 +118,6 @@ namespace roboptim
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
 
-    /// \brief Vector of interval vectors. This type is used to take
-    /// into account the fact that constraints can have output values
-    /// in \f$\mathbb{C}^{m}\f$.
-    ///
-    /// If \f$m=1\f$, then the associated interval vector contains
-    /// only one element of interval_t type.
-    typedef std::vector<intervals_t> intervalsVect_t;
-
-    /// \brief Vector of scale vectors. This type is used to take into
-    /// account the fact that constraints can have output values in
-    /// \f$\mathbb{R}^m\f$.
-    ///
-    /// If \f$m=1\f$, then the associated scale vector contains only
-    /// one element of scale_t type.
-    typedef std::vector<scales_t> scalesVect_t;
-
     /// \name Constructors and destructors.
     /// \{
 
@@ -310,6 +294,22 @@ namespace roboptim
 
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
+
+    /// \brief Vector of interval vectors. This type is used to take
+    /// into account the fact that constraints can have output values
+    /// in \f$\mathbb{C}^{m}\f$.
+    ///
+    /// If \f$m=1\f$, then the associated interval vector contains
+    /// only one element of interval_t type.
+    typedef std::vector<intervals_t> intervalsVect_t;
+
+    /// \brief Vector of scale vectors. This type is used to take into
+    /// account the fact that constraints can have output values in
+    /// \f$\mathbb{R}^m\f$.
+    ///
+    /// If \f$m=1\f$, then the associated scale vector contains only
+    /// one element of scale_t type.
+    typedef std::vector<scales_t> scalesVect_t;
 
     /// \name Constructors and destructors.
     /// \{
