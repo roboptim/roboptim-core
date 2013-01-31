@@ -45,27 +45,30 @@ struct F : public DerivableFunction
   }
 };
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (cached_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("cached-function");
+
   boost::shared_ptr<F> f (new F ());
 
   CachedFunction<DerivableFunction> cachedF (f);
 
-  std::cout << cachedF << ":" << std::endl
+  (*output) << cachedF << ":" << std::endl
 	    << std::endl;
 
   Function::vector_t x (1);
   for (double i = 0.; i < 10.; i += 0.5)
   {
     x[0] = i;
-    std::cout << cachedF (x) << std::endl;
-    std::cout << cachedF (x) << std::endl;
-    assert ((*f) (x)[0] == cachedF (x)[0]);
+    (*output) << cachedF (x) << std::endl;
+    (*output) << cachedF (x) << std::endl;
+    BOOST_CHECK_EQUAL ((*f) (x)[0], cachedF (x)[0]);
 
-    std::cout << cachedF.gradient (x) << std::endl;
-    std::cout << cachedF.gradient (x) << std::endl;
+    (*output) << cachedF.gradient (x) << std::endl;
+    (*output) << cachedF.gradient (x) << std::endl;
   }
-  return 0;
-}
 
-GENERATE_TEST ()
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
+}

@@ -25,8 +25,11 @@
 
 using namespace roboptim;
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (result)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("result");
+
   // Instantiate some results.
   Result result (3, 8);
 
@@ -37,8 +40,8 @@ int run_test ()
   Result result2 (result);
   Result result3 = result;
 
-  std::cout << result << std::endl;
-  return 0;
-}
+  (*output) << result << std::endl;
 
-GENERATE_TEST ()
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
+}

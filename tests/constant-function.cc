@@ -24,8 +24,11 @@
 
 using namespace roboptim;
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (constant_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("constant-function");
+
   ConstantFunction::vector_t offset (4);
   offset[0] = 12.;
   offset[1] = 46.;
@@ -37,7 +40,7 @@ int run_test ()
   ConstantFunction::vector_t x (4);
   x.setZero ();
 
-  std::cout
+  (*output)
     << cst << std::endl
     << "Evaluate: " << std::endl
     << cst (x) << std::endl
@@ -46,7 +49,6 @@ int run_test ()
     << "Jacobian: " << std::endl
     << cst.jacobian (x) << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

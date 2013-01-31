@@ -48,30 +48,33 @@ struct F : public DerivableFunction
   }
 };
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (split)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("split");
+
   boost::shared_ptr<F> f (new F ());
 
   for (unsigned id = 0; id < 10; ++id)
     {
       Split<DerivableFunction> splitF (f, id);
 
-      std::cout << splitF << ":" << std::endl
+      (*output) << splitF << ":" << std::endl
 		<< std::endl;
       
       Function::vector_t x (1);
       for (double i = 0.; i < 10.; i += 0.5)
 	{
 	  x[0] = i;
-	  std::cout << splitF (x) << std::endl;
-	  std::cout << splitF (x) << std::endl;
+	  (*output) << splitF (x) << std::endl;
+	  (*output) << splitF (x) << std::endl;
 	  //assert ((*f) (x)[0] == splitF (x)[id]);
 	  
-	  std::cout << splitF.gradient (x) << std::endl;
-	  std::cout << splitF.gradient (x) << std::endl;
+	  (*output) << splitF.gradient (x) << std::endl;
+	  (*output) << splitF.gradient (x) << std::endl;
 	}
     }
-  return 0;
-}
 
-GENERATE_TEST ()
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
+}

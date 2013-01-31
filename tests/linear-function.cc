@@ -58,24 +58,26 @@ struct NoTitle : public LinearFunction
   }
 };
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (linear_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("linear-function");
+
   Null null;
   NoTitle notitle;
 
-  std::cout << null << std::endl
+  (*output) << null << std::endl
 	    << notitle << std::endl;
 
   Null::vector_t x (1);
   x[0] = 42.;
 
-  std::cout << null.gradient (x) << std::endl
+  (*output) << null.gradient (x) << std::endl
 	    << notitle.gradient (x) << std::endl;
 
-  std::cout << null.hessian (x) << std::endl
+  (*output) << null.hessian (x) << std::endl
 	    << notitle.hessian (x) << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

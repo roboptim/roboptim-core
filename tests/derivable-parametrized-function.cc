@@ -56,13 +56,13 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
 
 #define CHECKME(PVALUE)						\
   {								\
-    std::cout << "Parameter is " << PVALUE << std::endl;	\
+    (*output) << "Parameter is " << PVALUE << std::endl;	\
     parameter[0] = (PVALUE);					\
     IdentityFunction cst = pf (parameter);			\
 								\
     IdentityFunction::vector_t x (1);				\
     x[0] = 31.;							\
-    std::cout							\
+    (*output)							\
       << cst << std::endl					\
       << "Evaluate: " << std::endl				\
       << cst (x) << std::endl					\
@@ -75,8 +75,11 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
       << std::endl;						\
   }								\
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (derivable_parametrized_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("derivable-parametrized-function");
+
   ParametrizedDF pf;
 
   ParametrizedDF::argument_t parameter (1);
@@ -94,10 +97,9 @@ int run_test ()
     // Natural evaluation in one line.
     IdentityFunction::result_t res = pf (parameter) (x);
 
-    assert (res[0] == 128. + 256.);
+    BOOST_CHECK_EQUAL (res[0], 128. + 256.);
   }
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

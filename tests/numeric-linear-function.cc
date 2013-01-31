@@ -26,8 +26,11 @@ using namespace roboptim;
 
 typedef DummySolver solver_t;
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (numeric_linear_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("numeric-linear-function");
+
   NumericLinearFunction::matrix_t a (1, 5);
   NumericLinearFunction::vector_t b (1);
   NumericLinearFunction::vector_t x (5);
@@ -45,7 +48,7 @@ int run_test ()
 
   NumericLinearFunction f (a, b);
 
-  std::cout << f << std::endl;
+  (*output) << f << std::endl;
 
   x[0] = 0.1;
   x[1] = 1.2;
@@ -53,11 +56,9 @@ int run_test ()
   x[3] = 3.4;
   x[4] = 4.5;
 
-  std::cout << "f(x) = " << f (x) << std::endl;
-  std::cout << "J(x) = " << f.jacobian (x) << std::endl;
+  (*output) << "f(x) = " << f (x) << std::endl;
+  (*output) << "J(x) = " << f.jacobian (x) << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-
-GENERATE_TEST ()

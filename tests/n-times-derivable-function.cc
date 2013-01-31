@@ -46,11 +46,14 @@ struct F : public NTimesDerivableFunction<10>
   }
 };
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (n_times_derivable_function)
 {
-  F f;
-  std::cout << f << std::endl;
-  return 0;
-}
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("n-times-derivable-function");
 
-GENERATE_TEST ()
+  F f;
+  (*output) << f << std::endl;
+
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
+}

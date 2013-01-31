@@ -39,13 +39,13 @@ struct ParametrizedF : public ParametrizedFunction<ConstantFunction>
 
 #define CHECKME(PVALUE)						\
   {								\
-    std::cout << "Parameter is " << PVALUE << std::endl;	\
+    (*output) << "Parameter is " << PVALUE << std::endl;	\
     parameter[0] = (PVALUE);					\
     ConstantFunction cst = pf (parameter);			\
 								\
     ConstantFunction::vector_t x (1);				\
     x[0] = 31.;							\
-    std::cout							\
+    (*output)							\
       << cst << std::endl					\
       << "Evaluate: " << std::endl				\
       << cst (x) << std::endl					\
@@ -56,8 +56,11 @@ struct ParametrizedF : public ParametrizedFunction<ConstantFunction>
       << std::endl;						\
   }								\
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (parametrized_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("parametrized-function");
+
   ParametrizedF pf;
 
   ParametrizedF::argument_t parameter (1);
@@ -75,10 +78,9 @@ int run_test ()
     // Natural evaluation in one line.
     ConstantFunction::result_t res = pf (parameter) (x);
 
-    assert (res[0] == 128.);
+    BOOST_CHECK_EQUAL (res[0], 128.);
   }
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

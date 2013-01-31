@@ -26,8 +26,11 @@ using namespace roboptim;
 
 typedef DummySolver solver_t;
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (numeric_quadratic_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("numeric-quadratic-function");
+
   NumericQuadraticFunction::matrix_t a (5, 5);
   NumericQuadraticFunction::vector_t b (5);
   NumericQuadraticFunction::vector_t x (5);
@@ -49,7 +52,7 @@ int run_test ()
 
   NumericQuadraticFunction f (a, b);
 
-  std::cout << f << std::endl;
+  (*output) << f << std::endl;
 
   x[0] = 0.1;
   x[1] = 1.2;
@@ -57,12 +60,11 @@ int run_test ()
   x[3] = 3.4;
   x[4] = 4.5;
 
-  std::cout << "f(x) = " << f (x) << std::endl;
-  std::cout << "J(x) = " << f.jacobian (x) << std::endl;
-  std::cout << "G(x) = " << f.gradient (x, 0) << std::endl;
-  std::cout << "H(x) = " << f.hessian (x, 0) << std::endl;
+  (*output) << "f(x) = " << f (x) << std::endl;
+  (*output) << "J(x) = " << f.jacobian (x) << std::endl;
+  (*output) << "G(x) = " << f.gradient (x, 0) << std::endl;
+  (*output) << "H(x) = " << f.hessian (x, 0) << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

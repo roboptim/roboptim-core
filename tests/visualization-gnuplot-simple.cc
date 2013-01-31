@@ -28,20 +28,23 @@ using namespace roboptim;
 using namespace roboptim::visualization;
 
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (visualization_gnuplot_simple)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("visualization-gnuplot-simple");
+
   using namespace roboptim::visualization::gnuplot;
   Gnuplot gnuplot = Gnuplot::make_gnuplot ();
 
   // Display nothing, generate just some valid Gnuplot commands.
-  std::cout
+  (*output)
     << (gnuplot
 	<< set ("term", "x11 enhanced persist")
 	<< comment ("Hello, world!")
 	<< cd ("/tmp")
 	<< reset
 	);
-  return 0;
-}
 
-GENERATE_TEST ()
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
+}

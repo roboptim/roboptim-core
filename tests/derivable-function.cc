@@ -59,8 +59,11 @@ struct NoTitle : public DerivableFunction
   }
 };
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (derivable_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("derivable-function");
+
   Null null;
   NoTitle notitle;
 
@@ -68,45 +71,44 @@ int run_test ()
   Null::gradient_t grad (null.gradientSize ());
   x[0] = 42.;
 
-  std::cout << null << std::endl
+  (*output) << null << std::endl
 	    << notitle << std::endl;
 
-  std::cout << null.inputSize () << std::endl
+  (*output) << null.inputSize () << std::endl
 	    << notitle.inputSize () << std::endl;
 
-  std::cout << null.outputSize () << std::endl
+  (*output) << null.outputSize () << std::endl
 	    << notitle.outputSize () << std::endl;
 
-  std::cout << null.getName () << std::endl
+  (*output) << null.getName () << std::endl
 	    << notitle.getName () << std::endl;
 
-  std::cout << null.isValidResult (null (x)) << std::endl
+  (*output) << null.isValidResult (null (x)) << std::endl
 	    << notitle.isValidResult (notitle (x)) << std::endl;
 
-  std::cout << null (x) << std::endl
+  (*output) << null (x) << std::endl
 	    << notitle (x) << std::endl;
 
-  std::cout << null.gradient (x) << std::endl
+  (*output) << null.gradient (x) << std::endl
 	    << notitle.gradient (x) << std::endl;
 
   null.gradient (grad, x);
-  std::cout << grad << std::endl;
+  (*output) << grad << std::endl;
   notitle.gradient (grad, x);
-  std::cout << grad << std::endl;
+  (*output) << grad << std::endl;
 
-  std::cout << null.gradientSize () << std::endl
+  (*output) << null.gradientSize () << std::endl
 	    << notitle.gradientSize () << std::endl;
 
-  std::cout << null.jacobianSize () << std::endl
+  (*output) << null.jacobianSize () << std::endl
 	    << notitle.jacobianSize () << std::endl;
 
-  std::cout << null.isValidGradient (null.gradient (x)) << std::endl
+  (*output) << null.isValidGradient (null.gradient (x)) << std::endl
 	    << notitle.isValidGradient (notitle.gradient (x)) << std::endl;
 
-  std::cout << null.isValidJacobian (null.jacobian (x)) << std::endl
+  (*output) << null.isValidJacobian (null.jacobian (x)) << std::endl
 	    << notitle.isValidJacobian (notitle.jacobian (x)) << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

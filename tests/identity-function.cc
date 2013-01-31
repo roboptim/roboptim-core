@@ -24,8 +24,11 @@
 
 using namespace roboptim;
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (identity_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("identity-function");
+
   IdentityFunction::vector_t offset (4);
   offset[0] = 12.;
   offset[1] = 46.;
@@ -37,7 +40,7 @@ int run_test ()
   IdentityFunction::vector_t x (4);
   x.setZero ();
 
-  std::cout
+  (*output)
     << id << std::endl
     << "Evaluate: " << std::endl
     << id (x) << std::endl
@@ -46,7 +49,6 @@ int run_test ()
     << "Jacobian: " << std::endl
     << id.jacobian (x) << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

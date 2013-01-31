@@ -46,8 +46,11 @@ struct NoTitle : public Function
   }
 };
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (null_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("function");
+
   Null null;
   NoTitle notitle;
 
@@ -56,31 +59,30 @@ int run_test ()
 
   Null::argument_t res (null.outputSize ());
 
-  std::cout << null << std::endl
+  (*output) << null << std::endl
 	    << notitle << std::endl;
 
-  std::cout << null.inputSize () << std::endl
+  (*output) << null.inputSize () << std::endl
 	    << notitle.inputSize () << std::endl;
 
-  std::cout << null.outputSize () << std::endl
+  (*output) << null.outputSize () << std::endl
 	    << notitle.outputSize () << std::endl;
 
-  std::cout << null.getName () << std::endl
+  (*output) << null.getName () << std::endl
 	    << notitle.getName () << std::endl;
 
-  std::cout << null.isValidResult (null (x)) << std::endl
+  (*output) << null.isValidResult (null (x)) << std::endl
 	    << notitle.isValidResult (notitle (x)) << std::endl;
 
-  std::cout << null (x) << std::endl
+  (*output) << null (x) << std::endl
 	    << notitle (x) << std::endl;
 
   null (res, x);
-  std::cout << res << std::endl;
+  (*output) << res << std::endl;
 
   notitle (res, x);
-  std::cout << res << std::endl;
+  (*output) << res << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

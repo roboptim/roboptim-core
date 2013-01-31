@@ -71,8 +71,11 @@ struct NoTitle : public TwiceDerivableFunction
   }
 };
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (twice_derivable_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("twice-derivable-function");
+
   Null null;
   NoTitle notitle;
 
@@ -82,62 +85,60 @@ int run_test ()
 		     null.hessianSize ().second);
   Null::gradient_t grad (null.gradientSize ());
 
-  std::cout << null << std::endl
+  (*output) << null << std::endl
 	    << notitle << std::endl;
 
-  std::cout << null.inputSize () << std::endl
+  (*output) << null.inputSize () << std::endl
 	    << notitle.inputSize () << std::endl;
 
-  std::cout << null.outputSize () << std::endl
+  (*output) << null.outputSize () << std::endl
 	    << notitle.outputSize () << std::endl;
 
-  std::cout << null.getName () << std::endl
+  (*output) << null.getName () << std::endl
 	    << notitle.getName () << std::endl;
 
-  std::cout << null.isValidResult (null (x)) << std::endl
+  (*output) << null.isValidResult (null (x)) << std::endl
 	    << notitle.isValidResult (notitle (x)) << std::endl;
 
-  std::cout << null (x) << std::endl
+  (*output) << null (x) << std::endl
 	    << notitle (x) << std::endl;
 
-  std::cout << null.gradient (x) << std::endl
+  (*output) << null.gradient (x) << std::endl
 	    << notitle.gradient (x) << std::endl;
 
   null.gradient (grad, x);
-  std::cout << grad << std::endl;
+  (*output) << grad << std::endl;
   notitle.gradient (grad, x);
-  std::cout << grad << std::endl;
+  (*output) << grad << std::endl;
 
-  std::cout << null.gradientSize () << std::endl
+  (*output) << null.gradientSize () << std::endl
 	    << notitle.gradientSize () << std::endl;
 
-  std::cout << null.jacobianSize () << std::endl
+  (*output) << null.jacobianSize () << std::endl
 	    << notitle.jacobianSize () << std::endl;
 
-  std::cout << null.isValidGradient (null.gradient (x)) << std::endl
+  (*output) << null.isValidGradient (null.gradient (x)) << std::endl
 	    << notitle.isValidGradient (notitle.gradient (x)) << std::endl;
 
-  std::cout << null.isValidJacobian (null.jacobian (x)) << std::endl
+  (*output) << null.isValidJacobian (null.jacobian (x)) << std::endl
 	    << notitle.isValidJacobian (notitle.jacobian (x)) << std::endl;
 
 
-  std::cout << null.hessian (x) << std::endl
+  (*output) << null.hessian (x) << std::endl
 	    << notitle.hessian (x) << std::endl;
 
   null.hessian (h, x);
-  std::cout << h << std::endl;
+  (*output) << h << std::endl;
   notitle.hessian (h, x);
-  std::cout << h << std::endl;
+  (*output) << h << std::endl;
 
 
-  std::cout << null.hessianSize () << std::endl
+  (*output) << null.hessianSize () << std::endl
 	    << notitle.hessianSize () << std::endl;
 
-  std::cout << null.isValidHessian (null.hessian (x)) << std::endl
+  (*output) << null.isValidHessian (null.hessian (x)) << std::endl
 	    << notitle.isValidHessian (notitle.hessian (x)) << std::endl;
 
-
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

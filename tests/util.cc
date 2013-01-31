@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#define BOOST_TEST_MODULE util
+
 #include "shared-tests/common.hh"
 
 #include <iostream>
@@ -24,17 +26,19 @@
 
 using namespace roboptim;
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (util)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("util");
+
   // Check vector display.
   std::vector<int> v;
 
-  std::cout << v << std::endl;
+  (*output) << v << std::endl;
 
   v.push_back (1);
-  std::cout << v << std::endl;
+  (*output) << v << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

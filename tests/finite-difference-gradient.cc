@@ -142,25 +142,32 @@ struct Times : public DerivableFunction
   }
 };
 
-void displayGradient (const DerivableFunction&,
-		      const Function::vector_t&,
-		      Function::size_type i = 0);
+void displayGradient
+(boost::shared_ptr<boost::test_tools::output_test_stream> output,
+ const DerivableFunction&,
+ const Function::vector_t&,
+ Function::size_type i = 0);
 
 void
-displayGradient (const DerivableFunction& function,
-		 const Function::vector_t& x,
-		 Function::size_type i)
+displayGradient
+(boost::shared_ptr<boost::test_tools::output_test_stream> output,
+ const DerivableFunction& function,
+ const Function::vector_t& x,
+ Function::size_type i)
 {
   FiniteDifferenceGradient<> fdfunction (function);
   DerivableFunction::gradient_t grad = function.gradient (x, i);
   DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
 
-  std::cout << "#" << grad << std::endl
+  (*output) << "#" << grad << std::endl
 	    << "#" << fdgrad << std::endl;
 }
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (finite_difference_gradient)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("finite-difference-gradient");
+
   FGood fg;
   FBad fb;
   CircleXY sq;
@@ -170,32 +177,32 @@ int run_test ()
 
   for (x[0] = -10.; x[0] < 10.; x[0] += 1.)
     {
-      std::cout << "#Check gradient at x = " << x[0] << std::endl;
+      (*output) << "#Check gradient at x = " << x[0] << std::endl;
 
-      std::cout << "# Good" << std::endl;
-      displayGradient (fg, x);
+      (*output) << "# Good" << std::endl;
+      displayGradient (output, fg, x);
 
-      std::cout << "# Bad" << std::endl;
-      displayGradient (fb, x);
+      (*output) << "# Bad" << std::endl;
+      displayGradient (output, fb, x);
 
-      std::cout << "# Circle" << std::endl;
-      displayGradient (sq, x);
-      displayGradient (sq, x, 1);
+      (*output) << "# Circle" << std::endl;
+      displayGradient (output, sq, x);
+      displayGradient (output, sq, x, 1);
 
-      assert (checkGradient (fg, 0, x));
-      assert (! checkGradient (fb, 0, x));
+      BOOST_CHECK (checkGradient (fg, 0, x));
+      BOOST_CHECK (! checkGradient (fb, 0, x));
 
-      assert (checkGradient (sq, 0, x));
-      assert (checkGradient (sq, 1, x));
+      BOOST_CHECK (checkGradient (sq, 0, x));
+      BOOST_CHECK (checkGradient (sq, 1, x));
     }
 
   x.resize (2);
   for (x[1] = -10.; x[1] < 10.; x[1] += 1.)
     for (x[0] = -10.; x[0] < 10.; x[0] += 1.)
       {
-	std::cout << "# Times at x = " << x << std::endl;
-	displayGradient (times, x);
-	assert (checkGradient (times, 0, x));
+	(*output) << "# Times at x = " << x << std::endl;
+	displayGradient (output, times, x);
+	BOOST_CHECK (checkGradient (times, 0, x));
       }
 
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot ();
@@ -208,7 +215,7 @@ int run_test ()
 
   Function::discreteInterval_t interval (-100., 100., 1.);
 
-  std::cout
+  (*output)
     << (gnuplot
 	<< set ("multiplot layout 2,2")
 	<< plot (fg, interval)
@@ -217,8 +224,4 @@ int run_test ()
 	<< plot (p_fd, interval)
 	<< unset ("multiplot")
 	);
-
-  return 0;
 }
-
-GENERATE_TEST ()

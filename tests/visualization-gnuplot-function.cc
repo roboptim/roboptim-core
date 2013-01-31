@@ -64,8 +64,11 @@ struct Circle : public Function
 };
 
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (visualization_gnuplot_function)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("visualization-gnuplot-function");
+
   using namespace roboptim::visualization::gnuplot;
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot ();
 
@@ -75,7 +78,7 @@ int run_test ()
   Circle circle;
   discreteInterval_t intervalC (0., 2 * M_PI, 0.01);
 
-  std::cout
+  (*output)
     << (gnuplot
 	<< comment ("Hello, world (complex)!")
 	<< set ("multiplot")
@@ -83,7 +86,7 @@ int run_test ()
 	<< plot_xy (circle, intervalC)
 	<< unset ("multiplot")
 	);
-  return 0;
-}
 
-GENERATE_TEST ()
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
+}

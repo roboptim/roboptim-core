@@ -31,7 +31,7 @@ using namespace roboptim;
   assert (&(A).function () == &(B).function ());                        \
   assert ((A).constraints ().size () == (B).constraints ().size ());
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (problem_copy_constructor)
 {
   typedef Problem<DerivableFunction, boost::mpl::vector<DerivableFunction> >
     problemSrc_t;
@@ -55,8 +55,4 @@ int run_test ()
     problemDst_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
   }
-
-  return 0;
 }
-
-GENERATE_TEST ()

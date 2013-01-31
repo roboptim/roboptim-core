@@ -27,6 +27,8 @@ using namespace roboptim;
 // Specify the solver that will be used.
 typedef DummySolver solver_t;
 
+boost::shared_ptr<boost::test_tools::output_test_stream> output;
+
 // Define a simple function.
 struct F : public Function
 {
@@ -54,9 +56,9 @@ struct CountUnaryFunction
 
   void operator () (double x)
   {
-    std::cout << "Discrete point: " << x
-	      << " (cnt: " << ++cnt_ << ")"
-	      << std::endl;
+    // (*output) << "Discrete point: " << x
+    // 	      << " (cnt: " << ++cnt_ << ")"
+    // 	      << std::endl;
   }
 
 private:
@@ -64,49 +66,56 @@ private:
 };
 
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (simple)
 {
+  output = retrievePattern ("simple");
+
   // Instantiate the function and the problem.
   F f;
   DummySolver::problem_t pb (f);
 
-  std::cout << pb << std::endl;
+  (*output) << pb << std::endl;
 
   // Check that the problem is well formed.
-  assert (&pb.function () == &f);
-  assert (pb.constraints ().size () == 0);
-  assert (!pb.startingPoint ());
+  BOOST_CHECK_EQUAL (&pb.function (), &f);
+  BOOST_CHECK_EQUAL (pb.constraints ().size (), 0);
+  BOOST_CHECK (!pb.startingPoint ());
 
   Function::vector_t x (4);
   x.setZero ();
   pb.startingPoint () = x;
-  assert (pb.startingPoint ()
-	  && pb.startingPoint ()->size () == 4);
+  BOOST_CHECK_EQUAL (pb.startingPoint ()
+  	  && pb.startingPoint ()->size (), 4);
 
-  assert (pb.boundsVector ().size () == 0);
-  assert (pb.argumentBounds ().size () == 4);
-  assert (pb.argumentBounds ()[0] == Function::makeInfiniteInterval ()
-	  && pb.argumentBounds ()[1] == Function::makeInfiniteInterval ()
-	  && pb.argumentBounds ()[2] == Function::makeInfiniteInterval ()
-	  && pb.argumentBounds ()[3] == Function::makeInfiniteInterval ());
+  BOOST_CHECK_EQUAL (pb.boundsVector ().size (), 0);
+  BOOST_CHECK_EQUAL (pb.argumentBounds ().size (), 4);
+  BOOST_CHECK
+    (pb.argumentBounds ()[0] == Function::makeInfiniteInterval ()
+     && pb.argumentBounds ()[1] == Function::makeInfiniteInterval ()
+     && pb.argumentBounds ()[2] == Function::makeInfiniteInterval ()
+     && pb.argumentBounds ()[3] == Function::makeInfiniteInterval ());
 
 
-  assert (pb.scalesVector ().size () == 0);
-  assert (pb.argumentScales ().size () == 4);
-  assert (pb.argumentScales ()[0] == 1.
-	  && pb.argumentScales ()[1] == 1.
-	  && pb.argumentScales ()[2] == 1.
-	  && pb.argumentScales ()[3] == 1.);
+  BOOST_CHECK_EQUAL (pb.scalesVector ().size (), 0);
+  BOOST_CHECK_EQUAL (pb.argumentScales ().size (), 4);
+  BOOST_CHECK
+    (pb.argumentScales ()[0] == 1.
+     && pb.argumentScales ()[1] == 1.
+     && pb.argumentScales ()[2] == 1.
+     && pb.argumentScales ()[3] == 1.);
 
   F* g = new F ();
   pb.addConstraint (boost::shared_ptr<F> (g),
-		    Function::makeInterval (0., 5.), 3.5);
-  assert (pb.constraints ().size () == 1);
-  assert (&pb.constraints ()[0] != 0);
-  assert (pb.boundsVector ().size () == 1);
-  assert (pb.boundsVector ()[0][0] == Function::makeInterval (0., 5.));
-  assert (pb.scalesVector ().size () == 1);
-  assert (pb.scalesVector ()[0][0] == 3.5);
+  		    Function::makeInterval (0., 5.), 3.5);
+  BOOST_CHECK_EQUAL (pb.constraints ().size (), 1);
+  BOOST_CHECK (&pb.constraints ()[0] != 0);
+  BOOST_CHECK_EQUAL (pb.boundsVector ().size (), 1);
+  BOOST_CHECK_EQUAL (pb.boundsVector ()[0][0].first,
+		     0.);
+  BOOST_CHECK_EQUAL (pb.boundsVector ()[0][0].second,
+		     5.);
+  BOOST_CHECK_EQUAL (pb.scalesVector ().size (), 1);
+  BOOST_CHECK_EQUAL (pb.scalesVector ()[0][0], 3.5);
 
 
   // Try to solve it with the DummySolver (direct instantiation, no plug-in).
@@ -114,15 +123,14 @@ int run_test ()
   solver_t::result_t res = solver.minimum ();
   solver.getMinimum<SolverError> ();
 
-  std::cout << pb << std::endl
+  (*output) << pb << std::endl
             << "---" << std::endl
             << solver << std::endl;
 
   // Try to get the minimum from a GenericSolver*.
   GenericSolver* gs = &solver;
-  std::cout << gs->getMinimum<SolverError> ().what ()
+  (*output) << gs->getMinimum<SolverError> ().what ()
             << std::endl;
-
 
   // Check iteration in discrete intervals.
   {
@@ -132,28 +140,27 @@ int run_test ()
     {
       Function::discreteInterval_t interval (2.3, 3., 0.5);
       Function::foreach (interval, count);
-      assert (cnt == 2);
-      std::cout << std::endl;
+      BOOST_CHECK_EQUAL (cnt, 2);
+      (*output) << std::endl;
     }
 
     {
       cnt = 0;
       Function::discreteInterval_t interval (2., 3., 0.1);
       Function::foreach (interval, count);
-      assert (cnt == 11);
-      std::cout << std::endl;
+      BOOST_CHECK_EQUAL (cnt, 11);
+      (*output) << std::endl;
     }
 
     {
       cnt = 0;
       Function::discreteInterval_t interval (0.8, 10.8, 1.);
       Function::foreach (interval, count);
-      assert (cnt == 11);
-      std::cout << std::endl;
+      BOOST_CHECK_EQUAL (cnt, 11);
+      (*output) << std::endl;
     }
   }
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()

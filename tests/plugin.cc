@@ -45,8 +45,11 @@ struct F : public Function
   // No gradient, hessian.
 };
 
-int run_test ()
+BOOST_AUTO_TEST_CASE (plugin)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("plugin");
+
   // Instantiate the function and the problem.
   F f;
   solver_t::problem_t pb (f);
@@ -64,16 +67,15 @@ int run_test ()
   solver.getMinimum<SolverError> ();
 
   // Display problem and solver.
-  std::cout << pb << std::endl
+  (*output) << pb << std::endl
             << "---" << std::endl
             << solver << std::endl;
 
   // Try to get the minimum from a GenericSolver*.
   GenericSolver* gs = &solver;
-  std::cout << gs->getMinimum <SolverError> ().what ()
+  (*output) << gs->getMinimum <SolverError> ().what ()
             << std::endl;
 
-  return 0;
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
-
-GENERATE_TEST ()
