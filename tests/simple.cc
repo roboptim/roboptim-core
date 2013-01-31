@@ -83,7 +83,7 @@ int run_test ()
   assert (pb.startingPoint ()
 	  && pb.startingPoint ()->size () == 4);
 
-  assert (pb.bounds ().size () == 0);
+  assert (pb.boundsVector ().size () == 0);
   assert (pb.argumentBounds ().size () == 4);
   assert (pb.argumentBounds ()[0] == Function::makeInfiniteInterval ()
 	  && pb.argumentBounds ()[1] == Function::makeInfiniteInterval ()
@@ -91,7 +91,7 @@ int run_test ()
 	  && pb.argumentBounds ()[3] == Function::makeInfiniteInterval ());
 
 
-  assert (pb.scales ().size () == 0);
+  assert (pb.scalesVector ().size () == 0);
   assert (pb.argumentScales ().size () == 4);
   assert (pb.argumentScales ()[0] == 1.
 	  && pb.argumentScales ()[1] == 1.
@@ -103,10 +103,10 @@ int run_test ()
 		    Function::makeInterval (0., 5.), 3.5);
   assert (pb.constraints ().size () == 1);
   assert (&pb.constraints ()[0] != 0);
-  assert (pb.bounds ().size () == 1);
-  assert (pb.bounds ()[0] == Function::makeInterval (0., 5.));
-  assert (pb.scales ().size () == 1);
-  assert (pb.scales ()[0] == 3.5);
+  assert (pb.boundsVector ().size () == 1);
+  assert (pb.boundsVector ()[0][0] == Function::makeInterval (0., 5.));
+  assert (pb.scalesVector ().size () == 1);
+  assert (pb.scalesVector ()[0][0] == 3.5);
 
 
   // Try to solve it with the DummySolver (direct instantiation, no plug-in).

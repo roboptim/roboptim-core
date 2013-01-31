@@ -186,10 +186,8 @@ namespace roboptim
     : function_ (f),
       startingPoint_ (),
       constraints_ (),
-      bounds_ (),
       boundsVect_ (),
       argumentBounds_ (f.inputSize ()),
-      scales_ (),
       scalesVect_ (),
       argumentScales_ (f.inputSize ())
   {
@@ -308,8 +306,8 @@ namespace roboptim
 	const interval_t& interval = b[i];
 	assert (interval.first <= interval.second);
       }
-    boundsVect_.push_back (b);
 
+    boundsVect_.push_back (b);
     scalesVect_.push_back (s);
   }
 
@@ -334,13 +332,6 @@ namespace roboptim
   }
 
   template <typename F, typename CLIST>
-  const typename Problem<F, CLIST>::intervals_t&
-  Problem<F, CLIST>::bounds () const throw ()
-  {
-    return bounds_;
-  }
-
-  template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::intervalsVect_t&
   Problem<F, CLIST>::boundsVector () const throw ()
   {
@@ -359,13 +350,6 @@ namespace roboptim
   Problem<F, CLIST>::argumentBounds () const throw ()
   {
     return argumentBounds_;
-  }
-
-  template <typename F, typename CLIST>
-  const typename Problem<F, CLIST>::scales_t&
-  Problem<F, CLIST>::scales () const throw ()
-  {
-    return scales_;
   }
 
   template <typename F, typename CLIST>
