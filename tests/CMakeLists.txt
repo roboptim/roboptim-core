@@ -31,6 +31,7 @@ SET(COMMON_HEADERS
   ${HEADERS}
   shared-tests/common.hh
   shared-tests/hs071.hh
+  shared-tests/hs071-nonscalar-constraints.hh
   )
 
 
