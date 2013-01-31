@@ -1,10 +1,15 @@
 This package was written by and with the assistance of
 
+* Antonio El Khoury             antonio.elkhoury@gmail.com
+- Non-scalar constraints support.
+
 * Florent Lamiraux              florent@laas.fr
 - Interface design.
+- Eigen3 support.
 
 * François Keith                francois.keith@gmail.com
 - Microsoft Windows / Microsoft Visual Studio support.
+- Non-scalar constraints support.
 
 * Thomas Moulard                thomas.moulard@gmail.com
 - Package creation.
