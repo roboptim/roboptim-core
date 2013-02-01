@@ -86,7 +86,8 @@ namespace roboptim
 		   double& round,
 		   double& trunc,
 		   const Function::argument_t& argument,
-		   Function::size_type idFunction);
+		   Function::size_type idFunction,
+		   Function::argument_t& xEps);
 
     /// Algorithm from the Gnu Scientific Library.
     ROBOPTIM_DLLLOCAL void
@@ -97,7 +98,8 @@ namespace roboptim
 		   double& round,
 		   double& trunc,
 		   const Function::argument_t& argument,
-		   Function::size_type idFunction)
+		   Function::size_type idFunction,
+		   Function::argument_t& xEps)
     {
       /* Compute the derivative using the 5-point rule (x-h, x-h/2, x,
 	 x+h/2, x+h). Note that the central point is not used.
@@ -106,7 +108,7 @@ namespace roboptim
 	 the 3-point rule (x-h,x,x+h). Again the central point is not
 	 used. */
 
-      Function::argument_t xEps = argument;
+      xEps = argument;
 
       xEps[j] = argument[j] - h;
       double fm1 = adaptee (xEps)[idFunction];
@@ -151,7 +153,8 @@ namespace roboptim
      Function::value_type epsilon,
      Function::result_t& gradient,
      const Function::argument_t& argument,
-     Function::size_type idFunction) const throw ()
+     Function::size_type idFunction,
+     Function::argument_t& xEps) const throw ()
     {
       typedef Function::value_type value_type;
       assert (adaptee.outputSize () - idFunction > 0);
@@ -159,7 +162,7 @@ namespace roboptim
       Function::result_t res = adaptee (argument);
       for (size_type j = 0; j < adaptee.inputSize (); ++j)
 	{
-	  Function::argument_t xEps = argument;
+	  xEps = argument;
 	  xEps[j] += epsilon;
 	  Function::result_t resEps = adaptee (xEps);
 	  gradient (j) = (resEps[idFunction] - res[idFunction]) / epsilon;
@@ -172,7 +175,8 @@ namespace roboptim
      Function::value_type epsilon,
      Function::result_t& gradient,
      const Function::argument_t& argument,
-     Function::size_type idFunction) const throw ()
+     Function::size_type idFunction,
+     Function::argument_t& xEps) const throw ()
     {
       typedef Function::value_type value_type;
 
@@ -188,7 +192,7 @@ namespace roboptim
 	{
 	  detail::compute_deriv (adaptee, j, h,
 				 r_0, round, trunc,
-				 argument, idFunction);
+				 argument, idFunction, xEps);
 	  error = round + trunc;
 
 	  if (round < trunc && (round > 0 && trunc > 0))
@@ -205,7 +209,8 @@ namespace roboptim
 
 	      detail::compute_deriv (adaptee, j, h_opt,
 				     r_opt, round_opt, trunc_opt,
-				     argument, idFunction);
+				     argument, idFunction,
+				     xEps);
 	      error_opt = round_opt + trunc_opt;
 
 	      /* Check that the new error is smaller, and that the new

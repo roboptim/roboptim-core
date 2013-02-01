@@ -44,7 +44,8 @@ namespace roboptim
 				       const argument_t& argument)
     const throw ()
   {
-    result.noalias () = a_* argument + b_;
+    result.noalias () = a_* argument;
+    result += b_;
   }
 
   // A

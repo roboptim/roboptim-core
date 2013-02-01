@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HH
+# include <cstring>
 # include <limits>
 # include <utility>
 
@@ -49,7 +50,8 @@ namespace roboptim
   /// To avoid this costly representation, the function is split
   /// into \f$m\f$ \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$ functions.
   /// See #DifferentialeFunction documentation for more information.
-  class ROBOPTIM_DLLAPI TwiceDifferentiableFunction : public DifferentiableFunction
+  class ROBOPTIM_DLLAPI TwiceDifferentiableFunction
+    : public DifferentiableFunction
   {
   public:
     /// \brief Hessian type.
@@ -109,7 +111,14 @@ namespace roboptim
       LOG4CXX_TRACE (logger,
 		     "Evaluating hessian at point: " << argument);
       assert (isValidHessian (hessian));
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (false);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       this->impl_hessian (hessian, argument, functionId);
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       assert (isValidHessian (hessian));
     }
 

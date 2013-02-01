@@ -27,7 +27,8 @@ namespace roboptim
     : DifferentiableFunction (adaptee.inputSize (), adaptee.outputSize ()),
       FdgPolicy (),
       adaptee_ (adaptee),
-      epsilon_ (epsilon)
+      epsilon_ (epsilon),
+      xEps_ (adaptee.inputSize ())
   {
     // Avoid meaningless values for epsilon such as 0 or NaN.
     assert (epsilon != 0. && epsilon == epsilon);
@@ -53,7 +54,11 @@ namespace roboptim
    const argument_t& argument,
    size_type idFunction) const throw ()
   {
-    this->computeGradient (adaptee_, epsilon_, gradient, argument, idFunction);
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    this->computeGradient (adaptee_, epsilon_, gradient,
+			   argument, idFunction, xEps_);
   }
 
 } // end of namespace roboptim

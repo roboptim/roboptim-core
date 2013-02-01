@@ -103,7 +103,8 @@ namespace roboptim
        Function::value_type epsilon,
        Function::result_t& gradient,
        const Function::argument_t& argument,
-       Function::size_type idFunction) const throw ();
+       Function::size_type idFunction,
+       Function::argument_t& xEps) const throw ();
     };
 
     /// \brief Precise finite difference gradient computation.
@@ -119,7 +120,8 @@ namespace roboptim
        Function::value_type epsilon,
        Function::result_t& gradient,
        const Function::argument_t& argument,
-       Function::size_type idFunction) const throw ();
+       Function::size_type idFunction,
+       Function::argument_t& xEps) const throw ();
     };
   } // end of namespace policy.
 
@@ -168,6 +170,8 @@ namespace roboptim
 
     //// \brief Epsilon used in finite differences computation.
     const value_type epsilon_;
+
+    mutable argument_t xEps_;
   };
 
   /// \brief Check if a gradient is valid.

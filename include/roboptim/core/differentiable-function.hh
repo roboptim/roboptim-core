@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HH
+# include <cstring>
 # include <limits>
 # include <utility>
 
@@ -138,7 +139,13 @@ namespace roboptim
 		     "Evaluating jacobian at point: " << argument);
       assert (argument.size () == inputSize ());
       assert (isValidJacobian (jacobian));
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (false);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       this->impl_jacobian (jacobian, argument);
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       assert (isValidJacobian (jacobian));
     }
 
@@ -174,7 +181,13 @@ namespace roboptim
 		     << " (function id: " << functionId << ")");
       assert (argument.size () == inputSize ());
       assert (isValidGradient (gradient));
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (false);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       this->impl_gradient (gradient, argument, functionId);
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       assert (isValidGradient (gradient));
     }
 

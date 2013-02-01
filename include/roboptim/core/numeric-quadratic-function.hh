@@ -68,6 +68,8 @@ namespace roboptim
     symmetric_t a_;
     /// \brief B vector.
     vector_t b_;
+    /// \brief buffer to avoid allocating during computation.
+    mutable vector_t buffer_;
   };
 
   /// Example shows numeric quadratic function use.

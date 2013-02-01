@@ -43,7 +43,8 @@ namespace roboptim
 		   size_type functionId) throw ()
     : T (fct->inputSize (), 1, splitName (*fct, functionId)),
       function_ (fct),
-      functionId_ (functionId)
+      functionId_ (functionId),
+      res_ (function_->outputSize ())
   {
     assert (functionId < fct->outputSize ());
   }
@@ -59,9 +60,8 @@ namespace roboptim
 			  const argument_t& argument)
     const throw ()
   {
-    result_t res (function_->outputSize ());
-    (*function_) (res, argument);
-    result[0] = res[functionId_];
+    (*function_) (this->res_, argument);
+    result[0] = this->res_[functionId_];
   }
 
 

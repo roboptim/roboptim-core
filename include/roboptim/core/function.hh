@@ -17,8 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_FUNCTION_HH
 # define ROBOPTIM_CORE_FUNCTION_HH
-# include <roboptim/core/portability.hh>
-
+# include <cstring>
 # include <iostream>
 # include <limits>
 # include <string>
@@ -28,12 +27,15 @@
 # include <boost/tuple/tuple.hpp>
 
 # define EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET
+# define EIGEN_RUNTIME_NO_MALLOC
 # include <Eigen/Core>
+# include <Eigen/Dense>
 # include <Eigen/Sparse>
 
 # include <log4cxx/logger.h>
 
 # include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -307,7 +309,8 @@ namespace roboptim
       for (size_type i = 0; i < n; ++i)
 	{
 	  value_type t =
-	    getLowerBound (interval) + (value_type)i * (delta / ((value_type)n - 1));
+	    getLowerBound (interval)
+	    + (value_type)i * (delta / ((value_type)n - 1));
 	  if (t > getUpperBound (interval))
 	    t = getUpperBound (interval);
 	  assert (getLowerBound (interval) <= t
@@ -373,7 +376,13 @@ namespace roboptim
 	(logger, "Evaluating function at point: " << argument);
       assert (argument.size () == inputSize ());
       assert (isValidResult (result));
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (false);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       this->impl_compute (result, argument);
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       assert (isValidResult (result));
     }
 

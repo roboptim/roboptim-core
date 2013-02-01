@@ -36,12 +36,11 @@ namespace roboptim
 					 const argument_t& argument)
     const throw ()
   {
-    for (size_type i = 0; i < outputSize (); ++i)
-      {
-        gradient_t grad = gradient (argument, i);
-        for (size_type j = 0; j < inputSize (); ++j)
-          jacobian (i, j) = grad[j];
-      }
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    for (jacobian_t::Index i = 0; i < outputSize (); ++i)
+      jacobian.row (i) = gradient (argument, i);
   }
 
   std::ostream&

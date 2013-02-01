@@ -28,7 +28,8 @@ namespace roboptim
     throw ()
     : QuadraticFunction (a.rows (), 1, "numeric quadratic function"),
       a_ (a),
-      b_ (b)
+      b_ (b),
+      buffer_ (b.size ())
   {
     assert (a.rows () == a.cols () && a.cols () == b.size ());
   }
@@ -45,7 +46,9 @@ namespace roboptim
 					  const argument_t& argument)
     const throw ()
   {
-    result (0) = .5*argument.dot(a_*argument) + argument.dot(b_);
+    buffer_.noalias () = a_ * argument;
+    result (0) = .5 * argument.adjoint ()  * buffer_;
+    result (0) += b_.adjoint () * argument;
   }
 
   // x * A + b
@@ -54,7 +57,8 @@ namespace roboptim
 					   const argument_t& x,
 					   size_type) const throw ()
   {
-    result.noalias () = a_ * x + b_;
+    result.noalias () = a_ * x;
+    result += b_;
   }
 
   // A
