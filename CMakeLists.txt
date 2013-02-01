@@ -26,8 +26,6 @@ SET(PROJECT_NAME roboptim-core)
 SET(PROJECT_DESCRIPTION "RobOptim core")
 SET(PROJECT_URL "http://github.com/laas/roboptim-core")
 
-SET(CXX_DISABLE_WERROR 1)
-
 SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/identity-function.hh
