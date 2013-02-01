@@ -7,9 +7,9 @@ Evaluate:
 Gradient: 
 [1](1)
 Jacobian: 
-[1,1]((1))
+[1](1)
 Derivative w.r.t params: 
-[1,1]((1))
+[1](1)
 
 Parameter is 3.14
 Identity function
@@ -20,9 +20,9 @@ Evaluate:
 Gradient: 
 [1](1)
 Jacobian: 
-[1,1]((1))
+[1](1)
 Derivative w.r.t params: 
-[1,1]((1))
+[1](1)
 
 Parameter is 42
 Identity function
@@ -33,7 +33,8 @@ Evaluate:
 Gradient: 
 [1](1)
 Jacobian: 
-[1,1]((1))
+[1](1)
 Derivative w.r.t params: 
-[1,1]((1))
+[1](1)
+
 

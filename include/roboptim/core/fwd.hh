@@ -17,8 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_FWD_HH
 # define ROBOPTIM_CORE_FWD_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
 
 namespace roboptim
 {
@@ -31,7 +29,7 @@ namespace roboptim
   class NoSolution {};
 
   class ConstantFunction;
-  class DifferentialeFunction;
+  class DifferentiableFunction;
   class DummySolver;
 
   namespace finiteDifferenceGradientPolicies
@@ -46,6 +44,23 @@ namespace roboptim
 
   template <typename T>
   class GenericFunction;
+
+  template <typename T>
+  struct GenericFunctionTraits;
+
+  /// \brief Tag type for functions using Eigen dense matrices.
+  struct EigenMatrixDense {};
+  /// \brief Tag type for functions using Eigen sparse matrices.
+  struct EigenMatrixSparse {};
+
+  /// \brief Trait specializing GenericFunction for Eigen dense matrices.
+  typedef GenericFunction<EigenMatrixDense>
+  Function;
+
+  /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
+  typedef GenericFunction<EigenMatrixSparse>
+  SparseFunction;
+
 
   class GenericSolver;
   class LinearFunction;

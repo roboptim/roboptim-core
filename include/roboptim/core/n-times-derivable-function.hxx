@@ -30,7 +30,7 @@ namespace roboptim
   NTimesDerivableFunction<dorder>::print (std::ostream& o) const
     throw ()
   {
-    o << "Function derivable " << derivabilityOrder << " times.";
+    o << "Function differentiable " << derivabilityOrder << " times.";
     return o;
   }
 

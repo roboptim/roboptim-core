@@ -35,23 +35,23 @@ namespace roboptim
   {
   public:
     /// \brief Import value type.
-    typedef typename DerivableFunction::value_type value_type;
+    typedef typename DifferentiableFunction::value_type value_type;
     /// \brief Import size type.
-    typedef typename DerivableFunction::size_type size_type;
+    typedef typename DifferentiableFunction::size_type size_type;
     /// \brief Import vector type.
-    typedef typename DerivableFunction::vector_t vector_t;
+    typedef typename DifferentiableFunction::vector_t vector_t;
     /// \brief Import result type.
-    typedef typename DerivableFunction::result_t result_t;
+    typedef typename DifferentiableFunction::result_t result_t;
     /// \brief Import argument type.
-    typedef typename DerivableFunction::argument_t argument_t;
+    typedef typename DifferentiableFunction::argument_t argument_t;
     /// \brief Import gradient type.
-    typedef typename DerivableFunction::gradient_t gradient_t;
+    typedef typename DifferentiableFunction::gradient_t gradient_t;
     /// \brief Import hessian type.
-    typedef typename TwiceDerivableFunction::hessian_t hessian_t;
+    typedef typename TwiceDifferentiableFunction::hessian_t hessian_t;
     /// \brief Import jacobian type.
-    typedef typename DerivableFunction::jacobian_t jacobian_t;
+    typedef typename DifferentiableFunction::jacobian_t jacobian_t;
     /// \brief Import interval type.
-    typedef typename DerivableFunction::interval_t interval_t;
+    typedef typename DifferentiableFunction::interval_t interval_t;
 
     explicit Split (boost::shared_ptr<const T> fct,
 		    size_type functionId) throw ();

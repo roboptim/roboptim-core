@@ -1,5 +1,5 @@
 Problem:
-  a * d * (a + b + c) + d (not derivable)
+  a * d * (a + b + c) + d (not differentiable)
   Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Argument's scales: 1, 1, 1, 1
   No constraints.
@@ -8,7 +8,7 @@ Problem:
 ---
 Solver:
   Problem:
-    a * d * (a + b + c) + d (not derivable)
+    a * d * (a + b + c) + d (not differentiable)
     Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Argument's scales: 1, 1, 1, 1
     No constraints.

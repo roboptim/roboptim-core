@@ -1,5 +1,5 @@
-null function (twice derivable function)
-Twice derivable function
+null function (twice differentiable function)
+Twice differentiable function
 1
 1
 1
@@ -22,10 +22,10 @@ null function
 1
 1
 1
-[1,1]((0))
-[1,1]((0))
-[1,1]((0))
-[1,1]((0))
+[1](0)
+[1](0)
+[1](0)
+[1](0)
 (1, 1)
 (1, 1)
 1

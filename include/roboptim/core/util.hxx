@@ -17,7 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_UTIL_HXX
 # define ROBOPTIM_CORE_UTIL_HXX
-# include <roboptim/core/function.hh>
+# include <roboptim/core/differentiable-function.hh>
 
 namespace roboptim
 {
@@ -25,13 +25,13 @@ namespace roboptim
   {
     template <typename T>
     void
-    jacobian_from_gradients (DerivableFunction::matrix_t& jac,
+    jacobian_from_gradients (typename DifferentiableFunction::matrix_t& jac,
                              const std::vector<const T*>& c,
-                             const DerivableFunction::vector_t& x)
+                             const DifferentiableFunction::vector_t& x)
     {
       for (unsigned i = 0; i < jac.rows (); ++i)
         {
-          DerivableFunction::jacobian_t grad = c[i]->jacobian (x);
+          DifferentiableFunction::jacobian_t grad = c[i]->jacobian (x);
           for (unsigned j = 0; j < jac.cols (); ++j)
             jac (i, j) = grad(0, j);
         }
@@ -61,6 +61,30 @@ namespace roboptim
     return o << "(" << p.first << ", " << p.second << ")";
   }
 
+  /// \brief Display an Eigen object with the appropriate IOFormat.
+  template <typename T>
+  std::ostream& operator<< (std::ostream& o, const Eigen::MatrixBase<T>& matrix)
+  {
+    Eigen::IOFormat ioformat (Eigen::StreamPrecision,
+			      0, ",", ", ", "(", ")", "(", ")");
+    ioformat.rowSpacer = "";
+    o << "[";
+
+    // Matrix
+    if (matrix.cols () == 1 || matrix.cols () == 1)
+      {
+	// Vector
+	ioformat = Eigen::IOFormat (Eigen::StreamPrecision,
+				    0, ",", ",", "", "", "(", ")");
+	ioformat.rowSpacer = "";
+	o << matrix.size ();
+      }
+    else
+      o << matrix.rows () << "," << matrix.cols ();
+
+    o << "]" << matrix.format (ioformat);
+    return o;
+  }
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_UTIL_HXX

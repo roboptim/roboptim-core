@@ -17,9 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_PROBLEM_HH
 # define ROBOPTIM_CORE_PROBLEM_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
-
 # include <iostream>
 # include <stdexcept>
 
@@ -32,6 +29,7 @@
 # include <boost/variant.hpp>
 
 # include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
 # include <roboptim/core/function.hh>
 
 namespace roboptim

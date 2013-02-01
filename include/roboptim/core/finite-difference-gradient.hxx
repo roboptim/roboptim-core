@@ -24,7 +24,7 @@ namespace roboptim
   FiniteDifferenceGradient<FdgPolicy>::FiniteDifferenceGradient
   (const Function& adaptee, value_type epsilon)
     throw ()
-    : DerivableFunction (adaptee.inputSize (), adaptee.outputSize ()),
+    : DifferentiableFunction (adaptee.inputSize (), adaptee.outputSize ()),
       FdgPolicy (),
       adaptee_ (adaptee),
       epsilon_ (epsilon)

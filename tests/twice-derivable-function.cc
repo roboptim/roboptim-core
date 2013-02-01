@@ -20,14 +20,14 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/twice-derivable-function.hh>
+#include <roboptim/core/twice-differentiable-function.hh>
 #include <roboptim/core/util.hh>
 
 using namespace roboptim;
 
-struct Null : public TwiceDerivableFunction
+struct Null : public TwiceDifferentiableFunction
 {
-  Null () : TwiceDerivableFunction (1, 1, "null function")
+  Null () : TwiceDifferentiableFunction (1, 1, "null function")
   {}
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
@@ -48,9 +48,9 @@ struct Null : public TwiceDerivableFunction
   }
 };
 
-struct NoTitle : public TwiceDerivableFunction
+struct NoTitle : public TwiceDifferentiableFunction
 {
-  NoTitle () : TwiceDerivableFunction (1, 1)
+  NoTitle () : TwiceDifferentiableFunction (1, 1)
   {}
 
   void impl_compute (result_t& res, const argument_t&) const throw ()

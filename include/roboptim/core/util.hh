@@ -17,10 +17,10 @@
 
 #ifndef ROBOPTIM_CORE_UTIL_HH
 # define ROBOPTIM_CORE_UTIL_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
+# include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
 
-# include <roboptim/core/derivable-function.hh>
+# include <roboptim/core/twice-differentiable-function.hh>
 
 namespace roboptim
 {
@@ -28,8 +28,9 @@ namespace roboptim
   {
     /// \internal
     /// \brief Copy the content of a uBLAS vector into a C array.
-    ROBOPTIM_DLLAPI void vector_to_array (Function::value_type* dst,
-					  const Function::vector_t& src);
+    ROBOPTIM_DLLAPI void vector_to_array
+    (Function::value_type* dst,
+     const Function::vector_t& src);
 
     /// \internal
     /// \brief Copy the content of a C array into a uBLAS vector.
@@ -41,9 +42,9 @@ namespace roboptim
     /// The first line of the jacobian is the only one used.
     template <typename T>
     void
-    jacobian_from_gradients (DerivableFunction::matrix_t& jac,
+    jacobian_from_gradients (typename DifferentiableFunction::matrix_t& jac,
                              const std::vector<const T*>& c,
-                             const DerivableFunction::vector_t& x);
+                             const DifferentiableFunction::vector_t& x);
   } // end of namespace detail.
 
   /// \brief Display a vector.
@@ -53,6 +54,10 @@ namespace roboptim
   /// \brief Display a pair.
   template <typename T1, typename T2>
   std::ostream& operator<< (std::ostream&, const std::pair<T1, T2>&);
+
+  /// \brief Display an Eigen object with the appropriate IOFormat.
+  template <typename T>
+  std::ostream& operator<< (std::ostream&, const Eigen::MatrixBase<T>&);
 } // end of namespace roboptim.
 
 # include <roboptim/core/util.hxx>

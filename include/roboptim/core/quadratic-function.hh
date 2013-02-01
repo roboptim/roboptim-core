@@ -17,12 +17,11 @@
 
 #ifndef ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH
 # define ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
-
 # include <limits>
 
-# include <roboptim/core/twice-derivable-function.hh>
+# include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
+# include <roboptim/core/twice-differentiable-function.hh>
 
 namespace roboptim
 {
@@ -32,7 +31,7 @@ namespace roboptim
   /// \brief Define an abstract quadratic function.
   ///
   /// Inherit from this class when implementing quadratic functions.
-  class ROBOPTIM_DLLAPI QuadraticFunction : public TwiceDerivableFunction
+  class ROBOPTIM_DLLAPI QuadraticFunction : public TwiceDifferentiableFunction
   {
   public:
     /// \brief Concrete class constructor should call this constructor.

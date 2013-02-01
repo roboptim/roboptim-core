@@ -17,15 +17,15 @@
 
 #ifndef ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
-
 # include <limits>
 # include <utility>
 
 # include <log4cxx/logger.h>
 
+# include <roboptim/core/fwd.hh>
+
 # include <roboptim/core/function.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -66,6 +66,10 @@ namespace roboptim
   class ROBOPTIM_DLLAPI DifferentiableFunction : public Function
   {
   public:
+    typedef Function::vector_t vector_t;
+    typedef Function::matrix_t matrix_t;
+
+
     /// \brief Gradient type.
     typedef vector_t gradient_t;
     /// \brief Jacobian type.

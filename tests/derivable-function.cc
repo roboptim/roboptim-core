@@ -20,14 +20,14 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/derivable-function.hh>
+#include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/util.hh>
 
 using namespace roboptim;
 
-struct Null : public DerivableFunction
+struct Null : public DifferentiableFunction
 {
-  Null () : DerivableFunction (1, 1, "null function")
+  Null () : DifferentiableFunction (1, 1, "null function")
   {}
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
@@ -42,9 +42,9 @@ struct Null : public DerivableFunction
   }
 };
 
-struct NoTitle : public DerivableFunction
+struct NoTitle : public DifferentiableFunction
 {
-  NoTitle () : DerivableFunction (1, 1)
+  NoTitle () : DifferentiableFunction (1, 1)
   {}
 
   void impl_compute (result_t& res, const argument_t&) const throw ()

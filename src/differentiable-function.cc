@@ -50,7 +50,7 @@ namespace roboptim
     if (getName ().empty ())
       return o << "Differentiable function";
     else
-      return o << getName () << " (derivable function)";
+      return o << getName () << " (differentiable function)";
   }
 
 } // end of namespace roboptim

@@ -32,9 +32,9 @@ using namespace roboptim::visualization;
 using namespace roboptim::visualization::gnuplot;
 
 // Define a function with a correct gradient.
-struct FGood : public DerivableFunction
+struct FGood : public DifferentiableFunction
 {
-  FGood () : DerivableFunction (1, 1, "x * x")
+  FGood () : DifferentiableFunction (1, 1, "x * x")
   {}
 
   void impl_compute (result_t& result,
@@ -51,9 +51,9 @@ struct FGood : public DerivableFunction
 };
 
 // Define a function with a bad gradient.
-struct FBad : public DerivableFunction
+struct FBad : public DifferentiableFunction
 {
-  FBad () : DerivableFunction (1, 1, "x * x")
+  FBad () : DifferentiableFunction (1, 1, "x * x")
   {}
 
   void impl_compute (result_t& result,
@@ -70,9 +70,9 @@ struct FBad : public DerivableFunction
 };
 
 // Define a polynomial function.
-struct Polynomial : public DerivableFunction
+struct Polynomial : public DifferentiableFunction
 {
-  Polynomial () : DerivableFunction (1, 1)
+  Polynomial () : DifferentiableFunction (1, 1)
   {}
 
   void impl_compute (result_t& result,
@@ -89,9 +89,9 @@ struct Polynomial : public DerivableFunction
 };
 
 // Define a function that draws a circle.
-struct CircleXY : public DerivableFunction
+struct CircleXY : public DifferentiableFunction
 {
-  CircleXY () : DerivableFunction (1, 2)
+  CircleXY () : DifferentiableFunction (1, 2)
   {}
 
   void impl_compute (result_t& result,
@@ -122,9 +122,9 @@ struct CircleXY : public DerivableFunction
 };
 
 // Define ``f(x,y) = x * y'' function.
-struct Times : public DerivableFunction
+struct Times : public DifferentiableFunction
 {
-  Times () : DerivableFunction (2, 1)
+  Times () : DifferentiableFunction (2, 1)
   {}
 
   void impl_compute (result_t& result,
@@ -144,20 +144,20 @@ struct Times : public DerivableFunction
 
 void displayGradient
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
- const DerivableFunction&,
+ const DifferentiableFunction&,
  const Function::vector_t&,
  Function::size_type i = 0);
 
 void
 displayGradient
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
- const DerivableFunction& function,
+ const DifferentiableFunction& function,
  const Function::vector_t& x,
  Function::size_type i)
 {
   FiniteDifferenceGradient<> fdfunction (function);
-  DerivableFunction::gradient_t grad = function.gradient (x, i);
-  DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
+  DifferentiableFunction::gradient_t grad = function.gradient (x, i);
+  DifferentiableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
 
   (*output) << "#" << grad << std::endl
 	    << "#" << fdgrad << std::endl;

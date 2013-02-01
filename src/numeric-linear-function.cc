@@ -19,6 +19,7 @@
 
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/numeric-linear-function.hh>
+#include <roboptim/core/util.hh>
 
 namespace roboptim
 {

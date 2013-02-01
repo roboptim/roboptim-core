@@ -17,13 +17,11 @@
 
 #ifndef ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HH
 # define ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
-
 # include <stdexcept>
-# include <roboptim/core/fwd.hh>
 
-# include <roboptim/core/derivable-function.hh>
+# include <roboptim/core/fwd.hh>
+# include <roboptim/core/differentiable-function.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -37,13 +35,13 @@ namespace roboptim
   {
   public:
     /// \brief Import vector.
-    typedef DerivableFunction::vector_t vector_t;
+    typedef DifferentiableFunction::vector_t vector_t;
     /// \brief Import gradient.
-    typedef DerivableFunction::gradient_t gradient_t;
+    typedef DifferentiableFunction::gradient_t gradient_t;
     /// \brief Import value_type.
-    typedef DerivableFunction::value_type value_type;
+    typedef DifferentiableFunction::value_type value_type;
     /// \brief Import size_type.
-    typedef DerivableFunction::size_type size_type;
+    typedef DifferentiableFunction::size_type size_type;
 
     /// \brief Default constructor.
     BadGradient (const vector_t& x,
@@ -144,7 +142,7 @@ namespace roboptim
   /// constructor.
   template <typename FdgPolicy>
   class FiniteDifferenceGradient
-    : public DerivableFunction,
+    : public DifferentiableFunction,
       private FdgPolicy
   {
   public:
@@ -182,14 +180,14 @@ namespace roboptim
   /// \param threshold maximum tolerated error
   /// \return true if valid, false if not
   ROBOPTIM_DLLAPI bool checkGradient
-  (const DerivableFunction& function,
+  (const DifferentiableFunction& function,
    Function::size_type functionId,
    const Function::vector_t& x,
    Function::value_type threshold = finiteDifferenceThreshold)
     throw ();
 
   ROBOPTIM_DLLAPI void checkGradientAndThrow
-  (const DerivableFunction& function,
+  (const DifferentiableFunction& function,
    Function::size_type functionId,
    const Function::vector_t& x,
    Function::value_type threshold = finiteDifferenceThreshold)

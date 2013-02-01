@@ -226,14 +226,14 @@ namespace roboptim
 
 
   bool
-  checkGradient (const DerivableFunction& function,
+  checkGradient (const DifferentiableFunction& function,
 		 Function::size_type i,
 		 const Function::vector_t& x,
 		 Function::value_type threshold) throw ()
   {
     FiniteDifferenceGradient<> fdfunction (function);
-    DerivableFunction::gradient_t grad = function.gradient (x, i);
-    DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
+    DifferentiableFunction::gradient_t grad = function.gradient (x, i);
+    DifferentiableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
 
     for (Function::size_type col = 0; col < function.inputSize (); ++col)
       if (fabs (grad[col] - fdgrad[col]) >= threshold)
@@ -242,15 +242,15 @@ namespace roboptim
   }
 
   void
-  checkGradientAndThrow (const DerivableFunction& function,
+  checkGradientAndThrow (const DifferentiableFunction& function,
 			 Function::size_type i,
 			 const Function::vector_t& x,
 			 Function::value_type threshold)
     throw (BadGradient)
   {
     FiniteDifferenceGradient<> fdfunction (function);
-    DerivableFunction::gradient_t grad = function.gradient (x, i);
-    DerivableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
+    DifferentiableFunction::gradient_t grad = function.gradient (x, i);
+    DifferentiableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
 
     if (!checkGradient (function, i, x, threshold))
       throw BadGradient (x, grad, fdgrad, threshold);

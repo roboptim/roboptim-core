@@ -22,7 +22,7 @@
 
 # include <boost/shared_ptr.hpp>
 
-# include <roboptim/core/derivable-function.hh>
+# include <roboptim/core/differentiable-function.hh>
 # include <roboptim/core/function.hh>
 
 namespace roboptim {
@@ -37,12 +37,12 @@ namespace roboptim {
   ///
   /// The differentiable functions are stored in a vector valued function
   /// called base function.
-  class SumOfC1Squares : public DerivableFunction
+  class SumOfC1Squares : public DifferentiableFunction
   {
   public:
     /// @name Types
     /// @{
-    typedef DerivableFunction parent_t;
+    typedef DifferentiableFunction parent_t;
     typedef parent_t::argument_t argument_t;
     typedef parent_t::jacobian_t jacobian_t;
     typedef parent_t::gradient_t gradient_t;
@@ -53,7 +53,7 @@ namespace roboptim {
     /// \brief Constructot by vector valued functions
     /// The value of this scalar valued function is the sum of the
     /// squares of the coordinates of the vector valued base function.
-    explicit SumOfC1Squares (const boost::shared_ptr<DerivableFunction>&
+    explicit SumOfC1Squares (const boost::shared_ptr<DifferentiableFunction>&
 			     function,
 			     const std::string& name) throw ();
     explicit SumOfC1Squares (const SumOfC1Squares& function) throw ();
@@ -61,7 +61,7 @@ namespace roboptim {
     /// \brief Get base function
     /// Base function is the vector valued function given at construction
     /// of this class.
-    const boost::shared_ptr<const DerivableFunction>& baseFunction () const;
+    const boost::shared_ptr<const DifferentiableFunction>& baseFunction () const;
   protected:
     /// \brief Compute value of function
     /// Value is sum of squares of coordinates of vector valued base function
@@ -75,7 +75,7 @@ namespace roboptim {
     /// Compute base function and store result in value_.
     void computeFunction (const argument_t x) const;
     /// \brief Vector valued function given at construction
-    boost::shared_ptr<const DerivableFunction> baseFunction_;
+    boost::shared_ptr<const DifferentiableFunction> baseFunction_;
     /// \brief Store last argument for which the function has been computed
     mutable argument_t x_;
     /// \brief temporary variable to store vector value of input function

@@ -17,10 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_CONSTANT_FUNCTION_HH
 # define ROBOPTIM_CORE_CONSTANT_FUNCTION_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
-
+# include <roboptim/core/fwd.hh>
 # include <roboptim/core/linear-function.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {

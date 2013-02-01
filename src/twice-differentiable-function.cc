@@ -35,8 +35,8 @@ namespace roboptim
   TwiceDifferentiableFunction::print (std::ostream& o) const throw ()
   {
     if (getName ().empty ())
-      return o << "Twice derivable function";
+      return o << "Twice differentiable function";
     else
-      return o << getName () << " (twice derivable function)";
+      return o << getName () << " (twice differentiable function)";
   }
 } // end of namespace roboptim

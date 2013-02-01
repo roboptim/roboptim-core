@@ -56,9 +56,9 @@ struct CountUnaryFunction
 
   void operator () (double x)
   {
-    // (*output) << "Discrete point: " << x
-    // 	      << " (cnt: " << ++cnt_ << ")"
-    // 	      << std::endl;
+    (*output) << "Discrete point: " << x
+	      << " (cnt: " << ++cnt_ << ")"
+	      << std::endl;
   }
 
 private:

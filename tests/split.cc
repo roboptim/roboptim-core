@@ -22,15 +22,15 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/derivable-function.hh>
+#include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/util.hh>
 #include <roboptim/core/filter/split.hh>
 
 using namespace roboptim;
 
-struct F : public DerivableFunction
+struct F : public DifferentiableFunction
 {
-  F () : DerivableFunction (1, 10, "f_n (x) = n * x")
+  F () : DifferentiableFunction (1, 10, "f_n (x) = n * x")
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const throw ()
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE (split)
 
   for (unsigned id = 0; id < 10; ++id)
     {
-      Split<DerivableFunction> splitF (f, id);
+      Split<DifferentiableFunction> splitF (f, id);
 
       (*output) << splitF << ":" << std::endl
 		<< std::endl;
@@ -68,7 +68,6 @@ BOOST_AUTO_TEST_CASE (split)
 	  x[0] = i;
 	  (*output) << splitF (x) << std::endl;
 	  (*output) << splitF (x) << std::endl;
-	  //assert ((*f) (x)[0] == splitF (x)[id]);
 	  
 	  (*output) << splitF.gradient (x) << std::endl;
 	  (*output) << splitF.gradient (x) << std::endl;

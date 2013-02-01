@@ -1,142 +1,142 @@
-2 * x (cached) (derivable function):
+2 * x (cached) (differentiable function):
 
-not cached
+computation (not cached)
 [1](0)
-cached
 [1](0)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](1)
-cached
 [1](1)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
-[1](2)
-cached
-[1](2)
-cached
+computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
+gradient computation (not cached)
+[1](2)
+[1](2)
+computation (not cached)
 [1](3)
-cached
 [1](3)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](4)
-cached
 [1](4)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](5)
-cached
 [1](5)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](6)
-cached
 [1](6)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](7)
-cached
 [1](7)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](8)
-cached
 [1](8)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](9)
-cached
 [1](9)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](10)
-cached
 [1](10)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](11)
-cached
 [1](11)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](12)
-cached
 [1](12)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](13)
-cached
 [1](13)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](14)
-cached
 [1](14)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](15)
-cached
 [1](15)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](16)
-cached
 [1](16)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](17)
-cached
 [1](17)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](18)
-cached
 [1](18)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)
-not cached
+computation (not cached)
 [1](19)
-cached
 [1](19)
-cached
+computation (not cached)
+gradient computation (not cached)
 [1](2)
 [1](2)

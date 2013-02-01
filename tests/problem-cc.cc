@@ -21,7 +21,7 @@
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/constant-function.hh>
-#include <roboptim/core/derivable-function.hh>
+#include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/problem.hh>
 
 using namespace roboptim;
@@ -33,7 +33,8 @@ using namespace roboptim;
 
 BOOST_AUTO_TEST_CASE (problem_copy_constructor)
 {
-  typedef Problem<DerivableFunction, boost::mpl::vector<DerivableFunction> >
+  typedef Problem<DifferentiableFunction,
+		  boost::mpl::vector<DifferentiableFunction> >
     problemSrc_t;
   typedef Problem<Function, boost::mpl::vector<Function> > problemDst_t;
 

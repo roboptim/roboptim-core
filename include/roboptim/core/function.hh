@@ -17,8 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_FUNCTION_HH
 # define ROBOPTIM_CORE_FUNCTION_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
+# include <roboptim/core/portability.hh>
 
 # include <iostream>
 # include <limits>
@@ -456,7 +455,7 @@ namespace roboptim
     if (getName ().empty ())
       return o << "Function";
     else
-      return o << getName  () << " (not derivable)";
+      return o << getName  () << " (not differentiable)";
   }
 
   template <typename T>
@@ -465,11 +464,6 @@ namespace roboptim
   {
     return f.print (o);
   }
-
-  /// \brief Tag type for functions using Eigen dense matrices.
-  struct EigenMatrixDense {};
-  /// \brief Tag type for functions using Eigen sparse matrices.
-  struct EigenMatrixSparse {};
 
   /// \brief Trait specializing GenericFunction for Eigen dense matrices.
   template <>
@@ -498,15 +492,6 @@ namespace roboptim
     typedef vector_t result_t;
     typedef vector_t argument_t;
   };
-
-
-  /// \brief Trait specializing GenericFunction for Eigen dense matrices.
-  typedef GenericFunction<EigenMatrixDense>
-  Function;
-
-  /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
-  typedef GenericFunction<EigenMatrixSparse>
-  SparseFunction;
 
   /// @}
 

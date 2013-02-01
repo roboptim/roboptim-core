@@ -28,13 +28,13 @@ namespace roboptim
   };
 
   template <>
-  struct derivativeSize<DerivableFunction>
+  struct derivativeSize<DifferentiableFunction>
   {
     static const unsigned int value = 1;
   };
 
   template <>
-    struct derivativeSize<TwiceDerivableFunction>
+    struct derivativeSize<TwiceDifferentiableFunction>
   {
     static const unsigned int value = 2;
   };

@@ -20,19 +20,22 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/derivable-function.hh>
+#include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/util.hh>
 #include <roboptim/core/filter/cached-function.hh>
 
 using namespace roboptim;
 
-struct F : public DerivableFunction
+boost::shared_ptr<boost::test_tools::output_test_stream> output;
+
+struct F : public DifferentiableFunction
 {
-  F () : DerivableFunction (1, 1, "2 * x")
+  F () : DifferentiableFunction (1, 1, "2 * x")
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const throw ()
   {
+    (*output) << "computation (not cached)" << std::endl;
     res.setZero ();
     res[0] = 2. * argument[0];
   }
@@ -40,6 +43,7 @@ struct F : public DerivableFunction
   void impl_gradient (gradient_t& grad, const argument_t&,
 		      size_type) const throw ()
   {
+    (*output) << "gradient computation (not cached)" << std::endl;
     grad.setZero ();
     grad[0] = 2.;
   }
@@ -47,12 +51,11 @@ struct F : public DerivableFunction
 
 BOOST_AUTO_TEST_CASE (cached_function)
 {
-  boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("cached-function");
+  output = retrievePattern ("cached-function");
 
   boost::shared_ptr<F> f (new F ());
 
-  CachedFunction<DerivableFunction> cachedF (f);
+  CachedFunction<DifferentiableFunction> cachedF (f);
 
   (*output) << cachedF << ":" << std::endl
 	    << std::endl;

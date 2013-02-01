@@ -17,16 +17,14 @@
 
 #ifndef ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
-# include <roboptim/core/fwd.hh>
-
 # include <limits>
 # include <utility>
 
 # include <log4cxx/logger.h>
 
-# include <roboptim/core/derivable-function.hh>
+# include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
+# include <roboptim/core/differentiable-function.hh>
 
 namespace roboptim
 {

@@ -23,7 +23,7 @@
 # include <boost/static_assert.hpp>
 
 # include <roboptim/core/fwd.hh>
-# include <roboptim/core/twice-derivable-function.hh>
+# include <roboptim/core/twice-differentiable-function.hh>
 
 namespace roboptim
 {
@@ -39,7 +39,7 @@ namespace roboptim
   /// ``n times derivable function'' and implements generic methods required by
   /// upper classes using this class specific interface.
   template <>
-  class NTimesDerivableFunction<2> : public TwiceDerivableFunction
+  class NTimesDerivableFunction<2> : public TwiceDifferentiableFunction
   {
   public:
     /// \brief Function derivability order.
@@ -144,7 +144,7 @@ namespace roboptim
     /// \param name function's name
     NTimesDerivableFunction (size_type outputSize = 1,
 			     std::string name = std::string ()) throw ()
-      : TwiceDerivableFunction (1, outputSize, name)
+      : TwiceDifferentiableFunction (1, outputSize, name)
     {}
 
     /// \brief Function evaluation.

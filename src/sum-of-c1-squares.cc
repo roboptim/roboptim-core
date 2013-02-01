@@ -21,10 +21,10 @@
 
 namespace roboptim {
 
-  SumOfC1Squares::SumOfC1Squares (const boost::shared_ptr<DerivableFunction>&
+  SumOfC1Squares::SumOfC1Squares (const boost::shared_ptr<DifferentiableFunction>&
 				  function,
 				  const std::string& name) throw () :
-    DerivableFunction(function->inputSize(), 1, name),
+    DifferentiableFunction(function->inputSize(), 1, name),
     baseFunction_ (function)
   {
     value_.resize (function->outputSize());
@@ -35,7 +35,7 @@ namespace roboptim {
   }
     
   SumOfC1Squares::SumOfC1Squares (const SumOfC1Squares& src) throw ():
-    DerivableFunction(src.inputSize(), 1, src.getName()),
+    DifferentiableFunction(src.inputSize(), 1, src.getName()),
     baseFunction_ (src.baseFunction_), x_ (src.x_),
     value_ (src.value_),
     gradient_ (src.gradient_)
@@ -46,7 +46,7 @@ namespace roboptim {
   {
   }
 
-  const boost::shared_ptr<const DerivableFunction>& SumOfC1Squares::
+  const boost::shared_ptr<const DifferentiableFunction>& SumOfC1Squares::
   baseFunction () const
   {
     return baseFunction_;

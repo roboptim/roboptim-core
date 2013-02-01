@@ -7,7 +7,7 @@ Evaluate:
 Gradient: 
 [1](0)
 Jacobian: 
-[1,1]((0))
+[1](0)
 
 Parameter is 3.14
 Constant function
@@ -18,7 +18,7 @@ Evaluate:
 Gradient: 
 [1](0)
 Jacobian: 
-[1,1]((0))
+[1](0)
 
 Parameter is 42
 Constant function
@@ -29,5 +29,5 @@ Evaluate:
 Gradient: 
 [1](0)
 Jacobian: 
-[1,1]((0))
+[1](0)
 

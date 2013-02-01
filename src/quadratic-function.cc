@@ -27,7 +27,7 @@ namespace roboptim
 					size_type outputSize,
 					std::string name)
     throw ()
-    : TwiceDerivableFunction (inputSize, outputSize, name)
+    : TwiceDifferentiableFunction (inputSize, outputSize, name)
   {
   }
 
