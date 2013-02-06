@@ -37,8 +37,8 @@ struct Square : public Function
   {
   }
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+  void impl_compute (result_t result,
+		     argument_t argument) const throw ()
   {
     result[0] = argument[0] * argument[0];
   }
@@ -53,8 +53,8 @@ struct Circle : public Function
   {
   }
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+  void impl_compute (result_t result,
+		     argument_t argument) const throw ()
   {
     result[0] = sin (argument[0]) * r_;
     result[1] = cos (argument[0]) * r_;

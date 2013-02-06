@@ -29,15 +29,15 @@ struct Null : public LinearFunction
   Null () : LinearFunction (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t res, argument_t) const throw ()
   {
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_t grad, argument_t,
 		      size_type) const throw ()
   {
-    grad.setZero ();
+    grad.block (0, 0, grad.rows (), grad.cols ()).setZero ();
   }
 };
 
@@ -46,15 +46,15 @@ struct NoTitle : public LinearFunction
   NoTitle () : LinearFunction (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t res, argument_t) const throw ()
   {
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_t grad, argument_t,
 		      size_type) const throw ()
   {
-    grad.setZero ();
+    grad.block (0, 0, grad.rows (), grad.cols ()).setZero ();
   }
 };
 

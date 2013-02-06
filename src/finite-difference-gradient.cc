@@ -25,8 +25,8 @@
 namespace roboptim
 {
   BadGradient::BadGradient (const vector_t& x,
-			    const gradient_t& analyticalGradient,
-			    const gradient_t& finiteDifferenceGradient,
+			    gradient_t analyticalGradient,
+			    gradient_t finiteDifferenceGradient,
 			    const value_type& threshold)
     : std::runtime_error ("bad gradient"),
       x_ (x),
@@ -85,9 +85,9 @@ namespace roboptim
 		   double& result,
 		   double& round,
 		   double& trunc,
-		   const Function::argument_t& argument,
+		   Function::argument_t argument,
 		   Function::size_type idFunction,
-		   Function::argument_t& xEps);
+		   Function::vector_t& xEps);
 
     /// Algorithm from the Gnu Scientific Library.
     ROBOPTIM_DLLLOCAL void
@@ -97,9 +97,9 @@ namespace roboptim
 		   double& result,
 		   double& round,
 		   double& trunc,
-		   const Function::argument_t& argument,
+		   Function::argument_t argument,
 		   Function::size_type idFunction,
-		   Function::argument_t& xEps)
+		   Function::vector_t& xEps)
     {
       /* Compute the derivative using the 5-point rule (x-h, x-h/2, x,
 	 x+h/2, x+h). Note that the central point is not used.
@@ -151,20 +151,20 @@ namespace roboptim
     Simple::computeGradient
     (const Function& adaptee,
      Function::value_type epsilon,
-     Function::result_t& gradient,
-     const Function::argument_t& argument,
+     Function::result_t gradient,
+     Function::argument_t argument,
      Function::size_type idFunction,
-     Function::argument_t& xEps) const throw ()
+     Function::vector_t xEps) const throw ()
     {
       typedef Function::value_type value_type;
       assert (adaptee.outputSize () - idFunction > 0);
 
-      Function::result_t res = adaptee (argument);
+      Function::vector_t res = adaptee (argument);
       for (size_type j = 0; j < adaptee.inputSize (); ++j)
 	{
 	  xEps = argument;
 	  xEps[j] += epsilon;
-	  Function::result_t resEps = adaptee (xEps);
+	  Function::vector_t resEps = adaptee (xEps);
 	  gradient (j) = (resEps[idFunction] - res[idFunction]) / epsilon;
 	}
     }
@@ -173,10 +173,10 @@ namespace roboptim
     FivePointsRule::computeGradient
     (const Function& adaptee,
      Function::value_type epsilon,
-     Function::result_t& gradient,
-     const Function::argument_t& argument,
+     Function::result_t gradient,
+     Function::argument_t argument,
      Function::size_type idFunction,
-     Function::argument_t& xEps) const throw ()
+     Function::vector_t xEps) const throw ()
     {
       typedef Function::value_type value_type;
 
@@ -233,7 +233,7 @@ namespace roboptim
   bool
   checkGradient (const DifferentiableFunction& function,
 		 Function::size_type i,
-		 const Function::vector_t& x,
+		 Function::argument_t x,
 		 Function::value_type threshold) throw ()
   {
     FiniteDifferenceGradient<> fdfunction (function);
@@ -249,13 +249,13 @@ namespace roboptim
   void
   checkGradientAndThrow (const DifferentiableFunction& function,
 			 Function::size_type i,
-			 const Function::vector_t& x,
+			 Function::argument_t x,
 			 Function::value_type threshold)
     throw (BadGradient)
   {
     FiniteDifferenceGradient<> fdfunction (function);
-    DifferentiableFunction::gradient_t grad = function.gradient (x, i);
-    DifferentiableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
+    DifferentiableFunction::vector_t grad = function.gradient (x, i);
+    DifferentiableFunction::vector_t fdgrad = fdfunction.gradient (x, i);
 
     if (!checkGradient (function, i, x, threshold))
       throw BadGradient (x, grad, fdgrad, threshold);

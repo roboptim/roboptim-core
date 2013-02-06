@@ -37,14 +37,14 @@ struct FGood : public DifferentiableFunction
   FGood () : DifferentiableFunction (1, 1, "x * x")
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+  void impl_compute (result_t result,
+		     argument_t argument) const throw ()
   {
     result (0) = argument[0] * argument[0];
   }
 
-  void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const throw ()
+  void impl_gradient (gradient_t gradient,
+		      argument_t argument, size_type) const throw ()
   {
     gradient (0) = 2 * argument[0];
   }
@@ -56,14 +56,14 @@ struct FBad : public DifferentiableFunction
   FBad () : DifferentiableFunction (1, 1, "x * x")
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+  void impl_compute (result_t result,
+		     argument_t argument) const throw ()
   {
     result (0) = argument[0] * argument[0];
   }
 
-  void impl_gradient (result_t& result,
-		      const vector_t& argument, size_type) const throw ()
+  void impl_gradient (result_t result,
+		      argument_t argument, size_type) const throw ()
   {
     result (0) = 5 * argument[0] + 42;
   }
@@ -75,14 +75,14 @@ struct Polynomial : public DifferentiableFunction
   Polynomial () : DifferentiableFunction (1, 1)
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+  void impl_compute (result_t result,
+		     argument_t argument) const throw ()
   {
     result (0) = -24 * argument[0] * argument[0] + 33 * argument[0] + 5;
   }
 
-  void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const throw ()
+  void impl_gradient (gradient_t gradient,
+		      argument_t argument, size_type) const throw ()
   {
     gradient (0) = -42 * argument[0] + 33;
   }
@@ -94,15 +94,15 @@ struct CircleXY : public DifferentiableFunction
   CircleXY () : DifferentiableFunction (1, 2)
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+  void impl_compute (result_t result,
+		     argument_t argument) const throw ()
   {
     result (0) = sin (argument[0]);
     result (1) = cos (argument[0]);
   }
 
-  void impl_gradient (result_t& result,
-		      const argument_t& argument,
+  void impl_gradient (result_t result,
+		      argument_t argument,
 		      size_type idFunction) const throw ()
   {
     switch (idFunction)
@@ -127,14 +127,14 @@ struct Times : public DifferentiableFunction
   Times () : DifferentiableFunction (2, 1)
   {}
 
-  void impl_compute (result_t& result,
-		     const vector_t& argument) const throw ()
+  void impl_compute (result_t result,
+		     argument_t argument) const throw ()
   {
     result (0) = argument[0] * argument[1];
   }
 
-  void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument,
+  void impl_gradient (gradient_t gradient,
+		      argument_t argument,
 		      size_type) const throw ()
   {
     gradient (0) = argument[1];
@@ -145,19 +145,19 @@ struct Times : public DifferentiableFunction
 void displayGradient
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const DifferentiableFunction&,
- const Function::vector_t&,
+ Function::vector_t,
  Function::size_type i = 0);
 
 void
 displayGradient
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const DifferentiableFunction& function,
- const Function::vector_t& x,
+ Function::vector_t x,
  Function::size_type i)
 {
   FiniteDifferenceGradient<> fdfunction (function);
-  DifferentiableFunction::gradient_t grad = function.gradient (x, i);
-  DifferentiableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
+  DifferentiableFunction::vector_t grad = function.gradient (x, i);
+  DifferentiableFunction::vector_t fdgrad = fdfunction.gradient (x, i);
 
   (*output) << "#" << grad << std::endl
 	    << "#" << fdgrad << std::endl;

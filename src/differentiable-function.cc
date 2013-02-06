@@ -32,8 +32,8 @@ namespace roboptim
   }
 
   void
-  DifferentiableFunction::impl_jacobian (jacobian_t& jacobian,
-					 const argument_t& argument)
+  DifferentiableFunction::impl_jacobian (jacobian_t jacobian,
+					 argument_t argument)
     const throw ()
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION

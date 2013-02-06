@@ -66,10 +66,10 @@ namespace roboptim {
     /// \brief Compute value of function
     /// Value is sum of squares of coordinates of vector valued base function
     virtual void
-    impl_compute(result_t &result, const argument_t &x) const throw ();
+    impl_compute(result_t result, argument_t x) const throw ();
     /// \brief Gradient
     virtual void
-    impl_gradient(gradient_t& gradient, const argument_t& x,
+    impl_gradient(gradient_t gradient, argument_t x,
 		  size_type row = 0) const throw ();
   private:
     /// Compute base function and store result in value_.
@@ -77,11 +77,11 @@ namespace roboptim {
     /// \brief Vector valued function given at construction
     boost::shared_ptr<const DifferentiableFunction> baseFunction_;
     /// \brief Store last argument for which the function has been computed
-    mutable argument_t x_;
+    mutable vector_t x_;
     /// \brief temporary variable to store vector value of input function
-    mutable result_t value_;
+    mutable vector_t value_;
     /// \brief temporary variable to store gradients
-    mutable gradient_t gradient_;
+    mutable vector_t gradient_;
   }; // class Solver
   /// @}
 } // namespace roboptim

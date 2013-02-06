@@ -29,9 +29,9 @@ struct Null : public Function
   Null () : Function (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t res, argument_t) const throw ()
   {
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
   }
 };
 
@@ -40,9 +40,9 @@ struct NoTitle : public Function
   NoTitle () : Function (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t res, argument_t) const throw ()
   {
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
   }
 };
 
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE (null_function)
   Null::vector_t x (1);
   x[0] = 42.;
 
-  Null::argument_t res (null.outputSize ());
+  Null::vector_t res (null.outputSize ());
 
   (*output) << null << std::endl
 	    << notitle << std::endl;
@@ -71,8 +71,10 @@ BOOST_AUTO_TEST_CASE (null_function)
   (*output) << null.getName () << std::endl
 	    << notitle.getName () << std::endl;
 
-  (*output) << null.isValidResult (null (x)) << std::endl
-	    << notitle.isValidResult (notitle (x)) << std::endl;
+  Null::vector_t r = null (x);
+  Null::vector_t r2 = notitle (x);
+  (*output) << null.isValidResult (r) << std::endl
+	    << notitle.isValidResult (r2) << std::endl;
 
   (*output) << null (x) << std::endl
 	    << notitle (x) << std::endl;

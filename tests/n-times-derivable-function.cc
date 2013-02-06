@@ -32,17 +32,17 @@ struct F : public NTimesDerivableFunction<10>
   F () : NTimesDerivableFunction<10> (4, "0")
   {}
 
-  virtual void impl_compute (result_t& result, double) const throw ()
+  virtual void impl_compute (result_t res, double) const throw ()
   {
-    result.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
   }
 
-  virtual void impl_derivative (gradient_t& derivative,
+  virtual void impl_derivative (gradient_t derivative,
 				double,
 				size_type order = 1) const throw ()
   {
     assert (order <= derivabilityOrder);
-    derivative.setZero ();
+    derivative.block (0, 0, derivative.rows (), derivative.cols ()).setZero ();
   }
 };
 

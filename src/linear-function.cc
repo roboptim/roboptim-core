@@ -31,11 +31,11 @@ namespace roboptim
   }
 
   void
-  LinearFunction::impl_hessian (hessian_t& hessian,
-				const vector_t&,
+  LinearFunction::impl_hessian (hessian_t,
+				argument_t,
 				size_type) const throw ()
   {
-    setZero (hessian);
+    // null
   }
 
   std::ostream&

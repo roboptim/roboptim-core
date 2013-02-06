@@ -31,7 +31,7 @@ struct ParametrizedF : public ParametrizedFunction<ConstantFunction>
   ParametrizedF () : ParametrizedFunction<ConstantFunction> (1, 1, 1)
   {}
 
-  result_t impl_compute (const argument_t& argument) const throw ()
+  result_t impl_compute (argument_t argument) const throw ()
   {
     return result_t (argument);
   }
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE (parametrized_function)
 
   ParametrizedF pf;
 
-  ParametrizedF::argument_t parameter (1);
+  ParametrizedF::vector_t parameter (1);
   parameter.setZero ();
 
   CHECKME (0.);
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE (parametrized_function)
     x[0] = 256.;
 
     // Natural evaluation in one line.
-    ConstantFunction::result_t res = pf (parameter) (x);
+    ConstantFunction::vector_t res = pf (parameter) (x);
 
     BOOST_CHECK_EQUAL (res[0], 128.);
   }

@@ -187,9 +187,9 @@ namespace roboptim
       startingPoint_ (),
       constraints_ (),
       boundsVect_ (),
-      argumentBounds_ (f.inputSize ()),
+      argumentBounds_ ((std::size_t)f.inputSize ()),
       scalesVect_ (),
-      argumentScales_ (f.inputSize ())
+      argumentScales_ ((std::size_t)f.inputSize ())
   {
     // Initialize bound.
     std::fill (argumentBounds_.begin (), argumentBounds_.end (),
@@ -301,7 +301,7 @@ namespace roboptim
     constraints_.push_back (boost::static_pointer_cast<C> (x));
 
     // Check that the bounds are correctly defined.
-    for (Function::size_type i = 0; i < x->outputSize (); ++i)
+    for (std::size_t i = 0; i < x->outputSize (); ++i)
       {
 	const interval_t& interval = b[i];
 	assert (interval.first <= interval.second);
@@ -398,7 +398,7 @@ namespace roboptim
     {
       printConstraint (std::ostream& o,
 		       const P& problem,
-		       Function::size_type i) :
+		       std::size_t i) :
 	problem_ (problem),
 	o_ (o),
 	i_ (i)
@@ -418,15 +418,18 @@ namespace roboptim
 	if (problem_.startingPoint ())
 	  {
 	    U g = get<U> (problem_.constraints ()[i_]);
-	    Function::vector_t x = (*g) (*problem_.startingPoint ());
+	    Function::vector_t start = *problem_.startingPoint ();
+	    Function::vector_t x = (*g) (start);
 	    o_ << "Initial value: "
 	       << x;
 	    for (Function::size_type j = 0; j < x.size (); ++j)
 	      {
 		if (x[j] < Function::
-		    getLowerBound ((problem_.boundsVector ()[i_])[j])
+		    getLowerBound
+		    ((problem_.boundsVector ()[i_])[(std::size_t)j])
 		    || x[j] > Function::
-		    getUpperBound ((problem_.boundsVector ()[i_])[j]))
+		    getUpperBound
+		    ((problem_.boundsVector ()[i_])[(std::size_t)j]))
 		  o_ << " (constraint not satisfied)";
 		break;
 	      }
@@ -437,7 +440,7 @@ namespace roboptim
     private:
       const P& problem_;
       std::ostream& o_;
-      Function::size_type i_;
+      std::size_t i_;
     };
   } // end of namespace detail.
 
@@ -471,9 +474,10 @@ namespace roboptim
     // Starting point.
     if (startingPoint_)
       {
-	o << iendl << "Starting point: " << *startingPoint_
+	Function::vector_t x = *startingPoint_;
+	o << iendl << "Starting point: " << x
 	  << iendl << "Starting value: "
-	  << this->function () (*startingPoint_);
+	  << this->function () (x);
       }
     else
       o << iendl << "No starting point.";

@@ -45,8 +45,8 @@ namespace roboptim
 
     /// \brief Default constructor.
     BadGradient (const vector_t& x,
-		 const gradient_t& analyticalGradient,
-		 const gradient_t& finiteDifferenceGradient,
+		 gradient_t analyticalGradient,
+		 gradient_t finiteDifferenceGradient,
 		 const value_type& threshold);
 
     virtual ~BadGradient () throw ();
@@ -101,10 +101,10 @@ namespace roboptim
       void computeGradient
       (const Function& adaptee,
        Function::value_type epsilon,
-       Function::result_t& gradient,
-       const Function::argument_t& argument,
+       Function::result_t gradient,
+       Function::argument_t argument,
        Function::size_type idFunction,
-       Function::argument_t& xEps) const throw ();
+       Function::vector_t xEps) const throw ();
     };
 
     /// \brief Precise finite difference gradient computation.
@@ -118,10 +118,10 @@ namespace roboptim
       void computeGradient
       (const Function& adaptee,
        Function::value_type epsilon,
-       Function::result_t& gradient,
-       const Function::argument_t& argument,
+       Function::result_t gradient,
+       Function::argument_t argument,
        Function::size_type idFunction,
-       Function::argument_t& xEps) const throw ();
+       Function::vector_t xEps) const throw ();
     };
   } // end of namespace policy.
 
@@ -161,8 +161,8 @@ namespace roboptim
     ~FiniteDifferenceGradient () throw ();
 
   protected:
-    void impl_compute (result_t&, const argument_t&) const throw ();
-    void impl_gradient (gradient_t&, const argument_t& argument, size_type = 0)
+    void impl_compute (result_t, argument_t) const throw ();
+    void impl_gradient (gradient_t, argument_t argument, size_type = 0)
       const throw ();
 
     /// \brief Reference to the wrapped function.
@@ -171,7 +171,7 @@ namespace roboptim
     //// \brief Epsilon used in finite differences computation.
     const value_type epsilon_;
 
-    mutable argument_t xEps_;
+    mutable vector_t xEps_;
   };
 
   /// \brief Check if a gradient is valid.
@@ -186,14 +186,14 @@ namespace roboptim
   ROBOPTIM_DLLAPI bool checkGradient
   (const DifferentiableFunction& function,
    Function::size_type functionId,
-   const Function::vector_t& x,
+   Function::argument_t x,
    Function::value_type threshold = finiteDifferenceThreshold)
     throw ();
 
   ROBOPTIM_DLLAPI void checkGradientAndThrow
   (const DifferentiableFunction& function,
    Function::size_type functionId,
-   const Function::vector_t& x,
+   Function::argument_t x,
    Function::value_type threshold = finiteDifferenceThreshold)
     throw (BadGradient);
 

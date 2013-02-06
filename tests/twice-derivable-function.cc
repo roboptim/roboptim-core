@@ -30,21 +30,21 @@ struct Null : public TwiceDifferentiableFunction
   Null () : TwiceDifferentiableFunction (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t res, argument_t) const throw ()
   {
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_t grad, argument_t,
 		      size_type) const throw ()
   {
-    grad.setZero ();
+    grad.block (0, 0, grad.rows (), grad.cols ()).setZero ();
   }
 
-  void impl_hessian (hessian_t& h, const argument_t&,
+  void impl_hessian (hessian_t h, argument_t,
 		     size_type) const throw ()
   {
-    h.setZero ();
+    h.block (0, 0, h.rows (), h.cols ()).setZero ();
   }
 };
 
@@ -53,21 +53,21 @@ struct NoTitle : public TwiceDifferentiableFunction
   NoTitle () : TwiceDifferentiableFunction (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t res, argument_t) const throw ()
   {
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_t grad, argument_t,
 		      size_type) const throw ()
   {
-    grad.setZero ();
+    grad.block (0, 0, grad.rows (), grad.cols ()).setZero ();
   }
 
-  void impl_hessian (hessian_t& h, const argument_t&, size_type)
+  void impl_hessian (hessian_t h, argument_t, size_type)
     const throw ()
   {
-    h.setZero ();
+    h.block (0, 0, h.rows (), h.cols ()).setZero ();
   }
 };
 
@@ -81,9 +81,9 @@ BOOST_AUTO_TEST_CASE (twice_derivable_function)
 
   Null::vector_t x (1);
   x[0] = 42.;
-  Null::hessian_t h (null.hessianSize ().first,
+  Null::matrix_t h (null.hessianSize ().first,
 		     null.hessianSize ().second);
-  Null::gradient_t grad (null.gradientSize ());
+  Null::vector_t grad (null.gradientSize ());
 
   (*output) << null << std::endl
 	    << notitle << std::endl;
@@ -97,8 +97,10 @@ BOOST_AUTO_TEST_CASE (twice_derivable_function)
   (*output) << null.getName () << std::endl
 	    << notitle.getName () << std::endl;
 
-  (*output) << null.isValidResult (null (x)) << std::endl
-	    << notitle.isValidResult (notitle (x)) << std::endl;
+  Null::vector_t r = null (x);
+  Null::vector_t r2 = notitle (x);
+  (*output) << null.isValidResult (r) << std::endl
+	    << notitle.isValidResult (r2) << std::endl;
 
   (*output) << null (x) << std::endl
 	    << notitle (x) << std::endl;
@@ -136,8 +138,10 @@ BOOST_AUTO_TEST_CASE (twice_derivable_function)
   (*output) << null.hessianSize () << std::endl
 	    << notitle.hessianSize () << std::endl;
 
-  (*output) << null.isValidHessian (null.hessian (x)) << std::endl
-	    << notitle.isValidHessian (notitle.hessian (x)) << std::endl;
+  Null::matrix_t hess = null.hessian (x);
+  Null::matrix_t hess2 = notitle.hessian (x);
+  (*output) << null.isValidHessian (hess) << std::endl
+	    << notitle.isValidHessian (hess2) << std::endl;
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

@@ -35,27 +35,29 @@ namespace roboptim
   }
 
   void
-  IdentityFunction::impl_compute (result_t& result,
-				  const argument_t& argument)
+  IdentityFunction::impl_compute (result_t result,
+				  argument_t argument)
     const throw ()
   {
-    result = argument + this->offset_;
+    //FIXME: why is it necessary?
+    for (unsigned i = 0; i < result.size (); ++i)
+      result[i] = argument[i] + this->offset_[i];
   }
 
   void
-  IdentityFunction::impl_jacobian (jacobian_t& jacobian,
-				   const argument_t&) const throw ()
+  IdentityFunction::impl_jacobian (jacobian_t jacobian,
+				   argument_t) const throw ()
   {
-    jacobian.resize (jacobianSize ().first, jacobianSize ().second);
-    jacobian.setIdentity ();
+    jacobian.diagonal () =
+      Eigen::VectorXd::Constant (jacobian.diagonal ().size (), 1.);
+    //jacobian_t::Identity (jacobian.rows (), jacobian.cols ());
   }
 
   void
-  IdentityFunction::impl_gradient (gradient_t& gradient,
-				   const argument_t& ,
+  IdentityFunction::impl_gradient (gradient_t gradient,
+				   argument_t,
 				   size_type idFunction) const throw ()
   {
-    gradient.setZero ();
     gradient[idFunction] = 1.;
   }
 

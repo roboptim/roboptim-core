@@ -67,14 +67,12 @@ namespace roboptim
   class ROBOPTIM_DLLAPI DifferentiableFunction : public Function
   {
   public:
+    typedef Function::tag_t tag_t;
     typedef Function::vector_t vector_t;
     typedef Function::matrix_t matrix_t;
 
-
-    /// \brief Gradient type.
-    typedef vector_t gradient_t;
-    /// \brief Jacobian type.
-    typedef matrix_t jacobian_t;
+    typedef GenericFunctionTraits<tag_t>::gradient_t gradient_t;
+    typedef GenericFunctionTraits<tag_t>::jacobian_t jacobian_t;
 
     /// \brief Jacobian size type (pair of values).
     typedef std::pair<size_type, size_type> jacobianSize_t;
@@ -99,7 +97,7 @@ namespace roboptim
     /// \brief Check if the gradient is valid (check size).
     /// \param gradient checked gradient
     /// \return true if valid, false if not
-    bool isValidGradient (const gradient_t& gradient) const throw ()
+    bool isValidGradient (gradient_t gradient) const throw ()
     {
       return gradient.size () == gradientSize ();
     }
@@ -108,7 +106,7 @@ namespace roboptim
     ///
     /// \param jacobian checked jacobian
     /// \return true if valid, false if not
-    bool isValidJacobian (const jacobian_t& jacobian) const throw ()
+    bool isValidJacobian (jacobian_t jacobian) const throw ()
     {
       return jacobian.rows () == jacobianSize ().first
 	&& jacobian.cols () == jacobianSize ().second;
@@ -118,9 +116,9 @@ namespace roboptim
     ///
     /// \param argument point at which the jacobian will be computed
     /// \return jacobian matrix
-    jacobian_t jacobian (const argument_t& argument) const throw ()
+    jacobian_t jacobian (argument_t argument) const throw ()
     {
-      jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
+      matrix_t jacobian (jacobianSize ().first, jacobianSize ().second);
       jacobian.setZero ();
       this->jacobian (jacobian, argument);
       return jacobian;
@@ -132,7 +130,7 @@ namespace roboptim
     /// or after the jacobian computation.
     /// \param jacobian jacobian will be stored in this argument
     /// \param argument point at which the jacobian will be computed
-    void jacobian (jacobian_t& jacobian, const argument_t& argument)
+    void jacobian (jacobian_t jacobian, argument_t argument)
       const throw ()
     {
       LOG4CXX_TRACE (logger,
@@ -154,10 +152,10 @@ namespace roboptim
     /// \param argument point at which the gradient will be computed
     /// \param functionId function id in split representation
     /// \return gradient vector
-    gradient_t gradient (const argument_t& argument,
+    gradient_t gradient (argument_t argument,
 			 size_type functionId = 0) const throw ()
     {
-      gradient_t gradient (gradientSize ());
+      vector_t gradient (gradientSize ());
       gradient.setZero ();
       this->gradient (gradient, argument, functionId);
       return gradient;
@@ -171,8 +169,8 @@ namespace roboptim
     /// \param argument point at which the gradient will be computed
     /// \param functionId function id in split representation
     /// \return gradient vector
-    void gradient (gradient_t& gradient,
-		   const argument_t& argument,
+    void gradient (gradient_t gradient,
+		   argument_t argument,
 		   size_type functionId = 0) const throw ()
     {
       LOG4CXX_TRACE (logger,
@@ -214,7 +212,7 @@ namespace roboptim
     /// \warning Do not call this function directly, call #jacobian instead.
     /// \param jacobian jacobian will be store in this argument
     /// \param arg point where the jacobian will be computed
-    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
+    virtual void impl_jacobian (jacobian_t jacobian, argument_t arg)
       const throw ();
 
     /// \brief Gradient evaluation.
@@ -226,8 +224,8 @@ namespace roboptim
     /// \param gradient gradient will be store in this argument
     /// \param argument point where the gradient will be computed
     /// \param functionId evaluated function id in the split representation
-    virtual void impl_gradient (gradient_t& gradient,
-				const argument_t& argument,
+    virtual void impl_gradient (gradient_t gradient,
+				argument_t argument,
 				size_type functionId = 0)
       const throw () = 0;
   };

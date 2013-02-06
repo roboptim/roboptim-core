@@ -40,26 +40,27 @@ namespace roboptim
 
   // A * x + b
   void
-  NumericLinearFunction::impl_compute (result_t& result,
-				       const argument_t& argument)
+  NumericLinearFunction::impl_compute (result_t result,
+				       argument_t argument)
     const throw ()
   {
-    result.noalias () = a_* argument;
+    result.block (0, 0, result.rows (), result.cols ()).noalias () =
+      a_* argument;
     result += b_;
   }
 
   // A
   void
-  NumericLinearFunction::impl_jacobian (jacobian_t& jacobian,
-					const argument_t&) const throw ()
+  NumericLinearFunction::impl_jacobian (jacobian_t jacobian,
+					argument_t) const throw ()
   {
-    jacobian = this->a_;
+    jacobian.block (0, 0, jacobian.rows (), jacobian.cols ()) = this->a_;
   }
 
   // A(i)
   void
-  NumericLinearFunction::impl_gradient (gradient_t& gradient,
-					const argument_t&,
+  NumericLinearFunction::impl_gradient (gradient_t gradient,
+					argument_t,
 					size_type idFunction) const throw ()
   {
     for (size_type j = 0; j < inputSize (); ++j)

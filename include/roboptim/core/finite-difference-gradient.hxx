@@ -42,7 +42,7 @@ namespace roboptim
   template <typename FdgPolicy>
   void
   FiniteDifferenceGradient<FdgPolicy>::impl_compute
-  (result_t& result, const argument_t& argument) const throw ()
+  (result_t result, argument_t argument) const throw ()
   {
     adaptee_ (result, argument);
   }
@@ -50,8 +50,8 @@ namespace roboptim
   template <typename FdgPolicy>
   void
   FiniteDifferenceGradient<FdgPolicy>::impl_gradient
-  (gradient_t& gradient,
-   const argument_t& argument,
+  (gradient_t gradient,
+   argument_t argument,
    size_type idFunction) const throw ()
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION

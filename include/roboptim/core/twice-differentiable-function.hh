@@ -54,10 +54,13 @@ namespace roboptim
     : public DifferentiableFunction
   {
   public:
-    /// \brief Hessian type.
-    ///
-    /// Hessians are symmetric matrices.
-    typedef matrix_t hessian_t;
+    typedef Function::tag_t tag_t;
+    typedef Function::vector_t vector_t;
+    typedef Function::matrix_t matrix_t;
+
+    typedef DifferentiableFunction::gradient_t gradient_t;
+    typedef DifferentiableFunction::jacobian_t jacobian_t;
+    typedef GenericFunctionTraits<tag_t>::hessian_t hessian_t;
 
     /// \brief Hessian size type represented as a pair of values.
     typedef std::pair<size_type, size_type> hessianSize_t;
@@ -89,11 +92,11 @@ namespace roboptim
     /// \param argument point where the hessian will be computed
     /// \param functionId evaluated function id in the split representation
     /// \return computed hessian
-    hessian_t hessian (const argument_t& argument,
-		       size_type functionId = 0) const throw ()
+    matrix_t hessian (argument_t argument,
+		      size_type functionId = 0) const throw ()
     {
-      hessian_t hessian (matrix_t(hessianSize ().first, hessianSize ().second));
-      setZero (hessian);
+      matrix_t hessian (matrix_t(hessianSize ().first, hessianSize ().second));
+      hessian.setZero ();
       this->hessian (hessian, argument, functionId);
       return hessian;
     }
@@ -104,8 +107,8 @@ namespace roboptim
     /// \param hessian hessian will be stored here
     /// \param argument point where the hessian will be computed
     /// \param functionId evaluated function id in the split representation
-    void hessian (hessian_t& hessian,
-		  const argument_t& argument,
+    void hessian (hessian_t hessian,
+		  argument_t argument,
 		  size_type functionId = 0) const throw ()
     {
       LOG4CXX_TRACE (logger,
@@ -148,16 +151,9 @@ namespace roboptim
     /// \param hessian hessian will be stored here
     /// \param argument point where the hessian will be computed
     /// \param functionId evaluated function id in the split representation
-    virtual void impl_hessian (hessian_t& hessian,
-			       const argument_t& argument,
+    virtual void impl_hessian (hessian_t hessian,
+			       argument_t argument,
 			       size_type functionId = 0) const throw () = 0;
-    /// \brief Set a symmetric matrix to zero
-    ///
-    /// \note there might be an eigen function to do that.
-    void setZero (hessian_t& symmetric) const
-    {
-      symmetric.setZero ();
-    }
   };
 
   /// @}

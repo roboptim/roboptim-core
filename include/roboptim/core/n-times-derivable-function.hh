@@ -58,7 +58,7 @@ namespace roboptim
     /// \brief Check if a derivative is valid (check sizes).
     /// \param derivative derivative vector to be checked
     /// \return true if valid, false if not
-    bool isValidDerivative (const gradient_t& derivative) const throw ()
+    bool isValidDerivative (gradient_t derivative) const throw ()
     {
       return derivative.size () == this->derivativeSize ();
     }
@@ -73,7 +73,7 @@ namespace roboptim
     result_t operator () (double argument) const
       throw ()
     {
-      result_t result (outputSize ());
+      vector_t result (outputSize ());
       result.setZero ();
       (*this) (result, argument);
       return result;
@@ -87,7 +87,7 @@ namespace roboptim
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    void operator () (result_t& result, double argument) const throw ()
+    void operator () (result_t result, double argument) const throw ()
     {
       assert (isValidResult (result));
       this->impl_compute (result, argument);
@@ -103,7 +103,7 @@ namespace roboptim
     gradient_t derivative (double argument, size_type order = 1) const
       throw ()
     {
-      gradient_t derivative (derivativeSize ());
+      vector_t derivative (derivativeSize ());
       derivative.setZero ();
       this->derivative (derivative, argument, order);
       return derivative;
@@ -115,7 +115,7 @@ namespace roboptim
     /// \param derivative derivative will be stored in this vector
     /// \param argument point at which the derivative will be computed
     /// \param order derivative order (if 0 then function is evaluated)
-    void derivative (gradient_t& derivative,
+    void derivative (gradient_t derivative,
 		     double argument,
 		     size_type order = 1) const
       throw ()
@@ -154,12 +154,12 @@ namespace roboptim
     /// instead of a vector).
     ///
     /// \warning Do not call this function directly, call
-    /// #operator()(result_t&, const argument_t&) const throw ()
+    /// #operator()(result_t, const argument_t&) const throw ()
     /// instead.
     ///
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
-    void impl_compute (result_t& result, const argument_t& argument)
+    void impl_compute (result_t result, argument_t argument)
       const throw ()
     {
       (*this) (result, argument[0]);
@@ -172,7 +172,7 @@ namespace roboptim
     /// #operator()(double) const throw () instead.  \param result
     /// result will be stored in this vector \param t point at which
     /// the function will be evaluated
-    virtual void impl_compute (result_t& result, double t) const throw () = 0;
+    virtual void impl_compute (result_t result, double t) const throw () = 0;
 
     /// \brief Gradient evaluation.
     ///
@@ -184,13 +184,13 @@ namespace roboptim
     /// \param gradient gradient will be store in this argument
     /// \param argument point where the gradient will be computed
     /// \param functionId evaluated function id in the split representation
-    void impl_gradient (gradient_t& gradient,
-			const argument_t& argument,
+    void impl_gradient (gradient_t gradient,
+			argument_t argument,
 			size_type functionId = 0) const throw ()
     {
       assert (functionId == 0);
 
-      gradient_t derivative (derivativeSize ());
+      vector_t derivative (derivativeSize ());
       derivative.setZero ();
 
       this->derivative (derivative, argument[0], 1);
@@ -205,7 +205,7 @@ namespace roboptim
     /// \param derivative derivative will be store in this argument
     /// \param argument point where the gradient will be computed
     /// \param order derivative order (if 0 evaluates the function)
-    virtual void impl_derivative (gradient_t& derivative,
+    virtual void impl_derivative (gradient_t derivative,
 				  double argument,
 				  size_type order = 1) const throw () = 0;
 
@@ -219,13 +219,13 @@ namespace roboptim
     /// \param hessian hessian will be stored here
     /// \param argument point where the hessian will be computed
     /// \param functionId evaluated function id in the split representation
-    void impl_hessian (hessian_t& hessian,
-		       const argument_t& argument,
+    void impl_hessian (hessian_t hessian,
+		       argument_t argument,
 		       size_type functionId = 0) const throw ()
     {
       assert (functionId == 0);
 
-      gradient_t derivative (derivativeSize ());
+      vector_t derivative (derivativeSize ());
       derivative.setZero ();
 
       this->derivative (derivative, argument[0], 2);

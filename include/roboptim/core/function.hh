@@ -78,6 +78,9 @@ namespace roboptim
   class GenericFunction
   {
   public:
+    /// \brief Remember type tag used to specialize trait.
+    typedef T tag_t;
+
     /// \brief Values type.
     ///
     /// Represents the numerical type (i.e. float, double, int...)
@@ -325,7 +328,7 @@ namespace roboptim
     ///
     /// \param result result that will be checked
     /// \return true if valid, false if not
-    bool isValidResult (const result_t& result) const throw ()
+    bool isValidResult (result_t result) const throw ()
     {
       return result.size () == outputSize ();
     }
@@ -355,9 +358,9 @@ namespace roboptim
     /// expected size.
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    result_t operator () (const argument_t& argument) const throw ()
+    vector_t operator () (argument_t argument) const throw ()
     {
-      result_t result (outputSize ());
+      vector_t result (outputSize ());
       result.setZero ();
       (*this) (result, argument);
       return result;
@@ -369,7 +372,7 @@ namespace roboptim
     /// expected size.
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
-    void operator () (result_t& result, const argument_t& argument)
+    void operator () (result_t result, argument_t argument)
       const throw ()
     {
       LOG4CXX_TRACE
@@ -407,18 +410,18 @@ namespace roboptim
     /// \param outputSize result size
     /// \param name function's name
     GenericFunction (size_type inputSize,
-	      size_type outputSize = 1,
-	      std::string name = std::string ()) throw ();
+		     size_type outputSize = 1,
+		     std::string name = std::string ()) throw ();
 
 
     /// \brief Function evaluation.
     ///
     /// Evaluate the function, has to be implemented in concrete
     /// classes.  \warning Do not call this function directly, call
-    /// #operator()(result_t&, const argument_t&) const throw ()
+    /// #operator()(result_t, const argument_t&) const throw ()
     /// instead.  \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
-    virtual void impl_compute (result_t& result, const argument_t& argument)
+    virtual void impl_compute (result_t result, argument_t argument)
       const throw () = 0;
 
   private:
@@ -442,8 +445,8 @@ namespace roboptim
 
   template <typename T>
   GenericFunction<T>::GenericFunction (size_type inputSize,
-				    size_type outputSize,
-				    std::string name) throw ()
+				       size_type outputSize,
+				       std::string name) throw ()
     : inputSize_ (inputSize),
       outputSize_ (outputSize),
       name_ (name)
@@ -478,14 +481,19 @@ namespace roboptim
   template <>
   struct GenericFunctionTraits<EigenMatrixDense>
   {
-    typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> matrix_t;
-    typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
+    typedef Eigen::MatrixXd matrix_t;
+    typedef Eigen::VectorXd vector_t;
 
     typedef typename matrix_t::Index size_type;
     typedef typename matrix_t::Scalar value_type;
 
-    typedef vector_t result_t;
-    typedef vector_t argument_t;
+    typedef Eigen::Ref<vector_t, Eigen::Aligned> result_t;
+    // FIXME: should be const!
+    typedef Eigen::Ref<vector_t, Eigen::Aligned> argument_t; 
+
+    typedef Eigen::Ref<vector_t, Eigen::Aligned> gradient_t;
+    typedef Eigen::Ref<matrix_t, Eigen::Aligned> jacobian_t;
+    typedef Eigen::Ref<matrix_t, Eigen::Aligned> hessian_t;
   };
 
   /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
@@ -493,13 +501,17 @@ namespace roboptim
   struct GenericFunctionTraits<EigenMatrixSparse>
   {
     typedef Eigen::SparseMatrix<double> matrix_t;
-    typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
+    typedef Eigen::VectorXd vector_t;
 
     typedef typename matrix_t::Index size_type;
     typedef typename matrix_t::Scalar value_type;
 
-    typedef vector_t result_t;
-    typedef vector_t argument_t;
+    typedef Eigen::Ref<vector_t> result_t;
+    typedef Eigen::Ref<const vector_t> argument_t;
+
+    typedef Eigen::Ref<matrix_t> gradient_t;
+    typedef Eigen::Ref<matrix_t> jacobian_t;
+    typedef Eigen::Ref<matrix_t> hessian_t;
   };
 
   /// @}

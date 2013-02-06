@@ -112,7 +112,7 @@ namespace roboptim
     /// classes.  \warning Do not call this function directly, call
     /// #operator()(const argument_t&) const throw () instead.  \param
     /// argument point at which the function will be evaluated
-    virtual result_t impl_compute (const argument_t& argument)
+    virtual result_t impl_compute (argument_t argument)
       const throw () = 0;
 
   private:

@@ -58,27 +58,27 @@ namespace roboptim
     ~Split () throw ();
 
   protected:
-    virtual void impl_compute (result_t& result, const argument_t& argument)
+    virtual void impl_compute (result_t result, argument_t argument)
       const throw ();
 
 
-    virtual void impl_gradient (gradient_t& gradient,
-				const argument_t& argument,
+    virtual void impl_gradient (gradient_t gradient,
+				argument_t argument,
 				size_type functionId = 0)
       const throw ();
 
-    virtual void impl_hessian (hessian_t& hessian,
-    			       const argument_t& argument,
-    			       size_type functionId = 0) const throw ();
+    virtual void impl_hessian (hessian_t hessian,
+			       argument_t argument,
+			       size_type functionId = 0) const throw ();
 
-    virtual void impl_derivative (gradient_t& derivative,
+    virtual void impl_derivative (gradient_t derivative,
     				  double argument,
     				  size_type order = 1) const throw ();
 
   private:
     boost::shared_ptr<const T> function_;
     size_type functionId_;
-    mutable result_t res_;
+    mutable vector_t res_;
   };
 
   template <typename P, typename C>

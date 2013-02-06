@@ -30,15 +30,17 @@ struct Null : public DifferentiableFunction
   Null () : DifferentiableFunction (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t res, argument_t) const throw ()
   {
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
+    res[0] = 41.;
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_t grad, argument_t,
 		      size_type) const throw ()
   {
-    grad.setZero ();
+    grad.block (0, 0, grad.rows (), grad.cols ()).setZero ();
+    grad (0, 0) = 1.;
   }
 };
 
@@ -47,15 +49,17 @@ struct NoTitle : public DifferentiableFunction
   NoTitle () : DifferentiableFunction (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t res, argument_t) const throw ()
   {
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
+    res[0] = 42.;
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_t grad, argument_t,
 		      size_type) const throw ()
   {
-    grad.setZero ();
+    grad.block (0, 0, grad.rows (), grad.cols ()).setZero ();
+    grad (0, 0) = 2.;
   }
 };
 
@@ -68,7 +72,8 @@ BOOST_AUTO_TEST_CASE (derivable_function)
   NoTitle notitle;
 
   Null::vector_t x (1);
-  Null::gradient_t grad (null.gradientSize ());
+  Null::vector_t grad (null.gradientSize ());
+  grad.setZero ();
   x[0] = 42.;
 
   (*output) << null << std::endl
@@ -83,14 +88,16 @@ BOOST_AUTO_TEST_CASE (derivable_function)
   (*output) << null.getName () << std::endl
 	    << notitle.getName () << std::endl;
 
-  (*output) << null.isValidResult (null (x)) << std::endl
-	    << notitle.isValidResult (notitle (x)) << std::endl;
+  Null::vector_t r = null (x);
+  Null::vector_t r2 = notitle (x);
+  (*output) << null.isValidResult (r) << std::endl
+	    << notitle.isValidResult (r2) << std::endl;
 
   (*output) << null (x) << std::endl
 	    << notitle (x) << std::endl;
 
-  (*output) << null.gradient (x) << std::endl
-	    << notitle.gradient (x) << std::endl;
+  (*output) << "xxx " << null.gradient (x) << std::endl
+	    << "yyy " << notitle.gradient (x) << std::endl;
 
   null.gradient (grad, x);
   (*output) << grad << std::endl;

@@ -43,8 +43,8 @@ namespace roboptim
     : T (fct->inputSize (), fct->outputSize (), cachedFunctionName (*fct)),
       function_ (fct),
       cache_ (derivativeSize<T>::value),
-      gradientCache_ (fct->outputSize ()),
-      hessianCache_ (fct->outputSize ())
+      gradientCache_ ((std::size_t)fct->outputSize ()),
+      hessianCache_ ((std::size_t)fct->outputSize ())
   {
   }
 
@@ -65,14 +65,14 @@ namespace roboptim
 
   template <typename T>
   void
-  CachedFunction<T>::impl_compute (result_t& result,
-				   const argument_t& argument)
+  CachedFunction<T>::impl_compute (result_t result,
+				   argument_t argument)
     const throw ()
   {
     functionCache_t::const_iterator it = cache_[0].find (argument);
     if (it != cache_[0].end ())
       {
-	result = it->second;
+	result.block (0, 0, result.rows (), result.cols ()) = it->second;
 	return;
       }
     (*function_) (result, argument);
@@ -82,7 +82,7 @@ namespace roboptim
 
   template <>
   void
-  CachedFunction<Function>::impl_gradient (gradient_t&, const argument_t&, size_type)
+  CachedFunction<Function>::impl_gradient (gradient_t, argument_t, size_type)
     const throw ()
   {
     assert (0);
@@ -90,20 +90,21 @@ namespace roboptim
 
   template <typename T>
   void
-  CachedFunction<T>::impl_gradient (gradient_t& gradient,
-				    const argument_t& argument,
+  CachedFunction<T>::impl_gradient (gradient_t gradient,
+				    argument_t argument,
 				    size_type functionId)
     const throw ()
   {
     functionCache_t::const_iterator it =
-      gradientCache_[functionId].find (argument);
-    if (it != gradientCache_[functionId].end ())
+      gradientCache_[(std::size_t)functionId].find (argument);
+    if (it != gradientCache_[(std::size_t)functionId].end ())
       {
-	gradient = it->second;
+	gradient.block (0, 0, gradient.rows (), gradient.cols ()) =
+	  it->second;
 	return;
       }
     function_->gradient (gradient, argument, functionId);
-    gradientCache_[functionId][argument] = gradient;
+    gradientCache_[(std::size_t)functionId][argument] = gradient;
   }
 
 
@@ -112,7 +113,7 @@ namespace roboptim
   template <>
   void
   CachedFunction<Function>::impl_hessian
-  (hessian_t&, const argument_t&, size_type) const throw ()
+  (hessian_t, argument_t, size_type) const throw ()
   {
     assert (0);
   }
@@ -120,7 +121,7 @@ namespace roboptim
   template <>
   void
   CachedFunction<DifferentiableFunction>::impl_hessian
-  (hessian_t&, const argument_t&, size_type) const throw ()
+  (hessian_t, argument_t, size_type) const throw ()
   {
     assert (0);
   }
@@ -129,8 +130,8 @@ namespace roboptim
 
   template <typename T>
   void
-  CachedFunction<T>::impl_hessian (hessian_t& hessian,
-  				   const argument_t& argument,
+  CachedFunction<T>::impl_hessian (hessian_t hessian,
+  				   argument_t argument,
   				   size_type functionId)
     const throw ()
   {
@@ -152,7 +153,7 @@ namespace roboptim
   template <>
   void
   CachedFunction<Function>::impl_derivative
-  (gradient_t&, double, size_type) const throw ()
+  (gradient_t, double, size_type) const throw ()
   {
     assert (0);
   }
@@ -160,7 +161,7 @@ namespace roboptim
   template <>
   void
   CachedFunction<DifferentiableFunction>::impl_derivative
-  (gradient_t&, double, size_type) const throw ()
+  (gradient_t, double, size_type) const throw ()
   {
     assert (0);
   }
@@ -168,14 +169,14 @@ namespace roboptim
   template <>
   void
   CachedFunction<TwiceDifferentiableFunction>::impl_derivative
-  (gradient_t&, double, size_type) const throw ()
+  (gradient_t, double, size_type) const throw ()
   {
     assert (0);
   }
 
   template <typename T>
   void
-  CachedFunction<T>::impl_derivative (gradient_t& derivative,
+  CachedFunction<T>::impl_derivative (gradient_t derivative,
   				      double argument,
   				      size_type order)
     const throw ()

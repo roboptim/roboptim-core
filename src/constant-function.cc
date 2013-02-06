@@ -36,26 +36,26 @@ namespace roboptim
   }
 
   void
-  ConstantFunction::impl_compute (result_t& result,
-				  const argument_t&)
+  ConstantFunction::impl_compute (result_t, argument_t)
     const throw ()
   {
-    result = this->offset_;
+    //FIXME:
+    //result = this->offset_;
   }
 
   void
-  ConstantFunction::impl_jacobian (jacobian_t& jacobian,
-				   const argument_t&) const throw ()
+  ConstantFunction::impl_jacobian (jacobian_t,
+				   argument_t) const throw ()
   {
-    jacobian.setZero ();
+    // null
   }
 
   void
-  ConstantFunction::impl_gradient (gradient_t& gradient,
-				   const argument_t&,
+  ConstantFunction::impl_gradient (gradient_t,
+				   argument_t,
 				   size_type) const throw ()
   {
-    gradient.setZero ();
+    // null
   }
 
   std::ostream&

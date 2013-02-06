@@ -33,18 +33,18 @@ struct F : public DifferentiableFunction
   F () : DifferentiableFunction (1, 1, "2 * x")
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const throw ()
+  void impl_compute (result_t res, argument_t argument) const throw ()
   {
     (*output) << "computation (not cached)" << std::endl;
-    res.setZero ();
+    res.block (0, 0, res.rows (), res.cols ()).setZero ();
     res[0] = 2. * argument[0];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_t grad, argument_t,
 		      size_type) const throw ()
   {
     (*output) << "gradient computation (not cached)" << std::endl;
-    grad.setZero ();
+    grad.block (0, 0, grad.rows (), grad.cols ()).setZero ();
     grad[0] = 2.;
   }
 };
