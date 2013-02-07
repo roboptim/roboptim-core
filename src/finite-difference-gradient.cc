@@ -21,6 +21,7 @@
 
 #include <roboptim/core/indent.hh>
 #include <roboptim/core/finite-difference-gradient.hh>
+#include <roboptim/core/util.hh>
 
 namespace roboptim
 {
