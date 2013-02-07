@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE (simple)
 
   // Check that the problem is well formed.
   BOOST_CHECK_EQUAL (&pb.function (), &f);
-  BOOST_CHECK_EQUAL (pb.constraints ().size (), 0);
+  BOOST_CHECK_EQUAL (pb.constraints ().size (), 0u);
   BOOST_CHECK (!pb.startingPoint ());
 
   Function::vector_t x (4);
@@ -87,8 +87,8 @@ BOOST_AUTO_TEST_CASE (simple)
   BOOST_CHECK_EQUAL (pb.startingPoint ()
   	  && pb.startingPoint ()->size (), 4);
 
-  BOOST_CHECK_EQUAL (pb.boundsVector ().size (), 0);
-  BOOST_CHECK_EQUAL (pb.argumentBounds ().size (), 4);
+  BOOST_CHECK_EQUAL (pb.boundsVector ().size (), 0u);
+  BOOST_CHECK_EQUAL (pb.argumentBounds ().size (), 4u);
   BOOST_CHECK
     (pb.argumentBounds ()[0] == Function::makeInfiniteInterval ()
      && pb.argumentBounds ()[1] == Function::makeInfiniteInterval ()
@@ -96,8 +96,8 @@ BOOST_AUTO_TEST_CASE (simple)
      && pb.argumentBounds ()[3] == Function::makeInfiniteInterval ());
 
 
-  BOOST_CHECK_EQUAL (pb.scalesVector ().size (), 0);
-  BOOST_CHECK_EQUAL (pb.argumentScales ().size (), 4);
+  BOOST_CHECK_EQUAL (pb.scalesVector ().size (), 0u);
+  BOOST_CHECK_EQUAL (pb.argumentScales ().size (), 4u);
   BOOST_CHECK
     (pb.argumentScales ()[0] == 1.
      && pb.argumentScales ()[1] == 1.
@@ -107,14 +107,14 @@ BOOST_AUTO_TEST_CASE (simple)
   F* g = new F ();
   pb.addConstraint (boost::shared_ptr<F> (g),
   		    Function::makeInterval (0., 5.), 3.5);
-  BOOST_CHECK_EQUAL (pb.constraints ().size (), 1);
+  BOOST_CHECK_EQUAL (pb.constraints ().size (), 1u);
   BOOST_CHECK (&pb.constraints ()[0] != 0);
-  BOOST_CHECK_EQUAL (pb.boundsVector ().size (), 1);
+  BOOST_CHECK_EQUAL (pb.boundsVector ().size (), 1u);
   BOOST_CHECK_EQUAL (pb.boundsVector ()[0][0].first,
 		     0.);
   BOOST_CHECK_EQUAL (pb.boundsVector ()[0][0].second,
 		     5.);
-  BOOST_CHECK_EQUAL (pb.scalesVector ().size (), 1);
+  BOOST_CHECK_EQUAL (pb.scalesVector ().size (), 1u);
   BOOST_CHECK_EQUAL (pb.scalesVector ()[0][0], 3.5);
 
 
