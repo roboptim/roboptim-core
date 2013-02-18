@@ -1,0 +1,43 @@
+\form#0:\[f(x) = offset\]
+\form#1:$offset$
+\form#2:$C^1$
+\form#3:\[ f : x \rightarrow f(x) \]
+\form#4:$x \in \mathbb{R}^n$
+\form#5:$f(x) \in \mathbb{R}^m$
+\form#6:$n$
+\form#7:$m$
+\form#8:$\mathbb{R}^n \rightarrow \mathbb{R}^m$
+\form#9:$n > 1$
+\form#10:$m > 1$
+\form#11:$\mathbb{R}^n \rightarrow \mathbb{R}$
+\form#12:$m = 1$
+\form#13:\[f'(x)\approx {f(x+\epsilon)-f(x)\over \epsilon}\]
+\form#14:$\epsilon$
+\form#15:$\{x-2h, x-h, x, x+h, x+2h\}$
+\form#16:$C^0$
+\form#17:$[l, u]$
+\form#18:$[-\infty, +\infty]$
+\form#19:$[l, +\infty]$
+\form#20:$[-\infty, u]$
+\form#21:\[f(x) = x + offset\]
+\form#22:$A$
+\form#23:$b$
+\form#24:$\mathbb{R} \rightarrow \mathbb{R}^m$
+\form#25:$n \geq 2$
+\form#26:\[f(x) = A x + b\]
+\form#27:\[f(x) = \frac{1}{2} x^t A x + b^t x\]
+\form#28:$B$
+\form#29:\[ f : p \rightarrow g \]
+\form#30:$p \in \mathbb{R}^p$
+\form#31:$g \in G$
+\form#32:$p$
+\form#33:$G = \mathbb{R}^n \in \mathbb{R}^m$
+\form#34:$n, m \in \mathbb{R}^2$
+\form#35:$\mathbb{C}^{m}$
+\form#36:$m=1$
+\form#37:$\mathbb{R}^m$
+\form#38:$C^2$
+\form#39:$min_{x \in \mathbb{R}^4} x_1 x_4 (x_1 + x_2 + x_3) + x_3$
+\form#40:$x_1 x_2 x_3 x_4 \geq 25$
+\form#41:$x_1^2 + x_2^2 + x_3^2 + x_4^2 = 40$
+\form#42:$1 \leq x_1, x_2, x_3, x_4 \leq 5$

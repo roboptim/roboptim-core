@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$a00130.html" title="roboptim/core/sys.hh" alt="" coords="2888,726,3035,757"/>
+<area shape="rect" id="node7" href="$a00066.html" title="roboptim/core/debug.hh" alt="" coords="2467,566,2629,597"/>
+<area shape="rect" id="node27" href="$a00083.html" title="roboptim/core/fwd.hh" alt="" coords="1296,646,1443,677"/>
+<area shape="rect" id="node29" href="$a00124.html" title="roboptim/core/solver.hh" alt="" coords="1656,86,1819,117"/>
+<area shape="rect" id="node135" href="$a00118.html" title="roboptim/core/solver&#45;error.hh" alt="" coords="2256,406,2451,437"/>
+<area shape="rect" id="node154" href="$a00120.html" title="roboptim/core/solver&#45;factory.hxx" alt="" coords="3183,166,3393,197"/>
+<area shape="rect" id="node5" href="$a00108.html" title="roboptim/core/portability.hh" alt="" coords="67,806,248,837"/>
+<area shape="rect" id="node11" href="$a00096.html" title="roboptim/core/indent.hh" alt="" coords="2152,646,2312,677"/>
+<area shape="rect" id="node46" href="$a00082.html" title="roboptim/core/function.hh" alt="" coords="387,566,557,597"/>
+<area shape="rect" id="node77" href="$a00109.html" title="roboptim/core/problem.hh" alt="" coords="1129,246,1303,277"/>
+<area shape="rect" id="node105" href="$a00086.html" title="roboptim/core/generic&#45;solver.hh" alt="" coords="2139,166,2349,197"/>
+<area shape="rect" id="node145" href="$a00125.html" title="roboptim/core/solver.hxx" alt="" coords="2947,406,3115,437"/>
+<area shape="rect" id="node97" href="$a00110.html" title="roboptim/core/problem.hxx" alt="" coords="1309,326,1488,357"/>
+<area shape="rect" id="node117" href="$a00116.html" title="roboptim/core/result.hh" alt="" coords="2259,486,2416,517"/>
+<area shape="rect" id="node124" href="$a00114.html" title="roboptim/core/result&#45;with&#45;warnings.hh" alt="" coords="2480,246,2720,277"/>
+<area shape="rect" id="node131" href="$a00122.html" title="roboptim/core/solver&#45;warning.hh" alt="" coords="2357,326,2568,357"/>
+<area shape="rect" id="node149" href="$a00097.html" title="roboptim/core/io.hh" alt="" coords="2947,486,3083,517"/>
+</map>

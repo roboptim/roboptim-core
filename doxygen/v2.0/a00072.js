@@ -1,0 +1,4 @@
+var a00072 =
+[
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS", "a00072.html#acb0d62d89669ee019cf7dfc94b3e8189", null ]
+];

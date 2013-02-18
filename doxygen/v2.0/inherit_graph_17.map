@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$a00038.html" title="Abstract interface satisfied by all solvers." alt="" coords="5,31,173,62"/>
+<area shape="rect" id="node3" href="$a00055.html" title="Solver for a specific problem class." alt="" coords="327,5,497,35"/>
+<area shape="rect" id="node5" href="$a00055.html" title="roboptim::Solver\&lt; Function, boost::mpl::vector\&lt; Function \&gt; \&gt;" alt="" coords="221,58,603,89"/>
+<area shape="rect" id="node7" href="$a00024.html" title="Dummy solver which always fails." alt="" coords="680,31,845,62"/>
+<area shape="rect" id="node9" href="$a00025.html" title="Dummy solver which always fails, but returns the last state of the solver." alt="" coords="652,85,873,115"/>
+</map>

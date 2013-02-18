@@ -1,0 +1,13 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$a00029.html" title="Define an abstract derivable function ( )." alt="" coords="267,111,557,142"/>
+<area shape="rect" id="node5" href="$a00030.html" title="Compute automatically a gradient with finite differences." alt="" coords="616,58,923,89"/>
+<area shape="rect" id="node7" href="$a00039.html" title="Define an abstract function which is derivable twice ( )." alt="" coords="605,111,933,142"/>
+<area shape="rect" id="node23" href="$a00060.html" title="Sum of the squares of differentiable functions." alt="" coords="608,165,931,195"/>
+<area shape="rect" id="node9" href="$a00037.html" title="Define an abstract quadratic function." alt="" coords="983,85,1252,115"/>
+<area shape="rect" id="node21" href="$a00045.html" title="Explicit specialization for the stop case of NTimesDerivable class." alt="" coords="984,138,1251,169"/>
+<area shape="rect" id="node11" href="$a00035.html" title="Define an abstract linear function." alt="" coords="1363,58,1611,89"/>
+<area shape="rect" id="node19" href="$a00046.html" title="Build a quadratic function from a matrix and a vector." alt="" coords="1301,111,1672,142"/>
+<area shape="rect" id="node13" href="$a00018.html" title="Constant function." alt="" coords="1720,5,2037,35"/>
+<area shape="rect" id="node15" href="$a00036.html" title="Build a linear function from a vector and a matrix." alt="" coords="1729,58,2028,89"/>
+<area shape="rect" id="node17" href="$a00041.html" title="Identity function." alt="" coords="1725,111,2032,142"/>
+</map>

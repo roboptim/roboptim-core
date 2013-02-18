@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$a00110.html" title="problem.hxx" alt="" coords="353,86,447,117"/>
+<area shape="rect" id="node33" href="$a00117.html" title="solver&#45;error.cc" alt="" coords="471,86,577,117"/>
+<area shape="rect" id="node5" href="$a00109.html" title="problem.hh" alt="" coords="357,166,443,197"/>
+<area shape="rect" id="node7" href="$a00086.html" title="generic&#45;solver.hh" alt="" coords="496,246,619,277"/>
+<area shape="rect" id="node9" href="$a00124.html" title="solver.hh" alt="" coords="363,326,437,357"/>
+<area shape="rect" id="node13" href="$a00074.html" title="dummy&#45;laststate.cc" alt="" coords="5,486,141,517"/>
+<area shape="rect" id="node17" href="$a00076.html" title="dummy.cc" alt="" coords="243,486,325,517"/>
+<area shape="rect" id="node21" href="$a00065.html" title="core.hh" alt="" coords="572,486,639,517"/>
+<area shape="rect" id="node27" href="$a00085.html" title="generic&#45;solver.cc" alt="" coords="617,326,740,357"/>
+<area shape="rect" id="node11" href="$a00075.html" title="dummy&#45;laststate.hh" alt="" coords="83,406,219,437"/>
+<area shape="rect" id="node15" href="$a00077.html" title="dummy.hh" alt="" coords="243,406,325,437"/>
+<area shape="rect" id="node19" href="$a00119.html" title="solver&#45;factory.hh" alt="" coords="499,406,616,437"/>
+<area shape="rect" id="node24" href="$a00123.html" title="solver.cc" alt="" coords="400,406,475,437"/>
+</map>

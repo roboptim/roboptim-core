@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$a00130.html" title="roboptim/core/sys.hh" alt="" coords="2313,646,2460,677"/>
+<area shape="rect" id="node7" href="$a00066.html" title="roboptim/core/debug.hh" alt="" coords="2487,486,2649,517"/>
+<area shape="rect" id="node31" href="$a00083.html" title="roboptim/core/fwd.hh" alt="" coords="1429,566,1576,597"/>
+<area shape="rect" id="node33" href="$a00082.html" title="roboptim/core/function.hh" alt="" coords="727,486,897,517"/>
+<area shape="rect" id="node64" href="$a00109.html" title="roboptim/core/problem.hh" alt="" coords="1163,246,1336,277"/>
+<area shape="rect" id="node103" href="$a00086.html" title="roboptim/core/generic&#45;solver.hh" alt="" coords="2037,86,2248,117"/>
+<area shape="rect" id="node143" href="$a00125.html" title="roboptim/core/solver.hxx" alt="" coords="2960,326,3128,357"/>
+<area shape="rect" id="node5" href="$a00108.html" title="roboptim/core/portability.hh" alt="" coords="1784,726,1965,757"/>
+<area shape="rect" id="node11" href="$a00096.html" title="roboptim/core/indent.hh" alt="" coords="2037,566,2197,597"/>
+<area shape="rect" id="node85" href="$a00110.html" title="roboptim/core/problem.hxx" alt="" coords="869,326,1048,357"/>
+<area shape="rect" id="node99" href="$a00131.html" title="roboptim/core/terminal&#45;color.hh" alt="" coords="1632,406,1837,437"/>
+<area shape="rect" id="node115" href="$a00116.html" title="roboptim/core/result.hh" alt="" coords="2323,406,2480,437"/>
+<area shape="rect" id="node122" href="$a00114.html" title="roboptim/core/result&#45;with&#45;warnings.hh" alt="" coords="2307,166,2547,197"/>
+<area shape="rect" id="node129" href="$a00122.html" title="roboptim/core/solver&#45;warning.hh" alt="" coords="2153,246,2364,277"/>
+<area shape="rect" id="node133" href="$a00118.html" title="roboptim/core/solver&#45;error.hh" alt="" coords="2053,326,2248,357"/>
+<area shape="rect" id="node147" href="$a00097.html" title="roboptim/core/io.hh" alt="" coords="2960,406,3096,437"/>
+</map>
