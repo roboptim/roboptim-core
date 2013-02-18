@@ -1,13 +1,5 @@
-before_install:
-  - git submodule update --init --recursive
-  - sudo apt-get update -qq
-  - > sudo apt-get install -qq libltdl-dev libboost-all-dev
-                               liblog4cxx10-dev libeigen3-dev
 language: cpp
-script: mkdir _build && cd _build && cmake . && make && make test
 compiler:
   - clang
   - gcc
-branches:
-  only:
-    - master
+script: "cmake . && make"
