@@ -1,6 +1,8 @@
 roboptim-core
 =============
 
+[![Build Status](https://travis-ci.org/roboptim/roboptim-core.png?branch=master)](https://travis-ci.org/roboptim/roboptim-core)
+
 For general information about the project, please refer to its
 homepage: http://www.roboptim.net/
 
