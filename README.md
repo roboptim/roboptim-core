@@ -2,7 +2,7 @@ roboptim-core
 =============
 
 For general information about the project, please refer to its
-homepage: https://github.com/laas/roboptim-core
+homepage: http://www.roboptim.net/
 
 Where is the library documentation?
 -----------------------------------
@@ -15,8 +15,8 @@ into you ``_build'' directory and type:
 
     $ make doc
 
-To view the HTML documentation: go in the `doc/html` directory and
-open the `index.html` file with your favorite internet browser.
+To view the HTML documentation: go in the `doc/doxygen-html` directory
+and open the `index.html` file with your favorite internet browser.
 
 
 How to use Valgrind with the test suite?
@@ -25,5 +25,5 @@ How to use Valgrind with the test suite?
 All the tests launched by the test suite can be prefixed
 with the environment variable ``CHECK_PREFIX''.
 
-    $ export CHECK_PREFIX='valgrind --log-file=valgrind.log'
-    $ make check
+    $ cmake -DCHECK_PREFIX='valgrind --log-file=valgrind.log' ..
+    $ make && make check

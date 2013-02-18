@@ -13,6 +13,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with roboptim-core.  If not, see <http://www.gnu.org/licenses/>.
 
+# Declare the CHECK_PREFIX option.
+# It allows the user to instrument the test suite easily to make it run
+# through Valgrind for instance.
+SET(CHECK_PREFIX "" CACHE STRING "Shell prefix used when running tests")
+
 # Generate local-libdir.hh.
 CONFIG_FILES(shared-tests/local-libdir.hh)
 
@@ -45,7 +50,7 @@ SET(COMMON_HEADERS
 #
 MACRO(ROBOPTIM_CORE_TEST NAME)
   ADD_EXECUTABLE(${NAME} ${NAME}.cc ${COMMON_HEADERS})
-  ADD_TEST(${NAME} ${RUNTIME_OUTPUT_DIRECTORY}/${NAME})
+  ADD_TEST(${NAME} ${CHECK_PREFIX} ${CMAKE_CURRENT_BINARY_DIR}/${NAME})
 
   TARGET_LINK_LIBRARIES(${NAME} roboptim-core)
   PKG_CONFIG_USE_DEPENDENCY(${NAME} eigen3)
