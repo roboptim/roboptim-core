@@ -39,4 +39,10 @@
   LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),	\
 	       STATEMENT)
 
+# ifdef NDEBUG
+#  define ROBOPTIM_DEBUG_ONLY(X)
+# else
+#  define ROBOPTIM_DEBUG_ONLY(X) X
+# endif // NDEBUG
+
 #endif // !ROBOPTIM_CORE_DEBUG_HH

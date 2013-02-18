@@ -43,8 +43,8 @@ namespace roboptim
     : T (fct->inputSize (), fct->outputSize (), cachedFunctionName (*fct)),
       function_ (fct),
       cache_ (derivativeSize<T>::value),
-      gradientCache_ (fct->outputSize ()),
-      hessianCache_ (fct->outputSize ())
+      gradientCache_ (static_cast<std::size_t> (fct->outputSize ())),
+      hessianCache_ (static_cast<std::size_t> (fct->outputSize ()))
   {
   }
 
@@ -96,14 +96,14 @@ namespace roboptim
     const throw ()
   {
     functionCache_t::const_iterator it =
-      gradientCache_[functionId].find (argument);
-    if (it != gradientCache_[functionId].end ())
+      gradientCache_[static_cast<std::size_t> (functionId)].find (argument);
+    if (it != gradientCache_[static_cast<std::size_t> (functionId)].end ())
       {
 	gradient = it->second;
 	return;
       }
     function_->gradient (gradient, argument, functionId);
-    gradientCache_[functionId][argument] = gradient;
+    gradientCache_[static_cast<std::size_t> (functionId)][argument] = gradient;
   }
 
 
@@ -137,7 +137,7 @@ namespace roboptim
     //FIXME: bug detected by Clang. To be fixed.
 #ifdef ROBOPTIM_CORE_THIS_DOES_NOT_WORK
     functionCache_t::const_iterator it =
-      hessianCache_[functionId].find (argument);
+      hessianCache_[static_cast<std::size_t> (functionId)].find (argument);
     if (it != hessianCache_[functionId].end ())
       {
 	hessian = it->second;
@@ -145,7 +145,7 @@ namespace roboptim
       }
 #endif
     function_->hessian (hessian, argument, functionId);
-    hessianCache_[functionId][argument] = hessian;
+    hessianCache_[static_cast<std::size_t> (functionId)][argument] = hessian;
   }
 
 

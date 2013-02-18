@@ -19,6 +19,7 @@
 
 #include <cstring>
 
+#include <algorithm>
 #include "roboptim/core/util.hh"
 
 namespace roboptim
@@ -30,7 +31,7 @@ namespace roboptim
     {
       if (src.size () == 0)
 	return;
-      memcpy (dst, &src[0], src.size () * sizeof (Function::value_type));
+      Eigen::Map<Eigen::VectorXd>(dst, src.size ()) = src;
 
       // NaN != NaN, handle this case.
       for (Function::size_type i = 0; i < src.size (); ++i)
@@ -45,7 +46,7 @@ namespace roboptim
     {
       if (dst.size () == 0)
 	return;
-      memcpy (&dst[0], src, dst.size () * sizeof (Function::value_type));
+      dst = Eigen::Map<const Eigen::VectorXd>(src, dst.size ());
 
       // NaN != NaN, handle this case.
       for (Function::size_type i = 0; i < dst.size (); ++i)

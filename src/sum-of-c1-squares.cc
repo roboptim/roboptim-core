@@ -17,6 +17,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "roboptim/core/debug.hh"
 #include "roboptim/core/sum-of-c1-squares.hh"
 
 namespace roboptim {
@@ -66,10 +67,8 @@ namespace roboptim {
 
   void SumOfC1Squares::
   impl_gradient(gradient_t& gradient, const argument_t& x,
-		size_type row) const throw ()
+		size_type ROBOPTIM_DEBUG_ONLY (row)) const throw ()
   {
-    row = row; // keep unused variable warning silent.
-
     assert (row == 0);
     computeFunction (x);
     gradient.setZero ();

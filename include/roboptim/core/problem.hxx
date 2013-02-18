@@ -187,9 +187,9 @@ namespace roboptim
       startingPoint_ (),
       constraints_ (),
       boundsVect_ (),
-      argumentBounds_ (f.inputSize ()),
+      argumentBounds_ (static_cast<std::size_t> (f.inputSize ())),
       scalesVect_ (),
-      argumentScales_ (f.inputSize ())
+      argumentScales_ (static_cast<std::size_t> (f.inputSize ()))
   {
     // Initialize bound.
     std::fill (argumentBounds_.begin (), argumentBounds_.end (),
@@ -301,7 +301,7 @@ namespace roboptim
     constraints_.push_back (boost::static_pointer_cast<C> (x));
 
     // Check that the bounds are correctly defined.
-    for (Function::size_type i = 0; i < x->outputSize (); ++i)
+    for (std::size_t i = 0; i < x->outputSize (); ++i)
       {
 	const interval_t& interval = b[i];
 	assert (interval.first <= interval.second);
@@ -398,7 +398,7 @@ namespace roboptim
     {
       printConstraint (std::ostream& o,
 		       const P& problem,
-		       Function::size_type i) :
+		       std::size_t i) :
 	problem_ (problem),
 	o_ (o),
 	i_ (i)
@@ -424,9 +424,13 @@ namespace roboptim
 	    for (Function::size_type j = 0; j < x.size (); ++j)
 	      {
 		if (x[j] < Function::
-		    getLowerBound ((problem_.boundsVector ()[i_])[j])
+		    getLowerBound ((problem_.boundsVector ()
+				    [i_])
+				   [static_cast<std::size_t> (j)])
 		    || x[j] > Function::
-		    getUpperBound ((problem_.boundsVector ()[i_])[j]))
+		    getUpperBound ((problem_.boundsVector ()
+				    [i_])
+				   [static_cast<std::size_t> (j)]))
 		  o_ << " (constraint not satisfied)";
 		break;
 	      }
@@ -437,7 +441,7 @@ namespace roboptim
     private:
       const P& problem_;
       std::ostream& o_;
-      Function::size_type i_;
+      std::size_t i_;
     };
   } // end of namespace detail.
 
