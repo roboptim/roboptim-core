@@ -7,3 +7,9 @@ before_install:
   - git submodule update --init --recursive
   - sudo apt-get update -qq
   - sudo apt-get install -qq doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev libeigen3-dev
+notifications:
+  email:
+    - roboptim@googlegroups.com
+branches:
+  only:
+    - master
