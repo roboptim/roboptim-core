@@ -29,10 +29,11 @@ namespace roboptim
                              const std::vector<const T*>& c,
                              const DifferentiableFunction::vector_t& x)
     {
-      for (unsigned i = 0; i < jac.rows (); ++i)
+      for (DifferentiableFunction::matrix_t::Index i = 0; i < jac.rows (); ++i)
         {
           DifferentiableFunction::jacobian_t grad = c[i]->jacobian (x);
-          for (unsigned j = 0; j < jac.cols (); ++j)
+          for (DifferentiableFunction::matrix_t::Index j = 0;
+	       j < jac.cols (); ++j)
             jac (i, j) = grad(0, j);
         }
     }
