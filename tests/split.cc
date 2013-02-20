@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE (split)
 
   boost::shared_ptr<F> f (new F ());
 
-  for (unsigned id = 0; id < 10; ++id)
+  for (DifferentiableFunction::vector_t::Index id = 0; id < 10; ++id)
     {
       Split<DifferentiableFunction> splitF (f, id);
 
