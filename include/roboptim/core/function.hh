@@ -481,8 +481,8 @@ namespace roboptim
     typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> matrix_t;
     typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
 
-    typedef typename matrix_t::Index size_type;
-    typedef typename matrix_t::Scalar value_type;
+    typedef matrix_t::Index size_type;
+    typedef matrix_t::Scalar value_type;
 
     typedef vector_t result_t;
     typedef vector_t argument_t;
@@ -495,8 +495,8 @@ namespace roboptim
     typedef Eigen::SparseMatrix<double> matrix_t;
     typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
 
-    typedef typename matrix_t::Index size_type;
-    typedef typename matrix_t::Scalar value_type;
+    typedef matrix_t::Index size_type;
+    typedef matrix_t::Scalar value_type;
 
     typedef vector_t result_t;
     typedef vector_t argument_t;
