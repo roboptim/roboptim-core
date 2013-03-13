@@ -333,7 +333,7 @@ namespace roboptim
     /// \brief Return the input size (i.e. argument's vector size).
     ///
     /// \return input size
-    size_type inputSize () const throw ()
+    typename GenericFunction<T>::size_type inputSize () const throw ()
     {
       return inputSize_;
     }
@@ -341,7 +341,7 @@ namespace roboptim
     /// \brief Return the output size (i.e. result's vector size).
     ///
     /// \return input size
-    size_type  outputSize () const throw ()
+    typename GenericFunction<T>::size_type  outputSize () const throw ()
     {
       return outputSize_;
     }
