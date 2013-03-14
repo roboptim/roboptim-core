@@ -56,6 +56,10 @@ namespace roboptim {
   void SumOfC1Squares::
   impl_compute(result_t &result, const argument_t &x) const throw ()
   {
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
     computeFunction (x);
     value_t sumSquares = 0;
     for (size_t i = 0; i < value_.size(); i++) {
@@ -69,6 +73,10 @@ namespace roboptim {
   impl_gradient(gradient_t& gradient, const argument_t& x,
 		size_type ROBOPTIM_DEBUG_ONLY (row)) const throw ()
   {
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
     assert (row == 0);
     computeFunction (x);
     gradient.setZero ();
