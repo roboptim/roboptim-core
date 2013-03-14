@@ -252,6 +252,9 @@ namespace roboptim
     template <typename F_, typename CLIST_>
     friend class Problem;
 
+    /// \brief Constraints types list.
+    typedef CLIST constraintsList_t;
+
     /// \brief Function type.
     ///
     /// This has to be either Function or one of its
