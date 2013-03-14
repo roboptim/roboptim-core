@@ -29,3 +29,10 @@ with the environment variable ``CHECK_PREFIX''.
 
     $ cmake -DCHECK_PREFIX='valgrind --log-file=valgrind.log' ..
     $ make && make check
+
+
+Available packages
+------------------
+
+ * Arch Linux (Git master branch):
+   https://aur.archlinux.org/packages/roboptim-core-git/
