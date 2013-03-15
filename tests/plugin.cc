@@ -27,10 +27,11 @@
 using namespace roboptim;
 typedef Solver<Function, boost::mpl::vector<> > solver_t;
 
-BOOST_AUTO_TEST_CASE (plugin)
+void testme (const std::string& solverName,
+	     const std::string& pattern)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("plugin");
+    output = retrievePattern (pattern);
 
   F f;
   solver_t::problem_t pb (f);
@@ -47,7 +48,7 @@ BOOST_AUTO_TEST_CASE (plugin)
   pb.startingPoint () = start;
 
   // Initialize solver
-  SolverFactory<solver_t> factory ("nag", pb);
+  SolverFactory<solver_t> factory (solverName, pb);
   solver_t& solver = factory ();
 
   // Compute the minimum and retrieve the result.
@@ -75,4 +76,14 @@ BOOST_AUTO_TEST_CASE (plugin)
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
+}
+
+BOOST_AUTO_TEST_CASE (simple)
+{
+  testme ("nag", "plugin-simple");
+}
+
+BOOST_AUTO_TEST_CASE (differentiable)
+{
+  testme ("nag-differentiable", "plugin-simple");
 }

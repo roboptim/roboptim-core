@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_PLUGING_NAG_NAG_HH
-# define ROBOPTIM_CORE_PLUGING_NAG_NAG_HH
+#ifndef ROBOPTIM_CORE_PLUGING_NAG_NAG_DIFFERENTIABLE_HH
+# define ROBOPTIM_CORE_PLUGING_NAG_NAG_DIFFERENTIABLE_HH
 # include <vector>
 
 # include <roboptim/core/solver.hh>
@@ -27,25 +27,25 @@ namespace roboptim
   /// \addtogroup roboptim_solver
   /// @{
 
-  /// \brief Solver for C1 function without gradient computation, no
+  /// \brief Solver for C1 function with gradient computation, no
   ///        constraint.
   ///
-  /// Searches for a minimum, in a given finite interval, of a
-  /// continuous function of a single variable, using function values
-  /// only. The method (based on quadratic interpolation) is intended
-  /// for functions which have a continuous first derivative (although
-  /// it will usually work if the derivative has occasional
-  /// discontinuities).
+  /// Search for a minimum, in a given finite interval, of a
+  /// continuous function of a single variable, using function and
+  /// first derivative values. The method (based on cubic
+  /// interpolation) is intended for functions which have a continuous
+  /// first derivative (although it will usually work if the
+  /// derivative has occasional discontinuities).
   ///
-  /// \see http://www.nag.com/numeric/CL/nagdoc_cl23/html/E04/e04abc.html
-  class ROBOPTIM_DLLEXPORT NagSolver : public Solver<Function,
-						     boost::mpl::vector<> >
+  /// \see http://www.nag.com/numeric/CL/nagdoc_cl23/html/E04/e04bbc.html
+  class ROBOPTIM_DLLEXPORT NagSolverDifferentiable
+    : public Solver<DifferentiableFunction, boost::mpl::vector<> >
   {
   public:
-    typedef Solver<Function, boost::mpl::vector<> > parent_t;
+    typedef Solver<DifferentiableFunction, boost::mpl::vector<> > parent_t;
 
-    explicit NagSolver (const problem_t& pb) throw ();
-    virtual ~NagSolver () throw ();
+    explicit NagSolverDifferentiable (const problem_t& pb) throw ();
+    virtual ~NagSolverDifferentiable () throw ();
 
     /// \brief Solve the problem.
     void solve () throw ();
@@ -63,9 +63,11 @@ namespace roboptim
     Function::vector_t x_;
     /// \brief Current cost.
     Function::vector_t f_;
+    /// \brief Current gradient.
+    Function::vector_t g_;
   };
 
   /// @}
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_PLUGING_NAG_NAG_HH
+#endif //! ROBOPTIM_CORE_PLUGING_NAG_NAG_DIFFERENTIABLE_HH

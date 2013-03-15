@@ -28,3 +28,17 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-nag PROPERTIES
   SOVERSION 1.1.0)
 
 INSTALL(TARGETS roboptim-core-plugin-nag DESTINATION ${PLUGINDIR})
+
+# Nag differentiable plug-in.
+ADD_LIBRARY(roboptim-core-plugin-nag-differentiable MODULE
+  nag.cc ${HEADERS}
+  )
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-nag-differentiable roboptim-core)
+TARGET_LINK_LIBRARIES(roboptim-core-plugin-nag-differentiable nagc_nag)
+
+SET_TARGET_PROPERTIES(roboptim-core-plugin-nag-differentiable PROPERTIES
+  PREFIX ""
+  SOVERSION 1.1.0)
+
+INSTALL(TARGETS roboptim-core-plugin-nag-differentiable
+  DESTINATION ${PLUGINDIR})

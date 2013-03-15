@@ -37,34 +37,41 @@ namespace roboptim
   namespace detail
   {
     static void
-    nagSolverCallback (double xc, double *fc, Nag_Comm* comm)
+    nagSolverCallbackDifferentiable (double xc, double* fc, double* gc,
+				     Nag_Comm* comm)
     {
       assert (!!comm);
       assert (!!comm->p);
-      NagSolver* solver = static_cast<NagSolver*> (comm->p);
+      NagSolverDifferentiable* solver = static_cast<NagSolverDifferentiable*> (comm->p);
       assert (!!solver);
 
-      Eigen::Map<const Function::vector_t> x_
+      Eigen::Map<const DifferentiableFunction::vector_t> x_
 	(&xc, solver->problem ().function ().inputSize ());
-      Eigen::Map<Function::vector_t> fc_
+      Eigen::Map<DifferentiableFunction::vector_t> fc_
 	(fc, solver->problem ().function ().outputSize ());
+      Eigen::Map<DifferentiableFunction::vector_t> gc_
+	(gc, solver->problem ().function ().inputSize ());
 
       fc_.setZero ();
       fc_ = solver->problem ().function () (x_);
+
+      gc_.setZero ();
+      gc_ = solver->problem ().gradient () (x_);
     }
   } // end of namespace detail
 
-  NagSolver::NagSolver (const problem_t& pb) throw ()
+  NagSolverDifferentiable::NagSolverDifferentiable (const problem_t& pb) throw ()
     : parent_t (pb),
       e1_ (0.),
       e2_ (0.),
       a_ (problem ().function ().inputSize ()),
       b_ (problem ().function ().inputSize ()),
       x_ (problem ().function ().inputSize ()),
-      f_ (problem ().function ().outputSize ())
+      f_ (problem ().function ().outputSize ()),
+      g_ (problem ().function ().inputSize ())
   {
     // Argument lower (a) and upper (b) bounds.
-    assert (static_cast<Function::size_type>
+    assert (static_cast<DifferentiableFunction::size_type>
 	    (problem ().argumentBounds ().size ()) ==
 	    problem ().function ().inputSize ());
 
@@ -74,6 +81,7 @@ namespace roboptim
 
     x_.setZero ();
     f_.setZero ();
+    g_.setZero ();
 
     // Shared parameters.
     DEFINE_PARAMETER ("max-iterations", "number of iterations", 30);
@@ -83,11 +91,11 @@ namespace roboptim
     DEFINE_PARAMETER ("nag.e2", "absolute accuracy (0 means default)", 0.);
   }
 
-  NagSolver::~NagSolver () throw ()
+  NagSolverDifferentiable::~NagSolverDifferentiable () throw ()
   {}
 
   void
-  NagSolver::solve () throw ()
+  NagSolverDifferentiable::solve () throw ()
   {
     // e1 and e2
     e1_ = boost::get<double> (this->parameters_["nag.e1"].value);
@@ -111,9 +119,10 @@ namespace roboptim
     memset (&fail, 0, sizeof (NagError));
     INIT_FAIL (fail);
 
-    nag_opt_one_var_no_deriv
-      (detail::nagSolverCallback,
-       e1_, e2_, &a_[0], &b_[0], max_fun, &x_[0], &f_[0], &comm, &fail);
+    nag_opt_one_var_deriv
+      (detail::nagSolverCallbackDifferentiable,
+       e1_, e2_, &a_[0], &b_[0], max_fun,
+       &x_[0], &f_[0], &g_[0], &comm, &fail);
 
     if (fail.code == NE_NOERROR)
       {
@@ -131,22 +140,24 @@ namespace roboptim
 
 extern "C"
 {
-  typedef roboptim::NagSolver NagSolver;
-  typedef roboptim::Solver<roboptim::Function,
+  typedef roboptim::NagSolverDifferentiable NagSolverDifferentiable;
+  typedef roboptim::Solver<roboptim::DifferentiableFunction,
 			   boost::mpl::vector<> > solver_t;
 
   ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ();
-  ROBOPTIM_DLLEXPORT solver_t* create (const NagSolver::problem_t& pb);
+  ROBOPTIM_DLLEXPORT solver_t* create
+  (const NagSolverDifferentiable::problem_t& pb);
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
 
   ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ()
   {
-    return sizeof (NagSolver::problem_t);
+    return sizeof (NagSolverDifferentiable::problem_t);
   }
 
-  ROBOPTIM_DLLEXPORT solver_t* create (const NagSolver::problem_t& pb)
+  ROBOPTIM_DLLEXPORT solver_t* create
+  (const NagSolverDifferentiable::problem_t& pb)
   {
-    return new roboptim::NagSolver (pb);
+    return new roboptim::NagSolverDifferentiable (pb);
   }
 
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p)
