@@ -42,13 +42,32 @@ namespace roboptim
       Eigen::Map<Function::vector_t> fc_
 	(fc, solver->problem ().function ().outputSize ());
 
+      fc_.setZero ();
       fc_ = solver->problem ().function () (x_);
     }
   } // end of namespace detail
 
   NagSolver::NagSolver (const problem_t& pb) throw ()
-    : parent_t (pb)
-  {}
+    : parent_t (pb),
+      e1_ (0.),
+      e2_ (0.),
+      a_ (problem ().function ().inputSize ()),
+      b_ (problem ().function ().inputSize ()),
+      x_ (problem ().function ().inputSize ()),
+      f_ (problem ().function ().outputSize ())
+  {
+    // Argument lower (a) and upper (b) bounds.
+    assert (static_cast<Function::size_type>
+	    (problem ().argumentBounds ().size ()) ==
+	    problem ().function ().inputSize ());
+
+    for (unsigned i = 0; i < problem ().argumentBounds ().size (); ++i)
+      a_[i] = problem ().argumentBounds ()[i].first,
+	b_[i] = problem ().argumentBounds ()[i].second;
+
+    x_.setZero ();
+    f_.setZero ();
+  }
 
   NagSolver::~NagSolver () throw ()
   {}
@@ -56,52 +75,26 @@ namespace roboptim
   void
   NagSolver::solve () throw ()
   {
-    // Result relative accuracy.
-    double e1 = 0.;
-    // Result absolute accuracy.
-    double e2 = 0.;
-
-    // Argument lower (a) and upper (b) bounds.
-    assert (static_cast<Function::size_type>
-	    (problem ().argumentBounds ().size ()) ==
-	    problem ().function ().inputSize ());
-
-    double* a = new double [problem ().function ().inputSize ()];
-    double* b = new double [problem ().function ().inputSize ()];
-
-    for (unsigned i = 0; i < problem ().argumentBounds ().size (); ++i)
-      a[i] = problem ().argumentBounds ()[i].first,
-	b[i] = problem ().argumentBounds ()[i].second;
-
     // Number of iterations
     Integer max_fun = 30;
 
     // Solution.
-    double* x = new double [problem ().function ().inputSize ()];
-    Eigen::Map<Function::vector_t> x_
-      (x, problem ().function ().inputSize ());
-
-    memset (x, 0, problem ().function ().inputSize () * sizeof (double));
     if (problem ().startingPoint ())
       x_ = *(problem ().startingPoint ());
 
-    // Final cost.
-    double* f = new double [problem ().function ().outputSize ()];
-    Eigen::Map<Function::vector_t> f_
-      (f, problem ().function ().outputSize ());
-    memset (f, 0, problem ().function ().outputSize () * sizeof (double));
-
     // Nag communication object.
     Nag_Comm comm;
-    comm.user = 0, comm.iuser = 0, comm.p = this;
+    memset (&comm, 0, sizeof (Nag_Comm));
+    comm.p = this;
 
     // Nag error code.
     NagError fail;
+    memset (&fail, 0, sizeof (NagError));
     INIT_FAIL (fail);
 
     nag_opt_one_var_no_deriv
       (detail::nagSolverCallback,
-       e1, e2, a, b, max_fun, x, f, &comm, &fail);
+       e1_, e2_, &a_[0], &b_[0], max_fun, &x_[0], &f_[0], &comm, &fail);
 
     if (fail.code == NE_NOERROR)
       {
@@ -119,19 +112,20 @@ namespace roboptim
 
 extern "C"
 {
+  typedef roboptim::NagSolver NagSolver;
   typedef roboptim::Solver<roboptim::Function,
 			   boost::mpl::vector<> > solver_t;
 
   ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ();
-  ROBOPTIM_DLLEXPORT solver_t* create (const solver_t::problem_t& pb);
+  ROBOPTIM_DLLEXPORT solver_t* create (const NagSolver::problem_t& pb);
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
 
   ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ()
   {
-    return sizeof (roboptim::NagSolver::problem_t);
+    return sizeof (NagSolver::problem_t);
   }
 
-  ROBOPTIM_DLLEXPORT solver_t* create (const solver_t::problem_t& pb)
+  ROBOPTIM_DLLEXPORT solver_t* create (const NagSolver::problem_t& pb)
   {
     return new roboptim::NagSolver (pb);
   }

@@ -20,8 +20,11 @@ SET(PLUGINDIR lib/roboptim-core)
 ADD_LIBRARY(roboptim-core-plugin-nag MODULE
   nag.cc ${HEADERS}
   )
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-nag roboptim-core)
+TARGET_LINK_LIBRARIES(roboptim-core-plugin-nag nagc_nag)
+
 SET_TARGET_PROPERTIES(roboptim-core-plugin-nag PROPERTIES
   PREFIX ""
   SOVERSION 1.1.0)
+
 INSTALL(TARGETS roboptim-core-plugin-nag DESTINATION ${PLUGINDIR})
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-nag roboptim-core)

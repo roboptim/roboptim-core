@@ -17,6 +17,8 @@
 
 #ifndef ROBOPTIM_CORE_PLUGING_NAG_NAG_HH
 # define ROBOPTIM_CORE_PLUGING_NAG_NAG_HH
+# include <vector>
+
 # include <roboptim/core/solver.hh>
 # include <roboptim/core/differentiable-function.hh>
 
@@ -25,7 +27,8 @@ namespace roboptim
   /// \addtogroup roboptim_solver
   /// @{
 
-  class ROBOPTIM_DLLEXPORT NagSolver : public Solver<Function, boost::mpl::vector<> >
+  class ROBOPTIM_DLLEXPORT NagSolver : public Solver<Function,
+						     boost::mpl::vector<> >
   {
   public:
     typedef Solver<Function, boost::mpl::vector<> > parent_t;
@@ -35,6 +38,14 @@ namespace roboptim
 
     /// \brief Solve the problem.
     void solve () throw ();
+
+  private:
+    double e1_;
+    double e2_;
+    std::vector<double> a_;
+    std::vector<double> b_;
+    Function::vector_t x_;
+    Function::vector_t f_;
   };
 
   /// @}

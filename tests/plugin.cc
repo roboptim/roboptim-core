@@ -25,8 +25,7 @@
 #include "shared-tests/hs071.hh"
 
 using namespace roboptim;
-typedef Solver<Function,
-	       boost::mpl::vector<Function> > solver_t;
+typedef Solver<Function, boost::mpl::vector<> > solver_t;
 
 BOOST_AUTO_TEST_CASE (plugin)
 {

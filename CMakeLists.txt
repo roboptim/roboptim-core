@@ -39,6 +39,7 @@ ADD_REQUIRED_DEPENDENCY("roboptim-core >= 0.5")
 FIND_PATH(NAG_DIR include/nag.h HINTS /opt/NAG/cll6a23dhl/)
 
 INCLUDE_DIRECTORIES("${NAG_DIR}/include")
+LINK_DIRECTORIES("${NAG_DIR}/lib")
 
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(tests)
