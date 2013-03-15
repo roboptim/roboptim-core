@@ -116,3 +116,28 @@ namespace roboptim
     this->result_ = SolverError (fail.message);
   }
 } // end of namespace roboptim.
+
+extern "C"
+{
+  typedef roboptim::Solver<roboptim::Function,
+			   boost::mpl::vector<> > solver_t;
+
+  ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ();
+  ROBOPTIM_DLLEXPORT solver_t* create (const solver_t::problem_t& pb);
+  ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
+
+  ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ()
+  {
+    return sizeof (roboptim::NagSolver::problem_t);
+  }
+
+  ROBOPTIM_DLLEXPORT solver_t* create (const solver_t::problem_t& pb)
+  {
+    return new roboptim::NagSolver (pb);
+  }
+
+  ROBOPTIM_DLLEXPORT void destroy (solver_t* p)
+  {
+    delete p;
+  }
+}
