@@ -23,7 +23,7 @@
 #include <nag.h>
 #include <nage04.h>
 
-#include <roboptim/core/plugin/nag/nag.hh>
+#include <roboptim/core/plugin/nag/nag-differentiable.hh>
 
 #define DEFINE_PARAMETER(KEY, DESCRIPTION, VALUE)	\
   do {							\
@@ -42,7 +42,8 @@ namespace roboptim
     {
       assert (!!comm);
       assert (!!comm->p);
-      NagSolverDifferentiable* solver = static_cast<NagSolverDifferentiable*> (comm->p);
+      NagSolverDifferentiable* solver =
+	static_cast<NagSolverDifferentiable*> (comm->p);
       assert (!!solver);
 
       Eigen::Map<const DifferentiableFunction::vector_t> x_
@@ -56,7 +57,7 @@ namespace roboptim
       fc_ = solver->problem ().function () (x_);
 
       gc_.setZero ();
-      gc_ = solver->problem ().gradient () (x_);
+      gc_ = solver->problem ().function ().gradient (x_, 0);
     }
   } // end of namespace detail
 
