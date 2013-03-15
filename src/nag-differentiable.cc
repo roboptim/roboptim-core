@@ -46,7 +46,7 @@ namespace roboptim
       assert (!!solver);
 
       Eigen::Map<const DifferentiableFunction::vector_t> x_
-	(&xc, solver->problem ().function ().inputSize ());
+	(&xc, 1);
       Eigen::Map<DifferentiableFunction::vector_t> fc_
 	(fc, solver->problem ().function ().outputSize ());
       Eigen::Map<DifferentiableFunction::vector_t> gc_
@@ -66,10 +66,14 @@ namespace roboptim
       e2_ (0.),
       a_ (problem ().function ().inputSize ()),
       b_ (problem ().function ().inputSize ()),
-      x_ (problem ().function ().inputSize ()),
+      x_ (1),
       f_ (problem ().function ().outputSize ()),
       g_ (problem ().function ().inputSize ())
   {
+    if (pb.function ().inputSize () != 1)
+      throw std::runtime_error
+	("this solver only support cost function which input size is 1");
+
     // Argument lower (a) and upper (b) bounds.
     assert (static_cast<DifferentiableFunction::size_type>
 	    (problem ().argumentBounds ().size ()) ==

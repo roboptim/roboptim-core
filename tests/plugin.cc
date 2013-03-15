@@ -22,10 +22,30 @@
 #include <roboptim/core/solver-factory.hh>
 
 #include "shared-tests/common.hh"
-#include "shared-tests/hs071.hh"
 
 using namespace roboptim;
 typedef Solver<Function, boost::mpl::vector<> > solver_t;
+
+struct Square : public DifferentiableFunction
+{
+  Square () : DifferentiableFunction (1, 1, "x * x")
+  {
+  }
+
+  void
+  impl_compute (result_t& result, const argument_t& x) const throw ()
+  {
+    result.setZero ();
+    result (0) = x[0] * x[0];
+  }
+
+  void
+  impl_gradient (gradient_t& grad, const argument_t&, size_type) const throw ()
+  {
+    grad[0] = 2;
+  }
+};
+
 
 void testme (const std::string& solverName,
 	     const std::string& pattern)
@@ -33,7 +53,7 @@ void testme (const std::string& solverName,
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern (pattern);
 
-  F f;
+  Square f;
   solver_t::problem_t pb (f);
 
   // Set bound for all variables.
@@ -44,7 +64,7 @@ void testme (const std::string& solverName,
 
   // Set the starting point.
   Function::vector_t start (pb.function ().inputSize ());
-  start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
+  start[0] = 4.;
   pb.startingPoint () = start;
 
   // Initialize solver
