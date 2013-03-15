@@ -25,6 +25,13 @@
 
 #include <roboptim/core/plugin/nag/nag.hh>
 
+#define DEFINE_PARAMETER(KEY, DESCRIPTION, VALUE)	\
+  do {							\
+    this->parameters_[KEY].description = DESCRIPTION;	\
+    this->parameters_[KEY].value = VALUE;		\
+  } while (0)
+
+
 namespace roboptim
 {
   namespace detail
@@ -67,6 +74,13 @@ namespace roboptim
 
     x_.setZero ();
     f_.setZero ();
+
+    // Shared parameters.
+    DEFINE_PARAMETER ("max-iterations", "number of iterations", 30);
+
+    // Custom parameters
+    DEFINE_PARAMETER ("nag.e1", "relative accuracy (0 means default)", 0.);
+    DEFINE_PARAMETER ("nag.e2", "absolute accuracy (0 means default)", 0.);
   }
 
   NagSolver::~NagSolver () throw ()
@@ -75,8 +89,13 @@ namespace roboptim
   void
   NagSolver::solve () throw ()
   {
+    // e1 and e2
+    e1_ = boost::get<double> (this->parameters_["nag.e1"].value);
+    e2_ = boost::get<double> (this->parameters_["nag.e2"].value);
+
     // Number of iterations
-    Integer max_fun = 30;
+    Integer max_fun =
+      boost::get<int> (this->parameters_["max-iterations"].value);
 
     // Solution.
     if (problem ().startingPoint ())

@@ -8,11 +8,9 @@ Solver:
     Starting value: [1](12)
     Infinity value (for all functions): inf
   Parameters:
+    max-iterations (number of iterations): 30
+    nag.e1 (relative accuracy (0 means default)): 0
+    nag.e2 (absolute accuracy (0 means default)): 0
     
 A solution has been found: 
-Result: 
-  Size (input, output): 4, 1
-  X: [4](1,5,5,1)
-  Value: [1](0)
-  Constraints values: [0]()
-  Lambda: [0]()
+[4](1,5,5,1)

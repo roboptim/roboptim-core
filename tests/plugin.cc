@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE (plugin)
 
   // Display the result.
   (*output) << "A solution has been found: " << std::endl;
-  (*output) << result << std::endl;
+  (*output) << result.x << std::endl;
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
