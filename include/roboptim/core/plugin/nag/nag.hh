@@ -27,6 +27,15 @@ namespace roboptim
   /// \addtogroup roboptim_solver
   /// @{
 
+  /// \brief Solver for C1 function without gradient computation, no
+  ///        constraint.
+  ///
+  /// Searches for a minimum, in a given finite interval, of a
+  /// continuous function of a single variable, using function values
+  /// only. The method (based on quadratic interpolation) is intended
+  /// for functions which have a continuous first derivative (although
+  /// it will usually work if the derivative has occasional
+  /// discontinuities).
   class ROBOPTIM_DLLEXPORT NagSolver : public Solver<Function,
 						     boost::mpl::vector<> >
   {
@@ -40,11 +49,17 @@ namespace roboptim
     void solve () throw ();
 
   private:
+    /// \brief Relative accuracy.
     double e1_;
+    /// \brief Absolute accuracy.
     double e2_;
+    /// \brief Lower bound.
     std::vector<double> a_;
+    /// \brief Upper bound.
     std::vector<double> b_;
+    /// \brief Current minimum estimation.
     Function::vector_t x_;
+    /// \brief Current cost.
     Function::vector_t f_;
   };
 
