@@ -36,6 +36,8 @@ namespace roboptim
   /// for functions which have a continuous first derivative (although
   /// it will usually work if the derivative has occasional
   /// discontinuities).
+  ///
+  /// \see http://www.nag.com/numeric/CL/nagdoc_cl23/html/E04/e04abc.html
   class ROBOPTIM_DLLEXPORT NagSolver : public Solver<Function,
 						     boost::mpl::vector<> >
   {
