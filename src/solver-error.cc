@@ -26,10 +26,31 @@ namespace roboptim
   {
   }
 
+  SolverError::SolverError (const std::string& msg,
+                            const Result& res) throw ()
+    : std::runtime_error (msg),
+      lastState_(res)
+  {
+  }
+
+  SolverError::~SolverError () throw ()
+  {
+  }
+
   std::ostream&
   SolverError::print (std::ostream& o) const throw ()
   {
     return o << "Solver error:" << what ();
+  }
+
+  const boost::optional<Result>& SolverError::lastState () const throw ()
+  {
+    return lastState_;
+  }
+
+  boost::optional<Result>& SolverError::lastState () throw ()
+  {
+    return lastState_;
   }
 
   std::ostream& operator<< (std::ostream& o, const SolverError& s)

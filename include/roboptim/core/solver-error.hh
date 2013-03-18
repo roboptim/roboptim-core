@@ -22,6 +22,9 @@
 
 # include <iostream>
 # include <stdexcept>
+# include <boost/optional.hpp>
+
+# include <roboptim/core/result.hh>
 
 namespace roboptim
 {
@@ -38,11 +41,35 @@ namespace roboptim
     /// \param arg error message.
     explicit SolverError (const std::string& arg) throw ();
 
+    /// \brief Instantiate an error from an error message.
+    /// \param arg error message.
+    /// \param res last state of the solver.
+    SolverError (const std::string& arg,
+                 const Result& res) throw ();
+
+    /// \brief Trivial destructor.
+    ~SolverError() throw();
+
     /// \brief Display the error on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
+
+    /// \brief Retrieve the (optional) last state of the solver.
+    /// \return last state of the solver.
+    const boost::optional<Result>& lastState () const throw ();
+
+    /// \brief Retrieve the (optional) last state of the solver.
+    /// \return last state of the solver.
+    boost::optional<Result>& lastState () throw ();
+
+  private:
+    /// \brief (Optional) Last state of the solver before the error was raised.
+    ///
+    /// \warning This piece of data may be completely unusable, and comes
+    /// without any warranty of any kind.
+    boost::optional<Result> lastState_;
   };
 
   /// @}
