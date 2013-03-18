@@ -47,6 +47,10 @@ namespace roboptim
     SolverError (const std::string& arg,
                  const Result& res) throw ();
 
+    /// \brief Copy constructor.
+    /// \param error other error to copy.
+    SolverError (const SolverError& error) throw ();
+
     /// \brief Trivial destructor.
     ~SolverError() throw();
 
