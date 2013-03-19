@@ -1,0 +1,18 @@
+Solver:
+  Problem:
+    x * x (differentiable function)
+    Argument's bounds: (1, 5)
+    Argument's scales: 1
+    
+    Starting point: [1](4)
+    Starting value: [1](16)
+    Infinity value (for all functions): inf
+  Parameters:
+    max-iterations (number of iterations): 1500
+    nag.list (if true, problem will be displayed by the NAG solver): 1
+    nag.optim_tol (the accuracy in x  to which the solution is required): 2.22045e-16
+    nag.outfile (output file used by the NAG logging system): /tmp/nag.out
+    nag.print_level (verbosity level): 1125
+    
+A solution has been found: 
+[1](0)

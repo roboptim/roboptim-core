@@ -16,29 +16,18 @@
 # Define the directory where plug-ins will be installed.
 SET(PLUGINDIR lib/roboptim-core)
 
-# Nag plug-in.
-ADD_LIBRARY(roboptim-core-plugin-nag MODULE
-  nag.cc ${HEADERS}
-  )
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-nag roboptim-core)
-TARGET_LINK_LIBRARIES(roboptim-core-plugin-nag nagc_nag)
+MACRO(NAG_PLUGIN NAME)
+  ADD_LIBRARY(roboptim-core-plugin-${NAME} MODULE ${NAME}.cc ${HEADERS})
+  PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-${NAME} roboptim-core)
+  TARGET_LINK_LIBRARIES(roboptim-core-plugin-${NAME} nagc_nag)
 
-SET_TARGET_PROPERTIES(roboptim-core-plugin-nag PROPERTIES
-  PREFIX ""
-  SOVERSION 1.1.0)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-${NAME} PROPERTIES
+    PREFIX ""
+    SOVERSION 1.1.0)
 
-INSTALL(TARGETS roboptim-core-plugin-nag DESTINATION ${PLUGINDIR})
+  INSTALL(TARGETS roboptim-core-plugin-${NAME} DESTINATION ${PLUGINDIR})
+ENDMACRO()
 
-# Nag differentiable plug-in.
-ADD_LIBRARY(roboptim-core-plugin-nag-differentiable MODULE
-  nag.cc ${HEADERS}
-  )
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-nag-differentiable roboptim-core)
-TARGET_LINK_LIBRARIES(roboptim-core-plugin-nag-differentiable nagc_nag)
-
-SET_TARGET_PROPERTIES(roboptim-core-plugin-nag-differentiable PROPERTIES
-  PREFIX ""
-  SOVERSION 1.1.0)
-
-INSTALL(TARGETS roboptim-core-plugin-nag-differentiable
-  DESTINATION ${PLUGINDIR})
+NAG_PLUGIN(nag)
+NAG_PLUGIN(nag-differentiable)
+NAG_PLUGIN(nag-simplex)

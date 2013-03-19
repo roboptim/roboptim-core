@@ -85,6 +85,7 @@ void testme (const std::string& solverName,
                 << boost::get<SolverError> (res).what ()
                 << std::endl;
       BOOST_CHECK_EQUAL (res.which (), solver_t::SOLVER_VALUE);
+      return;
     }
 
   // Get the result.
@@ -106,4 +107,9 @@ BOOST_AUTO_TEST_CASE (simple)
 BOOST_AUTO_TEST_CASE (differentiable)
 {
   testme ("nag-differentiable", "plugin-simple");
+}
+
+BOOST_AUTO_TEST_CASE (simplex)
+{
+  testme ("nag-simplex", "plugin-simplex");
 }
