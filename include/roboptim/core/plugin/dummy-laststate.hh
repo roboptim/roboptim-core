@@ -24,7 +24,12 @@
 
 namespace roboptim
 {
-  /// \brief Dummy solver which always fails.
+  /// \brief Dummy solver which always fails, but returns the last state of the
+  /// solver.
+  ///
+  /// The SolverError generated contains a dummy state of the solver (x,
+  /// constraints etc.). These values can be obtained thanks to
+  /// SolverError::lastState.
   ///
   /// This solver always fails but is always available
   /// as it does not rely on the plug-in mechanism.
@@ -53,4 +58,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_DUMMY_HH
+#endif //! ROBOPTIM_CORE_DUMMY_LASTSTATE_HH
