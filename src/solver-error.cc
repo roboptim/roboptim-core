@@ -35,7 +35,7 @@ namespace roboptim
 
   SolverError::SolverError (const SolverError& error) throw ()
     : std::runtime_error (error.what()),
-      lastState_(*error.lastState())
+      lastState_(error.lastState_)
   {
   }
 
