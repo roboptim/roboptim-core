@@ -65,3 +65,12 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES
   PREFIX ""
   SOVERSION 1.1.0)
 INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
+
+# Dummy-laststate plug-in.
+ADD_LIBRARY(roboptim-core-plugin-dummy-laststate MODULE dummy-laststate.cc)
+ADD_DEPENDENCIES(roboptim-core-plugin-dummy-laststate roboptim-core)
+TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-laststate roboptim-core)
+SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES
+  PREFIX ""
+  SOVERSION 1.1.0)
+INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
