@@ -23,8 +23,8 @@ INCLUDE(cmake/cpack.cmake)
 INCLUDE(cmake/eigen.cmake)
 
 SET(PROJECT_NAME roboptim-core)
-SET(PROJECT_DESCRIPTION "RobOptim core")
-SET(PROJECT_URL "http://github.com/laas/roboptim-core")
+SET(PROJECT_DESCRIPTION "RobOptim Core")
+SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
 
 SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
