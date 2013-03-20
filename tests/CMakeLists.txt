@@ -87,6 +87,9 @@ ROBOPTIM_CORE_TEST(derivable-parametrized-function)
 # Dynamic loading mechanism.
 ROBOPTIM_CORE_TEST(plugin)
 
+# Dynamic loading mechanism with solver's last state
+ROBOPTIM_CORE_TEST(plugin-laststate)
+
 # Algorithm.
 ROBOPTIM_CORE_TEST(finite-difference-gradient)
 

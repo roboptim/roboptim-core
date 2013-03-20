@@ -51,6 +51,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivative-size.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy-laststate.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/debug.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-function.hh
