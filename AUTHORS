@@ -3,6 +3,9 @@ This package was written by and with the assistance of
 * Antonio El Khoury             antonio.elkhoury@gmail.com
 - Non-scalar constraints support.
 
+* Benjamin Chrétien             chretien@lirmm.fr
+- Solver error reporting enhancement.
+
 * Florent Lamiraux              florent@laas.fr
 - Interface design.
 - Eigen3 support.
