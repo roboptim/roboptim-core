@@ -42,8 +42,13 @@ namespace roboptim
   class NTimesDerivableFunction<2> : public TwiceDifferentiableFunction
   {
   public:
-    /// \brief Function derivability order.
+    /// \brief Function derivability order. One static const variable per class
+    /// in inheritance structure.
     static const size_type derivabilityOrder = 2;
+    /// \brief Returns the maximum derivability order (relevant for N>2 only)
+    virtual size_type derivabilityOrderMax() const{
+      return 2;
+    }
 
     virtual ~NTimesDerivableFunction () throw () {}
 
@@ -120,7 +125,7 @@ namespace roboptim
 		     size_type order = 1) const
       throw ()
     {
-      assert (order <= derivabilityOrder
+      assert (order <= derivabilityOrderMax()
 	      && isValidDerivative (derivative));
       this->impl_derivative (derivative, argument, order);
       assert (isValidDerivative (derivative));
@@ -133,7 +138,7 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ()
     {
-      o << "Function derivable " << derivabilityOrder << " times.";
+      o << "Function derivable " << derivabilityOrderMax() << " times.";
       return o;
     }
 
@@ -250,6 +255,10 @@ namespace roboptim
 
     /// \brief Function derivability order.
     static const size_type derivabilityOrder = DerivabilityOrder;
+    /// \brief Returns the maximum derivability order.
+    virtual size_type derivabilityOrderMax() const{
+      return DerivabilityOrder;
+    }
 
     virtual ~NTimesDerivableFunction () throw ();
 
