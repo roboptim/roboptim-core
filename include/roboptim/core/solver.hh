@@ -23,7 +23,8 @@
 # include <map>
 # include <string>
 
-# include <boost/static_assert.hpp>
+# include <boost/mpl/assert.hpp>
+# include <boost/mpl/logical.hpp>
 # include <boost/type_traits/is_base_of.hpp>
 # include <boost/variant/variant.hpp>
 # include <boost/variant/get.hpp>
@@ -42,7 +43,8 @@ namespace roboptim
   struct Parameter
   {
     /// \brief Allowed types for parameters.
-    typedef boost::variant<Function::value_type, int, std::string> parameterValues_t;
+    typedef boost::variant<Function::value_type,
+			   int, std::string> parameterValues_t;
 
     /// \brief Parameter description (for humans).
     std::string description;
@@ -65,7 +67,8 @@ namespace roboptim
   template <typename F, typename C>
   class Solver : public GenericSolver
   {
-    BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
+    BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
+		      boost::is_base_of<SparseFunction, F> >));
   public:
     /// \brief Solver problem type.
     ///

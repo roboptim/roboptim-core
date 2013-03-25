@@ -20,11 +20,12 @@
 # include <iostream>
 # include <stdexcept>
 
+# include <boost/mpl/assert.hpp>
+# include <boost/mpl/logical.hpp>
 # include <boost/mpl/transform.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/optional.hpp>
 # include <boost/shared_ptr.hpp>
-# include <boost/static_assert.hpp>
 # include <boost/type_traits/is_base_of.hpp>
 # include <boost/variant.hpp>
 
@@ -91,7 +92,8 @@ namespace roboptim
   template <typename F>
   class Problem <F, boost::mpl::vector<> >
   {
-    BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
+    BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
+		      boost::is_base_of<SparseFunction, F> >));
 
     //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
   public:
@@ -245,7 +247,8 @@ namespace roboptim
   template <typename F, typename CLIST>
   class Problem
   {
-    BOOST_STATIC_ASSERT((boost::is_base_of<Function, F>::value));
+    BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
+		      boost::is_base_of<SparseFunction, F> >));
 
     //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
   public:
