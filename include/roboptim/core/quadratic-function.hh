@@ -31,17 +31,21 @@ namespace roboptim
   /// \brief Define an abstract quadratic function.
   ///
   /// Inherit from this class when implementing quadratic functions.
-  class ROBOPTIM_DLLAPI QuadraticFunction : public TwiceDifferentiableFunction
+  template <typename T>
+  class GenericQuadraticFunction : public GenericTwiceDifferentiableFunction<T>
   {
   public:
+    typedef GenericTwiceDifferentiableFunction<T> parent_t;
+    typedef typename parent_t::size_type size_type;
+
     /// \brief Concrete class constructor should call this constructor.
     ///
     /// \param inputSize function arity
     /// \param outputSize result size
     /// \param name function's name
-    QuadraticFunction (size_type inputSize,
-		       size_type outputSize = 1,
-		       std::string name = std::string ()) throw ();
+    GenericQuadraticFunction (size_type inputSize,
+			      size_type outputSize = 1,
+			      std::string name = std::string ()) throw ();
 
     /// \brief Display the function on the specified output stream.
     ///
@@ -53,4 +57,6 @@ namespace roboptim
   /// @}
 
 } // end of namespace roboptim
+
+# include <roboptim/core/quadratic-function.hxx>
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH

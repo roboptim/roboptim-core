@@ -15,35 +15,38 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "debug.hh"
-
-#include "roboptim/core/linear-function.hh"
-#include "roboptim/core/indent.hh"
-#include "roboptim/core/util.hh"
+#ifndef ROBOPTIM_CORE_LINEAR_FUNCTION_HXX
+# define ROBOPTIM_CORE_LINEAR_FUNCTION_HXX
+# include <roboptim/core/indent.hh>
+# include <roboptim/core/util.hh>
 
 namespace roboptim
 {
-  LinearFunction::LinearFunction (size_type inputSize,
-				  size_type outputSize,
-				  std::string name) throw ()
-    : QuadraticFunction (inputSize, outputSize, name)
-  {
-  }
+  template <typename T>
+  GenericLinearFunction<T>::GenericLinearFunction (size_type inputSize,
+						   size_type outputSize,
+						   std::string name) throw ()
+    : GenericQuadraticFunction<T> (inputSize, outputSize, name)
+  {}
 
+  template <typename T>
   void
-  LinearFunction::impl_hessian (hessian_t& hessian,
-				const vector_t&,
-				size_type) const throw ()
+  GenericLinearFunction<T>::impl_hessian (hessian_t& hessian,
+					  const argument_t&,
+					  size_type) const throw ()
   {
     setZero (hessian);
   }
 
+  template <typename T>
   std::ostream&
-  LinearFunction::print (std::ostream& o) const throw ()
+  GenericLinearFunction<T>::print (std::ostream& o) const throw ()
   {
-    if (getName ().empty ())
+    if (this->getName ().empty ())
       return o << "Linear function";
     else
-      return o << getName () << " (linear function)";
+      return o << this->getName () << " (linear function)";
   }
 } // end of namespace roboptim
+
+#endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HXX

@@ -31,17 +31,25 @@ namespace roboptim
   /// \brief Define an abstract linear function.
   ///
   /// Inherit from this class when implementing linear functions.
-  class ROBOPTIM_DLLAPI LinearFunction : public QuadraticFunction
+  template <typename T>
+  class GenericLinearFunction : public GenericQuadraticFunction<T>
   {
   public:
+    typedef GenericQuadraticFunction<T> parent_t;
+    typedef typename parent_t::size_type size_type;
+    typedef typename parent_t::vector_t vector_t;
+    typedef typename parent_t::argument_t argument_t;
+    typedef typename parent_t::result_t result_t;
+    typedef typename parent_t::hessian_t hessian_t;
+
     /// \brief Concrete class constructor should call this constructor.
     ///
     /// \param inputSize function arity
     /// \param outputSize result size
     /// \param name function's name
-    LinearFunction (size_type inputSize,
-		    size_type outputSize = 1,
-		    std::string name = std::string ()) throw ();
+    GenericLinearFunction (size_type inputSize,
+			   size_type outputSize = 1,
+			   std::string name = std::string ()) throw ();
 
     /// \brief Display the function on the specified output stream.
     ///
@@ -57,4 +65,6 @@ namespace roboptim
   /// @}
 
 } // end of namespace roboptim
+
+# include <roboptim/core/linear-function.hxx>
 #endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HH

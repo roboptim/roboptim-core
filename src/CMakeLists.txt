@@ -31,17 +31,14 @@ ADD_LIBRARY(roboptim-core SHARED
   generic-solver.cc
   identity-function.cc
   indent.cc
-  linear-function.cc
   numeric-linear-function.cc
   numeric-quadratic-function.cc
-  quadratic-function.cc
   result.cc
   result-with-warnings.cc
   solver.cc
   solver-error.cc
   solver-warning.cc
   sum-of-c1-squares.cc
-  twice-differentiable-function.cc
   util.cc
 
   visualization/gnuplot.cc

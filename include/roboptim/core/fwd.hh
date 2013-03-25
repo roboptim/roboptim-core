@@ -74,16 +74,31 @@ namespace roboptim
 
 
   class GenericSolver;
-  class LinearFunction;
   class NoSolution;
   class NumericLinearFunction;
   class NumericQuadraticFunction;
-  class QuadraticFunction;
   class Result;
   class ResultWithWarnings;
   class SolverError;
   class SolverWarning;
-  class TwiceDifferentialeFunction;
+
+  template <typename T>
+  class GenericTwiceDifferentiableFunction;
+  typedef GenericTwiceDifferentiableFunction<EigenMatrixDense>
+  TwiceDifferentiableFunction;
+  typedef GenericTwiceDifferentiableFunction<EigenMatrixSparse>
+  TwiceDifferentiableSparseFunction;
+
+  template <typename T>
+  class GenericLinearFunction;
+  typedef GenericLinearFunction<EigenMatrixDense> LinearFunction;
+  typedef GenericLinearFunction<EigenMatrixSparse> LinearSparseFunction;
+
+  template <typename T>
+  class GenericQuadraticFunction;
+  typedef GenericQuadraticFunction<EigenMatrixDense> QuadraticFunction;
+  typedef GenericQuadraticFunction<EigenMatrixSparse> QuadraticSparseFunction;
+
   template <typename F, typename C = F> class Problem;
   template <typename F, typename C = F> class Solver;
   template <typename T> class SolverFactory;

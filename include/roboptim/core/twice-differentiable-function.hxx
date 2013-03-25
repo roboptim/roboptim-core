@@ -15,28 +15,31 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "debug.hh"
-
-#include "roboptim/core/twice-differentiable-function.hh"
-#include "roboptim/core/indent.hh"
-#include "roboptim/core/util.hh"
+#ifndef ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HXX
+# define ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HXX
+# include <roboptim/core/indent.hh>
+# include <roboptim/core/util.hh>
 
 namespace roboptim
 {
-  TwiceDifferentiableFunction::TwiceDifferentiableFunction
+  template <typename T>
+  GenericTwiceDifferentiableFunction<T>::GenericTwiceDifferentiableFunction
   (size_type inputSize,
    size_type outputSize,
    std::string name) throw ()
-    : DifferentiableFunction (inputSize, outputSize, name)
+    : GenericDifferentiableFunction<T> (inputSize, outputSize, name)
   {
   }
 
+  template <typename T>
   std::ostream&
-  TwiceDifferentiableFunction::print (std::ostream& o) const throw ()
+  GenericTwiceDifferentiableFunction<T>::print (std::ostream& o) const throw ()
   {
-    if (getName ().empty ())
+    if (this->getName ().empty ())
       return o << "Twice differentiable function";
     else
-      return o << getName () << " (twice differentiable function)";
+      return o << this->getName () << " (twice differentiable function)";
   }
 } // end of namespace roboptim
+
+#endif //! ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HXX

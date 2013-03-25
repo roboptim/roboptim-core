@@ -42,8 +42,10 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/io.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-error.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/linear-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/linear-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-derivable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-differentiable-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-differentiable-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/indent.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/constant-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/generic-solver.hh
@@ -72,6 +74,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hxx

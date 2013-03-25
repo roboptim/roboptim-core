@@ -15,28 +15,30 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "debug.hh"
-
-#include "roboptim/core/quadratic-function.hh"
-#include "roboptim/core/indent.hh"
-#include "roboptim/core/util.hh"
+#ifndef ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX
+# define ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX
+# include "roboptim/core/indent.hh"
+# include "roboptim/core/util.hh"
 
 namespace roboptim
 {
-  QuadraticFunction::QuadraticFunction (size_type inputSize,
-					size_type outputSize,
-					std::string name)
+  template <typename T>
+  GenericQuadraticFunction<T>::GenericQuadraticFunction (size_type inputSize,
+							 size_type outputSize,
+							 std::string name)
     throw ()
-    : TwiceDifferentiableFunction (inputSize, outputSize, name)
-  {
-  }
+    : GenericTwiceDifferentiableFunction<T> (inputSize, outputSize, name)
+  {}
 
+  template <typename T>
   std::ostream&
-  QuadraticFunction::print (std::ostream& o) const throw ()
+  GenericQuadraticFunction<T>::print (std::ostream& o) const throw ()
   {
-    if (getName ().empty ())
+    if (this->getName ().empty ())
       return o << "Quadratic function";
     else
-      return o << getName () << " (quadratic function)";
+      return o << this->getName () << " (quadratic function)";
   }
 } // end of namespace roboptim
+
+#endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX

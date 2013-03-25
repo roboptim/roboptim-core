@@ -50,10 +50,17 @@ namespace roboptim
   /// To avoid this costly representation, the function is split
   /// into \f$m\f$ \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$ functions.
   /// See #DifferentialeFunction documentation for more information.
-  class ROBOPTIM_DLLAPI TwiceDifferentiableFunction
-    : public DifferentiableFunction
+  template <typename T>
+  class GenericTwiceDifferentiableFunction
+    : public GenericDifferentiableFunction<T>
   {
   public:
+    typedef GenericDifferentiableFunction<T> parent_t;
+    typedef typename parent_t::size_type size_type;
+    typedef typename parent_t::matrix_t matrix_t;
+    typedef typename parent_t::argument_t argument_t;
+    typedef typename parent_t::result_t result_t;
+
     /// \brief Hessian type.
     ///
     /// Hessians are symmetric matrices.
@@ -69,7 +76,7 @@ namespace roboptim
     /// \return hessian's size as a pair
     hessianSize_t hessianSize () const throw ()
     {
-      return std::make_pair (inputSize (), inputSize ());
+      return std::make_pair (this->inputSize (), this->inputSize ());
     }
 
     /// \brief Check if the hessian is valid (check sizes).
@@ -108,7 +115,7 @@ namespace roboptim
 		  const argument_t& argument,
 		  size_type functionId = 0) const throw ()
     {
-      LOG4CXX_TRACE (logger,
+      LOG4CXX_TRACE (this->logger,
 		     "Evaluating hessian at point: " << argument);
       assert (isValidHessian (hessian));
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
@@ -135,9 +142,9 @@ namespace roboptim
     /// \param inputSize input size (argument size)
     /// \param outputSize output size (result size)
     /// \param name function's name
-    TwiceDifferentiableFunction (size_type inputSize,
-				 size_type outputSize = 1,
-				 std::string name = std::string ()) throw ();
+    GenericTwiceDifferentiableFunction
+    (size_type inputSize, size_type outputSize = 1,
+     std::string name = std::string ()) throw ();
 
     /// \brief Hessian evaluation.
     ///
@@ -162,4 +169,6 @@ namespace roboptim
 
   /// @}
 } // end of namespace roboptim
+
+# include <roboptim/core/twice-differentiable-function.hxx>
 #endif //! ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HH
