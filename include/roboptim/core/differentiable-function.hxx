@@ -37,7 +37,7 @@ namespace roboptim
   (jacobian_t& jacobian, const argument_t& argument)
     const throw ()
   {
-    throw std::runtime_error ("FIXME");
+    throw std::runtime_error ("FIXME: to be implemented");
   }
 
 
