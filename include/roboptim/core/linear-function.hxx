@@ -35,7 +35,7 @@ namespace roboptim
 					  const argument_t&,
 					  size_type) const throw ()
   {
-    setZero (hessian);
+    this->setZero (hessian);
   }
 
   template <typename T>
