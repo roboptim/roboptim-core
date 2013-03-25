@@ -21,6 +21,7 @@
 # include <roboptim/core/debug.hh>
 
 # include <boost/format.hpp>
+# include <boost/lexical_cast.hpp>
 
 # include <roboptim/core/function.hh>
 # include <roboptim/core/differentiable-function.hh>
@@ -41,9 +42,11 @@ namespace roboptim
       /// \brief Import discrete interval type from function.
       typedef DifferentiableFunction::argument_t argument_t;
 
-      /// \brief Plot the Jacobian with Gnuplot.
+      /// \brief Plot the Jacobian structure with Gnuplot.
       ///
-      /// Plot the Jacobian of a differentiable function with Gnuplot.
+      /// Plot the structure of the Jacobian of a differentiable function with
+      /// Gnuplot. Non-zero values will be displayed in blue, zeros in white.
+      ///
       /// \param f differentiable function whose Jacobian will be plotted
       /// \param arg optimization parameters of the point to plot
       /// \return Gnuplot command
@@ -58,12 +61,27 @@ namespace roboptim
 
 	std::string str = "";
 
+	// Title of the graph
 	str += "set title 'jacobian(" + f.getName() + ")'\n";
-	str += "set palette defined(0 \"white\",1 \"blue\")\n";
-	str += "set yrange [:] reverse\n";
-	str += "set size square\n";
-	str += "plot '-' using 1:2:($3 == 0 ? 0 : 1) matrix with image\n";
 
+	// White = 0, Blue = non zero
+	str += "set palette defined(0 \"white\",1 \"blue\")\n";
+	str += "set grid front\n";
+
+	// Jacobian (x,y) range
+	str += "set xrange [0:" + boost::lexical_cast<std::string>
+	  ((float)jac.cols()) + "]\n";
+	str += "set yrange [0:" + boost::lexical_cast<std::string>
+	  ((float)jac.rows()) + "] reverse\n";
+	str += "set size ratio -1\n";
+
+	// Remove the colorbox
+	str += "unset colorbox\n";
+
+	// Matrix plotting
+	// (range offset since pixels are centered on integer coordinates)
+	str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
+	str += "notitle matrix with image\n";
 
 	for (unsigned int cstr_id = 0; cstr_id < jac.rows(); ++cstr_id)
 	  for (unsigned int out_id = 0; out_id < jac.cols(); ++out_id)
