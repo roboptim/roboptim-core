@@ -64,11 +64,16 @@ namespace roboptim
   /// ignored in the gradient/jacobian computation.
   /// The class provides a default value for the function id so that
   /// these functions do not have to explicitly set the function id.
-  class ROBOPTIM_DLLAPI DifferentiableFunction : public Function
+  template <typename T>
+  class GenericDifferentiableFunction : public GenericFunction<T>
   {
   public:
-    typedef Function::vector_t vector_t;
-    typedef Function::matrix_t matrix_t;
+    typedef GenericFunction<T> parent_t;
+    typedef typename parent_t::size_type size_type;
+    typedef typename parent_t::vector_t vector_t;
+    typedef typename parent_t::matrix_t matrix_t;
+    typedef typename parent_t::argument_t argument_t;
+    typedef typename parent_t::result_t result_t;
 
 
     /// \brief Gradient type.
@@ -85,7 +90,7 @@ namespace roboptim
     /// Gradient size is equals to the input size.
     size_type gradientSize () const throw ()
     {
-      return inputSize ();
+      return this->inputSize ();
     }
 
     /// \brief Return the jacobian size as a pair.
@@ -93,7 +98,7 @@ namespace roboptim
     /// Gradient size is equals to (output size, input size).
     jacobianSize_t jacobianSize () const throw ()
     {
-      return std::make_pair (outputSize (), inputSize ());
+      return std::make_pair (this->outputSize (), this->inputSize ());
     }
 
     /// \brief Check if the gradient is valid (check size).
@@ -135,9 +140,9 @@ namespace roboptim
     void jacobian (jacobian_t& jacobian, const argument_t& argument)
       const throw ()
     {
-      LOG4CXX_TRACE (logger,
+      LOG4CXX_TRACE (this->logger,
 		     "Evaluating jacobian at point: " << argument);
-      assert (argument.size () == inputSize ());
+      assert (argument.size () == this->inputSize ());
       assert (isValidJacobian (jacobian));
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       Eigen::internal::set_is_malloc_allowed (false);
@@ -175,11 +180,11 @@ namespace roboptim
 		   const argument_t& argument,
 		   size_type functionId = 0) const throw ()
     {
-      LOG4CXX_TRACE (logger,
+      LOG4CXX_TRACE (this->logger,
 		     "Evaluating gradient at point: "
 		     << argument
 		     << " (function id: " << functionId << ")");
-      assert (argument.size () == inputSize ());
+      assert (argument.size () == this->inputSize ());
       assert (isValidGradient (gradient));
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       Eigen::internal::set_is_malloc_allowed (false);
@@ -203,9 +208,9 @@ namespace roboptim
     /// \param inputSize input size (argument size)
     /// \param outputSize output size (result size)
     /// \param name function's name
-    DifferentiableFunction (size_type inputSize,
-			    size_type outputSize = 1,
-			    std::string name = std::string ()) throw ();
+    GenericDifferentiableFunction (size_type inputSize,
+				   size_type outputSize = 1,
+				   std::string name = std::string ()) throw ();
 
     /// \brief Jacobian evaluation.
     ///
@@ -235,4 +240,6 @@ namespace roboptim
   /// @}
 
 } // end of namespace roboptim
+
+# include <roboptim/core/differentiable-function.hxx>
 #endif //! ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HH

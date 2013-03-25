@@ -29,7 +29,10 @@ namespace roboptim
   class NoSolution {};
 
   class ConstantFunction;
-  class DifferentiableFunction;
+
+  template <typename T>
+  class GenericDifferentiableFunction;
+
   class DummySolver;
 
   namespace finiteDifferenceGradientPolicies
@@ -53,13 +56,21 @@ namespace roboptim
   /// \brief Tag type for functions using Eigen sparse matrices.
   struct EigenMatrixSparse {};
 
-  /// \brief Trait specializing GenericFunction for Eigen dense matrices.
+  /// \brief Dense function.
   typedef GenericFunction<EigenMatrixDense>
   Function;
 
-  /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
+  /// \brief Sparse function.
   typedef GenericFunction<EigenMatrixSparse>
   SparseFunction;
+
+  /// \brief Dense differentiable function.
+  typedef GenericDifferentiableFunction<EigenMatrixDense>
+  DifferentiableFunction;
+
+  /// \brief Sparse differentiable function.
+  typedef GenericDifferentiableFunction<EigenMatrixSparse>
+  DifferentiableSparseFunction;
 
 
   class GenericSolver;

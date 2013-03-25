@@ -15,41 +15,44 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "debug.hh"
-
-#include "roboptim/core/differentiable-function.hh"
-#include "roboptim/core/indent.hh"
-#include "roboptim/core/util.hh"
+#ifndef ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
+# define ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
+# include "roboptim/core/indent.hh"
+# include "roboptim/core/util.hh"
 
 namespace roboptim
 {
-  DifferentiableFunction::DifferentiableFunction (size_type inputSize,
-						  size_type outputSize,
-						  std::string name)
+  template <typename T>
+  GenericDifferentiableFunction<T>::GenericDifferentiableFunction
+  (size_type inputSize, size_type outputSize, std::string name)
     throw ()
     : Function (inputSize, outputSize, name)
   {
   }
 
+  template <typename T>
   void
-  DifferentiableFunction::impl_jacobian (jacobian_t& jacobian,
-					 const argument_t& argument)
+  GenericDifferentiableFunction<T>::impl_jacobian (jacobian_t& jacobian,
+						   const argument_t& argument)
     const throw ()
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    for (jacobian_t::Index i = 0; i < outputSize (); ++i)
+    for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
       jacobian.row (i) = gradient (argument, i);
   }
 
+  template <typename T>
   std::ostream&
-  DifferentiableFunction::print (std::ostream& o) const throw ()
+  GenericDifferentiableFunction<T>::print (std::ostream& o) const throw ()
   {
-    if (getName ().empty ())
+    if (this->getName ().empty ())
       return o << "Differentiable function";
     else
-      return o << getName () << " (differentiable function)";
+      return o << this->getName () << " (differentiable function)";
   }
 
 } // end of namespace roboptim
+
+#endif //! ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION

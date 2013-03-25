@@ -26,7 +26,6 @@ ADD_LIBRARY(roboptim-core SHARED
   debug.hh
   debug.cc
   doc.hh
-  differentiable-function.cc
   finite-difference-gradient.cc
   function.cc
   generic-solver.cc

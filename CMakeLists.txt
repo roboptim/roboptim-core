@@ -56,6 +56,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-warning.hh
