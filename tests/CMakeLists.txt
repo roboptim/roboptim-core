@@ -105,3 +105,6 @@ ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)
 
 # visualization-gnuplot-function
 ROBOPTIM_CORE_TEST(visualization-gnuplot-function)
+
+# visualization-gnuplot-differentiable-function
+ROBOPTIM_CORE_TEST(visualization-gnuplot-differentiable-function)
