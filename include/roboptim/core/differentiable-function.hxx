@@ -34,7 +34,7 @@ namespace roboptim
   template <>
   inline void
   GenericDifferentiableFunction<EigenMatrixSparse>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& argument)
+  (jacobian_t&, const argument_t&)
     const throw ()
   {
     throw std::runtime_error ("FIXME: to be implemented");
