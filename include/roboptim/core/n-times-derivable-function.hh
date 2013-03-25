@@ -46,7 +46,8 @@ namespace roboptim
     /// in inheritance structure.
     static const size_type derivabilityOrder = 2;
     /// \brief Returns the maximum derivability order (relevant for N>2 only)
-    virtual size_type derivabilityOrderMax() const{
+    virtual size_type derivabilityOrderMax () const
+    {
       return 2;
     }
 
@@ -125,7 +126,7 @@ namespace roboptim
 		     size_type order = 1) const
       throw ()
     {
-      assert (order <= derivabilityOrderMax()
+      assert (order <= derivabilityOrderMax ()
 	      && isValidDerivative (derivative));
       this->impl_derivative (derivative, argument, order);
       assert (isValidDerivative (derivative));
@@ -138,7 +139,7 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ()
     {
-      o << "Function derivable " << derivabilityOrderMax() << " times.";
+      o << "Function derivable " << derivabilityOrderMax () << " times.";
       return o;
     }
 
@@ -256,7 +257,8 @@ namespace roboptim
     /// \brief Function derivability order.
     static const size_type derivabilityOrder = DerivabilityOrder;
     /// \brief Returns the maximum derivability order.
-    virtual size_type derivabilityOrderMax() const{
+    virtual size_type derivabilityOrderMax () const
+    {
       return DerivabilityOrder;
     }
 
