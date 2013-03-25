@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
 # define ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
+# include <stdexcept>
 # include "roboptim/core/indent.hh"
 # include "roboptim/core/util.hh"
 
@@ -29,6 +30,16 @@ namespace roboptim
     : Function (inputSize, outputSize, name)
   {
   }
+
+  template <>
+  inline void
+  GenericDifferentiableFunction<EigenMatrixSparse>::impl_jacobian
+  (jacobian_t& jacobian, const argument_t& argument)
+    const throw ()
+  {
+    throw std::runtime_error ("FIXME");
+  }
+
 
   template <typename T>
   void
