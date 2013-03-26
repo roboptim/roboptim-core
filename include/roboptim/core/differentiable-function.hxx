@@ -17,7 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
 # define ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
-# include <stdexcept>
 # include "roboptim/core/indent.hh"
 # include "roboptim/core/util.hh"
 
@@ -34,10 +33,14 @@ namespace roboptim
   template <>
   inline void
   GenericDifferentiableFunction<EigenMatrixSparse>::impl_jacobian
-  (jacobian_t&, const argument_t&)
+  (jacobian_t& jacobian, const argument_t& argument)
     const throw ()
   {
-    throw std::runtime_error ("FIXME: to be implemented");
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
+      jacobian.middleRows (i, 1) = gradient (argument, i);
   }
 
 

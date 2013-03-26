@@ -492,8 +492,8 @@ namespace roboptim
   template <>
   struct GenericFunctionTraits<EigenMatrixSparse>
   {
-    typedef Eigen::SparseMatrix<double> matrix_t;
-    typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
+    typedef Eigen::SparseMatrix<double, Eigen::RowMajor> matrix_t;
+    typedef Eigen::SparseVector<double> vector_t;
 
     typedef matrix_t::Index size_type;
     typedef matrix_t::Scalar value_type;
