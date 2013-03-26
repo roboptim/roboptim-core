@@ -82,7 +82,9 @@ namespace roboptim
 
   template <>
   void
-  CachedFunction<Function>::impl_gradient (gradient_t&, const argument_t&, size_type)
+  CachedFunction<Function>::impl_gradient (gradient_t&,
+                                           const argument_t&,
+                                           size_type)
     const throw ()
   {
     assert (0);
@@ -107,6 +109,31 @@ namespace roboptim
   }
 
 
+  template <>
+  void
+  CachedFunction<Function>::impl_jacobian
+  (jacobian_t&,
+   const argument_t&) const throw ()
+  {
+    assert (0);
+  }
+
+
+  template <typename T>
+  void
+  CachedFunction<T>::impl_jacobian
+  (jacobian_t& jacobian,
+   const argument_t& argument) const throw ()
+  {
+    jacobianCache_t::const_iterator it = jacobianCache_.find (argument);
+    if (it != jacobianCache_.end ())
+      {
+	jacobian = it->second;
+	return;
+      }
+    function_->jacobian (jacobian, argument);
+    jacobianCache_[argument] = jacobian;
+  }
 
 
   template <>
