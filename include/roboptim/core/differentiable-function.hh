@@ -77,9 +77,9 @@ namespace roboptim
 
 
     /// \brief Gradient type.
-    typedef vector_t gradient_t;
+    typedef typename GenericFunctionTraits<T>::gradient_t gradient_t;
     /// \brief Jacobian type.
-    typedef matrix_t jacobian_t;
+    typedef typename GenericFunctionTraits<T>::jacobian_t jacobian_t;
 
     /// \brief Jacobian size type (pair of values).
     typedef std::pair<size_type, size_type> jacobianSize_t;
