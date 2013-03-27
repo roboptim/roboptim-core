@@ -17,6 +17,9 @@
 
 #include "shared-tests/common.hh"
 
+#include <boost/mpl/list.hpp>
+#include <boost/test/test_case_template.hpp>
+
 #include <iostream>
 
 #include <roboptim/core/io.hh>
@@ -25,9 +28,16 @@
 
 using namespace roboptim;
 
-struct Null : public DifferentiableFunction
+template <typename T>
+struct Null : public GenericDifferentiableFunction<T>
 {
-  Null () : DifferentiableFunction (1, 1, "null function")
+  typedef GenericDifferentiableFunction<T> parent_t;
+  typedef typename parent_t::size_type size_type;
+  typedef typename parent_t::argument_t argument_t;
+  typedef typename parent_t::result_t result_t;
+  typedef typename parent_t::gradient_t gradient_t;
+
+  Null () : GenericDifferentiableFunction<T> (1, 1, "null function")
   {}
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
@@ -42,9 +52,16 @@ struct Null : public DifferentiableFunction
   }
 };
 
-struct NoTitle : public DifferentiableFunction
+template <typename T>
+struct NoTitle : public GenericDifferentiableFunction<T>
 {
-  NoTitle () : DifferentiableFunction (1, 1)
+  typedef GenericDifferentiableFunction<T> parent_t;
+  typedef typename parent_t::size_type size_type;
+  typedef typename parent_t::argument_t argument_t;
+  typedef typename parent_t::result_t result_t;
+  typedef typename parent_t::gradient_t gradient_t;
+
+  NoTitle () : GenericDifferentiableFunction<T> (1, 1)
   {}
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
@@ -59,16 +76,37 @@ struct NoTitle : public DifferentiableFunction
   }
 };
 
-BOOST_AUTO_TEST_CASE (derivable_function)
+template <typename T>
+struct getPattern
+{
+  const char* operator () ();
+};
+
+template <>
+const char* getPattern< ::roboptim::EigenMatrixSparse>::operator () ()
+{
+  return "derivable-function-sparse";
+}
+
+template <typename T>
+const char* getPattern<T>::operator () ()
+{
+  return "derivable-function";
+}
+
+typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
+			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE (derivable_function, T, functionTypes_t)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("derivable-function");
+    output = retrievePattern (getPattern<T> () ());
 
-  Null null;
-  NoTitle notitle;
+  Null<T> null;
+  NoTitle<T> notitle;
 
-  Null::vector_t x (1);
-  Null::gradient_t grad (null.gradientSize ());
+  typename Null<T>::vector_t x (1);
+  typename Null<T>::gradient_t grad (null.gradientSize ());
   x[0] = 42.;
 
   (*output) << null << std::endl
