@@ -15,7 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <boost/mpl/list.hpp>
+
 #include "shared-tests/common.hh"
+
+#include <boost/test/test_case_template.hpp>
 
 #include <iostream>
 
@@ -24,9 +28,13 @@
 
 using namespace roboptim;
 
-struct Null : public Function
+template <typename T>
+struct Null : public GenericFunction<T>
 {
-  Null () : Function (1, 1, "null function")
+  typedef typename GenericFunction<T>::argument_t argument_t;
+  typedef typename GenericFunction<T>::result_t result_t;
+
+  Null () : GenericFunction<T> (1, 1, "null function")
   {}
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
@@ -35,9 +43,13 @@ struct Null : public Function
   }
 };
 
-struct NoTitle : public Function
+template <typename T>
+struct NoTitle : public GenericFunction<T>
 {
-  NoTitle () : Function (1, 1)
+  typedef typename GenericFunction<T>::argument_t argument_t;
+  typedef typename GenericFunction<T>::result_t result_t;
+
+  NoTitle () : GenericFunction<T> (1, 1)
   {}
 
   void impl_compute (result_t& res, const argument_t&) const throw ()
@@ -46,18 +58,21 @@ struct NoTitle : public Function
   }
 };
 
-BOOST_AUTO_TEST_CASE (null_function)
+typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
+			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE (null_function, T, functionTypes_t)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("function");
 
-  Null null;
-  NoTitle notitle;
+  Null<T> null;
+  NoTitle<T> notitle;
 
-  Null::vector_t x (1);
+  typename Null<T>::vector_t x (1);
   x[0] = 42.;
 
-  Null::argument_t res (null.outputSize ());
+  typename Null<T>::argument_t res (null.outputSize ());
 
   (*output) << null << std::endl
 	    << notitle << std::endl;
