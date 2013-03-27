@@ -26,7 +26,7 @@ namespace roboptim
   GenericDifferentiableFunction<T>::GenericDifferentiableFunction
   (size_type inputSize, size_type outputSize, std::string name)
     throw ()
-    : Function (inputSize, outputSize, name)
+    : GenericFunction<T> (inputSize, outputSize, name)
   {
   }
 
