@@ -31,11 +31,7 @@ using namespace roboptim;
 template <typename T>
 struct Null : public GenericDifferentiableFunction<T>
 {
-  typedef GenericDifferentiableFunction<T> parent_t;
-  typedef typename parent_t::size_type size_type;
-  typedef typename parent_t::argument_t argument_t;
-  typedef typename parent_t::result_t result_t;
-  typedef typename parent_t::gradient_t gradient_t;
+  ROBOPTIM_FUNCTION_FWD_TYPEDEFS (GenericDifferentiableFunction<T>);
 
   Null () : GenericDifferentiableFunction<T> (1, 1, "null function")
   {}
@@ -55,11 +51,7 @@ struct Null : public GenericDifferentiableFunction<T>
 template <typename T>
 struct NoTitle : public GenericDifferentiableFunction<T>
 {
-  typedef GenericDifferentiableFunction<T> parent_t;
-  typedef typename parent_t::size_type size_type;
-  typedef typename parent_t::argument_t argument_t;
-  typedef typename parent_t::result_t result_t;
-  typedef typename parent_t::gradient_t gradient_t;
+  ROBOPTIM_FUNCTION_FWD_TYPEDEFS (GenericDifferentiableFunction<T>);
 
   NoTitle () : GenericDifferentiableFunction<T> (1, 1)
   {}
@@ -149,4 +141,84 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (derivable_function, T, functionTypes_t)
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
+}
+
+
+template <typename T>
+struct F : public GenericDifferentiableFunction<T>
+{
+  ROBOPTIM_FUNCTION_FWD_TYPEDEFS (GenericDifferentiableFunction<T>);
+
+  F () : GenericDifferentiableFunction<T> (4, 2, "null function")
+  {}
+
+  void impl_compute (result_t& res, const argument_t& x) const throw ()
+  {
+    res[0] = x[0] * x[1];
+    res[1] = x[2] * x[3];
+  }
+
+  void impl_gradient (gradient_t& grad, const argument_t& x,
+		      size_type functionId) const throw ();
+};
+
+template <>
+void
+F<roboptim::EigenMatrixSparse>::impl_gradient
+(gradient_t& grad, const argument_t& x, size_type functionId) const throw ()
+{
+  grad.resize (4);
+  if (functionId == 0)
+    {
+      grad.insert (0) = x[1];
+      grad.insert (1) = x[0];
+      grad.insert (2) = 0.;
+      grad.insert (3) = 0.;
+    }
+  else if (functionId == 1)
+    {
+      grad.insert (0) = 0.;
+      grad.insert (1) = 0.;
+      grad.insert (2) = x[3];
+      grad.insert (3) = x[2];
+    }
+  else
+    assert (0);
+}
+
+template <typename T>
+void
+F<T>::impl_gradient (gradient_t& grad, const argument_t& x,
+		     size_type functionId) const throw ()
+{
+  if (functionId == 0)
+    {
+      grad[0] = x[1];
+      grad[1] = x[0];
+      grad[2] = 0.;
+      grad[3] = 0.;
+    }
+  else if (functionId == 1)
+    {
+      grad[0] = 0.;
+      grad[1] = 0.;
+      grad[2] = x[3];
+      grad[3] = x[2];
+    }
+  else
+    assert (0);
+}
+
+
+BOOST_AUTO_TEST_CASE_TEMPLATE (jacobian_check, T, functionTypes_t)
+{
+  F<T> f;
+  typename F<T>::vector_t x (4);
+  x[0] = 10.;
+  x[1] = -1.;
+  x[2] = 7.;
+  x[3] = 2.;
+
+  BOOST_CHECK (f.jacobian (x).row (0).isApprox (f.gradient (x, 0)));
+  BOOST_CHECK (f.jacobian (x).row (1).isApprox ( f.gradient (x, 1)));
 }

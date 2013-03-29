@@ -39,8 +39,17 @@ namespace roboptim
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
-      jacobian.middleRows (i, 1) = gradient (argument, i);
+
+      typedef Eigen::Triplet<double> triplet_t;
+      std::vector<triplet_t> coefficients;
+      for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
+	{
+	  gradient_t grad = gradient (argument, i);
+	  for (gradient_t::InnerIterator it (grad); it; ++it)
+	    coefficients.push_back
+	      (triplet_t (i + it.col (), it.row (), it.value ()));
+	}
+      jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
   }
 
 
