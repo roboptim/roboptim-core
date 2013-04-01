@@ -25,7 +25,7 @@
 
 namespace roboptim
 {
-  inline long int& indent (std::ostream& o)
+  long int& indent (std::ostream& o)
   {
     // The slot to store the current indentation level.
     static const int indent_index = std::ios::xalloc ();
