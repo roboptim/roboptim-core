@@ -18,12 +18,15 @@
 #ifndef ROBOPTIM_CORE_FUNCTION_HH
 # define ROBOPTIM_CORE_FUNCTION_HH
 # include <cstring>
+# include <iomanip>
 # include <iostream>
 # include <limits>
+# include <sstream>
 # include <string>
 # include <utility>
 # include <vector>
 
+# include <boost/algorithm/string/replace.hpp>
 # include <boost/tuple/tuple.hpp>
 
 # define EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET
@@ -35,6 +38,7 @@
 # include <log4cxx/logger.h>
 
 # include <roboptim/core/fwd.hh>
+# include <roboptim/core/indent.hh>
 # include <roboptim/core/portability.hh>
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)		\
@@ -42,9 +46,7 @@
   typedef typename parent_t::size_type size_type;	\
   typedef typename parent_t::argument_t argument_t;	\
   typedef typename parent_t::result_t result_t;		\
-  typedef typename parent_t::gradient_t gradient_t;	\
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
 
 namespace roboptim
 {
@@ -397,7 +399,7 @@ namespace roboptim
 
     /// \brief Get function name.
     ///
-    /// \return Function's name.
+    /// \return Function name.
     const std::string& getName () const throw ()
     {
       return name_;
@@ -472,8 +474,16 @@ namespace roboptim
   {
     if (getName ().empty ())
       return o << "Function";
-    else
-      return o << getName  () << " (not differentiable)";
+
+    std::stringstream ss;
+    ss << std::endl;
+    char fill = o.fill (' ');
+    ss << std::setw ((int)indent (o))
+       << ""
+       << std::setfill (fill);
+    std::string name = getName ();
+    boost::algorithm::replace_all (name, "\n", ss.str ());
+    return o << name << " (not differentiable)";
   }
 
   template <typename T>
