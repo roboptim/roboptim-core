@@ -1,4 +1,4 @@
-# Copyright 2013, Thomas Moulard, LAAS-CNRS
+# Copyright 2013, Thomas Moulard, CNRS-AIST.
 #
 # This file is part of roboptim-core.
 # roboptim-core is free software: you can redistribute it and/or modify
@@ -13,42 +13,34 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with roboptim-core.  If not, see <http://www.gnu.org/licenses/>.
 
-# Generate local-libdir.hh.
-CONFIG_FILES(shared-tests/local-libdir.hh)
+# Include shared test suite.
+SET(PLUGIN_PATH "${CMAKE_BINARY_DIR}/src")
 
-# Make sure local headers are found
-INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/tests)
+#FIXME: no problem whose input size is 1 in the test suite for now.
 
-# Add Boost path to include directories.
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+#SET(SOLVER_NAME "nag")
+#SET(SCHITTKOWSKI_PROBLEMS 1 2 3)
+#SET(FUNCTION_TYPE ::roboptim::EigenMatrixDense)
+#SET(COST_FUNCTION_TYPE ::roboptim::GenericFunction)
+#SET(CONSTRAINT_TYPE_1 False)
+#SET(CONSTRAINT_TYPE_2 False)
+#SET(PROGRAM_SUFFIX "")
+#INCLUDE(shared-tests/CMakeLists.txt)
 
-# Make Boost.Test generates the main function in test cases.
-ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
+#SET(SOLVER_NAME "nag-differentiable")
+#SET(SCHITTKOWSKI_PROBLEMS 1 2 3 4)
+#SET(FUNCTION_TYPE ::roboptim::EigenMatrixDense)
+#SET(COST_FUNCTION_TYPE ::roboptim::GenericDifferentiableFunction)
+#SET(CONSTRAINT_TYPE_1 False)
+#SET(CONSTRAINT_TYPE_2 False)
+#SET(PROGRAM_SUFFIX "-differentiable")
+#INCLUDE(shared-tests/CMakeLists.txt)
 
-SET(COMMON_HEADERS
-  ${HEADERS}
-  shared-tests/common.hh
-  shared-tests/hs071.hh
-  )
-
-# ROBOPTIM_CORE_NAG_PLUGIN_TEST(NAME)
-# -----------------------------------
-#
-# Define a test named `NAME'.
-#
-# This macro will create a binary from `NAME.cc', link it against
-# Boost and add it to the test suite.
-#
-MACRO(ROBOPTIM_CORE_PLUGIN_NAG_TEST NAME)
-  ADD_EXECUTABLE(${NAME}
-    ${NAME}.cc
-    ${COMMON_HEADERS})
-  ADD_TEST(${NAME} ${RUNTIME_OUTPUT_DIRECTORY}/${NAME})
-
-  PKG_CONFIG_USE_DEPENDENCY(${NAME} roboptim-core)
-
-  # Link against Boost.
-  TARGET_LINK_LIBRARIES(${NAME} ${Boost_LIBRARIES})
-ENDMACRO()
-
-ROBOPTIM_CORE_PLUGIN_NAG_TEST(plugin)
+#SET(SOLVER_NAME "nag-simplex")
+#SET(SCHITTKOWSKI_PROBLEMS 1 2 3 4)
+#SET(FUNCTION_TYPE ::roboptim::EigenMatrixDense)
+#SET(COST_FUNCTION_TYPE ::roboptim::GenericDifferentiableFunction)
+#SET(CONSTRAINT_TYPE_1 False)
+#SET(CONSTRAINT_TYPE_2 False)
+#SET(PROGRAM_SUFFIX "-simplex")
+#INCLUDE(shared-tests/CMakeLists.txt)

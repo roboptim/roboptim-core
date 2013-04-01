@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+  <appender name="consoleAppender"
+	    class="org.apache.log4j.ConsoleAppender">
+    <param name="Target" value="System.out"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%-5p %c{1} - %m%n"/>
+    </layout>
+  </appender>
+
+  <appender name="journalAppender" class="org.apache.log4j.FileAppender">
+    <param name="file" value="/tmp/roboptim-debug-tests.log" />
+    <param name="append" value="false" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern"
+	     value="%d %-5p [%t:%x] %C{2} (%F:%L) - %m%n" />
+    </layout>
+  </appender>
+
+  <root>
+    <priority value="info" />
+    <appender-ref ref="journalAppender"/>
+  </root>
+
+  <category name="roboptim.solver">
+    <priority value="warn" />
+  </category>
+</log4j:configuration>

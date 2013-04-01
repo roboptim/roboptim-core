@@ -79,7 +79,7 @@ namespace roboptim
       f_.setZero ();
 
       // Shared parameters.
-      DEFINE_PARAMETER ("max-iterations", "number of iterations", 1500);
+      DEFINE_PARAMETER ("max-iterations", "number of iterations", 3000);
 
       // Custom parameters
       DEFINE_PARAMETER
