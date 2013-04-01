@@ -222,6 +222,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (jacobian_check, T, functionTypes_t)
   x[2] = 7.;
   x[3] = 2.;
 
-  BOOST_CHECK (f.jacobian (x).row (0).isApprox (f.gradient (x, 0)));
-  BOOST_CHECK (f.jacobian (x).row (1).isApprox ( f.gradient (x, 1)));
+  BOOST_REQUIRE_EQUAL (f.jacobian (x).row (0).size (),
+		       f.gradient (x, 0).size ());
+  BOOST_REQUIRE_EQUAL (f.jacobian (x).row (1).size (),
+		       f.gradient (x, 1).size ());
+
+  BOOST_CHECK (f.jacobian (x).row (0).isApprox (f.gradient (x, 0).adjoint ()));
+  BOOST_CHECK (f.jacobian (x).row (1).isApprox (f.gradient (x, 1).adjoint ()));
 }
