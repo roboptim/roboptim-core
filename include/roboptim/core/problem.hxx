@@ -26,6 +26,7 @@
 # include <boost/variant/apply_visitor.hpp>
 
 # include <roboptim/core/indent.hh>
+# include <roboptim/core/terminal-color.hh>
 # include <roboptim/core/util.hh>
 
 namespace roboptim
@@ -141,7 +142,7 @@ namespace roboptim
 	  << this->function () (*startingPoint_);
       }
     else
-      o << iendl << "No starting point.";
+      o << iendl << fg::warn << "No starting point." << fg::reset;
 
     // Infinity.
     o << iendl << "Infinity value (for all functions): "
@@ -419,8 +420,8 @@ namespace roboptim
 	  {
 	    U g = get<U> (problem_.constraints ()[i_]);
 	    Function::vector_t x = (*g) (*problem_.startingPoint ());
-	    o_ << "Initial value: "
-	       << x;
+	    bool satisfied = true;
+	    o_ << "Initial value: ";
 	    for (Function::size_type j = 0; j < x.size (); ++j)
 	      {
 		if (x[j] < Function::
@@ -431,10 +432,15 @@ namespace roboptim
 		    getUpperBound ((problem_.boundsVector ()
 				    [i_])
 				   [static_cast<std::size_t> (j)]))
-		  o_ << " (constraint not satisfied)";
+		  satisfied = false;
 		break;
 	      }
-	    o_ << iendl;
+
+	    if (satisfied)
+	      o_ << fg::ok << x;
+	    else
+	      o_ << fg::fail << x << " (constraint not satisfied)";
+	    o_ << fg::reset << iendl;
 	  }
 	o_ << decindent << decindent;
       }
@@ -462,7 +468,7 @@ namespace roboptim
 
     // Constraints.
     if (this->constraints ().empty ())
-      o << "No constraints.";
+      o << fg::ok << "No constraints." << fg::reset;
     else
       o << "Number of constraints: " << this->constraints ().size ();
 
@@ -480,7 +486,7 @@ namespace roboptim
 	  << this->function () (*startingPoint_);
       }
     else
-      o << iendl << "No starting point.";
+      o << iendl << fg::warn << "No starting point." << fg::reset;
 
     // Infinity.
     o << iendl << "Infinity value (for all functions): "

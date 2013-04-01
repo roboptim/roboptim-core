@@ -18,6 +18,7 @@
 #include "debug.hh"
 
 #include "roboptim/core/solver-error.hh"
+#include "roboptim/core/terminal-color.hh"
 
 namespace roboptim
 {
@@ -46,7 +47,7 @@ namespace roboptim
   std::ostream&
   SolverError::print (std::ostream& o) const throw ()
   {
-    return o << "Solver error:" << what ();
+    return o << fg::fail << "Solver error:" << what () << fg::reset;
   }
 
   const boost::optional<Result>& SolverError::lastState () const throw ()

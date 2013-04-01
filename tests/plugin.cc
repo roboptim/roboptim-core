@@ -71,6 +71,10 @@ BOOST_AUTO_TEST_CASE (plugin)
             << "---" << std::endl
             << solver << std::endl;
 
+  std::cout << pb << std::endl
+            << "---" << std::endl
+            << solver << std::endl;
+
   // Try to get the minimum from a GenericSolver*.
   GenericSolver* gs = &solver;
   (*output) << gs->getMinimum <SolverError> ().what ()
