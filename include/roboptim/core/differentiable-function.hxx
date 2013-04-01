@@ -17,6 +17,8 @@
 
 #ifndef ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
 # define ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
+# include <boost/algorithm/string/replace.hpp>
+
 # include "roboptim/core/indent.hh"
 # include "roboptim/core/util.hh"
 
@@ -72,8 +74,17 @@ namespace roboptim
   {
     if (this->getName ().empty ())
       return o << "Differentiable function";
-    else
-      return o << this->getName () << " (differentiable function)";
+
+    std::stringstream ss;
+    ss << std::endl;
+    char fill = o.fill (' ');
+    ss << std::setw ((int)indent (o))
+       << ""
+       << std::setfill (fill);
+    std::string name = this->getName ();
+    boost::algorithm::replace_all (name, "\n", ss.str ());
+
+    return o << name << " (differentiable function)";
   }
 
 } // end of namespace roboptim
