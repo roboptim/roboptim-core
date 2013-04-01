@@ -49,7 +49,10 @@ namespace roboptim
 	  gradient_t grad = gradient (argument, i);
 	  for (gradient_t::InnerIterator it (grad); it; ++it)
 	    coefficients.push_back
-	      (triplet_t (i, it.index (), it.value ()));
+	      (triplet_t
+	       (i,
+		static_cast<typename jacobian_t::Index> (it.index ()),
+		it.value ()));
 	}
       jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
   }
