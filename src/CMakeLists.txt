@@ -24,7 +24,6 @@ ADD_LIBRARY(roboptim-core SHARED
   ${HEADERS}
   constant-function.cc
   debug.hh
-  debug.cc
   doc.hh
   finite-difference-gradient.cc
   function.cc
