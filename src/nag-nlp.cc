@@ -195,7 +195,7 @@ namespace roboptim
       }
 
     // - bounds for linear constraints (A)
-    idx = pb.argumentBounds ().size () - 1;
+    idx = static_cast<Function::size_type> (pb.argumentBounds ().size () - 1);
     for (unsigned constraintId = 0;
 	 constraintId < pb.constraints ().size ();
 	 ++constraintId)
