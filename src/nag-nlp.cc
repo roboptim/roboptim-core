@@ -169,6 +169,74 @@ namespace roboptim
     clamda_.resize (n_ + nclin_ + ncnln_);
     grad_.resize (n_);
     h_.resize (n_, n_);
+
+    // Fill A matrix.
+    Function::size_type idx = 0;
+    for (iter_t it = pb.constraints ().begin ();
+	 it != pb.constraints ().begin (); ++it)
+      {
+	if (it->which () != 0)
+	  continue;
+	boost::shared_ptr<NumericLinearFunction> g =
+	  boost::get<boost::shared_ptr<NumericLinearFunction> > (*it);
+	assert (!!g);
+
+	a_.block (idx, 0, g->outputSize (), g->inputSize ()) = g->A ();
+	idx += g->outputSize ();
+      }
+
+    // Fill bu and bl.
+
+    // - x
+    for (unsigned i = 0; i < pb.argumentBounds ().size (); ++i)
+      {
+	bl_[i] = pb.argumentBounds ()[i].first;
+	bu_[i] = pb.argumentBounds ()[i].second;
+      }
+
+    // - bounds for linear constraints (A)
+    idx = pb.argumentBounds ().size () - 1;
+    for (unsigned constraintId = 0;
+	 constraintId < pb.constraints ().size ();
+	 ++constraintId)
+      {
+	if (pb.constraints ()[constraintId].which () != 0)
+	  continue;
+	boost::shared_ptr<NumericLinearFunction> g =
+	  boost::get<boost::shared_ptr<NumericLinearFunction> >
+	  (pb.constraints ()[constraintId]);
+	assert (!!g);
+
+	for (unsigned i = 0; i < g->outputSize (); ++i)
+	  {
+	    // warning: we shift bounds here.
+	    bl_[idx + i] =
+	      pb.boundsVector ()[constraintId][i].first + g->b ()[i];
+	    bu_[idx + i] =
+	      pb.boundsVector ()[constraintId][i].second + g->b ()[i];
+	  }
+	idx += g->outputSize ();
+      }
+
+    // - non-linear constraints
+    for (unsigned constraintId = 0;
+	 constraintId < pb.constraints ().size ();
+	 ++constraintId)
+      {
+	if (pb.constraints ()[constraintId].which () != 1)
+	  continue;
+	boost::shared_ptr<DifferentiableFunction> g =
+	  boost::get<boost::shared_ptr<DifferentiableFunction> >
+	  (pb.constraints ()[constraintId]);
+	assert (!!g);
+
+	for (unsigned i = 0; i < g->outputSize (); ++i)
+	  {
+	    bl_[idx + i] = pb.boundsVector ()[constraintId][i].first;
+	    bu_[idx + i] = pb.boundsVector ()[constraintId][i].second;
+	  }
+	idx += g->outputSize ();
+      }
   }
 
   NagSolverNlp::~NagSolverNlp () throw ()
