@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "shared-tests/common.hh"
+#include "shared-tests/fixture.hh"
 
 #include <boost/mpl/list.hpp>
 #include <boost/test/test_case_template.hpp>
@@ -90,6 +90,8 @@ const char* getPattern<T>::operator () ()
 
 typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
 			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+
+BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (derivable_function, T, functionTypes_t)
 {
@@ -230,3 +232,5 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (jacobian_check, T, functionTypes_t)
   BOOST_CHECK (f.jacobian (x).row (0).isApprox (f.gradient (x, 0).adjoint ()));
   BOOST_CHECK (f.jacobian (x).row (1).isApprox (f.gradient (x, 1).adjoint ()));
 }
+
+BOOST_AUTO_TEST_SUITE_END ()

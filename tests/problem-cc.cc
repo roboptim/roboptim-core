@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "shared-tests/common.hh"
+#include "shared-tests/fixture.hh"
 
 #include <boost/mpl/vector.hpp>
 
@@ -30,6 +30,8 @@ using namespace roboptim;
 #define CHECK_COPY(A, B)                                                \
   assert (&(A).function () == &(B).function ());                        \
   assert ((A).constraints ().size () == (B).constraints ().size ());
+
+BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (problem_copy_constructor)
 {
@@ -57,3 +59,5 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
     CHECK_COPY(pbSrc, pbDst);
   }
 }
+
+BOOST_AUTO_TEST_SUITE_END ()

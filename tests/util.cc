@@ -17,7 +17,7 @@
 
 #define BOOST_TEST_MODULE util
 
-#include "shared-tests/common.hh"
+#include "shared-tests/fixture.hh"
 
 #include <iostream>
 
@@ -25,6 +25,8 @@
 #include <roboptim/core/util.hh>
 
 using namespace roboptim;
+
+BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (util)
 {
@@ -42,3 +44,5 @@ BOOST_AUTO_TEST_CASE (util)
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }
+
+BOOST_AUTO_TEST_SUITE_END ()

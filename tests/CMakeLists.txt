@@ -18,9 +18,6 @@
 # through Valgrind for instance.
 SET(CHECK_PREFIX "" CACHE STRING "Shell prefix used when running tests")
 
-# Generate local-libdir.hh.
-CONFIG_FILES(shared-tests/local-libdir.hh)
-
 # Make sure local headers are found
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/tests)
 
@@ -31,14 +28,9 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 # Make Boost.Test generates the main function in test cases.
 ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
 
-
-SET(COMMON_HEADERS
-  ${HEADERS}
-  shared-tests/common.hh
-  shared-tests/hs071.hh
-  shared-tests/hs071-nonscalar-constraints.hh
-  )
-
+# To locate built plug-in.
+ADD_DEFINITIONS(-DPLUGIN_PATH="${CMAKE_BINARY_DIR}/src")
+ADD_DEFINITIONS(-DTESTS_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 # ROBOPTIM_CORE_TEST(NAME)
 # ------------------------
@@ -49,7 +41,7 @@ SET(COMMON_HEADERS
 # Boost and add it to the test suite.
 #
 MACRO(ROBOPTIM_CORE_TEST NAME)
-  ADD_EXECUTABLE(${NAME} ${NAME}.cc ${COMMON_HEADERS})
+  ADD_EXECUTABLE(${NAME} ${NAME}.cc)
   ADD_TEST(${NAME} ${CHECK_PREFIX} ${CMAKE_CURRENT_BINARY_DIR}/${NAME})
 
   TARGET_LINK_LIBRARIES(${NAME} roboptim-core)

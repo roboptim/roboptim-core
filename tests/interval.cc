@@ -17,7 +17,7 @@
 
 #undef NDEBUG
 
-#include "shared-tests/common.hh"
+#include "shared-tests/fixture.hh"
 
 #include <iostream>
 
@@ -37,6 +37,8 @@ struct MyFunctor
     (*output) << t << std::endl;
   }
 };
+
+BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (interval)
 {
@@ -95,3 +97,5 @@ BOOST_AUTO_TEST_CASE (interval)
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }
+
+BOOST_AUTO_TEST_SUITE_END ()

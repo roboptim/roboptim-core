@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "shared-tests/common.hh"
+#include "shared-tests/fixture.hh"
 
 #include <iostream>
 
@@ -58,6 +58,8 @@ struct NoTitle : public LinearFunction
   }
 };
 
+BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
+
 BOOST_AUTO_TEST_CASE (linear_function)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
@@ -81,3 +83,5 @@ BOOST_AUTO_TEST_CASE (linear_function)
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }
+
+BOOST_AUTO_TEST_SUITE_END ()

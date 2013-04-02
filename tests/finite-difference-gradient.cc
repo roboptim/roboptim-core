@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "shared-tests/common.hh"
+#include "shared-tests/fixture.hh"
 
 #include <iostream>
 
@@ -163,6 +163,8 @@ displayGradient
 	    << "#" << fdgrad << std::endl;
 }
 
+BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
+
 BOOST_AUTO_TEST_CASE (finite_difference_gradient)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
@@ -225,3 +227,5 @@ BOOST_AUTO_TEST_CASE (finite_difference_gradient)
 	<< unset ("multiplot")
 	);
 }
+
+BOOST_AUTO_TEST_SUITE_END ()

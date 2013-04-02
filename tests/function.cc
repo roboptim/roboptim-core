@@ -17,7 +17,7 @@
 
 #include <boost/mpl/list.hpp>
 
-#include "shared-tests/common.hh"
+#include "shared-tests/fixture.hh"
 
 #include <boost/test/test_case_template.hpp>
 
@@ -60,6 +60,8 @@ struct NoTitle : public GenericFunction<T>
 
 typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
 			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+
+BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (null_function, T, functionTypes_t)
 {
@@ -123,3 +125,5 @@ BOOST_AUTO_TEST_CASE(name_indentation_function)
 
   //FIXME
 }
+
+BOOST_AUTO_TEST_SUITE_END ()

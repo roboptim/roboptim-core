@@ -17,7 +17,7 @@
 
 #undef NDEBUG
 
-#include "shared-tests/common.hh"
+#include "shared-tests/fixture.hh"
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/n-times-derivable-function.hh>
@@ -46,6 +46,8 @@ struct F : public NTimesDerivableFunction<10>
   }
 };
 
+BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
+
 BOOST_AUTO_TEST_CASE (n_times_derivable_function)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
@@ -57,3 +59,5 @@ BOOST_AUTO_TEST_CASE (n_times_derivable_function)
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }
+
+BOOST_AUTO_TEST_SUITE_END ()
