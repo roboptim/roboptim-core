@@ -101,3 +101,25 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (null_function, T, functionTypes_t)
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }
+
+
+struct F : public Function
+{
+  ROBOPTIM_FUNCTION_FWD_TYPEDEFS (Function);
+    
+  F () : Function (1, 1, "first line\nsecond line\nthirdline")
+  {}
+    
+  void impl_compute (result_t& res, const argument_t&) const throw ()
+  {
+    res.setZero ();
+  }
+};
+
+BOOST_AUTO_TEST_CASE(name_indentation_function)
+{
+  F f;
+  std::cout << "Function: " << incindent << iendl << f << iendl;
+
+  //FIXME
+}

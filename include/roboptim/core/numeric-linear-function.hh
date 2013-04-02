@@ -49,6 +49,16 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
 
+    const matrix_t& A () const
+    {
+      return a_;
+    }
+
+    const vector_t& b () const
+    {
+      return b_;
+    }
+
   protected:
     void impl_compute (result_t& , const argument_t&) const throw ();
     void impl_gradient (gradient_t&, const argument_t&, size_type = 0)

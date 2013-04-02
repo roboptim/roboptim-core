@@ -47,12 +47,13 @@ namespace roboptim
       for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
 	{
 	  gradient_t grad = gradient (argument, i);
+	  const unsigned int i_ = static_cast<const unsigned int> (i);
 	  for (gradient_t::InnerIterator it (grad); it; ++it)
-	    coefficients.push_back
-	      (triplet_t
-	       (i,
-		static_cast<typename jacobian_t::Index> (it.index ()),
-		it.value ()));
+	    {
+	      const unsigned int idx = static_cast<const unsigned int> (it.index ());
+	      coefficients.push_back
+		(triplet_t (i_, idx, it.value ()));
+	    }
 	}
       jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
   }

@@ -31,7 +31,7 @@ using namespace roboptim;
 template <typename T>
 struct Null : public GenericDifferentiableFunction<T>
 {
-  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
   (GenericDifferentiableFunction<T>);
 
   Null () : GenericDifferentiableFunction<T> (1, 1, "null function")
@@ -52,7 +52,7 @@ struct Null : public GenericDifferentiableFunction<T>
 template <typename T>
 struct NoTitle : public GenericDifferentiableFunction<T>
 {
-  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
   (GenericDifferentiableFunction<T>);
 
   NoTitle () : GenericDifferentiableFunction<T> (1, 1)
@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (derivable_function, T, functionTypes_t)
 template <typename T>
 struct F : public GenericDifferentiableFunction<T>
 {
-  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
   (GenericDifferentiableFunction<T>);
 
   F () : GenericDifferentiableFunction<T> (4, 2, "null function")

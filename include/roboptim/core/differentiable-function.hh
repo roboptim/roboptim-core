@@ -29,10 +29,13 @@
 # include <roboptim/core/portability.hh>
 
 # define ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
-  typedef PARENT parent_t;					\
-  typedef typename parent_t::size_type size_type;		\
-  typedef typename parent_t::argument_t argument_t;		\
-  typedef typename parent_t::result_t result_t;			\
+  ROBOPTIM_FUNCTION_FWD_TYPEDEFS (PARENT);			\
+  typedef parent_t::gradient_t gradient_t;			\
+  typedef parent_t::jacobian_t jacobian_t;			\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+# define ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
+  ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (PARENT);			\
   typedef typename parent_t::gradient_t gradient_t;		\
   typedef typename parent_t::jacobian_t jacobian_t;		\
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
@@ -77,13 +80,7 @@ namespace roboptim
   class GenericDifferentiableFunction : public GenericFunction<T>
   {
   public:
-    typedef GenericFunction<T> parent_t;
-    typedef typename parent_t::size_type size_type;
-    typedef typename parent_t::vector_t vector_t;
-    typedef typename parent_t::matrix_t matrix_t;
-    typedef typename parent_t::argument_t argument_t;
-    typedef typename parent_t::result_t result_t;
-
+    ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<T>);
 
     /// \brief Gradient type.
     typedef typename GenericFunctionTraits<T>::gradient_t gradient_t;
