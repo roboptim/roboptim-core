@@ -75,7 +75,12 @@ namespace roboptim
 
   class GenericSolver;
   class NoSolution;
-  class NumericLinearFunction;
+
+  template <typename T>
+  class GenericNumericLinearFunction;
+  typedef GenericNumericLinearFunction<EigenMatrixDense>
+  NumericLinearFunction;
+
   class NumericQuadraticFunction;
   class Result;
   class ResultWithWarnings;

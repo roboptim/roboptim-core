@@ -32,16 +32,21 @@ namespace roboptim
   /// Implement a linear function using the general formula:
   /// \f[f(x) = A x + b\f]
   /// where \f$A\f$ and \f$b\f$ are set when the class is instantiated.
-  class ROBOPTIM_DLLAPI NumericLinearFunction : public LinearFunction
+  template <typename T>
+  class GenericNumericLinearFunction : public GenericLinearFunction<T>
   {
   public:
+    ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+    (GenericLinearFunction<T>);
+
     /// \brief Build a linear function from a matrix and a vector.
     ///
     /// See class documentation for A and b definition.
     /// \param A A matrix
     /// \param b b vector
-    NumericLinearFunction (const matrix_t& A, const vector_t& b) throw ();
-    ~NumericLinearFunction () throw ();
+    GenericNumericLinearFunction (const matrix_t& A, const vector_t& b)
+      throw ();
+    ~GenericNumericLinearFunction () throw ();
 
     /// \brief Display the function on the specified output stream.
     ///
@@ -79,4 +84,5 @@ namespace roboptim
 
 } // end of namespace roboptim
 
+# include <roboptim/core/numeric-linear-function.hxx>
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH

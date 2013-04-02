@@ -28,22 +28,12 @@
 # include <roboptim/core/differentiable-function.hh>
 
 # define ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
-  typedef PARENT parent_t;						\
-  typedef parent_t::size_type size_type;				\
-  typedef parent_t::argument_t argument_t;				\
-  typedef parent_t::result_t result_t;					\
-  typedef parent_t::gradient_t gradient_t;				\
-  typedef parent_t::jacobian_t jacobian_t;				\
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT);		\
   typedef parent_t::hessian_t hessian_t;				\
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 # define ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
-  typedef PARENT parent_t;						\
-  typedef typename parent_t::size_type size_type;			\
-  typedef typename parent_t::argument_t argument_t;			\
-  typedef typename parent_t::result_t result_t;				\
-  typedef typename parent_t::gradient_t gradient_t;			\
-  typedef typename parent_t::jacobian_t jacobian_t;			\
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT);		\
   typedef typename parent_t::hessian_t hessian_t;			\
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 

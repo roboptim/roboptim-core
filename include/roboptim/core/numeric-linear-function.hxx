@@ -15,33 +15,38 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "debug.hh"
+#ifndef ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
+# define ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
+# include "debug.hh"
 
-#include <roboptim/core/indent.hh>
-#include <roboptim/core/numeric-linear-function.hh>
-#include <roboptim/core/util.hh>
+# include <roboptim/core/indent.hh>
+# include <roboptim/core/numeric-linear-function.hh>
+# include <roboptim/core/util.hh>
 
 namespace roboptim
 {
-  NumericLinearFunction::NumericLinearFunction (const matrix_t& a,
-                                                const vector_t& b)
+  template <typename T>
+  GenericNumericLinearFunction<T>::GenericNumericLinearFunction
+  (const matrix_t& a, const vector_t& b)
     throw ()
-    : LinearFunction (a.cols (), a.rows (), "numeric linear function"),
+    : GenericLinearFunction<T>
+      (a.cols (), a.rows (), "numeric linear function"),
       a_ (a),
       b_ (b)
   {
-    assert (b.size () == outputSize ());
+    assert (b.size () == this->outputSize ());
   }
 
-  NumericLinearFunction::~NumericLinearFunction () throw ()
+  template <typename T>
+  GenericNumericLinearFunction<T>::~GenericNumericLinearFunction () throw ()
   {
   }
 
-
   // A * x + b
+  template <typename T>
   void
-  NumericLinearFunction::impl_compute (result_t& result,
-				       const argument_t& argument)
+  GenericNumericLinearFunction<T>::impl_compute (result_t& result,
+						 const argument_t& argument)
     const throw ()
   {
     result.noalias () = a_* argument;
@@ -49,25 +54,28 @@ namespace roboptim
   }
 
   // A
+  template <typename T>
   void
-  NumericLinearFunction::impl_jacobian (jacobian_t& jacobian,
-					const argument_t&) const throw ()
+  GenericNumericLinearFunction<T>::impl_jacobian
+  (jacobian_t& jacobian, const argument_t&) const throw ()
   {
     jacobian = this->a_;
   }
 
   // A(i)
+  template <typename T>
   void
-  NumericLinearFunction::impl_gradient (gradient_t& gradient,
+  GenericNumericLinearFunction<T>::impl_gradient (gradient_t& gradient,
 					const argument_t&,
 					size_type idFunction) const throw ()
   {
-    for (size_type j = 0; j < inputSize (); ++j)
+    for (size_type j = 0; j < this->inputSize (); ++j)
       gradient[j] = a_ (idFunction, j);
   }
 
+  template <typename T>
   std::ostream&
-  NumericLinearFunction::print (std::ostream& o) const throw ()
+  GenericNumericLinearFunction<T>::print (std::ostream& o) const throw ()
   {
     return o << "Numeric linear function" << incindent << iendl
              << "A = " << this->a_ << iendl
@@ -76,3 +84,5 @@ namespace roboptim
   }
 
 } // end of namespace roboptim
+
+#endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX

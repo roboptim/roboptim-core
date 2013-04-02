@@ -63,6 +63,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-warning.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-linear-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-linear-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/n-times-derivable-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/terminal-color.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-function.hh
