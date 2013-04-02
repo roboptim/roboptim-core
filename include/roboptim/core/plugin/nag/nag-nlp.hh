@@ -20,8 +20,9 @@
 # include <vector>
 
 # include <roboptim/core/solver.hh>
-# include <roboptim/core/linear-function.hh>
+# include <roboptim/core/numeric-linear-function.hh>
 # include <roboptim/core/differentiable-function.hh>
+# include <roboptim/core/twice-differentiable-function.hh>
 
 namespace roboptim
 {
@@ -41,14 +42,14 @@ namespace roboptim
   /// \see http://www.nag.com/numeric/CL/nagdoc_cl23/html/E04/e04wdc.html
   class ROBOPTIM_DLLEXPORT NagSolverNlp
     : public Solver<DifferentiableFunction,
-		    boost::mpl::vector<LinearFunction,
+		    boost::mpl::vector<NumericLinearFunction,
 				       DifferentiableFunction> >
   {
   public:
     typedef Solver<
       DifferentiableFunction,
       boost::mpl::vector<
-	LinearFunction, DifferentiableFunction> >
+	NumericLinearFunction, DifferentiableFunction> >
       parent_t;
 
     explicit NagSolverNlp (const problem_t& pb) throw ();
@@ -58,12 +59,25 @@ namespace roboptim
     void solve () throw ();
 
   private:
-    /// \brief Current minimum estimation.
+    Integer n_;
+    Integer nclin_;
+    Integer ncnln_;
+    Integer tda_;
+    Integer tdcj_;
+    Integer tdh_;
+    Function::vector_t objf_;
+
+    Function::matrix_t a_;
+    Function::vector_t bl_;
+    Function::vector_t bu_;
+
+    Function::vector_t ccon_;
+    Function::matrix_t cjac_;
+    Function::vector_t clamda_;
+
+    Function::vector_t grad_;
+    TwiceDifferentiableFunction::hessian_t h_;
     Function::vector_t x_;
-    /// \brief Current cost.
-    Function::vector_t f_;
-    /// \brief Current gradient.
-    Function::vector_t g_;
   };
 
   /// @}

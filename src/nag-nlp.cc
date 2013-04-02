@@ -41,7 +41,7 @@ namespace roboptim
 			::Integer ncnln,
 			::Integer n,
 			::Integer tdcj,
-			const ::Integer needc[],
+			const ::Integer[] /* needc */,
 			const double x[],
 			double ccon[],
 			double cjac[],
@@ -55,15 +55,37 @@ namespace roboptim
 
       // Maps C-arrays to Eigen structures.
       Eigen::Map<const DifferentiableFunction::argument_t> x_ (x, n);
+      Eigen::Map<DifferentiableFunction::result_t> ccon_ (ccon, ncnln);
+      Eigen::Map<DifferentiableFunction::gradient_t> jac_
+	(cjac, ncnln, tdcj);
 
-      if (*mode == 0)
+      // Iterate on constraints.
+      Function::size_type idx = 0;
+      typedef NagSolverNlp::problem_t::constraints_t::const_iterator iter_t;
+      for (iter_t it = solver->problem ().constraints ().begin ();
+	   it != solver->problem ().constraints ().begin (); ++it)
 	{
-	}
-      if (*mode == 1)
-	{
-	}
-      if (*mode == 2)
-	{
+	  boost::shared_ptr<DifferentiableFunction> g;
+	  if (it->which () == 0)
+	    g = boost::get<boost::shared_ptr<NumericLinearFunction> > (*it);
+	  else
+	    g = boost::get<boost::shared_ptr<DifferentiableFunction> > (*it);
+	  assert (!!g);
+
+	  // evaluate constraint.
+	  if (*mode == 0 || *mode == 2)
+	    {
+	      ccon_.segment (idx, g->outputSize ()) = (*g) (x_);
+	    }
+
+	  // evaluate jacobian.
+	  if (*mode == 1 || *mode == 2)
+	    {
+	      jac_.block (idx, 0, g->outputSize (), g->inputSize ()) =
+		g->jacobian (x_);
+	    }
+
+	  idx += g->outputSize ();
 	}
     }
 
@@ -86,23 +108,67 @@ namespace roboptim
       Eigen::Map<DifferentiableFunction::result_t> objf_ (objf, 1);
       Eigen::Map<DifferentiableFunction::gradient_t> grad_ (grad, n);
 
-
       assert (!!mode);
       assert ((*mode >= 0 || *mode <= 2) && "should never happen");
       if (*mode == 0 || *mode == 3) // evaluate objective
 	objf_ = solver->problem ().function () (x_);
 
       if (*mode == 1 || *mode == 3) // evaluate objective gradient
-	grad_ = solver->problem ().function ().gradient () (x_, 0);
+	grad_ = solver->problem ().function ().gradient (x_, 0);
     }
   } // end of namespace detail
 
   NagSolverNlp::NagSolverNlp (const problem_t& pb) throw ()
     : parent_t (pb),
-      x_ (),
-      f_ (problem ().function ().outputSize ()),
-      g_ (problem ().function ().inputSize ())
+      n_ (static_cast<int> (problem ().function ().inputSize ())),
+      nclin_ (0),
+      ncnln_ (0),
+      tda_ (problem ().function ().inputSize ()),
+      tdcj_ (problem ().function ().inputSize ()),
+      tdh_ (problem ().function ().inputSize ()),
+      objf_ (1),
+      a_ (),
+      bl_ (),
+      bu_ (),
+      ccon_ (),
+      cjac_ (),
+      clamda_ (),
+      grad_ (),
+      h_ (),
+      x_ (pb.function ().inputSize ())
   {
+    objf_[0] = 0.;
+
+    // Count constraints and compute their size.
+    typedef problem_t::constraints_t::const_iterator iter_t;
+    for (iter_t it = pb.constraints ().begin ();
+	 it != pb.constraints ().begin (); ++it)
+      {
+	if (it->which () == 0)
+	  {
+	    boost::shared_ptr<NumericLinearFunction> g =
+	      boost::get<boost::shared_ptr<NumericLinearFunction> > (*it);
+	    assert (!!g);
+	    nclin_ += g->outputSize ();
+	  }
+	else
+	  {
+	    boost::shared_ptr<DifferentiableFunction> g =
+	      boost::get<boost::shared_ptr<DifferentiableFunction> > (*it);
+
+	    ncnln_ += g->outputSize ();
+	  }
+      }
+
+    // Resize matrices.
+    a_.resize (std::max (Integer (1), nclin_), pb.function ().inputSize ());
+    bl_.resize (n_ + nclin_ + ncnln_);
+    bu_.resize (n_ + nclin_ + ncnln_);
+    ccon_.resize (std::max (Integer (1), ncnln_));
+    cjac_.resize (std::max (Integer (1), tdcj_), std::max (Integer (1), ncnln_));
+    clamda_.resize (n_ + nclin_ + ncnln_);
+    grad_.resize (n_);
+    h_.resize (n_, n_);
   }
 
   NagSolverNlp::~NagSolverNlp () throw ()
@@ -113,39 +179,56 @@ namespace roboptim
   {
     // Initialization
     Nag_E04State state;
+    memset (&state, 0, sizeof (Nag_E04State));
     NagError fail;
+    memset (&fail, 0, sizeof (NagError));
+    INIT_FAIL (fail);
+
+    // Initialize problem.
     nag_opt_nlp_init (&state, &fail);
+    if (fail.code != NE_NOERROR)
+      {
+	this->result_ = SolverError (fail.message);
+	return;
+      }
 
     // Nag communication object.
     Nag_Comm comm;
     memset (&comm, 0, sizeof (Nag_Comm));
     comm.p = this;
 
-    ::Integer n = problem ().function ().inputSize ();
-    ::Integer nclin;
-    ::Integer ncnln;
-    ::Integer tda;
-    ::Integer tdcj;
-    ::Integer tdh;
-    double a[1];
-    double bl[1];
-    double bu[1];
-    ::Integer majits;
-    ::Integer istate[1];
-    double ccon[1];
-    double cjac[1];
-    double clamda[1];
-    double objf;
-    double grad[1];
-    double h[1];
-    double x[1];
+    ::Integer majits = 0.;
+    ::Integer* istate = new Integer[n_ + nclin_ + ncnln_];
 
+    std::size_t istateSize =
+      static_cast<std::size_t> ((n_ + nclin_ + ncnln_)) * sizeof (double);
+    memset (istate, 0, istateSize);
+
+    // Solve.
     nag_opt_nlp_solve
-      (n, nclin, ncnln, tda, tdcj, tdh, a, bl, bu,
+      (n_, nclin_, ncnln_, tda_, tdcj_, tdh_, &a_ (0, 0), &bl_[0], &bu_[0],
        detail::confun,
        detail::objfun,
-       &majits, istate, ccon, cjac, clamda, &objf, grad, h, x, 
+       &majits, &istate[0], &ccon_[0], &cjac_ (0, 0), &clamda_[0], &objf_[0],
+       &grad_[0], &h_(0, 0), &x_[0],
        &state, &comm, &fail);
+
+    delete[] istate;
+    istate = 0;
+
+    if (fail.code == NE_NOERROR)
+      {
+	Result res (problem ().function ().inputSize (),
+		    problem ().function ().outputSize ());
+	res.x = x_;
+	res.value = objf_;
+	res.constraints = ccon_;
+	res.lambda = clamda_;
+	result_ = res;
+	return;
+      }
+
+    this->result_ = SolverError (fail.message);
   }
 } // end of namespace roboptim.
 
@@ -154,7 +237,7 @@ extern "C"
   typedef roboptim::NagSolverNlp NagSolverNlp;
   typedef roboptim::Solver<
     roboptim::DifferentiableFunction,
-    boost::mpl::vector<roboptim::LinearFunction,
+    boost::mpl::vector<roboptim::NumericLinearFunction,
 		       roboptim::DifferentiableFunction> >
   solver_t;
 

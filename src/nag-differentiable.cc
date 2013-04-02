@@ -65,8 +65,8 @@ namespace roboptim
     : parent_t (pb),
       e1_ (0.),
       e2_ (0.),
-      a_ (problem ().function ().inputSize ()),
-      b_ (problem ().function ().inputSize ()),
+      a_ (static_cast<std::size_t> (problem ().function ().inputSize ())),
+      b_ (static_cast<std::size_t> (problem ().function ().inputSize ())),
       x_ (1),
       f_ (problem ().function ().outputSize ()),
       g_ (problem ().function ().inputSize ())
