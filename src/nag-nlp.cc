@@ -56,7 +56,8 @@ namespace roboptim
       // Maps C-arrays to Eigen structures.
       Eigen::Map<const DifferentiableFunction::argument_t> x_ (x, n);
       Eigen::Map<DifferentiableFunction::result_t> ccon_ (ccon, ncnln);
-      Eigen::Map<DifferentiableFunction::jacobian_t> jac_
+      Eigen::Map<Eigen::Matrix<
+	double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> > jac_
 	(cjac, ncnln, tdcj);
 
       // Iterate on constraints.
@@ -87,8 +88,6 @@ namespace roboptim
 
 	  idx += g->outputSize ();
 	}
-
-      std::cout << jac_ << std::endl;
     }
 
     // Objective callback
@@ -183,7 +182,7 @@ namespace roboptim
     h_.resize (n_, n_);
 
     // Fill A matrix.
-    
+
     Function::size_type idx = 0;
     for (iter_t it = problem ().constraints ().begin ();
 	 it != problem ().constraints ().begin (); ++it)
