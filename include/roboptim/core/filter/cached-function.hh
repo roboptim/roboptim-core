@@ -118,7 +118,7 @@ namespace roboptim
     				  double argument,
     				  size_type order = 1) const throw ();
 
-  private:
+  protected:
     boost::shared_ptr<const T> function_;
     mutable std::vector<functionCache_t> cache_;
     mutable std::vector<functionCache_t> gradientCache_;
