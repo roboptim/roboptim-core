@@ -56,14 +56,14 @@ namespace roboptim
       // Maps C-arrays to Eigen structures.
       Eigen::Map<const DifferentiableFunction::argument_t> x_ (x, n);
       Eigen::Map<DifferentiableFunction::result_t> ccon_ (ccon, ncnln);
-      Eigen::Map<DifferentiableFunction::gradient_t> jac_
+      Eigen::Map<DifferentiableFunction::jacobian_t> jac_
 	(cjac, ncnln, tdcj);
 
       // Iterate on constraints.
       Function::size_type idx = 0;
       typedef NagSolverNlp::problem_t::constraints_t::const_iterator iter_t;
       for (iter_t it = solver->problem ().constraints ().begin ();
-	   it != solver->problem ().constraints ().begin (); ++it)
+	   it != solver->problem ().constraints ().end (); ++it)
 	{
 	  boost::shared_ptr<DifferentiableFunction> g;
 	  if (it->which () == 0)
@@ -87,6 +87,8 @@ namespace roboptim
 
 	  idx += g->outputSize ();
 	}
+
+      std::cout << jac_ << std::endl;
     }
 
     // Objective callback
@@ -109,11 +111,11 @@ namespace roboptim
       Eigen::Map<DifferentiableFunction::gradient_t> grad_ (grad, n);
 
       assert (!!mode);
-      assert ((*mode >= 0 || *mode <= 2) && "should never happen");
-      if (*mode == 0 || *mode == 3) // evaluate objective
+      assert (*mode >= 0 && *mode <= 2 && "should never happen");
+      if (*mode == 0 || *mode == 2) // evaluate objective
 	objf_ = solver->problem ().function () (x_);
 
-      if (*mode == 1 || *mode == 3) // evaluate objective gradient
+      if (*mode == 1 || *mode == 2) // evaluate objective gradient
 	grad_ = solver->problem ().function ().gradient (x_, 0);
     }
   } // end of namespace detail
@@ -138,11 +140,18 @@ namespace roboptim
       x_ (pb.function ().inputSize ())
   {
     objf_[0] = 0.;
+  }
 
+  NagSolverNlp::~NagSolverNlp () throw ()
+  {}
+
+  void
+  NagSolverNlp::solve () throw ()
+  {
     // Count constraints and compute their size.
     typedef problem_t::constraints_t::const_iterator iter_t;
-    for (iter_t it = pb.constraints ().begin ();
-	 it != pb.constraints ().begin (); ++it)
+    for (iter_t it = problem ().constraints ().begin ();
+	 it != problem ().constraints ().end (); ++it)
       {
 	if (it->which () == 0)
 	  {
@@ -151,29 +160,33 @@ namespace roboptim
 	    assert (!!g);
 	    nclin_ += g->outputSize ();
 	  }
-	else
+	else if (it->which () == 1)
 	  {
 	    boost::shared_ptr<DifferentiableFunction> g =
 	      boost::get<boost::shared_ptr<DifferentiableFunction> > (*it);
-
+	    assert (!!g);
 	    ncnln_ += g->outputSize ();
 	  }
+	else
+	  assert (false && "should never happen");
       }
 
     // Resize matrices.
-    a_.resize (std::max (Integer (1), nclin_), pb.function ().inputSize ());
+    a_.resize
+      (std::max (Integer (1), nclin_), problem ().function ().inputSize ());
     bl_.resize (n_ + nclin_ + ncnln_);
     bu_.resize (n_ + nclin_ + ncnln_);
     ccon_.resize (std::max (Integer (1), ncnln_));
-    cjac_.resize (std::max (Integer (1), tdcj_), std::max (Integer (1), ncnln_));
+    cjac_.resize (std::max (Integer (1), ncnln_), std::max (Integer (1), tdcj_));
     clamda_.resize (n_ + nclin_ + ncnln_);
     grad_.resize (n_);
     h_.resize (n_, n_);
 
     // Fill A matrix.
+    
     Function::size_type idx = 0;
-    for (iter_t it = pb.constraints ().begin ();
-	 it != pb.constraints ().begin (); ++it)
+    for (iter_t it = problem ().constraints ().begin ();
+	 it != problem ().constraints ().begin (); ++it)
       {
 	if (it->which () != 0)
 	  continue;
@@ -188,63 +201,60 @@ namespace roboptim
     // Fill bu and bl.
 
     // - x
-    for (unsigned i = 0; i < pb.argumentBounds ().size (); ++i)
+    for (unsigned i = 0; i < problem ().argumentBounds ().size (); ++i)
       {
-	bl_[i] = pb.argumentBounds ()[i].first;
-	bu_[i] = pb.argumentBounds ()[i].second;
+	bl_[i] = problem ().argumentBounds ()[i].first;
+	bu_[i] = problem ().argumentBounds ()[i].second;
       }
 
     // - bounds for linear constraints (A)
-    idx = static_cast<Function::size_type> (pb.argumentBounds ().size () - 1);
+    idx = static_cast<Function::size_type> (problem ().argumentBounds ().size ());
     for (unsigned constraintId = 0;
-	 constraintId < pb.constraints ().size ();
+	 constraintId < problem ().constraints ().size ();
 	 ++constraintId)
       {
-	if (pb.constraints ()[constraintId].which () != 0)
+	if (problem ().constraints ()[constraintId].which () != 0)
 	  continue;
 	boost::shared_ptr<NumericLinearFunction> g =
 	  boost::get<boost::shared_ptr<NumericLinearFunction> >
-	  (pb.constraints ()[constraintId]);
+	  (problem ().constraints ()[constraintId]);
 	assert (!!g);
 
 	for (unsigned i = 0; i < g->outputSize (); ++i)
 	  {
 	    // warning: we shift bounds here.
 	    bl_[idx + i] =
-	      pb.boundsVector ()[constraintId][i].first + g->b ()[i];
+	      problem ().boundsVector ()[constraintId][i].first + g->b ()[i];
 	    bu_[idx + i] =
-	      pb.boundsVector ()[constraintId][i].second + g->b ()[i];
+	      problem ().boundsVector ()[constraintId][i].second + g->b ()[i];
 	  }
 	idx += g->outputSize ();
       }
 
     // - non-linear constraints
     for (unsigned constraintId = 0;
-	 constraintId < pb.constraints ().size ();
+	 constraintId < problem ().constraints ().size ();
 	 ++constraintId)
       {
-	if (pb.constraints ()[constraintId].which () != 1)
+	if (problem ().constraints ()[constraintId].which () != 1)
 	  continue;
 	boost::shared_ptr<DifferentiableFunction> g =
 	  boost::get<boost::shared_ptr<DifferentiableFunction> >
-	  (pb.constraints ()[constraintId]);
+	  (problem ().constraints ()[constraintId]);
 	assert (!!g);
 
 	for (unsigned i = 0; i < g->outputSize (); ++i)
 	  {
-	    bl_[idx + i] = pb.boundsVector ()[constraintId][i].first;
-	    bu_[idx + i] = pb.boundsVector ()[constraintId][i].second;
+	    bl_[idx + i] = problem ().boundsVector ()[constraintId][i].first;
+	    bu_[idx + i] = problem ().boundsVector ()[constraintId][i].second;
 	  }
 	idx += g->outputSize ();
       }
-  }
 
-  NagSolverNlp::~NagSolverNlp () throw ()
-  {}
+    // Fill starting point.
+    if (problem ().startingPoint ())
+      x_ = *problem ().startingPoint ();
 
-  void
-  NagSolverNlp::solve () throw ()
-  {
     // Initialization
     Nag_E04State state;
     memset (&state, 0, sizeof (Nag_E04State));
@@ -259,6 +269,9 @@ namespace roboptim
 	this->result_ = SolverError (fail.message);
 	return;
       }
+
+    // Fill parameters.
+    nag_opt_nlp_option_set_integer ("Print File", 1, &state, &fail);
 
     // Nag communication object.
     Nag_Comm comm;
@@ -290,8 +303,11 @@ namespace roboptim
 		    problem ().function ().outputSize ());
 	res.x = x_;
 	res.value = objf_;
-	res.constraints = ccon_;
-	res.lambda = clamda_;
+	if (!problem ().constraints ().empty ())
+	  {
+	    res.constraints = ccon_;
+	    res.lambda = clamda_;
+	  }
 	result_ = res;
 	return;
       }
