@@ -175,9 +175,9 @@ namespace roboptim
       flow_ (),
       fupp_ (),
 
-      x_ (),
-      xmul_ (),
-      fmul_ (),
+      x_ (pb.function ().inputSize ()),
+      xmul_ (pb.function ().inputSize ()),
+      fmul_ (pb.function ().inputSize ()),
       ns_ (0.),
       ninf_ (0.),
       sinf_ (0.)
@@ -201,15 +201,15 @@ namespace roboptim
       {
 	if (it->which () == 0)
 	  {
-	    boost::shared_ptr<NumericLinearFunction> g =
-	      boost::get<boost::shared_ptr<NumericLinearFunction> > (*it);
+	    boost::shared_ptr<linearFunction_t> g =
+	      boost::get<boost::shared_ptr<linearFunction_t> > (*it);
 	    assert (!!g);
 	    nf_ += g->outputSize ();
 	  }
 	else if (it->which () == 1)
 	  {
-	    boost::shared_ptr<DifferentiableFunction> g =
-	      boost::get<boost::shared_ptr<DifferentiableFunction> > (*it);
+	    boost::shared_ptr<nonlinearFunction_t> g =
+	      boost::get<boost::shared_ptr<nonlinearFunction_t> > (*it);
 	    assert (!!g);
 	    nf_ += g->outputSize ();
 	  }
@@ -221,6 +221,8 @@ namespace roboptim
   void
   NagSolverNlpSparse::fill_xlow_xupp ()
   {
+    xlow_.resize (problem ().argumentBounds ().size ());
+    xupp_.resize (problem ().argumentBounds ().size ());
     for (unsigned i = 0; i < problem ().argumentBounds ().size (); ++i)
       {
 	xlow_[i] = problem ().argumentBounds ()[i].first;
@@ -231,8 +233,12 @@ namespace roboptim
   void
   NagSolverNlpSparse::fill_flow_fupp ()
   {
+    flow_.resize (problem ().constraints ().size () + 1);
+    fupp_.resize (problem ().constraints ().size () + 1);
+
+
     // - bounds for cost function: always none.
-    flow_[0] = function_t::infinity ();
+    flow_[0] = -function_t::infinity ();
     fupp_[0] = function_t::infinity ();
 
     // - bounds for linear constraints (A)
@@ -240,7 +246,7 @@ namespace roboptim
 	 constraintId < problem ().constraints ().size ();
 	 ++constraintId)
       {
-	if (problem ().constraints ()[constraintId].which () == 1)
+	if (problem ().constraints ()[constraintId].which () == 0)
 	  {
 	    boost::shared_ptr<linearFunction_t> g =
 	      boost::get<boost::shared_ptr<linearFunction_t> >
@@ -250,15 +256,15 @@ namespace roboptim
 	    for (function_t::size_type i = 0; i < g->outputSize (); ++i)
 	      {
 		// warning: we shift bounds here.
-		flow_[i + 1] =
+		flow_[constraintId + i + 1] =
 		  problem ().boundsVector ()
 		  [constraintId][i].first + g->b ()[i];
-		fupp_[i + 1] =
+		fupp_[constraintId + i + 1] =
 		  problem ().boundsVector ()
 		  [constraintId][i].second + g->b ()[i];
 	      }
 	  }
-	else if (problem ().constraints ()[constraintId].which () == 0)
+	else if (problem ().constraints ()[constraintId].which () == 1)
 	  {
 	    boost::shared_ptr<nonlinearFunction_t> g =
 	      boost::get<boost::shared_ptr<nonlinearFunction_t> >
@@ -267,9 +273,9 @@ namespace roboptim
 
 	    for (function_t::size_type i = 0; i < g->outputSize (); ++i)
 	      {
-		xlow_[i + 1] =
+		flow_[constraintId + i + 1] =
 		  problem ().boundsVector ()[constraintId][i].first;
-		xupp_[i + 1] =
+		fupp_[constraintId + i + 1] =
 		      problem ().boundsVector ()[constraintId][i].second;
 	      }
 
@@ -282,6 +288,10 @@ namespace roboptim
   void
   NagSolverNlpSparse::fill_iafun_javar_lena_nea ()
   {
+    iafun_.clear ();
+    javar_.clear ();
+    a_.clear ();
+
     function_t::size_type offset = 0;
     nea_ = 0;
     for (unsigned constraintId = 0;
@@ -329,8 +339,8 @@ namespace roboptim
 	else
 	  x = *(problem ().startingPoint ());
 
-	function_t::result_t jac = (*g) (x);
-	nea_ += jac.nonZeros ();
+	function_t::result_t res = (*g) (x);
+	nea_ += res.nonZeros ();
 
 	for (int k=0; k < g->A ().outerSize (); ++k)
 	  for (function_t::matrix_t::InnerIterator it (g->A (), k); it;
@@ -343,11 +353,22 @@ namespace roboptim
       }
 
     lena_ = iafun_.size ();
+
+    if (lena_ == 0)
+      {
+	iafun_.resize (1);
+	javar_.resize (1);
+	a_.resize (1);
+	lena_ = 1;
+      }
   }
 
   void
   NagSolverNlpSparse::fill_igfun_jgvar_leng_neg ()
   {
+    igfun_.clear ();
+    jgvar_.clear ();
+
     function_t::size_type offset = 0;
     neg_ = 0;
     for (unsigned constraintId = 0;
@@ -407,7 +428,14 @@ namespace roboptim
 	    }
       }
 
-    lena_ = iafun_.size ();
+    leng_ = igfun_.size ();
+
+    if (leng_ == 0)
+      {
+	igfun_.resize (1);
+	jgvar_.resize (1);
+	leng_ = 1;
+      }
   }
 
   void
@@ -447,7 +475,9 @@ namespace roboptim
     compute_nf ();
 
     // we will provide function names for everyone
-    nfname_ = nf_;
+    //FIXME: disabled for now.
+    //nfname_ = nf_;
+    nfname_ = 1.;
 
     // fill sparse A and G date and/or structure
     fill_iafun_javar_lena_nea ();
@@ -460,18 +490,19 @@ namespace roboptim
     // Fill fnames.
     fill_fnames ();
 
+    // Fill xstate.
+    x_.resize (n_);
+    xstate_.resize (n_);
+    xmul_.resize (n_);
+
     // Fill starting point.
     if (problem ().startingPoint ())
       x_ = *problem ().startingPoint ();
 
-    // Fill xstate.
-    xstate_.resize (n_, 0.);
-
-    // Fill f.
-    fstate_.resize (nf_, 0.);
-
-    // Fill fstate.
-    fstate_.resize (nf_, 0.);
+    // Fill f, fstate, fmul.
+    f_.resize (nf_);
+    fstate_.resize (nf_);
+    fmul_.resize (nf_);
 
     // Error code initialization.
     NagError fail;
@@ -482,6 +513,11 @@ namespace roboptim
     memset (&state, 0, sizeof (Nag_E04State));
 
     nag_opt_sparse_nlp_init (&state, &fail);
+
+    // Set parameters.
+    nag_opt_sparse_nlp_option_set_integer
+      ("Print file", 1, &state, &fail);
+  
 
     // Nag communication object.
     Nag_Comm comm;
