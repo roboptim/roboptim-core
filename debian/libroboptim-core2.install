@@ -1,2 +1,2 @@
-usr/lib/*/libroboptim-core
+usr/lib/*/libroboptim-core.so.2*
 usr/lib/*/roboptim-core/*.so.2*
