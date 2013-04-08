@@ -1,4 +1,11 @@
                                                                 -*- outline -*-
+
+New in 2.0, 2013-04-09
+* [MAJOR ABI BREAKING CHANGE] Switch from uBlas to Eigen for matrix computation.
+* Add support for Eigen sparse matrices.
+* Huge speed-up by avoiding allocationg in time-critical functions/methods.
+* Various bugfix.
+
 New in 1.0, 2012-01-30
 * Specialize template problem for empty vector of constraints.
 * Support for cache functions.
