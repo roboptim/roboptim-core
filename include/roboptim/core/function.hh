@@ -43,6 +43,7 @@
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)		\
   typedef PARENT parent_t;				\
+  typedef parent_t::value_type value_type;		\
   typedef parent_t::size_type size_type;		\
   typedef parent_t::argument_t argument_t;		\
   typedef parent_t::result_t result_t;			\
@@ -52,6 +53,7 @@
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
   typedef PARENT parent_t;				\
+  typedef typename parent_t::value_type value_type;	\
   typedef typename parent_t::size_type size_type;	\
   typedef typename parent_t::argument_t argument_t;	\
   typedef typename parent_t::result_t result_t;		\

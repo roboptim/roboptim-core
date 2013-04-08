@@ -43,7 +43,8 @@ namespace roboptim
       /// \param f function to be plotted
       /// \param interval plot interval
       /// \return Gnuplot command
-      Command plot (const Function& f, discreteInterval_t interval);
+      template <typename T>
+      Command plot (const GenericFunction<T>& f, discreteInterval_t interval);
 
       /// \brief Plot a 2D function with Gnuplot.
       ///
@@ -53,10 +54,12 @@ namespace roboptim
       /// \param f function to be plotted
       /// \param interval plot interval
       /// \return Gnuplot command
-      Command plot_xy (const Function& f, discreteInterval_t interval);
+      template <typename T>
+      Command plot_xy (const GenericFunction<T>& f, discreteInterval_t interval);
 
 
-      Command plot (const Function& f, discreteInterval_t window)
+      template <typename T>
+      Command plot (const GenericFunction<T>& f, discreteInterval_t window)
       {
 	assert (f.inputSize () == 1);
 
@@ -89,8 +92,8 @@ namespace roboptim
 	return Command (str);
       }
 
-
-      Command plot_xy (const Function& f, discreteInterval_t window)
+      template <typename T>
+      Command plot_xy (const GenericFunction<T>& f, discreteInterval_t window)
       {
 	assert (f.inputSize () == 1 && f.outputSize () == 2);
 

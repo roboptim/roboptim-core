@@ -37,13 +37,16 @@ namespace roboptim
 
   namespace finiteDifferenceGradientPolicies
   {
+    template <typename T>
     class Simple;
+    template <typename T>
     class FivePointsRule;
   } // end of finiteDifferenceGradientPolicies
 
-  template <typename FdgPolicy =
-	    finiteDifferenceGradientPolicies::FivePointsRule>
-  class FiniteDifferenceGradient;
+  template <typename T,
+	    typename FdgPolicy =
+	    finiteDifferenceGradientPolicies::FivePointsRule<T> >
+  class GenericFiniteDifferenceGradient;
 
   template <typename T>
   class GenericFunction;

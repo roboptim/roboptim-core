@@ -32,9 +32,13 @@ using namespace roboptim::visualization;
 using namespace roboptim::visualization::gnuplot;
 
 // Define a function with a correct gradient.
-struct FGood : public DifferentiableFunction
+template <typename T>
+struct FGood : public GenericDifferentiableFunction<T>
 {
-  FGood () : DifferentiableFunction (1, 1, "x * x")
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+  (GenericDifferentiableFunction<T>);
+
+  FGood () : GenericDifferentiableFunction<T> (1, 1, "x * x")
   {}
 
   void impl_compute (result_t& result,
@@ -44,16 +48,35 @@ struct FGood : public DifferentiableFunction
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const throw ()
-  {
-    gradient (0) = 2 * argument[0];
-  }
+		      const argument_t& argument, size_type) const throw ();
+
 };
 
-// Define a function with a bad gradient.
-struct FBad : public DifferentiableFunction
+template <>
+void
+FGood<EigenMatrixSparse>::impl_gradient
+(gradient_t& gradient, const argument_t& argument, size_type) const throw ()
 {
-  FBad () : DifferentiableFunction (1, 1, "x * x")
+  gradient.insert (0) = 2 * argument[0];
+}
+
+template <typename T>
+void
+FGood<T>::impl_gradient (gradient_t& gradient,
+			 const argument_t& argument, size_type) const throw ()
+{
+  gradient (0) = 2 * argument[0];
+}
+
+
+// Define a function with a bad gradient.
+template <typename T>
+struct FBad : public GenericDifferentiableFunction<T>
+{
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+  (GenericDifferentiableFunction<T>);
+
+  FBad () : GenericDifferentiableFunction<T> (1, 1, "x * x")
   {}
 
   void impl_compute (result_t& result,
@@ -62,17 +85,35 @@ struct FBad : public DifferentiableFunction
     result (0) = argument[0] * argument[0];
   }
 
-  void impl_gradient (result_t& result,
-		      const vector_t& argument, size_type) const throw ()
-  {
-    result (0) = 5 * argument[0] + 42;
-  }
+  void impl_gradient (gradient_t& gradient,
+		      const argument_t& argument, size_type) const throw ();
 };
 
-// Define a polynomial function.
-struct Polynomial : public DifferentiableFunction
+template <>
+void
+FBad<EigenMatrixSparse>::impl_gradient
+(gradient_t& gradient, const argument_t& argument, size_type) const throw ()
 {
-  Polynomial () : DifferentiableFunction (1, 1)
+  gradient.insert (0) = 5 * argument[0] + 42;
+}
+
+template <typename T>
+void
+FBad<T>::impl_gradient (gradient_t& gradient,
+			const argument_t& argument, size_type) const throw ()
+{
+  gradient (0) = 5 * argument[0] + 42;
+}
+
+
+// Define a polynomial function.
+template <typename T>
+struct Polynomial : public GenericDifferentiableFunction<T>
+{
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+  (GenericDifferentiableFunction<T>);
+
+  Polynomial () : GenericDifferentiableFunction<T> (1, 1)
   {}
 
   void impl_compute (result_t& result,
@@ -82,16 +123,35 @@ struct Polynomial : public DifferentiableFunction
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const throw ()
-  {
-    gradient (0) = -42 * argument[0] + 33;
-  }
+		      const argument_t& argument, size_type) const throw ();
 };
 
-// Define a function that draws a circle.
-struct CircleXY : public DifferentiableFunction
+template <>
+void
+Polynomial<EigenMatrixSparse>::impl_gradient
+(gradient_t& gradient, const argument_t& argument, size_type) const throw ()
 {
-  CircleXY () : DifferentiableFunction (1, 2)
+  gradient.insert (0) = -42 * argument[0] + 33;
+}
+
+template <typename T>
+void
+Polynomial<T>::impl_gradient (gradient_t& gradient,
+			      const argument_t& argument, size_type)
+  const throw ()
+{
+  gradient (0) = -42 * argument[0] + 33;
+}
+
+
+// Define a function that draws a circle.
+template <typename T>
+struct CircleXY : public GenericDifferentiableFunction<T>
+{
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+  (GenericDifferentiableFunction<T>);
+
+  CircleXY () : GenericDifferentiableFunction<T> (1, 2)
   {}
 
   void impl_compute (result_t& result,
@@ -101,30 +161,62 @@ struct CircleXY : public DifferentiableFunction
     result (1) = cos (argument[0]);
   }
 
-  void impl_gradient (result_t& result,
+  void impl_gradient (gradient_t& result,
 		      const argument_t& argument,
-		      size_type idFunction) const throw ()
-  {
-    switch (idFunction)
-      {
-      case 0:
-	result (0) = cos (argument[0]);
-	break;
-
-      case 1:
-	result (0) = -sin (argument[0]);
-	break;
-
-      default:
-	assert (0);
-      }
-  }
+		      size_type idFunction) const throw ();
 };
 
-// Define ``f(x,y) = x * y'' function.
-struct Times : public DifferentiableFunction
+template <>
+void
+CircleXY<EigenMatrixSparse>::impl_gradient (gradient_t& gradient,
+					    const argument_t& argument,
+					    size_type idFunction) const throw ()
 {
-  Times () : DifferentiableFunction (2, 1)
+  switch (idFunction)
+    {
+    case 0:
+      gradient.insert (0) = cos (argument[0]);
+      break;
+
+    case 1:
+      gradient.insert (0) = -sin (argument[0]);
+      break;
+
+    default:
+      assert (0);
+    }
+}
+
+template <typename T>
+void
+CircleXY<T>::impl_gradient (gradient_t& gradient,
+			    const argument_t& argument,
+			    size_type idFunction) const throw ()
+{
+  switch (idFunction)
+    {
+    case 0:
+      gradient (0) = cos (argument[0]);
+      break;
+
+    case 1:
+      gradient (0) = -sin (argument[0]);
+      break;
+
+    default:
+      assert (0);
+    }
+}
+
+
+// Define ``f(x,y) = x * y'' function.
+template <typename T>
+struct Times : public GenericDifferentiableFunction<T>
+{
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+  (GenericDifferentiableFunction<T>);
+
+  Times () : GenericDifferentiableFunction<T> (2, 1)
   {}
 
   void impl_compute (result_t& result,
@@ -135,29 +227,50 @@ struct Times : public DifferentiableFunction
 
   void impl_gradient (gradient_t& gradient,
 		      const argument_t& argument,
-		      size_type) const throw ()
-  {
-    gradient (0) = argument[1];
-    gradient (1) = argument[0];
-  }
+		      size_type) const throw ();
 };
 
+template <>
+void
+Times<EigenMatrixSparse>::impl_gradient (gradient_t& gradient,
+					 const argument_t& argument,
+					 size_type) const throw ()
+{
+  gradient.insert (0) = argument[1];
+  gradient.insert (1) = argument[0];
+}
+
+template <typename T>
+void
+Times<T>::impl_gradient (gradient_t& gradient,
+			 const argument_t& argument,
+			 size_type) const throw ()
+{
+  gradient (0) = argument[1];
+  gradient (1) = argument[0];
+}
+
+
+template <typename T>
 void displayGradient
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
- const DifferentiableFunction&,
- const Function::vector_t&,
- Function::size_type i = 0);
+ const GenericDifferentiableFunction<T>&,
+ const typename GenericDifferentiableFunction<T>::vector_t&,
+ typename GenericDifferentiableFunction<T>::size_type i = 0);
 
+template <typename T>
 void
 displayGradient
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
- const DifferentiableFunction& function,
- const Function::vector_t& x,
- Function::size_type i)
+ const GenericDifferentiableFunction<T>& function,
+ const typename GenericDifferentiableFunction<T>::vector_t& x,
+ typename GenericDifferentiableFunction<T>::size_type i)
 {
-  FiniteDifferenceGradient<> fdfunction (function);
-  DifferentiableFunction::gradient_t grad = function.gradient (x, i);
-  DifferentiableFunction::gradient_t fdgrad = fdfunction.gradient (x, i);
+  GenericFiniteDifferenceGradient<T> fdfunction (function);
+  typename GenericFiniteDifferenceGradient<T>::gradient_t grad =
+    function.gradient (x, i);
+  typename GenericFiniteDifferenceGradient<T>::gradient_t fdgrad =
+    fdfunction.gradient (x, i);
 
   (*output) << "#" << grad << std::endl
 	    << "#" << fdgrad << std::endl;
@@ -165,17 +278,20 @@ displayGradient
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
-BOOST_AUTO_TEST_CASE (finite_difference_gradient)
+typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
+			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("finite-difference-gradient");
 
-  FGood fg;
-  FBad fb;
-  CircleXY sq;
-  Times times;
+  FGood<T> fg;
+  FBad<T> fb;
+  CircleXY<T> sq;
+  Times<T> times;
 
-  Function::vector_t x (1);
+  typename FGood<T>::vector_t x (1);
 
   for (x[0] = -10.; x[0] < 10.; x[0] += 1.)
     {
@@ -209,10 +325,14 @@ BOOST_AUTO_TEST_CASE (finite_difference_gradient)
 
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot ();
 
-  FiniteDifferenceGradient<> fg_fd (fg, 10.);
+  GenericFiniteDifferenceGradient<
+    T,
+    finiteDifferenceGradientPolicies::Simple<T> > fg_fd (fg, 10.);
 
-  Polynomial p;
-  FiniteDifferenceGradient<finiteDifferenceGradientPolicies::Simple>
+  Polynomial<T> p;
+  GenericFiniteDifferenceGradient<
+    T,
+    finiteDifferenceGradientPolicies::Simple<T> >
     p_fd (p, 10.);
 
   Function::discreteInterval_t interval (-100., 100., 1.);
@@ -226,6 +346,7 @@ BOOST_AUTO_TEST_CASE (finite_difference_gradient)
 	<< plot (p_fd, interval)
 	<< unset ("multiplot")
 	);
+  std::cout << output->str () << std::endl;
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

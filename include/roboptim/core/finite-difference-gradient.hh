@@ -31,17 +31,12 @@ namespace roboptim
   static const double finiteDifferenceEpsilon = 1e-8;
 
   /// \brief Exception thrown when a gradient check fail.
-  class ROBOPTIM_DLLAPI BadGradient : public std::runtime_error
+  template <typename T>
+  class BadGradient : public std::runtime_error
   {
   public:
-    /// \brief Import vector.
-    typedef DifferentiableFunction::vector_t vector_t;
-    /// \brief Import gradient.
-    typedef DifferentiableFunction::gradient_t gradient_t;
-    /// \brief Import value_type.
-    typedef DifferentiableFunction::value_type value_type;
-    /// \brief Import size_type.
-    typedef DifferentiableFunction::size_type size_type;
+    ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+    (GenericDifferentiableFunction<T>);
 
     /// \brief Default constructor.
     BadGradient (const vector_t& x,
@@ -82,8 +77,9 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param f function to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
-					    const BadGradient& f);
+  template <typename T>
+  std::ostream& operator<< (std::ostream& o,
+			    const BadGradient<T>& f);
 
   /// \brief Contains finite difference gradients policies.
   ///
@@ -94,34 +90,40 @@ namespace roboptim
     /// \brief Fast finite difference gradient computation.
     ///
     /// Finite difference is computed using forward difference.
-    class ROBOPTIM_DLLAPI Simple
+    template <typename T>
+    class Simple
     {
     public:
-      typedef Function::size_type size_type;
+      ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+      (GenericDifferentiableFunction<T>);
+
       void computeGradient
-      (const Function& adaptee,
-       Function::value_type epsilon,
-       Function::result_t& gradient,
-       const Function::argument_t& argument,
-       Function::size_type idFunction,
-       Function::argument_t& xEps) const throw ();
+      (const GenericFunction<T>& adaptee,
+       value_type epsilon,
+       gradient_t& gradient,
+       const argument_t& argument,
+       size_type idFunction,
+       argument_t& xEps) const throw ();
     };
 
     /// \brief Precise finite difference gradient computation.
     ///
     /// Finite difference is computed using five-points stencil
     /// (i.e. \f$\{x-2h, x-h, x, x+h, x+2h\}\f$).
-    class ROBOPTIM_DLLAPI FivePointsRule
+    template <typename T>
+    class FivePointsRule
     {
     public:
-      typedef Function::size_type size_type;
+      ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+      (GenericDifferentiableFunction<T>);
+
       void computeGradient
-      (const Function& adaptee,
-       Function::value_type epsilon,
-       Function::result_t& gradient,
-       const Function::argument_t& argument,
-       Function::size_type idFunction,
-       Function::argument_t& xEps) const throw ();
+      (const GenericFunction<T>& adaptee,
+       value_type epsilon,
+       gradient_t& gradient,
+       const argument_t& argument,
+       size_type idFunction,
+       argument_t& xEps) const throw ();
     };
   } // end of namespace policy.
 
@@ -142,12 +144,15 @@ namespace roboptim
   /// \f[f'(x)\approx {f(x+\epsilon)-f(x)\over \epsilon}\f]
   /// where \f$\epsilon\f$ is a constant given when calling the class
   /// constructor.
-  template <typename FdgPolicy>
-  class FiniteDifferenceGradient
-    : public DifferentiableFunction,
+  template <typename T, typename FdgPolicy>
+  class GenericFiniteDifferenceGradient
+    : public GenericDifferentiableFunction<T>,
       private FdgPolicy
   {
   public:
+    ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+    (GenericDifferentiableFunction<T>);
+
     /// \brief Instantiate a finite differences gradient.
     ///
     /// Instantiate a derivable function that will wraps a non
@@ -155,10 +160,10 @@ namespace roboptim
     /// using finite differences.
     /// \param f function that will e wrapped
     /// \param e epsilon used in finite difference computation
-    FiniteDifferenceGradient (const Function& f,
-			      value_type e = finiteDifferenceEpsilon)
-      throw ();
-    ~FiniteDifferenceGradient () throw ();
+    GenericFiniteDifferenceGradient
+    (const GenericFunction<T>& f,
+     value_type e = finiteDifferenceEpsilon) throw ();
+    ~GenericFiniteDifferenceGradient () throw ();
 
   protected:
     void impl_compute (result_t&, const argument_t&) const throw ();
@@ -166,7 +171,7 @@ namespace roboptim
       const throw ();
 
     /// \brief Reference to the wrapped function.
-    const Function& adaptee_;
+    const GenericFunction<T>& adaptee_;
 
     //// \brief Epsilon used in finite differences computation.
     const value_type epsilon_;
@@ -183,19 +188,25 @@ namespace roboptim
   /// \param x point where the gradient will be evaluated
   /// \param threshold maximum tolerated error
   /// \return true if valid, false if not
-  ROBOPTIM_DLLAPI bool checkGradient
-  (const DifferentiableFunction& function,
-   Function::size_type functionId,
-   const Function::vector_t& x,
-   Function::value_type threshold = finiteDifferenceThreshold)
+  template <typename T>
+  bool
+  checkGradient
+  (const GenericDifferentiableFunction<T>& function,
+   typename GenericDifferentiableFunction<T>::size_type functionId,
+   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::value_type threshold =
+   finiteDifferenceThreshold)
     throw ();
 
-  ROBOPTIM_DLLAPI void checkGradientAndThrow
-  (const DifferentiableFunction& function,
-   Function::size_type functionId,
-   const Function::vector_t& x,
-   Function::value_type threshold = finiteDifferenceThreshold)
-    throw (BadGradient);
+  template <typename T>
+  void
+  checkGradientAndThrow
+  (const GenericDifferentiableFunction<T>& function,
+   typename GenericDifferentiableFunction<T>::size_type functionId,
+   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::value_type threshold =
+   finiteDifferenceThreshold)
+    throw (BadGradient<T>);
 
   /// Example shows finite differences gradient use.
   /// \example finite-difference-gradient.cc
