@@ -13,8 +13,9 @@ CXXFLAGS+=-fvisibility=hidden
 	dh  $@ --parallel --with pkgkde_symbolshelper
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DCMAKE_INSTALL_LIBDIR=lib/${DEB_HOST_MULTIARCH}
-
+	dh_auto_configure -- \
+	-DCMAKE_INSTALL_LIBDIR=lib/${DEB_HOST_MULTIARCH} \
+	-DCMAKE_INSTALL_DOCDIR=share/doc/libroboptim-core-doc
 
 override_dh_strip:
 	dh_strip -a --dbg-package=libroboptim-core2-dbg
