@@ -1,0 +1,4 @@
+usr/include/*
+usr/lib/*/libroboptim-core.so
+usr/lib/*/roboptim-core/*.so
+usr/lib/*/pkgconfig/*.pc

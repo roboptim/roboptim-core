@@ -1,0 +1,74 @@
+Source: roboptim-core
+Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
+Uploaders: Thomas Moulard <thomas.moulard@gmail.com>
+Section: libs
+Priority: extra
+Build-Depends: debhelper (>= 9),
+	       hardening-wrapper,
+	       pkg-kde-tools (>= 0.6),
+               cmake,
+               doxygen,
+               doxygen-latex,
+	       libltdl-dev,
+	       libeigen3-dev,
+	       libboost-dev
+Standards-Version: 3.9.4
+Vcs-Browser: https://github.com/roboptim/roboptim-core
+Vcs-Git: git://github.com/roboptim/roboptim-core.git
+Homepage: http://www.roboptim.net/
+
+
+Package: libroboptim-core-dev
+Section: libdevel
+Architecture: any
+Depends: libltdl-dev,
+	 libeigen3-dev,
+	 libboost-dev,
+	 libroboptim-core2 (= ${binary:Version}),
+         ${misc:Depends}
+Suggests: libroboptim-core-doc
+Description: numerical optimization library - development files
+ RobOptim is a set of packages designed to make robotics non-linear
+ optimization problem easier to solve. It is composed of several
+ packages which are focusing on different kind of problem related to
+ robotics, especially humanoid robotics.
+ .
+ This package contains development files (headers and shared library
+ symbolic link).
+
+Package: libroboptim2
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: numerical optimization library
+ RobOptim is a set of packages designed to make robotics non-linear
+ optimization problem easier to solve. It is composed of several
+ packages which are focusing on different kind of problem related to
+ robotics, especially humanoid robotics.
+
+Package: libroboptim-core2-dbg
+Architecture: any
+Section: debug
+Depends: libroboptim-core2 (= ${binary:Version}),
+         ${misc:Depends}
+Description: numerical optimization library - debugging symbols
+ RobOptim is a set of packages designed to make robotics non-linear
+ optimization problem easier to solve. It is composed of several
+ packages which are focusing on different kind of problem related to
+ robotics, especially humanoid robotics.
+ .
+ This package contains the debugging symbols for the shared libraries.
+
+Package: libroboptim-core-doc
+Architecture: all
+Section: doc
+Depends: ${misc:Depends}
+Description: numerical optimization library - documentation
+ RobOptim is a set of packages designed to make robotics non-linear
+ optimization problem easier to solve. It is composed of several
+ packages which are focusing on different kind of problem related to
+ robotics, especially humanoid robotics.
+ .
+ This package contains the Doxygen generated documentation.

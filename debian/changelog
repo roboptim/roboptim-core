@@ -1,0 +1,5 @@
+roboptim-core (2.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Tue, 09 Apr 2013 03:52:11 +0900

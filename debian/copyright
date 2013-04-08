@@ -1,0 +1,9 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: roboptim-core
+Upstream-Contact: roboptim@googlegroups.com
+Source: http://www.roboptim.net/
+
+Files: *
+Copyright: 2009-2013 Thomas Moulard, AIST, CNRS, INRIA
+License: LGPL-3
+ See `/usr/share/common-licenses/LGPL-3'.

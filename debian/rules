@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_HARDENING=1
+
+.PHONY: override_dh_strip
+
+%:
+	dh  $@ --parallel --with pkgkde_symbolshelper
+
+override_dh_strip:
+	dh_strip -a --dbg-package=libroboptim-core2-dbg

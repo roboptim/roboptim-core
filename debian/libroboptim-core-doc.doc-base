@@ -1,0 +1,9 @@
+Document: visp
+Title: ViSP C++ API reference
+Author: INRIA Bretagne, LAGADIC
+Abstract: Describe the ViSP library C++ API.
+Section: Programming/C++
+
+Format: HTML
+Index: /usr/share/doc/libvisp-doc/html/index.html
+Files: /usr/share/doc/libvisp-doc/html/*
