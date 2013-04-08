@@ -32,10 +32,11 @@
    The interface relies heavily on Boost for:
    <ul>
    <li>advanced typing (Boost.Optional and Boost.Variant),</li>
-   <li>matrix manipulation (Boost.uBLAS).</li>
    <li>and meta-programming
    (Boost.StaticAssert, Boost.TypeTraits, Boost.MPL).</li>
    </ul>
+
+   Matrix manipulation is handled by default by the Eigen matrix.
 
    New users might want to check out the idea behind Boost.Optional
    and Boost.Variant are these types are present in the public
@@ -86,7 +87,8 @@
 
    \section problem Problem definition
 
-   The problem that will be solved is:
+   The problem that will be solved in this tutorial is the 71th
+   problem of Hock-Schittkowski:
 
    \f$min_{x \in \mathbb{R}^4} x_1 x_4 (x_1 + x_2 + x_3) + x_3\f$
 
@@ -99,11 +101,15 @@
    \section cost Defining the cost function.
 
    The library contains the following hierarchy of functions:
-   - optimization::Function
-   - optimization::DerivableFunction
-   - optimization::TwiceDerivableFunction
-   - optimization::QuadraticFunction
-   - optimization::LinearFunction
+   - #roboptim::Function
+   - #roboptim::DerivableFunction
+   - #roboptim::TwiceDerivableFunction
+   - #roboptim::QuadraticFunction
+   - #roboptim::LinearFunction
+
+   These types correspond to dense vectors and matrices relying on
+   Eigen. RobOptim also support dense matrices and you can even extend
+   the framework to support your own types.
 
    When defining a new function, you have to derive your new function from one
    of those classes. Depending on the class you derive from, you will be have
@@ -136,28 +142,22 @@ struct F : public TwiceDerivableFunction
   void
   impl_compute (result_t& result, const argument_t& x) const throw ()
   {
-    vector_t res (m);
-    res (0) = x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
-    return res;
+    result (0) = x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
   }
 
   void
   impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
   {
-    gradient_t grad (n);
-
     grad[0] = x[0] * x[3] + x[3] * (x[0] + x[1] + x[2]);
     grad[1] = x[0] * x[3];
     grad[2] = x[0] * x[3] + 1;
     grad[3] = x[0] * (x[0] + x[1] + x[2]);
-    return grad;
   }
 
   void
   impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
 
   {
-    matrix_t h (n, n);
     h (0, 0) = 2 * x[3];
     h (0, 1) = x[3];
     h (0, 2) = x[3];
@@ -184,7 +184,7 @@ struct F : public TwiceDerivableFunction
 
    \section constraints Defining the constraints.
 
-   A constraints is no different from a cost function and
+   A constraint is no different from a cost function and
    can be defined in the same way than a cost function.
 
    The following sample defines two constraints which are
@@ -202,27 +202,21 @@ struct G0 : public TwiceDerivableFunction
   void
   impl_compute (result_t& result, const argument_t& x) const throw ()
   {
-    vector_t res (m);
-    res (0) = x[0] * x[1] * x[2] * x[3];
-    return res;
+    result (0) = x[0] * x[1] * x[2] * x[3];
   }
 
   void
   impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
   {
-    gradient_t grad (n);
-
     grad[0] = x[1] * x[2] * x[3];
     grad[1] = x[0] * x[2] * x[3];
     grad[2] = x[0] * x[1] * x[3];
     grad[3] = x[0] * x[1] * x[2];
-    return grad;
   }
 
   void
   impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
   {
-    matrix_t h (n, n);
     h (0, 0) = 0.;
     h (0, 1) = x[2] * x[3];
     h (0, 2) = x[1] * x[3];
@@ -242,7 +236,6 @@ struct G0 : public TwiceDerivableFunction
     h (3, 1) = x[0] * x[2];
     h (3, 2) = x[0] * x[1];
     h (3, 3) = 0.;
-    return h;
   }
 };
 
@@ -256,27 +249,21 @@ struct G1 : public TwiceDerivableFunction
   void
   impl_compute (result_t& result, const argument_t& x) const throw ()
   {
-    vector_t res (m);
-    res (0) = x[0]*x[0] + x[1]*x[1] + x[2]*x[2] + x[3]*x[3];
-    return res;
+    result (0) = x[0]*x[0] + x[1]*x[1] + x[2]*x[2] + x[3]*x[3];
   }
 
   void
   impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
   {
-    gradient_t grad (n);
-
     grad[0] = 2 * x[0];
     grad[1] = 2 * x[1];
     grad[2] = 2 * x[2];
     grad[3] = 2 * x[3];
-    return grad;
   }
 
   void
   impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
   {
-    matrix_t h (n, n);
     h (0, 0) = 2.;
     h (0, 1) = 0.;
     h (0, 2) = 0.;
@@ -296,7 +283,6 @@ struct G1 : public TwiceDerivableFunction
     h (3, 1) = 0.;
     h (3, 2) = 0.;
     h (3, 3) = 2.;
-    return h;
   }
 };
    \endcode
@@ -319,7 +305,7 @@ int run_test ()
   G0 g0;
   G1 g1;
 
-  CFSQPSolver::problem_t pb (f);
+  solver_t::problem_t pb (f);
 
   // Set bound for all variables.
   // 1. < x_i < 5. (x_i in [1.;5.])
@@ -336,11 +322,15 @@ int run_test ()
 
   initialize_problem (pb, g0, g1);
 
-  // Initialize solver
-  CFSQPSolver solver (pb);
+  // Initialize solver.
+
+  // Here we are relying on the Ipopt solver (available separately).
+  // You may change this string to load the solver you wish to use.
+  SolverFactory<solver_t> factory ("ipopt-td", problem);
+  solver_t& solver = factory ();
 
   // Compute the minimum and retrieve the result.
-  CFSQPSolver::result_t res = solver.minimum ();
+  solver_t::result_t res = solver.minimum ();
 
   // Display solver information.
   std::cout << solver << std::endl;
@@ -395,17 +385,9 @@ int run_test ()
 
    \section avl_solvers What solvers are currently available?
 
-   Supported solvers are:
-   <ul>
-   <li><a href="https://projects.coin-or.org/Ipopt/">Ipopt</a></li>
-   <li><a href="http://www.aemdesign.com/">CFSQP</a></li>
-   </ul>
-
-   Solvers we plan to support in the future:
-   <ul>
-   <li><a href="http://vxl.sourceforge.net/"
-   >Optimization algorithms from VXL/VNL</a></li>
-   </ul>
+   Supported solvers are available on seperated packages, please check
+   <a href="http://www.roboptim.net/">the project webpage</a> of the
+   supported solvers list.
 
    \section boost_optvar What are those Optional and Variant types?
 
@@ -515,7 +497,7 @@ int run_test ()
 
    It avoids useless computations when the whole Jacobian is not needed.
    Hence, it also avoid the use of a tensor as this structure is particularly
-   costly and not built-in in uBlas (the matrix library the package rely on).
+   costly and not built-in in Eigen (the matrix library the package rely on).
 
 
    This set of meta-functions is completed by two generic implementations
@@ -691,13 +673,8 @@ int run_test ()
    The naming convention is CamlCase, the name should be the solver's name
    suffixed by <code>Solver</code>.
 
-   It also should be pre-declared in the <code>fwd.hh</code> header.
-
-   A m4 macro should then be written to add a soft dependency against the
-   library (ie: the bridge is built if the solver is available, if not the
-   bridge is skipped).
-   Please consult the Autoconf manual and the <code>build-aux/cfsqp.m4</code>
-   and <code>build-aux/ipopt.m4</code> for more information.
+   This plug-in must be provided as a separate package to avoid
+   cluttering RobOptim Core with useless dependencies.
 
    \subsection impl Implementing the bridge.
 
@@ -736,20 +713,8 @@ int run_test ()
    a new solver as the code can be considered as the minimum stub to get a
    compilable bridge. It should also be quite easy to understand.
 
-
-   To submit a new bridge, please post a patch on the project's mailing-list.
-   To generate a patch with Git:
-
-   \code
-   $ git diff HEAD > add_support_for_BRIDGENAME.patch
-   \endcode
-
-   (replace BRIDGENAME by the name of the solver you are integrating).
-   Then, post a message to the mailing-list. Please, prefix the object
-   by the following tag:
-   <pre>
-   [PATCH] Add support for BRIDGENAME.
-   </pre>
+   If you write a new bridge, please post an annoucement to the RobOptim
+   Google group.
 */
 
 

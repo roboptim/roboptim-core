@@ -31,28 +31,38 @@ namespace roboptim
   /// \addtogroup roboptim_filter
   /// @{
 
-  struct ltvector
+  namespace detail
   {
-    bool operator()(const Function::vector_t& v1,
-		    const Function::vector_t& v2) const
+    struct ltvector
     {
-      Function::size_type it1 = 0;
-      Function::size_type it2 = 0;
+      bool operator()(const Function::vector_t& v1,
+		      const Function::vector_t& v2) const
+      {
+	Function::size_type it1 = 0;
+	Function::size_type it2 = 0;
+	
+	while (it1 != v1.size () && it2 != v2.size ())
+	  {
+	    if (fabs (v1(it1) - v2(it2)) < Function::epsilon ())
+	      ++it1, ++it2;
+	    else if (v1(it1) - v2(it2) < - Function::epsilon ())
+	      return true;
+	    else return false;
+	  }
+	return false;
+      }
+    };
+  } // end of namespace detail.
 
-      while (it1 != v1.size () && it2 != v2.size ())
-	{
-	  if (fabs (v1(it1) - v2(it2)) < Function::epsilon ())
-	    ++it1, ++it2;
-	  else if (v1(it1) - v2(it2) < - Function::epsilon ())
-	    return true;
-	  else return false;
-	}
-      return false;
-    }
-  };
-
+  /// \brief Store previous function computation.
+  ///
+  /// When an expensive function is called several times at the same
+  /// point (exactly!), the cached function prevents useless
+  /// computation by caching the function result.
+  ///
+  /// This filter is experimental in this release.
   template <typename T>
-  class ROBOPTIM_DLLAPI CachedFunction : public T
+  class CachedFunction : public T
   {
   public:
     /// \brief Import value type.
@@ -75,9 +85,9 @@ namespace roboptim
     typedef typename DifferentiableFunction::interval_t interval_t;
 
 
-    typedef std::map<Function::vector_t, Function::vector_t, ltvector>
+    typedef std::map<Function::vector_t, Function::vector_t, detail::ltvector>
       functionCache_t;
-    typedef std::map<Function::vector_t, hessian_t, ltvector>
+    typedef std::map<Function::vector_t, hessian_t, detail::ltvector>
       hessianCache_t;
 
     explicit CachedFunction (boost::shared_ptr<const T> fct) throw ();
