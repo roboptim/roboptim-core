@@ -1,0 +1,23 @@
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Date: Tue, 9 Apr 2013 04:55:06 +0900
+Subject: Fix SOVERSION.
+
+Fix SOVERSION to match Debian guidelines.
+
+Forwarded: yes
+Author: Thomas Moulard <thomas.moulard@gmail.com>
+---
+ src/CMakeLists.txt |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 6f138de..7a793bb 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -46,7 +46,7 @@ PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
+ PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
+ 
+ TARGET_LINK_LIBRARIES(roboptim-core ltdl)
+-SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 2.0.0)
++SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 2)
+ INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
