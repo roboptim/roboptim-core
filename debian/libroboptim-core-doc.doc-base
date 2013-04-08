@@ -1,9 +1,9 @@
-Document: visp
-Title: ViSP C++ API reference
-Author: INRIA Bretagne, LAGADIC
-Abstract: Describe the ViSP library C++ API.
+Document: roboptim-core
+Title: RobOptim Core C++ API reference
+Author: RobOptim Team
+Abstract: Describe the RobOptim Core library C++ API.
 Section: Programming/C++
 
 Format: HTML
-Index: /usr/share/doc/libvisp-doc/html/index.html
-Files: /usr/share/doc/libvisp-doc/html/*
+Index: /usr/share/doc/libroboptim-core/doxygen-html/index.html
+Files: /usr/share/doc/libroboptim-core/doxygen-html/*
