@@ -4,6 +4,8 @@ export DEB_BUILD_HARDENING=1
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
+CXXFLAGS+=-fvisibility=hidden
+
 .PHONY: override_dh_auto_configure	\
 	override_dh_strip
 
