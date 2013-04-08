@@ -17,7 +17,7 @@
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
 # Define the directory where plug-ins will be installed.
-SET(PLUGINDIR lib/${PROJECT_NAME})
+SET(PLUGINDIR ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME})
 
 # Main library.
 ADD_LIBRARY(roboptim-core SHARED
@@ -46,8 +46,8 @@ PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 TARGET_LINK_LIBRARIES(roboptim-core ltdl)
-SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 1.1.0)
-INSTALL(TARGETS roboptim-core DESTINATION lib)
+SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 2.0.0)
+INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 
 # Dummy plug-in.
@@ -56,7 +56,7 @@ ADD_DEPENDENCIES(roboptim-core-plugin-dummy roboptim-core)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES
   PREFIX ""
-  SOVERSION 1.1.0)
+  SOVERSION 2.0.0)
 INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
 
 # Dummy-laststate plug-in.
@@ -65,5 +65,5 @@ ADD_DEPENDENCIES(roboptim-core-plugin-dummy-laststate roboptim-core)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-laststate roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES
   PREFIX ""
-  SOVERSION 1.1.0)
+  SOVERSION 2.0.0)
 INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
