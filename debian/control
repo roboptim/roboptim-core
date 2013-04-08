@@ -38,7 +38,7 @@ Description: numerical optimization library - development files
  This package contains development files (headers and shared library
  symbolic link).
 
-Package: libroboptim2
+Package: libroboptim-core2
 Architecture: any
 Multi-Arch: same
 Depends: ${shlibs:Depends},
