@@ -1,5 +1,5 @@
 # SymbolsHelper-Confirmed: 2.0 amd64
-libroboptim-core.so.2.0.0 libroboptim-core2 #MINVER#
+libroboptim-core.so.2 libroboptim-core2 #MINVER#
  _ZN8roboptim11SolverError9lastStateEv@Base 2.0
  _ZN8roboptim11SolverErrorC1ERKS0_@Base 2.0
  _ZN8roboptim11SolverErrorC1ERKSs@Base 2.0
