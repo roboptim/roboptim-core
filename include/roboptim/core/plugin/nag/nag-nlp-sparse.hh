@@ -72,6 +72,9 @@ namespace roboptim
     void fill_igfun_jgvar_leng_neg ();
     void fill_fnames ();
 
+    function_t::vector_t lookForX ();
+    function_t::vector_t lookForX (unsigned constraintId);
+
     Integer nf_;
     Integer n_;
     Integer nxname_;

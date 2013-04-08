@@ -44,7 +44,7 @@ namespace roboptim
 			::Integer nf,
 			double f[],
 			::Integer needg,
-			::Integer /*leng*/,
+			::Integer leng,
 			double g[],
 			Nag_Comm *comm)
     {
@@ -105,16 +105,18 @@ namespace roboptim
       // gradient functions computation are needed
       if (needg > 0)
 	{
+	  Eigen::Map<DifferentiableFunction::vector_t> g_ (g, leng);
+
 	  unsigned offset = 0;
 	  NagSolverNlpSparse::function_t::jacobian_t j;
 
+	  // retrieve objective jacobian
 	  j = solver->problem ().function ().jacobian (x_);
 
 	  for (int k=0; k < j.outerSize (); ++k)
 	    for (NagSolverNlpSparse::function_t::matrix_t::InnerIterator
-		   it (j, k); it;
-		 ++it, ++offset)
-	      g[offset] = it.value ();
+		   it (j, k); it; ++it)
+	      g_[offset++] = it.value ();
 
 	  unsigned constraintId = 0;
 	  for (iter_t it = solver->problem ().constraints ().begin ();
@@ -143,8 +145,9 @@ namespace roboptim
 	      for (int k=0; k < j.outerSize (); ++k)
 		for (NagSolverNlpSparse::function_t::matrix_t::InnerIterator
 		       it (j, k); it; ++it)
-		  g[offset] = it.value ();
+		  g_[offset++] = it.value ();
 	    }
+	  assert (offset == leng);
 	}
     }
   } // end of namespace detail
@@ -221,9 +224,13 @@ namespace roboptim
   void
   NagSolverNlpSparse::fill_xlow_xupp ()
   {
-    xlow_.resize (problem ().argumentBounds ().size ());
-    xupp_.resize (problem ().argumentBounds ().size ());
-    for (unsigned i = 0; i < problem ().argumentBounds ().size (); ++i)
+    assert (problem ().argumentBounds ().size () ==
+	    static_cast<std::size_t> (n_));
+
+    xlow_.resize (n_);
+    xupp_.resize (n_);
+
+    for (unsigned i = 0; i < n_; ++i)
       {
 	xlow_[i] = problem ().argumentBounds ()[i].first;
 	xupp_[i] = problem ().argumentBounds ()[i].second;
@@ -233,8 +240,8 @@ namespace roboptim
   void
   NagSolverNlpSparse::fill_flow_fupp ()
   {
-    flow_.resize (problem ().constraints ().size () + 1);
-    fupp_.resize (problem ().constraints ().size () + 1);
+    flow_.resize (nf_);
+    fupp_.resize (nf_);
 
 
     // - bounds for cost function: always none.
@@ -285,6 +292,55 @@ namespace roboptim
       }
   }
 
+  NagSolverNlpSparse::function_t::vector_t
+  NagSolverNlpSparse::lookForX ()
+  {
+    function_t::vector_t x (n_);
+
+    if (!problem ().startingPoint ())
+      x.setZero ();
+    else
+      x = *(problem ().startingPoint ());
+    return x;
+  }
+
+  NagSolverNlpSparse::function_t::vector_t
+  NagSolverNlpSparse::lookForX (unsigned constraintId)
+  {
+    function_t::vector_t x (n_);
+
+    // Look for a place to evaluate the jacobian of the
+    // current constraint.
+    // If we do not have an initial guess...
+    if (!problem ().startingPoint ())
+      for (unsigned i = 0; i < x.size (); ++i)
+	{
+	  // if constraint is in an interval, evaluate at middle.
+	  if (problem ().boundsVector ()[constraintId][i].first
+	      != function_t::infinity ()
+	      &&
+	      problem ().boundsVector ()[constraintId][i].second
+	      != function_t::infinity ())
+	    x[i] =
+	      (problem ().boundsVector ()
+	       [constraintId][i].second
+	       - problem ().boundsVector ()
+	       [constraintId][i].first) / 2.;
+	  // otherwise use the non-infinite bound.
+	  else if (problem ().boundsVector ()
+		   [constraintId][i].first
+		   != function_t::infinity ())
+	    x[i] = problem ().boundsVector ()
+	      [constraintId][i].first;
+	  else
+	    x[i] = problem ().boundsVector ()
+	      [constraintId][i].second;
+	}
+    else
+      x = *(problem ().startingPoint ());
+    return x;
+  }
+
   void
   NagSolverNlpSparse::fill_iafun_javar_lena_nea ()
   {
@@ -294,6 +350,7 @@ namespace roboptim
 
     function_t::size_type offset = 0;
     nea_ = 0;
+
     for (unsigned constraintId = 0;
 	 constraintId < problem ().constraints ().size ();
 	 ++constraintId)
@@ -307,49 +364,18 @@ namespace roboptim
 	  (problem ().constraints ()[constraintId]);
 	assert (!!g);
 
-	function_t::vector_t x (n_);
-
-	// Look for a place to evaluate the jacobian of the
-	// current constraint.
-	// If we do not have an initial guess...
-	if (!problem ().startingPoint ())
-	  for (unsigned i = 0; i < x.size (); ++i)
-	    {
-	      // if constraint is in an interval, evaluate at middle.
-	      if (problem ().boundsVector ()[constraintId][i].first
-		  != function_t::infinity ()
-		  &&
-		  problem ().boundsVector ()[constraintId][i].second
-		  != function_t::infinity ())
-		x[i] =
-		  (problem ().boundsVector ()
-		   [constraintId][i].second
-		   - problem ().boundsVector ()
-		   [constraintId][i].first) / 2.;
-	      // otherwise use the non-infinite bound.
-	      else if (problem ().boundsVector ()
-		       [constraintId][i].first
-		       != function_t::infinity ())
-		x[i] = problem ().boundsVector ()
-		  [constraintId][i].first;
-	      else
-		x[i] = problem ().boundsVector ()
-		  [constraintId][i].second;
-	    }
-	else
-	  x = *(problem ().startingPoint ());
-
+	function_t::vector_t x = lookForX (constraintId);
 	function_t::result_t res = (*g) (x);
 	nea_ += res.nonZeros ();
 
 	for (int k=0; k < g->A ().outerSize (); ++k)
-	  for (function_t::matrix_t::InnerIterator it (g->A (), k); it;
-	       ++it, ++offset)
+	  for (function_t::matrix_t::InnerIterator it (g->A (), k); it; ++it)
 	    {
-	      iafun_.push_back (nea_ + it.row ());
-	      javar_.push_back (nea_ + it.col ());
+	      iafun_.push_back (offset + it.row () + 1);
+	      javar_.push_back (it.col () + 1);
 	      a_.push_back (it.value ());
 	    }
+	offset += 1;
       }
 
     lena_ = iafun_.size ();
@@ -371,61 +397,46 @@ namespace roboptim
 
     function_t::size_type offset = 0;
     neg_ = 0;
+
+    // evaluate objective jacobian.
+    function_t::vector_t x = lookForX ();
+    function_t::jacobian_t jac =
+      problem ().function ().jacobian (x);
+    neg_ += jac.nonZeros ();
+
+    for (int k=0; k < jac.outerSize (); ++k)
+      for (function_t::jacobian_t::InnerIterator it (jac, k); it; ++it)
+	{
+	  igfun_.push_back (it.row () + 1);
+	  jgvar_.push_back (it.col () + 1);
+	}
+    offset += jac.rows ();
+
     for (unsigned constraintId = 0;
 	 constraintId < problem ().constraints ().size ();
 	 ++constraintId)
       {
-	// if non-linear, pass.
-	if (problem ().constraints ()[constraintId].which () == 1)
+	// if linear, pass.
+	if (problem ().constraints ()[constraintId].which () == 0)
 	  continue;
 
-	boost::shared_ptr<linearFunction_t> g =
-	  boost::get<boost::shared_ptr<linearFunction_t> >
+	boost::shared_ptr<nonlinearFunction_t> g =
+	  boost::get<boost::shared_ptr<nonlinearFunction_t> >
 	  (problem ().constraints ()[constraintId]);
 	assert (!!g);
 
-	function_t::vector_t x (n_);
-
-	// Look for a place to evaluate the jacobian of the
-	// current constraint.
-	// If we do not have an initial guess...
-	if (!problem ().startingPoint ())
-	  for (unsigned i = 0; i < x.size (); ++i)
-	    {
-	      // if constraint is in an interval, evaluate at middle.
-	      if (problem ().boundsVector ()[constraintId][i].first
-		  != function_t::infinity ()
-		  &&
-		  problem ().boundsVector ()[constraintId][i].second
-		  != function_t::infinity ())
-		x[i] =
-		  (problem ().boundsVector ()
-		   [constraintId][i].second
-		   - problem ().boundsVector ()
-		   [constraintId][i].first) / 2.;
-	      // otherwise use the non-infinite bound.
-	      else if (problem ().boundsVector ()
-		       [constraintId][i].first
-		       != function_t::infinity ())
-		x[i] = problem ().boundsVector ()
-		  [constraintId][i].first;
-	      else
-		x[i] = problem ().boundsVector ()
-		  [constraintId][i].second;
-	    }
-	else
-	  x = *(problem ().startingPoint ());
-
+	function_t::vector_t x = lookForX (constraintId);
 	function_t::jacobian_t jac = g->jacobian (x);
 	neg_ += jac.nonZeros ();
 
 	for (int k=0; k < jac.outerSize (); ++k)
 	  for (function_t::jacobian_t::InnerIterator it (jac, k); it;
-	       ++it, ++offset)
+	       ++it)
 	    {
-	      igfun_.push_back (neg_ + it.row ());
-	      jgvar_.push_back (neg_ + it.col ());
+	      igfun_.push_back (offset + it.row () + 1);
+	      jgvar_.push_back (it.col () + 1);
 	    }
+	offset += jac.rows ();
       }
 
     leng_ = igfun_.size ();
@@ -498,6 +509,8 @@ namespace roboptim
     // Fill starting point.
     if (problem ().startingPoint ())
       x_ = *problem ().startingPoint ();
+    else
+      x_.setZero ();
 
     // Fill f, fstate, fmul.
     f_.resize (nf_);
@@ -517,7 +530,7 @@ namespace roboptim
     // Set parameters.
     nag_opt_sparse_nlp_option_set_integer
       ("Print file", 1, &state, &fail);
-  
+
 
     // Nag communication object.
     Nag_Comm comm;
@@ -526,6 +539,37 @@ namespace roboptim
 
     // Solve.
     const char* xnames[] = {0};
+
+    // Double check that sizes are valid.
+    assert (nf_ > 0);
+    assert (n_ > 0);
+    assert (nxname_ == 1 || nxname_ == n_);
+    assert (nfname_ == 1 || nfname_ == nf_);
+    assert (objadd_ == 0.);
+    assert (1 <= objrow_ && objrow_ <= nf_);
+    assert (iafun_.size () == static_cast<std::size_t> (lena_));
+    assert (javar_.size () == static_cast<std::size_t> (lena_));
+    assert (a_.size () == static_cast<std::size_t> (lena_));
+    assert (lena_ >= 1);
+
+    assert (igfun_.size () >= static_cast<std::size_t> (leng_));
+    assert (jgvar_.size () >= static_cast<std::size_t> (leng_));
+    assert (leng_ >= 1);
+    assert (0 <= neg_ && neg_ <= leng_);
+
+    assert (xlow_.size () == static_cast<std::size_t> (n_));
+    assert (xupp_.size () == static_cast<std::size_t> (n_));
+
+    assert (flow_.size () == static_cast<std::size_t> (nf_));
+    assert (fupp_.size () == static_cast<std::size_t> (nf_));
+
+    assert (x_.size () == static_cast<std::size_t> (n_));
+    assert (xstate_.size () == static_cast<std::size_t> (n_));
+    assert (xmul_.size () == static_cast<std::size_t> (n_));
+
+    assert (f_.size () == static_cast<std::size_t> (nf_));
+    assert (fstate_.size () == static_cast<std::size_t> (nf_));
+    assert (fmul_.size () == static_cast<std::size_t> (nf_));
 
     nag_opt_sparse_nlp_solve
       (Nag_Cold,
@@ -560,7 +604,12 @@ namespace roboptim
       {
 	Result res (problem ().function ().inputSize (),
 		    problem ().function ().outputSize ());
-	//FIXME:
+
+	res.x = x_;
+	res.value.setZero ();
+	res.value[0] = f_[0];
+	res.constraints = f_.segment (1, nf_ - 1);
+	res.lambda = fmul_.segment (1, nf_ - 1);
 	result_ = res;
 	return;
       }
