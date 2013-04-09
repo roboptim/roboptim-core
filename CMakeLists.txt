@@ -90,7 +90,7 @@ SETUP_PROJECT()
 
 # Add extra keys to pkg-config file to export the location of the
 # plug-in directory in a robust manner.
-SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_PREFIX}/lib/roboptim-core")
+SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_FULL_LIBDIR}/roboptim-core")
 
 # Add main library to pkg-config file.
 PKG_CONFIG_APPEND_LIBS(roboptim-core)
