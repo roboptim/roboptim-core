@@ -30,22 +30,32 @@ boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
 struct F : public DifferentiableFunction
 {
-  F () : DifferentiableFunction (1, 1, "2 * x")
+  F () : DifferentiableFunction (2, 1, "2 * x * x + y")
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const throw ()
   {
     (*output) << "computation (not cached)" << std::endl;
     res.setZero ();
-    res[0] = 2. * argument[0];
+    res[0] = 2. * argument[0] * argument[0] + argument[1];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_t& grad, const argument_t& argument,
 		      size_type) const throw ()
   {
     (*output) << "gradient computation (not cached)" << std::endl;
     grad.setZero ();
-    grad[0] = 2.;
+    grad[0] = 4. * argument[0];
+    grad[1] = 1.;
+  }
+
+  void impl_jacobian (jacobian_t& jacobian, const argument_t& argument)
+    const throw ()
+  {
+    (*output) << "jacobian computation (not cached)" << std::endl;
+    jacobian.setZero ();
+    jacobian(0,0) = 4. * argument[0];
+    jacobian(0,1) = 1.;
   }
 };
 
@@ -62,16 +72,20 @@ BOOST_AUTO_TEST_CASE (cached_function)
   (*output) << cachedF << ":" << std::endl
 	    << std::endl;
 
-  Function::vector_t x (1);
+  Function::vector_t x (2);
   for (double i = 0.; i < 10.; i += 0.5)
   {
     x[0] = i;
+    x[1] = 2*i;
     (*output) << cachedF (x) << std::endl;
     (*output) << cachedF (x) << std::endl;
     BOOST_CHECK_EQUAL ((*f) (x)[0], cachedF (x)[0]);
 
     (*output) << cachedF.gradient (x) << std::endl;
     (*output) << cachedF.gradient (x) << std::endl;
+
+    (*output) << cachedF.jacobian (x) << std::endl;
+    (*output) << cachedF.jacobian (x) << std::endl;
   }
 
   std::cout << output->str () << std::endl;
