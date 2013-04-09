@@ -30,7 +30,7 @@ namespace roboptim
   /// \brief Default epsilon for finite difference class.
   static const double finiteDifferenceEpsilon = 1e-8;
 
-  /// \brief Exception thrown when a gradient check fail.
+  /// \brief Exception thrown when a gradient check fails.
   template <typename T>
   class BadGradient : public std::runtime_error
   {

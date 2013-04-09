@@ -58,6 +58,14 @@ namespace roboptim
   /// \brief Display an Eigen object with the appropriate IOFormat.
   template <typename T>
   std::ostream& operator<< (std::ostream&, const Eigen::MatrixBase<T>&);
+
+  /// \brief Convert a sparse matrix into a dense matrix.
+  GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
+  (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t&);
+
+  GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
+  (const GenericFunctionTraits<EigenMatrixSparse>::gradient_t& v);
+
 } // end of namespace roboptim.
 
 # include <roboptim/core/util.hxx>
