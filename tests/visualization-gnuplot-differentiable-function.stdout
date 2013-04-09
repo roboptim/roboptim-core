@@ -3,9 +3,12 @@
 set terminal wxt persist
 set title 'jacobian(The Answer)'
 set palette defined(0 "white",1 "blue")
-set yrange [:] reverse
-set size square
-plot '-' using 1:2:($3 == 0 ? 0 : 1) matrix with image
+set grid front
+set xrange [0:7]
+set yrange [0:7] reverse
+set size ratio -1
+unset colorbox
+plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) notitle matrix with image
 1.00 0.00 0.00 0.00 1.00 1.00 0.00
 1.00 0.00 1.00 0.00 0.00 0.00 1.00
 1.00 0.00 1.00 0.00 0.00 0.00 1.00

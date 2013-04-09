@@ -30,9 +30,9 @@ using namespace roboptim::visualization;
 
 
 // Define f(x) = forty_two(x)
-struct Square : public DifferentiableFunction
+struct FortyTwo : public DifferentiableFunction
 {
-  explicit Square ()
+  explicit FortyTwo ()
     : DifferentiableFunction (7, 7, "The Answer")
   {
   }
@@ -92,13 +92,13 @@ BOOST_AUTO_TEST_CASE (visualization_gnuplot_differentiable_function)
   using namespace roboptim::visualization::gnuplot;
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot ();
 
-  Square square;
-  Square::vector_t arg(7);
+  FortyTwo f;
+  FortyTwo::vector_t arg(7);
   arg.fill(1.0);
 
   (*output)
     << (gnuplot
-	<< plot_jac (square, arg)
+	<< plot_jac (f, arg)
 	);
 
   std::cout << output->str () << std::endl;

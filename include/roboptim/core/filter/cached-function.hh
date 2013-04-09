@@ -87,6 +87,8 @@ namespace roboptim
 
     typedef std::map<Function::vector_t, Function::vector_t, detail::ltvector>
       functionCache_t;
+    typedef std::map<Function::vector_t, jacobian_t, detail::ltvector>
+      jacobianCache_t;
     typedef std::map<Function::vector_t, hessian_t, detail::ltvector>
       hessianCache_t;
 
@@ -105,6 +107,9 @@ namespace roboptim
 				size_type functionId = 0)
       const throw ();
 
+    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
+      const throw ();
+
     virtual void impl_hessian (hessian_t& hessian,
     			       const argument_t& argument,
     			       size_type functionId = 0) const throw ();
@@ -113,10 +118,11 @@ namespace roboptim
     				  double argument,
     				  size_type order = 1) const throw ();
 
-  private:
+  protected:
     boost::shared_ptr<const T> function_;
     mutable std::vector<functionCache_t> cache_;
     mutable std::vector<functionCache_t> gradientCache_;
+    mutable jacobianCache_t jacobianCache_;
     mutable std::vector<hessianCache_t> hessianCache_;
   };
 
