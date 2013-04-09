@@ -95,20 +95,22 @@ namespace roboptim
       ~Gnuplot () throw ();
 
       /// \brief Instanciate a Gnuplot without setting a term.
+      /// \param with_header whether to print the header or not
       /// \return Gnuplot instance
-      static Gnuplot make_gnuplot () throw ()
+      static Gnuplot make_gnuplot (bool with_header = true) throw ()
       {
-	return Gnuplot ();
+	return Gnuplot (with_header);
       }
 
       /// \brief Instanciate a Gnuplot suitable for interactive use.
       ///
       /// This initializes a persistent Gnuplot instance which are
       /// suitable for user interaction.
+      /// \param with_header whether to print the header or not
       /// \return Gnuplot instance
-      static Gnuplot make_interactive_gnuplot () throw ()
+      static Gnuplot make_interactive_gnuplot (bool with_header = true) throw ()
       {
-	Gnuplot gp;
+	Gnuplot gp(with_header);
 	gp.push_command (gnuplot::set ("terminal", "wxt persist"));
 	return gp;
       }
@@ -131,7 +133,7 @@ namespace roboptim
       ///
       /// Use of the named constructor (see static methods) to
       /// instantiate this class.
-      explicit Gnuplot () throw ();
+      explicit Gnuplot (bool with_header = true) throw ();
     private:
       /// \brief Vector of commands.
       std::vector<gnuplot::Command> commands_;

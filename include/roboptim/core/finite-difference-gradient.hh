@@ -30,7 +30,7 @@ namespace roboptim
   /// \brief Default epsilon for finite difference class.
   static const double finiteDifferenceEpsilon = 1e-8;
 
-  /// \brief Exception thrown when a gradient check fail.
+  /// \brief Exception thrown when a gradient check fails.
   template <typename T>
   class BadGradient : public std::runtime_error
   {
@@ -81,6 +81,58 @@ namespace roboptim
   std::ostream& operator<< (std::ostream& o,
 			    const BadGradient<T>& f);
 
+  /// \brief Exception thrown when a Jacobian check fails.
+  template <typename T>
+  class BadJacobian : public std::runtime_error
+  {
+  public:
+    ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+    (GenericDifferentiableFunction<T>);
+
+    /// \brief Default constructor.
+    BadJacobian (const vector_t& x,
+		 const jacobian_t& analyticalJacobian,
+		 const jacobian_t& finiteDifferenceJacobian,
+		 const value_type& threshold);
+
+    virtual ~BadJacobian () throw ();
+
+    /// \brief Display the exception on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
+    virtual std::ostream& print (std::ostream& o) const throw ();
+
+
+    /// \brief Jacobian has been computed for this point.
+    vector_t x_;
+
+    /// \brief Analytical Jacobian.
+    gradient_t analyticalJacobian_;
+
+    /// \brief Jacobian computed through finite differences.
+    gradient_t finiteDifferenceJacobian_;
+
+    /// \brief Maximum error.
+    value_type maxDelta_;
+
+    /// \brief Components containing the maximum error.
+    size_type maxDeltaRow_;
+    size_type maxDeltaCol_;
+
+    /// \brief Allowed threshold.
+    value_type threshold_;
+  };
+
+  /// \brief Override operator<< to handle exception display.
+  ///
+  /// \param o output stream used for display
+  /// \param f function to be displayed
+  /// \return output stream
+  template <typename T>
+  std::ostream& operator<< (std::ostream& o,
+			    const BadJacobian<T>& f);
+
   /// \brief Contains finite difference gradients policies.
   ///
   /// Each class of this algorithm implements a finite difference
@@ -127,6 +179,25 @@ namespace roboptim
     };
   } // end of namespace policy.
 
+  namespace detail
+  {
+    /// \brief Utility structure used to fill the Jacobian matrix while using
+    /// partial template specialization.
+    template<typename T>
+    struct JacobianProcessor
+    {
+      /// \brief Compute the Jacobian with finite differences for the given
+      /// argument.
+      /// \param fd object used to compute the Jacobian with finite difference
+      /// \param jacobian Jacobian matrix which is computed
+      /// \param argument point where the Jacobian will be evaluated
+      template <typename FdgPolicy>
+      static void process(
+			  const GenericFiniteDifferenceGradient<T, FdgPolicy>* fd,
+			  typename GenericDifferentiableFunction<T>::jacobian_t& jacobian,
+			  const typename GenericDifferentiableFunction<T>::argument_t& argument) throw();
+    };
+  }
 
   /// \addtogroup roboptim_function
   /// @{
@@ -165,10 +236,15 @@ namespace roboptim
      value_type e = finiteDifferenceEpsilon) throw ();
     ~GenericFiniteDifferenceGradient () throw ();
 
+    friend struct detail::JacobianProcessor<T>;
+
   protected:
-    void impl_compute (result_t&, const argument_t&) const throw ();
-    void impl_gradient (gradient_t&, const argument_t& argument, size_type = 0)
-      const throw ();
+    virtual void impl_compute (result_t&, const argument_t&) const throw ();
+    virtual void impl_gradient (gradient_t&,
+                                const argument_t& argument,
+                                size_type = 0) const throw ();
+    virtual void impl_jacobian (jacobian_t& jacobian,
+                                const argument_t& argument) const throw ();
 
     /// \brief Reference to the wrapped function.
     const GenericFunction<T>& adaptee_;
@@ -207,6 +283,32 @@ namespace roboptim
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold)
     throw (BadGradient<T>);
+
+  /// \brief Check if a Jacobian is valid.
+  ///
+  /// Check if a Jacobian is valid by comparing the distance between the
+  /// matrix and an automatically computed finite differences Jacobian.
+  /// \param function function that will be checked
+  /// \param x point where the Jacobian will be evaluated
+  /// \param threshold maximum tolerated error
+  /// \return true if valid, false if not
+  template <typename T>
+  bool
+  checkJacobian
+  (const GenericDifferentiableFunction<T>& function,
+   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::value_type threshold =
+   finiteDifferenceThreshold)
+    throw ();
+
+  template <typename T>
+  void
+  checkJacobianAndThrow
+  (const GenericDifferentiableFunction<T>& function,
+   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::value_type threshold =
+   finiteDifferenceThreshold)
+    throw (BadJacobian<T>);
 
   /// Example shows finite differences gradient use.
   /// \example finite-difference-gradient.cc

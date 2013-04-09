@@ -276,6 +276,27 @@ displayGradient
 	    << "#" << fdgrad << std::endl;
 }
 
+template <>
+void
+displayGradient<roboptim::EigenMatrixSparse>
+(boost::shared_ptr<boost::test_tools::output_test_stream> output,
+ const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>& function,
+ const typename GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
+ vector_t& x,
+ typename GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
+ size_type i)
+{
+  GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>
+    fdfunction (function);
+  typename GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
+    gradient_t grad = function.gradient (x, i);
+  typename GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
+    gradient_t fdgrad = fdfunction.gradient (x, i);
+
+  (*output) << "#" << sparse_to_dense(grad) << std::endl
+	    << "#" << sparse_to_dense(fdgrad) << std::endl;
+}
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
@@ -323,7 +344,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
 	BOOST_CHECK (checkGradient (times, 0, x));
       }
 
-  Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot ();
+  Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot (false);
 
   GenericFiniteDifferenceGradient<
     T,
@@ -346,7 +367,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
 	<< plot (p_fd, interval)
 	<< unset ("multiplot")
 	);
+
   std::cout << output->str () << std::endl;
+
+  BOOST_CHECK (output->match_pattern ());
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
