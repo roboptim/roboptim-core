@@ -22,6 +22,38 @@
 
 namespace roboptim
 {
+  template <>
+  inline BadGradient<EigenMatrixSparse>::BadGradient
+  (const vector_t& x,
+   const gradient_t& analyticalGradient,
+   const gradient_t& finiteDifferenceGradient,
+   const value_type& threshold)
+    : std::runtime_error ("bad gradient"),
+      x_ (x),
+      analyticalGradient_ (analyticalGradient),
+      finiteDifferenceGradient_ (finiteDifferenceGradient),
+      maxDelta_ (),
+      maxDeltaComponent_ (),
+      threshold_ (threshold)
+  {
+    assert (analyticalGradient.size () ==
+	    finiteDifferenceGradient.size ());
+
+    maxDelta_ = -std::numeric_limits<Function::value_type>::infinity ();
+    for (size_type i = 0; i < analyticalGradient.size (); ++i)
+      {
+	value_type delta =
+	  std::fabs (analyticalGradient.coeff (i)
+		     - finiteDifferenceGradient.coeff (i));
+
+	if (delta > maxDelta_)
+	  {
+	    maxDelta_ = delta;
+	    maxDeltaComponent_ = i;
+	  }
+      }
+  }
+
   template <typename T>
   BadGradient<T>::BadGradient (const vector_t& x,
 			       const gradient_t& analyticalGradient,
@@ -35,7 +67,8 @@ namespace roboptim
       maxDeltaComponent_ (),
       threshold_ (threshold)
   {
-    assert (analyticalGradient.size () == finiteDifferenceGradient.size ());
+    assert (analyticalGradient.size () ==
+	    finiteDifferenceGradient.size ());
 
     maxDelta_ = -std::numeric_limits<Function::value_type>::infinity ();
     for (size_type i = 0; i < analyticalGradient.size (); ++i)
@@ -150,9 +183,9 @@ namespace roboptim
     throw (BadGradient<T>)
   {
     GenericFiniteDifferenceGradient<T> fdfunction (function);
-    DifferentiableFunction::gradient_t grad =
+    typename GenericFiniteDifferenceGradient<T>::gradient_t grad =
       function.gradient (x, functionId);
-    DifferentiableFunction::gradient_t fdgrad =
+    typename GenericFiniteDifferenceGradient<T>::gradient_t fdgrad =
       fdfunction.gradient (x, functionId);
 
     if (!checkGradient (function, functionId, x, threshold))
