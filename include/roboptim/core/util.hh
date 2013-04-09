@@ -63,6 +63,7 @@ namespace roboptim
   GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
   (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t&);
 
+  /// \brief Convert a sparse vector into a dense vector.
   GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
   (const GenericFunctionTraits<EigenMatrixSparse>::gradient_t& v);
 

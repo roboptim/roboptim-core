@@ -84,6 +84,7 @@ ROBOPTIM_CORE_TEST(plugin-laststate)
 
 # Algorithm.
 ROBOPTIM_CORE_TEST(finite-difference-gradient)
+ROBOPTIM_CORE_TEST(finite-difference-jacobian)
 
 # Built-in mathematical functions.
 ROBOPTIM_CORE_TEST(identity-function)

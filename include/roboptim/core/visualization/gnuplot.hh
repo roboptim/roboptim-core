@@ -95,6 +95,7 @@ namespace roboptim
       ~Gnuplot () throw ();
 
       /// \brief Instanciate a Gnuplot without setting a term.
+      /// \param with_header whether to print the header or not
       /// \return Gnuplot instance
       static Gnuplot make_gnuplot (bool with_header = true) throw ()
       {
@@ -105,6 +106,7 @@ namespace roboptim
       ///
       /// This initializes a persistent Gnuplot instance which are
       /// suitable for user interaction.
+      /// \param with_header whether to print the header or not
       /// \return Gnuplot instance
       static Gnuplot make_interactive_gnuplot (bool with_header = true) throw ()
       {
