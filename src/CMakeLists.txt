@@ -46,7 +46,7 @@ PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 TARGET_LINK_LIBRARIES(roboptim-core ltdl)
-SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 2.0.0)
+SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 2 VERSION 2.0.0)
 INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 
@@ -56,7 +56,7 @@ ADD_DEPENDENCIES(roboptim-core-plugin-dummy roboptim-core)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES
   PREFIX ""
-  SOVERSION 2.0.0)
+  VERSION 2.0.0 SOVERSION 2)
 INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
 
 # Dummy-laststate plug-in.
@@ -65,5 +65,5 @@ ADD_DEPENDENCIES(roboptim-core-plugin-dummy-laststate roboptim-core)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-laststate roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES
   PREFIX ""
-  SOVERSION 2.0.0)
+  VERSION 2.0.0 SOVERSION 2)
 INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
