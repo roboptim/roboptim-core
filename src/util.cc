@@ -56,4 +56,30 @@ namespace roboptim
 	  assert (dst[i] == src[i]);
     }
   } // end of namespace detail.
+
+  GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
+  (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& m)
+  {
+    GenericFunctionTraits<EigenMatrixDense>::matrix_t
+      dense(m.rows(), m.cols());
+    for (int k = 0; k < m.outerSize(); ++k)
+      for (GenericFunctionTraits<EigenMatrixSparse>::matrix_t::InnerIterator
+	     it(m,k); it; ++it)
+	{
+	  dense(it.row(), it.col()) = it.value();
+	}
+    return dense;
+  }
+
+  GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
+  (const GenericFunctionTraits<EigenMatrixSparse>::gradient_t& v)
+  {
+    GenericFunctionTraits<EigenMatrixDense>::vector_t dense(v.size());
+    for (GenericFunctionTraits<EigenMatrixSparse>::gradient_t::InnerIterator
+           it(v); it; ++it)
+      {
+	dense(it.index()) = it.value();
+      }
+    return dense;
+  }
 } // end of namespace roboptim.

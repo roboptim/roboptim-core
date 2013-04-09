@@ -126,6 +126,67 @@ namespace roboptim
     assert (epsilon != 0. && epsilon == epsilon);
   }
 
+  template <typename T>
+  BadJacobian<T>::BadJacobian (const vector_t& x,
+                               const jacobian_t& analyticalJacobian,
+                               const jacobian_t& finiteDifferenceJacobian,
+                               const value_type& threshold)
+    : std::runtime_error ("bad jacobian"),
+      x_ (x),
+      analyticalJacobian_ (analyticalJacobian),
+      finiteDifferenceJacobian_ (finiteDifferenceJacobian),
+      maxDelta_ (),
+      maxDeltaRow_ (),
+      maxDeltaCol_ (),
+      threshold_ (threshold)
+  {
+    assert (analyticalJacobian.rows () == finiteDifferenceJacobian.rows ());
+    assert (analyticalJacobian.cols () == finiteDifferenceJacobian.cols ());
+
+    maxDelta_ = -std::numeric_limits<Function::value_type>::infinity ();
+    for (size_type i = 0; i < analyticalJacobian.rows (); ++i)
+      for (size_type j = 0; j < analyticalJacobian.cols (); ++j)
+	{
+          value_type delta =
+	    std::fabs (analyticalJacobian(i,j)
+		       - finiteDifferenceJacobian(i,j));
+
+          if (delta > maxDelta_)
+	    {
+              maxDelta_ = delta;
+              maxDeltaRow_ = i;
+              maxDeltaCol_ = j;
+	    }
+	}
+  }
+
+  template <typename T>
+  BadJacobian<T>::~BadJacobian () throw ()
+  {}
+
+  template <typename T>
+  std::ostream&
+  BadJacobian<T>::print (std::ostream& o) const throw ()
+  {
+    o << this->what () << incindent << iendl
+      << "X: " << x_ << iendl
+      << "Analytical Jacobian: " << analyticalJacobian_ << iendl
+      << "Finite difference Jacobian: " << finiteDifferenceJacobian_
+      << iendl
+      << "Max. delta: " << maxDelta_ << iendl
+      << "Max. delta in row: " << maxDeltaRow_ << iendl
+      << "Max. delta in column: " << maxDeltaCol_ << iendl
+      << "Max. allowed delta: " << threshold_ << decindent;
+    return o;
+  }
+
+  template <typename T>
+  std::ostream&
+  operator<< (std::ostream& o, const BadJacobian<T>& bj)
+  {
+    return bj.print (o);
+  }
+
   template <typename T, typename FdgPolicy>
   GenericFiniteDifferenceGradient<
     T, FdgPolicy>::~GenericFiniteDifferenceGradient () throw ()
@@ -152,6 +213,18 @@ namespace roboptim
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     this->computeGradient (adaptee_, epsilon_, gradient,
 			   argument, idFunction, xEps_);
+  }
+
+  template <typename T, typename FdgPolicy>
+  void
+  GenericFiniteDifferenceGradient<T, FdgPolicy>::impl_jacobian
+  (jacobian_t& jacobian,
+   const argument_t& argument) const throw ()
+  {
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    detail::JacobianProcessor<T>::process(this, jacobian, argument);
   }
 
   template <typename T>
@@ -190,6 +263,42 @@ namespace roboptim
 
     if (!checkGradient (function, functionId, x, threshold))
       throw BadGradient<T> (x, grad, fdgrad, threshold);
+  }
+
+  template <typename T>
+  bool
+  checkJacobian
+  (const GenericDifferentiableFunction<T>& function,
+   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::value_type threshold)
+    throw ()
+  {
+    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    typename GenericDifferentiableFunction<T>::jacobian_t jac =
+      function.jacobian (x);
+    typename GenericDifferentiableFunction<T>::jacobian_t fdjac =
+      fdfunction.jacobian (x);
+
+    return jac.isApprox (fdjac, threshold);
+    return true;
+  }
+
+  template <typename T>
+  void
+  checkJacobianAndThrow
+  (const GenericDifferentiableFunction<T>& function,
+   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::value_type threshold)
+    throw (BadJacobian<T>)
+  {
+    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    DifferentiableFunction::jacobian_t jac =
+      function.jacobian (x);
+    DifferentiableFunction::jacobian_t fdjac =
+      fdfunction.jacobian (x);
+
+    if (!checkJacobian (function, x, threshold))
+      throw BadJacobian<T> (x, jac, fdjac, threshold);
   }
 
   namespace detail
@@ -260,6 +369,72 @@ namespace roboptim
       result = r5 / h;
       trunc = std::fabs ((r5 - r3) / h); // Estimated truncation error O(h^2)
       round = std::fabs (e5 / h) + dy; // Rounding error (cancellations)
+    }
+
+    template<typename T>
+    template<typename FdgPolicy>
+    void JacobianProcessor<T>::process
+    (
+     const GenericFiniteDifferenceGradient<T, FdgPolicy>* fd,
+     typename GenericDifferentiableFunction<T>::
+     jacobian_t& jacobian,
+     const typename GenericDifferentiableFunction<T>::
+     argument_t& argument)
+      throw()
+    {
+      typename GenericDifferentiableFunction<T>::gradient_t grad;
+      grad.resize(jacobian.cols());
+
+      for (typename GenericDifferentiableFunction<T>::
+             jacobian_t::Index i = 0; i < fd->outputSize(); ++i)
+        {
+	  grad.setZero();
+	  fd->computeGradient (fd->adaptee_, fd->epsilon_, grad,
+			       argument, i, fd->xEps_);
+	  jacobian.row (i) = grad;
+        }
+    }
+
+    template<>
+    template<typename FdgPolicy>
+    void JacobianProcessor<EigenMatrixSparse>::process
+    (
+     const GenericFiniteDifferenceGradient<EigenMatrixSparse, FdgPolicy>* fd,
+     typename GenericDifferentiableFunction<EigenMatrixSparse>::
+     jacobian_t& jacobian,
+     const typename GenericDifferentiableFunction<EigenMatrixSparse>::
+     argument_t& argument)
+      throw()
+    {
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
+      typedef GenericDifferentiableFunction<EigenMatrixSparse>::jacobian_t
+	jacobian_t;
+      typedef GenericDifferentiableFunction<EigenMatrixSparse>::argument_t
+	argument_t;
+      typedef GenericDifferentiableFunction<EigenMatrixSparse>::gradient_t
+	gradient_t;
+      typedef Eigen::Triplet<double> triplet_t;
+
+      std::vector<triplet_t> coefficients;
+      for (typename jacobian_t::Index i = 0; i < fd->outputSize (); ++i)
+	{
+	  gradient_t grad;
+	  fd->computeGradient (fd->adaptee_, fd->epsilon_, grad,
+			       argument, i, fd->xEps_);
+
+	  const unsigned int i_ = static_cast<const unsigned int> (i);
+	  for (gradient_t::InnerIterator it (grad); it; ++it)
+	    {
+	      const unsigned int idx =
+		static_cast<const unsigned int> (it.index ());
+	      coefficients.push_back
+		(triplet_t (i_, idx, it.value ()));
+	    }
+	}
+      jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
     }
 
   } // end of namespace detail.
