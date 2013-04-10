@@ -242,8 +242,7 @@ namespace roboptim
     typename GenericDifferentiableFunction<T>::gradient_t fdgrad =
       fdfunction.gradient (x, functionId);
 
-    return grad.isApprox (fdgrad, threshold);
-    return true;
+    return allclose(grad, fdgrad, threshold, threshold);
   }
 
   template <typename T>
@@ -279,8 +278,7 @@ namespace roboptim
     typename GenericDifferentiableFunction<T>::jacobian_t fdjac =
       fdfunction.jacobian (x);
 
-    return jac.isApprox (fdjac, threshold);
-    return true;
+    return allclose(jac, fdjac, threshold, threshold);
   }
 
   template <typename T>

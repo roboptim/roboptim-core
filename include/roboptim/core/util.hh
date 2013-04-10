@@ -67,6 +67,30 @@ namespace roboptim
   GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
   (const GenericFunctionTraits<EigenMatrixSparse>::gradient_t& v);
 
+  /// \brief Compare dense vectors (matrices) using both relative and absolute
+  /// tolerances.
+  /// \see http://stackoverflow.com/a/15052131/1043187
+  template<typename DerivedA, typename DerivedB>
+  bool allclose
+  (const Eigen::DenseBase<DerivedA>& a,
+   const Eigen::DenseBase<DerivedB>& b,
+   const typename DerivedA::RealScalar& rtol
+   = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
+   const typename DerivedA::RealScalar& atol
+   = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon());
+
+  /// \brief Compare sparse vectors (matrices) using both relative and absolute
+  /// tolerances.
+  /// \see http://stackoverflow.com/a/15052131/1043187
+  template<typename DerivedA, typename DerivedB>
+  bool allclose
+  (const Eigen::SparseMatrix<DerivedA>& a,
+   const Eigen::SparseMatrix<DerivedB>& b,
+   const typename DerivedA::RealScalar& rtol
+   = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
+   const typename DerivedA::RealScalar& atol
+   = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon());
+
 } // end of namespace roboptim.
 
 # include <roboptim/core/util.hxx>
