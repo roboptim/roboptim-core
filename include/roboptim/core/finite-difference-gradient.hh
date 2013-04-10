@@ -218,7 +218,7 @@ namespace roboptim
   template <typename T, typename FdgPolicy>
   class GenericFiniteDifferenceGradient
     : public GenericDifferentiableFunction<T>,
-      private FdgPolicy
+      protected FdgPolicy
   {
   public:
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
