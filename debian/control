@@ -27,6 +27,7 @@ Depends: libltdl-dev,
 	 libeigen3-dev,
 	 libboost-all-dev,
 	 liblog4cxx10-dev,
+	 pkg-config,
 	 libroboptim-core2 (= ${binary:Version}),
          ${misc:Depends}
 Suggests: libroboptim-core-doc
@@ -51,11 +52,30 @@ Description: numerical optimization library
  packages which are focusing on different kind of problem related to
  robotics, especially humanoid robotics.
 
+Package: libroboptim-core2-plugin-base
+Architecture: any
+Multi-Arch: same
+Depends: libroboptim-core2 (= ${binary:Version}),
+	 ${shlibs:Depends},
+	 ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Enhances: libroboptim-core2
+Description: numerical optimization library - core plug-ins
+ RobOptim is a set of packages designed to make robotics non-linear
+ optimization problem easier to solve. It is composed of several
+ packages which are focusing on different kind of problem related to
+ robotics, especially humanoid robotics.
+ .
+ This package contains dummy plug-ins for demonstration and
+ documentation purpose.
+
 Package: libroboptim-core2-dbg
 Architecture: any
 Section: debug
+Multi-Arch: same
 Depends: libroboptim-core2 (= ${binary:Version}),
          ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
 Description: numerical optimization library - debugging symbols
  RobOptim is a set of packages designed to make robotics non-linear
  optimization problem easier to solve. It is composed of several

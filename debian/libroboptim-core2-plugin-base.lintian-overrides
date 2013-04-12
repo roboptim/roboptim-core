@@ -1,0 +1,4 @@
+# false positive
+hardening-no-fortify-functions usr/lib/x86_64-linux-gnu/roboptim-core/roboptim-core-plugin-dummy-laststate.so.2.0.0
+# false positive
+hardening-no-fortify-functions usr/lib/x86_64-linux-gnu/roboptim-core/roboptim-core-plugin-dummy.so.2.0.0
