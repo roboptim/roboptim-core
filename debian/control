@@ -31,6 +31,7 @@ Depends: libltdl-dev,
 	 libroboptim-core2 (= ${binary:Version}),
          ${misc:Depends}
 Suggests: libroboptim-core-doc
+Multi-Arch: same
 Description: numerical optimization library - development files
  RobOptim is a set of packages designed to make robotics non-linear
  optimization problem easier to solve. It is composed of several
@@ -88,6 +89,7 @@ Package: libroboptim-core-doc
 Architecture: all
 Section: doc
 Depends: ${misc:Depends}
+Multi-Arch: foreign
 Description: numerical optimization library - documentation
  RobOptim is a set of packages designed to make robotics non-linear
  optimization problem easier to solve. It is composed of several
