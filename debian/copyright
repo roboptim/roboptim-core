@@ -8,6 +8,11 @@ Copyright: 2009 Thomas Moulard, AIST, CNRS, INRIA
 License: LGPL-3
  See `/usr/share/common-licenses/LGPL-3'.
 
+Files: debian/*
+Copyright: 2013 Thomas Moulard, AIST, CNRS, INRIA
+License: LGPL-3
+ See `/usr/share/common-licenses/LGPL-3'.
+
 Files: src/solver.cc
 Copyright: 2010 Thomas Moulard, AIST, CNRS, INRIA
 License: LGPL-3
