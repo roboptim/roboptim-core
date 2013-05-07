@@ -4,6 +4,16 @@ Upstream-Contact: roboptim@googlegroups.com
 Source: http://www.roboptim.net/
 
 Files: *
-Copyright: 2009-2013 Thomas Moulard, AIST, CNRS, INRIA
+Copyright: 2009 Thomas Moulard, AIST, CNRS, INRIA
+License: LGPL-3
+ See `/usr/share/common-licenses/LGPL-3'.
+
+Files: src/solver.cc
+Copyright: 2010 Thomas Moulard, AIST, CNRS, INRIA
+License: LGPL-3
+ See `/usr/share/common-licenses/LGPL-3'.
+
+Files: src/sum-of-c1-squares.cc
+Copyright: 2011 Thomas Moulard, CNRS
 License: LGPL-3
  See `/usr/share/common-licenses/LGPL-3'.
