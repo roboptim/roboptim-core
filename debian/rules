@@ -22,7 +22,7 @@ CXXFLAGS+=-fvisibility=hidden
 	override_dh_makeshlibs
 
 %:
-	dh  $@ --parallel --with pkgkde_symbolshelper
+	dh  $@ --parallel --with pkgkde-symbolshelper
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
