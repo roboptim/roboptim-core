@@ -172,14 +172,14 @@ template <>
 void displayJacobian<roboptim::EigenMatrixSparse>
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>& function,
- const typename GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
+ const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
  vector_t& x)
 {
   GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>
     fdfunction (function);
-  typename GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
+  GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
     jacobian_t jac = function.jacobian (x);
-  typename GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
+  GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
     jacobian_t fdjac = fdfunction.jacobian (x);
 
   (*output) << "#" << sparse_to_dense(jac) << std::endl

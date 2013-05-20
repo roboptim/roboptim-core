@@ -281,16 +281,16 @@ void
 displayGradient<roboptim::EigenMatrixSparse>
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>& function,
- const typename GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
+ const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
  vector_t& x,
- typename GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
+ GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
  size_type i)
 {
   GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>
     fdfunction (function);
-  typename GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
+  GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
     gradient_t grad = function.gradient (x, i);
-  typename GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
+  GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
     gradient_t fdgrad = fdfunction.gradient (x, i);
 
   (*output) << "#" << sparse_to_dense(grad) << std::endl

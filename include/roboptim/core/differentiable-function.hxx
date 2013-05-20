@@ -44,7 +44,7 @@ namespace roboptim
 
       typedef Eigen::Triplet<double> triplet_t;
       std::vector<triplet_t> coefficients;
-      for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
+      for (jacobian_t::Index i = 0; i < this->outputSize (); ++i)
 	{
 	  gradient_t grad = gradient (argument, i);
 	  const unsigned int i_ = static_cast<const unsigned int> (i);

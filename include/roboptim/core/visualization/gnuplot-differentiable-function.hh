@@ -83,8 +83,10 @@ namespace roboptim
 	str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
 	str += "notitle matrix with image\n";
 
-	for (unsigned int cstr_id = 0; cstr_id < jac.rows(); ++cstr_id)
-	  for (unsigned int out_id = 0; out_id < jac.cols(); ++out_id)
+	for (DifferentiableFunction::jacobian_t::Index cstr_id = 0;
+	     cstr_id < jac.rows(); ++cstr_id)
+	  for (DifferentiableFunction::jacobian_t::Index out_id = 0;
+	       out_id < jac.cols(); ++out_id)
 	    {
 	      str += (boost::format("%1.2f")
 		      % normalize(jac(cstr_id, out_id))).str();
