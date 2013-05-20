@@ -1,6 +1,7 @@
 roboptim-core (2.0-2) unstable; urgency=low
 
   * Fix compilation on 32-bits architecture.
+  * Remove hardening-wrapper.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Mon, 20 May 2013 11:47:44 +0900
 

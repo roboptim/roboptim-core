@@ -4,7 +4,6 @@ Uploaders: Thomas Moulard <thomas.moulard@gmail.com>
 Section: libs
 Priority: extra
 Build-Depends: debhelper (>= 9),
-	       hardening-wrapper,
 	       pkg-kde-tools (>= 0.6),
                cmake,
 	       pkg-config,
