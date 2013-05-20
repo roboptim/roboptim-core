@@ -1,0 +1,43 @@
+From: Thomas Moulard <thomas.moulard@gmail.com>
+Date: Sun, 19 May 2013 19:38:41 -0700
+Subject: Fix warnings with gcc-4.4.3 (32-bits architecture).
+
+Fix warnings with gcc-4.4.3 (32-bits architecture).
+
+Forwarded: yes
+Author: Thomas Moulard <thomas.moulard@gmail.com>
+---
+ include/roboptim/core/differentiable-function.hxx                |    2 +-
+ .../core/visualization/gnuplot-differentiable-function.hh        |    6 ++++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/include/roboptim/core/differentiable-function.hxx b/include/roboptim/core/differentiable-function.hxx
+index 385cd20..eb2b93d 100644
+--- a/include/roboptim/core/differentiable-function.hxx
++++ b/include/roboptim/core/differentiable-function.hxx
+@@ -44,7 +44,7 @@ namespace roboptim
+ 
+       typedef Eigen::Triplet<double> triplet_t;
+       std::vector<triplet_t> coefficients;
+-      for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
++      for (jacobian_t::Index i = 0; i < this->outputSize (); ++i)
+ 	{
+ 	  gradient_t grad = gradient (argument, i);
+ 	  const unsigned int i_ = static_cast<const unsigned int> (i);
+diff --git a/include/roboptim/core/visualization/gnuplot-differentiable-function.hh b/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
+index 6283d7a..4e99985 100644
+--- a/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
++++ b/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
+@@ -65,8 +65,10 @@ namespace roboptim
+ 	str += "plot '-' using 1:2:($3 == 0 ? 0 : 1) matrix with image\n";
+ 
+ 
+-	for (unsigned int cstr_id = 0; cstr_id < jac.rows(); ++cstr_id)
+-	  for (unsigned int out_id = 0; out_id < jac.cols(); ++out_id)
++	for (DifferentiableFunction::jacobian_t::Index cstr_id = 0;
++	     cstr_id < jac.rows(); ++cstr_id)
++	  for (DifferentiableFunction::jacobian_t::Index out_id = 0;
++	       out_id < jac.cols(); ++out_id)
+ 	    {
+ 	      str += (boost::format("%1.2f")
+ 		      % normalize(jac(cstr_id, out_id))).str();
