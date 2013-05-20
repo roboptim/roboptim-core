@@ -1,6 +1,6 @@
 roboptim-core (2.0-2) unstable; urgency=low
 
-  * Fix compilation on 32-bits architecture.
+  * Fix compilation on 32-bits architecture (Closes: #708604).
   * Remove hardening-wrapper.
   * Update symbols using pkgkde-getbuildlogs and pkgkde-symbolshelper.
 
