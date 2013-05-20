@@ -1,3 +1,10 @@
+roboptim-core (2.0-3) unstable; urgency=low
+
+  * Update symbols for the following architectures: amd64 armhf i386 ia64
+  kfreebsd-amd64 kfreebsd-i386 powerpc s390 s390x sparc
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Mon, 20 May 2013 18:27:18 +0900
+
 roboptim-core (2.0-2) unstable; urgency=low
 
   * Fix compilation on 32-bits architecture (Closes: #708604).
