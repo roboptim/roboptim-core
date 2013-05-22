@@ -82,7 +82,6 @@ libroboptim-core.so.2 libroboptim-core2 #MINVER#
  _ZN8roboptim6ResultD0Ev@Base 2.0
  _ZN8roboptim6ResultD1Ev@Base 2.0
  _ZN8roboptim6ResultD2Ev@Base 2.0
- (arch=amd64)_ZN8roboptim6ResultaSERKS0_@Base 2.0
  _ZN8roboptim6detail15array_to_vectorERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEEPKd@Base 2.0
  _ZN8roboptim6detail15vector_to_arrayEPdRKN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEE@Base 2.0
  _ZN8roboptim6indentERSo@Base 2.0
