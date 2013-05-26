@@ -9,7 +9,10 @@ Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  include/roboptim/core/differentiable-function.hxx                |    2 +-
  .../core/visualization/gnuplot-differentiable-function.hh        |    6 ++++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ include/roboptim/core/solver-factory.hxx             |    5 +++--
+ src/dummy-laststate.cc                               |    4 ++--
+ src/dummy.cc                                         |    4 ++--
+ 5 files changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/include/roboptim/core/differentiable-function.hxx b/include/roboptim/core/differentiable-function.hxx
 index 385cd20..eb2b93d 100644
@@ -41,3 +44,70 @@ index 6283d7a..4e99985 100644
  	    {
  	      str += (boost::format("%1.2f")
  		      % normalize(jac(cstr_id, out_id))).str();
+diff --git a/include/roboptim/core/solver-factory.hxx b/include/roboptim/core/solver-factory.hxx
+index 85d6de0..4c439e7 100644
+--- a/include/roboptim/core/solver-factory.hxx
++++ b/include/roboptim/core/solver-factory.hxx
+@@ -17,6 +17,7 @@
+ 
+ #ifndef ROBOPTIM_CORE_SOLVER_FACTORY_HXX
+ # define ROBOPTIM_CORE_SOLVER_FACTORY_HXX
++# include <cstddef>
+ # include <sstream>
+ 
+ namespace roboptim
+@@ -45,7 +46,7 @@ namespace roboptim
+     : handle_ (),
+       solver_ ()
+   {
+-    typedef unsigned getsizeofproblem_t ();
++    typedef std::size_t getsizeofproblem_t ();
+     typedef solver_t* create_t (const problem_t&);
+ 
+     if (lt_dlinit () > 0)
+@@ -76,7 +77,7 @@ namespace roboptim
+ 	throw std::runtime_error (sserror.str ().c_str ());
+       }
+ 
+-    unsigned sizeOfProblem = getSizeOfProblem ();
++    std::size_t sizeOfProblem = getSizeOfProblem ();
+     if (sizeOfProblem != sizeof (typename solver_t::problem_t))
+       {
+ 	std::stringstream sserror;
+diff --git a/src/dummy-laststate.cc b/src/dummy-laststate.cc
+index 28afb92..514c63e 100644
+--- a/src/dummy-laststate.cc
++++ b/src/dummy-laststate.cc
+@@ -61,12 +61,12 @@ extern "C"
+   using namespace roboptim;
+   typedef DummySolverLastState::parent_t solver_t;
+ 
+-  ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ();
++  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ();
+   ROBOPTIM_DLLEXPORT solver_t* create
+     (const DummySolverLastState::problem_t& pb);
+   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
+ 
+-  ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ()
++  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ()
+   {
+     return sizeof (solver_t::problem_t);
+   }
+diff --git a/src/dummy.cc b/src/dummy.cc
+index 98bde30..cdb3164 100644
+--- a/src/dummy.cc
++++ b/src/dummy.cc
+@@ -53,11 +53,11 @@ extern "C"
+   using namespace roboptim;
+   typedef DummySolver::parent_t solver_t;
+ 
+-  ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ();
++  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ();
+   ROBOPTIM_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb);
+   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
+ 
+-  ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ()
++  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ()
+   {
+     return sizeof (solver_t::problem_t);
+   }
