@@ -1,3 +1,10 @@
+roboptim-core (2.0-4) unstable; urgency=low
+
+  * Update symbols for amd64 armhf hurd-i386 i386 ia64 kfreebsd-amd64
+  kfreebsd-i386 powerpc s390 s390x sparc (Closes: #709113).
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Sun, 26 May 2013 22:20:18 +0900
+
 roboptim-core (2.0-3) unstable; urgency=low
 
   * Update symbols for the following architectures: amd64 armhf i386 ia64
