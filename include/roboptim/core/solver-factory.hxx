@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_FACTORY_HXX
 # define ROBOPTIM_CORE_SOLVER_FACTORY_HXX
+# include <cstddef>
 # include <sstream>
 
 namespace roboptim
@@ -45,7 +46,7 @@ namespace roboptim
     : handle_ (),
       solver_ ()
   {
-    typedef unsigned getsizeofproblem_t ();
+    typedef std::size_t getsizeofproblem_t ();
     typedef solver_t* create_t (const problem_t&);
 
     if (lt_dlinit () > 0)
@@ -76,7 +77,7 @@ namespace roboptim
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
-    unsigned sizeOfProblem = getSizeOfProblem ();
+    std::size_t sizeOfProblem = getSizeOfProblem ();
     if (sizeOfProblem != sizeof (typename solver_t::problem_t))
       {
 	std::stringstream sserror;

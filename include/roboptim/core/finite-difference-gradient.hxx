@@ -412,8 +412,6 @@ namespace roboptim
 
       typedef GenericDifferentiableFunction<EigenMatrixSparse>::jacobian_t
 	jacobian_t;
-      typedef GenericDifferentiableFunction<EigenMatrixSparse>::argument_t
-	argument_t;
       typedef GenericDifferentiableFunction<EigenMatrixSparse>::gradient_t
 	gradient_t;
       typedef Eigen::Triplet<double> triplet_t;

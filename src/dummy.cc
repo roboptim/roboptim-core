@@ -53,11 +53,11 @@ extern "C"
   using namespace roboptim;
   typedef DummySolver::parent_t solver_t;
 
-  ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ();
+  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ();
   ROBOPTIM_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb);
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
 
-  ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ()
+  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ()
   {
     return sizeof (solver_t::problem_t);
   }
