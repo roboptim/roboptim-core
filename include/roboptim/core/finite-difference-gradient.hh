@@ -139,11 +139,35 @@ namespace roboptim
   /// gradient computation algorithm.
   namespace finiteDifferenceGradientPolicies
   {
+    /// \brief Interface for the finite difference gradient policies.
+    template <typename T>
+    class Policy
+    {
+    public:
+      ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+      (GenericDifferentiableFunction<T>);
+
+      virtual void computeGradient
+      (const GenericFunction<T>& adaptee,
+       value_type epsilon,
+       gradient_t& gradient,
+       const argument_t& argument,
+       size_type idFunction,
+       argument_t& xEps) const throw () = 0;
+
+      virtual void computeJacobian
+      (const GenericFunction<T>& adaptee,
+       value_type epsilon,
+       jacobian_t& jacobian,
+       const argument_t& argument,
+       argument_t& xEps) const throw ();
+    };
+
     /// \brief Fast finite difference gradient computation.
     ///
     /// Finite difference is computed using forward difference.
     template <typename T>
-    class Simple
+    class Simple : public Policy<T>
     {
     public:
       ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
@@ -163,7 +187,7 @@ namespace roboptim
     /// Finite difference is computed using five-points stencil
     /// (i.e. \f$\{x-2h, x-h, x, x+h, x+2h\}\f$).
     template <typename T>
-    class FivePointsRule
+    class FivePointsRule : public Policy<T>
     {
     public:
       ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
@@ -179,25 +203,6 @@ namespace roboptim
     };
   } // end of namespace policy.
 
-  namespace detail
-  {
-    /// \brief Utility structure used to fill the Jacobian matrix while using
-    /// partial template specialization.
-    template<typename T>
-    struct JacobianProcessor
-    {
-      /// \brief Compute the Jacobian with finite differences for the given
-      /// argument.
-      /// \param fd object used to compute the Jacobian with finite difference
-      /// \param jacobian Jacobian matrix which is computed
-      /// \param argument point where the Jacobian will be evaluated
-      template <typename FdgPolicy>
-      static void process(
-			  const GenericFiniteDifferenceGradient<T, FdgPolicy>* fd,
-			  typename GenericDifferentiableFunction<T>::jacobian_t& jacobian,
-			  const typename GenericDifferentiableFunction<T>::argument_t& argument) throw();
-    };
-  }
 
   /// \addtogroup roboptim_function
   /// @{
@@ -218,7 +223,7 @@ namespace roboptim
   template <typename T, typename FdgPolicy>
   class GenericFiniteDifferenceGradient
     : public GenericDifferentiableFunction<T>,
-      private FdgPolicy
+      protected FdgPolicy
   {
   public:
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
@@ -235,8 +240,6 @@ namespace roboptim
     (const GenericFunction<T>& f,
      value_type e = finiteDifferenceEpsilon) throw ();
     ~GenericFiniteDifferenceGradient () throw ();
-
-    friend struct detail::JacobianProcessor<T>;
 
   protected:
     virtual void impl_compute (result_t&, const argument_t&) const throw ();

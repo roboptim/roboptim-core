@@ -224,7 +224,7 @@ namespace roboptim
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    detail::JacobianProcessor<T>::process(this, jacobian, argument);
+    this->computeJacobian(adaptee_, epsilon_, jacobian, argument, xEps_);
   }
 
   template <typename T>
@@ -242,8 +242,7 @@ namespace roboptim
     typename GenericDifferentiableFunction<T>::gradient_t fdgrad =
       fdfunction.gradient (x, functionId);
 
-    return grad.isApprox (fdgrad, threshold);
-    return true;
+    return allclose(grad, fdgrad, threshold, threshold);
   }
 
   template <typename T>
@@ -279,8 +278,7 @@ namespace roboptim
     typename GenericDifferentiableFunction<T>::jacobian_t fdjac =
       fdfunction.jacobian (x);
 
-    return jac.isApprox (fdjac, threshold);
-    return true;
+    return allclose(jac, fdjac, threshold, threshold);
   }
 
   template <typename T>
@@ -370,75 +368,62 @@ namespace roboptim
       trunc = std::fabs ((r5 - r3) / h); // Estimated truncation error O(h^2)
       round = std::fabs (e5 / h) + dy; // Rounding error (cancellations)
     }
+  } // end of namespace detail.
 
-    template<typename T>
-    template<typename FdgPolicy>
-    void JacobianProcessor<T>::process
-    (
-     const GenericFiniteDifferenceGradient<T, FdgPolicy>* fd,
-     typename GenericDifferentiableFunction<T>::
+  namespace finiteDifferenceGradientPolicies
+  {
+
+    template <>
+    void
+    Policy<EigenMatrixSparse>::computeJacobian
+    (const GenericFunction<EigenMatrixSparse>& adaptee,
+     value_type epsilon,
      jacobian_t& jacobian,
-     const typename GenericDifferentiableFunction<T>::
-     argument_t& argument)
-      throw()
+     const argument_t& argument,
+     argument_t& xEps) const throw ()
     {
-      typename GenericDifferentiableFunction<T>::gradient_t grad;
-      grad.resize(jacobian.cols());
-
-      for (typename GenericDifferentiableFunction<T>::
-             jacobian_t::Index i = 0; i < fd->outputSize(); ++i)
-        {
-	  grad.setZero();
-	  fd->computeGradient (fd->adaptee_, fd->epsilon_, grad,
-			       argument, i, fd->xEps_);
-	  jacobian.row (i) = grad;
-        }
-    }
-
-    template<>
-    template<typename FdgPolicy>
-    void JacobianProcessor<EigenMatrixSparse>::process
-    (
-     const GenericFiniteDifferenceGradient<EigenMatrixSparse, FdgPolicy>* fd,
-     typename GenericDifferentiableFunction<EigenMatrixSparse>::
-     jacobian_t& jacobian,
-     const typename GenericDifferentiableFunction<EigenMatrixSparse>::
-     argument_t& argument)
-      throw()
-    {
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-
-      typedef GenericDifferentiableFunction<EigenMatrixSparse>::jacobian_t
-	jacobian_t;
-      typedef GenericDifferentiableFunction<EigenMatrixSparse>::gradient_t
-	gradient_t;
       typedef Eigen::Triplet<double> triplet_t;
 
       std::vector<triplet_t> coefficients;
-      for (typename jacobian_t::Index i = 0; i < fd->outputSize (); ++i)
+      for (jacobian_t::Index i = 0; i < adaptee.outputSize (); ++i)
 	{
-	  gradient_t grad;
-	  fd->computeGradient (fd->adaptee_, fd->epsilon_, grad,
-			       argument, i, fd->xEps_);
+          gradient_t grad;
+          computeGradient (adaptee, epsilon, grad,
+                           argument, i, xEps);
 
-	  const unsigned int i_ = static_cast<const unsigned int> (i);
-	  for (gradient_t::InnerIterator it (grad); it; ++it)
+          const unsigned int i_ = static_cast<const unsigned int> (i);
+          for (gradient_t::InnerIterator it (grad); it; ++it)
 	    {
-	      const unsigned int idx =
+              const unsigned int idx =
 		static_cast<const unsigned int> (it.index ());
-	      coefficients.push_back
+              coefficients.push_back
 		(triplet_t (i_, idx, it.value ()));
 	    }
 	}
       jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
     }
 
-  } // end of namespace detail.
+    template <typename T>
+    void
+    Policy<T>::computeJacobian
+    (const GenericFunction<T>& adaptee,
+     value_type epsilon,
+     jacobian_t& jacobian,
+     const argument_t& argument,
+     argument_t& xEps) const throw ()
+    {
+      gradient_t grad;
+      grad.resize(jacobian.cols());
 
-  namespace finiteDifferenceGradientPolicies
-  {
+      for (typename jacobian_t::Index i = 0; i < adaptee.outputSize(); ++i)
+	{
+          grad.setZero();
+          computeGradient (adaptee, epsilon, grad,
+                           argument, i, xEps);
+          jacobian.row (i) = grad;
+	}
+    }
+
     template <>
     inline void
     Simple<EigenMatrixSparse>::computeGradient

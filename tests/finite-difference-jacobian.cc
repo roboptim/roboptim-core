@@ -38,7 +38,8 @@ struct FGood : public GenericDifferentiableFunction<T>
   ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
   (GenericDifferentiableFunction<T>);
 
-  FGood () : GenericDifferentiableFunction<T> (2, 1, "x * x + x * y + 2 * y")
+  FGood () : GenericDifferentiableFunction<T>
+             (2, 2, "x * x + x * y + 2 * y, 3 * x * x * y")
   {}
 
   void impl_compute (result_t& result,
@@ -47,6 +48,7 @@ struct FGood : public GenericDifferentiableFunction<T>
     result (0) =   argument[0] * argument[0]
       + argument[0] * argument[1]
       +          2. * argument[1];
+    result (1) = 3. * argument[0] * argument[0] * argument[1];
   }
 
   void impl_gradient (gradient_t& grad, const argument_t& argument,
@@ -76,6 +78,8 @@ FGood<EigenMatrixSparse>::impl_jacobian
   jacobian.setZero ();
   jacobian.insert(0,0) = 2. * argument[0] + argument[1];
   jacobian.insert(0,1) =      argument[0] + 2.;
+  jacobian.insert(1,0) = 6. * argument[0] * argument[1];
+  jacobian.insert(1,1) = 3. * argument[0] * argument[0];
 }
 
 template <typename T>
@@ -86,6 +90,8 @@ FGood<T>::impl_jacobian
   jacobian.setZero ();
   jacobian(0,0) = 2. * argument[0] + argument[1];
   jacobian(0,1) =      argument[0] + 2.;
+  jacobian(1,0) = 6. * argument[0] * argument[1];
+  jacobian(1,1) = 3. * argument[0] * argument[0];
 }
 
 
@@ -96,7 +102,8 @@ struct FBad : public GenericDifferentiableFunction<T>
   ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
   (GenericDifferentiableFunction<T>);
 
-  FBad () : GenericDifferentiableFunction<T> (2, 1, "x * x + x * y + 2 * y")
+  FBad () : GenericDifferentiableFunction<T>
+            (2, 2, "x * x + x * y + 2 * y, 3 * x * x * y")
   {}
 
   void impl_compute (result_t& result,
@@ -105,6 +112,7 @@ struct FBad : public GenericDifferentiableFunction<T>
     result (0) =   argument[0] * argument[0]
       + argument[0] * argument[1]
       +          2. * argument[1];
+    result (1) = 3. * argument[0] * argument[0] * argument[1];
   }
 
   void impl_gradient (gradient_t& grad, const argument_t& argument,
@@ -130,8 +138,10 @@ FBad<EigenMatrixSparse>::impl_jacobian
 (jacobian_t& jacobian, const argument_t& argument) const throw ()
 {
   jacobian.setZero ();
-  jacobian.insert(0,0) = 2. * argument[0] + 42.;
-  jacobian.insert(0,1) =      argument[0] - 2.;
+  jacobian.insert(0,0) = 2. * argument[0] + argument[1];
+  jacobian.insert(0,1) =      argument[0] + 42.;
+  jacobian.insert(1,0) = 6. * argument[0] * argument[1];
+  jacobian.insert(1,1) = 3. * argument[0] * argument[0];
 }
 
 template <typename T>
@@ -140,8 +150,10 @@ FBad<T>::impl_jacobian
 (jacobian_t& jacobian, const argument_t& argument) const throw ()
 {
   jacobian.setZero ();
-  jacobian(0,0) = 2. * argument[0] + 42.;
-  jacobian(0,1) =      argument[0] - 2.;
+  jacobian(0,0) = 2. * argument[0] + argument[1];
+  jacobian(0,1) =      argument[0] + 42.;
+  jacobian(1,0) = 6. * argument[0] * argument[1];
+  jacobian(1,1) = 3. * argument[0] * argument[0];
 }
 
 

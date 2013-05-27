@@ -6,26 +6,38 @@ roboptim-core
 For general information about the project, please refer to its
 homepage: http://www.roboptim.net/
 
+How can I install roboptim-core?
+--------------------------------
+
+RobOptim uses [CMake](http://www.cmake.org/) to generate build files. For
+instance, if you want to build roboptim-core in release with debug info, and
+install it in `/my/prefix`, go to the root of the project folder and type:
+
+    $ mkdir -p build && cd build
+    $ cmake -DCMAKE_INSTALL_PREFIX=/my/prefix -DCMAKE_BUILD_TYPE=RELWITHDEBINFO ..
+    $ make && make test
+    $ sudo make install
+
 Where is the library documentation?
 -----------------------------------
 
-This README only covers configure/building issues, for more information
+This **README** only covers configure/building issues. For more information
 regarding this library usage, please refer to the Doxygen documentation.
 
 If you have configured the package as explained in the first section, go
-into you ``_build'' directory and type:
+into your `build` directory and type:
 
     $ make doc
 
 To view the HTML documentation: go in the `doc/doxygen-html` directory
-and open the `index.html` file with your favorite internet browser.
+and open `index.html` with your favorite internet browser.
 
 
 How to use Valgrind with the test suite?
 ----------------------------------------
 
 All the tests launched by the test suite can be prefixed
-with the environment variable ``CHECK_PREFIX''.
+with the environment variable `CHECK_PREFIX`.
 
     $ cmake -DCHECK_PREFIX='valgrind --log-file=valgrind.log' ..
     $ make && make check
@@ -34,5 +46,9 @@ with the environment variable ``CHECK_PREFIX''.
 Available packages
 ------------------
 
+ * Debian (Release 2.0):
+   http://mentors.debian.net/package/roboptim-core
+ * Arch Linux (Release 2.0):
+   https://aur.archlinux.org/packages/roboptim-core/
  * Arch Linux (Git master branch):
    https://aur.archlinux.org/packages/roboptim-core-git/
