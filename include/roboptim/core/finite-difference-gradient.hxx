@@ -374,7 +374,7 @@ namespace roboptim
   {
 
     template <>
-    void
+    inline void
     Policy<EigenMatrixSparse>::computeJacobian
     (const GenericFunction<EigenMatrixSparse>& adaptee,
      value_type epsilon,
