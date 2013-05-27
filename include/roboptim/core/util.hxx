@@ -45,7 +45,7 @@ namespace roboptim
     typedef typename std::vector<T>::const_iterator citer_t;
 
     if (vect.empty ())
-        return o << "Empty vector";
+      return o << "Empty vector";
 
     citer_t it = vect.begin ();
     o << *it;
@@ -86,6 +86,55 @@ namespace roboptim
     o << "]" << matrix.format (ioformat);
     return o;
   }
+
+  template<typename DerivedA, typename DerivedB>
+  bool allclose
+  (const Eigen::DenseBase<DerivedA>& a,
+   const Eigen::DenseBase<DerivedB>& b,
+   const typename DerivedA::RealScalar& rtol,
+   const typename DerivedA::RealScalar& atol)
+  {
+    assert(a.cols() == b.cols());
+    assert(a.rows() == b.rows());
+
+    return ((a.derived() - b.derived()).array().abs()
+            <= (atol + rtol * b.derived().array().abs())).all();
+  }
+
+  template<typename DerivedA, typename DerivedB>
+  bool allclose
+  (const Eigen::SparseMatrixBase<DerivedA>& a,
+   const Eigen::SparseMatrixBase<DerivedB>& b,
+   const typename DerivedA::RealScalar& rtol,
+   const typename DerivedA::RealScalar& atol)
+  {
+    assert(a.cols() == b.cols());
+    assert(a.rows() == b.rows());
+    assert(a.outerSize() == b.outerSize());
+
+    for (int k = 0; k < a.outerSize(); ++k)
+      {
+	// Iterator over a
+	typename DerivedA::InnerIterator it_a(a.derived(),k);
+	// Iterator over b
+	typename DerivedB::InnerIterator it_b(b.derived(),k);
+
+	while (it_a && it_b)
+          {
+	    assert(it_a.col() == it_b.col());
+	    assert(it_a.row() == it_b.row());
+
+	    if(fabs(it_a.value() - it_b.value())
+	       > atol + rtol * fabs(it_b.value()))
+	      return false;
+
+	    ++it_a;
+	    ++it_b;
+          }
+      }
+    return true;
+  }
+
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_UTIL_HXX

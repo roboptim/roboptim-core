@@ -81,7 +81,7 @@ namespace roboptim
 	// Matrix plotting
 	// (range offset since pixels are centered on integer coordinates)
 	str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
-	str += "notitle matrix with image\n";
+	str += "matrix with image notitle\n";
 
 	for (DifferentiableFunction::jacobian_t::Index cstr_id = 0;
 	     cstr_id < jac.rows(); ++cstr_id)
