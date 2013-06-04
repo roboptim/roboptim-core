@@ -10,7 +10,6 @@ libroboptim-core.so.2 libroboptim-core2 #MINVER#
  _ZN8roboptim11SolverErrorD0Ev@Base 2.0
  _ZN8roboptim11SolverErrorD1Ev@Base 2.0
  _ZN8roboptim11SolverErrorD2Ev@Base 2.0
- (arch=s390x)_ZN8roboptim11SolverErroraSERKS0_@Base 2.0
  _ZN8roboptim11resetindentERSo@Base 2.0
  _ZN8roboptim13GenericSolver5resetEv@Base 2.0
  _ZN8roboptim13GenericSolver6loggerE@Base 2.0
