@@ -1,3 +1,9 @@
+roboptim-core (2.0-5) unstable; urgency=low
+
+  * Update symbols for s390x.
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Mon, 10 Jun 2013 10:28:35 +0900
+
 roboptim-core (2.0-4) unstable; urgency=low
 
   * Update symbols for amd64 armhf hurd-i386 i386 ia64 kfreebsd-amd64
