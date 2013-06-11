@@ -1,3 +1,4 @@
 0001-Fix-SOVERSION.patch
 0002-Fix-pkgconfig-file.patch
 0003-Fix-warnings-with-gcc.patch
+0004-Fix-plugindir-for-multiarch.patch
