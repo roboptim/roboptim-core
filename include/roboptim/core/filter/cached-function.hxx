@@ -81,7 +81,7 @@ namespace roboptim
 
 
   template <>
-  void
+  inline void
   CachedFunction<Function>::impl_gradient (gradient_t&,
                                            const argument_t&,
                                            size_type)
@@ -110,7 +110,7 @@ namespace roboptim
 
 
   template <>
-  void
+  inline void
   CachedFunction<Function>::impl_jacobian
   (jacobian_t&,
    const argument_t&) const throw ()
@@ -137,7 +137,7 @@ namespace roboptim
 
 
   template <>
-  void
+  inline void
   CachedFunction<Function>::impl_hessian
   (hessian_t&, const argument_t&, size_type) const throw ()
   {
@@ -145,13 +145,12 @@ namespace roboptim
   }
 
   template <>
-  void
+  inline void
   CachedFunction<DifferentiableFunction>::impl_hessian
   (hessian_t&, const argument_t&, size_type) const throw ()
   {
     assert (0);
   }
-
 
 
   template <typename T>
@@ -177,7 +176,7 @@ namespace roboptim
 
 
   template <>
-  void
+  inline void
   CachedFunction<Function>::impl_derivative
   (gradient_t&, double, size_type) const throw ()
   {
@@ -185,7 +184,7 @@ namespace roboptim
   }
 
   template <>
-  void
+  inline void
   CachedFunction<DifferentiableFunction>::impl_derivative
   (gradient_t&, double, size_type) const throw ()
   {
@@ -193,7 +192,7 @@ namespace roboptim
   }
 
   template <>
-  void
+  inline void
   CachedFunction<TwiceDifferentiableFunction>::impl_derivative
   (gradient_t&, double, size_type) const throw ()
   {
