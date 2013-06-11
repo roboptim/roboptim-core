@@ -2,6 +2,10 @@ From: Thomas Moulard <thomas.moulard@gmail.com>
 Date: Tue, 11 Jun 2013 18:36:17 +0900
 Subject: Fix plugindir for multiarch.
 
+Fix plugindir for multiarch.
+
+Forwarded: yes
+Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
  CMakeLists.txt |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -15,7 +19,7 @@ index 701fdc7..ceb288b 100644
  # Add extra keys to pkg-config file to export the location of the
  # plug-in directory in a robust manner.
 -SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_PREFIX}/lib/roboptim-core")
-+SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_LIBDIR}/roboptim-core")
++SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_FULL_LIBDIR}/roboptim-core")
  
  # Add main library to pkg-config file.
  PKG_CONFIG_APPEND_LIBS(roboptim-core)
