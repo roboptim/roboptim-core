@@ -29,62 +29,72 @@ namespace roboptim
     namespace gnuplot
     {
 
+      std::string dense_jacobian_to_gnuplot
+      (GenericFunctionTraits<EigenMatrixDense>::matrix_t jac,
+       std::string name)
+      {
+        typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t matrix_t;
+
+        std::string str = "";
+
+        // Title of the graph
+        str += "set title 'jacobian(" + name + ")'\n";
+
+        // White = 0, Blue = non zero
+        str += "set palette defined(0 \"white\",1 \"blue\")\n";
+        str += "set grid front\n";
+
+        // Jacobian (x,y) range
+        str += "set xrange [0:" + boost::lexical_cast<std::string>
+          ((float)jac.cols()) + "]\n";
+        str += "set yrange [0:" + boost::lexical_cast<std::string>
+          ((float)jac.rows()) + "] reverse\n";
+        str += "set size ratio -1\n";
+
+        // Remove the colorbox
+        str += "unset colorbox\n";
+
+        // Matrix plotting
+        // (range offset since pixels are centered on integer coordinates)
+        str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
+        str += "matrix with image notitle\n";
+
+        for (matrix_t::Index cstr_id = 0;
+             cstr_id < jac.rows(); ++cstr_id)
+          for (matrix_t::Index out_id = 0;
+               out_id < jac.cols(); ++out_id)
+            {
+              str += (boost::format("%1.2f")
+		      % normalize(jac(cstr_id, out_id))).str();
+
+              if (out_id < jac.cols() - 1) str += " ";
+              else str += "\n";
+            }
+        str += "e\n";
+        return str;
+      }
+
       template <>
       Command plot_jac (const DifferentiableFunction& f,
 			const argument_t& arg)
       {
-
 	DifferentiableFunction::jacobian_t jac = f.jacobian(arg);
 
-	std::string str = "";
-
-	// Title of the graph
-	str += "set title 'jacobian(" + f.getName() + ")'\n";
-
-	// White = 0, Blue = non zero
-	str += "set palette defined(0 \"white\",1 \"blue\")\n";
-	str += "set grid front\n";
-
-	// Jacobian (x,y) range
-	str += "set xrange [0:" + boost::lexical_cast<std::string>
-	  ((float)jac.cols()) + "]\n";
-	str += "set yrange [0:" + boost::lexical_cast<std::string>
-	  ((float)jac.rows()) + "] reverse\n";
-	str += "set size ratio -1\n";
-
-	// Remove the colorbox
-	str += "unset colorbox\n";
-
-	// Matrix plotting
-	// (range offset since pixels are centered on integer coordinates)
-	str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
-	str += "matrix with image notitle\n";
-
-	for (DifferentiableFunction::jacobian_t::Index cstr_id = 0;
-	     cstr_id < jac.rows(); ++cstr_id)
-	  for (DifferentiableFunction::jacobian_t::Index out_id = 0;
-	       out_id < jac.cols(); ++out_id)
-	    {
-	      str += (boost::format("%1.2f")
-		      % normalize(jac(cstr_id, out_id))).str();
-
-	      if (out_id < jac.cols() - 1) str += " ";
-	      else str += "\n";
-	    }
-	str += "e\n";
-
-	return Command (str);
+	return Command (dense_jacobian_to_gnuplot(jac, f.getName()));
       }
 
 
-      // FIXME: implement sparse version.
-      // Note that gnuplot does not support sparse matrix display (yet).
       template <>
-      Command plot_jac (const DifferentiableSparseFunction&,
-			const argument_t&)
+      Command plot_jac (const DifferentiableSparseFunction& f,
+			const argument_t& arg)
       {
-        assert(0);
-        return Command ("");
+	// Note: Gnuplot does not support sparse matrix display (yet).
+	//       We currently convert the sparse matrix to a dense matrix,
+	//       which is highly inefficient for large matrices.
+	GenericFunctionTraits<EigenMatrixDense>::matrix_t
+	  jac_dense = sparse_to_dense(f.jacobian(arg));
+
+	return Command (dense_jacobian_to_gnuplot(jac_dense, f.getName()));
       }
 
     } // end of namespace gnuplot.

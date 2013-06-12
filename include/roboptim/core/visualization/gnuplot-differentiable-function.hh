@@ -44,7 +44,8 @@ namespace roboptim
       /// Plot the structure of the Jacobian of a differentiable function with
       /// Gnuplot. Non-zero values will be displayed in blue, zeros in white.
       ///
-      /// \warning Only the dense version has been implemented yet.
+      /// \warning The sparse version currently relies on a sparse to dense
+      /// matrix conversion. This can be highly inefficient for large matrices.
       ///
       /// \param f differentiable function whose Jacobian will be plotted
       /// \param arg optimization parameters of the point to plot
