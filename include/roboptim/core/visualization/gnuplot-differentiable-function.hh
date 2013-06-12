@@ -20,9 +20,6 @@
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
 
-# include <boost/format.hpp>
-# include <boost/lexical_cast.hpp>
-
 # include <roboptim/core/function.hh>
 # include <roboptim/core/differentiable-function.hh>
 
@@ -47,57 +44,15 @@ namespace roboptim
       /// Plot the structure of the Jacobian of a differentiable function with
       /// Gnuplot. Non-zero values will be displayed in blue, zeros in white.
       ///
+      /// \warning The sparse version currently relies on a sparse to dense
+      /// matrix conversion. This can be highly inefficient for large matrices.
+      ///
       /// \param f differentiable function whose Jacobian will be plotted
       /// \param arg optimization parameters of the point to plot
       /// \return Gnuplot command
-      Command plot_jac (const DifferentiableFunction& f,
-                        const DifferentiableFunction::argument_t& arg);
-
-      Command plot_jac (const DifferentiableFunction& f,
-                        const argument_t& arg)
-      {
-
-	DifferentiableFunction::jacobian_t jac = f.jacobian(arg);
-
-	std::string str = "";
-
-	// Title of the graph
-	str += "set title 'jacobian(" + f.getName() + ")'\n";
-
-	// White = 0, Blue = non zero
-	str += "set palette defined(0 \"white\",1 \"blue\")\n";
-	str += "set grid front\n";
-
-	// Jacobian (x,y) range
-	str += "set xrange [0:" + boost::lexical_cast<std::string>
-	  ((float)jac.cols()) + "]\n";
-	str += "set yrange [0:" + boost::lexical_cast<std::string>
-	  ((float)jac.rows()) + "] reverse\n";
-	str += "set size ratio -1\n";
-
-	// Remove the colorbox
-	str += "unset colorbox\n";
-
-	// Matrix plotting
-	// (range offset since pixels are centered on integer coordinates)
-	str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
-	str += "matrix with image notitle\n";
-
-	for (DifferentiableFunction::jacobian_t::Index cstr_id = 0;
-	     cstr_id < jac.rows(); ++cstr_id)
-	  for (DifferentiableFunction::jacobian_t::Index out_id = 0;
-	       out_id < jac.cols(); ++out_id)
-	    {
-	      str += (boost::format("%1.2f")
-		      % normalize(jac(cstr_id, out_id))).str();
-
-              if (out_id < jac.cols() - 1) str += " ";
-              else str += "\n";
-	    }
-	str += "e\n";
-
-	return Command (str);
-      }
+      template <typename T>
+      Command plot_jac (const GenericDifferentiableFunction<T>& f,
+                        const argument_t& arg);
 
       /// @}
     } // end of namespace gnuplot.
