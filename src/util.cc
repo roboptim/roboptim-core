@@ -62,6 +62,8 @@ namespace roboptim
   {
     GenericFunctionTraits<EigenMatrixDense>::matrix_t
       dense(m.rows(), m.cols());
+    dense.setZero();
+
     for (int k = 0; k < m.outerSize(); ++k)
       for (GenericFunctionTraits<EigenMatrixSparse>::matrix_t::InnerIterator
 	     it(m,k); it; ++it)
@@ -75,6 +77,8 @@ namespace roboptim
   (const GenericFunctionTraits<EigenMatrixSparse>::gradient_t& v)
   {
     GenericFunctionTraits<EigenMatrixDense>::vector_t dense(v.size());
+    dense.setZero();
+
     for (GenericFunctionTraits<EigenMatrixSparse>::gradient_t::InnerIterator
            it(v); it; ++it)
       {
