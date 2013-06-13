@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 2.0 amd64 armhf hurd-i386 i386 ia64 kfreebsd-amd64 kfreebsd-i386 powerpc s390 s390x sparc
+# SymbolsHelper-Confirmed: 2.0 alpha amd64 armhf hurd-i386 i386 ia64 kfreebsd-amd64 kfreebsd-i386 powerpc s390 s390x sparc
 libroboptim-core.so.2 libroboptim-core2 #MINVER#
  _ZN8roboptim11SolverError9lastStateEv@Base 2.0
  _ZN8roboptim11SolverErrorC1ERKS0_@Base 2.0
@@ -59,10 +59,10 @@ libroboptim-core.so.2 libroboptim-core2 #MINVER#
  _ZN8roboptim16IdentityFunctionD0Ev@Base 2.0
  _ZN8roboptim16IdentityFunctionD1Ev@Base 2.0
  _ZN8roboptim16IdentityFunctionD2Ev@Base 2.0
- (arch=!amd64 !ia64 !kfreebsd-amd64 !s390x)_ZN8roboptim18ResultWithWarningsC1Eii@Base 2.0
- (arch=amd64 ia64 kfreebsd-amd64 s390x)_ZN8roboptim18ResultWithWarningsC1Ell@Base 2.0
- (arch=!amd64 !ia64 !kfreebsd-amd64 !s390x)_ZN8roboptim18ResultWithWarningsC2Eii@Base 2.0
- (arch=amd64 ia64 kfreebsd-amd64 s390x)_ZN8roboptim18ResultWithWarningsC2Ell@Base 2.0
+ (arch=!alpha !amd64 !ia64 !kfreebsd-amd64 !s390x)_ZN8roboptim18ResultWithWarningsC1Eii@Base 2.0
+ (arch=alpha amd64 ia64 kfreebsd-amd64 s390x)_ZN8roboptim18ResultWithWarningsC1Ell@Base 2.0
+ (arch=!alpha !amd64 !ia64 !kfreebsd-amd64 !s390x)_ZN8roboptim18ResultWithWarningsC2Eii@Base 2.0
+ (arch=alpha amd64 ia64 kfreebsd-amd64 s390x)_ZN8roboptim18ResultWithWarningsC2Ell@Base 2.0
  _ZN8roboptim18ResultWithWarningsD0Ev@Base 2.0
  _ZN8roboptim18ResultWithWarningsD1Ev@Base 2.0
  _ZN8roboptim18ResultWithWarningsD2Ev@Base 2.0
@@ -73,11 +73,11 @@ libroboptim-core.so.2 libroboptim-core2 #MINVER#
  _ZN8roboptim24NumericQuadraticFunctionD2Ev@Base 2.0
  _ZN8roboptim5iendlERSo@Base 2.0
  (arch=amd64 hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386)_ZN8roboptim6ResultC1ERKS0_@Base 2.0
- (arch=!amd64 !ia64 !kfreebsd-amd64 !s390x)_ZN8roboptim6ResultC1Eii@Base 2.0
- (arch=amd64 ia64 kfreebsd-amd64 s390x)_ZN8roboptim6ResultC1Ell@Base 2.0
+ (arch=!alpha !amd64 !ia64 !kfreebsd-amd64 !s390x)_ZN8roboptim6ResultC1Eii@Base 2.0
+ (arch=alpha amd64 ia64 kfreebsd-amd64 s390x)_ZN8roboptim6ResultC1Ell@Base 2.0
  (arch=amd64 hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386)_ZN8roboptim6ResultC2ERKS0_@Base 2.0
- (arch=!amd64 !ia64 !kfreebsd-amd64 !s390x)_ZN8roboptim6ResultC2Eii@Base 2.0
- (arch=amd64 ia64 kfreebsd-amd64 s390x)_ZN8roboptim6ResultC2Ell@Base 2.0
+ (arch=!alpha !amd64 !ia64 !kfreebsd-amd64 !s390x)_ZN8roboptim6ResultC2Eii@Base 2.0
+ (arch=alpha amd64 ia64 kfreebsd-amd64 s390x)_ZN8roboptim6ResultC2Ell@Base 2.0
  _ZN8roboptim6ResultD0Ev@Base 2.0
  _ZN8roboptim6ResultD1Ev@Base 2.0
  _ZN8roboptim6ResultD2Ev@Base 2.0
@@ -100,21 +100,21 @@ libroboptim-core.so.2 libroboptim-core2 #MINVER#
  _ZNK8roboptim13visualization7Gnuplot5printERSo@Base 2.0
  _ZNK8roboptim13visualization7gnuplot7Command7commandEv@Base 2.0
  _ZNK8roboptim16ConstantFunction12impl_computeERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_@Base 2.0
- (arch=!amd64 !ia64 !kfreebsd-amd64 !s390x)_ZNK8roboptim16ConstantFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_i@Base 2.0
- (arch=amd64 ia64 kfreebsd-amd64 s390x)_ZNK8roboptim16ConstantFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_l@Base 2.0
+ (arch=!alpha !amd64 !ia64 !kfreebsd-amd64 !s390x)_ZNK8roboptim16ConstantFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_i@Base 2.0
+ (arch=alpha amd64 ia64 kfreebsd-amd64 s390x)_ZNK8roboptim16ConstantFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_l@Base 2.0
  _ZNK8roboptim16ConstantFunction13impl_jacobianERN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS2_IdLin1ELi1ELi0ELin1ELi1EEE@Base 2.0
  _ZNK8roboptim16ConstantFunction5printERSo@Base 2.0
  _ZNK8roboptim16IdentityFunction12impl_computeERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_@Base 2.0
- (arch=!amd64 !ia64 !kfreebsd-amd64 !s390x)_ZNK8roboptim16IdentityFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_i@Base 2.0
- (arch=amd64 ia64 kfreebsd-amd64 s390x)_ZNK8roboptim16IdentityFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_l@Base 2.0
+ (arch=!alpha !amd64 !ia64 !kfreebsd-amd64 !s390x)_ZNK8roboptim16IdentityFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_i@Base 2.0
+ (arch=alpha amd64 ia64 kfreebsd-amd64 s390x)_ZNK8roboptim16IdentityFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_l@Base 2.0
  _ZNK8roboptim16IdentityFunction13impl_jacobianERN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS2_IdLin1ELi1ELi0ELin1ELi1EEE@Base 2.0
  _ZNK8roboptim16IdentityFunction5printERSo@Base 2.0
  _ZNK8roboptim18ResultWithWarnings5printERSo@Base 2.0
  _ZNK8roboptim24NumericQuadraticFunction12impl_computeERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_@Base 2.0
- (arch=!amd64 !ia64 !kfreebsd-amd64 !s390x)_ZNK8roboptim24NumericQuadraticFunction12impl_hessianERN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS2_IdLin1ELi1ELi0ELin1ELi1EEEi@Base 2.0
- (arch=amd64 ia64 kfreebsd-amd64 s390x)_ZNK8roboptim24NumericQuadraticFunction12impl_hessianERN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS2_IdLin1ELi1ELi0ELin1ELi1EEEl@Base 2.0
- (arch=!amd64 !ia64 !kfreebsd-amd64 !s390x)_ZNK8roboptim24NumericQuadraticFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_i@Base 2.0
- (arch=amd64 ia64 kfreebsd-amd64 s390x)_ZNK8roboptim24NumericQuadraticFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_l@Base 2.0
+ (arch=!alpha !amd64 !ia64 !kfreebsd-amd64 !s390x)_ZNK8roboptim24NumericQuadraticFunction12impl_hessianERN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS2_IdLin1ELi1ELi0ELin1ELi1EEEi@Base 2.0
+ (arch=alpha amd64 ia64 kfreebsd-amd64 s390x)_ZNK8roboptim24NumericQuadraticFunction12impl_hessianERN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEERKNS2_IdLin1ELi1ELi0ELin1ELi1EEEl@Base 2.0
+ (arch=!alpha !amd64 !ia64 !kfreebsd-amd64 !s390x)_ZNK8roboptim24NumericQuadraticFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_i@Base 2.0
+ (arch=alpha amd64 ia64 kfreebsd-amd64 s390x)_ZNK8roboptim24NumericQuadraticFunction13impl_gradientERN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEERKS3_l@Base 2.0
  _ZNK8roboptim24NumericQuadraticFunction5printERSo@Base 2.0
  _ZNK8roboptim6Result5printERSo@Base 2.0
  (optional=templinst)_ZNSs12_S_constructISt15_Deque_iteratorIcRcPcEEES2_T_S4_RKSaIcESt20forward_iterator_tag@Base 2.0

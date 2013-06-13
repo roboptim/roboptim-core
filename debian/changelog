@@ -1,6 +1,6 @@
 roboptim-core (2.0-5) unstable; urgency=low
 
-  * Update symbols for s390x.
+  * Update symbols for alpha and s390x.
   * Fix plugindir location for multiarch.
 
  -- Thomas Moulard <thomas.moulard@gmail.com>  Mon, 10 Jun 2013 10:28:35 +0900
