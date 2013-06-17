@@ -18,6 +18,7 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 CXXFLAGS+=-fvisibility=hidden
 
 .PHONY: override_dh_auto_configure	\
+	override_dh_auto_build-indep	\
 	override_dh_strip		\
 	override_dh_makeshlibs
 
@@ -28,6 +29,9 @@ override_dh_auto_configure:
 	dh_auto_configure -- \
 	-DCMAKE_INSTALL_LIBDIR=lib/${DEB_HOST_MULTIARCH} \
 	-DCMAKE_INSTALL_DOCDIR=share/doc/libroboptim-core-doc
+
+override_dh_auto_build-indep:
+	dh_auto_build -- doc # Generate Doxygen documentation.
 
 override_dh_strip:
 	dh_strip -a --dbg-package=libroboptim-core2-dbg
