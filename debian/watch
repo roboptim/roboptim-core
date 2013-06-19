@@ -1,8 +1,4 @@
-# Watch control file for uscan
-# Rename this file to "watch" and then you can run the "uscan" command
-# to check for upstream updates and more.
-# See uscan(1) for format
-
 version=3
-
-http://roboptim.net/index.html .*roboptim-core-(.*)\.tar\.gz.*
+http://www.roboptim.net/ \
+(?:.*/|)roboptim-core(?:-|_|_v|\.|V|)(\d\S*)\.(?:tar\.(?:gz|bz2|xz)|tgz|tbz2|txz|zip)(?:|\?\S+)
+# Bart Martens <bartm@debian.org> 2013-06-19 05:45:02
