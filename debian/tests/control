@@ -1,0 +1,2 @@
+Tests: build
+Depends: libroboptim-core-dev, build-essential
