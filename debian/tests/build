@@ -1,0 +1,44 @@
+#!/bin/sh
+# autopkgtest check: Build and run a program against roboptim-core, to
+# verify that the headers and pkg-config file are installed correctly
+# (C) 2013 Thomas Moulard
+# Author: Thomas Moulard <thomas.moulard@gmail.com>
+
+set -e
+
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+cd $WORKDIR
+cat <<EOF > roboptimcoretest.cpp
+#include <roboptim/core/function.hh>
+
+using namespace roboptim;
+
+template <typename T>
+struct Null : public GenericFunction<T>
+{
+  typedef typename GenericFunction<T>::argument_t argument_t;
+  typedef typename GenericFunction<T>::result_t result_t;
+
+  Null () : GenericFunction<T> (1, 1, "null function")
+  {}
+
+  void impl_compute (result_t& res, const argument_t&) const throw ()
+  {
+    res.setZero ();
+  }
+};
+
+int main()
+{
+    Null< ::roboptim::EigenMatrixDense> null;
+    return 0;
+}
+EOF
+
+g++ -o roboptimcoretest roboptimcoretest.cpp \
+ `pkg-config --cflags --libs roboptim-core`
+echo "build: OK"
+[ -x roboptimcoretest ]
+./roboptimcoretest
+echo "run: OK"
