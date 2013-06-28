@@ -13,9 +13,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with roboptim-core.  If not, see <http://www.gnu.org/licenses/>.
 
-# Define the directory where plug-ins will be installed.
-SET(PLUGINDIR lib/roboptim-core)
-
 MACRO(NAG_PLUGIN NAME)
   ADD_LIBRARY(roboptim-core-plugin-${NAME} MODULE ${NAME}.cc ${HEADERS})
   PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-${NAME} roboptim-core)
@@ -25,7 +22,7 @@ MACRO(NAG_PLUGIN NAME)
     PREFIX ""
     SOVERSION 1.1.0)
 
-  INSTALL(TARGETS roboptim-core-plugin-${NAME} DESTINATION ${PLUGINDIR})
+  INSTALL(TARGETS roboptim-core-plugin-${NAME} DESTINATION ${ROBOPTIM_CORE_PLUGINDIR})
 ENDMACRO()
 
 NAG_PLUGIN(nag)

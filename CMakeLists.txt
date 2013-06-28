@@ -27,6 +27,8 @@ SET(PROJECT_URL "http://github.com/laas/roboptim-core-plugin-nag")
 SET(HEADERS
   )
 
+SET(PKG_CONFIG_ADDITIONAL_VARIABLES plugindir ${PKG_CONFIG_ADDITIONAL_VARIABLES})
+
 SETUP_PROJECT()
 
 # Search for dependencies.
