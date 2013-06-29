@@ -65,6 +65,17 @@ namespace roboptim
     }
 
   protected:
+    matrix_t& A ()
+    {
+      return a_;
+    }
+
+    vector_t& b ()
+    {
+      return b_;
+    }
+
+
     void impl_compute (result_t& , const argument_t&) const throw ();
     void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
       const throw ();
