@@ -102,6 +102,12 @@ namespace roboptim
   class GenericFunction
   {
   public:
+    /// \brief Traits type.
+    ///
+    /// Represents the matrix type used to store the underlying data. This
+    /// can be EigenMatrixDense or EigenMatrixSparse.
+    typedef T traits_t;
+
     /// \brief Values type.
     ///
     /// Represents the numerical type (i.e. float, double, int...)

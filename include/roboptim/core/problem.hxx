@@ -304,7 +304,7 @@ namespace roboptim
     // Check that the bounds are correctly defined.
     for (std::size_t i = 0; i < x->outputSize (); ++i)
       {
-	const interval_t& interval = b[i];
+        ROBOPTIM_DEBUG_ONLY(const interval_t& interval = b[i]);
 	assert (interval.first <= interval.second);
       }
 
