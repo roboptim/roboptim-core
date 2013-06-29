@@ -84,8 +84,8 @@ namespace roboptim
   /// \see http://stackoverflow.com/a/15052131/1043187
   template<typename DerivedA, typename DerivedB>
   bool allclose
-  (const Eigen::SparseMatrix<DerivedA>& a,
-   const Eigen::SparseMatrix<DerivedB>& b,
+  (const Eigen::SparseMatrixBase<DerivedA>& a,
+   const Eigen::SparseMatrixBase<DerivedB>& b,
    const typename DerivedA::RealScalar& rtol
    = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
    const typename DerivedA::RealScalar& atol
