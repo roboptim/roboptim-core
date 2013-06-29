@@ -62,6 +62,17 @@ namespace roboptim
     jacobian = this->a_;
   }
 
+  // A(i) - sparse specialization
+  template <>
+  inline void
+  GenericNumericLinearFunction<EigenMatrixSparse>::impl_gradient
+  (gradient_t& gradient, const argument_t&, size_type idFunction)
+    const throw ()
+  {
+    for (size_type j = 0; j < this->inputSize (); ++j)
+      gradient.coeffRef (j) = a_.coeff (idFunction, j);
+  }
+
   // A(i)
   template <typename T>
   void
