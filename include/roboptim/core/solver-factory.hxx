@@ -19,6 +19,12 @@
 # define ROBOPTIM_CORE_SOLVER_FACTORY_HXX
 # include <cstddef>
 # include <sstream>
+# include <typeinfo>
+
+# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
+// Include headers for demangling
+#  include <cxxabi.h>
+# endif // __GLIBCXX__ || __GLIBCPP__
 
 namespace roboptim
 {
@@ -40,13 +46,36 @@ namespace roboptim
     return u.real_ptr;
   }
 
+# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
+  // Demangling available
+  inline const std::string demangle(const char* name)
+  {
+    int status = -4;
+
+    char* res = abi::__cxa_demangle(name, NULL, NULL, &status);
+    const char* const demangled_name = (status == 0)? res : name;
+    std::string ret_val(demangled_name);
+    free(res);
+
+    return ret_val;
+  }
+# else
+  // No demangling available
+  inline const std::string demangle(const char* name)
+  {
+    return std::string(name);
+  }
+# endif // __GLIBCXX__ || __GLIBCPP__
+
+
   template <typename T>
   SolverFactory<T>::SolverFactory (std::string plugin, const problem_t& pb)
-  throw (std::runtime_error)
+    throw (std::runtime_error)
     : handle_ (),
       solver_ ()
   {
     typedef std::size_t getsizeofproblem_t ();
+    typedef const char* gettypeidofconstraintslist_t ();
     typedef solver_t* create_t (const problem_t&);
 
     if (lt_dlinit () > 0)
@@ -77,6 +106,21 @@ namespace roboptim
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
+    gettypeidofconstraintslist_t* getTypeIdOfConstraintsList =
+      unionCast<gettypeidofconstraintslist_t>
+      (lt_dlsym (handle_, "getTypeIdOfConstraintsList"));
+    if (!getTypeIdOfConstraintsList)
+      {
+        std::stringstream sserror;
+        sserror << "libltdl failed to find symbol"
+                << " ``getTypeIdOfConstraintsList'': "
+                << lt_dlerror ();
+
+        lt_dlclose (handle_);
+        lt_dlexit ();
+        throw std::runtime_error (sserror.str ().c_str ());
+      }
+
     std::size_t sizeOfProblem = getSizeOfProblem ();
     if (sizeOfProblem != sizeof (typename solver_t::problem_t))
       {
@@ -92,6 +136,25 @@ namespace roboptim
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
+    const std::string typeIdOfConstraintsList
+      = demangle(getTypeIdOfConstraintsList ());
+    const std::string expectedTypeIdOfConstraintsList
+      = demangle(typeid
+                 (typename solver_t::problem_t::constraintsList_t).name ());
+    if (typeIdOfConstraintsList != expectedTypeIdOfConstraintsList)
+      {
+        std::stringstream sserror;
+        sserror
+          << "``Problem::constraintsList_t'' type id does not match in"
+          << " application and plug-in. Type id is:\n"
+          << typeIdOfConstraintsList
+          << "\nbut application expected:\n"
+          << expectedTypeIdOfConstraintsList;
+
+        lt_dlclose (handle_);
+        lt_dlexit ();
+        throw std::runtime_error (sserror.str ().c_str ());
+      }
 
     create_t* c =
       unionCast<create_t> (lt_dlsym (handle_, "create"));

@@ -43,6 +43,31 @@ BOOST_AUTO_TEST_CASE (util)
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
+
+  // Test operations on dense matrices
+  Eigen::MatrixXd dense_a(5,5);
+  Eigen::MatrixXd dense_b(5,5);
+
+  for (int i = 0; i < dense_a.rows(); ++i)
+    for (int j = 0; j < dense_a.cols(); ++j)
+      {
+        dense_a(i,j) = dense_b(i,j) = (double)(i*j);
+      }
+
+  BOOST_CHECK (allclose(dense_a, dense_b));
+
+  // Test operations on sparse matrices
+  Eigen::SparseMatrix<double> sparse_a(5,5);
+  Eigen::SparseMatrix<double> sparse_b(5,5);
+
+  for (int i = 0; i < sparse_a.rows(); ++i)
+    for (int j = 0; j < sparse_a.cols(); ++j)
+      {
+        sparse_a.insert(i,j) = (double)(i*j);
+        sparse_b.insert(i,j) = (double)(i*j);
+      }
+
+  BOOST_CHECK (allclose(sparse_a, sparse_b));
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

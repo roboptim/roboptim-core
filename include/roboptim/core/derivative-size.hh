@@ -21,20 +21,20 @@
 
 namespace roboptim
 {
-  template <>
-  struct derivativeSize<Function>
+  template <typename T>
+  struct derivativeSize< GenericFunction<T> >
   {
     static const unsigned int value = 0;
   };
 
-  template <>
-  struct derivativeSize<DifferentiableFunction>
+  template <typename T>
+  struct derivativeSize< GenericDifferentiableFunction<T> >
   {
     static const unsigned int value = 1;
   };
 
-  template <>
-    struct derivativeSize<TwiceDifferentiableFunction>
+  template <typename T>
+    struct derivativeSize< GenericTwiceDifferentiableFunction<T> >
   {
     static const unsigned int value = 2;
   };

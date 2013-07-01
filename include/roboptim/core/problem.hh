@@ -21,6 +21,8 @@
 # include <stdexcept>
 
 # include <boost/mpl/assert.hpp>
+# include <boost/mpl/back_inserter.hpp>
+# include <boost/mpl/copy.hpp>
 # include <boost/mpl/logical.hpp>
 # include <boost/mpl/transform.hpp>
 # include <boost/mpl/vector.hpp>
@@ -109,11 +111,14 @@ namespace roboptim
     // \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
 
-    /// \brief Optional vector defines a starting point.
-    typedef boost::optional<Function::vector_t> startingPoint_t;
+    /// \brief Vector type.
+    typedef typename function_t::vector_t vector_t;
 
-    typedef Function::interval_t interval_t;
-    typedef Function::intervals_t intervals_t;
+    /// \brief Optional vector defines a starting point.
+    typedef boost::optional<vector_t> startingPoint_t;
+
+    typedef typename function_t::interval_t interval_t;
+    typedef typename function_t::intervals_t intervals_t;
 
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
@@ -256,7 +261,17 @@ namespace roboptim
     friend class Problem;
 
     /// \brief Constraints types list.
-    typedef CLIST constraintsList_t;
+    ///
+    /// CLIST is converted to a boost::mpl::vector to ensure a similar behavior
+    /// for codes using different random access sequences (vector, list, etc.).
+    ///
+    /// Moreover, in the case of boost::mpl::vector, this ensures a normalized
+    /// representation of the vector (boost::mpl::vector converted to
+    /// boost::mpl::v_item) and orders the constraints in a proper way. This
+    /// makes the use of typeid comparison possible.
+    typedef typename boost::mpl::copy
+    <CLIST, boost::mpl::back_inserter<boost::mpl::vector<> > >::type
+    constraintsList_t;
 
     /// \brief Function type.
     ///
@@ -282,19 +297,26 @@ namespace roboptim
     /// The meta-algorithm which add shared pointers is implemented
     /// in detail::add_shared_pointer.
     typedef typename boost::make_variant_over
-    <typename detail::add_shared_ptr<CLIST>::type>::type constraint_t;
+    <typename detail::add_shared_ptr<constraintsList_t>::type>::type
+    constraint_t;
 
     // \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
+
+    /// \brief Vector type.
+    typedef typename function_t::vector_t vector_t;
+
+    /// \brief Size type.
+    typedef typename function_t::size_type size_type;
 
     /// \brief Constraints are represented as a vector of constraints.
     typedef std::vector<constraint_t> constraints_t;
 
     /// \brief Optional vector defines a starting point.
-    typedef boost::optional<Function::vector_t> startingPoint_t;
+    typedef boost::optional<vector_t> startingPoint_t;
 
-    typedef Function::interval_t interval_t;
-    typedef Function::intervals_t intervals_t;
+    typedef typename function_t::interval_t interval_t;
+    typedef typename function_t::intervals_t intervals_t;
 
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;

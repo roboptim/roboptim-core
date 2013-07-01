@@ -46,7 +46,7 @@ namespace roboptim
 
     // Initialize bound.
     std::fill (argumentBounds_.begin (), argumentBounds_.end (),
-	       Function::makeInfiniteInterval ());
+               function_t::makeInfiniteInterval ());
     // Initialize scale.
     std::fill (argumentScales_.begin (), argumentScales_.end (), 1.);
   }
@@ -146,7 +146,7 @@ namespace roboptim
 
     // Infinity.
     o << iendl << "Infinity value (for all functions): "
-      << Function::infinity ();
+      << function_t::infinity ();
     return o << decindent;
   }
 
@@ -194,7 +194,7 @@ namespace roboptim
   {
     // Initialize bound.
     std::fill (argumentBounds_.begin (), argumentBounds_.end (),
-	       Function::makeInfiniteInterval ());
+               function_t::makeInfiniteInterval ());
     // Initialize scale.
     std::fill (argumentScales_.begin (), argumentScales_.end (), 1.);
   }
@@ -304,7 +304,7 @@ namespace roboptim
     // Check that the bounds are correctly defined.
     for (std::size_t i = 0; i < x->outputSize (); ++i)
       {
-	const interval_t& interval = b[i];
+        ROBOPTIM_DEBUG_ONLY(const interval_t& interval = b[i]);
 	assert (interval.first <= interval.second);
       }
 
@@ -419,16 +419,16 @@ namespace roboptim
 	if (problem_.startingPoint ())
 	  {
 	    U g = get<U> (problem_.constraints ()[i_]);
-	    Function::vector_t x = (*g) (*problem_.startingPoint ());
+            typename P::vector_t x = (*g) (*problem_.startingPoint ());
 	    bool satisfied = true;
 	    o_ << "Initial value: ";
-	    for (Function::size_type j = 0; j < x.size (); ++j)
+            for (typename P::size_type j = 0; j < x.size (); ++j)
 	      {
-		if (x[j] < Function::
+                if (x[j] < P::function_t::
 		    getLowerBound ((problem_.boundsVector ()
 				    [i_])
 				   [static_cast<std::size_t> (j)])
-		    || x[j] > Function::
+                    || x[j] > P::function_t::
 		    getUpperBound ((problem_.boundsVector ()
 				    [i_])
 				   [static_cast<std::size_t> (j)]))
@@ -490,7 +490,7 @@ namespace roboptim
 
     // Infinity.
     o << iendl << "Infinity value (for all functions): "
-      << Function::infinity ();
+      << function_t::infinity ();
     return o << decindent;
   }
 
