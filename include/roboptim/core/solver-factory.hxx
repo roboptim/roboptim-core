@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_SOLVER_FACTORY_HXX
 # include <cstddef>
 # include <sstream>
+# include <typeinfo>
 
 namespace roboptim
 {
@@ -42,11 +43,12 @@ namespace roboptim
 
   template <typename T>
   SolverFactory<T>::SolverFactory (std::string plugin, const problem_t& pb)
-  throw (std::runtime_error)
+    throw (std::runtime_error)
     : handle_ (),
       solver_ ()
   {
     typedef std::size_t getsizeofproblem_t ();
+    typedef const char* gettypeidofconstraintslist_t ();
     typedef solver_t* create_t (const problem_t&);
 
     if (lt_dlinit () > 0)
@@ -77,6 +79,21 @@ namespace roboptim
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
+    gettypeidofconstraintslist_t* getTypeIdOfConstraintsList =
+      unionCast<gettypeidofconstraintslist_t>
+      (lt_dlsym (handle_, "getTypeIdOfConstraintsList"));
+    if (!getTypeIdOfConstraintsList)
+      {
+        std::stringstream sserror;
+        sserror << "libltdl failed to find symbol"
+                << " ``getTypeIdOfConstraintsList'': "
+                << lt_dlerror ();
+
+        lt_dlclose (handle_);
+        lt_dlexit ();
+        throw std::runtime_error (sserror.str ().c_str ());
+      }
+
     std::size_t sizeOfProblem = getSizeOfProblem ();
     if (sizeOfProblem != sizeof (typename solver_t::problem_t))
       {
@@ -92,6 +109,24 @@ namespace roboptim
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
+    std::string typeIdOfConstraintsList = getTypeIdOfConstraintsList ();
+    if (typeIdOfConstraintsList
+     != typeid (typename solver_t::problem_t::constraintsList_t).name ())
+      {
+        std::stringstream sserror;
+        sserror
+          << "``Problem::constraintsList_t'' type id does not match in"
+          << " application and plug-in (type id is "
+          << typeIdOfConstraintsList
+          << " but "
+          << std::string(typeid
+             (typename solver_t::problem_t::constraintsList_t).name ())
+          << " was expected by application)";
+
+        lt_dlclose (handle_);
+        lt_dlexit ();
+        throw std::runtime_error (sserror.str ().c_str ());
+      }
 
     create_t* c =
       unionCast<create_t> (lt_dlsym (handle_, "create"));

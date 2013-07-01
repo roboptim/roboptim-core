@@ -17,6 +17,8 @@
 
 #include "debug.hh"
 
+#include <typeinfo>
+
 #include "roboptim/core/function.hh"
 #include "roboptim/core/problem.hh"
 #include "roboptim/core/plugin/dummy.hh"
@@ -54,12 +56,18 @@ extern "C"
   typedef DummySolver::parent_t solver_t;
 
   ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ();
+  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ();
   ROBOPTIM_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb);
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
 
   ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ()
   {
     return sizeof (solver_t::problem_t);
+  }
+
+  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ()
+  {
+    return typeid (solver_t::problem_t::constraintsList_t).name ();
   }
 
   ROBOPTIM_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb)

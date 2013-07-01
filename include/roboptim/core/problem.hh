@@ -21,6 +21,8 @@
 # include <stdexcept>
 
 # include <boost/mpl/assert.hpp>
+# include <boost/mpl/back_inserter.hpp>
+# include <boost/mpl/copy.hpp>
 # include <boost/mpl/logical.hpp>
 # include <boost/mpl/transform.hpp>
 # include <boost/mpl/vector.hpp>
@@ -256,7 +258,17 @@ namespace roboptim
     friend class Problem;
 
     /// \brief Constraints types list.
-    typedef CLIST constraintsList_t;
+    ///
+    /// CLIST is converted to a boost::mpl::vector to ensure a similar behavior
+    /// for codes using different random access sequences (vector, list, etc.).
+    ///
+    /// Moreover, in the case of boost::mpl::vector, this ensures a normalized
+    /// representation of the vector (boost::mpl::vector converted to
+    /// boost::mpl::v_item) and orders the constraints in a proper way. This
+    /// makes the use of typeid comparison possible.
+    typedef typename boost::mpl::copy
+    <CLIST, boost::mpl::back_inserter<boost::mpl::vector<> > >::type
+    constraintsList_t;
 
     /// \brief Function type.
     ///
@@ -282,7 +294,8 @@ namespace roboptim
     /// The meta-algorithm which add shared pointers is implemented
     /// in detail::add_shared_pointer.
     typedef typename boost::make_variant_over
-    <typename detail::add_shared_ptr<CLIST>::type>::type constraint_t;
+    <typename detail::add_shared_ptr<constraintsList_t>::type>::type
+    constraint_t;
 
     // \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
