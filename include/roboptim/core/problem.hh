@@ -111,11 +111,14 @@ namespace roboptim
     // \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
 
-    /// \brief Optional vector defines a starting point.
-    typedef boost::optional<Function::vector_t> startingPoint_t;
+    /// \brief Vector type.
+    typedef typename function_t::vector_t vector_t;
 
-    typedef Function::interval_t interval_t;
-    typedef Function::intervals_t intervals_t;
+    /// \brief Optional vector defines a starting point.
+    typedef boost::optional<vector_t> startingPoint_t;
+
+    typedef typename function_t::interval_t interval_t;
+    typedef typename function_t::intervals_t intervals_t;
 
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
@@ -300,14 +303,20 @@ namespace roboptim
     // \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
 
+    /// \brief Vector type.
+    typedef typename function_t::vector_t vector_t;
+
+    /// \brief Size type.
+    typedef typename function_t::size_type size_type;
+
     /// \brief Constraints are represented as a vector of constraints.
     typedef std::vector<constraint_t> constraints_t;
 
     /// \brief Optional vector defines a starting point.
-    typedef boost::optional<Function::vector_t> startingPoint_t;
+    typedef boost::optional<vector_t> startingPoint_t;
 
-    typedef Function::interval_t interval_t;
-    typedef Function::intervals_t intervals_t;
+    typedef typename function_t::interval_t interval_t;
+    typedef typename function_t::intervals_t intervals_t;
 
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
