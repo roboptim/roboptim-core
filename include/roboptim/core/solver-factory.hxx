@@ -21,6 +21,11 @@
 # include <sstream>
 # include <typeinfo>
 
+# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
+// Include headers for demangling
+#  include <cxxabi.h>
+# endif // __GLIBCXX__ || __GLIBCPP__
+
 namespace roboptim
 {
   // This union is here to workaround a limitation of the C++
@@ -40,6 +45,28 @@ namespace roboptim
     u.ptr = ptr;
     return u.real_ptr;
   }
+
+# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
+  // Demangling available
+  inline const std::string demangle(const char* name)
+  {
+    int status = -4;
+
+    char* res = abi::__cxa_demangle(name, NULL, NULL, &status);
+    const char* const demangled_name = (status == 0)? res : name;
+    std::string ret_val(demangled_name);
+    free(res);
+
+    return ret_val;
+  }
+# else
+  // No demangling available
+  inline const std::string demangle(const char* name)
+  {
+    return std::string(name);
+  }
+# endif // __GLIBCXX__ || __GLIBCPP__
+
 
   template <typename T>
   SolverFactory<T>::SolverFactory (std::string plugin, const problem_t& pb)
@@ -109,19 +136,20 @@ namespace roboptim
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
-    std::string typeIdOfConstraintsList = getTypeIdOfConstraintsList ();
-    if (typeIdOfConstraintsList
-     != typeid (typename solver_t::problem_t::constraintsList_t).name ())
+    const std::string typeIdOfConstraintsList
+      = demangle(getTypeIdOfConstraintsList ());
+    const std::string expectedTypeIdOfConstraintsList
+      = demangle(typeid
+                 (typename solver_t::problem_t::constraintsList_t).name ());
+    if (typeIdOfConstraintsList != expectedTypeIdOfConstraintsList)
       {
         std::stringstream sserror;
         sserror
           << "``Problem::constraintsList_t'' type id does not match in"
-          << " application and plug-in (type id is "
+          << " application and plug-in. Type id is:\n"
           << typeIdOfConstraintsList
-          << " but "
-          << std::string(typeid
-             (typename solver_t::problem_t::constraintsList_t).name ())
-          << " was expected by application)";
+          << "\nbut application expected:\n"
+          << expectedTypeIdOfConstraintsList;
 
         lt_dlclose (handle_);
         lt_dlexit ();
