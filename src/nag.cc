@@ -140,12 +140,18 @@ extern "C"
 			   boost::mpl::vector<> > solver_t;
 
   ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ();
+  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ();
   ROBOPTIM_DLLEXPORT solver_t* create (const NagSolver::problem_t& pb);
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
 
   ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ()
   {
     return sizeof (NagSolver::problem_t);
+  }
+
+  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ()
+  {
+    return typeid (NagSolver::problem_t::constraintsList_t).name ();
   }
 
   ROBOPTIM_DLLEXPORT solver_t* create (const NagSolver::problem_t& pb)

@@ -161,6 +161,7 @@ extern "C"
 			   boost::mpl::vector<> > solver_t;
 
   ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ();
+  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ();
   ROBOPTIM_DLLEXPORT solver_t* create
   (const Simplex::problem_t& pb);
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
@@ -168,6 +169,11 @@ extern "C"
   ROBOPTIM_DLLEXPORT unsigned getSizeOfProblem ()
   {
     return sizeof (Simplex::problem_t);
+  }
+
+  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ()
+  {
+    return typeid (Simplex::problem_t::constraintsList_t).name ();
   }
 
   ROBOPTIM_DLLEXPORT solver_t* create
