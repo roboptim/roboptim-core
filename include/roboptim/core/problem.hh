@@ -102,6 +102,8 @@ namespace roboptim
     template <typename F_, typename CLIST_>
     friend class Problem;
 
+    typedef typename boost::mpl::vector<> constraintsList_t;
+
     /// \brief Function type.
     ///
     /// This has to be either Function or one of its
