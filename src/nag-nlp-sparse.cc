@@ -613,21 +613,25 @@ namespace roboptim
        &ninf_, &sinf_,
        &state, &comm, &fail);
 
+    Result res (problem ().function ().inputSize (),
+		problem ().function ().outputSize ());
+
+    res.x = x_;
+    res.value.setZero ();
+    res.value[0] = f_[0];
+    res.constraints = f_.segment (1, nf_ - 1);
+    res.lambda = fmul_.segment (1, nf_ - 1);
+
+
     if (fail.code == NE_NOERROR)
       {
-	Result res (problem ().function ().inputSize (),
-		    problem ().function ().outputSize ());
-
-	res.x = x_;
-	res.value.setZero ();
-	res.value[0] = f_[0];
-	res.constraints = f_.segment (1, nf_ - 1);
-	res.lambda = fmul_.segment (1, nf_ - 1);
-	result_ = res;
+	this->result_ = res;
 	return;
       }
 
-    this->result_ = SolverError (fail.message);
+    SolverError error (fail.message);
+    error.lastState () = res;
+    this->result_ = error;
   }
 } // end of namespace roboptim.
 
