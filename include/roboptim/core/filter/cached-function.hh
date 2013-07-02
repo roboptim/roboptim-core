@@ -52,7 +52,9 @@ namespace roboptim
 	return false;
       }
     };
+
   } // end of namespace detail.
+
 
   /// \brief Store previous function computation.
   ///
@@ -65,32 +67,45 @@ namespace roboptim
   class CachedFunction : public T
   {
   public:
+    /// \brief Import traits type.
+    typedef typename T::traits_t traits_t;
     /// \brief Import value type.
-    typedef typename DifferentiableFunction::value_type value_type;
+    typedef typename GenericDifferentiableFunction<traits_t>::
+    value_type value_type;
     /// \brief Import size type.
-    typedef typename DifferentiableFunction::size_type size_type;
+    typedef typename GenericDifferentiableFunction<traits_t>::
+    size_type size_type;
     /// \brief Import vector type.
-    typedef typename DifferentiableFunction::vector_t vector_t;
+    typedef typename GenericDifferentiableFunction<traits_t>::
+    vector_t vector_t;
     /// \brief Import result type.
-    typedef typename DifferentiableFunction::result_t result_t;
+    typedef typename GenericDifferentiableFunction<traits_t>::
+    result_t result_t;
     /// \brief Import argument type.
-    typedef typename DifferentiableFunction::argument_t argument_t;
+    typedef typename GenericDifferentiableFunction<traits_t>::
+    argument_t argument_t;
     /// \brief Import gradient type.
-    typedef typename DifferentiableFunction::gradient_t gradient_t;
+    typedef typename GenericDifferentiableFunction<traits_t>::
+    gradient_t gradient_t;
     /// \brief Import hessian type.
-    typedef typename TwiceDifferentiableFunction::hessian_t hessian_t;
+    typedef typename GenericTwiceDifferentiableFunction<traits_t>::
+    hessian_t hessian_t;
     /// \brief Import jacobian type.
-    typedef typename DifferentiableFunction::jacobian_t jacobian_t;
+    typedef typename GenericDifferentiableFunction<traits_t>::
+    jacobian_t jacobian_t;
     /// \brief Import interval type.
-    typedef typename DifferentiableFunction::interval_t interval_t;
+    typedef typename GenericDifferentiableFunction<traits_t>::
+    interval_t interval_t;
 
 
-    typedef std::map<Function::vector_t, Function::vector_t, detail::ltvector>
-      functionCache_t;
-    typedef std::map<Function::vector_t, jacobian_t, detail::ltvector>
-      jacobianCache_t;
-    typedef std::map<Function::vector_t, hessian_t, detail::ltvector>
-      hessianCache_t;
+    typedef std::map<argument_t, vector_t, detail::ltvector>
+    functionCache_t;
+    typedef std::map<argument_t, gradient_t, detail::ltvector>
+    gradientCache_t;
+    typedef std::map<argument_t, jacobian_t, detail::ltvector>
+    jacobianCache_t;
+    typedef std::map<argument_t, hessian_t, detail::ltvector>
+    hessianCache_t;
 
     explicit CachedFunction (boost::shared_ptr<const T> fct) throw ();
     ~CachedFunction () throw ();
@@ -116,12 +131,12 @@ namespace roboptim
 
     virtual void impl_derivative (gradient_t& derivative,
     				  double argument,
-    				  size_type order = 1) const throw ();
+                                  size_type order = 1) const throw ();
 
   protected:
     boost::shared_ptr<const T> function_;
     mutable std::vector<functionCache_t> cache_;
-    mutable std::vector<functionCache_t> gradientCache_;
+    mutable std::vector<gradientCache_t> gradientCache_;
     mutable jacobianCache_t jacobianCache_;
     mutable std::vector<hessianCache_t> hessianCache_;
   };
