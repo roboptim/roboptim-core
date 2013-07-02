@@ -25,6 +25,9 @@ namespace roboptim
   /// \brief Legacy name of TwiceDifferentiableFunction.
   typedef DifferentiableFunction DerivableFunction;
 
+  /// \brief Legacy name of TwiceDifferentiableSparseFunction.
+  typedef DifferentiableSparseFunction DerivableSparseFunction;
+
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_DERIVABLE_FUNCTION_HH
