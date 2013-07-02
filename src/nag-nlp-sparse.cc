@@ -242,7 +242,8 @@ namespace roboptim
   {
     flow_.resize (nf_);
     fupp_.resize (nf_);
-
+    flow_.setZero ();
+    fupp_.setZero ();
 
     // - bounds for cost function: always none.
     flow_[0] = -function_t::infinity ();
@@ -290,6 +291,18 @@ namespace roboptim
 	else
 	  assert (false && "should never happen");
       }
+
+    for (int id = 0; id < nf_; ++id)
+      {
+	if (std::abs (flow_[id]) < 1e-6)
+	  flow_[id] = 0.;
+	if (std::abs (fupp_[id]) < 1e-6)
+	  fupp_[id] = 0.;
+	if (std::abs (flow_[id] - fupp_[id]) < 1e-6)
+	  flow_[id] = fupp_[id];
+	assert (flow_[id] <= fupp_[id]);
+      }
+
   }
 
   NagSolverNlpSparse::function_t::vector_t
