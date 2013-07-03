@@ -382,7 +382,7 @@ namespace roboptim
 	      javar_.push_back (it.col () + 1);
 	      a_.push_back (it.value ());
 	    }
-	offset += 1;
+	offset += static_cast<int> (res.rows ());
       }
 
     lena_ = iafun_.size ();
