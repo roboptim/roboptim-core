@@ -124,13 +124,7 @@ namespace roboptim
 	       ++it, ++constraintId)
 	    {
 	      if (it->which () == 0)
-		{
-		  boost::shared_ptr<NagSolverNlpSparse::linearFunction_t> g =
-		    boost::get<boost::shared_ptr<
-		      NagSolverNlpSparse::linearFunction_t> > (*it);
-		  assert (!!g);
-		  j = g->jacobian (x_);
-		}
+		continue;
 	      else if (it->which () == 1)
 		{
 		  boost::shared_ptr<NagSolverNlpSparse::nonlinearFunction_t> g =
