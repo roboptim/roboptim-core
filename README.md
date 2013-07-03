@@ -47,7 +47,7 @@ Available packages
 ------------------
 
  * Debian (Release 2.0):
-   http://mentors.debian.net/package/roboptim-core
+   http://packages.qa.debian.org/r/roboptim-core.html
  * Arch Linux (Release 2.0):
    https://aur.archlinux.org/packages/roboptim-core/
  * Arch Linux (Git master branch):
