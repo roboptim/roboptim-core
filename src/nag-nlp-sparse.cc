@@ -179,6 +179,14 @@ namespace roboptim
       ninf_ (0.),
       sinf_ (0.)
   {
+    // Shared parameters.
+    DEFINE_PARAMETER ("max-iterations", "number of iterations", 3000);
+
+    // NAG specific.
+
+    //  Output
+    DEFINE_PARAMETER ("nag.print-file", "log file", 1);
+    DEFINE_PARAMETER ("nag.verify-level", "verify level", 3);
   }
 
   NagSolverNlpSparse::~NagSolverNlpSparse () throw ()
@@ -536,7 +544,15 @@ namespace roboptim
 
     // Set parameters.
     nag_opt_sparse_nlp_option_set_integer
-      ("Print file", 1, &state, &fail);
+      ("Major Iterations Limit",
+       this->getParameter<int> ("max-iterations"), &state, &fail);
+
+    nag_opt_sparse_nlp_option_set_integer
+      ("Print file",
+       this->getParameter<int> ("nag.print-file"), &state, &fail);
+    nag_opt_sparse_nlp_option_set_integer
+      ("Verify Level",
+       this->getParameter<int> ("nag.verify-level"), &state, &fail);
 
 
     // Nag communication object.
