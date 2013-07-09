@@ -82,7 +82,7 @@ namespace roboptim
 	      {
 		x[0] = t;
 		Function::vector_t res = f (x);
-		str += (boost::format ("%1.2f %2.2f\n")
+                str += (boost::format ("%2.8f %2.8f\n")
 			% normalize (t)
 			% normalize (res [0])).str ();
 	      }
@@ -111,7 +111,7 @@ namespace roboptim
 	  {
 	    x[0] = t;
 	    Function::vector_t res = f (x);
-	    str += (boost::format ("%1.2f %2.2f\n")
+            str += (boost::format ("%2.8f %2.8f\n")
 		    % normalize (res[0])
 		    % normalize (res [1])).str ();
 	  }
