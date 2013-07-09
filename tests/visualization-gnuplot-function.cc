@@ -63,6 +63,22 @@ struct Circle : public Function
   double r_;
 };
 
+// Define a function that displays a cubic and a quartic monomial.
+struct Poly : public Function
+{
+  explicit Poly ()
+    : Function (1, 2, "{x^3; x^4}")
+  {
+  }
+
+  void impl_compute (result_t& result,
+                     const argument_t& argument) const throw ()
+  {
+    result[0] = argument[0] * argument[0] * argument[0];
+    result[1] = result[0] * argument[0];
+  }
+};
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (visualization_gnuplot_function)
@@ -79,12 +95,16 @@ BOOST_AUTO_TEST_CASE (visualization_gnuplot_function)
   Circle circle;
   discreteInterval_t intervalC (0., 2 * M_PI, 0.01);
 
+  Poly poly;
+  discreteInterval_t intervalP (-1., 1., 0.01);
+
   (*output)
     << (gnuplot
 	<< comment ("Hello, world (complex)!")
-	<< set ("multiplot")
+        << set ("multiplot layout 3,1")
 	<< plot (square, intervalS)
 	<< plot_xy (circle, intervalC)
+        << plot (poly, intervalP)
 	<< unset ("multiplot")
 	);
 
