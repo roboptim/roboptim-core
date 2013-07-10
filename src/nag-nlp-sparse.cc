@@ -71,10 +71,13 @@ namespace roboptim
       // functions computation are needed
       if (needf > 0)
 	{
+	  // the cost function is evaluated first
 	  f_.head<1> () = solver->problem ().function () (x_);
 
+	  // then the non linear constraints
 	  unsigned offset = 1;
 	  unsigned constraintId = 0;
+
 	  for (iter_t it = solver->problem ().constraints ().begin ();
 	       it != solver->problem ().constraints ().end ();
 	       ++it, ++constraintId)
@@ -91,6 +94,23 @@ namespace roboptim
 	      f_.segment (offset, g->outputSize ()) = (*g) (x_);
 	      offset += static_cast<unsigned> (g->outputSize ());
 	    }
+
+	  // the linear part is not taken into account but we will
+	  // have to iterate through linear constraints to fetch
+	  // their output size to update the offset
+	  for (iter_t it = solver->problem ().constraints ().begin ();
+	       it != solver->problem ().constraints ().end ();
+	       ++it, ++constraintId)
+	    {
+	      if (it->which () != NagSolverNlpSparse::linearFunctionId)
+		continue;
+	      boost::shared_ptr<NagSolverNlpSparse::linearFunction_t> g =
+		boost::get<boost::shared_ptr<
+		  NagSolverNlpSparse::linearFunction_t> > (*it);
+	      assert (!!g);
+	      offset += static_cast<unsigned> (g->outputSize ());
+	    }
+
 	  assert (offset == nf);
 	}
 
@@ -377,6 +397,26 @@ namespace roboptim
     a_.clear ();
 
     function_t::size_type offset = 0;
+
+    // compute the intial offset
+    offset += problem ().function ().outputSize ();
+    for (unsigned constraintId = 0;
+	 constraintId < problem ().constraints ().size ();
+	 ++constraintId)
+      {
+	// if linear, pass.
+	if (problem ().constraints ()[constraintId].which ()
+	    != nonlinearFunctionId)
+	  continue;
+
+	boost::shared_ptr<NagSolverNlpSparse::nonlinearFunction_t> g =
+	  boost::get<boost::shared_ptr<
+	    NagSolverNlpSparse::nonlinearFunction_t> >
+	  (problem ().constraints ()[constraintId]);
+	assert (!!g);
+	offset += static_cast<unsigned> (g->outputSize ());
+      }
+
     nea_ = 0;
 
     for (unsigned constraintId = 0;
@@ -415,12 +455,6 @@ namespace roboptim
 	lena_ = 1;
 	nea_ = 0;
       }
-
-    std::cout << "LEN A: " << lena_ << std::endl;
-    std::cout << "NEA: " << nea_ << std::endl;
-    std::cout << "IAFUN: " << iafun_ << std::endl;
-    std::cout << "JAVAR: " << javar_ << std::endl;
-    std::cout << "A: " << a_.size () << std::endl;
   }
 
   void
@@ -489,7 +523,7 @@ namespace roboptim
   NagSolverNlpSparse::fill_fnames ()
   {
     boost::format fmt
-      ("RobOptim function. Type: '%1%', Title: '%2%', Ouput variable '%3%'");
+      ("%1%, %2%, Ouput variable %3%");
 
 
     // first push the cost function name
