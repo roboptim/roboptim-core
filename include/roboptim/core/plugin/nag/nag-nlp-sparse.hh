@@ -51,72 +51,77 @@ namespace roboptim
       boost::mpl::vector<
 	GenericNumericLinearFunction<EigenMatrixSparse>,
 	GenericDifferentiableFunction<EigenMatrixSparse> > >
-      parent_t;
-    typedef GenericNumericLinearFunction<EigenMatrixSparse>
-      linearFunction_t;
-    typedef GenericDifferentiableFunction<EigenMatrixSparse>
-      nonlinearFunction_t;
-    typedef problem_t::function_t function_t;
+    parent_t;
+  typedef GenericNumericLinearFunction<EigenMatrixSparse>
+  linearFunction_t;
+  typedef GenericDifferentiableFunction<EigenMatrixSparse>
+  nonlinearFunction_t;
+  typedef problem_t::function_t function_t;
 
-    explicit NagSolverNlpSparse (const problem_t& pb) throw ();
-    virtual ~NagSolverNlpSparse () throw ();
+  static const int linearFunctionId = 0;
+  static const int nonlinearFunctionId = 1;
 
-    /// \brief Solve the problem.
-    void solve () throw ();
+  explicit NagSolverNlpSparse (const problem_t& pb) throw ();
+  virtual ~NagSolverNlpSparse () throw ();
 
-  private:
-    void compute_nf ();
-    void fill_xlow_xupp ();
-    void fill_flow_fupp ();
-    void fill_iafun_javar_lena_nea ();
-    void fill_igfun_jgvar_leng_neg ();
-    void fill_fnames ();
+  /// \brief Solve the problem.
+  void solve () throw ();
 
-    function_t::vector_t lookForX ();
-    function_t::vector_t lookForX (unsigned constraintId);
+private:
+  void compute_nf ();
+  void fill_xlow_xupp ();
+  void fill_flow_fupp ();
+  void fill_iafun_javar_lena_nea ();
+  void fill_igfun_jgvar_leng_neg ();
+  void fill_fnames ();
 
-    Integer nf_;
-    Integer n_;
-    Integer nxname_;
-    Integer nfname_;
-    double objadd_;
-    Integer objrow_;
-    std::string prob_;
+  function_t::vector_t lookForX ();
+  function_t::vector_t lookForX (unsigned constraintId);
 
-    std::vector<Integer> iafun_;
-    std::vector<Integer> javar_;
+  Integer nf_;
+  Integer n_;
+  Integer nxname_;
+  Integer nfname_;
+  double objadd_;
+  Integer objrow_;
+  std::string prob_;
 
-    std::vector<double> a_;
+  std::vector<Integer> iafun_;
+  std::vector<Integer> javar_;
 
-    Integer lena_;
-    Integer nea_;
+  std::vector<double> a_;
 
-    std::vector<Integer> igfun_;
-    std::vector<Integer> jgvar_;
+  Integer lena_;
+  Integer nea_;
 
-    Integer leng_;
+  std::vector<Integer> igfun_;
+  std::vector<Integer> jgvar_;
 
-    Integer neg_;
+  Integer leng_;
 
-    Function::vector_t xlow_;
-    Function::vector_t xupp_;
+  Integer neg_;
 
-    Function::vector_t flow_;
-    Function::vector_t fupp_;
+  Function::vector_t xlow_;
+  Function::vector_t xupp_;
 
-    std::vector<const char*> fnames_;
+  std::vector<const char*> xnames_;
 
-    Function::vector_t x_;
-    std::vector<Integer> xstate_;
-    Function::vector_t xmul_;
-    Function::vector_t f_;
-    std::vector<Integer> fstate_;
-    Function::vector_t fmul_;
-    Integer ns_;
+  Function::vector_t flow_;
+  Function::vector_t fupp_;
 
-    Integer ninf_;
-    double sinf_;
-  };
+  std::vector<const char*> fnames_;
+
+  Function::vector_t x_;
+  std::vector<Integer> xstate_;
+  Function::vector_t xmul_;
+  Function::vector_t f_;
+  std::vector<Integer> fstate_;
+  Function::vector_t fmul_;
+  Integer ns_;
+
+  Integer ninf_;
+  double sinf_;
+};
 
 /// @}
 } // end of namespace roboptim
