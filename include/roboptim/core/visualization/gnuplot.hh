@@ -104,7 +104,7 @@ namespace roboptim
 
       /// \brief Instanciate a Gnuplot suitable for interactive use.
       ///
-      /// This initializes a persistent Gnuplot instance which are
+      /// This initializes a persistent Gnuplot instance which is
       /// suitable for user interaction.
       /// \param with_header whether to print the header or not
       /// \return Gnuplot instance

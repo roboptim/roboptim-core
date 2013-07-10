@@ -21,6 +21,7 @@
 # include <roboptim/core/debug.hh>
 
 # include <string>
+# include <iostream>
 
 namespace roboptim
 {
@@ -54,6 +55,18 @@ namespace roboptim
       /// \brief Make a Gnuplot comment.
       ROBOPTIM_DLLAPI Command comment (const char*) throw ();
 
+      /// \brief Make a Gnuplot comment.
+      template <typename T>
+      ROBOPTIM_DLLAPI Command comment (const T& content) throw ()
+      {
+          // Note: we do not use boost::lexical_cast because the << operators
+          // need to be in the std:: or boost:: namespaces. As a result, if we
+          // try to add a comment with an Eigen matrix, it will not be printed
+          // in the RobOptim way. Thus, we stick to stringstream (for now).
+          std::stringstream ss;
+          ss << "# " << content;
+          return Command (ss.str ());
+      }
 
       /// \brief Make a Gnuplot set command.
       ///

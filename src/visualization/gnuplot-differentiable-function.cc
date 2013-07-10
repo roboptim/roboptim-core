@@ -64,7 +64,7 @@ namespace roboptim
           for (matrix_t::Index out_id = 0;
                out_id < jac.cols(); ++out_id)
             {
-              str += (boost::format("%1.2f")
+              str += (boost::format("%2.8f")
 		      % normalize(jac(cstr_id, out_id))).str();
 
               if (out_id < jac.cols() - 1) str += " ";
