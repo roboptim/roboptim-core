@@ -453,10 +453,10 @@ namespace roboptim
 
   private:
     /// \brief Problem dimension.
-    const size_type inputSize_;
+    size_type inputSize_;
 
     /// \brief Result dimension.
-    const size_type outputSize_;
+    size_type outputSize_;
 
     /// \brief Function name (for user-friendliness).
     std::string name_;

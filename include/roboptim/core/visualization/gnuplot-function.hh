@@ -67,27 +67,51 @@ namespace roboptim
 		&& boost::get<2> (window) > 0.);
 	//FIXME: compare with arg bounds?
 
-	std::string str = (boost::format ("plot '-' title '%1%' with line")
-			   % f.getName ()).str ();
+        std::string str = "";
 
-	for (Function::size_type i = 1; i < f.outputSize (); ++i)
-	  str += ", '-' with line";
+        if (f.outputSize () == 1)
+          str += (boost::format ("plot '-' title '%1%' with line")
+                  % f.getName ()).str ();
+        else
+          str += (boost::format ("plot '-' title '%1% (0)' with line")
+                  % f.getName ()).str ();
+
+        for (Function::size_type i = 1; i < f.outputSize (); ++i)
+          str += (boost::format (", '-' title '%1% (%2%)' with line")
+                  % f.getName ()
+                  % i).str ();
 	str += "\n";
 
+        // Argument (only 1D supported for now)
 	Function::vector_t x (f.inputSize ());
-	for (Function::size_type i = 0; i < f.outputSize (); ++i)
-	  {
-	    for (double t = boost::get<0> (window); t < boost::get<1> (window);
-		 t += boost::get<2> (window))
-	      {
-		x[0] = t;
-		Function::vector_t res = f (x);
-		str += (boost::format ("%1.2f %2.2f\n")
-			% normalize (t)
-			% normalize (res [0])).str ();
-	      }
-	    str += "e\n";
-	  }
+        x.setZero ();
+
+        // Vector used to store the result for each output
+        std::vector<std::string> results ((size_t) f.outputSize ());
+
+        for (double t = boost::get<0> (window); t < boost::get<1> (window);
+             t += boost::get<2> (window))
+          {
+            // Evaluate the function
+            x[0] = t;
+            Function::vector_t res = f (x);
+
+            // Store the result in the vector of strings (for each output)
+            for (Function::size_type i = 0; i < f.outputSize (); ++i)
+              {
+                results [(size_t)i] += (boost::format ("%2.8f %2.8f\n")
+                                        % normalize (t)
+                                        % normalize (res [i])).str ();
+              }
+          }
+
+        // Concatenate the result for each output in the final Gnuplot string
+        for (std::vector<std::string>::const_iterator it = results.begin();
+             it != results.end();
+             ++it)
+          {
+            str += *it + "e\n";
+          }
 
 	return Command (str);
       }
@@ -111,7 +135,7 @@ namespace roboptim
 	  {
 	    x[0] = t;
 	    Function::vector_t res = f (x);
-	    str += (boost::format ("%1.2f %2.2f\n")
+            str += (boost::format ("%2.8f %2.8f\n")
 		    % normalize (res[0])
 		    % normalize (res [1])).str ();
 	  }
