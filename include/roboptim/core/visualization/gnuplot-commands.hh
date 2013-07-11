@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_COMMANDS_HH
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
+# include <roboptim/core/util.hh>
 
 # include <string>
 # include <iostream>
@@ -59,13 +60,20 @@ namespace roboptim
       template <typename T>
       ROBOPTIM_DLLAPI Command comment (const T& content) throw ()
       {
-          // Note: we do not use boost::lexical_cast because the << operators
-          // need to be in the std:: or boost:: namespaces. As a result, if we
-          // try to add a comment with an Eigen matrix, it will not be printed
-          // in the RobOptim way. Thus, we stick to stringstream (for now).
-          std::stringstream ss;
-          ss << "# " << content;
-          return Command (ss.str ());
+        // Note: we do not use boost::lexical_cast because the << operators
+        // need to be in the std:: or boost:: namespaces. As a result, if we
+        // try to add a comment with an Eigen matrix, it will not be printed
+        // in the RobOptim way. Thus, we stick to stringstream (for now).
+        // Also, we use the "using" keyword to force the use of the RobOptim
+        // << operator when it is available (e.g. for Eigen matrices, pairs
+        // of values, etc.).
+        using roboptim::operator <<;
+        using std::operator <<;
+
+        std::stringstream ss;
+        ss << "# " << content;
+
+        return Command (ss.str ());
       }
 
       /// \brief Make a Gnuplot set command.
