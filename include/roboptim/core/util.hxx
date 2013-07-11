@@ -62,7 +62,6 @@ namespace roboptim
     return o << "(" << p.first << ", " << p.second << ")";
   }
 
-  /// \brief Display an Eigen object with the appropriate IOFormat.
   template <typename T>
   std::ostream& operator<< (std::ostream& o, const Eigen::MatrixBase<T>& matrix)
   {
