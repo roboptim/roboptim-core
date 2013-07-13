@@ -386,16 +386,21 @@ namespace roboptim
 
       std::vector<triplet_t> coefficients;
       for (jacobian_t::Index i = 0; i < adaptee.outputSize (); ++i)
-	{
-          gradient_t grad;
+        {
+          gradient_t grad (adaptee.inputSize ());
+
           computeGradient (adaptee, epsilon, grad,
                            argument, i, xEps);
 
           const unsigned int i_ = static_cast<const unsigned int> (i);
           for (gradient_t::InnerIterator it (grad); it; ++it)
-	    {
+            {
               const unsigned int idx =
 		static_cast<const unsigned int> (it.index ());
+
+              assert (idx < static_cast<const unsigned int>
+                      (adaptee.inputSize ()));
+
               coefficients.push_back
 		(triplet_t (i_, idx, it.value ()));
 	    }
