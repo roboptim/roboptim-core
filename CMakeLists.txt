@@ -88,6 +88,13 @@ SET(HEADERS
 
 SETUP_PROJECT()
 
+# If compiler support symbol visibility, enable it.
+INCLUDE(CheckCCompilerFlag)
+CHECK_C_COMPILER_FLAG(-fvisibility=hidden HAS_VISIBILITY)
+IF(HAS_VISIBILITY)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+ENDIF()
+
 # Add extra keys to pkg-config file to export the location of the
 # plug-in directory in a robust manner.
 SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_FULL_LIBDIR}/roboptim-core")
