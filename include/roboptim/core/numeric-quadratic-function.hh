@@ -34,9 +34,13 @@ namespace roboptim
   /// where \f$A\f$ and \f$B\f$ are set when the class is instantiated.
   ///
   /// \note A is a symmetric matrix.
-  class ROBOPTIM_DLLAPI NumericQuadraticFunction : public QuadraticFunction
+  template <typename T>
+  class GenericNumericQuadraticFunction : public GenericQuadraticFunction<T>
   {
   public:
+    ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+    (GenericQuadraticFunction<T>);
+
     /// \brief Symmetric matrix type.
     typedef matrix_t symmetric_t;
 
@@ -45,10 +49,11 @@ namespace roboptim
     /// See class documentation for A and b definition.
     /// \param A A symmetric matrix
     /// \param b b vector
-    NumericQuadraticFunction (const symmetric_t& A, const vector_t& b)
-      throw ();
+    GenericNumericQuadraticFunction (const symmetric_t& A,
+				     const vector_t& b)
+    throw ();
 
-    ~NumericQuadraticFunction () throw ();
+    ~GenericNumericQuadraticFunction () throw ();
 
     /// \brief Display the function on the specified output stream.
     ///
@@ -56,10 +61,31 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
 
+    const matrix_t& A () const
+    {
+      return a_;
+    }
+
+    const vector_t& b () const
+    {
+      return b_;
+    }
+
   protected:
+    matrix_t& A ()
+    {
+      return a_;
+    }
+
+    vector_t& b ()
+    {
+      return b_;
+    }
+
     void impl_compute (result_t& , const argument_t&) const throw ();
     void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
       const throw ();
+    void impl_jacobian (jacobian_t&, const argument_t&) const throw ();
     void impl_hessian (hessian_t& hessian,
 		       const argument_t& argument,
 		       size_type functionId = 0) const throw ();
@@ -79,4 +105,5 @@ namespace roboptim
 
 } // end of namespace roboptim
 
+# include <roboptim/core/numeric-quadratic-function.hxx>
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HH

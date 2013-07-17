@@ -29,7 +29,6 @@ ADD_LIBRARY(roboptim-core SHARED
   generic-solver.cc
   identity-function.cc
   indent.cc
-  numeric-quadratic-function.cc
   result.cc
   result-with-warnings.cc
   solver.cc

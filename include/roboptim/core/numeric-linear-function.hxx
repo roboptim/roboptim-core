@@ -96,4 +96,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX
+#endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HXX

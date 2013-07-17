@@ -84,7 +84,11 @@ namespace roboptim
   typedef GenericNumericLinearFunction<EigenMatrixDense>
   NumericLinearFunction;
 
-  class NumericQuadraticFunction;
+  template <typename T>
+  class GenericNumericQuadraticFunction;
+  typedef GenericNumericQuadraticFunction<EigenMatrixDense>
+  NumericQuadraticFunction;
+
   class Result;
   class ResultWithWarnings;
   class SolverError;
