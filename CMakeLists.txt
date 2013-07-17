@@ -39,6 +39,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/portability.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-quadratic-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-quadratic-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/io.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-error.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/linear-function.hh
