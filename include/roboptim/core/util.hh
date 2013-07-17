@@ -60,10 +60,12 @@ namespace roboptim
   std::ostream& operator<< (std::ostream&, const Eigen::MatrixBase<T>&);
 
   /// \brief Convert a sparse matrix into a dense matrix.
+  ROBOPTIM_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
   (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t&);
 
   /// \brief Convert a sparse vector into a dense vector.
+  ROBOPTIM_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
   (const GenericFunctionTraits<EigenMatrixSparse>::gradient_t& v);
 

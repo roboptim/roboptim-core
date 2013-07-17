@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_DIFFERENTIABLE_FUNCTION_HH
 # define ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_DIFFERENTIABLE_FUNCTION_HH
+# include <boost/mpl/assert.hpp>
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
 
@@ -53,6 +54,23 @@ namespace roboptim
       template <typename T>
       Command plot_jac (const GenericDifferentiableFunction<T>& f,
                         const argument_t& arg);
+
+      template <>
+      ROBOPTIM_DLLAPI
+      Command plot_jac (const DifferentiableFunction& f,
+			const argument_t& arg);
+      template <>
+      ROBOPTIM_DLLAPI
+      Command plot_jac (const DifferentiableSparseFunction& f,
+			const argument_t& arg);
+
+      template <typename T>
+      Command plot_jac (const GenericDifferentiableFunction<T>& f,
+                        const argument_t& arg)
+      {
+	BOOST_MPL_ASSERT_MSG (false, NOT_IMPLEMENTED, ());
+	return Command ("");
+      }
 
       /// @}
     } // end of namespace gnuplot.
