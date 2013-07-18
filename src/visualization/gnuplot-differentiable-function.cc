@@ -28,73 +28,124 @@ namespace roboptim
   {
     namespace gnuplot
     {
-
-      std::string dense_jacobian_to_gnuplot
-      (GenericFunctionTraits<EigenMatrixDense>::matrix_t jac,
-       std::string name)
+      namespace detail
       {
-        typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t matrix_t;
 
-        std::string str = "";
+        template <typename T>
+        void set_jacobian_header
+        (std::string& str,
+         const typename GenericFunctionTraits<T>::matrix_t& jac,
+         const std::string& name)
+        {
+          // Title of the graph
+          str += "set title 'Jacobian (" + name + ")'\n";
 
-        // Title of the graph
-        str += "set title 'jacobian(" + name + ")'\n";
+          // White = 0, Blue = non zero
+          str += "set palette defined(0 \"white\",1 \"blue\")\n";
+          str += "set grid front\n";
 
-        // White = 0, Blue = non zero
-        str += "set palette defined(0 \"white\",1 \"blue\")\n";
-        str += "set grid front\n";
+          // Jacobian (x,y) range
+          str += "set xrange [0:" + boost::lexical_cast<std::string>
+            ((float)jac.cols()) + "]\n";
+          str += "set yrange [0:" + boost::lexical_cast<std::string>
+            ((float)jac.rows()) + "] reverse\n";
+          str += "set size ratio -1\n";
 
-        // Jacobian (x,y) range
-        str += "set xrange [0:" + boost::lexical_cast<std::string>
-          ((float)jac.cols()) + "]\n";
-        str += "set yrange [0:" + boost::lexical_cast<std::string>
-          ((float)jac.rows()) + "] reverse\n";
-        str += "set size ratio -1\n";
+          // Remove the colorbox
+          str += "unset colorbox\n";
 
-        // Remove the colorbox
-        str += "unset colorbox\n";
+          // Matrix plotting
+          // (range offset since pixels are centered on integer coordinates)
+          str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
+          str += "matrix with image notitle\n";
+        }
 
-        // Matrix plotting
-        // (range offset since pixels are centered on integer coordinates)
-        str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
-        str += "matrix with image notitle\n";
+        std::string dense_jacobian_to_gnuplot
+        (const GenericFunctionTraits<EigenMatrixDense>::matrix_t& jac,
+         const std::string& name)
+        {
+          typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t matrix_t;
 
-        for (matrix_t::Index cstr_id = 0;
-             cstr_id < jac.rows(); ++cstr_id)
-          for (matrix_t::Index out_id = 0;
-               out_id < jac.cols(); ++out_id)
+          std::string str = "";
+
+          // Set the header of the Gnuplot output (title, range, etc.)
+          set_jacobian_header<EigenMatrixDense>(str, jac, name);
+
+          for (matrix_t::Index cstr_id = 0;
+               cstr_id < jac.rows(); ++cstr_id)
+            for (matrix_t::Index out_id = 0;
+                 out_id < jac.cols(); ++out_id)
+              {
+                str += (boost::format("%2.8f")
+                        % normalize(jac(cstr_id, out_id))).str();
+
+                if (out_id < jac.cols() - 1) str += " ";
+                else str += "\n";
+              }
+          str += "e\n";
+          str += "e\n";
+          return str;
+        }
+
+        std::string sparse_jacobian_to_gnuplot
+        (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& jac,
+         const std::string& name)
+        {
+          typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t matrix_t;
+
+          std::string str = "";
+
+          // Set the header of the Gnuplot output (title, range, etc.)
+          set_jacobian_header<EigenMatrixSparse>(str, jac, name);
+
+          // Since Gnuplot does not support sparse matrices, we will need to
+          // plot all the zeros of the sparse matrices.
+          // Outer dimension
+          for (int k = 0; k < jac.outerSize(); ++k)
             {
-              str += (boost::format("%2.8f")
-		      % normalize(jac(cstr_id, out_id))).str();
+              // Inner dimension
+              matrix_t::InnerIterator it(jac,k);
+              for (int col_it = 0; col_it < jac.rows (); ++col_it)
+                {
+                  // Sparse nonzero: return 1
+                  if (col_it == it.col ())
+                    {
+                      str += "1";
+                      ++it;
+                    }
+                  // Sparse zero: return 0
+                  else str += "0";
 
-              if (out_id < jac.cols() - 1) str += " ";
-              else str += "\n";
+                  if (col_it < jac.cols() - 1) str += " ";
+                  else str += "\n";
+                }
             }
-        str += "e\n";
-        return str;
-      }
+          str += "e\n";
+          str += "e\n";
+          return str;
+        }
+
+      } // end of namespace detail.
 
       template <>
       Command plot_jac (const DifferentiableFunction& f,
-			const argument_t& arg)
+                        const DifferentiableFunction::argument_t& arg)
       {
 	DifferentiableFunction::jacobian_t jac = f.jacobian(arg);
 
-	return Command (dense_jacobian_to_gnuplot(jac, f.getName()));
+        return Command (detail::dense_jacobian_to_gnuplot
+                        (jac, f.getName()));
       }
 
 
       template <>
       Command plot_jac (const DifferentiableSparseFunction& f,
-			const argument_t& arg)
+                        const DifferentiableSparseFunction::argument_t& arg)
       {
-	// Note: Gnuplot does not support sparse matrix display (yet).
-	//       We currently convert the sparse matrix to a dense matrix,
-	//       which is highly inefficient for large matrices.
-	GenericFunctionTraits<EigenMatrixDense>::matrix_t
-	  jac_dense = sparse_to_dense(f.jacobian(arg));
+        DifferentiableSparseFunction::jacobian_t jac = f.jacobian(arg);
 
-	return Command (dense_jacobian_to_gnuplot(jac_dense, f.getName()));
+        return Command (detail::sparse_jacobian_to_gnuplot
+                        (jac, f.getName()));
       }
 
     } // end of namespace gnuplot.
