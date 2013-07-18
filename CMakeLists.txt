@@ -69,6 +69,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/terminal-color.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-matrix.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/fwd.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-commands.hh
