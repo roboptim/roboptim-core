@@ -33,7 +33,7 @@ using namespace roboptim::visualization;
 struct FortyTwoDense : public DifferentiableFunction
 {
   explicit FortyTwoDense ()
-    : DifferentiableFunction (7, 7, "The Answer - Dense")
+    : DifferentiableFunction (7, 7, "The Answer")
   {
   }
 
@@ -87,7 +87,7 @@ struct FortyTwoDense : public DifferentiableFunction
 struct FortyTwoSparse : public DifferentiableSparseFunction
 {
   explicit FortyTwoSparse ()
-    : DifferentiableSparseFunction (7, 7, "The Answer - Sparse")
+    : DifferentiableSparseFunction (7, 7, "The Answer")
   {
   }
 
