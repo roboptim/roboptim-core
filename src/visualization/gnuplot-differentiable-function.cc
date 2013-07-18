@@ -17,6 +17,7 @@
 
 #include <roboptim/core/visualization/gnuplot.hh>
 #include <roboptim/core/visualization/gnuplot-commands.hh>
+#include <roboptim/core/visualization/gnuplot-matrix.hh>
 #include <roboptim/core/visualization/gnuplot-differentiable-function.hh>
 
 # include <boost/format.hpp>
@@ -31,97 +32,24 @@ namespace roboptim
       namespace detail
       {
 
-        template <typename T>
-        void set_jacobian_header
-        (std::string& str,
-         const typename GenericFunctionTraits<T>::matrix_t& jac,
-         const std::string& name)
-        {
-          // Title of the graph
-          str += "set title 'Jacobian (" + name + ")'\n";
-
-          // White = 0, Blue = non zero
-          str += "set palette defined(0 \"white\",1 \"blue\")\n";
-          str += "set grid front\n";
-
-          // Jacobian (x,y) range
-          str += "set xrange [0:" + boost::lexical_cast<std::string>
-            ((float)jac.cols()) + "]\n";
-          str += "set yrange [0:" + boost::lexical_cast<std::string>
-            ((float)jac.rows()) + "] reverse\n";
-          str += "set size ratio -1\n";
-
-          // Remove the colorbox
-          str += "unset colorbox\n";
-
-          // Matrix plotting
-          // (range offset since pixels are centered on integer coordinates)
-          str += "plot '-' using ($1+0.5):($2+0.5):($3 == 0 ? 0 : 1) ";
-          str += "matrix with image notitle\n";
-        }
-
         std::string dense_jacobian_to_gnuplot
-        (const GenericFunctionTraits<EigenMatrixDense>::matrix_t& jac,
+        (const DifferentiableFunction::jacobian_t& jac,
          const std::string& name)
         {
-          typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t matrix_t;
+          std::string str = "set title 'Dense Jacobian (" + name + ")'\n";
+          str += plot_mat (jac).command ();
 
-          std::string str = "";
-
-          // Set the header of the Gnuplot output (title, range, etc.)
-          set_jacobian_header<EigenMatrixDense>(str, jac, name);
-
-          for (matrix_t::Index cstr_id = 0;
-               cstr_id < jac.rows(); ++cstr_id)
-            for (matrix_t::Index out_id = 0;
-                 out_id < jac.cols(); ++out_id)
-              {
-                str += (boost::format("%2.8f")
-                        % normalize(jac(cstr_id, out_id))).str();
-
-                if (out_id < jac.cols() - 1) str += " ";
-                else str += "\n";
-              }
-          str += "e\n";
-          str += "e\n";
           return str;
         }
 
+
         std::string sparse_jacobian_to_gnuplot
-        (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& jac,
+        (const DifferentiableSparseFunction::jacobian_t& jac,
          const std::string& name)
         {
-          typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t matrix_t;
+          std::string str = "set title 'Sparse Jacobian (" + name + ")'\n";
+          str += plot_mat (jac).command ();
 
-          std::string str = "";
-
-          // Set the header of the Gnuplot output (title, range, etc.)
-          set_jacobian_header<EigenMatrixSparse>(str, jac, name);
-
-          // Since Gnuplot does not support sparse matrices, we will need to
-          // plot all the zeros of the sparse matrices.
-          // Outer dimension
-          for (int k = 0; k < jac.outerSize(); ++k)
-            {
-              // Inner dimension
-              matrix_t::InnerIterator it(jac,k);
-              for (int col_it = 0; col_it < jac.rows (); ++col_it)
-                {
-                  // Sparse nonzero: return 1
-                  if (col_it == it.col ())
-                    {
-                      str += "1";
-                      ++it;
-                    }
-                  // Sparse zero: return 0
-                  else str += "0";
-
-                  if (col_it < jac.cols() - 1) str += " ";
-                  else str += "\n";
-                }
-            }
-          str += "e\n";
-          str += "e\n";
           return str;
         }
 

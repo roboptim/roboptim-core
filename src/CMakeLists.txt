@@ -40,6 +40,7 @@ ADD_LIBRARY(roboptim-core SHARED
   visualization/gnuplot.cc
   visualization/gnuplot-commands.cc
   visualization/gnuplot-differentiable-function.cc
+  visualization/gnuplot-matrix.cc
   )
 
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)

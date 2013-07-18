@@ -41,14 +41,14 @@
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/portability.hh>
 
-# define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)		\
-  typedef PARENT parent_t;				\
-  typedef parent_t::value_type value_type;		\
-  typedef parent_t::size_type size_type;		\
-  typedef parent_t::argument_t argument_t;		\
-  typedef parent_t::result_t result_t;			\
-  typedef parent_t::vector_t vector_t;			\
-  typedef parent_t::matrix_t matrix_t;			\
+# define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT) \
+  typedef PARENT parent_t;                      \
+  typedef parent_t::value_type value_type;      \
+  typedef parent_t::size_type size_type;        \
+  typedef parent_t::argument_t argument_t;      \
+  typedef parent_t::result_t result_t;          \
+  typedef parent_t::vector_t vector_t;          \
+  typedef parent_t::matrix_t matrix_t;          \
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
@@ -437,8 +437,8 @@ namespace roboptim
     /// \param outputSize result size
     /// \param name function's name
     GenericFunction (size_type inputSize,
-	      size_type outputSize = 1,
-	      std::string name = std::string ()) throw ();
+                     size_type outputSize = 1,
+                     std::string name = std::string ()) throw ();
 
 
     /// \brief Function evaluation.
@@ -472,8 +472,8 @@ namespace roboptim
 
   template <typename T>
   GenericFunction<T>::GenericFunction (size_type inputSize,
-				    size_type outputSize,
-				    std::string name) throw ()
+                                       size_type outputSize,
+                                       std::string name) throw ()
     : inputSize_ (inputSize),
       outputSize_ (outputSize),
       name_ (name)
