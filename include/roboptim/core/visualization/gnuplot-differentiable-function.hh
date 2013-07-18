@@ -33,40 +33,42 @@ namespace roboptim
       /// \addtogroup roboptim_visualization
       /// @{
 
-
-      /// \brief Import discrete interval type from function.
-      typedef Function::discreteInterval_t discreteInterval_t;
-
-      /// \brief Import discrete interval type from function.
-      typedef DifferentiableFunction::argument_t argument_t;
-
       /// \brief Plot the Jacobian structure with Gnuplot.
       ///
       /// Plot the structure of the Jacobian of a differentiable function with
-      /// Gnuplot. Non-zero values will be displayed in blue, zeros in white.
+      /// Gnuplot. Nonzero values will be displayed in blue, zeros in white.
       ///
-      /// \warning The sparse version currently relies on a sparse to dense
-      /// matrix conversion. This can be highly inefficient for large matrices.
+      /// When dealing with a dense matrix, the actual values are printed and
+      /// exact zeros will be displayed in white.
+      ///
+      /// When dealing with a sparse matrix, inserted zeros will also be treated
+      /// as nonzero values, thus returning the real structure of the sparse
+      /// Jacobian matrix. In this case, the values returned are 1 for sparse
+      /// elements, and 0 for actual zeros.
       ///
       /// \param f differentiable function whose Jacobian will be plotted
-      /// \param arg optimization parameters of the point to plot
+      /// \param arg optimization parameters of the point to plot. This
+      /// parameter is not relevant when dealing with sparse functions, since
+      /// it should not change the Jacobian's sparse structure.
       /// \return Gnuplot command
       template <typename T>
       Command plot_jac (const GenericDifferentiableFunction<T>& f,
-                        const argument_t& arg);
+                        const typename GenericDifferentiableFunction<T>::
+                        argument_t& arg);
 
       template <>
       ROBOPTIM_DLLAPI
       Command plot_jac (const DifferentiableFunction& f,
-			const argument_t& arg);
+                        const DifferentiableFunction::argument_t& arg);
       template <>
       ROBOPTIM_DLLAPI
       Command plot_jac (const DifferentiableSparseFunction& f,
-			const argument_t& arg);
+                        const DifferentiableSparseFunction::argument_t& arg);
 
       template <typename T>
-      Command plot_jac (const GenericDifferentiableFunction<T>& f,
-                        const argument_t& arg)
+      Command plot_jac (const GenericDifferentiableFunction<T>&,
+                        const typename GenericDifferentiableFunction<T>::
+                        argument_t&)
       {
 	BOOST_MPL_ASSERT_MSG (false, NOT_IMPLEMENTED, ());
 	return Command ("");
