@@ -39,7 +39,7 @@ namespace roboptim
     const throw ()
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+    Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
       typedef Eigen::Triplet<double> triplet_t;
@@ -66,7 +66,7 @@ namespace roboptim
     const throw ()
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+    Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
       jacobian.row (i) = gradient (argument, i);

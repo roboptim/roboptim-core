@@ -3,7 +3,7 @@
 set terminal wxt persist
 set multiplot layout 2,1
 # Dense matrix
-set title 'Jacobian (The Answer - Dense)'
+set title 'Dense Jacobian (The Answer)'
 set palette defined(0 "white",1 "blue")
 set grid front
 set xrange [0:7]
@@ -22,7 +22,7 @@ e
 e
 
 # Sparse matrix
-set title 'Jacobian (The Answer - Sparse)'
+set title 'Sparse Jacobian (The Answer)'
 set palette defined(0 "white",1 "blue")
 set grid front
 set xrange [0:7]
