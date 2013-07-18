@@ -33,7 +33,7 @@ using namespace roboptim::visualization;
 struct FortyTwoDense : public DifferentiableFunction
 {
   explicit FortyTwoDense ()
-    : DifferentiableFunction (7, 7, "The Answer")
+    : DifferentiableFunction (7, 7, "The Answer - Dense")
   {
   }
 
@@ -87,7 +87,7 @@ struct FortyTwoDense : public DifferentiableFunction
 struct FortyTwoSparse : public DifferentiableSparseFunction
 {
   explicit FortyTwoSparse ()
-    : DifferentiableSparseFunction (7, 7, "The Answer")
+    : DifferentiableSparseFunction (7, 7, "The Answer - Sparse")
   {
   }
 
@@ -144,40 +144,28 @@ BOOST_AUTO_TEST_CASE (visualization_gnuplot_differentiable_function)
   using namespace roboptim::visualization::gnuplot;
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot ();
 
-
-  // Test #1: dense version
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern("visualization-gnuplot-differentiable-function");
 
+  // Test #1: dense version
   FortyTwoDense f_dense;
   FortyTwoDense::vector_t arg_dense(7);
   arg_dense.fill(1.0);
-
-  (*output)
-    << (gnuplot
-	<< plot_jac (f_dense, arg_dense)
-	);
-
-  std::cout << output->str () << std::endl;
-
-  // Match pattern and flush output
-  BOOST_CHECK (output->match_pattern (true));
-  // Reset pattern
-
 
   // Test #2: sparse version
   FortyTwoSparse f_sparse;
   FortyTwoSparse::vector_t arg_sparse(7);
   arg_sparse.fill(1.0);
 
-  // Reset gnuplot instance and pattern
-  gnuplot = Gnuplot::make_interactive_gnuplot ();
-  output = retrievePattern("visualization-gnuplot-differentiable-function");
-
   (*output)
     << (gnuplot
-	<< plot_jac (f_sparse, arg_sparse)
-	);
+    << set ("multiplot layout 2,1")
+    << comment (" Dense matrix")
+    << plot_jac (f_dense, arg_dense)
+    << comment (" Sparse matrix")
+    << plot_jac (f_sparse, arg_sparse)
+    << unset ("multiplot")
+    );
 
   std::cout << output->str () << std::endl;
 
