@@ -61,9 +61,16 @@ namespace roboptim
   GenericNumericQuadraticFunction<EigenMatrixSparse>::impl_jacobian
   (jacobian_t& jacobian, const argument_t& x) const throw ()
   {
-    jacobian = x.transpose () * a_.selfadjointView<Eigen::Upper> ();
-    for (size_type j = 0; j < this->inputSize (); ++j)
-      jacobian.coeffRef (0, j) += b_[j];
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
+    Eigen::MatrixXd j = x.transpose () * a_;
+    for (size_type i = 0; i < this->inputSize (); ++i)
+      j.coeffRef (0, i) += b_[i];
+
+    for (size_type i = 0; i < this->inputSize (); ++i)
+      jacobian.coeffRef (0, i) = j.coeffRef (0, i);;
   }
 
 
