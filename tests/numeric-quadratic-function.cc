@@ -73,16 +73,18 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
   std::cout << "G(x) = " << f.gradient (x, 0) << std::endl;
   std::cout << "H(x) = " << f.hessian (x, 0) << std::endl;
 
+  typedef typename GenericNumericQuadraticFunction<T>::matrix_t matrix_t;
+  matrix_t J (1, 5);
 
-  typename GenericNumericQuadraticFunction<T>::matrix_t J (1, 5);
-  for (unsigned i = 0; i < 5; ++i)
+  for (typename matrix_t::Index i = 0; i < 5; ++i)
     J.coeffRef (0, i) = x[i];
 
-  for (unsigned i = 0; i < 5; ++i)
+  for (typename matrix_t::Index i = 0; i < 5; ++i)
     {
       std::cout << f.jacobian (x).coeffRef (0, i) << std::endl;
       std::cout << J.coeffRef (0, i) << std::endl;
     }
+
   BOOST_CHECK (allclose (f.jacobian (x), J));
   BOOST_CHECK (allclose (f.hessian (x, 0), a));
 }
