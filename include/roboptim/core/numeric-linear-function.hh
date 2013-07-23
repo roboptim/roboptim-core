@@ -64,7 +64,6 @@ namespace roboptim
       return b_;
     }
 
-  protected:
     matrix_t& A ()
     {
       return a_;
