@@ -290,9 +290,9 @@ namespace roboptim
     throw (BadJacobian<T>)
   {
     GenericFiniteDifferenceGradient<T> fdfunction (function);
-    DifferentiableFunction::jacobian_t jac =
+    typename GenericDifferentiableFunction<T>::jacobian_t jac =
       function.jacobian (x);
-    DifferentiableFunction::jacobian_t fdjac =
+    typename GenericDifferentiableFunction<T>::jacobian_t fdjac =
       fdfunction.jacobian (x);
 
     if (!checkJacobian (function, x, threshold))
