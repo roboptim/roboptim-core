@@ -20,6 +20,7 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
+#include <roboptim/core/finite-difference-gradient.hh>
 #include <roboptim/core/numeric-quadratic-function.hh>
 #include <roboptim/core/util.hh>
 
@@ -85,6 +86,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
 
       BOOST_CHECK (allclose (f.jacobian (x), J));
       BOOST_CHECK (allclose (f.hessian (x, 0), a));
+
+      BOOST_CHECK (checkGradient (f, 0, x));
+      BOOST_CHECK (checkJacobian (f, x));
     }
 }
 
