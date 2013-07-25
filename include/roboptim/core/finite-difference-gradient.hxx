@@ -127,6 +127,7 @@ namespace roboptim
   }
 
   template <>
+  inline
   BadJacobian<EigenMatrixSparse>::BadJacobian
   (const vector_t& x,
    const jacobian_t& analyticalJacobian,
