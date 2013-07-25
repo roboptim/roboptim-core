@@ -27,6 +27,11 @@
 
 #include <roboptim/core/plugin/nag/nag-nlp-sparse.hh>
 
+#ifdef ROBOPTIM_CORE_PLUGIN_NAG_CHECK_GRADIENT
+# include <roboptim/core/finite-difference-gradient.hh>
+#endif // ROBOPTIM_CORE_PLUGIN_NAG_CHECK_GRADIENT
+
+
 #define DEFINE_PARAMETER(KEY, DESCRIPTION, VALUE)	\
   do {							\
     this->parameters_[KEY].description = DESCRIPTION;	\
@@ -36,6 +41,41 @@
 
 namespace roboptim
 {
+  /// \internal
+#ifdef ROBOPTIM_CORE_PLUGIN_NAG_CHECK_GRADIENT
+  template <typename T, typename U>
+  static void checkJacobian (const GenericDifferentiableFunction<T>& function,
+			     int functionId,
+			     U& x) throw ()
+  {
+    using boost::format;
+    try
+      {
+	checkJacobianAndThrow (function, Eigen::VectorXd (x));
+      }
+    catch (roboptim::BadJacobian<T>& bg)
+      {
+	//solver.invalidateGradient ();
+	std::cerr
+	  << ((functionId < 0)
+	      ? "Invalid cost function jacobian:"
+	      : "Invalid constraint function gradient:")
+	  << std::endl
+	  << function.getName ()
+	  << std::endl
+	  << bg
+	  << std::endl;
+      }
+  }
+#else
+  template <typename T, typename U>
+  static void checkJacobian (const GenericDifferentiableFunction<T>&,
+			     int,
+			     U&) throw ()
+  {}
+#endif //!ROBOPTIM_CORE_CFSQP_PLUGIN_CHECK_GRADIENT
+
+
   namespace detail
   {
     // Constraints Callback
@@ -125,6 +165,8 @@ namespace roboptim
 	  // retrieve objective jacobian
 	  j = solver->problem ().function ().jacobian (x_);
 
+	  checkJacobian (solver->problem ().function (), -1, x_);
+
 	  for (int k = 0; k < j.outerSize (); ++k)
 	    for (NagSolverNlpSparse::function_t::matrix_t::InnerIterator
 		   it (j, k); it; ++it)
@@ -143,6 +185,7 @@ namespace roboptim
 		  NagSolverNlpSparse::nonlinearFunction_t> > (*it);
 	      assert (!!g);
 	      j = g->jacobian (x_);
+	      checkJacobian (*g, constraintId, x_);
 
 	      for (int k = 0; k < j.outerSize (); ++k)
 		for (NagSolverNlpSparse::function_t::matrix_t::InnerIterator
