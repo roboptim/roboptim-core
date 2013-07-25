@@ -58,6 +58,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
   b[1] = 0.;
   b[2] = 0.;
   b[3] = 0.;
+  b[4] = 0.;
 
   GenericNumericQuadraticFunction<T> f (a, b);
 
@@ -91,5 +92,40 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
       BOOST_CHECK (checkJacobian (f, x));
     }
 }
+
+typedef boost::mpl::list< ::roboptim::EigenMatrixSparse> sparseOnly_t;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE (random_gradient_check, T, sparseOnly_t)
+{
+  typename GenericNumericQuadraticFunction<T>::matrix_t a (5, 5);
+  typename GenericNumericQuadraticFunction<T>::vector_t b (5);
+  typename GenericNumericQuadraticFunction<T>::vector_t x (5);
+
+  for (int randomTry = 0; randomTry < 10; ++randomTry)
+    {
+      a.setZero ();
+      b.setZero ();
+      x.setZero ();
+
+      for (typename GenericNumericQuadraticFunction<T>::matrix_t::Index i = 0; i < 5; ++i)
+	for (typename GenericNumericQuadraticFunction<T>::matrix_t::Index j = 0; j < 5; ++j)
+	  a.insert (i, j) = 0.;
+      for (typename GenericNumericQuadraticFunction<T>::matrix_t::Index i = 0; i < 5; ++i)
+	for (typename GenericNumericQuadraticFunction<T>::matrix_t::Index j = 0; j < 5; ++j)
+	  a.coeffRef (i, j) = a.coeffRef (j, i) = static_cast<double> (std::rand () / RAND_MAX);
+
+      b = GenericNumericQuadraticFunction<T>::vector_t::Random (5);
+
+      GenericNumericQuadraticFunction<T> f (a, b);
+
+      for (int i = 0; i < 10; ++i)
+	{
+	  x = GenericNumericQuadraticFunction<T>::vector_t::Random (5);
+	  BOOST_CHECK (checkGradient (f, 0, x));
+	  BOOST_CHECK (checkJacobian (f, x));
+	}
+    }
+}
+
 
 BOOST_AUTO_TEST_SUITE_END ()
