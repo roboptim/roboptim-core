@@ -192,8 +192,8 @@ namespace roboptim
 	boost::shared_ptr<NumericLinearFunction> g =
 	  boost::get<boost::shared_ptr<NumericLinearFunction> > (*it);
 	assert (!!g);
-
-	a_.block (idx, 0, g->outputSize (), g->inputSize ()) = g->A ();
+	const NumericLinearFunction::matrix_t& A = g->A ();
+	a_.block (idx, 0, g->outputSize (), g->inputSize ()) = A;
 	idx += g->outputSize ();
       }
 
@@ -221,11 +221,12 @@ namespace roboptim
 
 	for (unsigned i = 0; i < g->outputSize (); ++i)
 	  {
+	    const NumericLinearFunction::vector_t& b = g->b ();
 	    // warning: we shift bounds here.
 	    bl_[idx + i] =
-	      problem ().boundsVector ()[constraintId][i].first + g->b ()[i];
+	      problem ().boundsVector ()[constraintId][i].first + b[i];
 	    bu_[idx + i] =
-	      problem ().boundsVector ()[constraintId][i].second + g->b ()[i];
+	      problem ().boundsVector ()[constraintId][i].second + b[i];
 	  }
 	idx += g->outputSize ();
       }
