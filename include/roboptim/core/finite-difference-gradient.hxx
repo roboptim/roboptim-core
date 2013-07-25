@@ -148,8 +148,8 @@ namespace roboptim
       for (size_type j = 0; j < analyticalJacobian.cols (); ++j)
 	{
           value_type delta =
-	    std::fabs (analyticalJacobian(i,j)
-		       - finiteDifferenceJacobian(i,j));
+	    std::fabs (analyticalJacobian.coeffRef (i,j)
+		       - finiteDifferenceJacobian.coeffRef (i,j));
 
           if (delta > maxDelta_)
 	    {
