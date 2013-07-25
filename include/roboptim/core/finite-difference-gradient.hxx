@@ -126,6 +126,42 @@ namespace roboptim
     assert (epsilon != 0. && epsilon == epsilon);
   }
 
+  template <>
+  BadJacobian<EigenMatrixSparse>::BadJacobian
+  (const vector_t& x,
+   const jacobian_t& analyticalJacobian,
+   const jacobian_t& finiteDifferenceJacobian,
+   const value_type& threshold)
+    : std::runtime_error ("bad jacobian"),
+      x_ (x),
+      analyticalJacobian_ (analyticalJacobian),
+      finiteDifferenceJacobian_ (finiteDifferenceJacobian),
+      maxDelta_ (),
+      maxDeltaRow_ (),
+      maxDeltaCol_ (),
+      threshold_ (threshold)
+  {
+    assert (analyticalJacobian.rows () == finiteDifferenceJacobian.rows ());
+    assert (analyticalJacobian.cols () == finiteDifferenceJacobian.cols ());
+
+    maxDelta_ = -std::numeric_limits<Function::value_type>::infinity ();
+    for (size_type i = 0; i < analyticalJacobian.rows (); ++i)
+      for (size_type j = 0; j < analyticalJacobian.cols (); ++j)
+	{
+          value_type delta =
+	    std::fabs (analyticalJacobian.coeff (i,j)
+		       - finiteDifferenceJacobian.coeff (i,j));
+
+          if (delta > maxDelta_)
+	    {
+              maxDelta_ = delta;
+              maxDeltaRow_ = i;
+              maxDeltaCol_ = j;
+	    }
+	}
+  }
+
+
   template <typename T>
   BadJacobian<T>::BadJacobian (const vector_t& x,
                                const jacobian_t& analyticalJacobian,
@@ -148,8 +184,8 @@ namespace roboptim
       for (size_type j = 0; j < analyticalJacobian.cols (); ++j)
 	{
           value_type delta =
-	    std::fabs (analyticalJacobian.coeffRef (i,j)
-		       - finiteDifferenceJacobian.coeffRef (i,j));
+	    std::fabs (analyticalJacobian (i,j)
+		       - finiteDifferenceJacobian (i,j));
 
           if (delta > maxDelta_)
 	    {

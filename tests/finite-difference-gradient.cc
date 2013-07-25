@@ -330,9 +330,16 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
 
       BOOST_CHECK (checkGradient (fg, 0, x));
       BOOST_CHECK (! checkGradient (fb, 0, x));
+      BOOST_CHECK_THROW (checkGradientAndThrow (fb, 0, x),
+			 ::roboptim::BadGradient<T>);
+      BOOST_CHECK_THROW (checkJacobianAndThrow (fb, x),
+			 ::roboptim::BadJacobian<T>);
+
 
       BOOST_CHECK (checkGradient (sq, 0, x));
       BOOST_CHECK (checkGradient (sq, 1, x));
+      checkGradientAndThrow (sq, 0, x);
+      checkGradientAndThrow (sq, 1, x);
     }
 
   x.resize (2);
@@ -342,6 +349,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
 	(*output) << "# Times at x = " << x << std::endl;
 	displayGradient (output, times, x);
 	BOOST_CHECK (checkGradient (times, 0, x));
+	checkGradientAndThrow (times, 0, x);
       }
 
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot (false);
