@@ -93,6 +93,8 @@ ROBOPTIM_CORE_TEST(constant-function)
 ROBOPTIM_CORE_TEST(cached-function)
 ROBOPTIM_CORE_TEST(split)
 
+ROBOPTIM_CORE_TEST(plus)
+
 # Visualization
 ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)
 

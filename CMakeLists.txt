@@ -81,6 +81,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hh
