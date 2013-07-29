@@ -30,7 +30,7 @@ namespace roboptim
   (const matrix_t& a, const vector_t& b)
     throw ()
     : GenericQuadraticFunction<T>
-      (a.rows (), 1, "numeric linear function"),
+      (a.rows (), 1, "numeric quadratic function"),
       a_ (a),
       b_ (b),
       buffer_ (b.size ())
