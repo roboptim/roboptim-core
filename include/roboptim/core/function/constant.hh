@@ -1,4 +1,4 @@
-// Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
+// Copyright (C) 2013 by Thomas Moulard, AIST, CNRS, INRIA.
 //
 // This file is part of the roboptim.
 //
@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_CONSTANT_FUNCTION_HH
-# define ROBOPTIM_CORE_CONSTANT_FUNCTION_HH
+#ifndef ROBOPTIM_CORE_FUNCTION_CONSTANT_HH
+# define ROBOPTIM_CORE_FUNCTION_CONSTANT_HH
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/linear-function.hh>
 # include <roboptim/core/portability.hh>
@@ -31,26 +31,54 @@ namespace roboptim
   /// Implement a constant function using the formula:
   /// \f[f(x) = offset\f]
   /// where \f$offset\f$ is set when the class is instantiated.
-  class ROBOPTIM_DLLAPI ConstantFunction : public LinearFunction
+  template <typename T>
+  class GenericConstantFunction : public GenericLinearFunction<T>
   {
   public:
+    ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+    (GenericLinearFunction<T>);
+
     /// \brief Build an constant function.
     ///
     /// \param offset constant function offset
-    ConstantFunction (const vector_t& offset) throw ();
-    ~ConstantFunction () throw ();
+    GenericConstantFunction (const vector_t& offset) throw ()
+      : GenericLinearFunction<T> (static_cast<size_type> (offset.size ()),
+				  static_cast<size_type> (offset.size ()),
+				  "constant function"),
+	offset_ (offset)
+    {
+    }
+
+    ~GenericConstantFunction () throw ()
+    {}
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream& o) const throw ()
+    {
+      return o << "Constant function" << incindent << iendl
+	       << "offset = " << this->offset_ << iendl
+	       << decindent;
+    }
 
   protected:
-    void impl_compute (result_t& , const argument_t&) const throw ();
-    void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
-      const throw ();
-    void impl_jacobian (jacobian_t&, const argument_t&) const throw ();
+    void impl_compute (result_t& result, const argument_t&) const throw ()
+    {
+      result = this->offset_;
+    }
+
+    void impl_gradient (gradient_t& gradient, const argument_t&, size_type = 0)
+      const throw ()
+    {
+      gradient.setZero ();
+    }
+
+    void impl_jacobian (jacobian_t& jacobian, const argument_t&) const throw ()
+    {
+      jacobian.setZero ();
+    }
 
   private:
     const vector_t offset_;
@@ -63,4 +91,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_CONSTANT_FUNCTION_HH
+#endif //! ROBOPTIM_CORE_FUNCTION_CONSTANT_HH

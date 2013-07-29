@@ -22,12 +22,10 @@ SET(PLUGINDIR ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME})
 # Main library.
 ADD_LIBRARY(roboptim-core SHARED
   ${HEADERS}
-  constant-function.cc
   debug.hh
   doc.hh
   finite-difference-gradient.cc
   generic-solver.cc
-  identity-function.cc
   indent.cc
   result.cc
   result-with-warnings.cc

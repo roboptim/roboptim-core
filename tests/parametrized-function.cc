@@ -20,7 +20,7 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/constant-function.hh>
+#include <roboptim/core/function/constant.hh>
 #include <roboptim/core/parametrized-function.hh>
 
 using namespace roboptim;

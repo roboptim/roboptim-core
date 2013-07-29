@@ -20,7 +20,7 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/identity-function.hh>
+#include <roboptim/core/function/identity.hh>
 #include <roboptim/core/derivable-parametrized-function.hh>
 
 using namespace roboptim;
@@ -54,26 +54,26 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
   }
 };
 
-#define CHECKME(PVALUE)						\
-  {								\
-    (*output) << "Parameter is " << PVALUE << std::endl;	\
-    parameter[0] = (PVALUE);					\
-    IdentityFunction cst = pf (parameter);			\
-								\
-    IdentityFunction::vector_t x (1);				\
-    x[0] = 31.;							\
-    (*output)							\
-      << cst << std::endl					\
-      << "Evaluate: " << std::endl				\
-      << cst (x) << std::endl					\
-      << "Gradient: " << std::endl				\
-      << cst.gradient (x) << std::endl				\
-      << "Jacobian: " << std::endl				\
-      << cst.jacobian (x) << std::endl				\
-      << "Derivative w.r.t params: " << std::endl		\
-      << cst.jacobian (x) << std::endl				\
-      << std::endl;						\
-  }								\
+#define CHECKME(PVALUE)							\
+  {									\
+    (*output) << "Parameter is " << PVALUE << std::endl;		\
+    parameter[0] = (PVALUE);						\
+    IdentityFunction cst = pf (parameter);				\
+									\
+    ParametrizedDF::vector_t x (1);					\
+    x[0] = 31.;								\
+    (*output)								\
+      << cst << std::endl						\
+      << "Evaluate: " << std::endl					\
+      << cst (x) << std::endl						\
+      << "Gradient: " << std::endl					\
+      << cst.gradient (x) << std::endl					\
+      << "Jacobian: " << std::endl					\
+      << cst.jacobian (x) << std::endl					\
+      << "Derivative w.r.t params: " << std::endl			\
+      << cst.jacobian (x) << std::endl					\
+      << std::endl;							\
+  }									\
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 

@@ -28,7 +28,8 @@ SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
 
 SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/identity-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/constant.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/identity.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/util.hxx
@@ -48,7 +49,6 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-differentiable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-differentiable-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/indent.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/constant-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/generic-solver.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/fwd.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hh

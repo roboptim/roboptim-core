@@ -20,7 +20,7 @@
 #include <boost/mpl/vector.hpp>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/constant-function.hh>
+#include <roboptim/core/function/constant.hh>
 #include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/problem.hh>
 

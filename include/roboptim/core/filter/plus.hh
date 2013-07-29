@@ -103,6 +103,21 @@ namespace roboptim
      GenericLinearFunction<EigenMatrixSparse>);
 
 
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (GenericConstantFunction<EigenMatrixDense>,
+     GenericLinearFunction<EigenMatrixDense>);
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (GenericConstantFunction<EigenMatrixSparse>,
+     GenericLinearFunction<EigenMatrixSparse>);
+
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (GenericIdentityFunction<EigenMatrixDense>,
+     GenericLinearFunction<EigenMatrixDense>);
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (GenericIdentityFunction<EigenMatrixSparse>,
+     GenericLinearFunction<EigenMatrixSparse>);
+
+
 
     template<class T1, class T2, int promoteToT1>
     struct promote2
@@ -137,7 +152,7 @@ namespace roboptim
 
       // If we don't know both ranks, assert.
       BOOST_MPL_ASSERT ((boost::mpl::bool_<knowBothRanks>));
-      
+
       // Promote to type having the lesser precision.
       enum
 	{
@@ -203,6 +218,14 @@ namespace roboptim
     mutable gradient_t gradient_;
     mutable jacobian_t jacobian_;
   };
+
+  template <typename U, typename V>
+  boost::shared_ptr<Plus<U, V> >
+  plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+  {
+    return boost::make_shared<Plus<U, V> > (left, right);
+  }
+
 } // end of namespace roboptim.
 
 # include <roboptim/core/filter/plus.hxx>

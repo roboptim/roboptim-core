@@ -35,12 +35,8 @@ namespace roboptim
   class GenericLinearFunction : public GenericQuadraticFunction<T>
   {
   public:
-    typedef GenericQuadraticFunction<T> parent_t;
-    typedef typename parent_t::size_type size_type;
-    typedef typename parent_t::vector_t vector_t;
-    typedef typename parent_t::argument_t argument_t;
-    typedef typename parent_t::result_t result_t;
-    typedef typename parent_t::hessian_t hessian_t;
+    ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+    (GenericQuadraticFunction<T>);
 
     /// \brief Concrete class constructor should call this constructor.
     ///

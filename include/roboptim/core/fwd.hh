@@ -28,7 +28,8 @@ namespace roboptim
   /// the problem.
   class NoSolution {};
 
-  class ConstantFunction;
+  template <typename T>
+  class GenericConstantFunction;
 
   template <typename T>
   class GenericDifferentiableFunction;
@@ -88,6 +89,14 @@ namespace roboptim
   class GenericNumericQuadraticFunction;
   typedef GenericNumericQuadraticFunction<EigenMatrixDense>
   NumericQuadraticFunction;
+
+  template <typename T>
+  class GenericConstantFunction;
+  typedef GenericConstantFunction<EigenMatrixDense> ConstantFunction;
+
+  template <typename T>
+  class GenericIdentityFunction;
+  typedef GenericIdentityFunction<EigenMatrixDense> IdentityFunction;
 
   class Result;
   class ResultWithWarnings;

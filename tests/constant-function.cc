@@ -20,18 +20,18 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/constant-function.hh>
+#include <roboptim/core/function/constant.hh>
 
 using namespace roboptim;
 
+typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
+			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
-BOOST_AUTO_TEST_CASE (constant_function)
+BOOST_AUTO_TEST_CASE_TEMPLATE (constant_function, T, functionTypes_t)
 {
-  boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("constant-function");
-
-  ConstantFunction::vector_t offset (4);
+  typename GenericConstantFunction<T>::vector_t offset (4);
   offset[0] = 12.;
   offset[1] = 46.;
   offset[2] = 2.;
@@ -39,10 +39,10 @@ BOOST_AUTO_TEST_CASE (constant_function)
 
   ConstantFunction cst (offset);
 
-  ConstantFunction::vector_t x (4);
+  typename GenericConstantFunction<T>::vector_t x (4);
   x.setZero ();
 
-  (*output)
+  std::cout
     << cst << std::endl
     << "Evaluate: " << std::endl
     << cst (x) << std::endl
@@ -51,8 +51,8 @@ BOOST_AUTO_TEST_CASE (constant_function)
     << "Jacobian: " << std::endl
     << cst.jacobian (x) << std::endl;
 
-  std::cout << output->str () << std::endl;
-  BOOST_CHECK (output->match_pattern ());
+  typename GenericConstantFunction<T>::vector_t result = cst (x);
+  BOOST_CHECK (allclose (offset, result));
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
