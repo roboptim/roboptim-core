@@ -22,11 +22,11 @@ export PKG_CONFIG_PATH="$install_dir/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 # Checkout Eigen.
 cd "$build_dir"
-wget "http://bitbucket.org/eigen/eigen/get/3.1.2.tar.gz"
-tar xzvf 3.1.2.tar.gz
-cd "$build_dir/eigen-eigen-5097c01bcdc4/"
-mkdir -p "$build_dir/eigen-eigen-5097c01bcdc4/_build"
-cd "$build_dir/eigen-eigen-5097c01bcdc4/_build"
+wget "http://bitbucket.org/eigen/eigen/get/3.2.0.tar.gz"
+tar xzvf 3.2.0.tar.gz
+cd "$build_dir/eigen-eigen-*/"
+mkdir -p "$build_dir/eigen-eigen-*/_build"
+cd "$build_dir/eigen-eigen-*/_build"
 cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$install_dir" \
           -Dpkg_config_libdir:STRING="$install_dir/lib"
 make
