@@ -80,6 +80,10 @@ namespace roboptim
   class Minus;
   template <typename U, typename V>
   class Plus;
+  template <typename U, typename V>
+  class Product;
+  template <typename U>
+  class Scalar;
 
 
   class GenericSolver;
