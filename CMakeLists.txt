@@ -38,6 +38,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/minus.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/minus.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hh

@@ -77,6 +77,8 @@ namespace roboptim
   DifferentiableSparseFunction;
 
   template <typename U, typename V>
+  class Minus;
+  template <typename U, typename V>
   class Plus;
 
 

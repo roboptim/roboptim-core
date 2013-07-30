@@ -15,80 +15,74 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_PLUS_HXX
-# define ROBOPTIM_CORE_FILTER_PLUS_HXX
+#ifndef ROBOPTIM_CORE_FILTER_MINUS_HXX
+# define ROBOPTIM_CORE_FILTER_MINUS_HXX
 # include <boost/format.hpp>
 
 namespace roboptim
 {
   template <typename U, typename V>
-  Chain<U, V>::Chain
+  Minus<U, V>::Minus
   (boost::shared_ptr<U> left, boost::shared_ptr<V> right) throw ()
     : detail::PromoteTrait<U, V>::T_promote
       (left->inputSize (),
        left->outputSize (),
-       (boost::format ("%1%(%2%)")
+       (boost::format ("%1% - %2%")
 	% left->getName ()
 	% right->getName ()).str ()),
       left_ (left),
       right_ (right),
-      result_ (right->outputSize ()),
-      gradientLeft_ (left->inputSize ()),
-      gradientRight_ (right->inputSize ()),
-      jacobianLeft_ (left->outputSize (),
-		     left->inputSize ()),
-      jacobianRight_ (right->outputSize (),
-		      right->inputSize ())
+      result_ (left->outputSize ()),
+      gradient_ (left->inputSize ()),
+      jacobian_ (left->outputSize (),
+		 left->inputSize ())
   {
-    if (left->inputSize () != right->outputSize ())
-      throw std::runtime_error
-	("left input size and right output size mismatch");
+    if (left->inputSize () != right->inputSize ()
+	|| left->outputSize () != right->outputSize ())
+      throw std::runtime_error ("left and right size mismatch");
     result_.setZero ();
-    gradientLeft_.setZero ();
-    gradientRight_.setZero ();
-    jacobianLeft_.setZero ();
-    jacobianRight_.setZero ();
+    gradient_.setZero ();
+    jacobian_.setZero ();
   }
 
   template <typename U, typename V>
-  Chain<U, V>::~Chain () throw ()
+  Minus<U, V>::~Minus () throw ()
   {}
 
   template <typename U, typename V>
   void
-  Chain<U, V>::impl_compute
+  Minus<U, V>::impl_compute
   (result_t& result, const argument_t& x)
     const throw ()
   {
+    result.setZero ();
+    (*left_) (result, x);
     (*right_) (result_, x);
-    (*left_) (result, result_);
+    result -= result_;
   }
 
   template <typename U, typename V>
   void
-  Chain<U, V>::impl_gradient (gradient_t& gradient,
-			 const argument_t& x,
+  Minus<U, V>::impl_gradient (gradient_t& gradient,
+			 const argument_t& argument,
 			 size_type functionId)
     const throw ()
   {
-    (*right_) (result_, x);
-    left_->gradient (gradientLeft_, result_, functionId);
-    right_->gradient (gradientRight_, x, functionId);
-    gradient = gradientLeft_.cwiseProduct (gradientRight_);
+    left_->gradient (gradient, argument, functionId);
+    right_->gradient (gradient_, argument, functionId);
+    gradient -= gradient_;
   }
 
   template <typename U, typename V>
   void
-  Chain<U, V>::impl_jacobian (jacobian_t& jacobian,
-			      const argument_t& x)
+  Minus<U, V>::impl_jacobian (jacobian_t& jacobian,
+			 const argument_t& argument)
     const throw ()
   {
-    (*right_) (result_, x);
-    left_->jacobian (jacobianLeft_, result_);
-    right_->jacobian (jacobianRight_, x);
-    jacobian = jacobianLeft_ * jacobianRight_;
+    left_->jacobian (jacobian, argument);
+    right_->jacobian (jacobian_, argument);
+    jacobian -= jacobian_;
   }
-
 } // end of namespace roboptim.
 
-#endif //! ROBOPTIM_CORE_FILTER_PLUS_HXX
+#endif //! ROBOPTIM_CORE_FILTER_MINUS_HXX

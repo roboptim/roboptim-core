@@ -88,6 +88,13 @@ namespace roboptim
       typedef typename Plus<U, V>::parent_t T_type;
     };
 
+    template <typename U, typename V>
+    struct AutopromoteTrait<Minus<U, V> >
+    {
+      typedef typename Minus<U, V>::parent_t T_type;
+    };
+
+
     ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
     (GenericNumericQuadraticFunction<EigenMatrixDense>,
      GenericQuadraticFunction<EigenMatrixDense>);
