@@ -168,6 +168,7 @@ namespace roboptim
     gradient_t gradient (const argument_t& argument,
 			 size_type functionId = 0) const throw ()
     {
+      assert (functionId < this->outputSize ());
       gradient_t gradient (gradientSize ());
       gradient.setZero ();
       this->gradient (gradient, argument, functionId);
@@ -190,6 +191,7 @@ namespace roboptim
 		     "Evaluating gradient at point: "
 		     << argument
 		     << " (function id: " << functionId << ")");
+      assert (functionId < this->outputSize ());
       assert (argument.size () == this->inputSize ());
       assert (isValidGradient (gradient));
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
