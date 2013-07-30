@@ -24,9 +24,9 @@ export PKG_CONFIG_PATH="$install_dir/lib/pkgconfig:$PKG_CONFIG_PATH"
 cd "$build_dir"
 wget "http://bitbucket.org/eigen/eigen/get/3.2.0.tar.gz"
 tar xzvf 3.2.0.tar.gz
-cd "$build_dir/eigen-eigen-*/"
-mkdir -p "$build_dir/eigen-eigen-*/_build"
-cd "$build_dir/eigen-eigen-*/_build"
+cd "$build_dir/eigen-eigen-ffa86ffb5570/"
+mkdir -p "$build_dir/eigen-eigen-ffa86ffb5570/_build"
+cd "$build_dir/eigen-eigen-ffa86ffb5570/_build"
 cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$install_dir" \
           -Dpkg_config_libdir:STRING="$install_dir/lib"
 make
