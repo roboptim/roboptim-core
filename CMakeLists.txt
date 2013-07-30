@@ -27,69 +27,71 @@ SET(PROJECT_DESCRIPTION "RobOptim Core")
 SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
 
 SET(HEADERS
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/constant.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/identity.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/util.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/n-times-derivable-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/sys.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/portability.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-quadratic-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-quadratic-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/io.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-error.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/linear-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/linear-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-derivable-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-differentiable-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-differentiable-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/indent.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/generic-solver.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/fwd.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivative-size.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy-laststate.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/debug.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivative-size.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-warning.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-linear-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-linear-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/n-times-derivable-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/terminal-color.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-matrix.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/fwd.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-commands.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/sum-of-c1-squares.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/constant.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/identity.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/fwd.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/generic-solver.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/indent.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/io.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/linear-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/linear-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/n-times-derivable-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/n-times-derivable-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-linear-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-linear-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-quadratic-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/numeric-quadratic-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy-laststate.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/portability.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-error.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-warning.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/sum-of-c1-squares.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/sys.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/terminal-color.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-derivable-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-differentiable-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/twice-differentiable-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/util.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/util.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/fwd.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-commands.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-matrix.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot.hh
   )
 
 SETUP_PROJECT()

@@ -95,6 +95,7 @@ ROBOPTIM_CORE_TEST(split)
 
 ROBOPTIM_CORE_TEST(plus)
 ROBOPTIM_CORE_TEST(filter-chain)
+ROBOPTIM_CORE_TEST(filter-selection)
 
 # Visualization
 ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)

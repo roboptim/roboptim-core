@@ -76,6 +76,9 @@ namespace roboptim
   typedef GenericDifferentiableFunction<EigenMatrixSparse>
   DifferentiableSparseFunction;
 
+  template <typename U, typename V>
+  class Plus;
+
 
   class GenericSolver;
   class NoSolution;

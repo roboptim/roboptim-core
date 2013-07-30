@@ -15,47 +15,39 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_PLUS_HH
-# define ROBOPTIM_CORE_FILTER_PLUS_HH
+#ifndef ROBOPTIM_CORE_FILTER_SELECTION_HH
+# define ROBOPTIM_CORE_FILTER_SELECTION_HH
 # include <vector>
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
 # include <roboptim/core/differentiable-function.hh>
 
+
 namespace roboptim
 {
-  /// \brief Sum two RobOptim functions.
-  template <typename U, typename V>
-  class Plus : public detail::PromoteTrait<U, V>::T_promote
+  /// \brief Select part of a function.
+  template <typename U>
+  class Selection : public detail::AutopromoteTrait<U>::T_type
   {
   public:
-    typedef typename detail::PromoteTrait<U, V>::T_promote parentType_t;
+    typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<Plus> PlusShPtr_t;
+    typedef boost::shared_ptr<Selection> SelectionShPtr_t;
 
-    explicit Plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right) throw ();
-    ~Plus () throw ();
+    explicit Selection (boost::shared_ptr<U> left,
+			size_type start, size_type size) throw ();
+    ~Selection () throw ();
 
-    const boost::shared_ptr<U>& left () const
+    const boost::shared_ptr<U>& origin () const
     {
-      return left_;
+      return origin_;
     }
 
-    U& left ()
+    boost::shared_ptr<U>& origin ()
     {
-      return left_;
-    }
-
-    const boost::shared_ptr<V>& right () const
-    {
-      return right_;
-    }
-
-    V& right ()
-    {
-      return right_;
+      return origin_;
     }
 
     void impl_compute (result_t& result, const argument_t& x)
@@ -69,29 +61,26 @@ namespace roboptim
 			const argument_t& arg)
       const throw ();
   private:
-    boost::shared_ptr<U> left_;
-    boost::shared_ptr<V> right_;
+    boost::shared_ptr<U> origin_;
+
+    size_type start_;
+    size_type size_;
 
     mutable result_t result_;
     mutable gradient_t gradient_;
     mutable jacobian_t jacobian_;
   };
 
-  template <typename U, typename V>
-  boost::shared_ptr<Plus<U, V> >
-  plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+  template <typename U>
+  boost::shared_ptr<Selection<U> >
+  selection (boost::shared_ptr<U> origin,
+	     typename Selection<U>::size_type start = 0,
+	     typename Selection<U>::size_type size = 1)
   {
-    return boost::make_shared<Plus<U, V> > (left, right);
-  }
-
-  template <typename U, typename V>
-  boost::shared_ptr<Plus<U, V> >
-  operator+ (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
-  {
-    return boost::make_shared<Plus<U, V> > (left, right);
+    return boost::make_shared<Selection<U> > (origin, start, size);
   }
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/plus.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_PLUS_HH
+# include <roboptim/core/filter/selection.hxx>
+#endif //! ROBOPTIM_CORE_FILTER_SELECTION_HH

@@ -72,15 +72,21 @@ namespace roboptim
     template<class T>
     struct AutopromoteTrait
     {
-      typedef T T_numtype;
+      typedef T T_type;
     };
 
 # define ROBOPTIM_CORE_DECLARE_AUTOPROMOTE(T1,T2)		\
     template<>							\
     struct AutopromoteTrait<T1>					\
     {								\
-      typedef T2 T_numtype;					\
+      typedef T2 T_type;					\
     }
+
+    template <typename U, typename V>
+    struct AutopromoteTrait<Plus<U, V> >
+    {
+      typedef typename Plus<U, V>::parent_t T_type;
+    };
 
     ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
     (GenericNumericQuadraticFunction<EigenMatrixDense>,
@@ -129,8 +135,8 @@ namespace roboptim
     struct PromoteTrait
     {
       // Handle auto promotion.
-      typedef typename AutopromoteTrait<T1_orig>::T_numtype T1;
-      typedef typename AutopromoteTrait<T2_orig>::T_numtype T2;
+      typedef typename AutopromoteTrait<T1_orig>::T_type T1;
+      typedef typename AutopromoteTrait<T2_orig>::T_type T2;
 
       enum
 	{
