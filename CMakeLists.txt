@@ -32,6 +32,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivative-size.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/detail/autopromote.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hh
