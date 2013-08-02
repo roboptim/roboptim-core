@@ -91,6 +91,21 @@ namespace roboptim
     return boost::make_shared<Scalar<U> > (origin, scalar);
   }
 
+  template <typename U>
+  boost::shared_ptr<U>
+  operator+ (boost::shared_ptr<U> origin)
+  {
+    return origin;
+  }
+
+  template <typename U>
+  boost::shared_ptr<Scalar<U> >
+  operator- (boost::shared_ptr<U> origin)
+  {
+    return boost::make_shared<Scalar<U> > (origin, -1.);
+  }
+
+
 } // end of namespace roboptim.
 
 # include <roboptim/core/filter/scalar.hxx>
