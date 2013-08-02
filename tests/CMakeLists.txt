@@ -101,6 +101,7 @@ ROBOPTIM_CORE_TEST(filter-minus)
 ROBOPTIM_CORE_TEST(filter-product)
 ROBOPTIM_CORE_TEST(filter-scalar)
 ROBOPTIM_CORE_TEST(filter-selection)
+ROBOPTIM_CORE_TEST(filter-derivative)
 
 # Visualization
 ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)
