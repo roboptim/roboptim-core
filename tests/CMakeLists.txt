@@ -87,15 +87,15 @@ ROBOPTIM_CORE_TEST(finite-difference-gradient)
 ROBOPTIM_CORE_TEST(finite-difference-jacobian)
 
 # Built-in mathematical functions.
-ROBOPTIM_CORE_TEST(identity-function)
-ROBOPTIM_CORE_TEST(constant-function)
+ROBOPTIM_CORE_TEST(function-constant)
 ROBOPTIM_CORE_TEST(function-cos)
+ROBOPTIM_CORE_TEST(function-identity)
 ROBOPTIM_CORE_TEST(function-sin)
 
 ROBOPTIM_CORE_TEST(cached-function)
 ROBOPTIM_CORE_TEST(split)
 
-ROBOPTIM_CORE_TEST(plus)
+ROBOPTIM_CORE_TEST(filter-plus)
 ROBOPTIM_CORE_TEST(filter-chain)
 ROBOPTIM_CORE_TEST(filter-minus)
 ROBOPTIM_CORE_TEST(filter-product)
