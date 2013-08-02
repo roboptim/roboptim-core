@@ -52,6 +52,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/constant.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/identity.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/cos.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/sin.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/fwd.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/generic-solver.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/indent.hh

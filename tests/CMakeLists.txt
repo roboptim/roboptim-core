@@ -89,6 +89,8 @@ ROBOPTIM_CORE_TEST(finite-difference-jacobian)
 # Built-in mathematical functions.
 ROBOPTIM_CORE_TEST(identity-function)
 ROBOPTIM_CORE_TEST(constant-function)
+ROBOPTIM_CORE_TEST(function-cos)
+ROBOPTIM_CORE_TEST(function-sin)
 
 ROBOPTIM_CORE_TEST(cached-function)
 ROBOPTIM_CORE_TEST(split)
