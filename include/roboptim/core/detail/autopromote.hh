@@ -135,6 +135,20 @@ namespace roboptim
     (GenericIdentityFunction<EigenMatrixSparse>,
      GenericLinearFunction<EigenMatrixSparse>);
 
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (Cos<EigenMatrixDense>,
+     GenericDifferentiableFunction<EigenMatrixDense>);
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (Cos<EigenMatrixSparse>,
+     GenericDifferentiableFunction<EigenMatrixSparse>);
+
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (Sin<EigenMatrixDense>,
+     GenericDifferentiableFunction<EigenMatrixDense>);
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (Sin<EigenMatrixSparse>,
+     GenericDifferentiableFunction<EigenMatrixSparse>);
+
 
 
     template<class T1, class T2, int promoteToT1>

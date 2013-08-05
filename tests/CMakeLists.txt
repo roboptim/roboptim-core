@@ -95,13 +95,14 @@ ROBOPTIM_CORE_TEST(function-sin)
 ROBOPTIM_CORE_TEST(cached-function)
 ROBOPTIM_CORE_TEST(split)
 
-ROBOPTIM_CORE_TEST(filter-plus)
 ROBOPTIM_CORE_TEST(filter-chain)
+ROBOPTIM_CORE_TEST(filter-concatenate)
+ROBOPTIM_CORE_TEST(filter-derivative)
 ROBOPTIM_CORE_TEST(filter-minus)
+ROBOPTIM_CORE_TEST(filter-plus)
 ROBOPTIM_CORE_TEST(filter-product)
 ROBOPTIM_CORE_TEST(filter-scalar)
 ROBOPTIM_CORE_TEST(filter-selection)
-ROBOPTIM_CORE_TEST(filter-derivative)
 
 # Visualization
 ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)

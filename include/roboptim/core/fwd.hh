@@ -107,6 +107,13 @@ namespace roboptim
   class GenericIdentityFunction;
   typedef GenericIdentityFunction<EigenMatrixDense> IdentityFunction;
 
+  template <typename T>
+  class Cos;
+  template <typename T>
+  class Sin;
+
+
+
   class Result;
   class ResultWithWarnings;
   class SolverError;
