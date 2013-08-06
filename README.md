@@ -2,6 +2,7 @@ roboptim-core
 =============
 
 [![Build Status](https://travis-ci.org/roboptim/roboptim-core.png?branch=master)](https://travis-ci.org/roboptim/roboptim-core)
+[![Coverage Status](https://coveralls.io/repos/roboptim/roboptim-core/badge.png)](https://coveralls.io/r/roboptim/roboptim-core)
 
 For general information about the project, please refer to its
 homepage: http://www.roboptim.net/
@@ -52,3 +53,5 @@ Available packages
    https://aur.archlinux.org/packages/roboptim-core/
  * Arch Linux (Git master branch):
    https://aur.archlinux.org/packages/roboptim-core-git/
+ * Fedora (Release 0.5):
+   https://apps.fedoraproject.org/packages/roboptim-core
