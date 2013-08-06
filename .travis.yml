@@ -9,9 +9,7 @@ before_install:
   - sudo apt-get install -qq doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev libeigen3-dev
   - sudo pip install cpp-coveralls --use-mirrors
 after_success:
-  - coveralls --exclude _travis/install \
-              --exclude _travis/build/eigen-eigen-ffa86ffb5570/ \
-              --exclude tests
+  - coveralls -e _travis/install -e _travis/build/eigen-eigen-ffa86ffb5570/ -e tests
 notifications:
   email:
     - roboptim@googlegroups.com
