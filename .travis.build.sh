@@ -35,7 +35,10 @@ make install
 # Build package
 echo "Building package..."
 cd "$build_dir"
-cmake "$root_dir" -DCMAKE_INSTALL_PREFIX="$install_dir"
+cmake "$root_dir" -DCMAKE_INSTALL_PREFIX="$install_dir"		\
+		  -DCMAKE_CXX_FLAGS="--coverage"		\
+		  -DCMAKE_EXE_LINKER_FLAGS="--coverage"		\
+		  -DCMAKE_MODULE_LINKER_FLAGS="--coverage"
 make
 make install
 make test
