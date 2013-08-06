@@ -65,7 +65,7 @@ namespace roboptim
 
     // Otherwise interpolate.
     // f(x) = (1. - alpha) * x_before + alpha * x_after
-    double alpha = after - x[0];
+    double alpha = static_cast<value_type> (after) - x[0];
     result *= 1. - alpha;
     result +=
       alpha * x_.segment (after * this->outputSize (), this->outputSize ());
@@ -96,7 +96,7 @@ namespace roboptim
 
     // Otherwise interpolate.
     // f(x) = (1. - alpha) * x_before + alpha * x_after
-    double alpha = after - x[0];
+    double alpha = static_cast<value_type> (after) - x[0];
     gradient.coeffRef (0) *= 1. - alpha;
     gradient.coeffRef (0) +=
       alpha * dx_.coeffRef (after * this->outputSize () + functionId);
@@ -127,7 +127,7 @@ namespace roboptim
 
     // Otherwise interpolate.
     // f(x) = (1. - alpha) * x_before + alpha * x_after
-    double alpha = after - x[0];
+    double alpha = static_cast<value_type> (after) - x[0];
     jacobian *= 1. - alpha;
 
     for (size_type i = 0; i < this->outputSize (); ++i)
