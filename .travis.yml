@@ -9,7 +9,7 @@ before_install:
   - sudo apt-get install -qq doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev libeigen3-dev
   - sudo pip install cpp-coveralls --use-mirrors
 after_success:
-  - if test x$CC = xgcc; then coveralls --exclude _travis && echo "gcov data uploaded to coveralls.io"; fi
+  - coveralls --exclude _travis && echo "gcov data uploaded to coveralls.io"
 notifications:
   email:
     - roboptim@googlegroups.com
