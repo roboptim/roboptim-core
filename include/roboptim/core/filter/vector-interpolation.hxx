@@ -35,7 +35,7 @@ namespace roboptim
       throw std::runtime_error ("x and outputSize are not compatible");
 
     //FIXME: this should be configurable.
-    for (unsigned i = 0; i < x.size () - 1; ++i)
+    for (size_type i = 0; i < x.size () - 1; ++i)
       dx_[i] = (x[i] - x[i + 1]) / 2.;
   }
 
