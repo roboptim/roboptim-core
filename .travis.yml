@@ -21,7 +21,7 @@ branches:
     - master
 matrix:
   allow_failures:
-    - clang
+    - compiler: clang
 env:
   global:
     secure: "Slm+HqRT+Vy0SG7E9gEShuHvNz6XWRUmBhVBLVJEaYy/0Lo2qp4OjFEWDjiJwFIiXstW2Wclds4SuewAn3Tc4x7dsY+5uaMCX7S/HPzsBCjLXUwjKasUqEGaVTIYmtFJm57hOkz6K2SLUUV4intkMiwtCiq/R0xe92QTTKkHyfo="
