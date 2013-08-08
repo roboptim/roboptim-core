@@ -11,7 +11,7 @@ before_install:
 after_success:
   - coveralls -e _travis/install -e _travis/build/eigen-eigen-ffa86ffb5570/ -e tests
   - git remote set-url origin https://${GH_TOKEN}@github.com/roboptim/roboptim-core.git
-  - git fetch origin
+  - git fetch origin gh-pages:gh-pages
   - cd _travis/build/doc && ../../../cmake/github/update-doxygen-doc.sh
 notifications:
   email:
