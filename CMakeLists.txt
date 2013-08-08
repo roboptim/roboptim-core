@@ -120,7 +120,7 @@ PKG_CONFIG_APPEND_LIBS(roboptim-core)
 
 # Search for dependencies.
 SEARCH_FOR_BOOST()
-ADD_REQUIRED_DEPENDENCY("eigen3 >= 3.1.0")
+ADD_REQUIRED_DEPENDENCY("eigen3 >= 3.2.0")
 ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")
 
 # Libtool dynamic loading
