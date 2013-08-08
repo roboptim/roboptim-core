@@ -10,6 +10,8 @@ before_install:
   - sudo pip install cpp-coveralls --use-mirrors
 after_success:
   - coveralls -e _travis/install -e _travis/build/eigen-eigen-ffa86ffb5570/ -e tests
+  - git remote set-url origin https://${GH_TOKEN}@github.com/roboptim/roboptim-core.git
+  - cd _travis/build/doc && ../../../cmake/github/update-doxygen-doc.sh
 notifications:
   email:
     - roboptim@googlegroups.com
@@ -19,3 +21,6 @@ branches:
 matrix:
   allow_failures:
     - clang
+env:
+  global:
+    secure: "Slm+HqRT+Vy0SG7E9gEShuHvNz6XWRUmBhVBLVJEaYy/0Lo2qp4OjFEWDjiJwFIiXstW2Wclds4SuewAn3Tc4x7dsY+5uaMCX7S/HPzsBCjLXUwjKasUqEGaVTIYmtFJm57hOkz6K2SLUUV4intkMiwtCiq/R0xe92QTTKkHyfo="
