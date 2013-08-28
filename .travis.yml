@@ -1,0 +1,30 @@
+language: cpp
+compiler:
+  - clang
+  - gcc
+script: "./.travis.build.sh"
+before_install:
+  - git submodule update --init --recursive
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev
+  - sudo pip install cpp-coveralls --use-mirrors
+after_success:
+  - coveralls -e _travis/install  -e _travis/build/eigen-eigen-ffa86ffb5570/ -e _travis/build/roboptim-core/ -e tests
+  - git config --global user.name "Travis CI"
+  - git config --global user.email "thomas.moulard+travis@gmail.com"
+  - git remote set-url origin https://thomas-moulard:${GH_TOKEN}@github.com/roboptim/roboptim-core-plugin-ipopt.git
+  - git fetch origin gh-pages:gh-pages
+  - cd _travis/build/doc && ../../../cmake/github/update-doxygen-doc.sh
+after_failure: "cat `pwd`/_travis/build/tests/*.log"
+notifications:
+  email:
+    - roboptim@googlegroups.com
+branches:
+  only:
+    - master
+matrix:
+  allow_failures:
+    - compiler: clang
+env:
+  global:
+    secure: "Slm+HqRT+Vy0SG7E9gEShuHvNz6XWRUmBhVBLVJEaYy/0Lo2qp4OjFEWDjiJwFIiXstW2Wclds4SuewAn3Tc4x7dsY+5uaMCX7S/HPzsBCjLXUwjKasUqEGaVTIYmtFJm57hOkz6K2SLUUV4intkMiwtCiq/R0xe92QTTKkHyfo="
