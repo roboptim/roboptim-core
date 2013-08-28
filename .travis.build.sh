@@ -44,7 +44,6 @@ make install
 cd "$build_dir"
 wget "http://www.nag.co.uk/downloads/impl/cll6a23dhl.tgz"
 tar xzvf cll6a23dhl.tgz
-cd "$build_dir/cll6a23dhl"
 ./install.sh -accept -installdir="$install_dir/NAG"
 
 # Checkout roboptim-core
