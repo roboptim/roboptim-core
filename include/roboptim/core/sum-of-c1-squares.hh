@@ -22,6 +22,7 @@
 
 # include <boost/shared_ptr.hpp>
 
+# include <roboptim/core/config.hh>
 # include <roboptim/core/differentiable-function.hh>
 # include <roboptim/core/function.hh>
 
@@ -37,7 +38,7 @@ namespace roboptim {
   ///
   /// The differentiable functions are stored in a vector valued function
   /// called base function.
-  class SumOfC1Squares : public DifferentiableFunction
+  class ROBOPTIM_CORE_DLLAPI SumOfC1Squares : public DifferentiableFunction
   {
   public:
     /// @name Types
