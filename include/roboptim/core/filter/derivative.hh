@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_FILTER_DERIVATIVE_HH
 # include <cassert>
 # include <vector>
+# include <boost/make_shared.hpp>
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
