@@ -17,7 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_FILTER_VECTOR_INTERPOLATION_HXX
 # define ROBOPTIM_CORE_FILTER_VECTOR_INTERPOLATION_HXX
-# include <boost/format.hpp>
 
 namespace roboptim
 {
@@ -25,9 +24,7 @@ namespace roboptim
   VectorInterpolation<T>::VectorInterpolation
   (const vector_t& x, size_type outputSize) throw ()
     : roboptim::GenericDifferentiableFunction<T>
-      (1, outputSize,
-       (boost::format ("vectorInterpolation(%1%)")
-	% x).str ()),
+      (1, outputSize, "vectorInterpolation"),
       x_ (x),
       dx_ (x.size ())
   {
