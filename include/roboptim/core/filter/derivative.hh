@@ -113,7 +113,7 @@ namespace roboptim
     {
       origin_->hessian (hessian_, x, functionId);
       for (size_type i = 0; i < this->inputSize (); ++i)
-	gradient[i] = hessian_ (i, i);
+	gradient.coeffRef (i) = hessian_.coeffRef (i, i);
     }
 
   private:
