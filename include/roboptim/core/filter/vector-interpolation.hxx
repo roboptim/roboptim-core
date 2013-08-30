@@ -22,18 +22,19 @@ namespace roboptim
 {
   template <typename T>
   VectorInterpolation<T>::VectorInterpolation
-  (const vector_t& x, size_type outputSize) throw ()
+  (const vector_t& x, size_type outputSize, value_type dt) throw ()
     : roboptim::GenericDifferentiableFunction<T>
       (1, outputSize, "vectorInterpolation"),
       x_ (x),
-      dx_ (x.size ())
+      dx_ (x.size ()),
+      dt_ (dt)
   {
     if (x.size () % outputSize != 0)
       throw std::runtime_error ("x and outputSize are not compatible");
 
     //FIXME: this should be configurable.
     for (size_type i = 0; i < x.size () - 1; ++i)
-      dx_[i] = (x[i] - x[i + 1]) / 2.;
+      dx_[i] = (x[i] - x[i + 1]) / (2. * dt_);
   }
 
   template <typename T>
@@ -46,8 +47,8 @@ namespace roboptim
   (result_t& result, const argument_t& x)
     const throw ()
   {
-    size_type before = static_cast<size_type> (std::floor (x[0]));
-    size_type after = static_cast<size_type> (std::ceil (x[0]));
+    size_type before = static_cast<size_type> (std::floor (x[0] / dt_));
+    size_type after = static_cast<size_type> (std::ceil (x[0] / dt_));
 
     // If we are outsize the domain of definition, return zero.
     if (before < 0)
@@ -62,7 +63,7 @@ namespace roboptim
 
     // Otherwise interpolate.
     // f(x) = (1. - alpha) * x_before + alpha * x_after
-    double alpha = static_cast<value_type> (after) - x[0];
+    double alpha = static_cast<value_type> (after) - (x[0] / dt_);
     result *= 1. - alpha;
     result +=
       alpha * x_.segment (after * this->outputSize (), this->outputSize ());
@@ -75,8 +76,8 @@ namespace roboptim
 				 size_type functionId)
     const throw ()
   {
-    size_type before = static_cast<size_type> (std::floor (x[0]));
-    size_type after = static_cast<size_type> (std::ceil (x[0]));
+    size_type before = static_cast<size_type> (std::floor (x[0] / dt_));
+    size_type after = static_cast<size_type> (std::ceil (x[0] / dt_));
 
     // If we are outsize the domain of definition, return zero.
     if (before < 0)
@@ -93,7 +94,7 @@ namespace roboptim
 
     // Otherwise interpolate.
     // f(x) = (1. - alpha) * x_before + alpha * x_after
-    double alpha = static_cast<value_type> (after) - x[0];
+    double alpha = static_cast<value_type> (after) - (x[0]  / dt_);
     gradient.coeffRef (0) *= 1. - alpha;
     gradient.coeffRef (0) +=
       alpha * dx_.coeffRef (after * this->outputSize () + functionId);
@@ -105,8 +106,8 @@ namespace roboptim
 					   const argument_t& x)
     const throw ()
   {
-    size_type before = static_cast<size_type> (std::floor (x[0]));
-    size_type after = static_cast<size_type> (std::ceil (x[0]));
+    size_type before = static_cast<size_type> (std::floor (x[0] / dt_));
+    size_type after = static_cast<size_type> (std::ceil (x[0] / dt_));
 
     // If we are outsize the domain of definition, return zero.
     if (before < 0)
@@ -124,7 +125,7 @@ namespace roboptim
 
     // Otherwise interpolate.
     // f(x) = (1. - alpha) * x_before + alpha * x_after
-    double alpha = static_cast<value_type> (after) - x[0];
+    double alpha = static_cast<value_type> (after) - (x[0] / dt_);
     jacobian *= 1. - alpha;
 
     for (size_type i = 0; i < this->outputSize (); ++i)

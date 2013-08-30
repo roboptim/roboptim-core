@@ -48,7 +48,8 @@ namespace roboptim
 
     typedef boost::shared_ptr<VectorInterpolation> VectorInterpolationShPtr_t;
 
-    explicit VectorInterpolation (const vector_t& x, size_type outputSize)
+    explicit VectorInterpolation
+    (const vector_t& x, size_type outputSize, value_type dt)
       throw ();
     ~VectorInterpolation () throw ();
 
@@ -65,14 +66,16 @@ namespace roboptim
   private:
     vector_t x_;
     vector_t dx_;
+    value_type dt_;
   };
 
   template <typename T>
   boost::shared_ptr<VectorInterpolation<T> >
   vectorInterpolation (typename VectorInterpolation<T>::vector_t x,
-		       typename VectorInterpolation<T>::size_type outputSize)
+		       typename VectorInterpolation<T>::size_type outputSize,
+		       typename VectorInterpolation<T>::value_type dt = 1.)
   {
-    return boost::make_shared<VectorInterpolation<T> > (x, outputSize);
+    return boost::make_shared<VectorInterpolation<T> > (x, outputSize, dt);
   }
 
 } // end of namespace roboptim.
