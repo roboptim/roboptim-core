@@ -19,8 +19,10 @@
 # define ROBOPTIM_CORE_FILTER_DERIVATIVE_HH
 # include <cassert>
 # include <vector>
+
 # include <boost/make_shared.hpp>
 # include <boost/shared_ptr.hpp>
+# include <boost/type_traits/is_base_of.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
 # include <roboptim/core/differentiable-function.hh>
@@ -32,23 +34,52 @@ namespace roboptim
   ///
   /// Know issue: for now it returns a non-differentiable function.
   template <typename U>
-  class Derivative : public GenericFunction<typename U::traits_t>
+  class Derivative;
+
+  namespace
+  {
+    template <typename U>
+    struct DerivativeParent
+    {
+      typedef typename boost::mpl::if_<
+	boost::is_base_of<GenericTwiceDifferentiableFunction<typename U::traits_t>, U>,
+	GenericDifferentiableFunction<typename U::traits_t>,
+	GenericFunction<typename U::traits_t>
+	>::type result_t;
+    };
+  } // end of anonymous namespace.
+
+  template <typename U>
+  class Derivative : public DerivativeParent<U>::result_t
   {
   public:
-    ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<typename U::traits_t>);
+    ROBOPTIM_FUNCTION_FWD_TYPEDEFS_
+    (typename DerivativeParent<U>::result_t);
+
+    /// \brief Gradient type.
+    typedef typename GenericFunctionTraits<typename U::traits_t>::gradient_t
+    gradient_t;
+    /// \brief Jacobian type.
+    typedef typename GenericFunctionTraits<typename U::traits_t>::jacobian_t
+    jacobian_t;
+    /// \brief Jacobian size type (pair of values).
+    typedef std::pair<size_type, size_type> jacobianSize_t;
+
 
     typedef boost::shared_ptr<Derivative> DerivativeShPtr_t;
 
     explicit Derivative (boost::shared_ptr<U> origin,
 			size_type variableId) throw ()
-      : GenericFunction<typename U::traits_t>
+      : DerivativeParent<U>::result_t
 	(origin->inputSize (),
 	 origin->outputSize (),
 	 "derivative of " + origin->getName ()),
 	origin_ (origin),
 	variableId_ (variableId),
 	jacobian_ (origin->inputSize (),
-		   origin->outputSize ())
+		   origin->outputSize ()),
+	hessian_ (origin->inputSize (),
+		  origin->inputSize ())
     {
       assert (variableId_ < this->inputSize ());
     }
@@ -74,10 +105,22 @@ namespace roboptim
       origin_->jacobian (jacobian_, x);
       result = jacobian_.col (variableId_);
     }
+
+    void impl_gradient (gradient_t& gradient,
+			const argument_t& x,
+			size_type functionId = 0)
+      const throw ()
+    {
+      origin_->hessian (hessian_, x, functionId);
+      for (size_type i = 0; i < this->inputSize (); ++i)
+	gradient[i] = hessian_ (i, i);
+    }
+
   private:
     boost::shared_ptr<U> origin_;
     size_type variableId_;
     mutable matrix_t jacobian_;
+    mutable matrix_t hessian_;
   };
 
   template <typename U>
