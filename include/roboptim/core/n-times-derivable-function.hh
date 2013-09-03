@@ -233,6 +233,10 @@ namespace roboptim
 		       const argument_t& argument,
 		       size_type functionId = 0) const throw ()
     {
+# ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+# endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       assert (functionId == 0);
 
       gradient_t derivative (derivativeSize ());
