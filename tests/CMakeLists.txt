@@ -105,7 +105,6 @@ ROBOPTIM_CORE_TEST(filter-plus)
 ROBOPTIM_CORE_TEST(filter-product)
 ROBOPTIM_CORE_TEST(filter-scalar)
 ROBOPTIM_CORE_TEST(filter-selection)
-ROBOPTIM_CORE_TEST(filter-vector-interpolation)
 
 # Visualization
 ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)

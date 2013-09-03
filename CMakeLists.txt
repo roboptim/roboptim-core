@@ -48,8 +48,6 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/vector-interpolation.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/vector-interpolation.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hh
