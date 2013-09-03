@@ -40,6 +40,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/derivative.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/map.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/map.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/minus.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/minus.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hh
