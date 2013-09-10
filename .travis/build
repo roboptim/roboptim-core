@@ -74,6 +74,6 @@ debian_build_package()
 # debian/ folder.
 if [ -d debian ]; then
     debian_build_package
-elif
+else
     build_package
 fi

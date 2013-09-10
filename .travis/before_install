@@ -21,7 +21,7 @@ if [ -d debian ]; then
 	--debootstrapopts \
 	"--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
     sudo pbuilder update
-elif
+else
     # ...otherwise we install the dependencies explicitly.
     sudo apt-get install -qq			\
 	doxygen doxygen-latex			\

@@ -3,6 +3,6 @@ set -ev
 
 if [ -d debian ]; then
     ;
-elif
+else
     cat `pwd`/_travis/build/tests/*.log
 fi

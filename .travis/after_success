@@ -4,7 +4,7 @@ set -ev
 if [ -d debian ]; then
     ; # FIXME: upload the generated Debian source package to Launchpad
     ; # for publication.
-elif
+else
     coveralls						\
 	-e _travis/install				\
 	-e _travis/build/eigen-eigen-ffa86ffb5570/	\
