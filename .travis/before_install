@@ -1,0 +1,31 @@
+#!/bin/sh
+set -ev
+
+# Retrive the submodules.
+git submodule update --init --recursive
+
+# Update the apt local cache.
+sudo apt-get update -qq
+
+# Check if we are in a debian branch...
+if [ -d debian ]; then
+    # If we are, we install Debian package development tools and
+    # create a sid pbuilder. Package dependencies will be installed
+    # automatically.
+    sudo apt-get install -qq			\
+	pbuilder debootstrap devscripts		\
+	git-buildpackage debian-archive-keyring
+    sudo pbuilder create \
+	--distribution unstable \
+	--mirror ftp://ftp.us.debian.org/debian/ \
+	--debootstrapopts \
+	"--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
+    sudo pbuilder update
+elif
+    # ...otherwise we install the dependencies explicitly.
+    sudo apt-get install -qq			\
+	doxygen doxygen-latex			\
+	libltdl-dev libboost-all-dev		\
+	liblog4cxx10-dev libeigen3-dev
+    sudo pip install cpp-coveralls --use-mirrors
+fi

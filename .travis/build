@@ -1,0 +1,79 @@
+#!/bin/sh
+set -ev
+
+# Directories.
+root_dir=`pwd`
+build_dir="$root_dir/_travis/build"
+install_dir="$root_dir/_travis/install"
+core_dir="$build_dir/roboptim-core"
+
+# Shortcuts.
+git_clone="git clone --quiet --recursive"
+
+# Create layout.
+rm -rf "$build_dir" "$install_dir"
+mkdir -p "$build_dir"
+mkdir -p "$install_dir"
+
+# Setup environment variables.
+export LD_LIBRARY_PATH="$install_dir/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$install_dir/lib/roboptim-core:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="$install_dir/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+# Make cmake verbose.
+export CMAKE_VERBOSE_MAKEFILE=1
+export CTEST_OUTPUT_ON_FAILURE=1
+
+# build_package
+# -------------
+#
+# Build the package using the last Eigen release (3.2.0) which is not
+# available as a Debian package on Ubuntu 12.04.
+build_package()
+{
+    # Checkout Eigen.
+    cd "$build_dir"
+    wget "http://bitbucket.org/eigen/eigen/get/3.2.0.tar.gz"
+    tar xzvf 3.2.0.tar.gz
+    cd "$build_dir/eigen-eigen-ffa86ffb5570/"
+    mkdir -p "$build_dir/eigen-eigen-ffa86ffb5570/_build"
+    cd "$build_dir/eigen-eigen-ffa86ffb5570/_build"
+    cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$install_dir" \
+        -Dpkg_config_libdir:STRING="$install_dir/lib"
+    make
+    make install
+
+    echo "Building package..."
+    cd "$build_dir"
+    cmake "$root_dir" -DCMAKE_INSTALL_PREFIX="$install_dir"	\
+	-DCMAKE_CXX_FLAGS="--coverage"				\
+	-DCMAKE_EXE_LINKER_FLAGS="--coverage"			\
+	-DCMAKE_MODULE_LINKER_FLAGS="--coverage"
+    make
+    make install
+    make test
+}
+
+# debian_build_package
+# --------------------
+#
+# Use git-buildpackage and pbuilder to build the package in a sid
+# sandbox.
+debian_build_package()
+{
+    echo "Building Debian package..."
+    cd "$root_dir"
+    git-buildpackage		\
+	--git-verbose		\
+	--git-pbuilder		\
+	--git-dist=unstable
+}
+
+
+# Realize a normal build in all branches except the one containing a
+# debian/ folder.
+if [ -d debian ]; then
+    debian_build_package
+elif
+    build_package
+fi

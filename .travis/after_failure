@@ -1,0 +1,8 @@
+#!/bin/sh
+set -ev
+
+if [ -d debian ]; then
+    ;
+elif
+    cat `pwd`/_travis/build/tests/*.log
+fi
