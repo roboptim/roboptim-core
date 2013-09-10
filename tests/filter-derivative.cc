@@ -27,6 +27,7 @@
 #include <roboptim/core/filter/derivative.hh>
 
 #include <roboptim/core/function/cos.hh>
+#include <roboptim/core/function/identity.hh>
 
 using namespace roboptim;
 
@@ -48,5 +49,20 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (derivative_test, T, functionTypes_t)
   std::cout
     << (*fct) (x) << std::endl;
 }
+
+BOOST_AUTO_TEST_CASE_TEMPLATE (nonscalar_derivative_test, T, functionTypes_t)
+{
+  typename GenericIdentityFunction<T>::vector_t offset (3);
+  boost::shared_ptr<GenericIdentityFunction<T> > id =
+    boost::make_shared<GenericIdentityFunction<T> > (offset);
+  boost::shared_ptr<GenericFunction<T> > fct =
+    derivative (id, 0);
+
+  typename GenericFunction<T>::argument_t x (offset.size ());
+  x.setZero ();
+  std::cout
+    << (*fct) (x) << std::endl;
+}
+
 
 BOOST_AUTO_TEST_SUITE_END ()

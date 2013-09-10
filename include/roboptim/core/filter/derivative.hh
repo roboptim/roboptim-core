@@ -76,8 +76,8 @@ namespace roboptim
 	 "derivative of " + origin->getName ()),
 	origin_ (origin),
 	variableId_ (variableId),
-	jacobian_ (origin->inputSize (),
-		   origin->outputSize ()),
+	jacobian_ (origin->outputSize (),
+		   origin->inputSize ()),
 	hessian_ (origin->inputSize (),
 		  origin->inputSize ())
     {
@@ -103,7 +103,7 @@ namespace roboptim
       const throw ()
     {
       origin_->jacobian (jacobian_, x);
-      result = jacobian_.col (variableId_);
+      result = jacobian_.block (0, variableId_, this->outputSize (), 1);
     }
 
     void impl_gradient (gradient_t& gradient,
