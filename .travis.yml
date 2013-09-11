@@ -1,21 +1,26 @@
-language: cpp
-compiler:
-  - clang
-  - gcc
-script: "./.travis/build"
-before_install: "./.travis/before_install"
-after_success: "./.travis/after_success"
-after_failure: "./.travis/after_failure"
 notifications:
   email:
-    - roboptim@googlegroups.com
-branches:
-  only:
-    - master
-    - debian
-matrix:
-  allow_failures:
-    - compiler: clang
+  - roboptim@googlegroups.com
+  hipchat:
+    rooms:
+      secure: YH0AqP/y2L3+YkHNezAOfBNMB5QkeEYE3z5NV5k7gxqaEPEklQeMrSHLZzN1TuSyms/RuiQ6Zj0QA9D2ZxioTxTqGUQbh5c+Ia5n5GTIJZYg24uVXPS1w6uFQSyVNIZE6tJGpgf0RHzeGtejRW7Q9Ppr6e55TBnBc53fGTqJyPs=
+language: cpp
+after_failure: ./.travis/after_failure
+after_success: ./.travis/after_success
 env:
   global:
-    secure: "Slm+HqRT+Vy0SG7E9gEShuHvNz6XWRUmBhVBLVJEaYy/0Lo2qp4OjFEWDjiJwFIiXstW2Wclds4SuewAn3Tc4x7dsY+5uaMCX7S/HPzsBCjLXUwjKasUqEGaVTIYmtFJm57hOkz6K2SLUUV4intkMiwtCiq/R0xe92QTTKkHyfo="
+  - DEBSIGN_KEYID=5AE5CD75
+  - secure: Slm+HqRT+Vy0SG7E9gEShuHvNz6XWRUmBhVBLVJEaYy/0Lo2qp4OjFEWDjiJwFIiXstW2Wclds4SuewAn3Tc4x7dsY+5uaMCX7S/HPzsBCjLXUwjKasUqEGaVTIYmtFJm57hOkz6K2SLUUV4intkMiwtCiq/R0xe92QTTKkHyfo=
+  - secure: F9mibfsT3Ezk0RRsgOHy8RUO82H05REGmJKLDKdHiHE3toxykQX64oNBB8txjHoi+UF0H1Gwmk4oB/pNeILtyHdSuB7hB1Muod9wspOuKrzO7SMTGdjpPw7nDjQEmtfrZFhXEGb/3xm66uSGojhwe0RJF5mOzyfno+G8SIJyos4=
+script: ./.travis/build
+matrix:
+  allow_failures:
+  - compiler: clang
+before_install: ./.travis/before_install
+branches:
+  only:
+  - master
+  - debian
+compiler:
+- clang
+- gcc

@@ -1,16 +1,20 @@
 #!/bin/sh
 set -ev
 
+# Directories.
+root_dir=`pwd`
+build_dir="/tmp/_travis/build"
+install_dir="/tmp/_travis/install"
+
 if [ -d debian ]; then
-    ; # FIXME: upload the generated Debian source package to Launchpad
-    ; # for publication.
+    export GNUPGHOME="$root_dir/.travis/.gnupg"
+    # If the build is a success, upload the source package to Launchpad.
+    dput ppa:roboptim/ppa "$build_dir"/export/roboptim-core_*_source.changes
 else
     coveralls						\
 	-e _travis/install				\
 	-e _travis/build/eigen-eigen-ffa86ffb5570/	\
 	-e tests
-    git config --global user.name "Travis CI"
-    git config --global user.email "thomas.moulard+travis@gmail.com"
     git remote set-url origin \
 	https://thomas-moulard:${GH_TOKEN}@github.com/roboptim/roboptim-core.git
     git fetch origin gh-pages:gh-pages

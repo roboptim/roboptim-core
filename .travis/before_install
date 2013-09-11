@@ -1,6 +1,20 @@
 #!/bin/sh
 set -ev
 
+# Directories.
+root_dir=`pwd`
+build_dir="/tmp/_travis/build"
+install_dir="/tmp/_travis/install"
+
+# Create layout.
+rm -rf "$build_dir" "$install_dir"
+mkdir -p "$build_dir"
+mkdir -p "$install_dir"
+
+# Setup Git identity.
+git config --global user.name "Thomas Moulard (Travis Automatic Builds)"
+git config --global user.email "thomas.moulard+travis@gmail.com"
+
 # Retrive the submodules.
 git submodule update --init --recursive
 
@@ -9,18 +23,31 @@ sudo apt-get update -qq
 
 # Check if we are in a debian branch...
 if [ -d debian ]; then
+    # Fetch tags.
+    git fetch --tags
+
     # If we are, we install Debian package development tools and
     # create a sid pbuilder. Package dependencies will be installed
     # automatically.
     sudo apt-get install -qq			\
-	pbuilder debootstrap devscripts		\
-	git-buildpackage debian-archive-keyring
-    sudo pbuilder create \
-	--distribution unstable \
-	--mirror ftp://ftp.us.debian.org/debian/ \
-	--debootstrapopts \
-	"--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
-    sudo pbuilder update
+	debootstrap devscripts			\
+	git-buildpackage debian-archive-keyring \
+	pkg-kde-tools dput
+
+    cd "$build_dir"
+    git clone git://honk.sigxcpu.org/git/git-buildpackage.git
+    cd "$build_dir/git-buildpackage"
+    sudo python setup.py install
+    cd "$root_dir"
+
+    # Remove previous sandbox.
+    sudo rm -rf /var/cache/pbuilder/base-unstable.cow
+    # Create a new one.
+    DIST=unstable git-pbuilder create		\
+	--debootstrapopts "--variant=buildd"	\
+	--debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg" \
+	--mirror http://ftp.us.debian.org/debian/
+    echo "apt-get -y remove ccache" | DIST=unstable git-pbuilder login --save-after-exec
 else
     # ...otherwise we install the dependencies explicitly.
     sudo apt-get install -qq			\

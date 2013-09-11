@@ -1,19 +1,13 @@
 #!/bin/sh
-set -ev
+set -e
 
 # Directories.
 root_dir=`pwd`
-build_dir="$root_dir/_travis/build"
-install_dir="$root_dir/_travis/install"
-core_dir="$build_dir/roboptim-core"
+build_dir="/tmp/_travis/build"
+install_dir="/tmp/_travis/install"
 
 # Shortcuts.
 git_clone="git clone --quiet --recursive"
-
-# Create layout.
-rm -rf "$build_dir" "$install_dir"
-mkdir -p "$build_dir"
-mkdir -p "$install_dir"
 
 # Setup environment variables.
 export LD_LIBRARY_PATH="$install_dir/lib:$LD_LIBRARY_PATH"
@@ -61,12 +55,54 @@ build_package()
 # sandbox.
 debian_build_package()
 {
+    export GNUPGHOME="$root_dir/.travis/.gnupg"
+    export NAME="Thomas Moulard (Travis Automatic Builds)"
+    export DEBEMAIL="thomas.moulard+travis@gmail.com"
+
     echo "Building Debian package..."
     cd "$root_dir"
-    git-buildpackage		\
-	--git-verbose		\
-	--git-pbuilder		\
-	--git-dist=unstable
+
+    buildNumber=$(git rev-list \
+	$(git describe --tags --match "debian/*" --abbrev=0)..HEAD | wc -l) \
+	|| buildNumber=1
+    dch --force-distribution --distribution saucy \
+	--local -ppa$buildNumber "Travis automatic build"
+
+    echo "debian/changelog first line:"
+    head -n 1 debian/changelog
+
+    sudo chmod -R 777 /var/cache/pbuilder/ccache
+
+    # If orig tarball exists, delete it.
+    rm -f "$build_dir/export/roboptim-core_*.orig.tar*"
+    git-buildpackage					\
+	--git-submodules				\
+	--git-ignore-branch				\
+	--git-export-dir="$build_dir/export"		\
+	--git-tag					\
+	--git-upstream-branch=master			\
+	--git-dist=unstable				\
+	--git-pbuilder					\
+	--git-force-create				\
+	--git-verbose					\
+	--git-ignore-new				\
+	--git-retag					\
+	-p\"gpg\\ --passphrase\\ ${GNUPG_PASSPHRASE}\" \
+	-k${DEBSIGN_KEYID}
+
+    git-buildpackage			\
+	--git-submodules		\
+	--git-ignore-branch		\
+	--git-export-dir="$build_dir/export" \
+	--git-tag			\
+	--git-upstream-branch=master	\
+	--git-dist=unstable		\
+	--git-verbose			\
+	--git-ignore-new		\
+	--git-retag			\
+	-p\"gpg --passphrase ${GNUPG_PASSPHRASE}\" \
+	-k${DEBSIGN_KEYID} \
+	-S -sa
 }
 
 
