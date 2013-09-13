@@ -47,7 +47,7 @@ with the environment variable `CHECK_PREFIX`.
 Available packages
 ------------------
 
- * Debian (Release 2.0):
+ * Debian and derivatives, i.e. Ubuntu (Release 2.0):
    http://packages.qa.debian.org/r/roboptim-core.html
  * Arch Linux (Release 2.0):
    https://aur.archlinux.org/packages/roboptim-core/
@@ -55,3 +55,9 @@ Available packages
    https://aur.archlinux.org/packages/roboptim-core-git/
  * Fedora (Release 0.5):
    https://apps.fedoraproject.org/packages/roboptim-core
+
+
+Development Snapshost (*unstable*):
+
+ * Ubuntu Launchpad PPA:
+   https://launchpad.net/~roboptim/+archive/ppa
