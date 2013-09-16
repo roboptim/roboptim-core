@@ -10,6 +10,7 @@ env:
     - APT_DEPENDENCIES="doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev libeigen3-dev"
     - GIT_DEPENDENCIES=""
     - DEBSIGN_KEYID=5AE5CD75
+    - PPA_URI="roboptim/ppa"
 notifications:
   hipchat:
     rooms:
