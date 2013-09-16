@@ -1,26 +1,27 @@
-notifications:
-  email:
-  - roboptim@googlegroups.com
-  hipchat:
-    rooms:
-      secure: YH0AqP/y2L3+YkHNezAOfBNMB5QkeEYE3z5NV5k7gxqaEPEklQeMrSHLZzN1TuSyms/RuiQ6Zj0QA9D2ZxioTxTqGUQbh5c+Ia5n5GTIJZYg24uVXPS1w6uFQSyVNIZE6tJGpgf0RHzeGtejRW7Q9Ppr6e55TBnBc53fGTqJyPs=
 language: cpp
-after_failure: ./.travis/after_failure
-after_success: ./.travis/after_success
+compiler:
+  - gcc
+  - clang
 env:
   global:
-  - DEBSIGN_KEYID=5AE5CD75
-  - secure: Slm+HqRT+Vy0SG7E9gEShuHvNz6XWRUmBhVBLVJEaYy/0Lo2qp4OjFEWDjiJwFIiXstW2Wclds4SuewAn3Tc4x7dsY+5uaMCX7S/HPzsBCjLXUwjKasUqEGaVTIYmtFJm57hOkz6K2SLUUV4intkMiwtCiq/R0xe92QTTKkHyfo=
-  - secure: F9mibfsT3Ezk0RRsgOHy8RUO82H05REGmJKLDKdHiHE3toxykQX64oNBB8txjHoi+UF0H1Gwmk4oB/pNeILtyHdSuB7hB1Muod9wspOuKrzO7SMTGdjpPw7nDjQEmtfrZFhXEGb/3xm66uSGojhwe0RJF5mOzyfno+G8SIJyos4=
-script: ./.travis/build
-matrix:
-  allow_failures:
-  - compiler: clang
-before_install: ./.travis/before_install
+    - secure: Slm+HqRT+Vy0SG7E9gEShuHvNz6XWRUmBhVBLVJEaYy/0Lo2qp4OjFEWDjiJwFIiXstW2Wclds4SuewAn3Tc4x7dsY+5uaMCX7S/HPzsBCjLXUwjKasUqEGaVTIYmtFJm57hOkz6K2SLUUV4intkMiwtCiq/R0xe92QTTKkHyfo=
+    - secure: F9mibfsT3Ezk0RRsgOHy8RUO82H05REGmJKLDKdHiHE3toxykQX64oNBB8txjHoi+UF0H1Gwmk4oB/pNeILtyHdSuB7hB1Muod9wspOuKrzO7SMTGdjpPw7nDjQEmtfrZFhXEGb/3xm66uSGojhwe0RJF5mOzyfno+G8SIJyos4=
+    - secure: "ZKC2yAvUcDb2nyrZQNqpLgEbi2pYFSKDn/+xIj9ZH+5nkn6iA5RT4AunK13qxuBkjIr2HJcUBtMFvk/mfpvpWynX+v9i3OhpVZCbkmcjQrATjiUcG6r95oEcex7NAM5uKd/41CqV/0fzTPc3uJgPozDJlt0wsBmCEarHiRNAoo0="
+    - APT_DEPENDENCIES="doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev libeigen3-dev"
+    - GIT_DEPENDENCIES=""
+    - DEBSIGN_KEYID=5AE5CD75
+notifications:
+  hipchat:
+    rooms:
+      - secure: YH0AqP/y2L3+YkHNezAOfBNMB5QkeEYE3z5NV5k7gxqaEPEklQeMrSHLZzN1TuSyms/RuiQ6Zj0QA9D2ZxioTxTqGUQbh5c+Ia5n5GTIJZYg24uVXPS1w6uFQSyVNIZE6tJGpgf0RHzeGtejRW7Q9Ppr6e55TBnBc53fGTqJyPs=
+  email: roboptim@googlegroups.com
 branches:
   only:
   - master
   - debian
-compiler:
-- clang
-- gcc
+script: ./.travis/build | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
+after_success: ./.travis/after_success | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
+after_failure: ./.travis/after_failure | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
+before_install:
+  - ./.travis/before_install | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
+  - ./.travis/dependencies/eigen-3.2.0 | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
