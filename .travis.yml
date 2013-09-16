@@ -20,9 +20,9 @@ branches:
   only:
   - master
   - debian
-script: ./.travis/build | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
-after_success: ./.travis/after_success | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
-after_failure: ./.travis/after_failure | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
+script: ./.travis/build
+after_success: ./.travis/after_success
+after_failure: ./.travis/after_failure
 before_install:
-  - ./.travis/before_install | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
-  - ./.travis/dependencies/eigen-3.2.0 | sed -e 's|${GNUPG_PASSPHRASE}|\#EDITED\#|g' -e 's|${GH_PUSH_URI}|\#EDITED\#|g'
+  - ./.travis/before_install
+  - ./.travis/dependencies/eigen-3.2
