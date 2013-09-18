@@ -59,6 +59,7 @@ ADD_EXECUTABLE(simple
   ${COMMON_HEADERS}
   simple.cc
   ${CMAKE_SOURCE_DIR}/src/dummy.cc)
+PKG_CONFIG_USE_DEPENDENCY(simple liblog4cxx)
 TARGET_LINK_LIBRARIES(simple roboptim-core ${Boost_LIBRARIES})
 
 # Basic types.

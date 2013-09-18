@@ -52,17 +52,23 @@ INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
 # Dummy plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy MODULE dummy.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy roboptim-core)
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy liblog4cxx)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy roboptim-core)
-SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES
-  PREFIX ""
-  VERSION 2.0.0 SOVERSION 2)
+SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES PREFIX "")
+
+IF(NOT APPLE)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy VERSION 2.0.0 SOVERSION 2)
+ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
 
 # Dummy-laststate plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy-laststate MODULE dummy-laststate.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy-laststate roboptim-core)
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy-laststate liblog4cxx)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-laststate roboptim-core)
-SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES
-  PREFIX ""
-  VERSION 2.0.0 SOVERSION 2)
+SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES PREFIX "")
+
+IF(NOT APPLE)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate VERSION 2.0.0 SOVERSION 2)
+ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
