@@ -57,7 +57,8 @@ TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES PREFIX "")
 
 IF(NOT APPLE)
-  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy VERSION 2.0.0 SOVERSION 2)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy
+    PROPERTIES VERSION 2.0.0 SOVERSION 2)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
 
@@ -69,6 +70,7 @@ TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-laststate roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES PREFIX "")
 
 IF(NOT APPLE)
-  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate VERSION 2.0.0 SOVERSION 2)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate
+    PROPERTIES VERSION 2.0.0 SOVERSION 2)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
