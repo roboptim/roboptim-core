@@ -432,8 +432,10 @@ namespace roboptim
 		    getUpperBound ((problem_.boundsVector ()
 				    [i_])
 				   [static_cast<std::size_t> (j)]))
-		  satisfied = false;
-		break;
+		  {
+		    satisfied = false;
+		    break;
+		  }
 	      }
 
 	    if (satisfied)
