@@ -18,6 +18,7 @@
 #ifndef ROBOPTIM_CORE_FILTER_CHAIN_HH
 # define ROBOPTIM_CORE_FILTER_CHAIN_HH
 # include <vector>
+# include <boost/make_shared.hpp>
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
