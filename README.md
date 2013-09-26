@@ -7,36 +7,6 @@ roboptim-core
 For general information about the project, please refer to its
 homepage: http://www.roboptim.net/
 
-
-What is it?
------------
-
-Unless Python or Ruby packages, streamlined C++ application deployment
-is extremely challenging. Portability issues, compilation flags,
-interoperability between packages is notable difficult to ensure.
-
-This submodule contains a set of shell scripts which can be used to
-help Travis integrate with various services and tools useful for any
-C++ project.
-
-In particular:
-
- * Setup dependencies both from apt and from source. In the source
-   case, dependencies are built and installed in a local prefix.
- * Compile and test the software
- * Using the [jrl-cmakemodules][]:
-   * Run a CMake compatible `make distcheck` (build a release tarball
-     and the rebuild the whole project from it.
-   * Upload the latest Doxygen documentation to GitHub pages.
- * Integrate with [cppcheck][], [nsiqcppstyle][], [coverity][] to run
-   static analysis on the code and detect issues.
-
- * Annotate (see [git-notes][]) successful builds with dependencies
-   commit id to be able to reproduce again the exact same successful
-   build.
-
- [jrl-cmakemodules]: https://github.com/jrl-umi3218/jrl-cmakemodules
-
 How can I install roboptim-core?
 --------------------------------
 
