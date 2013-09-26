@@ -24,7 +24,7 @@ namespace roboptim
   template <typename U>
   Concatenate<U>::Concatenate
   (boost::shared_ptr<U> left,
-   boost::shared_ptr<U> right) throw ()
+   boost::shared_ptr<U> right) throw (std::runtime_error)
     : detail::AutopromoteTrait<U>::T_type
       (left->inputSize (),
        left->outputSize () + right->outputSize (),

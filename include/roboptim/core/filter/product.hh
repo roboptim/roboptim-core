@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_FILTER_PRODUCT_HH
 # define ROBOPTIM_CORE_FILTER_PRODUCT_HH
+# include <stdexcept>
 # include <vector>
 # include <boost/shared_ptr.hpp>
 
@@ -35,7 +36,8 @@ namespace roboptim
 
     typedef boost::shared_ptr<Product> ProductShPtr_t;
 
-    explicit Product (boost::shared_ptr<U> left, boost::shared_ptr<V> right) throw ();
+    explicit Product (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+      throw (std::runtime_error);
     ~Product () throw ();
 
     const boost::shared_ptr<U>& left () const

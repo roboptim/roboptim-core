@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_FILTER_CHAIN_HH
 # define ROBOPTIM_CORE_FILTER_CHAIN_HH
+# include <stdexcept>
 # include <vector>
 # include <boost/make_shared.hpp>
 # include <boost/shared_ptr.hpp>
@@ -39,7 +40,8 @@ namespace roboptim
 
     typedef boost::shared_ptr<Chain> ChainShPtr_t;
 
-    explicit Chain (boost::shared_ptr<U> left, boost::shared_ptr<V> right) throw ();
+    explicit Chain (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+      throw (std::runtime_error);
     ~Chain () throw ();
 
     const boost::shared_ptr<U>& left () const

@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_FILTER_PLUS_HH
 # define ROBOPTIM_CORE_FILTER_PLUS_HH
+# include <stdexcept>
 # include <vector>
 # include <boost/shared_ptr.hpp>
 
@@ -35,7 +36,8 @@ namespace roboptim
 
     typedef boost::shared_ptr<Plus> PlusShPtr_t;
 
-    explicit Plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right) throw ();
+    explicit Plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+      throw (std::runtime_error);
     ~Plus () throw ();
 
     const boost::shared_ptr<U>& left () const

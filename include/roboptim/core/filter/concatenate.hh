@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_FILTER_CONCATENATE_HH
 # define ROBOPTIM_CORE_FILTER_CONCATENATE_HH
+# include <stdexcept>
 # include <vector>
 # include <boost/shared_ptr.hpp>
 
@@ -38,7 +39,7 @@ namespace roboptim
 
     explicit Concatenate (boost::shared_ptr<U> left,
 			  boost::shared_ptr<U> right)
-      throw ();
+      throw (std::runtime_error);
     ~Concatenate () throw ();
 
     const boost::shared_ptr<U>& left () const

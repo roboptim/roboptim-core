@@ -23,7 +23,8 @@ namespace roboptim
 {
   template <typename U, typename V>
   Plus<U, V>::Plus
-  (boost::shared_ptr<U> left, boost::shared_ptr<V> right) throw ()
+  (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+    throw (std::runtime_error)
     : detail::PromoteTrait<U, V>::T_promote
       (left->inputSize (),
        left->outputSize (),

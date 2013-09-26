@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_FILTER_SELECTION_HH
 # define ROBOPTIM_CORE_FILTER_SELECTION_HH
+# include <stdexcept>
 # include <vector>
 # include <boost/shared_ptr.hpp>
 
@@ -37,7 +38,8 @@ namespace roboptim
     typedef boost::shared_ptr<Selection> SelectionShPtr_t;
 
     explicit Selection (boost::shared_ptr<U> left,
-			size_type start, size_type size) throw ();
+			size_type start, size_type size)
+      throw (std::runtime_error);
     ~Selection () throw ();
 
     const boost::shared_ptr<U>& origin () const

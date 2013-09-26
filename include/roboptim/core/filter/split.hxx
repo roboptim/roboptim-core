@@ -40,7 +40,7 @@ namespace roboptim
 
   template <typename T>
   Split<T>::Split (boost::shared_ptr<const T> fct,
-		   size_type functionId) throw ()
+		   size_type functionId) throw (std::runtime_error)
     : T (fct->inputSize (), 1, splitName (*fct, functionId)),
       function_ (fct),
       functionId_ (functionId),

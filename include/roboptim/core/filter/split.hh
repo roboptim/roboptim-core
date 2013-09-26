@@ -17,9 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_FILTER_SPLIT_HH
 # define ROBOPTIM_CORE_FILTER_SPLIT_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
-
+# include <stdexcept>
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/n-times-derivable-function.hh>
@@ -54,7 +52,7 @@ namespace roboptim
     typedef typename DifferentiableFunction::interval_t interval_t;
 
     explicit Split (boost::shared_ptr<const T> fct,
-		    size_type functionId) throw ();
+		    size_type functionId) throw (std::runtime_error);
     ~Split () throw ();
 
   protected:

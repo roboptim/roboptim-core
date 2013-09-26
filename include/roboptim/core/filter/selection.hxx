@@ -25,7 +25,7 @@ namespace roboptim
   Selection<U>::Selection
   (boost::shared_ptr<U> origin,
    size_type start,
-   size_type size) throw ()
+   size_type size) throw (std::runtime_error)
     : detail::AutopromoteTrait<U>::T_type
       (origin->inputSize (),
        size,
