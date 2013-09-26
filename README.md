@@ -41,9 +41,6 @@ RobOptim uses the following tools:
  * [Libtool][] and its ltdl library for portable plug-in management
  * a C++03 compliant modern C++ compiler such as GCC or clang
 
-You can install all the dependencies on Ubuntu by clicking on the
-[following link][depends-apturl].
-
 [Boost]: http://www.boost.org/
 [CMake]: htttp://www.cmake.org/
 [Doxygen]: http://www.stack.nl/~dimitri/doxygen/
@@ -52,8 +49,6 @@ You can install all the dependencies on Ubuntu by clicking on the
 [Libtool]: https://www.gnu.org/software/libtool/
 [log4cxx]: https://logging.apache.org/log4cxx/
 [pkg-config]: http://www.freedesktop.org/wiki/Software/pkg-config/
-
-[depends-apturl]: apt:cmake,pkg-config,doxygen,doxygen-latex,libltdl-dev,libeigen3-dev,libboost-all-dev,liblog4cxx10-dev
 
 ### Compiling the package
 
