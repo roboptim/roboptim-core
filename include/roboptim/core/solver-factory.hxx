@@ -89,7 +89,8 @@ namespace roboptim
 	std::stringstream sserror;
 	sserror << "libltdl failed to load plug-in ``"
 		<< ss.str () << "'': " << lt_dlerror ();
-	lt_dlexit ();
+	if (lt_dlexit ())
+	  sserror << " lt_dlexit failed too";
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
@@ -101,8 +102,10 @@ namespace roboptim
 	sserror << "libltdl failed to find symbol ``getSizeOfProblem'': "
 		<< lt_dlerror ();
 
-	lt_dlclose (handle_);
-	lt_dlexit ();
+	if (lt_dlclose (handle_))
+	  sserror << " (lt_dlclose failed too)";
+	if (lt_dlexit ())
+	  sserror << " lt_dlexit failed too";
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
@@ -116,8 +119,10 @@ namespace roboptim
                 << " ``getTypeIdOfConstraintsList'': "
                 << lt_dlerror ();
 
-        lt_dlclose (handle_);
-        lt_dlexit ();
+	if (lt_dlclose (handle_))
+	  sserror << " (lt_dlclose failed too)";
+	if (lt_dlexit ())
+	  sserror << " lt_dlexit failed too";
         throw std::runtime_error (sserror.str ().c_str ());
       }
 
@@ -131,8 +136,10 @@ namespace roboptim
 	  << " byte(s) but " << sizeof (typename solver_t::problem_t)
 	  << " byte(s) was expected by application)";
 
-	lt_dlclose (handle_);
-	lt_dlexit ();
+	if (lt_dlclose (handle_))
+	  sserror << " (lt_dlclose failed too)";
+	if (lt_dlexit ())
+	  sserror << " lt_dlexit failed too";
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
@@ -151,8 +158,10 @@ namespace roboptim
           << "\nbut application expected:\n"
           << expectedTypeIdOfConstraintsList;
 
-        lt_dlclose (handle_);
-        lt_dlexit ();
+	if (lt_dlclose (handle_))
+	  sserror << " (lt_dlclose failed too)";
+	if (lt_dlexit ())
+	  sserror << " lt_dlexit failed too";
         throw std::runtime_error (sserror.str ().c_str ());
       }
 
@@ -164,8 +173,10 @@ namespace roboptim
 	sserror << "libltdl failed to find symbol ``create'': "
 		<< lt_dlerror ();
 
-	lt_dlclose (handle_);
-	lt_dlexit ();
+	if (lt_dlclose (handle_))
+	  sserror << " (lt_dlclose failed too)";
+	if (lt_dlexit ())
+	  sserror << " lt_dlexit failed too";
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
@@ -177,8 +188,10 @@ namespace roboptim
 	sserror << "libltdl failed to call ``create'': "
 		<< lt_dlerror ();
 
-	lt_dlclose (handle_);
-	lt_dlexit ();
+	if (lt_dlclose (handle_))
+	  sserror << " (lt_dlclose failed too)";
+	if (lt_dlexit ())
+	  sserror << " lt_dlexit failed too";
 	throw std::runtime_error (sserror.str ().c_str ());
       }
   }
