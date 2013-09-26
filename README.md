@@ -10,6 +10,53 @@ homepage: http://www.roboptim.net/
 How can I install roboptim-core?
 --------------------------------
 
+*STOP!*
+
+First question: do you need to compile this package from source
+manually?
+
+The answer is yes if:
+
+ 1. There is no native package available for your system and you do
+ not want to use an external system such as [RobotPkg] to handle your
+ dependencies.
+ 1. You want to develop new features for this package and you do not
+ want to use [RobotPkg] on top of your system to handle this.
+
+If the answer is yes, then please proceed. Otherwise, please checkout
+the "Available Package" section at the end of this page.
+
+
+### Installing dependencies
+
+RobOptim uses the following tools:
+
+ * [Git][] a source content management system
+ * [CMake][] a build system
+ * [pkg-config][] dependency tracking tool
+ * [Doxygen][] a documentation generation tool
+ * [Boost][] C++ library
+ * [Eigen][] C++ template library for linear algebra
+ * [log4cxx][] logging framework
+ * [Libtool][] and its ltdl library for portable plug-in management
+ * a C++03 compliant modern C++ compiler such as GCC or clang
+
+You can install all the dependencies on Ubuntu by clicking on the
+[following link][depends-apturl].
+
+[Boost]: http://www.boost.org/
+[CMake]: htttp://www.cmake.org/
+[Doxygen]: http://www.stack.nl/~dimitri/doxygen/
+[Eigen]: http://eigen.tuxfamily.org/
+[Git]: http://git-scm.com/
+[Libtool]: https://www.gnu.org/software/libtool/
+[log4cxx]: https://logging.apache.org/log4cxx/
+[pkg-config]: http://www.freedesktop.org/wiki/Software/pkg-config/
+
+[depends-apturl]: apt:cmake,pkg-config,doxygen,doxygen-latex,libltdl-dev,libeigen3-dev,libboost-all-dev,liblog4cxx10-dev
+
+### Compiling the package
+
 RobOptim uses [CMake](http://www.cmake.org/) to generate build files. For
 instance, if you want to build roboptim-core in release with debug info, and
 install it in `/my/prefix`, go to the root of the project folder and type:
@@ -18,6 +65,9 @@ install it in `/my/prefix`, go to the root of the project folder and type:
     $ cmake -DCMAKE_INSTALL_PREFIX=/my/prefix -DCMAKE_BUILD_TYPE=RELWITHDEBINFO ..
     $ make && make test
     $ sudo make install
+
+
+[RobotPkg]: http://robotpkg.openrobots.org/
 
 Where is the library documentation?
 -----------------------------------
@@ -44,7 +94,7 @@ with the environment variable `CHECK_PREFIX`.
     $ make && make check
 
 
-Available packages
+Available Packages
 ------------------
 
  * Debian and derivatives, i.e. Ubuntu (Release 2.0):
@@ -55,7 +105,8 @@ Available packages
    https://aur.archlinux.org/packages/roboptim-core-git/
  * Fedora (Release 0.5):
    https://apps.fedoraproject.org/packages/roboptim-core
-
+ * RobotPkg (Release 1.0):
+   http://robotpkg.openrobots.org/robotpkg/optimization/roboptim-core/
 
 Development Snapshost (*unstable*):
 
