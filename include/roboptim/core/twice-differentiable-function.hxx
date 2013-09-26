@@ -28,7 +28,7 @@ namespace roboptim
   GenericTwiceDifferentiableFunction<T>::GenericTwiceDifferentiableFunction
   (size_type inputSize,
    size_type outputSize,
-   std::string name) throw ()
+   std::string name) throw (std::runtime_error)
     : GenericDifferentiableFunction<T> (inputSize, outputSize, name)
   {
   }

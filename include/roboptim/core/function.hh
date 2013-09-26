@@ -22,6 +22,7 @@
 # include <iostream>
 # include <limits>
 # include <sstream>
+# include <stdexcept>
 # include <string>
 # include <utility>
 # include <vector>
@@ -438,7 +439,8 @@ namespace roboptim
     /// \param name function's name
     GenericFunction (size_type inputSize,
                      size_type outputSize = 1,
-                     std::string name = std::string ()) throw ();
+                     std::string name = std::string ())
+      throw (std::runtime_error);
 
 
     /// \brief Function evaluation.
@@ -473,7 +475,8 @@ namespace roboptim
   template <typename T>
   GenericFunction<T>::GenericFunction (size_type inputSize,
                                        size_type outputSize,
-                                       std::string name) throw ()
+                                       std::string name)
+    throw (std::runtime_error)
     : inputSize_ (inputSize),
       outputSize_ (outputSize),
       name_ (name)

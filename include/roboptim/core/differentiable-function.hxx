@@ -27,7 +27,7 @@ namespace roboptim
   template <typename T>
   GenericDifferentiableFunction<T>::GenericDifferentiableFunction
   (size_type inputSize, size_type outputSize, std::string name)
-    throw ()
+    throw (std::runtime_error)
     : GenericFunction<T> (inputSize, outputSize, name)
   {
   }

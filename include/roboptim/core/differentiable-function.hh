@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HH
 # include <cstring>
 # include <limits>
+# include <stdexcept>
 # include <utility>
 
 # include <log4cxx/logger.h>
@@ -218,7 +219,8 @@ namespace roboptim
     /// \param name function's name
     GenericDifferentiableFunction (size_type inputSize,
 				   size_type outputSize = 1,
-				   std::string name = std::string ()) throw ();
+				   std::string name = std::string ())
+      throw (std::runtime_error);
 
     /// \brief Jacobian evaluation.
     ///
