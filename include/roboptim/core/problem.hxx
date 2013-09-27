@@ -92,7 +92,7 @@ namespace roboptim
 
   template <typename F>
   typename Problem<F, boost::mpl::vector<> >::startingPoint_t&
-  Problem<F, boost::mpl::vector<> >::startingPoint () throw ()
+  Problem<F, boost::mpl::vector<> >::startingPoint () throw (std::runtime_error)
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
@@ -102,7 +102,7 @@ namespace roboptim
 
   template <typename F>
   const typename Problem<F, boost::mpl::vector<> >::startingPoint_t&
-  Problem<F, boost::mpl::vector<> >::startingPoint () const throw ()
+  Problem<F, boost::mpl::vector<> >::startingPoint () const throw (std::runtime_error)
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
@@ -296,7 +296,7 @@ namespace roboptim
       assert (0 && "Invalid intervals (wrong interval vector size)");
     if (x->outputSize () != s.size ())
       assert (0 && "Invalid scales (wrong scale vector size)");
- 
+
     // Check that the pointer is not null.
     assert (!!x.get ());
     constraints_.push_back (boost::static_pointer_cast<C> (x));
