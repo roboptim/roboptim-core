@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <stdexcept>
 #include "roboptim/core/config.hh"
 
 #include <boost/format.hpp>
@@ -63,7 +64,7 @@ namespace roboptim
       }
 
       Command
-      comment (const char* content) throw ()
+      comment (const char* content) throw (std::runtime_error)
       {
 	std::string str = "#";
 	str += content;
@@ -71,7 +72,7 @@ namespace roboptim
       }
 
       Command
-      set (const char* var, const char* value) throw ()
+      set (const char* var, const char* value) throw (std::runtime_error)
       {
 	if (!*value)
 	  return Command ((boost::format ("set %1%") % var).str ());
@@ -79,13 +80,13 @@ namespace roboptim
       }
 
       Command
-      unset (const char* var) throw ()
+      unset (const char* var) throw (std::runtime_error)
       {
 	return Command ((boost::format ("unset %1%") % var).str ());
       }
 
       Command
-      show (const char* var) throw ()
+      show (const char* var) throw (std::runtime_error)
       {
 	return Command ((boost::format ("show %1%") % var).str ());
       }

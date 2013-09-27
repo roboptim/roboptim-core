@@ -54,11 +54,12 @@ namespace roboptim
       };
 
       /// \brief Make a Gnuplot comment.
-      ROBOPTIM_DLLAPI Command comment (const char*) throw ();
+      ROBOPTIM_DLLAPI Command comment (const char*)
+	throw (std::runtime_error);
 
       /// \brief Make a Gnuplot comment.
       template <typename T>
-      ROBOPTIM_DLLAPI Command comment (const T& content) throw ()
+      inline Command comment (const T& content) throw ()
       {
         // Note: we do not use boost::lexical_cast because the << operators
         // need to be in the std:: or boost:: namespaces. As a result, if we
@@ -83,21 +84,24 @@ namespace roboptim
       /// \param var variable that will be set
       /// \param val new variable value
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command set (const char* var, const char* val = "") throw ();
+      ROBOPTIM_DLLAPI Command set (const char* var, const char* val = "")
+	throw (std::runtime_error);
 
       /// \brief Make a Gnuplot unset command.
       ///
       /// Make a Gnuplot unset command (destroy a variable).
       /// \param var variable that will be unset
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command unset (const char* var) throw ();
+      ROBOPTIM_DLLAPI Command unset (const char* var)
+	throw (std::runtime_error);
 
       /// \brief Make a Gnuplot show command.
       ///
       /// Make a Gnuplot show command (show a variable value).
       /// \param var variable that will be shown
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command show (const char* var) throw ();
+      ROBOPTIM_DLLAPI Command show (const char* var)
+	throw (std::runtime_error);
 
       /// \brief Make a Gnuplot clear command.
       ///

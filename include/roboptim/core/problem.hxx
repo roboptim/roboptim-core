@@ -477,7 +477,14 @@ namespace roboptim
     for (unsigned i = 0; i < this->constraints ().size (); ++i)
       {
 	detail::printConstraint<Problem<F, CLIST> > pc (o, *this, i);
-	boost::apply_visitor (pc, this->constraints ()[i]);
+	try
+	  {
+	    boost::apply_visitor (pc, this->constraints ()[i]);
+	  }
+	catch (const boost::bad_get& e)
+	  {
+	    o << "failed to print constraints (boost::bad_get)" << iendl;
+	  }
       }
 
     // Starting point.
