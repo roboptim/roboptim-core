@@ -29,7 +29,7 @@ documentation][doxygen-documentation].
 
 It can also be generated locally by running the `make doc`
 command. After the package is installed, the documentation will be
-located in the `$prefix/share/doc/jrl-mathtools` directoy where
+located in the `$prefix/share/doc/roboptim-core` directoy where
 `$prefix` is your installation prefix (`/usr/local` by default).
 
 
