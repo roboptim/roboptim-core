@@ -22,9 +22,10 @@ branches:
   only:
   - master
   - debian
-script: ./.travis/build
-after_success: ./.travis/after_success
-after_failure: ./.travis/after_failure
-before_install:
-  - ./.travis/before_install
-  - ./.travis/dependencies/eigen-3.2.0
+script: ./.travis/run build
+after_success: ./.travis/run after_success
+after_failure: ./.travis/run after_failure
+before_install: ./.travis/run  before_install
+matrix:
+  allow_failures:
+    - compiler: clang
