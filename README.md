@@ -4,8 +4,34 @@ roboptim-core
 [![Build Status](https://travis-ci.org/roboptim/roboptim-core.png?branch=master)](https://travis-ci.org/roboptim/roboptim-core)
 [![Coverage Status](https://coveralls.io/repos/roboptim/roboptim-core/badge.png)](https://coveralls.io/r/roboptim/roboptim-core)
 
+![LGPL-3](https://www.gnu.org/graphics/lgplv3-88x31.png)
+
+This package is the Core layer of the RobOptim framework. It is
+released under the [LGPL-3](COPYING.LESSER) license.
+
+**Warning:** this repository contains [Git
+submodules][git-submodules]. Please clone this repository using the
+`git clone --recursive` command. If you already have cloned the
+repository, you can run `git submodule init && git submodule update`
+to retrieve the submodules.
+
+
+
 For general information about the project, please refer to its
 homepage: http://www.roboptim.net/
+
+
+Documentation
+-------------
+
+To get started with this library, please read the [online Doxygen
+documentation][doxygen-documentation].
+
+It can also be generated locally by running the `make doc`
+command. After the package is installed, the documentation will be
+located in the `$prefix/share/doc/jrl-mathtools` directoy where
+`$prefix` is your installation prefix (`/usr/local` by default).
+
 
 How can I install roboptim-core?
 --------------------------------
@@ -41,52 +67,75 @@ RobOptim uses the following tools:
  * [Libtool][] and its ltdl library for portable plug-in management
  * a C++03 compliant modern C++ compiler such as GCC or clang
 
-[Boost]: http://www.boost.org/
-[CMake]: htttp://www.cmake.org/
-[Doxygen]: http://www.stack.nl/~dimitri/doxygen/
-[Eigen]: http://eigen.tuxfamily.org/
-[Git]: http://git-scm.com/
-[Libtool]: https://www.gnu.org/software/libtool/
-[log4cxx]: https://logging.apache.org/log4cxx/
-[pkg-config]: http://www.freedesktop.org/wiki/Software/pkg-config/
 
-### Compiling the package
+### Compiling and installing the package
 
-RobOptim uses [CMake](http://www.cmake.org/) to generate build files. For
-instance, if you want to build roboptim-core in release with debug info, and
-install it in `/my/prefix`, go to the root of the project folder and type:
+The manual compilation requires two steps:
 
-    $ mkdir -p build && cd build
-    $ cmake -DCMAKE_INSTALL_PREFIX=/my/prefix -DCMAKE_BUILD_TYPE=RELWITHDEBINFO ..
-    $ make && make test
-    $ sudo make install
+ 1. configuration of the build and generation of the build files
+ 2. compilation of the sources and installation of the package
 
+roboptim-core uses [CMake](http://www.cmake.org/) to generate build
+files. It is recommended to create a separate build directory:
 
-[RobotPkg]: http://robotpkg.openrobots.org/
+```sh
+mkdir _build         # (1) Create a build directory
+cd _build            # (2) Go to the newly created build directory
+cmake [options] ..   # (3) Generate the build files
+```
 
-Where is the library documentation?
------------------------------------
+Options which can be passed to CMake are detailed in the next section.
 
-This **README** only covers configure/building issues. For more information
-regarding this library usage, please refer to the Doxygen documentation.
-
-If you have configured the package as explained in the first section, go
-into your `build` directory and type:
-
-    $ make doc
-
-To view the HTML documentation: go in the `doc/doxygen-html` directory
-and open `index.html` with your favorite internet browser.
+```sh
+make                 # (4) Compile the package
+make test            # (5) Execute the package tests
+make install         # (6) Install the package into the prefix (see step 3)
+```
 
 
-How to use Valgrind with the test suite?
-----------------------------------------
+### Options
+
+Additional options can be set on the command line through the
+following command: `-D<option>=<value>`.
+
+For instance: `cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..` will set
+the `CMAKE_BUILD_TYPE` option to the value `RelWithDebInfo`.
+
+
+Available options are:
+
+- `CMAKE_BUILD_TYPE` set the build profile that should be used (debug,
+  release, etc.). We recommend `RelWithDebInfo` as it will provide
+  performances while keeping debugging symbols enabled.
+- `CMAKE_INSTALL_PREFIX` set the installation prefix (the directory
+  where the software will be copied to after it has been compiled).
+
+
+Tips and Tricks
+---------------
+
+### How to use Valgrind with the test suite?
 
 All the tests launched by the test suite can be prefixed
 with the environment variable `CHECK_PREFIX`.
 
-    $ cmake -DCHECK_PREFIX='valgrind --log-file=valgrind.log' ..
-    $ make && make check
+```sh
+cmake -DCHECK_PREFIX='valgrind --log-file=valgrind.log' ..
+make && make check
+```
+
+
+Contributing
+------------
+
+If you want to contribute, please refer to the
+[CONTRIBUTING.md](CONTRIBUTING.md) file
+
+
+Credits
+-------
+
+This package authors are credited in the [AUTHORS](AUTHORS) file.
 
 
 Available Packages
@@ -107,3 +156,18 @@ Development Snapshost (*unstable*):
 
  * Ubuntu Launchpad PPA:
    https://launchpad.net/~roboptim/+archive/ppa
+
+
+
+[doxygen-documentation]: http://www.roboptim.net/roboptim-core/doxygen/HEAD/
+
+[git-submodules]: http://git-scm.com/book/en/Git-Tools-Submodules
+
+[Boost]: http://www.boost.org/
+[CMake]: htttp://www.cmake.org/
+[Doxygen]: http://www.stack.nl/~dimitri/doxygen/
+[Eigen]: http://eigen.tuxfamily.org/
+[Git]: http://git-scm.com/
+[Libtool]: https://www.gnu.org/software/libtool/
+[log4cxx]: https://logging.apache.org/log4cxx/
+[pkg-config]: http://www.freedesktop.org/wiki/Software/pkg-config/
