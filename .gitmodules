@@ -4,3 +4,6 @@
 [submodule "tests/shared-tests"]
 	path = tests/shared-tests
 	url = git://github.com/roboptim/roboptim-shared-tests.git
+[submodule ".travis"]
+	path = .travis
+	url = git://github.com/jrl-umi3218/jrl-travis.git
