@@ -16,7 +16,6 @@ repository, you can run `git submodule init && git submodule update`
 to retrieve the submodules.
 
 
-
 For general information about the project, please refer to its
 homepage: http://www.roboptim.net/
 
