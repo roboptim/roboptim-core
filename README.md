@@ -152,7 +152,7 @@ Available Packages
  * RobotPkg (Release 1.0):
    http://robotpkg.openrobots.org/robotpkg/optimization/roboptim-core/
 
-Development Snapshost (**unstable**):
+Development Snapshost ( *unstable* ):
 
  * Ubuntu Launchpad PPA:
    https://launchpad.net/~roboptim/+archive/ppa
