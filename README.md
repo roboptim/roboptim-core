@@ -65,7 +65,7 @@ the "Available Package" section at the end of this page.
 RobOptim uses the following tools:
 
  * [Git][] a source content management system
- * [CMake][] a build system
+ * [CMake][] (>= 2.8) a build system
  * [pkg-config][] dependency tracking tool
  * [Doxygen][] a documentation generation tool
  * [Boost][] C++ library

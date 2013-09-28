@@ -13,8 +13,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with roboptim-core.  If not, see <http://www.gnu.org/licenses/>.
 
-# Requires at least CMake 2.6 to configure the package.
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+# Requires at least CMake 2.8 to configure the package.
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
