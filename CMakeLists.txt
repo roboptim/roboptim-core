@@ -18,7 +18,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
-INCLUDE(cmake/cpack.cmake)
 
 SET(PROJECT_NAME roboptim-core-plugin-nag)
 SET(PROJECT_DESCRIPTION "RobOptim core NAG plug-in")
@@ -43,6 +42,7 @@ SEARCH_FOR_BOOST()
 
 # Search for Ipopt.
 ADD_REQUIRED_DEPENDENCY("roboptim-core >= 0.5")
+MESSAGE(STATUS "ROBOPTIM_CORE_PLUGINDIR: " ${ROBOPTIM_CORE_PLUGINDIR})
 
 # Look for NAG.
 FIND_PATH(NAG_DIR include/nag.h HINTS /opt/NAG/cll6a23dhl/)
