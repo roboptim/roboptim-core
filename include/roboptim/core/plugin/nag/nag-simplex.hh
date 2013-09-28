@@ -69,10 +69,6 @@ namespace roboptim
       void solve () throw ();
 
     private:
-      /// \brief Relative accuracy.
-      double e1_;
-      /// \brief Absolute accuracy.
-      double e2_;
       /// \brief Lower bound.
       std::vector<double> a_;
       /// \brief Upper bound.
