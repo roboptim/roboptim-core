@@ -25,7 +25,7 @@ before_install:
 - ./.travis/dependencies/nag
 - ./.travis/run  before_install
 script:
-- . .travis/common.sh; export CMAKE_ADDITIONAL_OPTIONS="-DNAG_DIR=\"$install_dir/NAG/cll6a23dhl\""; export LD_LIBRARY_PATH="$install_dir/NAG/cll6a23dhl/lib:$LD_LIBRARY_PATH"; ./.travis/run build
+- . .travis/common.sh; export CMAKE_ADDITIONAL_OPTIONS="-DNAG_DIR=\"$install_dir/NAG/cll6a23dhl\""; export LD_LIBRARY_PATH="$install_dir/NAG/cll6a23dhl/lib/roboptim-core:`pkg-config --variable=plugindir roboptim-core`:$LD_LIBRARY_PATH"; ./.travis/run build
 after_failure: ./.travis/run after_failure
 after_success: ./.travis/run after_success
 branches:
