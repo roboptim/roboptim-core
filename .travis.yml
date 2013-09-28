@@ -11,6 +11,7 @@ env:
   - NSIQCPPSTYLE_FILEFILTERPATH=cmake/filefilter.txt
   - GH_USERNAME=thomas-moulard
   - GH_REPO=roboptim/roboptim-core-plugin-nag
+  - ALLOW_TESTSUITE_FAILURE=true
   - secure: jlN/+P8C3DXiowQsGF46AlDRi4jtUjj+ELt4AUQUV20PjNA8Z8QfJbwiXqdZKMMshRowz1uneQ9h0UIItuoAiPYOECqga0jjEgSFKgvBpe371W3agH1cHoepIPgXEcaPDBM40PlaSpXLmxyEFVvCsUjTjrHfu+VDXUjH7+gSjg0=
   - secure: eOFrmE1op6o+lFhiGDdSMYL+f2hoTof/sxUI5uv6sWILk4QEbSrP6zKc7CQdqAgBLHfXp8YqPyTAP3RPL9fTHT7o/6/KqHyEr+TaYNvZODCQeWkMW4wIZ1NxB+1eZMDtjZfeKTV5NwfGWqldA9dyLhi+6PtznS4QsjUTH0/5Ji0=
   - secure: ekJ2WUgLkygFwmHlSrkS0H3y1qnwBCZY/T16EOi2VYs9+5ARy19YnNhdm27Rf36lrL8laJeJ+djsh36RNiaZzgDjUUBIDcE35NLvj1f3850bhyM7rzACD+WI5cqoAsMGpzvjF6KTZMPMFWdcNXLrZPM/VHtTFRaTrNa5uZiGV/Q=
