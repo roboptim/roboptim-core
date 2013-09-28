@@ -172,7 +172,7 @@ namespace roboptim
 		   it (j, k); it; ++it)
 	      g_[offset++] = it.value ();
 
-	  unsigned constraintId = 0;
+	  NagSolverNlpSparse::function_t::size_type constraintId = 0;
 	  for (iter_t it = solver->problem ().constraints ().begin ();
 	       it != solver->problem ().constraints ().end ();
 	       ++it, ++constraintId)
@@ -331,10 +331,11 @@ namespace roboptim
 
 	for (Function::size_type i = 0; i < g->outputSize (); ++i)
 	  {
+	    std::size_t i_ = static_cast<std::size_t> (i);
 	    flow_[offset] =
-	      problem ().boundsVector ()[constraintId][i].first;
+	      problem ().boundsVector ()[constraintId][i_].first;
 	    fupp_[offset] =
-	      problem ().boundsVector ()[constraintId][i].second;
+	      problem ().boundsVector ()[constraintId][i_].second;
 	    ++offset;
 	  }
       }
@@ -355,13 +356,14 @@ namespace roboptim
 
 	for (function_t::size_type i = 0; i < g->outputSize (); ++i)
 	  {
+	    std::size_t i_ = static_cast<std::size_t> (i);
 	    // warning: we shift bounds here.
 	    flow_[offset] =
 	      problem ().boundsVector ()
-	      [constraintId][i].first - g->b ()[i];
+	      [constraintId][i_].first - g->b ()[i];
 	    fupp_[offset] =
 	      problem ().boundsVector ()
-	      [constraintId][i].second - g->b ()[i];
+	      [constraintId][i_].second - g->b ()[i];
 	    ++offset;
 	  }
       }
