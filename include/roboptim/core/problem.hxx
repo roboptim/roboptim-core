@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_PROBLEM_HXX
 # include <algorithm>
 # include <stdexcept>
+# include <boost/format.hpp>
 # include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
 # include <boost/variant.hpp>
@@ -290,12 +291,43 @@ namespace roboptim
   {
     //FIXME: check that C is in CLIST.
 
+    if (!x)
+      throw std::runtime_error
+	("Failed to add constraint: null shared pointer");
+
     if (x->inputSize () != this->function ().inputSize ())
-      assert (0 && "Invalid constraint (wrong input size)");
+      {
+	boost::format fmt
+	  ("Failed to add constraint '%s': invalid input size "
+	   "(%d, expected size is %d)");
+	fmt
+	  % x->getName ()
+	  % x->inputSize ()
+	  % this->function ().inputSize ();
+	throw std::runtime_error (fmt.str ());
+      }
     if (x->outputSize () != b.size ())
-      assert (0 && "Invalid intervals (wrong interval vector size)");
+      {
+	boost::format fmt
+	  ("Failed to add constraint '%s': interval vector size is invalid "
+	   "(%d, expected size is %d)");
+	fmt
+	  % x->getName ()
+	  % b.size ()
+	  % x->outputSize ();
+	throw std::runtime_error (fmt.str ());
+      }
     if (x->outputSize () != s.size ())
-      assert (0 && "Invalid scales (wrong scale vector size)");
+      {
+	boost::format fmt
+	  ("Failed to add constraint '%s': scale vector size is invalid "
+	   "(%d, expected size is %d)");
+	fmt
+	  % x->getName ()
+	  % b.size ()
+	  % x->outputSize ();
+	throw std::runtime_error (fmt.str ());
+      }
 
     // Check that the pointer is not null.
     assert (!!x.get ());
