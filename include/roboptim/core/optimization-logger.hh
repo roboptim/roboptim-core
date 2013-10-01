@@ -50,6 +50,25 @@ namespace roboptim
       typename P::vector_t x_;
     };
 
+    template <typename P>
+    struct JacobianConstraint
+      : public boost::static_visitor<typename P::function_t::jacobian_t>
+    {
+      JacobianConstraint (const typename P::vector_t& x)
+	: x_ (x)
+      {}
+
+      template <typename U>
+      typename P::function_t::jacobian_t operator () (const U& constraint) const
+      {
+	return constraint->jacobian (x_);
+      }
+
+    private:
+      typename P::vector_t x_;
+    };
+
+
     struct ConstraintName : public boost::static_visitor<std::string>
     {
       template <typename U>
@@ -68,6 +87,7 @@ namespace roboptim
     typedef typename solver_t::problem_t problem_t;
     typedef typename solver_t::problem_t::value_type value_type;
     typedef typename solver_t::problem_t::vector_t vector_t;
+    typedef typename solver_t::problem_t::function_t::jacobian_t jacobian_t;
 
     explicit OptimizationLogger (const boost::filesystem::path& path)
       : path_ (path),
@@ -109,6 +129,33 @@ namespace roboptim
 	;
 
       // Cost evolution over time.
+      boost::filesystem::ofstream streamCost (path_ / "cost-evolution.csv");
+      for (std::size_t i = 0; i < costs_.size (); ++i)
+	{
+	  streamCost << costs_[i];
+	  if (i < costs_.size () - 1)
+	    streamCost << ", ";
+	}
+      streamCost << "\n";
+
+      // Constraints evolution over time.
+      boost::filesystem::ofstream streamConstraint (path_ / "constraints-evolution.csv");
+      for (std::size_t nIter = 0; nIter < constraints_.size (); ++nIter)
+	{
+	  for (std::size_t constraintId = 0; constraintId < constraints_[nIter].size ();
+	       ++constraintId)
+	    {
+	      for (std::size_t i = 0; i < constraints_[nIter][constraintId].size (); ++i)
+		{
+		  streamConstraint << constraints_[nIter][constraintId][i];
+		  if ((constraintId == constraints_[nIter].size () - 1) &&
+		      (i < constraints_[nIter][constraintId].size () - 1))
+		    streamConstraint << ", ";
+		}
+	    }
+	  streamConstraint << "\n";
+	}
+      streamConstraint << "\n";
     }
 
     void setIterationCallback (solver_t& solver)
@@ -180,10 +227,12 @@ namespace roboptim
 	  if (i < x.size () - 1)
 	    streamX << ", ";
 	}
+      streamX << "\n";
 
       boost::filesystem::ofstream streamCost (iterationPath / "cost");
       streamCost << cost << "\n";
 
+      std::vector<vector_t> constraintsOneIteration (pb.constraints ().size ());
       for (std::size_t constraintId = 0; constraintId < pb.constraints ().size ();
 	   ++constraintId)
 	{
@@ -196,7 +245,8 @@ namespace roboptim
 	  // Log name
 	  boost::filesystem::ofstream nameStream (constraintPath / "name");
 	  nameStream << boost::apply_visitor
-	    (::roboptim::detail::ConstraintName (), pb.constraints ()[constraintId]);
+	    (::roboptim::detail::ConstraintName (), pb.constraints ()[constraintId])
+		     << "\n";
 	  // Log value
 	  boost::filesystem::ofstream constraintValueStream (constraintPath / "value.csv");
 
@@ -208,7 +258,24 @@ namespace roboptim
 	      if (i < constraintValue.size () - 1)
 		constraintValueStream << ", ";
 	    }
+	  constraintsOneIteration[constraintId] = constraintValue;
+
+	  // Jacobian
+	  boost::filesystem::ofstream jacobianStream (constraintPath / "jacobian.csv");
+	  jacobian_t jacobian = boost::apply_visitor
+	    (::roboptim::detail::JacobianConstraint<problem_t> (x), pb.constraints ()[constraintId]);
+	  for (std::size_t i = 0; i < jacobian.rows (); ++i)
+	    {
+	      for (std::size_t j = 0; j < jacobian.cols (); ++j)
+		{
+		  jacobianStream << jacobian (i, j);
+		  if (j < jacobian.cols () - 1)
+		    jacobianStream << ", ";
+		}
+	      jacobianStream << "\n";
+	    }
 	}
+      constraints_.push_back (constraintsOneIteration);
 
       // Turn is finished, update variables.
       lastTime_ = t;
@@ -222,6 +289,7 @@ namespace roboptim
     boost::posix_time::ptime lastTime_;
 
     std::vector<value_type> costs_;
+    std::vector<std::vector<vector_t> > constraints_;
   };
 } // end of namespace roboptim
 
