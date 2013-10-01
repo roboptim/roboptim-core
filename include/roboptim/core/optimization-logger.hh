@@ -258,6 +258,7 @@ namespace roboptim
 	      if (i < constraintValue.size () - 1)
 		constraintValueStream << ", ";
 	    }
+	  constraintValueStream << "\n";
 	  constraintsOneIteration[constraintId] = constraintValue;
 
 	  // Jacobian
