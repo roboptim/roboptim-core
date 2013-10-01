@@ -148,7 +148,7 @@ namespace roboptim
 	      for (std::size_t i = 0; i < constraints_[nIter][constraintId].size (); ++i)
 		{
 		  streamConstraint << constraints_[nIter][constraintId][i];
-		  if ((constraintId == constraints_[nIter].size () - 1) &&
+		  if ((constraintId != constraints_[nIter].size () - 1) &&
 		      (i < constraints_[nIter][constraintId].size () - 1))
 		    streamConstraint << ", ";
 		}
