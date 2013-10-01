@@ -56,9 +56,6 @@ namespace roboptim
       SOLVER_ERROR
     };
 
-    /// \brief Vector type imported from function class.
-    typedef Function::vector_t vector_t;
-
     /// \brief Result type.
     ///
     /// Uses a Boost.Variant to represent the different possible results:
@@ -135,7 +132,7 @@ namespace roboptim
     }
 
   protected:
-    /// /brief Optimization result.
+    /// \brief Optimization result.
     result_t result_;
 
     /// \brief Pointer to function logger (see log4cxx documentation).

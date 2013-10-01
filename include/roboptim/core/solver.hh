@@ -23,6 +23,7 @@
 # include <map>
 # include <string>
 
+# include <boost/function.hpp>
 # include <boost/mpl/assert.hpp>
 # include <boost/mpl/logical.hpp>
 # include <boost/type_traits/is_base_of.hpp>
@@ -77,8 +78,20 @@ namespace roboptim
     /// required.
     typedef Problem<F, C> problem_t;
 
+    /// \brief Import vector type from cost function
+    typedef typename F::vector_t vector_t;
+
     /// \brief Map of parameters.
     typedef std::map<std::string, Parameter> parameters_t;
+
+    /// Per-iteration callback type
+    ///
+    /// Callback parameters:
+    /// \li x is the current considered point,
+    /// \li problem is a (constant) reference to the problem
+    ///
+    typedef boost::function<void (const vector_t& x,
+				  const problem_t& problem)> callback_t;
 
 
     /// \brief Instantiate a solver from a problem.
@@ -119,6 +132,21 @@ namespace roboptim
     template <typename T>
     const T& getParameter (const std::string& key) const;
     /// \}
+
+    /// \brief Set the per-iteration callback.
+    ///
+    /// The per-iteration callback is a callback called each time one
+    /// iteration of the optimization process is finished.
+    ///
+    /// Not all the solvers support such a callback so this method may
+    /// throw a std::runtime_error to let you know this feature is
+    /// unsupported.
+    virtual void
+    setIterationCallback (callback_t /*callback*/) throw (std::runtime_error)
+    {
+      throw std::runtime_error
+	("iteration callback is not supported by this solver");
+    }
 
     /// \brief Display the solver on the specified output stream.
     ///
