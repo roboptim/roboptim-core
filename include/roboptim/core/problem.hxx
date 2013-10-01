@@ -346,7 +346,7 @@ namespace roboptim
 
   template <typename F, typename CLIST>
   typename Problem<F, CLIST>::startingPoint_t&
-  Problem<F, CLIST>::startingPoint () throw ()
+  Problem<F, CLIST>::startingPoint () throw (std::runtime_error)
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
@@ -356,7 +356,7 @@ namespace roboptim
 
   template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::startingPoint_t&
-  Problem<F, CLIST>::startingPoint () const throw ()
+  Problem<F, CLIST>::startingPoint () const throw (std::runtime_error)
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())

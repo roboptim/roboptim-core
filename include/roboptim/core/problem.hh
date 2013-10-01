@@ -445,11 +445,11 @@ namespace roboptim
 
     /// \brief Set the initial guess.
     /// \return reference on the initial guess
-    startingPoint_t& startingPoint () throw ();
+    startingPoint_t& startingPoint () throw (std::runtime_error);
 
     /// \brief Get the initial guess.
     /// \return reference on the initial guess
-    const startingPoint_t& startingPoint () const throw ();
+    const startingPoint_t& startingPoint () const throw (std::runtime_error);
 
     /// \}
 
