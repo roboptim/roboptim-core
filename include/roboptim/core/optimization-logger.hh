@@ -318,7 +318,7 @@ namespace roboptim
 	    {
 	      for (std::size_t j = 0; j < jacobian.cols (); ++j)
 		{
-		  jacobianStream << jacobian (i, j);
+		  jacobianStream << jacobian.coeffRef (i, j);
 		  if (j < jacobian.cols () - 1)
 		    jacobianStream << ", ";
 		}
