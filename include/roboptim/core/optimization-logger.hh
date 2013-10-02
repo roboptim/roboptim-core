@@ -97,6 +97,20 @@ namespace roboptim
 	callbackCallId_ (0),
 	lastTime_ (boost::posix_time::microsec_clock::universal_time ())
     {
+      // Set the callback.
+      try
+	{
+	  solver_.setIterationCallback
+	    (boost::bind (&OptimizationLogger<T>::perIterationCallback, this, _1, _2));
+	}
+      catch (std::runtime_error& e)
+	{
+	  std::cerr
+	    << "failed to set per-iteration callback, "
+	    << "many information will be missing from logs:\n"
+	    << e.what () << std::endl;
+	}
+
       // Remove old logs.
       boost::filesystem::remove_all (path);
       boost::filesystem::create_directories (path);
@@ -197,20 +211,6 @@ namespace roboptim
 		streamConstraint << "\n";
 	      }
 	  }
-
-      // Set the callback.
-      try
-	{
-	  solver_.setIterationCallback
-	    (boost::bind (&OptimizationLogger<T>::perIterationCallback, this, _1, _2));
-	}
-      catch (std::runtime_error& e)
-	{
-	  std::cerr
-	    << "failed to set per-iteration callback, "
-	    << "many information will be missing from logs:\n"
-	    << e.what () << std::endl;
-	}
     }
 
   protected:
