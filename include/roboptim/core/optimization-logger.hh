@@ -199,8 +199,18 @@ namespace roboptim
 	  }
 
       // Set the callback.
-      solver_.setIterationCallback
-	(boost::bind (&OptimizationLogger<T>::perIterationCallback, this, _1, _2));
+      try
+	{
+	  solver_.setIterationCallback
+	    (boost::bind (&OptimizationLogger<T>::perIterationCallback, this, _1, _2));
+	}
+      catch (std::runtime_error& e)
+	{
+	  std::cerr
+	    << "failed to set per-iteration callback, "
+	    << "many information will be missing from logs:\n"
+	    << e.what () << std::endl;
+	}
     }
 
   protected:
