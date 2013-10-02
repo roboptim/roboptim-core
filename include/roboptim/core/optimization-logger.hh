@@ -89,8 +89,10 @@ namespace roboptim
     typedef typename solver_t::problem_t::vector_t vector_t;
     typedef typename solver_t::problem_t::function_t::jacobian_t jacobian_t;
 
-    explicit OptimizationLogger (const boost::filesystem::path& path)
-      : path_ (path),
+    explicit OptimizationLogger (solver_t& solver,
+				 const boost::filesystem::path& path)
+      : solver_ (solver),
+	path_ (path),
 	output_ (),
 	callbackCallId_ (0),
 	lastTime_ (boost::posix_time::microsec_clock::universal_time ())
@@ -114,6 +116,14 @@ namespace roboptim
 
     ~OptimizationLogger ()
     {
+      // Unregister the callback, do not fail if this is impossible.
+      try
+	{
+	  solver_.setIterationCallback (typename solver_t::callback_t ());
+	}
+      catch (std::exception& e)
+	{}
+
       // Get current time
       boost::posix_time::ptime t =
 	boost::posix_time::microsec_clock::universal_time();
@@ -187,11 +197,9 @@ namespace roboptim
 		streamConstraint << "\n";
 	      }
 	  }
-    }
 
-    void setIterationCallback (solver_t& solver)
-    {
-      solver.setIterationCallback
+      // Set the callback.
+      solver_.setIterationCallback
 	(boost::bind (&OptimizationLogger<T>::perIterationCallback, this, _1, _2));
     }
 
@@ -234,9 +242,7 @@ namespace roboptim
 
       // Update journal
       if (callbackCallId_ == 0)
-	{
-	  output_ << pb << iendl;
-	}
+	output_ << solver_ << iendl;
 
       output_
 	<< std::string (80, '+') << iendl
@@ -317,6 +323,7 @@ namespace roboptim
     }
 
   private:
+    solver_t& solver_;
     boost::filesystem::path path_;
     boost::filesystem::ofstream output_;
     unsigned callbackCallId_;
