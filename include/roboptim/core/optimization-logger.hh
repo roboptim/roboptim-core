@@ -97,7 +97,7 @@ namespace roboptim
     {
       // Remove old logs.
       boost::filesystem::remove_all (path);
-      boost::filesystem::create_directory (path);
+      boost::filesystem::create_directories (path);
 
       output_.open (path / "journal.log");
 
@@ -220,7 +220,7 @@ namespace roboptim
       boost::filesystem::path iterationPath =
 	path_ / (boost::format ("iteration-%d") % callbackCallId_).str ();
       boost::filesystem::remove_all (iterationPath);
-      boost::filesystem::create_directory (iterationPath);
+      boost::filesystem::create_directories (iterationPath);
 
       // Compute intermediary values.
       // - Store X
@@ -273,7 +273,7 @@ namespace roboptim
 	  boost::filesystem::path constraintPath =
 	    iterationPath / (boost::format ("constraint-%d") % constraintId).str ();
 	  boost::filesystem::remove_all (constraintPath);
-	  boost::filesystem::create_directory (constraintPath);
+	  boost::filesystem::create_directories (constraintPath);
 
 	  // Log name
 	  boost::filesystem::ofstream nameStream (constraintPath / "name");
