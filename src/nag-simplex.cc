@@ -57,6 +57,11 @@ namespace roboptim
 
 	fc_.setZero ();
 	fc_ = solver->problem ().function () (x_);
+
+	if (!solver->callback ())
+	  return;
+	Function::vector_t xCb = x_;
+	solver->callback () (xCb, solver->problem ());
       }
 
       static void

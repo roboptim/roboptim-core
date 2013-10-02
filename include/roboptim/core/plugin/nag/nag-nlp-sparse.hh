@@ -67,6 +67,16 @@ namespace roboptim
   /// \brief Solve the problem.
   void solve () throw ();
 
+  void
+  setIterationCallback (callback_t callback) throw (std::runtime_error)
+  {
+    callback_ = callback;
+  }
+
+  const callback_t& callback () const throw ()
+  {
+    return callback_;
+  }
 private:
   void compute_nf ();
   void fill_xlow_xupp ();
@@ -121,6 +131,8 @@ private:
 
   Integer ninf_;
   double sinf_;
+
+  callback_t callback_;
 };
 
 /// @}

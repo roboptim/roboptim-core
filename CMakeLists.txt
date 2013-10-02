@@ -38,6 +38,8 @@ IF(HAS_VISIBILITY)
 ENDIF()
 
 # Search for dependencies.
+SET(BOOST_COMPONENTS
+  date_time filesystem system thread program_options unit_test_framework)
 SEARCH_FOR_BOOST()
 
 # Search for Ipopt.

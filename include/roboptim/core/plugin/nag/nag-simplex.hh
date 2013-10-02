@@ -68,6 +68,17 @@ namespace roboptim
       /// \brief Solve the problem.
       void solve () throw ();
 
+
+      void
+      setIterationCallback (callback_t callback) throw (std::runtime_error)
+      {
+	callback_ = callback;
+      }
+
+      const callback_t& callback () const throw ()
+      {
+	return callback_;
+      }
     private:
       /// \brief Lower bound.
       std::vector<double> a_;
@@ -79,6 +90,9 @@ namespace roboptim
       Function::vector_t f_;
       /// \brief Current gradient.
       Function::vector_t g_;
+
+      /// \brief Per-iteration callback function.
+      callback_t callback_;
     };
 
     /// @}

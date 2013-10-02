@@ -58,6 +58,11 @@ namespace roboptim
 
       gc_.setZero ();
       gc_ = solver->problem ().function ().gradient (x_, 0);
+
+      if (!solver->callback ())
+	return;
+      DifferentiableFunction::vector_t xCb = x_;
+      solver->callback () (xCb, solver->problem ());
     }
   } // end of namespace detail
 

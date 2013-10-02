@@ -116,6 +116,11 @@ namespace roboptim
 
       if (*mode == 1 || *mode == 2) // evaluate objective gradient
 	grad_ = solver->problem ().function ().gradient (x_, 0);
+
+      if (!solver->callback ())
+	return;
+      DifferentiableFunction::vector_t xCb = x_;
+      solver->callback () (xCb, solver->problem ());
     }
   } // end of namespace detail
 
@@ -136,7 +141,8 @@ namespace roboptim
       clamda_ (),
       grad_ (),
       h_ (),
-      x_ (pb.function ().inputSize ())
+      x_ (pb.function ().inputSize ()),
+      callback_ ()
   {
     objf_[0] = 0.;
   }

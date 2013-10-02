@@ -194,6 +194,11 @@ namespace roboptim
 	    }
 	  assert (offset == leng);
 	}
+
+      if (!solver->callback ())
+	return;
+      DifferentiableFunction::vector_t xCb = x_;
+      solver->callback () (xCb, solver->problem ());
     }
   } // end of namespace detail
 

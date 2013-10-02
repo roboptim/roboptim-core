@@ -58,6 +58,16 @@ namespace roboptim
     /// \brief Solve the problem.
     void solve () throw ();
 
+    void
+    setIterationCallback (callback_t callback) throw (std::runtime_error)
+    {
+      callback_ = callback;
+    }
+
+    const callback_t& callback () const throw ()
+    {
+      return callback_;
+    }
   private:
     Integer n_;
     Integer nclin_;
@@ -78,6 +88,8 @@ namespace roboptim
     Function::vector_t grad_;
     TwiceDifferentiableFunction::hessian_t h_;
     Function::vector_t x_;
+
+    callback_t callback_;
   };
 
   /// @}
