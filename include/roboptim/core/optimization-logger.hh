@@ -129,33 +129,64 @@ namespace roboptim
 	;
 
       // Cost evolution over time.
-      boost::filesystem::ofstream streamCost (path_ / "cost-evolution.csv");
-      for (std::size_t i = 0; i < costs_.size (); ++i)
-	{
-	  streamCost << costs_[i];
-	  if (i < costs_.size () - 1)
-	    streamCost << ", ";
-	}
-      streamCost << "\n";
+      {
+	boost::filesystem::ofstream streamCost (path_ / "cost-evolution.csv");
+	streamCost << "Cost\n";
+	for (std::size_t i = 0; i < costs_.size (); ++i)
+	  streamCost << costs_[i] << "\n";
+      }
+
+      // X evolution over time.
+      {
+	boost::filesystem::ofstream streamX (path_ / "x-evolution.csv");
+	if (!x_.empty ())
+	  {
+	    for (std::size_t i = 0; i < x_[0].size (); ++i)
+	      {
+		if (i > 0)
+		  streamX << ", ";
+		streamX << "X " << i;
+	      }
+	    streamX << "\n";
+	    for (std::size_t nIter = 0; nIter < x_.size (); ++nIter)
+	      {
+		for (std::size_t i = 0; i < x_[nIter].size (); ++i)
+		  {
+		    if (i > 0)
+		      streamX << ", ";
+		    streamX << x_[nIter][i];
+		  }
+		streamX << "\n";
+	      }
+	  }
+      }
+
 
       // Constraints evolution over time.
-      boost::filesystem::ofstream streamConstraint (path_ / "constraints-evolution.csv");
-      for (std::size_t nIter = 0; nIter < constraints_.size (); ++nIter)
-	{
-	  for (std::size_t constraintId = 0; constraintId < constraints_[nIter].size ();
-	       ++constraintId)
-	    {
-	      for (std::size_t i = 0; i < constraints_[nIter][constraintId].size (); ++i)
-		{
-		  streamConstraint << constraints_[nIter][constraintId][i];
-		  if ((constraintId != constraints_[nIter].size () - 1) &&
-		      (i < constraints_[nIter][constraintId].size () - 1))
-		    streamConstraint << ", ";
-		}
-	    }
-	  streamConstraint << "\n";
-	}
-      streamConstraint << "\n";
+      if (!constraints_.empty ())
+	for (std::size_t constraintId = 0; constraintId < constraints_[0].size ();
+	     ++constraintId)
+	  {
+	    boost::filesystem::ofstream streamConstraint
+	      (path_ / (boost::format ("constraint-%d-evolution.csv") % constraintId).str ());
+	    for (std::size_t i = 0; i < constraints_[0][constraintId].size (); ++i)
+	      {
+		if (i > 0)
+		  streamConstraint << ", ";
+		streamConstraint << "output " << i;
+	      }
+	    streamConstraint << "\n";
+	    for (std::size_t nIter = 0; nIter < constraints_.size (); ++nIter)
+	      {
+		for (std::size_t i = 0; i < constraints_[nIter][constraintId].size (); ++i)
+		  {
+		    if (i > 0)
+		      streamConstraint << ", ";
+		    streamConstraint << constraints_[nIter][constraintId][i];
+		  }
+		streamConstraint << "\n";
+	      }
+	  }
     }
 
     void setIterationCallback (solver_t& solver)
@@ -192,6 +223,8 @@ namespace roboptim
       boost::filesystem::create_directory (iterationPath);
 
       // Compute intermediary values.
+      // - Store X
+      x_.push_back (x);
       // - Get current time
       boost::posix_time::ptime t =
 	boost::posix_time::microsec_clock::universal_time ();
@@ -289,6 +322,7 @@ namespace roboptim
     unsigned callbackCallId_;
     boost::posix_time::ptime lastTime_;
 
+    std::vector<vector_t> x_;
     std::vector<value_type> costs_;
     std::vector<std::vector<vector_t> > constraints_;
   };
