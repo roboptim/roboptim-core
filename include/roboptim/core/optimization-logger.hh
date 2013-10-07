@@ -346,11 +346,11 @@ namespace roboptim
 
     boost::filesystem::path& path () const throw ()
     {
-      path_;
+      return path_;
     }
     boost::filesystem::path& path () throw ()
     {
-      path_;
+      return path_;
     }
     unsigned callbackCallId () const throw ()
     {
