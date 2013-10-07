@@ -229,8 +229,14 @@ namespace roboptim
 	{
 	  std::cerr << "unknown exception" << std::endl;
 	}
+
+      // Turn is finished, update variables.
+      lastTime_ =
+	boost::posix_time::microsec_clock::universal_time ();
+      ++callbackCallId_;
     }
 
+    virtual
     void perIterationCallbackUnsafe (const typename solver_t::vector_t& x,
 				     const typename solver_t::problem_t& pb)
     {
@@ -326,11 +332,27 @@ namespace roboptim
 	    }
 	}
       constraints_.push_back (constraintsOneIteration);
-
-      // Turn is finished, update variables.
-      lastTime_ = t;
-      ++callbackCallId_;
     }
+
+  protected:
+    const solver_t& solver () const throw ()
+    {
+      solver_;
+    }
+    solver_t& solver () throw ()
+    {
+      solver_;
+    }
+
+    boost::filesystem::path& path () const throw ()
+    {
+      path_;
+    }
+    boost::filesystem::path& path () throw ()
+    {
+      path_;
+    }
+
 
   private:
     solver_t& solver_;
