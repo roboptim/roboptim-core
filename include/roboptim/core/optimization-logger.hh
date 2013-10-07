@@ -128,7 +128,7 @@ namespace roboptim
 	;
     }
 
-    ~OptimizationLogger ()
+    virtual ~OptimizationLogger ()
     {
       // Unregister the callback, do not fail if this is impossible.
       try
@@ -352,7 +352,10 @@ namespace roboptim
     {
       path_;
     }
-
+    unsigned callbackCallId () const throw ()
+    {
+      return callbackCallId_;
+    }
 
   private:
     solver_t& solver_;
