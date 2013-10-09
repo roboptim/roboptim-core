@@ -138,8 +138,23 @@ namespace roboptim
     // Starting point.
     if (startingPoint_)
       {
-	o << iendl << "Starting point: " << *startingPoint_
-	  << iendl << "Starting value: "
+	o << iendl << "Starting point: "
+	  << "[" << startingPoint_->size () << "](";
+	for (typename F::vector_t::Index i = 0;
+	     i < startingPoint_->size (); ++i)
+	  {
+	    if (i > 0)
+	      o << ",";
+	    std::size_t i_ = static_cast<std::size_t> (i);
+	    if (F::getLowerBound
+		(this->argumentBounds ()[i_]) <= (*startingPoint_)[i] &&
+		(*startingPoint_)[i] <= F::getUpperBound
+		(this->argumentBounds ()[i_]))
+	      o << fg::ok << (*startingPoint_)[i] << fg::reset;
+	    else
+	      o << fg::fail << (*startingPoint_)[i] << fg::reset;
+	  }
+	o << ")" << iendl << "Starting value: "
 	  << this->function () (*startingPoint_);
       }
     else
@@ -522,8 +537,24 @@ namespace roboptim
     // Starting point.
     if (startingPoint_)
       {
-	o << iendl << "Starting point: " << *startingPoint_
-	  << iendl << "Starting value: "
+	o << iendl << "Starting point: "
+	  << "[" << startingPoint_->size () << "](";
+	for (typename F::vector_t::Index i = 0;
+	     i < startingPoint_->size (); ++i)
+	  {
+	    if (i > 0)
+	      o << ",";
+	    std::size_t i_ = static_cast<std::size_t> (i);
+	    if (F::getLowerBound
+		(this->argumentBounds ()[i_]) <= (*startingPoint_)[i] &&
+		(*startingPoint_)[i] <= F::getUpperBound
+		(this->argumentBounds ()[i_]))
+	      o << fg::ok << (*startingPoint_)[i];
+	    else
+	      o << fg::fail << (*startingPoint_)[i];
+	    o << fg::reset;
+	  }
+	o << ")" << iendl << "Starting value: "
 	  << this->function () (*startingPoint_);
       }
     else
