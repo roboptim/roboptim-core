@@ -86,8 +86,7 @@ BOOST_AUTO_TEST_CASE (simple)
   Function::vector_t x (4);
   x.setZero ();
   pb.startingPoint () = x;
-  BOOST_CHECK_EQUAL (pb.startingPoint ()
-  	  && pb.startingPoint ()->size (), 4);
+  BOOST_CHECK_EQUAL (pb.startingPoint ()->size (), 4);
 
   BOOST_CHECK_EQUAL (pb.boundsVector ().size (), 0u);
   BOOST_CHECK_EQUAL (pb.argumentBounds ().size (), 4u);
