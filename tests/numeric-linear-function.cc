@@ -64,6 +64,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function, T, functionTypes_t)
   (*output) << "f(x) = " << f (x) << std::endl;
   (*output) << "J(x) = " << f.jacobian (x) << std::endl;
 
+  GenericNumericLinearFunction<T> numericLinearFunction (a, b);
+  GenericLinearFunction<T>* linearFunction = &numericLinearFunction;
+
+  GenericNumericLinearFunction<T> numericLinearFunctionRebuilt (*linearFunction);
+
+  BOOST_CHECK (allclose (numericLinearFunction.A (),
+			 numericLinearFunctionRebuilt.A ()));
+  BOOST_CHECK_EQUAL (numericLinearFunction.b (), numericLinearFunctionRebuilt.b ());
+
   std::cout << output->str () << std::endl;
   //BOOST_CHECK (output->match_pattern ());
 }

@@ -19,6 +19,8 @@
 # define ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
 # include "debug.hh"
 
+# include <boost/format.hpp>
+
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/numeric-linear-function.hh>
 # include <roboptim/core/util.hh>
@@ -35,6 +37,25 @@ namespace roboptim
       b_ (b)
   {
     assert (b.size () == this->outputSize ());
+  }
+
+  template <typename T>
+  GenericNumericLinearFunction<T>::GenericNumericLinearFunction
+  (const GenericLinearFunction<T>& function) throw ()
+    : GenericLinearFunction<T>
+      (function.inputSize (), function.outputSize (),
+       (boost::format
+	("numeric linear function (built from %s)")
+	% function.getName ()).str ()),
+      a_ (function.outputSize (),
+	  function.inputSize ()),
+      b_ (function.outputSize ())
+  {
+    vector_t x (function.inputSize ());
+    x.setZero ();
+    b_ = function (x);
+    x.setConstant (1.);
+    function.jacobian (a_, x);
   }
 
   template <typename T>

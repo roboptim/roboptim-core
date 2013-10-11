@@ -46,6 +46,11 @@ namespace roboptim
     /// \param b b vector
     GenericNumericLinearFunction (const matrix_t& A, const vector_t& b)
       throw ();
+
+    /// \brief Build a linear function from another one.
+    GenericNumericLinearFunction (const GenericLinearFunction<T>&)
+      throw ();
+
     ~GenericNumericLinearFunction () throw ();
 
     /// \brief Display the function on the specified output stream.
