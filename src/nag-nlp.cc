@@ -18,6 +18,7 @@
 #include <cassert>
 #include <cstring>
 
+#include <roboptim/core/numeric-linear-function.hh>
 #include <roboptim/core/differentiable-function.hh>
 
 #include <nag.h>
@@ -68,7 +69,7 @@ namespace roboptim
 	{
 	  boost::shared_ptr<DifferentiableFunction> g;
 	  if (it->which () == 0)
-	    g = boost::get<boost::shared_ptr<NumericLinearFunction> > (*it);
+	    g = boost::get<boost::shared_ptr<LinearFunction> > (*it);
 	  else
 	    g = boost::get<boost::shared_ptr<DifferentiableFunction> > (*it);
 	  assert (!!g);
@@ -160,8 +161,8 @@ namespace roboptim
       {
 	if (it->which () == 0)
 	  {
-	    boost::shared_ptr<NumericLinearFunction> g =
-	      boost::get<boost::shared_ptr<NumericLinearFunction> > (*it);
+	    boost::shared_ptr<LinearFunction> g =
+	      boost::get<boost::shared_ptr<LinearFunction> > (*it);
 	    assert (!!g);
 	    nclin_ += g->outputSize ();
 	  }
@@ -188,17 +189,17 @@ namespace roboptim
     h_.resize (n_, n_);
 
     // Fill A matrix.
-
     Function::size_type idx = 0;
     for (iter_t it = problem ().constraints ().begin ();
 	 it != problem ().constraints ().begin (); ++it)
       {
 	if (it->which () != 0)
 	  continue;
-	boost::shared_ptr<NumericLinearFunction> g =
-	  boost::get<boost::shared_ptr<NumericLinearFunction> > (*it);
+	boost::shared_ptr<LinearFunction> g =
+	  boost::get<boost::shared_ptr<LinearFunction> > (*it);
 	assert (!!g);
-	const NumericLinearFunction::matrix_t& A = g->A ();
+	NumericLinearFunction g_ (*g);
+	const NumericLinearFunction::matrix_t& A = g_.A ();
 	a_.block (idx, 0, g->outputSize (), g->inputSize ()) = A;
 	idx += g->outputSize ();
       }
@@ -220,14 +221,15 @@ namespace roboptim
       {
 	if (problem ().constraints ()[constraintId].which () != 0)
 	  continue;
-	boost::shared_ptr<NumericLinearFunction> g =
-	  boost::get<boost::shared_ptr<NumericLinearFunction> >
+	boost::shared_ptr<LinearFunction> g =
+	  boost::get<boost::shared_ptr<LinearFunction> >
 	  (problem ().constraints ()[constraintId]);
 	assert (!!g);
 
+	NumericLinearFunction g_ (*g);
 	for (unsigned i = 0; i < g->outputSize (); ++i)
 	  {
-	    const NumericLinearFunction::vector_t& b = g->b ();
+	    const LinearFunction::vector_t& b = g_.b ();
 	    // warning: we shift bounds here.
 	    bl_[idx + i] =
 	      problem ().boundsVector ()[constraintId][i].first + b[i];
@@ -327,7 +329,7 @@ extern "C"
   typedef roboptim::NagSolverNlp NagSolverNlp;
   typedef roboptim::Solver<
     roboptim::DifferentiableFunction,
-    boost::mpl::vector<roboptim::NumericLinearFunction,
+    boost::mpl::vector<roboptim::LinearFunction,
 		       roboptim::DifferentiableFunction> >
   solver_t;
 

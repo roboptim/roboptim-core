@@ -20,7 +20,7 @@
 # include <vector>
 
 # include <roboptim/core/solver.hh>
-# include <roboptim/core/numeric-linear-function.hh>
+# include <roboptim/core/linear-function.hh>
 # include <roboptim/core/differentiable-function.hh>
 # include <roboptim/core/twice-differentiable-function.hh>
 
@@ -42,14 +42,14 @@ namespace roboptim
   /// \see http://www.nag.com/numeric/CL/nagdoc_cl23/html/E04/e04wdc.html
   class ROBOPTIM_DLLEXPORT NagSolverNlp
     : public Solver<DifferentiableFunction,
-		    boost::mpl::vector<NumericLinearFunction,
+		    boost::mpl::vector<LinearFunction,
 				       DifferentiableFunction> >
   {
   public:
     typedef Solver<
       DifferentiableFunction,
       boost::mpl::vector<
-	NumericLinearFunction, DifferentiableFunction> >
+	LinearFunction, DifferentiableFunction> >
       parent_t;
 
     explicit NagSolverNlp (const problem_t& pb) throw ();

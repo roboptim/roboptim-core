@@ -21,6 +21,7 @@
 #include <boost/format.hpp>
 
 #include <roboptim/core/differentiable-function.hh>
+#include <roboptim/core/numeric-linear-function.hh>
 
 #include <nag.h>
 #include <nage04.h>
@@ -359,16 +360,18 @@ namespace roboptim
 	  (problem ().constraints ()[constraintId]);
 	assert (!!g);
 
+	numericLinearFunction_t g_ (*g);
+
 	for (function_t::size_type i = 0; i < g->outputSize (); ++i)
 	  {
 	    std::size_t i_ = static_cast<std::size_t> (i);
 	    // warning: we shift bounds here.
 	    flow_[offset] =
 	      problem ().boundsVector ()
-	      [constraintId][i_].first - g->b ()[i];
+	      [constraintId][i_].first - g_.b ()[i];
 	    fupp_[offset] =
 	      problem ().boundsVector ()
-	      [constraintId][i_].second - g->b ()[i];
+	      [constraintId][i_].second - g_.b ()[i];
 	    ++offset;
 	  }
       }
@@ -482,16 +485,17 @@ namespace roboptim
 	  boost::get<boost::shared_ptr<linearFunction_t> >
 	  (problem ().constraints ()[constraintId]);
 	assert (!!g);
+	numericLinearFunction_t g_ (*g);
 
 	// copy the non-null elements of the jacobian
-	for (int k=0; k < g->A ().outerSize (); ++k)
-	  for (function_t::matrix_t::InnerIterator it (g->A (), k); it; ++it)
+	for (int k=0; k < g_.A ().outerSize (); ++k)
+	  for (function_t::matrix_t::InnerIterator it (g_.A (), k); it; ++it)
 	    {
 	      iafun_.push_back (offset + it.row () + 1);
 	      javar_.push_back (it.col () + 1);
 	      a_.push_back (it.value ());
 	    }
-	offset += static_cast<int> (g->A ().rows ());
+	offset += static_cast<int> (g_.A ().rows ());
       }
 
     lena_ = static_cast<int> (iafun_.size ());
@@ -805,7 +809,7 @@ extern "C"
   typedef roboptim::Solver<
     ::roboptim::GenericDifferentiableFunction< ::roboptim::EigenMatrixSparse>,
     boost::mpl::vector<
-      ::roboptim::GenericNumericLinearFunction< ::roboptim::EigenMatrixSparse>,
+      ::roboptim::GenericLinearFunction< ::roboptim::EigenMatrixSparse>,
       ::roboptim::GenericDifferentiableFunction< ::roboptim::EigenMatrixSparse>
       > >
   solver_t;

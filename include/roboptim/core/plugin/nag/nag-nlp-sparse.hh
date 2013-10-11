@@ -20,7 +20,7 @@
 # include <vector>
 
 # include <roboptim/core/solver.hh>
-# include <roboptim/core/numeric-linear-function.hh>
+# include <roboptim/core/linear-function.hh>
 # include <roboptim/core/differentiable-function.hh>
 # include <roboptim/core/twice-differentiable-function.hh>
 
@@ -43,17 +43,20 @@ namespace roboptim
   class ROBOPTIM_DLLEXPORT NagSolverNlpSparse
     : public Solver<GenericDifferentiableFunction<EigenMatrixSparse>,
 		    boost::mpl::vector<
-		      GenericNumericLinearFunction<EigenMatrixSparse>,
+		      GenericLinearFunction<EigenMatrixSparse>,
 		      GenericDifferentiableFunction<EigenMatrixSparse> > >
   {
   public:
     typedef Solver<GenericDifferentiableFunction<EigenMatrixSparse>,
       boost::mpl::vector<
-	GenericNumericLinearFunction<EigenMatrixSparse>,
+	GenericLinearFunction<EigenMatrixSparse>,
 	GenericDifferentiableFunction<EigenMatrixSparse> > >
     parent_t;
-  typedef GenericNumericLinearFunction<EigenMatrixSparse>
+  typedef GenericLinearFunction<EigenMatrixSparse>
   linearFunction_t;
+  typedef GenericNumericLinearFunction<EigenMatrixSparse>
+  numericLinearFunction_t;
+
   typedef GenericDifferentiableFunction<EigenMatrixSparse>
   nonlinearFunction_t;
   typedef problem_t::function_t function_t;
