@@ -66,7 +66,8 @@ namespace roboptim
   std::ostream& operator<< (std::ostream& o, const Eigen::MatrixBase<T>& matrix)
   {
     Eigen::IOFormat ioformat (Eigen::StreamPrecision,
-			      0, ",", ", ", "(", ")", "(", ")");
+                              Eigen::DontAlignCols,
+                              ",", ", ", "(", ")", "(", ")");
     ioformat.rowSpacer = "";
     o << "[";
 
@@ -74,8 +75,9 @@ namespace roboptim
     if (matrix.cols () == 1 || matrix.cols () == 1)
       {
 	// Vector
-	ioformat = Eigen::IOFormat (Eigen::StreamPrecision,
-				    0, ",", ",", "", "", "(", ")");
+        ioformat = Eigen::IOFormat (Eigen::StreamPrecision,
+                                    Eigen::DontAlignCols,
+                                    ",", ",", "", "", "(", ")");
 	ioformat.rowSpacer = "";
 	o << matrix.size ();
       }
