@@ -105,6 +105,7 @@ ROBOPTIM_CORE_TEST(function-sin)
 ROBOPTIM_CORE_TEST(cached-function)
 ROBOPTIM_CORE_TEST(split)
 
+ROBOPTIM_CORE_TEST(filter-bind)
 ROBOPTIM_CORE_TEST(filter-chain)
 ROBOPTIM_CORE_TEST(filter-concatenate)
 ROBOPTIM_CORE_TEST(filter-derivative)

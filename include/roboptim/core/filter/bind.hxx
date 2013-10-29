@@ -1,0 +1,125 @@
+// Copyright (C) 2013 by Thomas Moulard, AIST, CNRS, INRIA.
+//
+// This file is part of the roboptim.
+//
+// roboptim is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// roboptim is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
+
+#ifndef ROBOPTIM_CORE_FILTER_BIND_HXX
+# define ROBOPTIM_CORE_FILTER_BIND_HXX
+# include <stdexcept>
+# include <boost/format.hpp>
+
+namespace roboptim
+{
+  template <typename U>
+  Bind<U>::Bind
+  (boost::shared_ptr<U> origin,
+   const boundValues_t& boundValues) throw (std::runtime_error)
+    : detail::AutopromoteTrait<U>::T_type
+      (static_cast<size_type>
+       (std::count (boundValues.begin (), boundValues.end (),
+		    boost::optional<value_type> ())),
+       origin->outputSize (),
+       (boost::format ("bind(%1%)")
+	% origin->getName ()).str ()),
+      origin_ (origin),
+      boundValues_ (boundValues),
+      x_ (origin->inputSize ()),
+      gradient_ (origin->inputSize ()),
+      jacobian_ (origin->outputSize (),
+		 origin->inputSize ())
+  {
+    gradient_.setZero ();
+    jacobian_.setZero ();
+
+    if (origin->inputSize () -
+	static_cast<size_type> (boundValues.size ()) != 0)
+      {
+	boost::format fmt
+	  ("function input size (%d) and bounded value (%d) do not match");
+	throw std::runtime_error (fmt.str ().c_str ());
+      }
+  }
+
+  template <typename U>
+  Bind<U>::~Bind () throw ()
+  {}
+
+  template <typename U>
+  void
+  Bind<U>::impl_compute
+  (result_t& result, const argument_t& x)
+    const throw ()
+  {
+    size_type id = 0;
+    for (std::size_t idx = 0; idx < boundValues_.size (); ++idx)
+      if (boundValues_[idx])
+	x_[static_cast<size_type> (idx)] = *(boundValues_[idx]);
+      else
+	x_[static_cast<size_type> (idx)] = x[id++];
+    origin_->operator () (result, x_);
+  }
+
+  template <typename U>
+  void
+  Bind<U>::impl_gradient (gradient_t& gradient,
+			  const argument_t& argument,
+			  size_type functionId)
+    const throw ()
+  {
+    size_type id = 0;
+    for (std::size_t idx = 0; idx < boundValues_.size (); ++idx)
+      if (boundValues_[idx])
+	x_[static_cast<size_type> (idx)] = *(boundValues_[idx]);
+      else
+	x_[static_cast<size_type> (idx)] = argument[id++];
+    origin_->gradient (gradient_, x_, functionId);
+
+    id = 0;
+    for (std::size_t idx = 0; idx < boundValues_.size (); ++idx)
+      if (!boundValues_[idx])
+	gradient.coeffRef (id++) =
+	  gradient_.coeffRef (static_cast<size_type> (idx));
+  }
+
+  template <typename U>
+  void
+  Bind<U>::impl_jacobian (jacobian_t& jacobian,
+			  const argument_t& argument)
+    const throw ()
+  {
+    size_type id = 0;
+    for (std::size_t idx = 0; idx < boundValues_.size (); ++idx)
+      if (boundValues_[idx])
+	x_[static_cast<size_type> (idx)] = *(boundValues_[idx]);
+      else
+	x_[static_cast<size_type> (idx)] = argument[id++];
+
+    origin_->jacobian (jacobian_, x_);
+
+    assert (jacobian_.rows () == jacobian.rows ());
+
+    id = 0;
+    for (size_type col = 0; col < jacobian_.cols (); ++col)
+      if (!boundValues_[static_cast<std::size_t> (col)])
+	{
+	  for (size_type row = 0; row < jacobian_.rows (); ++row)
+	    jacobian.coeffRef (row, id) = jacobian_.coeffRef (row, col);
+	  ++id;
+	}
+  }
+
+} // end of namespace roboptim.
+
+#endif //! ROBOPTIM_CORE_FILTER_BIND_HXX
