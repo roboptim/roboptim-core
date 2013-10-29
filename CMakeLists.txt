@@ -48,6 +48,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection-by-id.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection-by-id.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
