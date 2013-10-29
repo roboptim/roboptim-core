@@ -469,6 +469,7 @@ namespace roboptim
             typename P::vector_t x = (*g) (*problem_.startingPoint ());
 	    bool satisfied = true;
 	    o_ << "Initial value: ";
+	    o_ << "[" << x.size () << "](";
             for (typename P::size_type j = 0; j < x.size (); ++j)
 	      {
                 if (x[j] < P::function_t::
@@ -481,14 +482,18 @@ namespace roboptim
 				   [static_cast<std::size_t> (j)]))
 		  {
 		    satisfied = false;
-		    break;
+		    o_ << fg::fail << x[j];
 		  }
-	      }
+		else
+		  o_ << fg::ok << x[j];
 
-	    if (satisfied)
-	      o_ << fg::ok << x;
-	    else
-	      o_ << fg::fail << x << " (constraint not satisfied)";
+		o_ << fg::reset;
+		if (j < x.size () - 1)
+		  o_ << ", ";
+	      }
+	    o_ << ")";
+	    if (!satisfied)
+	      o_ << " (constraint not satisfied)";
 	    o_ << fg::reset << iendl;
 	  }
 	o_ << decindent << decindent;
