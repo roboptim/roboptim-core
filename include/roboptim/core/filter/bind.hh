@@ -44,7 +44,7 @@ namespace roboptim
 
     explicit Bind (boost::shared_ptr<U> origin,
 		   const boundValues_t& selector)
-      throw (std::runtime_error);
+      throw (std::exception);
     ~Bind () throw ();
 
     const boost::shared_ptr<U>& origin () const

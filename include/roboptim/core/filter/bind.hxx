@@ -25,7 +25,7 @@ namespace roboptim
   template <typename U>
   Bind<U>::Bind
   (boost::shared_ptr<U> origin,
-   const boundValues_t& boundValues) throw (std::runtime_error)
+   const boundValues_t& boundValues) throw (std::exception)
     : detail::AutopromoteTrait<U>::T_type
       (static_cast<size_type>
        (std::count (boundValues.begin (), boundValues.end (),
@@ -48,6 +48,7 @@ namespace roboptim
       {
 	boost::format fmt
 	  ("function input size (%d) and bounded value (%d) do not match");
+	fmt % origin->inputSize () % boundValues.size ();
 	throw std::runtime_error (fmt.str ().c_str ());
       }
   }
