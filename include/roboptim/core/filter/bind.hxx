@@ -47,8 +47,11 @@ namespace roboptim
 	static_cast<size_type> (boundValues.size ()) != 0)
       {
 	boost::format fmt
-	  ("function input size (%d) and bounded value (%d) do not match");
-	fmt % origin->inputSize () % boundValues.size ();
+	  ("function \"%s\" input size (%d)"
+	   " and bounded value (%d) do not match");
+	fmt
+	  % origin->getName ()
+	  % origin->inputSize () % boundValues.size ();
 	throw std::runtime_error (fmt.str ().c_str ());
       }
   }
