@@ -34,13 +34,18 @@ namespace roboptim
       origin_ (origin),
       selector_ (selector),
       result_ (origin->outputSize ()),
-      gradient_ (origin->inputSize ()),
-      jacobian_ (origin->outputSize (),
-		 origin->inputSize ())
+      gradient_ (origin->inputSize ())
   {
     result_.setZero ();
     gradient_.setZero ();
-    jacobian_.setZero ();
+
+    if (selector.size () != static_cast<std::size_t> (origin->outputSize ()))
+      {
+	boost::format fmt
+	  ("selector size is invalid (size is %d but %d was expected)");
+	fmt % selector.size () % origin->outputSize ();
+	throw std::runtime_error (fmt.str ());
+      }
   }
 
   template <typename U>
@@ -61,6 +66,11 @@ namespace roboptim
 	result[id++] = result_[row];
   }
 
+  // The gradient size depends on the input size which is not varying
+  // as we are filtering output but not input here.
+  //
+  // The only different value is the functionId value which may be lower
+  // if some outputs have been filtered out.
   template <typename U>
   void
   SelectionById<U>::impl_gradient (gradient_t& gradient,
@@ -68,12 +78,12 @@ namespace roboptim
 				   size_type functionId)
     const throw ()
   {
-    origin_->gradient (gradient_, argument, functionId);
+    size_type functionIdUpdated = functionId;
+    for (size_type element = 0; element < functionId; ++element)
+      if (selector_[static_cast<std::size_t> (element)])
+	functionIdUpdated--;
 
-    size_type id = 0;
-    for (size_type row = 0; row < gradient_.size (); ++row)
-      if (selector_[static_cast<std::size_t> (row)])
-	gradient.coeffRef (id++) = gradient_.coeffRef (row);
+    origin_->gradient (gradient, argument, functionIdUpdated);
   }
 
   template <typename U>
@@ -82,16 +92,18 @@ namespace roboptim
 				   const argument_t& argument)
     const throw ()
   {
-    origin_->jacobian (jacobian_, argument);
-
-    size_type id = 0;
-    for (size_type row = 0; row < jacobian_.rows (); ++row)
-      if (selector_[static_cast<std::size_t> (row)])
-	{
-	  for (size_type col = 0; col < jacobian_.cols (); ++col)
-	    jacobian.coeffRef (id, col) = jacobian_.coeffRef (row, col);
-	  ++id;
-	}
+    size_type row = 0;
+    for (size_type functionId = 0;
+	 functionId < origin_->outputSize (); ++functionId)
+      {
+	if (selector_[static_cast<std::size_t> (functionId)])
+	  {
+	    origin_->gradient (gradient_, argument, functionId);
+	    for (size_type col = 0; col < jacobian.cols (); ++col)
+	      jacobian.coeffRef (row, col) = gradient_.coeffRef (col);
+	    ++row;
+	  }
+      }
   }
 
 } // end of namespace roboptim.

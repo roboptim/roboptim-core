@@ -68,7 +68,6 @@ namespace roboptim
 
     mutable result_t result_;
     mutable gradient_t gradient_;
-    mutable jacobian_t jacobian_;
   };
 
   template <typename U>
