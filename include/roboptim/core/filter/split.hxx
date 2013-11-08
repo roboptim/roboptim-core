@@ -66,7 +66,7 @@ namespace roboptim
 
 
   template <>
-  void
+  inline void
   Split<Function>::impl_gradient (gradient_t&, const argument_t&, size_type)
     const throw ()
   {
@@ -88,7 +88,7 @@ namespace roboptim
 
 
   template <>
-  void
+  inline void
   Split<Function>::impl_hessian
   (hessian_t&, const argument_t&, size_type) const throw ()
   {
@@ -96,7 +96,7 @@ namespace roboptim
   }
 
   template <>
-  void
+  inline void
   Split<DifferentiableFunction>::impl_hessian
   (hessian_t&, const argument_t&, size_type) const throw ()
   {
@@ -118,7 +118,7 @@ namespace roboptim
 
 
   template <>
-  void
+  inline void
   Split<Function>::impl_derivative
   (gradient_t&, double, size_type) const throw ()
   {
@@ -126,7 +126,7 @@ namespace roboptim
   }
 
   template <>
-  void
+  inline void
   Split<DifferentiableFunction>::impl_derivative
   (gradient_t&, double, size_type) const throw ()
   {
@@ -134,7 +134,7 @@ namespace roboptim
   }
 
   template <>
-  void
+  inline void
   Split<TwiceDifferentiableFunction>::impl_derivative
   (gradient_t&, double, size_type) const throw ()
   {
