@@ -51,7 +51,7 @@ namespace roboptim {
     typedef Function::size_type size_t;
     typedef Function::value_type value_t;
     /// @}
-    /// \brief Constructot by vector valued functions
+    /// \brief Constructor by vector valued functions
     /// The value of this scalar valued function is the sum of the
     /// squares of the coordinates of the vector valued base function.
     explicit SumOfC1Squares (const boost::shared_ptr<DifferentiableFunction>&
