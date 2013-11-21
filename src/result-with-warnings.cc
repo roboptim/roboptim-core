@@ -40,7 +40,9 @@ namespace roboptim
   ResultWithWarnings::print (std::ostream& o) const throw ()
   {
     Result::print (o);
-    return o << incindent << iendl << "Warnings: " << warnings << decindent;
+    if (warnings.size () > 0)
+      return o << incindent << iendl << "Warnings: " << warnings << decindent;
+    return o << incindent << iendl << decindent;
   }
 
   ResultWithWarnings::~ResultWithWarnings () throw ()
