@@ -95,8 +95,10 @@ namespace roboptim
 	path_ (path),
 	output_ (),
 	callbackCallId_ (0),
-	lastTime_ (boost::posix_time::microsec_clock::universal_time ())
+	firstTime_ (boost::posix_time::microsec_clock::universal_time ())
     {
+      lastTime_ = firstTime_;
+
       // Set the callback.
       try
 	{
@@ -122,7 +124,7 @@ namespace roboptim
 	<< std::string (80, '*') << iendl
 	<< "RobOptim Optimization Logger" << iendl
 	<< " - current time: "
-	<< boost::posix_time::to_iso_extended_string (lastTime_) << "Z" << iendl
+	<< boost::posix_time::to_iso_extended_string (firstTime_) << "Z" << iendl
 	<< " - roboptim-core version: " ROBOPTIM_CORE_VERSION "\n"
 	<< std::string (80, '*') << iendl
 	;
@@ -148,7 +150,7 @@ namespace roboptim
 	<< " - current time: "
 	<< boost::posix_time::to_iso_extended_string(t) << "Z" << iendl
 	<< " - total elapsed time: "
-	<< (t - lastTime_) << iendl
+	<< (t - firstTime_) << iendl
 	<< std::string (80, '*') << iendl
 	;
 
@@ -363,6 +365,7 @@ namespace roboptim
     boost::filesystem::ofstream output_;
     unsigned callbackCallId_;
     boost::posix_time::ptime lastTime_;
+    boost::posix_time::ptime firstTime_;
 
     std::vector<vector_t> x_;
     std::vector<value_type> costs_;

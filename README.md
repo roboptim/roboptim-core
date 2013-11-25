@@ -128,7 +128,7 @@ with the environment variable `CHECK_PREFIX`.
 
 ```sh
 cmake -DCHECK_PREFIX='valgrind --log-file=valgrind.log' ..
-make && make check
+make && make test
 ```
 
 
