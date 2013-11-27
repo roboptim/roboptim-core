@@ -101,6 +101,7 @@ ROBOPTIM_CORE_TEST(function-constant)
 ROBOPTIM_CORE_TEST(function-cos)
 ROBOPTIM_CORE_TEST(function-identity)
 ROBOPTIM_CORE_TEST(function-sin)
+ROBOPTIM_CORE_TEST(function-polynomial)
 
 ROBOPTIM_CORE_TEST(cached-function)
 ROBOPTIM_CORE_TEST(split)
