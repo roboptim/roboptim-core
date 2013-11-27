@@ -28,6 +28,11 @@ namespace roboptim
   /// @{
 
   /// \brief Polynomial function.
+  ///
+  /// Implement a polynomial function using the formula:
+  /// \f[f(x) = a_0 + a_1 * x + a_2 * x^2 + a_3 * x^3 + ...\f] 
+  /// where polynomial coefficients \f$a_i\f$ are set when the class
+  /// is instanciated 
   template <typename T>
   class Polynomial : public GenericTwiceDifferentiableFunction<T>
   {
@@ -37,7 +42,8 @@ namespace roboptim
 
     /// \brief Build a polynomial function
     ///
-    /// \param offset constant function offset
+    /// \param coefficients polynomial coefficients 
+    /// given in increasing degree order 
     Polynomial(vector_t coefficients) throw (std::runtime_error)
       : GenericTwiceDifferentiableFunction<T>
 	(1, 1, "polynomial"),
@@ -197,7 +203,7 @@ namespace roboptim
   }
 
   /// Example shows constant function use.
-  /// \example Polynomial.cc
+  /// \example function-polynomial.cc
 
   /// @}
 
