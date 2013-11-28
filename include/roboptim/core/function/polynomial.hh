@@ -17,10 +17,13 @@
 
 #ifndef ROBOPTIM_CORE_FUNCTION_POLYNOMIAL_HH
 # define ROBOPTIM_CORE_FUNCTION_POLYNOMIAL_HH
+# include <stdexcept>
+
+# include <boost/format.hpp>
+
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/twice-differentiable-function.hh>
 # include <roboptim/core/portability.hh>
-# include <stdexcept>
 
 namespace roboptim
 {
@@ -30,9 +33,9 @@ namespace roboptim
   /// \brief Polynomial function.
   ///
   /// Implement a polynomial function using the formula:
-  /// \f[f(x) = a_0 + a_1 * x + a_2 * x^2 + a_3 * x^3 + ...\f] 
+  /// \f[f(x) = a_0 + a_1 * x + a_2 * x^2 + a_3 * x^3 + ...\f]
   /// where polynomial coefficients \f$a_i\f$ are set when the class
-  /// is instanciated 
+  /// is instanciated
   template <typename T>
   class Polynomial : public GenericTwiceDifferentiableFunction<T>
   {
@@ -42,48 +45,50 @@ namespace roboptim
 
     /// \brief Build a polynomial function
     ///
-    /// \param coefficients polynomial coefficients 
-    /// given in increasing degree order 
-    Polynomial(vector_t coefficients) throw (std::runtime_error)
+    /// \param coefficients polynomial coefficients
+    /// given in increasing degree order
+    explicit Polynomial (vector_t coefficients) throw (std::runtime_error)
       : GenericTwiceDifferentiableFunction<T>
 	(1, 1, "polynomial"),
         coeffs_(coefficients),
-        dCoeffs_(),
-        dDCoeffs_()
+        dCoeffs_ (),
+        dDCoeffs_ ()
     {
-      if (coeffs_.size () < 1)
+      typename vector_t::Index size = coeffs_.size ();
+
+      if (size < 1)
         throw std::runtime_error
-          ("Bad coefficients vector size (must be at least 1 but vector is of null size)");
-      if (coeffs_.size() == 1)
-      {
-        dCoeffs_.resize(1);
-        dCoeffs_[0] = 0;
-        dDCoeffs_.resize(1);
-        dDCoeffs_[0] = 0;
-      }
-      else if (coeffs_.size() == 2)
-      {
-        dCoeffs_.resize(1);
-        dCoeffs_[0] = coeffs_[1];
-        dDCoeffs_.resize(1);
-        dDCoeffs_[0] = 0;
-      }
-      else
-      {
-        dCoeffs_.resize(coeffs_.size() - 1);
-        dDCoeffs_.resize(coeffs_.size() - 2);
-        for(size_type deg = 1; deg < coeffs_.size(); ++deg)
-        {
-          dCoeffs_[deg-1] = static_cast<double>(deg)*coeffs_[deg];
-        }
-        for(size_type deg = 2; deg < coeffs_.size(); ++deg)
-        {
-          dDCoeffs_[deg-2] = static_cast<double>(deg*(deg-1))*coeffs_[deg];
-        }
-      }
+          ("Bad coefficients vector size"
+	   " (must be at least 1 but vector is of null size)");
+
+      if (size == 1)
+	{
+	  dCoeffs_.resize (1);
+	  dCoeffs_[0] = 0;
+	  dDCoeffs_.resize (1);
+	  dDCoeffs_[0] = 0;
+	  return;
+	}
+
+      if (size == 2)
+	{
+	  dCoeffs_.resize (1);
+	  dCoeffs_[0] = coeffs_[1];
+	  dDCoeffs_.resize (1);
+	  dDCoeffs_[0] = 0;
+	  return;
+	}
+
+      dCoeffs_.resize (coeffs_.size () - 1);
+      dDCoeffs_.resize (coeffs_.size () - 2);
+      for (typename vector_t::Index deg = 1; deg < coeffs_.size (); ++deg)
+	dCoeffs_[deg - 1] = static_cast<double> (deg) * coeffs_[deg];
+      for (typename vector_t::Index deg = 2; deg < coeffs_.size (); ++deg)
+	dDCoeffs_[deg - 2] =
+	  static_cast<double> (deg * (deg - 1)) * coeffs_[deg];
     }
 
-    ~Polynomial () throw ()
+    virtual ~Polynomial () throw ()
     {}
 
     /// \brief Display the function on the specified output stream.
@@ -92,117 +97,105 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ()
     {
-      o << "Polynomial function:\n";
+      boost::format fmt (" + %d pow(x, %d)");
+
+
+      o << "Polynomial function:" << iendl;
       o << coeffs_[0];
-      for(size_type deg = 1; deg < coeffs_.size(); ++deg)
-      {
-        o << "+" << coeffs_[deg] << "pow(x," << deg << ")";
-      }
-      o << "\nFirst derivative:\n";
+
+      for (typename vector_t::Index deg = 1; deg < coeffs_.size (); ++deg)
+	{
+	  fmt % coeffs_[deg] % deg;
+	  o << fmt.str ();
+	}
+      o << iendl;
+
+      o << "First derivative:" << iendl;
       o << dCoeffs_[0];
-      for(size_type deg = 1; deg < dCoeffs_.size(); ++deg)
-      {
-        o << "+" << dCoeffs_[deg] << "pow(x," << deg << ")";
-      }
-      o << "\nSecond derivative:\n";
+      for (typename vector_t::Index deg = 1; deg < dCoeffs_.size (); ++deg)
+	{
+	  fmt % dCoeffs_[deg] % deg;
+	  o << fmt.str ();
+	}
+      o << iendl;
+
+      o << "Second derivative:" << iendl;
       o << dDCoeffs_[0];
-      for(size_type deg = 1; deg < dDCoeffs_.size(); ++deg)
-      {
-        o << "+" << dDCoeffs_[deg] << "pow(x," << deg << ")";
-      }
-      o << "\n";
+      for(typename vector_t::Index deg = 1; deg < dDCoeffs_.size (); ++deg)
+	{
+	  fmt % dDCoeffs_[deg] % deg;
+	  o << fmt.str ();
+	}
+      o << iendl;
+
       return o;
     }
 
   protected:
     void impl_compute (result_t& result, const argument_t& x) const throw ()
     {
-      result[0] = applyPolynomial(coeffs_, x); 
+      result[0] = applyPolynomial (coeffs_, x);
     }
 
     void impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
-    const throw ();
+      const throw ();
 
-    void impl_jacobian (jacobian_t& jacobian, const argument_t& x) const throw ();
+    void impl_jacobian (jacobian_t& jacobian, const argument_t& x)
+      const throw ();
 
     void impl_hessian
     (hessian_t& hessian, const argument_t& x, size_type) const throw ();
 
+    /// \brief Implement Horner's method.
     double applyPolynomial
-    (const vector_t& coeffs, const argument_t& x) const throw (); 
+    (const vector_t& coeffs, const argument_t& x) const throw ();
 
   private:
     /// \brief Coefficients of the polynomial
-    vector_t coeffs_; 
+    vector_t coeffs_;
     /// \brief Coefficients of the first derivative of the polynomial
-    vector_t dCoeffs_;    
+    vector_t dCoeffs_;
     /// \brief Coefficients of the second derivative of the polynomial
-    vector_t dDCoeffs_;  
+    vector_t dDCoeffs_;
   };
 
   template <typename T>
   double Polynomial<T>::applyPolynomial
-    (const vector_t& coeffs, const argument_t& x) const throw ()
+  (const vector_t& coeffs, const argument_t& x) const throw ()
   {
-    double result = 0;
-    double acc = 1;     // Accumulator
-    for (size_type degree = 0; degree < coeffs.size(); 
-        ++degree)
-    {
-      result += coeffs[degree] * acc;
-      acc *= x[0];
-    }  
-    return result;
-  } 
+    // Accumulator
+    double acc = 0;
 
-
-  template <>
-  void
-  Polynomial<EigenMatrixSparse>::impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
-    const throw ()
-  {
-    gradient.insert (0) = applyPolynomial(coeffs_, x);
+    for (typename vector_t::Index degree = coeffs.size () - 1; degree >= 0;
+	 --degree)
+      acc = coeffs[degree] + acc * x[0];
+    return acc;
   }
 
   template <typename T>
   void
-  Polynomial<T>::impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
+  Polynomial<T>::impl_gradient (gradient_t& gradient,
+				const argument_t& x, size_type)
     const throw ()
   {
-    gradient[0] = applyPolynomial(dCoeffs_, x);
+    gradient.coeffRef (0) = applyPolynomial (dCoeffs_, x);
   }
 
-  template <>
-  void
-  Polynomial<EigenMatrixSparse>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const throw ()
-  {
-    jacobian.coeffRef (0, 0) = applyPolynomial(dCoeffs_, x);
-  }
   template <typename T>
   void
   Polynomial<T>::impl_jacobian
   (jacobian_t& jacobian, const argument_t& x) const throw ()
   {
-    jacobian (0, 0) = applyPolynomial(dCoeffs_, x); 
+    jacobian.coeffRef (0, 0) = applyPolynomial (dCoeffs_, x);
   }
 
   template <typename T>
   void
   Polynomial<T>::impl_hessian (hessian_t& hessian,
-			const argument_t& x,
-			size_type) const throw ()
+			       const argument_t& x,
+			       size_type) const throw ()
   {
-    hessian (0, 0) = applyPolynomial(dDCoeffs_, x);
-  }
-
-  template <>
-  void
-  Polynomial<EigenMatrixSparse>::impl_hessian (hessian_t& hessian,
-					const argument_t& x,
-					size_type) const throw ()
-  {
-    hessian.insert (0, 0) = applyPolynomial(dDCoeffs_, x);
+    hessian.coeffRef (0, 0) = applyPolynomial (dDCoeffs_, x);
   }
 
   /// Example shows constant function use.

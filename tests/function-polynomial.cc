@@ -15,16 +15,15 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <boost/mpl/list.hpp>
-
-#include "shared-tests/fixture.hh"
-
-#include <boost/test/test_case_template.hpp>
-
 #include <iostream>
+
+#include <boost/mpl/list.hpp>
+#include <boost/test/test_case_template.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/function/polynomial.hh>
+
+#include "shared-tests/fixture.hh"
 
 using namespace roboptim;
 
@@ -36,7 +35,7 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (polynomial_test, T, functionTypes_t)
 {
-  //test for degree 0 polynomial
+  // test for degree 0 polynomial
   typename Polynomial<T>::vector_t coefficients (1);
   coefficients[0] = 45;
   boost::shared_ptr<Polynomial<T> > fct =
@@ -47,62 +46,62 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (polynomial_test, T, functionTypes_t)
   x[0] = 0;
   typename Polynomial<T>::result_t y (1);
   y[0] = 45;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
-  
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
+
   x[0] = 1;
   y[0] = 45;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
 
-  //test for degree 1 polynomial 
-  coefficients.resize(2);
+  //test for degree 1 polynomial
+  coefficients.resize (2);
   coefficients[0] = 3;
   coefficients[1] = 5;
   fct = boost::make_shared<Polynomial<T> > (coefficients);
-  fct->print(std::cout);
-  
+  fct->print (std::cout);
+
   x[0] = 0;
   y[0] = 3;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
   x[0] = 1;
   y[0] = 8;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL((*fct) (x), y);
 
-  //test for degree 2 polynomial 
-  coefficients.resize(3);
+  //test for degree 2 polynomial
+  coefficients.resize (3);
   coefficients[0] = 3;
   coefficients[1] = 5;
   coefficients[2] = 2;
   fct = boost::make_shared<Polynomial<T> > (coefficients);
-  fct->print(std::cout);
-  
+  fct->print (std::cout);
+
   x[0] = 0;
   y[0] = 3;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
   x[0] = 1;
   y[0] = 10;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
   x[0] = 3;
   y[0] = 36;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
 
-  //test for degree 3 polynomial 
-  coefficients.resize(4);
+  //test for degree 3 polynomial
+  coefficients.resize (4);
   coefficients[0] = 3;
   coefficients[1] = 5;
   coefficients[2] = 2;
   coefficients[3] = 8;
   fct = boost::make_shared<Polynomial<T> > (coefficients);
-  fct->print(std::cout);
-  
+  fct->print (std::cout);
+
   x[0] = 0;
   y[0] = 3;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
   x[0] = 1;
   y[0] = 18;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
   x[0] = 3;
   y[0] = 252;
-  BOOST_CHECK_EQUAL( (*fct) (x), y );
+  BOOST_CHECK_EQUAL ((*fct) (x), y);
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
