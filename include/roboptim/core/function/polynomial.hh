@@ -74,11 +74,11 @@ namespace roboptim
         dDCoeffs_.resize(coeffs_.size() - 2);
         for(size_type deg = 1; deg < coeffs_.size(); ++deg)
         {
-          dCoeffs_[deg-1] = deg*coeffs_[deg];
+          dCoeffs_[deg-1] = static_cast<double>(deg)*coeffs_[deg];
         }
         for(size_type deg = 2; deg < coeffs_.size(); ++deg)
         {
-          dDCoeffs_[deg-2] = deg*(deg-1)*coeffs_[deg];
+          dDCoeffs_[deg-2] = static_cast<double>(deg*(deg-1))*coeffs_[deg];
         }
       }
     }
@@ -132,9 +132,12 @@ namespace roboptim
     (const vector_t& coeffs, const argument_t& x) const throw (); 
 
   private:
+    /// \brief Coefficients of the polynomial
     vector_t coeffs_; 
-    vector_t dCoeffs_;    //first order derivative coeff 
-    vector_t dDCoeffs_;   //second order derivative coeff
+    /// \brief Coefficients of the first derivative of the polynomial
+    vector_t dCoeffs_;    
+    /// \brief Coefficients of the second derivative of the polynomial
+    vector_t dDCoeffs_;  
   };
 
   template <typename T>
@@ -142,7 +145,7 @@ namespace roboptim
     (const vector_t& coeffs, const argument_t& x) const throw ()
   {
     double result = 0;
-    double acc = 1;     //Accumulator
+    double acc = 1;     // Accumulator
     for (size_type degree = 0; degree < coeffs.size(); 
         ++degree)
     {
