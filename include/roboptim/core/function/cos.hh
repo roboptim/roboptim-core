@@ -34,9 +34,9 @@ namespace roboptim
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericTwiceDifferentiableFunction<T>);
 
-    /// \brief Build an constant function.
+    /// \brief Build a cosinus function.
     ///
-    /// \param offset constant function offset
+    /// \param offset cosinus function offset
     Cos () throw ()
       : GenericTwiceDifferentiableFunction<T>
 	(1, 1, "cos")
@@ -120,8 +120,8 @@ namespace roboptim
   }
 
 
-  /// Example shows constant function use.
-  /// \example cos.cc
+  /// Example shows cosinus function use.
+  /// \example function_cos.cc
 
   /// @}
 
