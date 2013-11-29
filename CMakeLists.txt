@@ -41,6 +41,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/concatenate.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/derivative.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/map.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/map.hxx
@@ -61,6 +62,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/cos.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/identity.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/sin.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/polynomial.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/fwd.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/generic-solver.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/indent.hh
