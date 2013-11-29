@@ -97,38 +97,46 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ()
     {
-      boost::format fmt (" + %d pow(x, %d)");
+      try
+      {
+        boost::format fmt (" + %d pow(x, %d)");
 
 
-      o << "Polynomial function:" << iendl;
-      o << coeffs_[0];
+        o << "Polynomial function:" << iendl;
+        o << coeffs_[0];
 
-      for (typename vector_t::Index deg = 1; deg < coeffs_.size (); ++deg)
-	{
-	  fmt % coeffs_[deg] % deg;
-	  o << fmt.str ();
-	}
-      o << iendl;
+        for (typename vector_t::Index deg = 1; deg < coeffs_.size (); ++deg)
+	      {
+	        fmt % coeffs_[deg] % deg;
+	        o << fmt.str ();
+	      }
+        o << iendl;
 
-      o << "First derivative:" << iendl;
-      o << dCoeffs_[0];
-      for (typename vector_t::Index deg = 1; deg < dCoeffs_.size (); ++deg)
-	{
-	  fmt % dCoeffs_[deg] % deg;
-	  o << fmt.str ();
-	}
-      o << iendl;
+        o << "First derivative:" << iendl;
+        o << dCoeffs_[0];
+        for (typename vector_t::Index deg = 1; deg < dCoeffs_.size (); ++deg)
+	      {
+	        fmt % dCoeffs_[deg] % deg;
+	        o << fmt.str ();
+	      }
+        o << iendl;
 
-      o << "Second derivative:" << iendl;
-      o << dDCoeffs_[0];
-      for(typename vector_t::Index deg = 1; deg < dDCoeffs_.size (); ++deg)
-	{
-	  fmt % dDCoeffs_[deg] % deg;
-	  o << fmt.str ();
-	}
-      o << iendl;
+        o << "Second derivative:" << iendl;
+        o << dDCoeffs_[0];
+        for(typename vector_t::Index deg = 1; deg < dDCoeffs_.size (); ++deg)
+	      {
+	        fmt % dDCoeffs_[deg] % deg;
+	        o << fmt.str ();
+	      }
+        o << iendl;
 
-      return o;
+        return o;
+      }
+      catch (std::exception& e)
+      {
+        o << "Failed to display function, formatting error." << e.what ();
+        return o;
+      }
     }
 
   protected:
