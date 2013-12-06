@@ -28,13 +28,13 @@
 
 // Main headers.
 # include <roboptim/core/result-with-warnings.hh>
-# include <roboptim/core/constant-function.hh>
 # include <roboptim/core/derivable-function.hh>
 # include <roboptim/core/derivable-parametrized-function.hh>
 # include <roboptim/core/finite-difference-gradient.hh>
 # include <roboptim/core/function.hh>
 # include <roboptim/core/generic-solver.hh>
-# include <roboptim/core/identity-function.hh>
+# include <roboptim/core/function/constant.hh>
+# include <roboptim/core/function/identity.hh>
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/linear-function.hh>
 # include <roboptim/core/n-times-derivable-function.hh>
