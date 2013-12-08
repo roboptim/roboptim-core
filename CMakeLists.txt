@@ -91,6 +91,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-warning.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-state.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-state.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/sum-of-c1-squares.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/sys.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/terminal-color.hh
