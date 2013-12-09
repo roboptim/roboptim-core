@@ -216,13 +216,14 @@ namespace roboptim
       }
 
       // Constraint violation evolution over time.
-      {
-        boost::filesystem::ofstream streamCstrViol
-          (path_ / "constraint-violation-evolution.csv");
-        streamCstrViol << "Constraint violation\n";
-        for (std::size_t i = 0; i < constraintViolations_.size (); ++i)
-          streamCstrViol << constraintViolations_[i] << "\n";
-      }
+      if (!constraintViolations_.empty ())
+        {
+          boost::filesystem::ofstream streamCstrViol
+            (path_ / "constraint-violation-evolution.csv");
+          streamCstrViol << "Constraint violation\n";
+          for (std::size_t i = 0; i < constraintViolations_.size (); ++i)
+            streamCstrViol << constraintViolations_[i] << "\n";
+        }
 
       // X evolution over time.
       {
@@ -406,21 +407,24 @@ namespace roboptim
       constraints_.push_back (constraintsOneIteration);
 
       // constraint violation
-      if (!state.constraintViolation ())
+      if (!pb.constraints (). empty ())
         {
-          // FIXME: handle argument bounds
-          ::roboptim::detail::EvaluateConstraintViolation<problem_t>
-            evalCstrViol (constraintsOneIteration, pb.boundsVector ());
-          cstrViol = evalCstrViol.uniformNorm ();
+          // if the constraint violation was not given by the solver
+          if (!state.constraintViolation ())
+            {
+              // FIXME: handle argument bounds
+              ::roboptim::detail::EvaluateConstraintViolation<problem_t>
+                evalCstrViol (constraintsOneIteration, pb.boundsVector ());
+              cstrViol = evalCstrViol.uniformNorm ();
+            }
+          constraintViolations_.push_back (cstrViol);
+
+          boost::filesystem::ofstream streamCstrViol (iterationPath / "constraint-violation");
+          streamCstrViol << cstrViol << "\n";
+
+          output_ << "- viol_g(x):" << incindent << iendl
+                  << cstrViol << decindent << iendl;
         }
-      constraintViolations_.push_back (cstrViol);
-
-      boost::filesystem::ofstream streamCstrViol (iterationPath / "constraint-violation");
-      streamCstrViol << cstrViol << "\n";
-
-      if (pb.constraints (). size () > 0)
-        output_ << "- viol_g(x):" << incindent << iendl
-                << cstrViol << decindent << iendl;
 
       output_ << std::string (80, '-') << iendl;
     }
