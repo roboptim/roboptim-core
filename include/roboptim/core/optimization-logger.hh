@@ -26,7 +26,7 @@
 # include <boost/format.hpp>
 # include <boost/variant/apply_visitor.hpp>
 # include <boost/variant/static_visitor.hpp>
-# include <boost/type_traits.hpp>
+# include <boost/utility/enable_if.hpp>
 
 # include <roboptim/core/config.hh>
 
@@ -99,7 +99,7 @@ namespace roboptim
       {
         if (x < x_ul.first)
           return x_ul.first - x;
-        else if (x_ul.second < x)
+        else if (x > x_ul.second)
           return x - x_ul.second;
         else return 0.;
       }
