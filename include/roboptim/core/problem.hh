@@ -302,7 +302,7 @@ namespace roboptim
     <typename detail::add_shared_ptr<constraintsList_t>::type>::type
     constraint_t;
 
-    // \brief Import function's value_type type.
+    /// \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
 
     /// \brief Vector type.

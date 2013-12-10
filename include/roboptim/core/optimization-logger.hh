@@ -26,6 +26,7 @@
 # include <boost/format.hpp>
 # include <boost/variant/apply_visitor.hpp>
 # include <boost/variant/static_visitor.hpp>
+# include <boost/type_traits.hpp>
 
 # include <roboptim/core/config.hh>
 
@@ -109,10 +110,10 @@ namespace roboptim
         value_type cstr_viol = 0.;
 
         // For each multidimensional constraint
-        for (size_t i = 0; i < constraints_.size (); ++i)
+        for (std::size_t i = 0; i < constraints_.size (); ++i)
           {
             // For each dimension of the constraint
-            for (size_t j = 0; j < constraints_[i].size (); ++j)
+            for (std::size_t j = 0; j < constraints_[i].size (); ++j)
               {
                 cstr_viol = computeViolation (constraints_[i][j],
                                               bounds_[i][j]);
@@ -278,6 +279,98 @@ namespace roboptim
           }
     }
 
+  private:
+    /// \brief Process constraints in the callback.
+    /// This method is needed as long as unconstrained problem_t do not have
+    /// constraint_t and related methods defined.
+    template <typename U>
+    typename boost::disable_if<boost::is_same<U, boost::mpl::vector<> > >::type
+    process_constraints (const typename solver_t::problem_t& pb,
+                         const typename solver_t::solverState_t& state,
+                         const boost::filesystem::path& iterationPath,
+                         const typename solver_t::vector_t& x,
+                         value_type& cstrViol)
+    {
+      // constraints
+      std::vector<vector_t> constraintsOneIteration (pb.constraints ().size ());
+      for (std::size_t constraintId = 0; constraintId < pb.constraints ().size ();
+           ++constraintId)
+        {
+          // Create local path.
+          boost::filesystem::path constraintPath =
+            iterationPath / (boost::format ("constraint-%d") % constraintId).str ();
+          boost::filesystem::remove_all (constraintPath);
+          boost::filesystem::create_directories (constraintPath);
+
+          // Log name
+          boost::filesystem::ofstream nameStream (constraintPath / "name");
+          nameStream << boost::apply_visitor
+            (::roboptim::detail::ConstraintName (), pb.constraints ()[constraintId])
+                     << "\n";
+          // Log value
+          boost::filesystem::ofstream constraintValueStream (constraintPath / "value.csv");
+
+          vector_t constraintValue = boost::apply_visitor
+            (::roboptim::detail::EvaluateConstraint<problem_t> (x), pb.constraints ()[constraintId]);
+          for (std::size_t i = 0; i < constraintValue.size (); ++i)
+            {
+              constraintValueStream << constraintValue[i];
+              if (i < constraintValue.size () - 1)
+                constraintValueStream << ", ";
+            }
+          constraintValueStream << "\n";
+          constraintsOneIteration[constraintId] = constraintValue;
+
+          // Jacobian
+          boost::filesystem::ofstream jacobianStream (constraintPath / "jacobian.csv");
+          jacobian_t jacobian = boost::apply_visitor
+            (::roboptim::detail::JacobianConstraint<problem_t> (x), pb.constraints ()[constraintId]);
+          for (std::size_t i = 0; i < jacobian.rows (); ++i)
+            {
+              for (std::size_t j = 0; j < jacobian.cols (); ++j)
+                {
+                  jacobianStream << jacobian.coeffRef (i, j);
+                  if (j < jacobian.cols () - 1)
+                    jacobianStream << ", ";
+                }
+              jacobianStream << "\n";
+            }
+        }
+      constraints_.push_back (constraintsOneIteration);
+
+      // constraint violation: if the vector of constraints is not empty
+      if (!pb.constraints (). empty ())
+        {
+          // if the constraint violation was not given by the solver
+          if (!state.constraintViolation ())
+            {
+              // FIXME: handle argument bounds
+              ::roboptim::detail::EvaluateConstraintViolation<problem_t>
+                evalCstrViol (constraintsOneIteration, pb.boundsVector ());
+              cstrViol = evalCstrViol.uniformNorm ();
+            }
+          constraintViolations_.push_back (cstrViol);
+
+          boost::filesystem::ofstream streamCstrViol (iterationPath / "constraint-violation");
+          streamCstrViol << cstrViol << "\n";
+
+          output_ << "- viol_g(x):" << incindent << iendl
+                  << cstrViol << decindent << iendl;
+        }
+    }
+
+
+    template <typename U>
+    typename boost::enable_if<boost::is_same<U, boost::mpl::vector<> > >::type
+    process_constraints (const typename solver_t::problem_t&,
+                         const typename solver_t::solverState_t&,
+                         const boost::filesystem::path&,
+                         const typename solver_t::vector_t&,
+                         value_type&)
+    {
+      // Unconstrained problem: do nothing
+    }
+
   protected:
     void perIterationCallback (const problem_t& pb,
                                const solverState_t& state)
@@ -359,72 +452,9 @@ namespace roboptim
       boost::filesystem::ofstream streamCost (iterationPath / "cost");
       streamCost << cost << "\n";
 
-      // constraints
-      std::vector<vector_t> constraintsOneIteration (pb.constraints ().size ());
-      for (std::size_t constraintId = 0; constraintId < pb.constraints ().size ();
-	   ++constraintId)
-	{
-	  // Create local path.
-	  boost::filesystem::path constraintPath =
-	    iterationPath / (boost::format ("constraint-%d") % constraintId).str ();
-	  boost::filesystem::remove_all (constraintPath);
-	  boost::filesystem::create_directories (constraintPath);
-
-	  // Log name
-	  boost::filesystem::ofstream nameStream (constraintPath / "name");
-	  nameStream << boost::apply_visitor
-	    (::roboptim::detail::ConstraintName (), pb.constraints ()[constraintId])
-		     << "\n";
-	  // Log value
-	  boost::filesystem::ofstream constraintValueStream (constraintPath / "value.csv");
-
-	  vector_t constraintValue = boost::apply_visitor
-	    (::roboptim::detail::EvaluateConstraint<problem_t> (x), pb.constraints ()[constraintId]);
-	  for (std::size_t i = 0; i < constraintValue.size (); ++i)
-	    {
-	      constraintValueStream << constraintValue[i];
-	      if (i < constraintValue.size () - 1)
-		constraintValueStream << ", ";
-	    }
-	  constraintValueStream << "\n";
-	  constraintsOneIteration[constraintId] = constraintValue;
-
-	  // Jacobian
-	  boost::filesystem::ofstream jacobianStream (constraintPath / "jacobian.csv");
-	  jacobian_t jacobian = boost::apply_visitor
-	    (::roboptim::detail::JacobianConstraint<problem_t> (x), pb.constraints ()[constraintId]);
-	  for (std::size_t i = 0; i < jacobian.rows (); ++i)
-	    {
-	      for (std::size_t j = 0; j < jacobian.cols (); ++j)
-		{
-		  jacobianStream << jacobian.coeffRef (i, j);
-		  if (j < jacobian.cols () - 1)
-		    jacobianStream << ", ";
-		}
-	      jacobianStream << "\n";
-	    }
-	}
-      constraints_.push_back (constraintsOneIteration);
-
-      // constraint violation
-      if (!pb.constraints (). empty ())
-        {
-          // if the constraint violation was not given by the solver
-          if (!state.constraintViolation ())
-            {
-              // FIXME: handle argument bounds
-              ::roboptim::detail::EvaluateConstraintViolation<problem_t>
-                evalCstrViol (constraintsOneIteration, pb.boundsVector ());
-              cstrViol = evalCstrViol.uniformNorm ();
-            }
-          constraintViolations_.push_back (cstrViol);
-
-          boost::filesystem::ofstream streamCstrViol (iterationPath / "constraint-violation");
-          streamCstrViol << cstrViol << "\n";
-
-          output_ << "- viol_g(x):" << incindent << iendl
-                  << cstrViol << decindent << iendl;
-        }
+      // constraints: only process if the problem is constrained
+      process_constraints<typename solver_t::problem_t::constraintsList_t>
+        (pb, state, iterationPath, x, cstrViol);
 
       output_ << std::string (80, '-') << iendl;
     }
