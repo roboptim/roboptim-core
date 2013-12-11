@@ -92,10 +92,12 @@ namespace roboptim
     ///
     /// Callback parameters:
     /// \li problem is a (constant) reference to the problem
-    /// \li state is the current state of the optimization solver.
+    /// \li state is the current state of the optimization solver. It can be
+    ///     modified by the callback, and updated values can be used by the
+    ///     solver to determine what to do next.
     typedef boost::function
     <void (const problem_t& problem,
-           const solverState_t& state)> callback_t;
+           solverState_t& state)> callback_t;
 
 
     /// \brief Instantiate a solver from a problem.
