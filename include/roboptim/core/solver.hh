@@ -34,6 +34,7 @@
 # include <roboptim/core/function.hh>
 # include <roboptim/core/problem.hh>
 # include <roboptim/core/generic-solver.hh>
+# include <roboptim/core/solver-state.hh>
 
 namespace roboptim
 {
@@ -84,14 +85,17 @@ namespace roboptim
     /// \brief Map of parameters.
     typedef std::map<std::string, Parameter> parameters_t;
 
+    /// \brief State of the solver.
+    typedef SolverState<problem_t> solverState_t;
+
     /// Per-iteration callback type
     ///
     /// Callback parameters:
-    /// \li x is the current considered point,
     /// \li problem is a (constant) reference to the problem
-    ///
-    typedef boost::function<void (const vector_t& x,
-				  const problem_t& problem)> callback_t;
+    /// \li state is the current state of the optimization solver.
+    typedef boost::function
+    <void (const problem_t& problem,
+           const solverState_t& state)> callback_t;
 
 
     /// \brief Instantiate a solver from a problem.
