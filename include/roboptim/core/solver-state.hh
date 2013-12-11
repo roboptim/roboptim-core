@@ -111,7 +111,8 @@ namespace roboptim
     parameters_t& parameters () throw ();
 
     template <typename T>
-    const T& getParameter (const std::string& key) const;
+    const T& getParameter (const std::string& key) const
+      throw (std::out_of_range);
     /// \}
 
 
