@@ -104,6 +104,17 @@ namespace roboptim
     return boost::get<T> (it->second.value);
   }
 
+  template <typename P>
+  template <typename T>
+  T&
+  SolverState<P>::getParameter (const std::string& key)
+    throw (std::out_of_range)
+  {
+    typename parameters_t::iterator it = parameters_.find (key);
+    if (it == parameters_.end ())
+      throw std::out_of_range ("key "+ key +" not found");
+    return boost::get<T> (it->second.value);
+  }
 
   template <typename P>
   std::ostream&

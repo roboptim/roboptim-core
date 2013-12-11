@@ -50,8 +50,9 @@ namespace roboptim
     ///   - vector (e.g. current x)
     ///   - integer (e.g. current iteration)
     ///   - string (e.g. warning message from the solver)
+    ///   - bool (e.g. whether to stop the optimization)
     typedef boost::variant<value_type, vector_t,
-                           int, std::string> stateParameterValues_t;
+                           int, std::string, bool> stateParameterValues_t;
 
     /// \brief Parameter description (for humans).
     std::string description;
@@ -113,6 +114,9 @@ namespace roboptim
     template <typename T>
     const T& getParameter (const std::string& key) const
       throw (std::out_of_range);
+
+    template <typename T>
+    T& getParameter (const std::string& key) throw (std::out_of_range);
     /// \}
 
 
