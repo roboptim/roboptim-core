@@ -17,6 +17,11 @@ callback_t.callback ()
 Solver state:
   x: [4](5,5,5,5)
   Cost: 42
+solver_t.solve ()
+callback_t.callback ()
+Solver state:
+  x: [4](2,2,2,2)
+  Cost: 42
 
 ********************************************************************************
 
@@ -39,26 +44,9 @@ callback_t.callback ()
 Solver state:
   x: [5](5,5,5,5,5)
   Cost: 42
+solver_t.solve ()
+callback_t.callback ()
+Solver state:
+  x: [5](2,2,2,2,2)
+  Cost: 42
 
-********************************************************************************
-
-solver_t.solve ()
-callback_t.callback ()
-Solver state:
-  x: [4](5,5,5,5)
-  Cost: 42
-solver_t.solve ()
-callback_t.callback ()
-Solver state:
-  x: [4](5,5,5,5)
-  Cost: 42
-solver_t.solve ()
-callback_t.callback ()
-Solver state:
-  x: [4](5,5,5,5)
-  Cost: 42
-solver_t.solve ()
-callback_t.callback ()
-Solver state:
-  x: [4](2,2,2,2)
-  Cost: 42

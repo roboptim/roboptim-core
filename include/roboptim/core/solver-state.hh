@@ -26,6 +26,7 @@
 # include <boost/variant/variant.hpp>
 # include <boost/variant/get.hpp>
 # include <boost/optional.hpp>
+# include <boost/noncopyable.hpp>
 
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/function.hh>
@@ -66,7 +67,7 @@ namespace roboptim
   ///
   /// \tparam P problem type.
   template <typename P>
-  class SolverState
+  class SolverState : public boost::noncopyable
   {
   public:
     /// \brief Problem type

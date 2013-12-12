@@ -24,7 +24,8 @@ namespace roboptim
 {
   template <typename P>
   SolverState<P>::SolverState (const problem_t& pb) throw ()
-    : cost_ (),
+    : boost::noncopyable (),
+      cost_ (),
       constraintViolation_ ()
   {
     x_.resize (pb.function ().inputSize ());

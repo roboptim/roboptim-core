@@ -172,6 +172,9 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
   (boost::bind (&DummyStruct<solver_t>::callback,               \
                 &dummy##N, _1, _2));                            \
   solver##N->solve ();                                          \
+  /* Modify callback */                                         \
+  dummy##N.x_val_ = 2.;                                         \
+  solver##N->solve ();                                          \
   (*output) << std::endl;
 
 BOOST_AUTO_TEST_CASE (solver_state)
@@ -184,18 +187,6 @@ BOOST_AUTO_TEST_CASE (solver_state)
   ANALYZE_FUNC(1);
   (*output) << std::string (80, '*') << std::endl << std::endl;
   ANALYZE_FUNC(2);
-  (*output) << std::string (80, '*') << std::endl << std::endl;
-
-  // Test solver copy
-  solver_t solver11 = *(solver1);
-  solver11.solve ();
-  solver1->solve ();
-  // Delete initial solver
-  solver1.reset ();
-  solver11.solve ();
-  // Modify callback
-  dummy1.x_val_ = 2.;
-  solver11.solve ();
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
