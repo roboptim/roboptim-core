@@ -78,14 +78,20 @@ namespace roboptim
   Solver<F, C>::print (std::ostream& o) const throw ()
   {
     o << incindent << "Solver:" << iendl
-      << this->problem_ << iendl
-      << "Parameters:" << incindent << iendl;
+      << this->problem_;
 
-    typedef const std::pair<const std::string, Parameter> const_iterator_t;
-    BOOST_FOREACH (const_iterator_t& it, parameters_)
-      o << it.first << " (" << it.second.description << ")" << ": "
-	<< it.second.value << iendl;
-    o << decindent << decindent;
+    if (!parameters_.empty ())
+    {
+        o << iendl << "Parameters:" << incindent;
+
+        typedef const std::pair<const std::string, Parameter> const_iterator_t;
+        BOOST_FOREACH (const_iterator_t& it, parameters_)
+          o  << iendl << it.first << " (" << it.second.description << ")"
+             << ": " << it.second.value;
+        o << decindent;
+    }
+
+    o << decindent << iendl;
     return o;
   }
 } // end of namespace roboptim
