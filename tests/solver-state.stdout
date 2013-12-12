@@ -1,0 +1,64 @@
+Solver:
+  Problem:
+    a + b + c + d (not differentiable)
+    Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
+    Argument's scales: 1, 1, 1, 1
+    No constraints.
+    No starting point.
+    Infinity value (for all functions): inf
+
+solver_t.solve ()
+Solver state:
+  x: [4](0,0,0,0)
+  Cost: 0
+solver_t.setIterationCallback ()
+solver_t.solve ()
+callback_t.callback ()
+Solver state:
+  x: [4](5,5,5,5)
+  Cost: 42
+
+********************************************************************************
+
+Solver:
+  Problem:
+    a + b + c + d + e, a * b * c * d * e (not differentiable)
+    Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
+    Argument's scales: 1, 1, 1, 1, 1
+    No constraints.
+    No starting point.
+    Infinity value (for all functions): inf
+
+solver_t.solve ()
+Solver state:
+  x: [5](0,0,0,0,0)
+  Cost: 0
+solver_t.setIterationCallback ()
+solver_t.solve ()
+callback_t.callback ()
+Solver state:
+  x: [5](5,5,5,5,5)
+  Cost: 42
+
+********************************************************************************
+
+solver_t.solve ()
+callback_t.callback ()
+Solver state:
+  x: [4](5,5,5,5)
+  Cost: 42
+solver_t.solve ()
+callback_t.callback ()
+Solver state:
+  x: [4](5,5,5,5)
+  Cost: 42
+solver_t.solve ()
+callback_t.callback ()
+Solver state:
+  x: [4](5,5,5,5)
+  Cost: 42
+solver_t.solve ()
+callback_t.callback ()
+Solver state:
+  x: [4](2,2,2,2)
+  Cost: 42

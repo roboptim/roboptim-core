@@ -92,6 +92,9 @@ ROBOPTIM_CORE_TEST(plugin)
 # Dynamic loading mechanism with solver's last state
 ROBOPTIM_CORE_TEST(plugin-laststate)
 
+# Callbacks.
+ROBOPTIM_CORE_TEST(solver-state)
+
 # Algorithm.
 ROBOPTIM_CORE_TEST(finite-difference-gradient)
 ROBOPTIM_CORE_TEST(finite-difference-jacobian)
