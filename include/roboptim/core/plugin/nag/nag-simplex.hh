@@ -79,6 +79,12 @@ namespace roboptim
       {
 	return callback_;
       }
+
+      solverState_t& solverState () throw ()
+      {
+	return solverState_;
+      }
+
     private:
       /// \brief Lower bound.
       std::vector<double> a_;
@@ -93,6 +99,9 @@ namespace roboptim
 
       /// \brief Per-iteration callback function.
       callback_t callback_;
+
+      /// \brief Current solver state used by callback.
+      solverState_t solverState_;
     };
 
     /// @}

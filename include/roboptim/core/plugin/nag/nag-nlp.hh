@@ -68,6 +68,12 @@ namespace roboptim
     {
       return callback_;
     }
+
+    solverState_t& solverState () throw ()
+    {
+      return solverState_;
+    }
+
   private:
     Integer n_;
     Integer nclin_;
@@ -90,6 +96,8 @@ namespace roboptim
     Function::vector_t x_;
 
     callback_t callback_;
+
+    solverState_t solverState_;
   };
 
   /// @}

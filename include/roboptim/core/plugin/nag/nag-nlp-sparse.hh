@@ -80,6 +80,11 @@ namespace roboptim
   {
     return callback_;
   }
+
+  solverState_t& solverState () throw ()
+  {
+    return solverState_;
+  }
 private:
   void compute_nf ();
   void fill_xlow_xupp ();
@@ -136,6 +141,8 @@ private:
   double sinf_;
 
   callback_t callback_;
+
+  solverState_t solverState_;
 };
 
 /// @}

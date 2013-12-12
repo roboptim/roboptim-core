@@ -61,6 +61,11 @@ namespace roboptim
       return callback_;
     }
 
+    solverState_t& solverState () throw ()
+    {
+      return this->solverState_;
+    }
+
   private:
     /// \brief Relative accuracy.
     double e1_;
@@ -79,6 +84,9 @@ namespace roboptim
 
     /// \brief Per-iteration callback function.
     callback_t callback_;
+
+    /// \brief Solver state
+    solverState_t solverState_;
   };
 
   /// @}

@@ -61,8 +61,8 @@ namespace roboptim
 
       if (!solver->callback ())
 	return;
-      DifferentiableFunction::vector_t xCb = x_;
-      solver->callback () (xCb, solver->problem ());
+      solver->solverState ().x () = x_;
+      solver->callback () (solver->problem (), solver->solverState ());
     }
   } // end of namespace detail
 
@@ -74,7 +74,9 @@ namespace roboptim
       b_ (static_cast<std::size_t> (problem ().function ().inputSize ())),
       x_ (1),
       f_ (problem ().function ().outputSize ()),
-      g_ (problem ().function ().inputSize ())
+      g_ (problem ().function ().inputSize ()),
+      callback_ (),
+      solverState_ (pb)
   {
     if (pb.function ().inputSize () != 1)
       throw std::runtime_error

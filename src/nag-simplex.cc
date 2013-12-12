@@ -60,8 +60,8 @@ namespace roboptim
 
 	if (!solver->callback ())
 	  return;
-	Function::vector_t xCb = x_;
-	solver->callback () (xCb, solver->problem ());
+	solver->solverState ().x () = x_;
+	solver->callback () (solver->problem (), solver->solverState ());
       }
 
       static void
@@ -78,7 +78,9 @@ namespace roboptim
     Simplex::Simplex (const problem_t& pb) throw ()
       : parent_t (pb),
 	x_ (problem ().function ().inputSize ()),
-	f_ (problem ().function ().outputSize ())
+	f_ (problem ().function ().outputSize ()),
+	callback_ (),
+	solverState_ (pb)
     {
       x_.setZero ();
       f_.setZero ();

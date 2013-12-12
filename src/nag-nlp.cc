@@ -120,8 +120,8 @@ namespace roboptim
 
       if (!solver->callback ())
 	return;
-      DifferentiableFunction::vector_t xCb = x_;
-      solver->callback () (xCb, solver->problem ());
+      solver->solverState ().x () = x_;
+      solver->callback () (solver->problem (), solver->solverState ());
     }
   } // end of namespace detail
 
@@ -143,7 +143,8 @@ namespace roboptim
       grad_ (),
       h_ (),
       x_ (pb.function ().inputSize ()),
-      callback_ ()
+      callback_ (),
+      solverState_ (pb)
   {
     objf_[0] = 0.;
   }
