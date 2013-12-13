@@ -76,8 +76,9 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/optimization-logger.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy-laststate.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy-laststate.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy-td.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/portability.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hxx

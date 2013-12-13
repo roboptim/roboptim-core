@@ -86,6 +86,9 @@ ROBOPTIM_CORE_TEST(n-times-derivable-function)
 ROBOPTIM_CORE_TEST(parametrized-function)
 ROBOPTIM_CORE_TEST(derivable-parametrized-function)
 
+# Example from documentation.
+ROBOPTIM_CORE_TEST(example)
+
 # Dynamic loading mechanism.
 ROBOPTIM_CORE_TEST(plugin)
 
