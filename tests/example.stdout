@@ -1,0 +1,23 @@
+Solver:
+  Problem:
+    x₀ * x₃ * (x₀ + x₁ + x₂) + x₃ (twice differentiable function)
+    Argument's bounds: (1, 5), (1, 5), (1, 5), (1, 5)
+    Argument's scales: 1, 1, 1, 1
+    Number of constraints: 2
+    Constraint 0
+        x₀ * x₁ * x₂ * x₃ (twice differentiable function)
+        Bounds: (25, inf)
+        Scales: 1
+    Constraint 1
+        x₀² + x₁² + x₂² + x₃² (twice differentiable function)
+        Bounds: (40, 40)
+        Scales: 1
+    No starting point.
+    Infinity value (for all functions): inf
+  Parameters:
+    dummy-parameter (dummy parameter): 42
+    dummy-parameter2 (yet another dummy parameter): 3
+    dummy-parameter3 (just a dummy key): ...and a dummy value!
+
+A solution has not been found. As expected...
+The dummy solver always fail.

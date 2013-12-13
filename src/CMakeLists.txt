@@ -74,3 +74,16 @@ IF(NOT APPLE)
     PROPERTIES VERSION 2.0.0 SOVERSION 2)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
+
+# Dummy-td plug-in.
+ADD_LIBRARY(roboptim-core-plugin-dummy-td MODULE dummy-td.cc)
+ADD_DEPENDENCIES(roboptim-core-plugin-dummy-td roboptim-core)
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy-td liblog4cxx)
+TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-td roboptim-core)
+SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td PROPERTIES PREFIX "")
+
+IF(NOT APPLE)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td
+    PROPERTIES VERSION 2.0.0 SOVERSION 2)
+ENDIF()
+INSTALL(TARGETS roboptim-core-plugin-dummy-td DESTINATION ${PLUGINDIR})

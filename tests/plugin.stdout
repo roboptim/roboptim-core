@@ -18,5 +18,5 @@ Solver:
     dummy-parameter (dummy parameter): 42
     dummy-parameter2 (yet another dummy parameter): 3
     dummy-parameter3 (just a dummy key): ...and a dummy value!
-    
+
 The dummy solver always fail.

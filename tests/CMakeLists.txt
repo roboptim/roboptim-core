@@ -86,11 +86,17 @@ ROBOPTIM_CORE_TEST(n-times-derivable-function)
 ROBOPTIM_CORE_TEST(parametrized-function)
 ROBOPTIM_CORE_TEST(derivable-parametrized-function)
 
+# Example from documentation.
+ROBOPTIM_CORE_TEST(example)
+
 # Dynamic loading mechanism.
 ROBOPTIM_CORE_TEST(plugin)
 
 # Dynamic loading mechanism with solver's last state
 ROBOPTIM_CORE_TEST(plugin-laststate)
+
+# Callbacks.
+ROBOPTIM_CORE_TEST(solver-state)
 
 # Algorithm.
 ROBOPTIM_CORE_TEST(finite-difference-gradient)

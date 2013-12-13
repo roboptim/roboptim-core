@@ -56,18 +56,18 @@ namespace roboptim
   template <typename F>
   Problem<F, boost::mpl::vector <> >::Problem
   (const Problem<F, boost::mpl::vector <> >& pb) throw () :
-   function_ (pb.function_),
-   startingPoint_ (pb.startingPoint_),
-   argumentBounds_ (pb.argumentBounds_),
-   argumentScales_ (pb.argumentScales_)
+    function_ (pb.function_),
+    startingPoint_ (pb.startingPoint_),
+    argumentBounds_ (pb.argumentBounds_),
+    argumentScales_ (pb.argumentScales_)
   {
   }
 
   // Copy constructor (convert from another class of problem).
   template <typename F>
   template <typename F_>
-   Problem<F, boost::mpl::vector<> >::Problem
-   (const Problem<F_, boost::mpl::vector<> >& pb) throw ()
+  Problem<F, boost::mpl::vector<> >::Problem
+  (const Problem<F_, boost::mpl::vector<> >& pb) throw ()
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       argumentBounds_ (pb.argumentBounds_),
@@ -80,11 +80,11 @@ namespace roboptim
   }
 
   template <typename F>
-   Problem<F, boost::mpl::vector<> >::~Problem () throw ()
+  Problem<F, boost::mpl::vector<> >::~Problem () throw ()
   {
   }
 
-   template <typename F>
+  template <typename F>
   const typename Problem<F, boost::mpl::vector<> >::function_t&
   Problem<F, boost::mpl::vector<> >::function () const throw ()
   {
@@ -321,7 +321,7 @@ namespace roboptim
 	  % this->function ().inputSize ();
 	throw std::runtime_error (fmt.str ());
       }
-    if (x->outputSize () != b.size ())
+    if (x->outputSize () != static_cast<typename function_t::size_type> (b.size ()))
       {
 	boost::format fmt
 	  ("Failed to add constraint '%s': interval vector size is invalid "
@@ -332,7 +332,7 @@ namespace roboptim
 	  % x->outputSize ();
 	throw std::runtime_error (fmt.str ());
       }
-    if (x->outputSize () != s.size ())
+    if (x->outputSize () != static_cast<typename function_t::size_type> (s.size ()))
       {
 	boost::format fmt
 	  ("Failed to add constraint '%s': scale vector size is invalid "
@@ -349,7 +349,8 @@ namespace roboptim
     constraints_.push_back (boost::static_pointer_cast<C> (x));
 
     // Check that the bounds are correctly defined.
-    for (std::size_t i = 0; i < x->outputSize (); ++i)
+    for (std::size_t i = 0; i < static_cast<std::size_t> (x->outputSize ());
+         ++i)
       {
         ROBOPTIM_DEBUG_ONLY(const interval_t& interval = b[i]);
 	assert (interval.first <= interval.second);
@@ -458,17 +459,17 @@ namespace roboptim
 	assert (problem_.constraints ().size () - i_ > 0);
 	using namespace boost;
         o_ << iendl << incindent
-	   << "Constraint " << i_ << incindent << iendl
-	   << *constraint << iendl
-	   << "Bounds: " << problem_.boundsVector ()[i_] << iendl
-	   << "Scales: " << problem_.scalesVector ()[i_] << iendl;
+           << "Constraint " << i_ << incindent
+           << iendl << *constraint
+           << iendl << "Bounds: " << problem_.boundsVector ()[i_]
+           << iendl << "Scales: " << problem_.scalesVector ()[i_];
 
 	if (problem_.startingPoint ())
 	  {
 	    U g = get<U> (problem_.constraints ()[i_]);
             typename P::vector_t x = (*g) (*problem_.startingPoint ());
 	    bool satisfied = true;
-	    o_ << "Initial value: ";
+            o_ << iendl << "Initial value: ";
 	    o_ << "[" << x.size () << "](";
             for (typename P::size_type j = 0; j < x.size (); ++j)
 	      {
@@ -494,9 +495,9 @@ namespace roboptim
 	    o_ << ")";
 	    if (!satisfied)
 	      o_ << " (constraint not satisfied)";
-	    o_ << fg::reset << iendl;
+            o_ << fg::reset;
 	  }
-	o_ << decindent << decindent;
+        o_ << decindent << decindent;
       }
     private:
       const P& problem_;

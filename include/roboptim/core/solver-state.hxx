@@ -24,7 +24,8 @@ namespace roboptim
 {
   template <typename P>
   SolverState<P>::SolverState (const problem_t& pb) throw ()
-    : cost_ (),
+    : boost::noncopyable (),
+      cost_ (),
       constraintViolation_ ()
   {
     x_.resize (pb.function ().inputSize ());
@@ -120,24 +121,42 @@ namespace roboptim
   std::ostream&
   SolverState<P>::print (std::ostream& o) const throw ()
   {
-    o << incindent << "Solver state:" << iendl << incindent;
+    o << "Solver state:" << incindent;
 
-    o << "x: " << x_ << iendl;
+    o << iendl << "x: " << x_;
 
-    if (this->cost_)
-      o << "Cost: " << *cost_ << iendl;
+    if (cost_)
+      o << iendl << "Cost: " << *cost_;
 
-    if (this->constraintViolation_)
-      o << "Constraint violation: " << *constraintViolation_ << iendl;
+    if (constraintViolation_)
+      o << iendl << "Constraint violation: " << *constraintViolation_;
 
-    o << "Parameters:" << incindent << iendl;
-    typedef const std::pair<const std::string, StateParameter<function_t> >
-      const_iterator_t;
-    BOOST_FOREACH (const_iterator_t& it, parameters_)
-      o << it.first << " (" << it.second.description << ")" << ": "
-	<< it.second.value << iendl;
-    o << decindent << decindent << decindent;
+    if (!parameters_.empty ())
+      {
+        o << iendl << "Parameters:" << incindent;
+        typedef const std::pair<const std::string, StateParameter<function_t> >
+          const_iterator_t;
+        BOOST_FOREACH (const_iterator_t& it, parameters_)
+          o << iendl << it.first << " (" << it.second.description << ")"
+            << ": " << it.second.value;
+        o << decindent;
+      }
+    o << decindent;
     return o;
+  }
+
+  template <typename F>
+  std::ostream&
+  operator<< (std::ostream& o, const StateParameter<F>& parameter)
+  {
+    return parameter.print (o);
+  }
+
+  template <typename P>
+  std::ostream&
+  operator<< (std::ostream& o, const SolverState<P>& state)
+  {
+    return state.print (o);
   }
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_SOLVER_STATE_HXX

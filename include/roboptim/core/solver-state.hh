@@ -26,6 +26,7 @@
 # include <boost/variant/variant.hpp>
 # include <boost/variant/get.hpp>
 # include <boost/optional.hpp>
+# include <boost/noncopyable.hpp>
 
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/function.hh>
@@ -66,7 +67,7 @@ namespace roboptim
   ///
   /// \tparam P problem type.
   template <typename P>
-  class SolverState
+  class SolverState : public boost::noncopyable
   {
   public:
     /// \brief Problem type
@@ -148,11 +149,21 @@ namespace roboptim
   ///
   /// \param o output stream used for display
   /// \param parameter parameter to display
+  /// \tparam F function type.
+  /// \return output stream
+  template <typename F>
+  std::ostream&
+  operator<< (std::ostream& o, const StateParameter<F>& parameter);
+
+  /// \brief Override operator<< to display ``parameters'' objects.
+  ///
+  /// \param o output stream used for display
+  /// \param state solver state to display
   /// \tparam P problem type.
   /// \return output stream
   template <typename P>
-  ROBOPTIM_DLLAPI std::ostream&
-  operator<< (std::ostream& o, const StateParameter<P>& parameter);
+  std::ostream&
+  operator<< (std::ostream& o, const SolverState<P>& state);
   /// @}
 
 } // end of namespace roboptim
