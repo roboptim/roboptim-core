@@ -458,17 +458,17 @@ namespace roboptim
 	assert (problem_.constraints ().size () - i_ > 0);
 	using namespace boost;
         o_ << iendl << incindent
-	   << "Constraint " << i_ << incindent << iendl
-	   << *constraint << iendl
-	   << "Bounds: " << problem_.boundsVector ()[i_] << iendl
-	   << "Scales: " << problem_.scalesVector ()[i_] << iendl;
+           << "Constraint " << i_ << incindent
+           << iendl << *constraint
+           << iendl << "Bounds: " << problem_.boundsVector ()[i_]
+           << iendl << "Scales: " << problem_.scalesVector ()[i_];
 
 	if (problem_.startingPoint ())
 	  {
 	    U g = get<U> (problem_.constraints ()[i_]);
             typename P::vector_t x = (*g) (*problem_.startingPoint ());
 	    bool satisfied = true;
-	    o_ << "Initial value: ";
+            o_ << iendl << "Initial value: ";
 	    o_ << "[" << x.size () << "](";
             for (typename P::size_type j = 0; j < x.size (); ++j)
 	      {
@@ -494,9 +494,9 @@ namespace roboptim
 	    o_ << ")";
 	    if (!satisfied)
 	      o_ << " (constraint not satisfied)";
-	    o_ << fg::reset << iendl;
+            o_ << fg::reset;
 	  }
-	o_ << decindent << decindent;
+        o_ << decindent << decindent;
       }
     private:
       const P& problem_;
