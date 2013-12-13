@@ -130,12 +130,12 @@
    possible to avoid defining a hessian by deriving from DerivableFunction,
    even if you function can be derived twice).
 
-   In the following sample, a TwiceDerivableFunction will be defined.
+   In the following sample, a TwiceDifferentiableFunction will be defined.
 
    \code
-struct F : public TwiceDerivableFunction
+struct F : public TwiceDifferentiableFunction
 {
-  F () : TwiceDerivableFunction (4, 1)
+  F () : TwiceDifferentiableFunction (4, 1, "x₀ * x₃ * (x₀ + x₁ + x₂) + x₃")
   {
   }
 
@@ -146,7 +146,7 @@ struct F : public TwiceDerivableFunction
   }
 
   void
-  impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
+  impl_gradient (gradient_t& grad, const argument_t& x, size_type) const throw ()
   {
     grad[0] = x[0] * x[3] + x[3] * (x[0] + x[1] + x[2]);
     grad[1] = x[0] * x[3];
@@ -155,8 +155,7 @@ struct F : public TwiceDerivableFunction
   }
 
   void
-  impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
-
+  impl_hessian (hessian_t& h, const argument_t& x, size_type) const throw ()
   {
     h (0, 0) = 2 * x[3];
     h (0, 1) = x[3];
@@ -177,7 +176,6 @@ struct F : public TwiceDerivableFunction
     h (3, 1) = x[0];
     h (3, 2) = x[0];
     h (3, 3) = 0.;
-    return h;
   }
 };
    \endcode
@@ -192,10 +190,9 @@ struct F : public TwiceDerivableFunction
 
 
    \code
-struct G0 : public TwiceDerivableFunction
+struct G0 : public TwiceDifferentiableFunction
 {
-  G0 ()
-    : TwiceDerivableFunction (4, 1)
+  G0 () : TwiceDifferentiableFunction (4, 1, "x₀ * x₁ * x₂ * x₃")
   {
   }
 
@@ -206,7 +203,7 @@ struct G0 : public TwiceDerivableFunction
   }
 
   void
-  impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
+  impl_gradient (gradient_t& grad, const argument_t& x, size_type) const throw ()
   {
     grad[0] = x[1] * x[2] * x[3];
     grad[1] = x[0] * x[2] * x[3];
@@ -215,7 +212,7 @@ struct G0 : public TwiceDerivableFunction
   }
 
   void
-  impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
+  impl_hessian (hessian_t& h, const argument_t& x, size_type) const throw ()
   {
     h (0, 0) = 0.;
     h (0, 1) = x[2] * x[3];
@@ -239,10 +236,9 @@ struct G0 : public TwiceDerivableFunction
   }
 };
 
-struct G1 : public TwiceDerivableFunction
+struct G1 : public TwiceDifferentiableFunction
 {
-  G1 ()
-    : TwiceDerivableFunction (4, 1)
+  G1 () : TwiceDifferentiableFunction (4, 1, "x₀² + x₁² + x₂² + x₃²")
   {
   }
 
@@ -253,7 +249,7 @@ struct G1 : public TwiceDerivableFunction
   }
 
   void
-  impl_gradient (gradient_t& grad, const argument_t& x, int) const throw ()
+  impl_gradient (gradient_t& grad, const argument_t& x, size_type) const throw ()
   {
     grad[0] = 2 * x[0];
     grad[1] = 2 * x[1];
@@ -262,7 +258,7 @@ struct G1 : public TwiceDerivableFunction
   }
 
   void
-  impl_hessian (hessian_t& h, const argument_t& x, int) const throw ()
+  impl_hessian (hessian_t& h, const argument_t& x, size_type) const throw ()
   {
     h (0, 0) = 2.;
     h (0, 1) = 0.;
@@ -301,32 +297,53 @@ struct G1 : public TwiceDerivableFunction
    \code
 int run_test ()
 {
+  // Create cost function.
   F f;
-  G0 g0;
-  G1 g1;
 
+  // Create problem.
   solver_t::problem_t pb (f);
 
-  // Set bound for all variables.
+  // Set bounds for all optimization parameters.
   // 1. < x_i < 5. (x_i in [1.;5.])
-  for (Function::size_type i = 0; i < pb.function ().n; ++i)
-    pb.argBounds ()[i] = T::makeBound (1., 5.);
-
-  // Add constraints.
-  pb.addConstraint (&g0, T::makeUpperBound (25.));
-  pb.addConstraint (&g1, T::makeBound (40., 40.));
+  for (Function::size_type i = 0; i < pb.function ().inputSize (); ++i)
+    pb.argumentBounds ()[i] = Function::makeInterval (1., 5.);
 
   // Set the starting point.
-  Function::vector_t start (pb.function ().n);
+  Function::vector_t start (pb.function ().inputSize ());
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
 
-  initialize_problem (pb, g0, g1);
+  // Create constraints.
+  boost::shared_ptr<G0> g0 (new G0 ());
+  boost::shared_ptr<G1> g1 (new G1 ());
+
+  F::intervals_t bounds;
+  solver_t::problem_t::scales_t scales;
+
+  // Add constraints
+  bounds.push_back(Function::makeLowerInterval (25.));
+  scales.push_back (1.);
+  pb.addConstraint
+    (boost::static_pointer_cast<TwiceDifferentiableFunction> (g0),
+     bounds, scales);
+
+  bounds.clear ();
+  scales.clear ();
+
+  bounds.push_back(Function::makeInterval (40., 40.));
+  scales.push_back (1.);
+  pb.addConstraint
+    (boost::static_pointer_cast<TwiceDifferentiableFunction> (g1),
+     bounds, scales);
 
   // Initialize solver.
 
-  // Here we are relying on the Ipopt solver (available separately).
-  // You may change this string to load the solver you wish to use.
-  SolverFactory<solver_t> factory ("ipopt-td", problem);
+  // Here we are relying on a dummy solver.
+  // You may change this string to load the solver you wish to use:
+  //  - Ipopt: "ipopt", "ipopt-sparse", "ipopt-td"
+  //  - Eigen: "eigen-levenberg-marquardt"
+  //  etc.
+  // The plugin is built for a given solver type, so chose it adequately.
+  SolverFactory<solver_t> factory ("dummy-td", pb);
   solver_t& solver = factory ();
 
   // Compute the minimum and retrieve the result.
@@ -335,35 +352,44 @@ int run_test ()
   // Display solver information.
   std::cout << solver << std::endl;
 
-  // Check if the minimization has succeed.
-  switch (solver.minimumType ())
-    {
-    case SOLVER_NO_SOLUTION:
-      std::cerr << "No solution." << std::endl;
-      return 1;
-    case SOLVER_ERROR:
-      std::cerr << "An error happened: "
-		<< solver.getMinimum<SolverError> ().what () << std::endl;
-      return 2;
+  // Check if the minimization has succeeded.
 
-    case SOLVER_VALUE_WARNINGS:
+  // Process the result
+  switch (res.which ())
+    {
+    case solver_t::SOLVER_VALUE:
       {
-	// Get the ``real'' result.
-	Result& result = solver.getMinimum<ResultWithWarnings> ();
-	// Display the result.
-	std::cout << "A solution has been found (minor problems occurred): "
-		  << std::endl
-		  << result << std::endl;
-	return 0;
+        // Get the result.
+        Result& result = boost::get<Result> (res);
+
+        // Display the result.
+        std::cout << "A solution has been found: " << std::endl
+                  << result << std::endl;
+
+        return 0;
       }
-    case SOLVER_VALUE:
+
+    case solver_t::SOLVER_VALUE_WARNINGS:
       {
-	// Get the ``real'' result.
-	Result& result = solver.getMinimum<Result> ();
-	// Display the result.
-	std::cout << "A solution has been found: " << std::endl;
-	std::cout << result << std::endl;
-	return 0;
+        // Get the result.
+        ResultWithWarnings& result = boost::get<ResultWithWarnings> (res);
+
+        // Display the result.
+        std::cout << "A solution has been found: " << std::endl
+                  << result << std::endl;
+
+        return 0;
+      }
+
+    case solver_t::SOLVER_NO_SOLUTION:
+    case solver_t::SOLVER_ERROR:
+      {
+        std::cout << "A solution should have been found. Failing..."
+                  << std::endl
+                  << boost::get<SolverError> (res).what ()
+                  << std::endl;
+
+        return 2;
       }
     }
 

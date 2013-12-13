@@ -230,7 +230,7 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
   // Display solver information.
   (*output) << solver << std::endl;
 
-  // Check if the minimization has succeed.
+  // Check if the minimization has succeeded.
 
   // Process the result
   switch (res.which ())
