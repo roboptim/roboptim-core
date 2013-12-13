@@ -321,7 +321,7 @@ namespace roboptim
 	  % this->function ().inputSize ();
 	throw std::runtime_error (fmt.str ());
       }
-    if (x->outputSize () != b.size ())
+    if (x->outputSize () != static_cast<typename function_t::size_type> (b.size ()))
       {
 	boost::format fmt
 	  ("Failed to add constraint '%s': interval vector size is invalid "
@@ -332,7 +332,7 @@ namespace roboptim
 	  % x->outputSize ();
 	throw std::runtime_error (fmt.str ());
       }
-    if (x->outputSize () != s.size ())
+    if (x->outputSize () != static_cast<typename function_t::size_type> (s.size ()))
       {
 	boost::format fmt
 	  ("Failed to add constraint '%s': scale vector size is invalid "
@@ -349,7 +349,8 @@ namespace roboptim
     constraints_.push_back (boost::static_pointer_cast<C> (x));
 
     // Check that the bounds are correctly defined.
-    for (std::size_t i = 0; i < x->outputSize (); ++i)
+    for (std::size_t i = 0; i < static_cast<std::size_t> (x->outputSize ());
+         ++i)
       {
         ROBOPTIM_DEBUG_ONLY(const interval_t& interval = b[i]);
 	assert (interval.first <= interval.second);
