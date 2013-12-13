@@ -56,18 +56,18 @@ namespace roboptim
   template <typename F>
   Problem<F, boost::mpl::vector <> >::Problem
   (const Problem<F, boost::mpl::vector <> >& pb) throw () :
-   function_ (pb.function_),
-   startingPoint_ (pb.startingPoint_),
-   argumentBounds_ (pb.argumentBounds_),
-   argumentScales_ (pb.argumentScales_)
+    function_ (pb.function_),
+    startingPoint_ (pb.startingPoint_),
+    argumentBounds_ (pb.argumentBounds_),
+    argumentScales_ (pb.argumentScales_)
   {
   }
 
   // Copy constructor (convert from another class of problem).
   template <typename F>
   template <typename F_>
-   Problem<F, boost::mpl::vector<> >::Problem
-   (const Problem<F_, boost::mpl::vector<> >& pb) throw ()
+  Problem<F, boost::mpl::vector<> >::Problem
+  (const Problem<F_, boost::mpl::vector<> >& pb) throw ()
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       argumentBounds_ (pb.argumentBounds_),
@@ -80,11 +80,11 @@ namespace roboptim
   }
 
   template <typename F>
-   Problem<F, boost::mpl::vector<> >::~Problem () throw ()
+  Problem<F, boost::mpl::vector<> >::~Problem () throw ()
   {
   }
 
-   template <typename F>
+  template <typename F>
   const typename Problem<F, boost::mpl::vector<> >::function_t&
   Problem<F, boost::mpl::vector<> >::function () const throw ()
   {
