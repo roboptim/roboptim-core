@@ -141,7 +141,7 @@ namespace roboptim
     typedef typename solver_t::problem_t problem_t;
     typedef typename solver_t::problem_t::value_type value_type;
     typedef typename solver_t::problem_t::vector_t vector_t;
-    typedef typename solver_t::problem_t::function_t::jacobian_t jacobian_t;
+    typedef typename solver_t::problem_t::function_t::matrix_t jacobian_t;
     typedef typename solver_t::solverState_t solverState_t;
 
     explicit OptimizationLogger (solver_t& solver,

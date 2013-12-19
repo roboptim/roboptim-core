@@ -32,7 +32,6 @@ ADD_LIBRARY(roboptim-core SHARED
   solver.cc
   solver-error.cc
   solver-warning.cc
-  sum-of-c1-squares.cc
   util.cc
 
   visualization/gnuplot.cc
