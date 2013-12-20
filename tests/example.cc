@@ -183,7 +183,8 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
 
   // Set bounds for all optimization parameters.
   // 1. < x_i < 5. (x_i in [1.;5.])
-  for (Function::size_type i = 0; i < pb.function ().inputSize (); ++i)
+  for (std::size_t i = 0;
+       static_cast<Function::size_type> (i) < pb.function ().inputSize (); ++i)
     pb.argumentBounds ()[i] = Function::makeInterval (1., 5.);
 
   // Set the starting point.

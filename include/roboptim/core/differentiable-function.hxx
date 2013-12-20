@@ -42,20 +42,21 @@ namespace roboptim
     Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
-      typedef Eigen::Triplet<double> triplet_t;
-      std::vector<triplet_t> coefficients;
-      for (jacobian_t::Index i = 0; i < this->outputSize (); ++i)
-	{
-	  gradient_t grad = gradient (argument, i);
-	  const unsigned int i_ = static_cast<const unsigned int> (i);
-	  for (gradient_t::InnerIterator it (grad); it; ++it)
-	    {
-	      const unsigned int idx = static_cast<const unsigned int> (it.index ());
-	      coefficients.push_back
-		(triplet_t (i_, idx, it.value ()));
-	    }
-	}
-      jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
+    typedef Eigen::Triplet<double> triplet_t;
+    std::vector<triplet_t> coefficients;
+    for (jacobian_t::Index i = 0; i < this->outputSize (); ++i)
+      {
+        gradient_t grad = gradient (argument, i);
+        const matrix_t::Index i_ = static_cast<const matrix_t::Index> (i);
+        for (gradient_t::InnerIterator it (grad); it; ++it)
+          {
+            const matrix_t::Index
+              idx = static_cast<const matrix_t::Index> (it.index ());
+            coefficients.push_back
+              (triplet_t (i_, idx, it.value ()));
+          }
+      }
+    jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
   }
 
 

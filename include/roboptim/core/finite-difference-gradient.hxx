@@ -429,13 +429,13 @@ namespace roboptim
           computeGradient (adaptee, epsilon, grad,
                            argument, i, xEps);
 
-          const unsigned int i_ = static_cast<const unsigned int> (i);
+          const matrix_t::Index i_ = static_cast<const matrix_t::Index> (i);
           for (gradient_t::InnerIterator it (grad); it; ++it)
             {
-              const unsigned int idx =
-		static_cast<const unsigned int> (it.index ());
+              const matrix_t::Index idx =
+                static_cast<const matrix_t::Index> (it.index ());
 
-              assert (idx < static_cast<const unsigned int>
+              assert (idx < static_cast<const matrix_t::Index>
                       (adaptee.inputSize ()));
 
               coefficients.push_back
