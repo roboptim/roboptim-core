@@ -16,12 +16,29 @@
 MACRO(NAG_PLUGIN NAME)
   ADD_LIBRARY(roboptim-core-plugin-${NAME} MODULE ${NAME}.cc ${HEADERS})
   PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-${NAME} roboptim-core)
-  TARGET_LINK_LIBRARIES(roboptim-core-plugin-${NAME} nagc_nag)
-
+#  TARGET_LINK_LIBRARIES(roboptim-core-plugin-${NAME} nagc_nag imf svml irc)
+  TARGET_LINK_LIBRARIES(roboptim-core-plugin-${NAME} nagc_mkl imf svml irc)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-${NAME} PROPERTIES
     PREFIX ""
     SOVERSION 1.1.0
     INSTALL_RPATH "${NAG_DIR}/lib"
+    )
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-${NAME} PROPERTIES
+    PREFIX ""
+    SOVERSION 1.1.0
+    INSTALL_RPATH "${NAG_DIR}/rtl"
+    )
+# MKL
+  TARGET_LINK_LIBRARIES(roboptim-core-plugin-${NAME} mkl_intel mkl_intel_thread mkl_core mkl_avx mkl_def)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-${NAME} PROPERTIES
+    PREFIX ""
+    SOVERSION 1.1.0
+    INSTALL_RPATH "${NAG_DIR}/mkl"
+    )
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-${NAME} PROPERTIES
+    PREFIX ""
+    SOVERSION 1.1.0
+    INSTALL_RPATH "/opt/intel/mkl/lib/ia32"
     )
 
   INSTALL(TARGETS roboptim-core-plugin-${NAME}
