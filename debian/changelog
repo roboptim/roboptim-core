@@ -1,3 +1,12 @@
+roboptim-core (2.0-6) unstable; urgency=medium
+
+  * Remove symbols file (Closes: #729671)
+  * Update patches
+  * Remove dependency toward pkg-kde-tools.
+  * debian/watch: use GitHub release page
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Fri, 17 Jan 2014 18:00:53 +0900
+
 roboptim-core (2.0-5) unstable; urgency=low
 
   * Update symbols for alpha and s390x.
