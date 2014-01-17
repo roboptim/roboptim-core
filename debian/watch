@@ -1,4 +1,4 @@
 version=3
-http://www.roboptim.net/ \
+opts=uversionmangle=s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/ \
+https://www.github.com/roboptim/roboptim-core/releases/ \
 (?:.*/|)roboptim-core(?:-|_|_v|\.|V|)(\d\S*)\.(?:tar\.(?:gz|bz2|xz)|tgz|tbz2|txz|zip)(?:|\?\S+)
-# Bart Martens <bartm@debian.org> 2013-06-19 05:45:02
