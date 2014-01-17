@@ -7,12 +7,12 @@ Fix warnings with gcc-4.4.3 (32-bits architecture) and gcc-4.8.
 Forwarded: yes
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
- include/roboptim/core/differentiable-function.hxx                |    2 +-
- .../core/visualization/gnuplot-differentiable-function.hh        |    6 ++++--
- include/roboptim/core/solver-factory.hxx             |    5 +++--
- src/dummy-laststate.cc                               |    4 ++--
- src/dummy.cc                                         |    4 ++--
- 5 files changed, 12 insertions(+), 11 deletions(-)
+ include/roboptim/core/differentiable-function.hxx                   | 2 +-
+ include/roboptim/core/solver-factory.hxx                            | 5 +++--
+ .../roboptim/core/visualization/gnuplot-differentiable-function.hh  | 6 ++++--
+ src/dummy-laststate.cc                                              | 4 ++--
+ src/dummy.cc                                                        | 4 ++--
+ 5 files changed, 12 insertions(+), 9 deletions(-)
 
 diff --git a/include/roboptim/core/differentiable-function.hxx b/include/roboptim/core/differentiable-function.hxx
 index 385cd20..eb2b93d 100644
@@ -27,23 +27,6 @@ index 385cd20..eb2b93d 100644
  	{
  	  gradient_t grad = gradient (argument, i);
  	  const unsigned int i_ = static_cast<const unsigned int> (i);
-diff --git a/include/roboptim/core/visualization/gnuplot-differentiable-function.hh b/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
-index 6283d7a..4e99985 100644
---- a/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
-+++ b/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
-@@ -65,8 +65,10 @@ namespace roboptim
- 	str += "plot '-' using 1:2:($3 == 0 ? 0 : 1) matrix with image\n";
- 
- 
--	for (unsigned int cstr_id = 0; cstr_id < jac.rows(); ++cstr_id)
--	  for (unsigned int out_id = 0; out_id < jac.cols(); ++out_id)
-+	for (DifferentiableFunction::jacobian_t::Index cstr_id = 0;
-+	     cstr_id < jac.rows(); ++cstr_id)
-+	  for (DifferentiableFunction::jacobian_t::Index out_id = 0;
-+	       out_id < jac.cols(); ++out_id)
- 	    {
- 	      str += (boost::format("%1.2f")
- 		      % normalize(jac(cstr_id, out_id))).str();
 diff --git a/include/roboptim/core/solver-factory.hxx b/include/roboptim/core/solver-factory.hxx
 index 85d6de0..4c439e7 100644
 --- a/include/roboptim/core/solver-factory.hxx
@@ -74,6 +57,23 @@ index 85d6de0..4c439e7 100644
      if (sizeOfProblem != sizeof (typename solver_t::problem_t))
        {
  	std::stringstream sserror;
+diff --git a/include/roboptim/core/visualization/gnuplot-differentiable-function.hh b/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
+index 6283d7a..4e99985 100644
+--- a/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
++++ b/include/roboptim/core/visualization/gnuplot-differentiable-function.hh
+@@ -65,8 +65,10 @@ namespace roboptim
+ 	str += "plot '-' using 1:2:($3 == 0 ? 0 : 1) matrix with image\n";
+ 
+ 
+-	for (unsigned int cstr_id = 0; cstr_id < jac.rows(); ++cstr_id)
+-	  for (unsigned int out_id = 0; out_id < jac.cols(); ++out_id)
++	for (DifferentiableFunction::jacobian_t::Index cstr_id = 0;
++	     cstr_id < jac.rows(); ++cstr_id)
++	  for (DifferentiableFunction::jacobian_t::Index out_id = 0;
++	       out_id < jac.cols(); ++out_id)
+ 	    {
+ 	      str += (boost::format("%1.2f")
+ 		      % normalize(jac(cstr_id, out_id))).str();
 diff --git a/src/dummy-laststate.cc b/src/dummy-laststate.cc
 index 28afb92..514c63e 100644
 --- a/src/dummy-laststate.cc

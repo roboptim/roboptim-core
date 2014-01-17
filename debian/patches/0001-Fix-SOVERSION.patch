@@ -7,11 +7,11 @@ Fix SOVERSION to match Debian guidelines.
 Forwarded: yes
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
- src/CMakeLists.txt |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/CMakeLists.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 6f138de..7a793bb 100644
+index 6f138de..5d87c8f 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
 @@ -46,7 +46,7 @@ PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
@@ -23,7 +23,7 @@ index 6f138de..7a793bb 100644
  INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
  
  
-@@ -56,7 +57,7 @@ ADD_DEPENDENCIES(roboptim-core-plugin-dummy roboptim-core)
+@@ -56,7 +56,7 @@ ADD_DEPENDENCIES(roboptim-core-plugin-dummy roboptim-core)
  TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy roboptim-core)
  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES
    PREFIX ""
@@ -32,7 +32,7 @@ index 6f138de..7a793bb 100644
  INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
  
  # Dummy-laststate plug-in.
-@@ -65,5 +66,5 @@ ADD_DEPENDENCIES(roboptim-core-plugin-dummy-laststate roboptim-core)
+@@ -65,5 +65,5 @@ ADD_DEPENDENCIES(roboptim-core-plugin-dummy-laststate roboptim-core)
  TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-laststate roboptim-core)
  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES
    PREFIX ""

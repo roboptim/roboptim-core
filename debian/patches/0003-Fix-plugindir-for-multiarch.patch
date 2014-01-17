@@ -7,11 +7,11 @@ Fix plugindir for multiarch.
 Forwarded: yes
 Author: Thomas Moulard <thomas.moulard@gmail.com>
 ---
- CMakeLists.txt |    2 +-
+ CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 701fdc7..ceb288b 100644
+index 701fdc7..a1900eb 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -90,7 +90,7 @@ SETUP_PROJECT()
