@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_FILTER_BIND_HH
 # include <stdexcept>
 # include <vector>
+# include <boost/make_shared.hpp>
 # include <boost/optional.hpp>
 # include <boost/shared_ptr.hpp>
 
