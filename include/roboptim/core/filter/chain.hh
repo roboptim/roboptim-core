@@ -30,7 +30,17 @@ namespace roboptim
 {
   /// \brief Chain two RobOptim functions.
   ///
-  /// left(right(x))
+  ///
+  /// Input: (size: right function input size)
+  ///  x
+  ///
+  /// Output: x (size: left function output size)
+  ///  left (right (x))
+  ///
+  /// (left (right (x)))' = left'(right(x)) * right'(x)
+  ///
+  /// \param left Left function
+  /// \param right Right function
   template <typename U, typename V>
   class Chain : public detail::PromoteTrait<U, V>::T_promote
   {
@@ -75,16 +85,36 @@ namespace roboptim
 			const argument_t& arg)
       const throw ();
   private:
+    /// \brief Shared pointer to the left function.
     boost::shared_ptr<U> left_;
+    /// \brief Shared pointer to the right function.
     boost::shared_ptr<V> right_;
 
-    mutable result_t result_;
+    /// \name Buffers
+    /// \{
+
+    /// \brief Temporary buffer to store right function result.
+    mutable result_t rightResult_;
+
+    /// \brief Temporary buffer to store left function gradient.
     mutable gradient_t gradientLeft_;
+
+    /// \brief Temporary buffer to store right function gradient.
     mutable gradient_t gradientRight_;
+
+    /// \brief Temporary buffer to store left function jacobian.
     mutable jacobian_t jacobianLeft_;
+
+    /// \brief Temporary buffer to store right function jacobian.
     mutable jacobian_t jacobianRight_;
+
+    /// \}
   };
 
+  /// \brief Chain two RobOptim functions.
+  ///
+  /// This will instantiate a Chain<U,V> RobOptim filter that will
+  /// realize the underlying computations.
   template <typename U, typename V>
   boost::shared_ptr<Chain<U, V> >
   chain (boost::shared_ptr<U> left, boost::shared_ptr<V> right)

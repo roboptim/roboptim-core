@@ -26,14 +26,14 @@ namespace roboptim
   (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
     throw (std::runtime_error)
     : detail::PromoteTrait<U, V>::T_promote
-      (left->inputSize (),
+      (right->inputSize (),
        left->outputSize (),
        (boost::format ("%1%(%2%)")
 	% left->getName ()
 	% right->getName ()).str ()),
       left_ (left),
       right_ (right),
-      result_ (right->outputSize ()),
+      rightResult_ (right->outputSize ()),
       gradientLeft_ (left->inputSize ()),
       gradientRight_ (right->inputSize ()),
       jacobianLeft_ (left->outputSize (),
@@ -44,7 +44,8 @@ namespace roboptim
     if (left->inputSize () != right->outputSize ())
       throw std::runtime_error
 	("left input size and right output size mismatch");
-    result_.setZero ();
+
+    rightResult_.setZero ();
     gradientLeft_.setZero ();
     gradientRight_.setZero ();
     jacobianLeft_.setZero ();
@@ -61,8 +62,8 @@ namespace roboptim
   (result_t& result, const argument_t& x)
     const throw ()
   {
-    (*right_) (result_, x);
-    (*left_) (result, result_);
+    (*right_) (rightResult_, x);
+    (*left_) (result, rightResult_);
   }
 
   template <typename U, typename V>
@@ -72,10 +73,10 @@ namespace roboptim
 			 size_type functionId)
     const throw ()
   {
-    (*right_) (result_, x);
-    left_->gradient (gradientLeft_, result_, functionId);
-    right_->gradient (gradientRight_, x, functionId);
-    gradient = gradientLeft_.cwiseProduct (gradientRight_);
+    (*right_) (rightResult_, x);
+    left_->gradient (gradientLeft_, rightResult_, functionId);
+    right_->jacobian (jacobianRight_, x);
+    gradient = gradientLeft_.adjoint () * jacobianRight_;
   }
 
   template <typename U, typename V>
@@ -84,8 +85,8 @@ namespace roboptim
 			      const argument_t& x)
     const throw ()
   {
-    (*right_) (result_, x);
-    left_->jacobian (jacobianLeft_, result_);
+    (*right_) (rightResult_, x);
+    left_->jacobian (jacobianLeft_, rightResult_);
     right_->jacobian (jacobianRight_, x);
     jacobian = jacobianLeft_ * jacobianRight_;
   }

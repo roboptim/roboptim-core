@@ -34,8 +34,9 @@
 using namespace roboptim;
 
 
-typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
-			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+// FIXME: sparse matrices not supported yet.
+// ::roboptim::EigenMatrixSparse
+typedef boost::mpl::list< ::roboptim::EigenMatrixDense> functionTypes_t;
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
@@ -46,15 +47,41 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
   offset1.setZero ();
   offset5.setZero ();
 
+  // f(x) = x
+  // input: 1
+  // output: 1
   boost::shared_ptr<GenericIdentityFunction<T> > identity =
     boost::make_shared<GenericIdentityFunction<T> > (offset1);
+
+  // g(x) = 0
+  // input: 5
+  // output: 5
   boost::shared_ptr<GenericConstantFunction<T> > constant =
     boost::make_shared<GenericConstantFunction<T> > (offset5);
-  boost::shared_ptr<GenericLinearFunction<T> > selec_constant 
+
+  // g2(x) = 0
+  // input: 5
+  // output: 1
+  boost::shared_ptr<GenericLinearFunction<T> > selec_constant
           = roboptim::selection (constant, 2, 1);
+
   boost::format fmt("%s input %d output %d");
-        std::cout << fmt % "identity" % identity->inputSize() % identity->outputSize() << std::endl; 
-        std::cout << fmt % "selec_constant" % selec_constant->inputSize() % selec_constant->outputSize() << std::endl; 
+  std::cout
+    << (fmt
+	% "identity"
+	% identity->inputSize ()
+	% identity->outputSize ())
+    << "\n";
+  std::cout
+    << (fmt
+	% "selec_constant"
+	% selec_constant->inputSize ()
+	% selec_constant->outputSize ())
+    << std::endl;
+
+  // f(g2(x))
+  // input: 5
+  // output: 1
   boost::shared_ptr<GenericLinearFunction<T> >
     fct = chain (identity, selec_constant);
 
@@ -63,10 +90,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
   std::cout
     << (*fct) (x) << "\n"
     << fct->gradient (x, 0) << "\n"
-    << fct->gradient (x, 1) << "\n"
-    << fct->gradient (x, 2) << "\n"
-    << fct->gradient (x, 3) << "\n"
-    << fct->gradient (x, 4) << "\n"
     << fct->jacobian (x) << std::endl;
 }
 
