@@ -33,9 +33,26 @@ namespace roboptim
       (a.rows (), 1, "numeric quadratic function"),
       a_ (a),
       b_ (b),
+      c_ (1),
       buffer_ (b.size ())
   {
     assert (b.size () == this->inputSize ());
+    c_.setZero ();
+  }
+
+  template <typename T>
+  GenericNumericQuadraticFunction<T>::GenericNumericQuadraticFunction
+  (const matrix_t& a, const vector_t& b, const vector_t& c)
+    throw ()
+    : GenericQuadraticFunction<T>
+      (a.rows (), 1, "numeric quadratic function"),
+      a_ (a),
+      b_ (b),
+      c_ (c),
+      buffer_ (b.size ())
+  {
+    assert (b.size () == this->inputSize ());
+    assert (c.size () == 1);
   }
 
   template <typename T>
@@ -53,6 +70,7 @@ namespace roboptim
     buffer_.noalias () = a_ * argument;
     result = .5 * argument.adjoint ()  * buffer_;
     result += b_.adjoint () * argument;
+    result += c_;
   }
 
   // x * A + b
@@ -122,6 +140,7 @@ namespace roboptim
     return o << "Numeric quadratic function" << incindent << iendl
              << "A = " << this->a_ << iendl
              << "B = " << this->b_
+	     << "c = " << this->c_
              << decindent;
   }
 

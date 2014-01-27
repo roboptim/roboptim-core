@@ -30,7 +30,7 @@ namespace roboptim
   /// \brief Build a quadratic function from a matrix and a vector.
   ///
   /// Implement a quadratic function using the general formula:
-  /// \f[f(x) = \frac{1}{2} x^t A x + b^t x\f]
+  /// \f[f(x) = \frac{1}{2} x^t A x + b^t x + c\f]
   /// where \f$A\f$ and \f$B\f$ are set when the class is instantiated.
   ///
   /// \note A is a symmetric matrix.
@@ -46,12 +46,26 @@ namespace roboptim
 
     /// \brief Build a quadratic function from a matrix and a vector.
     ///
+    /// c here is omitted and set to zero.
+    ///
     /// See class documentation for A and b definition.
     /// \param A A symmetric matrix
     /// \param b b vector
     GenericNumericQuadraticFunction (const symmetric_t& A,
 				     const vector_t& b)
     throw ();
+
+    /// \brief Build a quadratic function from a matrix and a vector.
+    ///
+    /// See class documentation for A, b, c definition.
+    /// \param A A symmetric matrix (inputSize * inputSize)
+    /// \param b b vector (size inputSize)
+    /// \param c c vector (size one)
+    GenericNumericQuadraticFunction (const symmetric_t& A,
+				     const vector_t& b,
+				     const vector_t& c)
+      throw ();
+
 
     ~GenericNumericQuadraticFunction () throw ();
 
@@ -71,7 +85,11 @@ namespace roboptim
       return b_;
     }
 
-  protected:
+    const vector_t& c () const
+    {
+      return c_;
+    }
+
     matrix_t& A ()
     {
       return a_;
@@ -82,6 +100,12 @@ namespace roboptim
       return b_;
     }
 
+    vector_t& c ()
+    {
+      return c_;
+    }
+
+  protected:
     void impl_compute (result_t& , const argument_t&) const throw ();
     void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
       const throw ();
@@ -94,6 +118,8 @@ namespace roboptim
     symmetric_t a_;
     /// \brief B vector.
     vector_t b_;
+    /// \brief C vector.
+    vector_t c_;
     /// \brief buffer to avoid allocating during computation.
     mutable vector_t buffer_;
   };
