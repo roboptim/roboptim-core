@@ -30,7 +30,7 @@ namespace roboptim
   /// \brief Build a quadratic function from a matrix and a vector.
   ///
   /// Implement a quadratic function using the general formula:
-  /// \f[f(x) = \frac{1}{2} x^t A x + b^t x + c\f]
+  /// \f[f(x) = x^t A x + b^t x + c\f]
   /// where \f$A\f$ and \f$B\f$ are set when the class is instantiated.
   ///
   /// \note A is a symmetric matrix.

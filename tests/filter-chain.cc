@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cmath>
 #include <boost/mpl/list.hpp>
 
 #include "shared-tests/fixture.hh"
@@ -24,9 +25,12 @@
 
 #include <iostream>
 
+#include <roboptim/core/finite-difference-gradient.hh>
 #include <roboptim/core/io.hh>
 #include <roboptim/core/filter/chain.hh>
 #include <roboptim/core/filter/selection.hh>
+#include <roboptim/core/numeric-linear-function.hh>
+#include <roboptim/core/numeric-quadratic-function.hh>
 
 #include <roboptim/core/function/constant.hh>
 #include <roboptim/core/function/identity.hh>
@@ -91,6 +95,110 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
     << (*fct) (x) << "\n"
     << fct->gradient (x, 0) << "\n"
     << fct->jacobian (x) << std::endl;
+}
+
+#define CHECK_GRADIENT(F, I, X)				\
+  BOOST_CHECK_NO_THROW					\
+  (							\
+   try							\
+     {							\
+       checkGradientAndThrow ((F), (I), (X));		\
+       std::cout << "-> gradient ok\n";			\
+     }							\
+   catch(const BadGradient<T>& e)			\
+     {							\
+       std::cerr << #F << ":\n" << e << std::endl;	\
+       throw;						\
+     } )
+
+#define CHECK_JACOBIAN(F, X)				\
+  BOOST_CHECK_NO_THROW					\
+  (							\
+   try							\
+     {							\
+       checkJacobianAndThrow ((F), (X));		\
+       std::cout << "-> jacobian ok\n";			\
+     }							\
+   catch(const BadJacobian<T>& e)			\
+     {							\
+       std::cerr << #F << ":\n" << e << std::endl;	\
+       throw;						\
+     } )
+
+BOOST_AUTO_TEST_CASE_TEMPLATE (chain_jacobian_test, T, functionTypes_t)
+{
+  typedef typename GenericNumericLinearFunction<T>::matrix_t matrix_t;
+  typedef typename GenericNumericLinearFunction<T>::vector_t vector_t;
+  typedef boost::shared_ptr<GenericNumericLinearFunction<T> >
+    linearFunctionShPtr_t;
+  typedef boost::shared_ptr<GenericNumericQuadraticFunction<T> >
+    quadraticFunctionShPtr_t;
+  typedef boost::shared_ptr<GenericDifferentiableFunction<T> >
+    differentiableFunctionShPtr_t;
+
+  vector_t x (2);
+
+  vector_t Af (2);
+  Af[0] = 4.;
+  Af[1] = 7.;
+
+  vector_t Bf (2);
+  Bf.setZero ();
+
+  linearFunctionShPtr_t f =
+    boost::make_shared<GenericNumericLinearFunction<T> > (Af, Bf);
+
+
+  // g(x) = (Z - X)^2
+  vector_t Z (2);
+  Z[0] = 3;
+  Z[1] = 7;
+
+  matrix_t Ag (2, 2);
+  Ag.setIdentity ();
+  vector_t Bg (2);
+  Bg = -2 * Z;
+  vector_t c (1);
+  c = Z.adjoint () * Z;
+
+  quadraticFunctionShPtr_t g =
+    boost::make_shared<GenericNumericQuadraticFunction<T> > (Ag, Bg, c);
+
+  std::cout
+    << "g(x)\n" << (*g) << "\n"
+    << "g(Z)\n" << (*g) (Z) * 2 << "\n";
+
+  differentiableFunctionShPtr_t h =
+    chain<
+      GenericDifferentiableFunction<T>,
+      GenericDifferentiableFunction<T> >
+  (f, g);
+
+
+  for (int i = 0; i < 100; i++)
+    {
+      x.setRandom ();
+      x[0] = std::ceil (x[0]);
+      x[1] = std::ceil (x[1]);
+
+      std::cout
+	<< "jacobian f\n" << f->jacobian ((*g)(x)) << "\n"
+	<< "jacobian g\n" << g->jacobian (x) << "\n"
+	<< "h (manual) \n"
+	<< f->jacobian ((*g)(x)) * g->jacobian (x)
+	<< "\n"
+	<< "jacobian h\n" << h->jacobian (x) << "\n";
+
+      CHECK_GRADIENT (*g, 0, x);
+
+      CHECK_GRADIENT (*h, 0, x);
+      CHECK_GRADIENT (*h, 1, x);
+
+      CHECK_JACOBIAN (*g, x);
+
+      CHECK_JACOBIAN (*h, x);
+      CHECK_JACOBIAN (*h, x);
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

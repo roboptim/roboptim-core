@@ -68,7 +68,7 @@ namespace roboptim
     const throw ()
   {
     buffer_.noalias () = a_ * argument;
-    result = .5 * argument.adjoint ()  * buffer_;
+    result = argument.adjoint ()  * buffer_;
     result += b_.adjoint () * argument;
     result += c_;
   }
@@ -97,7 +97,7 @@ namespace roboptim
   GenericNumericQuadraticFunction<T>::impl_jacobian
   (jacobian_t& jacobian, const argument_t& x) const throw ()
   {
-    jacobian.noalias () = x.transpose () * a_;
+    jacobian.noalias () = 2 * x.transpose () * a_;
     jacobian += b_.transpose ();
   }
 
@@ -108,7 +108,7 @@ namespace roboptim
   (gradient_t& gradient, const argument_t& x, size_type)
     const throw ()
   {
-    buffer_.noalias () = a_ * x;
+    buffer_.noalias () = 2 * a_ * x;
     buffer_ += b_;
     for (size_type j = 0; j < this->inputSize (); ++j)
       gradient.coeffRef (j) = buffer_.coeffRef (j);
@@ -120,7 +120,7 @@ namespace roboptim
   GenericNumericQuadraticFunction<T>::impl_gradient
   (gradient_t& gradient, const argument_t& x, size_type) const throw ()
   {
-    gradient.noalias () = a_ * x;
+    gradient.noalias () = 2 * a_ * x;
     gradient += b_;
   }
 
@@ -139,7 +139,7 @@ namespace roboptim
   {
     return o << "Numeric quadratic function" << incindent << iendl
              << "A = " << this->a_ << iendl
-             << "B = " << this->b_
+             << "B = " << this->b_ << iendl
 	     << "c = " << this->c_
              << decindent;
   }
