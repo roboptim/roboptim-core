@@ -60,11 +60,11 @@ namespace roboptim
   {
   }
 
-  // 1/2 * x^T * A * x + b^T * x
+  // x^T * A * x + b^T * x + c
   template <typename T>
   void
   GenericNumericQuadraticFunction<T>::impl_compute (result_t& result,
-						 const argument_t& argument)
+						    const argument_t& argument)
     const throw ()
   {
     buffer_.noalias () = a_ * argument;
@@ -73,7 +73,7 @@ namespace roboptim
     result += c_;
   }
 
-  // x * A + b
+  // 2 * x * A + b
   template <>
   inline void
   GenericNumericQuadraticFunction<EigenMatrixSparse>::impl_jacobian
@@ -83,7 +83,7 @@ namespace roboptim
     Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
-    Eigen::MatrixXd j = x.transpose () * a_;
+    Eigen::MatrixXd j = 2 * x.transpose () * a_;
     for (size_type i = 0; i < this->inputSize (); ++i)
       j.coeffRef (0, i) += b_[i];
 

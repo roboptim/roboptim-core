@@ -62,27 +62,29 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
 
   GenericNumericQuadraticFunction<T> f (a, b);
 
-  std::cout << f << std::endl;
+  std::cout << f << '\n';
 
   for (int i = 0; i < 10; ++i)
     {
-      x = GenericNumericQuadraticFunction<T>::vector_t::Random (5);
+      for (int j = 0; j < 5; ++j)
+	x[j] = std::ceil (rand () % 50);
 
-      std::cout << "f(x) = " << f (x) << std::endl;
-      std::cout << "J(x) = " << f.jacobian (x) << std::endl;
-      std::cout << "G(x) = " << f.gradient (x, 0) << std::endl;
-      std::cout << "H(x) = " << f.hessian (x, 0) << std::endl;
+      std::cout << "x = " << x << '\n';
+      std::cout << "f(x) = " << f (x) << '\n';
+      std::cout << "J(x) = " << f.jacobian (x) << '\n';
+      std::cout << "G(x) = " << f.gradient (x, 0) << '\n';
+      std::cout << "H(x) = " << f.hessian (x, 0) << '\n';
 
       typedef typename GenericNumericQuadraticFunction<T>::matrix_t matrix_t;
       matrix_t J (1, 5);
 
       for (typename matrix_t::Index i = 0; i < 5; ++i)
-	J.coeffRef (0, i) = x[i];
+	J.coeffRef (0, i) = 2 * x[i];
 
       for (typename matrix_t::Index i = 0; i < 5; ++i)
 	{
-	  std::cout << f.jacobian (x).coeffRef (0, i) << std::endl;
-	  std::cout << J.coeffRef (0, i) << std::endl;
+	  std::cout << f.jacobian (x).coeffRef (0, i) << '\n';
+	  std::cout << J.coeffRef (0, i) << '\n';
 	}
 
       BOOST_CHECK (allclose (f.jacobian (x), J));
@@ -120,7 +122,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (random_gradient_check, T, sparseOnly_t)
 
       for (int i = 0; i < 10; ++i)
 	{
-	  x = GenericNumericQuadraticFunction<T>::vector_t::Random (5);
+	  for (int j = 0; j < 5; ++j)
+	    x[j] = std::ceil (rand () % 50);
+
 	  BOOST_CHECK (checkGradient (f, 0, x));
 	  BOOST_CHECK (checkJacobian (f, x));
 	}
