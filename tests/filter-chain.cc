@@ -20,11 +20,13 @@
 #include "shared-tests/fixture.hh"
 
 #include <boost/test/test_case_template.hpp>
+#include <boost/format.hpp>
 
 #include <iostream>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/filter/chain.hh>
+#include <roboptim/core/filter/selection.hh>
 
 #include <roboptim/core/function/constant.hh>
 #include <roboptim/core/function/identity.hh>
@@ -39,16 +41,22 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 {
-  typename GenericIdentityFunction<T>::result_t offset (5);
-  offset.setZero ();
+  typename GenericIdentityFunction<T>::result_t offset5 (5);
+  typename GenericIdentityFunction<T>::result_t offset1 (1);
+  offset1.setZero ();
+  offset5.setZero ();
 
   boost::shared_ptr<GenericIdentityFunction<T> > identity =
-    boost::make_shared<GenericIdentityFunction<T> > (offset);
+    boost::make_shared<GenericIdentityFunction<T> > (offset1);
   boost::shared_ptr<GenericConstantFunction<T> > constant =
-    boost::make_shared<GenericConstantFunction<T> > (offset);
-
+    boost::make_shared<GenericConstantFunction<T> > (offset5);
+  boost::shared_ptr<GenericLinearFunction<T> > selec_constant 
+          = roboptim::selection (constant, 2, 1);
+  boost::format fmt("%s input %d output %d");
+        std::cout << fmt % "identity" % identity->inputSize() % identity->outputSize() << std::endl; 
+        std::cout << fmt % "selec_constant" % selec_constant->inputSize() % selec_constant->outputSize() << std::endl; 
   boost::shared_ptr<GenericLinearFunction<T> >
-    fct = chain (identity, constant);
+    fct = chain (identity, selec_constant);
 
   typename GenericIdentityFunction<T>::argument_t x (5);
   x.setZero ();
