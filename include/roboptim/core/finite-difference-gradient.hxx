@@ -403,7 +403,11 @@ namespace roboptim
      const argument_t& argument,
      argument_t& xEps) const throw ()
     {
-      typedef Eigen::Triplet<double> triplet_t;
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
+    typedef Eigen::Triplet<double> triplet_t;
 
       std::vector<triplet_t> coefficients;
       for (jacobian_t::Index i = 0; i < this->adaptee_.outputSize (); ++i)
@@ -455,14 +459,14 @@ namespace roboptim
      argument_t& xEps) const throw ()
     {
       assert (adaptee_.outputSize () - idFunction > 0);
-      result_t res = adaptee_ (argument);
+      adaptee_ (result_, argument);
       for (size_type j = 0; j < adaptee_.inputSize (); ++j)
 	{
 	  xEps = argument;
 	  xEps[j] += epsilon;
-	  result_t resEps = adaptee_ (xEps);
+	  adaptee_ (resultEps_, xEps);
 	  gradient.insert (j) =
-	    (resEps[idFunction] - res[idFunction]) / epsilon;
+	    (resultEps_[idFunction] - result_[idFunction]) / epsilon;
 	}
     }
 
@@ -477,13 +481,14 @@ namespace roboptim
     {
       assert (this->adaptee_.outputSize () - idFunction > 0);
 
-      result_t res = adaptee_ (argument);
+      adaptee_ (result_, argument);
       for (size_type j = 0; j < this->adaptee_.inputSize (); ++j)
 	{
 	  xEps = argument;
 	  xEps[j] += epsilon;
-	  typename GenericFunction<T>::result_t resEps = this->adaptee_ (xEps);
-	  gradient (j) = (resEps[idFunction] - res[idFunction]) / epsilon;
+	  this->adaptee_ (resultEps_, xEps);
+	  gradient (j) =
+	    (resultEps_[idFunction] - result_[idFunction]) / epsilon;
 	}
     }
 
