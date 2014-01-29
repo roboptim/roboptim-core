@@ -147,20 +147,28 @@ namespace roboptim
       ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
       (GenericDifferentiableFunction<T>);
 
+      explicit Policy (const GenericFunction<T>& adaptee)
+	: adaptee_ (adaptee),
+	  gradient_ (adaptee.inputSize ())
+      {}
+
       virtual void computeGradient
-      (const GenericFunction<T>& adaptee,
-       value_type epsilon,
+      (value_type epsilon,
        gradient_t& gradient,
        const argument_t& argument,
        size_type idFunction,
        argument_t& xEps) const throw () = 0;
 
       virtual void computeJacobian
-      (const GenericFunction<T>& adaptee,
-       value_type epsilon,
+      (value_type epsilon,
        jacobian_t& jacobian,
        const argument_t& argument,
        argument_t& xEps) const throw ();
+
+    protected:
+      const GenericFunction<T>& adaptee_;
+    private:
+      mutable gradient_t gradient_;
     };
 
     /// \brief Fast finite difference gradient computation.
@@ -173,13 +181,22 @@ namespace roboptim
       ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
       (GenericDifferentiableFunction<T>);
 
+      explicit Simple (const GenericFunction<T>& adaptee)
+	: Policy<T> (adaptee),
+	  result_ (adaptee.outputSize ()),
+	  resultEps_ (adaptee.outputSize ())
+      {}
+
       void computeGradient
-      (const GenericFunction<T>& adaptee,
-       value_type epsilon,
+      (value_type epsilon,
        gradient_t& gradient,
        const argument_t& argument,
        size_type idFunction,
        argument_t& xEps) const throw ();
+
+    private:
+      mutable result_t result_;
+      mutable result_t resultEps_;
     };
 
     /// \brief Precise finite difference gradient computation.
@@ -193,13 +210,32 @@ namespace roboptim
       ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
       (GenericDifferentiableFunction<T>);
 
+      explicit FivePointsRule (const GenericFunction<T>& adaptee)
+	: Policy<T> (adaptee),
+	  tmpResult_ (adaptee.outputSize ())
+      {}
+
       void computeGradient
-      (const GenericFunction<T>& adaptee,
-       value_type epsilon,
+      (value_type epsilon,
        gradient_t& gradient,
        const argument_t& argument,
        size_type idFunction,
        argument_t& xEps) const throw ();
+
+      void
+      compute_deriv (typename GenericFunction<T>::size_type j,
+		     double h,
+		     double& result,
+		     double& round,
+		     double& trunc,
+		     const typename GenericFunction<T>::argument_t& argument,
+		     typename GenericFunction<T>::size_type idFunction,
+		     typename GenericFunction<T>::argument_t& xEps)
+	const throw ();
+
+    private:
+      mutable result_t tmpResult_;
+
     };
   } // end of namespace policy.
 

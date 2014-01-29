@@ -117,7 +117,7 @@ namespace roboptim
     throw ()
     : GenericDifferentiableFunction<T>
       (adaptee.inputSize (), adaptee.outputSize ()),
-      FdgPolicy (),
+      FdgPolicy (adaptee),
       adaptee_ (adaptee),
       epsilon_ (epsilon),
       xEps_ (adaptee.inputSize ())
@@ -245,10 +245,7 @@ namespace roboptim
    const argument_t& argument,
    size_type idFunction) const throw ()
   {
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    Eigen::internal::set_is_malloc_allowed (true);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    this->computeGradient (adaptee_, epsilon_, gradient,
+    this->computeGradient (epsilon_, gradient,
 			   argument, idFunction, xEps_);
   }
 
@@ -258,10 +255,7 @@ namespace roboptim
   (jacobian_t& jacobian,
    const argument_t& argument) const throw ()
   {
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    Eigen::internal::set_is_malloc_allowed (true);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    this->computeJacobian(adaptee_, epsilon_, jacobian, argument, xEps_);
+    this->computeJacobian(epsilon_, jacobian, argument, xEps_);
   }
 
   template <typename T>
@@ -336,32 +330,20 @@ namespace roboptim
       throw BadJacobian<T> (x, jac, fdjac, threshold);
   }
 
-  namespace detail
+  namespace finiteDifferenceGradientPolicies
   {
-    template <typename T>
-    void
-    compute_deriv (const GenericFunction<T>& adaptee,
-		   typename GenericFunction<T>::size_type j,
-		   double h,
-		   double& result,
-		   double& round,
-		   double& trunc,
-		   const typename GenericFunction<T>::argument_t& argument,
-		   typename GenericFunction<T>::size_type idFunction,
-		   typename GenericFunction<T>::argument_t& xEps);
-
     /// Algorithm from the Gnu Scientific Library.
     template <typename T>
     void
-    compute_deriv (const GenericFunction<T>& adaptee,
-		   typename GenericFunction<T>::size_type j,
-		   double h,
-		   double& result,
-		   double& round,
-		   double& trunc,
-		   const typename GenericFunction<T>::argument_t& argument,
-		   typename GenericFunction<T>::size_type idFunction,
-		   typename GenericFunction<T>::argument_t& xEps)
+    FivePointsRule<T>::compute_deriv
+    (typename GenericFunction<T>::size_type j,
+     double h,
+     double& result,
+     double& round,
+     double& trunc,
+     const typename GenericFunction<T>::argument_t& argument,
+     typename GenericFunction<T>::size_type idFunction,
+     typename GenericFunction<T>::argument_t& xEps) const throw ()
     {
       /* Compute the derivative using the 5-point rule (x-h, x-h/2, x,
 	 x+h/2, x+h). Note that the central point is not used.
@@ -373,13 +355,20 @@ namespace roboptim
       xEps = argument;
 
       xEps[j] = argument[j] - h;
-      double fm1 = adaptee (xEps)[idFunction];
+      adaptee_ (tmpResult_, xEps);
+      double fm1 = tmpResult_[idFunction];
+
       xEps[j] = argument[j] + h;
-      double fp1 = adaptee (xEps)[idFunction];
+      adaptee_ (tmpResult_, xEps);
+      double fp1 = tmpResult_[idFunction];
+
       xEps[j] = argument[j] - (h / 2.);
-      double fmh = adaptee (xEps)[idFunction];
+      adaptee_ (tmpResult_, xEps);
+      double fmh = tmpResult_[idFunction];
+
       xEps[j] = argument[j] + (h / 2.);
-      double fph = adaptee (xEps)[idFunction];
+      adaptee_ (tmpResult_, xEps);
+      double fph = tmpResult_[idFunction];
 
       double r3 = .5 * (fp1 - fm1);
       double r5 = (4. / 3.) * (fph - fmh) - (1. / 3.) * r3;
@@ -405,16 +394,11 @@ namespace roboptim
       trunc = std::fabs ((r5 - r3) / h); // Estimated truncation error O(h^2)
       round = std::fabs (e5 / h) + dy; // Rounding error (cancellations)
     }
-  } // end of namespace detail.
-
-  namespace finiteDifferenceGradientPolicies
-  {
 
     template <>
     inline void
     Policy<EigenMatrixSparse>::computeJacobian
-    (const GenericFunction<EigenMatrixSparse>& adaptee,
-     value_type epsilon,
+    (value_type epsilon,
      jacobian_t& jacobian,
      const argument_t& argument,
      argument_t& xEps) const throw ()
@@ -422,12 +406,11 @@ namespace roboptim
       typedef Eigen::Triplet<double> triplet_t;
 
       std::vector<triplet_t> coefficients;
-      for (jacobian_t::Index i = 0; i < adaptee.outputSize (); ++i)
+      for (jacobian_t::Index i = 0; i < this->adaptee_.outputSize (); ++i)
         {
-          gradient_t grad (adaptee.inputSize ());
+          gradient_t grad (this->adaptee_.inputSize ());
 
-          computeGradient (adaptee, epsilon, grad,
-                           argument, i, xEps);
+          computeGradient (epsilon, grad, argument, i, xEps);
 
           const matrix_t::Index i_ = static_cast<const matrix_t::Index> (i);
           for (gradient_t::InnerIterator it (grad); it; ++it)
@@ -436,7 +419,7 @@ namespace roboptim
                 static_cast<const matrix_t::Index> (it.index ());
 
               assert (idx < static_cast<const matrix_t::Index>
-                      (adaptee.inputSize ()));
+                      (this->adaptee_.inputSize ()));
 
               coefficients.push_back
 		(triplet_t (i_, idx, it.value ()));
@@ -448,41 +431,36 @@ namespace roboptim
     template <typename T>
     void
     Policy<T>::computeJacobian
-    (const GenericFunction<T>& adaptee,
-     value_type epsilon,
+    (value_type epsilon,
      jacobian_t& jacobian,
      const argument_t& argument,
      argument_t& xEps) const throw ()
     {
-      gradient_t grad;
-      grad.resize(jacobian.cols());
-
-      for (typename jacobian_t::Index i = 0; i < adaptee.outputSize(); ++i)
+      for (typename jacobian_t::Index i = 0;
+	   i < this->adaptee_.outputSize(); ++i)
 	{
-          grad.setZero();
-          computeGradient (adaptee, epsilon, grad,
-                           argument, i, xEps);
-          jacobian.row (i) = grad;
+          gradient_.setZero();
+          computeGradient (epsilon, gradient_, argument, i, xEps);
+          jacobian.row (i) = gradient_;
 	}
     }
 
     template <>
     inline void
     Simple<EigenMatrixSparse>::computeGradient
-    (const GenericFunction<EigenMatrixSparse>& adaptee,
-     value_type epsilon,
+    (value_type epsilon,
      gradient_t& gradient,
      const argument_t& argument,
      size_type idFunction,
      argument_t& xEps) const throw ()
     {
-      assert (adaptee.outputSize () - idFunction > 0);
-      result_t res = adaptee (argument);
-      for (size_type j = 0; j < adaptee.inputSize (); ++j)
+      assert (adaptee_.outputSize () - idFunction > 0);
+      result_t res = adaptee_ (argument);
+      for (size_type j = 0; j < adaptee_.inputSize (); ++j)
 	{
 	  xEps = argument;
 	  xEps[j] += epsilon;
-	  result_t resEps = adaptee (xEps);
+	  result_t resEps = adaptee_ (xEps);
 	  gradient.insert (j) =
 	    (resEps[idFunction] - res[idFunction]) / epsilon;
 	}
@@ -491,21 +469,20 @@ namespace roboptim
     template <typename T>
     void
     Simple<T>::computeGradient
-    (const GenericFunction<T>& adaptee,
-     value_type epsilon,
+    (value_type epsilon,
      gradient_t& gradient,
      const argument_t& argument,
      size_type idFunction,
      argument_t& xEps) const throw ()
     {
-      assert (adaptee.outputSize () - idFunction > 0);
+      assert (this->adaptee_.outputSize () - idFunction > 0);
 
-      result_t res = adaptee (argument);
-      for (size_type j = 0; j < adaptee.inputSize (); ++j)
+      result_t res = adaptee_ (argument);
+      for (size_type j = 0; j < this->adaptee_.inputSize (); ++j)
 	{
 	  xEps = argument;
 	  xEps[j] += epsilon;
-	  typename GenericFunction<T>::result_t resEps = adaptee (xEps);
+	  typename GenericFunction<T>::result_t resEps = this->adaptee_ (xEps);
 	  gradient (j) = (resEps[idFunction] - res[idFunction]) / epsilon;
 	}
     }
@@ -513,14 +490,13 @@ namespace roboptim
     template <>
     inline void
     FivePointsRule<EigenMatrixSparse>::computeGradient
-    (const GenericFunction<EigenMatrixSparse>& adaptee,
-     value_type epsilon,
+    (value_type epsilon,
      gradient_t& gradient,
      const argument_t& argument,
      size_type idFunction,
      argument_t& xEps) const throw ()
     {
-      assert (adaptee.outputSize () - idFunction > 0);
+      assert (this->adaptee_.outputSize () - idFunction > 0);
 
       value_type h = epsilon / 2.;
       value_type r_0 = 0.;
@@ -530,9 +506,9 @@ namespace roboptim
 
       for (size_type j = 0; j < argument.size (); ++j)
 	{
-	  detail::compute_deriv (adaptee, j, h,
-				 r_0, round, trunc,
-				 argument, idFunction, xEps);
+	  this->compute_deriv (j, h,
+			       r_0, round, trunc,
+			       argument, idFunction, xEps);
 	  error = round + trunc;
 
 	  if (round < trunc && (round > 0 && trunc > 0))
@@ -547,10 +523,10 @@ namespace roboptim
 	      value_type h_opt =
 		h * std::pow (round / (2. * trunc), 1. / 3.);
 
-	      detail::compute_deriv (adaptee, j, h_opt,
-				     r_opt, round_opt, trunc_opt,
-				     argument, idFunction,
-				     xEps);
+	      this->compute_deriv (j, h_opt,
+				   r_opt, round_opt, trunc_opt,
+				   argument, idFunction,
+				   xEps);
 	      error_opt = round_opt + trunc_opt;
 
 	      /* Check that the new error is smaller, and that the new
@@ -571,14 +547,13 @@ namespace roboptim
     template <typename T>
     void
     FivePointsRule<T>::computeGradient
-    (const GenericFunction<T>& adaptee,
-     value_type epsilon,
+    (value_type epsilon,
      gradient_t& gradient,
      const argument_t& argument,
      size_type idFunction,
      argument_t& xEps) const throw ()
     {
-      assert (adaptee.outputSize () - idFunction > 0);
+      assert (this->adaptee_.outputSize () - idFunction > 0);
 
       value_type h = epsilon / 2.;
       value_type r_0 = 0.;
@@ -588,9 +563,9 @@ namespace roboptim
 
       for (size_type j = 0; j < argument.size (); ++j)
 	{
-	  detail::compute_deriv (adaptee, j, h,
-				 r_0, round, trunc,
-				 argument, idFunction, xEps);
+	  this->compute_deriv (j, h,
+			       r_0, round, trunc,
+			       argument, idFunction, xEps);
 	  error = round + trunc;
 
 	  if (round < trunc && (round > 0 && trunc > 0))
@@ -605,10 +580,10 @@ namespace roboptim
 	      value_type h_opt =
 		h * std::pow (round / (2. * trunc), 1. / 3.);
 
-	      detail::compute_deriv (adaptee, j, h_opt,
-				     r_opt, round_opt, trunc_opt,
-				     argument, idFunction,
-				     xEps);
+	      this->compute_deriv (j, h_opt,
+				   r_opt, round_opt, trunc_opt,
+				   argument, idFunction,
+				   xEps);
 	      error_opt = round_opt + trunc_opt;
 
 	      /* Check that the new error is smaller, and that the new
