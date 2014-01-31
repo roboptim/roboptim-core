@@ -355,19 +355,19 @@ namespace roboptim
       xEps = argument;
 
       xEps[j] = argument[j] - h;
-      adaptee_ (tmpResult_, xEps);
+      this->adaptee_ (tmpResult_, xEps);
       double fm1 = tmpResult_[idFunction];
 
       xEps[j] = argument[j] + h;
-      adaptee_ (tmpResult_, xEps);
+      this->adaptee_ (tmpResult_, xEps);
       double fp1 = tmpResult_[idFunction];
 
       xEps[j] = argument[j] - (h / 2.);
-      adaptee_ (tmpResult_, xEps);
+      this->adaptee_ (tmpResult_, xEps);
       double fmh = tmpResult_[idFunction];
 
       xEps[j] = argument[j] + (h / 2.);
-      adaptee_ (tmpResult_, xEps);
+      this->adaptee_ (tmpResult_, xEps);
       double fph = tmpResult_[idFunction];
 
       double r3 = .5 * (fp1 - fm1);
@@ -404,10 +404,10 @@ namespace roboptim
      argument_t& xEps) const throw ()
     {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    Eigen::internal::set_is_malloc_allowed (true);
+      Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
-    typedef Eigen::Triplet<double> triplet_t;
+      typedef Eigen::Triplet<double> triplet_t;
 
       std::vector<triplet_t> coefficients;
       for (jacobian_t::Index i = 0; i < this->adaptee_.outputSize (); ++i)
@@ -481,7 +481,7 @@ namespace roboptim
     {
       assert (this->adaptee_.outputSize () - idFunction > 0);
 
-      adaptee_ (result_, argument);
+      this->adaptee_ (result_, argument);
       for (size_type j = 0; j < this->adaptee_.inputSize (); ++j)
 	{
 	  xEps = argument;
