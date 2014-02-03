@@ -147,7 +147,7 @@ IF (NOT LTDL_H_FOUND)
 ENDIF()
 #FIXME: check that libltdl.so is available instead of adding it blindly.
 PKG_CONFIG_APPEND_LIBS(ltdl)
-
+PKG_CONFIG_APPEND_CFLAGS (-DEIGEN_RUNTIME_NO_MALLOC)
 HEADER_INSTALL("${HEADERS}")
 
 ADD_SUBDIRECTORY(src)
