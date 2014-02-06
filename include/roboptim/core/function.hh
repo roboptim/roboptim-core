@@ -531,7 +531,7 @@ namespace roboptim
     typedef matrix_t::Scalar value_type;
 
     typedef vector_t result_t;
-    typedef vector_t argument_t;
+    typedef Eigen::Ref < vector_t > argument_t;
 
     typedef vector_t gradient_t;
     typedef matrix_t jacobian_t;
@@ -548,7 +548,7 @@ namespace roboptim
     typedef matrix_t::Scalar value_type;
 
     typedef vector_t result_t;
-    typedef vector_t argument_t;
+    typedef Eigen::Ref < vector_t > argument_t;
 
     typedef Eigen::SparseVector<double> gradient_t;
     typedef matrix_t jacobian_t;

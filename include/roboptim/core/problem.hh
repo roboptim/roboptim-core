@@ -62,8 +62,10 @@ namespace roboptim
   class Problem <F, boost::mpl::vector<> >
   {
     // Check that F derives from Function or SparseFunction.
-    BOOST_MPL_ASSERT_MSG((detail::derives_from_function<F>::type::value),
-                         ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
+    BOOST_MPL_ASSERT_MSG(
+      (boost::mpl::or_<boost::is_base_of<Function, F>,
+                       boost::is_base_of<SparseFunction, F> >::value),
+       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
 
   public:
     template <typename F_, typename CLIST_>
@@ -83,11 +85,14 @@ namespace roboptim
     /// \brief Vector type.
     typedef typename function_t::vector_t vector_t;
 
+    /// \brief Argument type
+    typedef typename function_t::argument_t argument_t;
+
     /// \brief Size type.
     typedef typename function_t::size_type size_type;
 
     /// \brief Optional vector defines a starting point.
-    typedef boost::optional<vector_t> startingPoint_t;
+    typedef boost::optional<argument_t> startingPoint_t;
 
     typedef typename function_t::interval_t interval_t;
     typedef typename function_t::intervals_t intervals_t;
@@ -286,7 +291,7 @@ namespace roboptim
     typedef std::vector<constraint_t> constraints_t;
 
     /// \brief Optional vector defines a starting point.
-    typedef boost::optional<vector_t> startingPoint_t;
+    typedef boost::optional<argument_t> startingPoint_t;
 
     /// \brief Interval type (e.g. for bounds).
     typedef typename function_t::interval_t interval_t;

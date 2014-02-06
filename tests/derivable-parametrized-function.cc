@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE (derivable_parametrized_function)
 
   ParametrizedDF pf;
 
-  ParametrizedDF::argument_t parameter (1);
+  ParametrizedDF::vector_t parameter (1);
   parameter.setZero ();
 
   CHECKME (0.);

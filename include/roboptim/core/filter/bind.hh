@@ -75,7 +75,7 @@ namespace roboptim
   private:
     boost::shared_ptr<U> origin_;
     boundValues_t boundValues_;
-    mutable argument_t x_;
+    mutable vector_t x_;
     mutable gradient_t gradient_;
     mutable jacobian_t jacobian_;
   };

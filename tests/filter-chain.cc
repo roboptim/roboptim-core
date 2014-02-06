@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
   boost::shared_ptr<GenericLinearFunction<T> >
     fct = chain (identity, selec_constant);
 
-  typename GenericIdentityFunction<T>::argument_t x (5);
+  typename GenericIdentityFunction<T>::vector_t x (5);
   x.setZero ();
   std::cout
     << (*fct) (x) << "\n"
@@ -186,11 +186,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_jacobian_test, T, functionTypes_t)
       x[0] = std::ceil (x[0]);
       x[1] = std::ceil (x[1]);
 
+      Function::result_t gx = (*g)(x);
+      Function::result_t Jf_gx = f->jacobian (gx);
       std::cout
-	<< "jacobian f\n" << f->jacobian ((*g)(x)) << "\n"
+	<< "jacobian f\n" << Jf_gx << "\n"
 	<< "jacobian g\n" << g->jacobian (x) << "\n"
-	<< "h (manual) \n"
-	<< f->jacobian ((*g)(x)) * g->jacobian (x)
+	<< "h (manual) \n";
+      std::cout
+	<< Jf_gx * g->jacobian (x);
+      std::cout
 	<< "\n"
 	<< "jacobian h\n" << h->jacobian (x) << "\n";
 

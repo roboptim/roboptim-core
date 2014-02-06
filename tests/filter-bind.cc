@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 
     BOOST_CHECK (fct->inputSize () == 5);
 
-    typename GenericIdentityFunction<T>::argument_t x (5);
+    typename GenericIdentityFunction<T>::vector_t x (5);
     x.setZero ();
     std::cout
       << (*fct) (x) << "\n"
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 
     BOOST_CHECK (fct->inputSize () == 4);
 
-    typename GenericIdentityFunction<T>::argument_t x (4);
+    typename GenericIdentityFunction<T>::vector_t x (4);
     x.setZero ();
     std::cout
       << (*fct) (x) << "\n"

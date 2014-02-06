@@ -39,7 +39,7 @@ namespace roboptim
     (GenericDifferentiableFunction<T>);
 
     /// \brief Default constructor.
-    BadGradient (const vector_t& x,
+    BadGradient (const argument_t& x,
 		 const gradient_t& analyticalGradient,
 		 const gradient_t& finiteDifferenceGradient,
 		 const value_type& threshold);
@@ -90,7 +90,7 @@ namespace roboptim
     (GenericDifferentiableFunction<T>);
 
     /// \brief Default constructor.
-    BadJacobian (const vector_t& x,
+    BadJacobian (const argument_t& x,
 		 const jacobian_t& analyticalJacobian,
 		 const jacobian_t& finiteDifferenceJacobian,
 		 const value_type& threshold);
@@ -311,7 +311,7 @@ namespace roboptim
   checkGradient
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::size_type functionId,
-   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   const typename GenericDifferentiableFunction<T>::argument_t& x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold);
 
@@ -320,7 +320,7 @@ namespace roboptim
   checkGradientAndThrow
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::size_type functionId,
-   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   const typename GenericDifferentiableFunction<T>::argument_t& x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold)
     throw (BadGradient<T>);
@@ -337,7 +337,7 @@ namespace roboptim
   bool
   checkJacobian
   (const GenericDifferentiableFunction<T>& function,
-   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   const typename GenericDifferentiableFunction<T>::argument_t& x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold);
 
@@ -345,7 +345,7 @@ namespace roboptim
   void
   checkJacobianAndThrow
   (const GenericDifferentiableFunction<T>& function,
-   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   const typename GenericDifferentiableFunction<T>::argument_t& x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold)
     throw (BadJacobian<T>);

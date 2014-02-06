@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (concatenate_test, T, functionTypes_t)
 
   BOOST_CHECK (fct->outputSize () == 1 + 1);
 
-  typename GenericDifferentiableFunction<T>::argument_t x (1);
+  typename GenericDifferentiableFunction<T>::vector_t x (1);
   x.setZero ();
   std::cout
     << (*fct) (x) << "\n"

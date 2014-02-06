@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (map_test, T, functionTypes_t)
   BOOST_CHECK (fct->inputSize () == 10);
   BOOST_CHECK (fct->outputSize () == 10);
 
-  typename Cos<T>::argument_t x (10);
+  typename Cos<T>::vector_t x (10);
   x.setZero ();
   std::cout
     << (*fct) (x) << "\n"
