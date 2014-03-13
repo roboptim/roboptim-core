@@ -42,6 +42,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/concatenate.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/concatenate.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/derivative.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/map.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/map.hxx
@@ -49,6 +50,10 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/minus.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/product.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/product.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/scalar.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/scalar.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection-by-id.hh
