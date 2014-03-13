@@ -38,11 +38,23 @@ namespace roboptim
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericLinearFunction<T>);
 
-    /// \brief Build an constant function.
+    /// \brief Build a constant function.
     ///
     /// \param offset constant function offset
     GenericConstantFunction (const vector_t& offset) throw ()
       : GenericLinearFunction<T> (static_cast<size_type> (offset.size ()),
+				  static_cast<size_type> (offset.size ()),
+				  "constant function"),
+	offset_ (offset)
+    {
+    }
+
+    /// \brief Build a constant function.
+    ///
+    /// \param input_size input size of the function
+    /// \param offset constant function offset
+    GenericConstantFunction (size_type input_size, const vector_t& offset) throw ()
+      : GenericLinearFunction<T> (input_size,
 				  static_cast<size_type> (offset.size ()),
 				  "constant function"),
 	offset_ (offset)
