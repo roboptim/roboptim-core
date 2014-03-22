@@ -3,7 +3,7 @@ roboptim-core
 
 [![Build Status](https://travis-ci.org/roboptim/roboptim-core.png?branch=master)](https://travis-ci.org/roboptim/roboptim-core)
 [![Coverage Status](https://coveralls.io/repos/roboptim/roboptim-core/badge.png)](https://coveralls.io/r/roboptim/roboptim-core)
-+[![Stories in Ready](https://badge.waffle.io/roboptim/roboptim-core.png?label=ready&title=Ready)](https://waffle.io/roboptim/roboptim-core)
+[![Stories in Ready](https://badge.waffle.io/roboptim/roboptim-core.png?label=ready&title=Ready)](https://waffle.io/roboptim/roboptim-core)
 
 ![LGPL-3](https://www.gnu.org/graphics/lgplv3-88x31.png)
 
