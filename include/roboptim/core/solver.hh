@@ -139,6 +139,12 @@ namespace roboptim
     const T& getParameter (const std::string& key) const;
     /// \}
 
+    /// \name Plugin name
+    /// \{
+    const std::string& pluginName () const throw ();
+    std::string& pluginName () throw ();
+    /// \}
+
     /// \brief Set the per-iteration callback.
     ///
     /// The per-iteration callback is a callback called each time one
@@ -159,12 +165,16 @@ namespace roboptim
     /// \param o output stream used for display
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const throw ();
+
   protected:
     /// \brief Problem that will be solved.
     const problem_t problem_;
 
     /// \brief Solver parameters (run-time configuration).
     parameters_t parameters_;
+
+    /// \brief Plugin name.
+    std::string plugin_name_;
 
     /// \brief Pointer to function logger (see log4cxx documentation).
     static log4cxx::LoggerPtr logger;

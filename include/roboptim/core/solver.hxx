@@ -25,7 +25,8 @@ namespace roboptim
   template <typename F, typename C>
   Solver<F, C>::Solver (const problem_t& pb) throw ()
     : GenericSolver (),
-      problem_ (pb)
+      problem_ (pb),
+      plugin_name_ ("")
   {
   }
 
@@ -33,7 +34,8 @@ namespace roboptim
   template <typename F_, typename C_>
   Solver<F, C>::Solver (const Problem<F_, C_>& pb) throw ()
     : GenericSolver (),
-      problem_ (pb)
+      problem_ (pb),
+      plugin_name_ ("")
   {
   }
 
@@ -72,16 +74,33 @@ namespace roboptim
     return boost::get<T> (it->second.value);
   }
 
+  template <typename F, typename C>
+  const std::string&
+  Solver<F, C>::pluginName () const throw ()
+  {
+    return plugin_name_;
+  }
+
+  template <typename F, typename C>
+  std::string&
+  Solver<F, C>::pluginName () throw ()
+  {
+    return plugin_name_;
+  }
 
   template <typename F, typename C>
   std::ostream&
   Solver<F, C>::print (std::ostream& o) const throw ()
   {
-    o << incindent << "Solver:" << iendl
-      << this->problem_;
+    o << incindent << "Solver:";
+
+    if (!this->plugin_name_.empty ())
+      o << iendl << "Plugin: " << this->plugin_name_;
+
+    o << iendl << this->problem_;
 
     if (!parameters_.empty ())
-    {
+      {
         o << iendl << "Parameters:" << incindent;
 
         typedef const std::pair<const std::string, Parameter> const_iterator_t;
@@ -89,7 +108,7 @@ namespace roboptim
           o  << iendl << it.first << " (" << it.second.description << ")"
              << ": " << it.second.value;
         o << decindent;
-    }
+      }
 
     o << decindent << iendl;
     return o;

@@ -194,6 +194,8 @@ namespace roboptim
 	  sserror << " lt_dlexit failed too";
 	throw std::runtime_error (sserror.str ().c_str ());
       }
+
+    solver_->pluginName () = plugin;
   }
 
   template <typename T>
