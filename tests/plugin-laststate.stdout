@@ -7,6 +7,7 @@ Problem:
   Infinity value (for all functions): inf
 ---
 Solver:
+  Plugin: dummy-laststate
   Problem:
     a * d * (a + b + c) + d (not differentiable)
     Argument's bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)

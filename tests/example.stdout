@@ -1,4 +1,5 @@
 Solver:
+  Plugin: dummy-td
   Problem:
     x₀ * x₃ * (x₀ + x₁ + x₂) + x₃ (twice differentiable function)
     Argument's bounds: (1, 5), (1, 5), (1, 5), (1, 5)
