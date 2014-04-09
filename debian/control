@@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 9),
 	       liblog4cxx10-dev
 Standards-Version: 3.9.4
 Vcs-Browser: https://github.com/roboptim/roboptim-core
-Vcs-Git: git://github.com/roboptim/roboptim-core.git
+Vcs-Git: git://github.com/roboptim/roboptim-core.git -b debian
 Homepage: http://www.roboptim.net/
 XS-Testsuite: autopkgtest
 
