@@ -92,14 +92,14 @@ namespace roboptim
     virtual ~FunctionPool ();
 
 
-    virtual void impl_compute (result_t& result, const argument_t& x) const;
+    virtual void impl_compute (result_ref result, const_argument_ref x) const;
 
-    virtual void impl_gradient (gradient_t& gradient,
-                                const argument_t& argument,
+    virtual void impl_gradient (gradient_ref gradient,
+                                const_argument_ref argument,
                                 size_type functionId = 0) const;
 
-    virtual void impl_jacobian (jacobian_t& jacobian,
-                                const argument_t& arg) const;
+    virtual void impl_jacobian (jacobian_ref jacobian,
+                                const_argument_ref arg) const;
 
     /// \brief Overriden print function for pools.
     virtual std::ostream& print (std::ostream&) const;

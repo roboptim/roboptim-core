@@ -57,20 +57,20 @@ namespace roboptim
     virtual std::ostream& print (std::ostream& o) const;
 
   protected:
-    void impl_compute (result_t& result, const argument_t& x) const;
+    void impl_compute (result_ref result, const_argument_ref x) const;
 
-    void impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
+    void impl_gradient (gradient_ref gradient, const_argument_ref x, size_type)
       const;
 
-    void impl_jacobian (jacobian_t& jacobian, const argument_t& x)
+    void impl_jacobian (jacobian_ref jacobian, const_argument_ref x)
       const;
 
     void impl_hessian
-    (hessian_t& hessian, const argument_t& x, size_type) const;
+    (hessian_ref hessian, const_argument_ref x, size_type) const;
 
     /// \brief Implement Horner's method.
     value_type applyPolynomial
-    (const vector_t& coeffs, const argument_t& x) const;
+    (const vector_t& coeffs, const_argument_ref x) const;
 
   private:
     /// \brief Coefficients of the polynomial

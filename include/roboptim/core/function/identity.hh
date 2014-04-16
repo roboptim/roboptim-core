@@ -62,23 +62,23 @@ namespace roboptim
 
   protected:
 
-    void impl_compute (result_t& result,
-		       const argument_t& argument)
+    void impl_compute (result_ref result,
+		       const_argument_ref argument)
       const
     {
       result = argument + this->offset_;
     }
 
     void
-    impl_jacobian (jacobian_t& jacobian,
-		   const argument_t&) const
+    impl_jacobian (jacobian_ref jacobian,
+		   const_argument_ref) const
     {
       jacobian.setIdentity ();
     }
 
     void
-    impl_gradient (gradient_t& gradient,
-		   const argument_t& ,
+    impl_gradient (gradient_ref gradient,
+		   const_argument_ref ,
 		   size_type idFunction) const;
 
   private:
@@ -88,7 +88,7 @@ namespace roboptim
   template <>
   inline void
   GenericIdentityFunction<EigenMatrixSparse>::impl_gradient
-  (gradient_t& gradient, const argument_t&, size_type idFunction) const
+  (gradient_ref gradient, const_argument_ref, size_type idFunction) const
   {
     gradient.setZero ();
     gradient.insert (idFunction) = 1.;
@@ -97,7 +97,7 @@ namespace roboptim
   template <typename T>
   void
   GenericIdentityFunction<T>::impl_gradient
-  (gradient_t& gradient, const argument_t&, size_type idFunction) const
+  (gradient_ref gradient, const_argument_ref, size_type idFunction) const
   {
     gradient.setZero ();
     gradient[idFunction] = 1.;

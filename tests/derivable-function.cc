@@ -37,12 +37,12 @@ struct Null : public GenericDifferentiableFunction<T>
   Null () : GenericDifferentiableFunction<T> (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const
+  void impl_compute (result_ref res, const_argument_ref) const
   {
     res.setZero ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_ref grad, const_argument_ref,
 		      size_type) const
   {
     grad.setZero ();
@@ -58,12 +58,12 @@ struct NoTitle : public GenericDifferentiableFunction<T>
   NoTitle () : GenericDifferentiableFunction<T> (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const
+  void impl_compute (result_ref res, const_argument_ref) const
   {
     res.setZero ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_ref grad, const_argument_ref,
 		      size_type) const
   {
     grad.setZero ();
@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (derivable_function, T, functionTypes_t)
   Null<T> null;
   NoTitle<T> notitle;
 
-  typename Null<T>::vector_t x (1);
+  typename Null<T>::argument_t x (1);
   typename Null<T>::gradient_t grad (null.gradientSize ());
   x[0] = 42.;
 
@@ -154,23 +154,23 @@ struct F : public GenericDifferentiableFunction<T>
   ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
   (GenericDifferentiableFunction<T>);
 
-  F () : GenericDifferentiableFunction<T> (4, 2, "null function")
+  F () : GenericDifferentiableFunction<T> (4, 2, "derivable function")
   {}
 
-  void impl_compute (result_t& res, const argument_t& x) const
+  void impl_compute (result_ref res, const_argument_ref x) const
   {
     res[0] = x[0] * x[1];
     res[1] = x[2] * x[3];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t& x,
+  void impl_gradient (gradient_ref grad, const_argument_ref x,
 		      size_type functionId) const;
 };
 
 template <>
 void
 F<roboptim::EigenMatrixSparse>::impl_gradient
-(gradient_t& grad, const argument_t& x, size_type functionId) const
+(gradient_ref grad, const_argument_ref x, size_type functionId) const
 {
   grad.resize (4);
   if (functionId == 0)
@@ -193,7 +193,7 @@ F<roboptim::EigenMatrixSparse>::impl_gradient
 
 template <typename T>
 void
-F<T>::impl_gradient (gradient_t& grad, const argument_t& x,
+F<T>::impl_gradient (gradient_ref grad, const_argument_ref x,
 		     size_type functionId) const
 {
   if (functionId == 0)
@@ -218,7 +218,7 @@ F<T>::impl_gradient (gradient_t& grad, const argument_t& x,
 BOOST_AUTO_TEST_CASE_TEMPLATE (jacobian_check, T, functionTypes_t)
 {
   F<T> f;
-  typename F<T>::vector_t x (4);
+  typename F<T>::argument_t x (4);
   x[0] = 10.;
   x[1] = -1.;
   x[2] = 7.;
@@ -231,6 +231,33 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (jacobian_check, T, functionTypes_t)
 
   BOOST_CHECK (f.jacobian (x).row (0).isApprox (f.gradient (x, 0).adjoint ()));
   BOOST_CHECK (f.jacobian (x).row (1).isApprox (f.gradient (x, 1).adjoint ()));
+
+  typename F<T>::jacobian_t jac = f.jacobian (x);
+  typename F<T>::gradient_t grad0 = f.gradient (x, 0);
+  typename F<T>::gradient_t grad1 = f.gradient (x, 1);
+
+  // Call f with a map to a C-style array.
+  typename F<T>::value_type ar[4] = {10., -1., 7., 2.};
+  Eigen::Map<typename F<T>::argument_t> map_x (ar, 4);
+  BOOST_CHECK (f.jacobian (map_x).row (0).isApprox (f.gradient (map_x, 0).adjoint ()));
+  BOOST_CHECK (f.jacobian (map_x).row (1).isApprox (f.gradient (map_x, 1).adjoint ()));
+  BOOST_CHECK (f.jacobian (map_x).isApprox (jac));
+  BOOST_CHECK (f.gradient (map_x, 0).isApprox (grad0));
+  BOOST_CHECK (f.gradient (map_x, 1).isApprox (grad1));
+  BOOST_CHECK_SMALL (f (x)[0] - f (map_x)[0], 1e-6);
+
+  // Call f with a block of a vector.
+  typename F<T>::argument_t full_x (8);
+  full_x.setZero ();
+  full_x.segment (2,4) = x;
+  BOOST_CHECK (f.jacobian (full_x.segment (2,4)).row (0).isApprox
+               (f.gradient (full_x.segment (2,4), 0).adjoint ()));
+  BOOST_CHECK (f.jacobian (full_x.segment (2,4)).row (1).isApprox
+               (f.gradient (full_x.segment (2,4), 1).adjoint ()));
+  BOOST_CHECK (f.jacobian (full_x.segment (2,4)).isApprox (jac));
+  BOOST_CHECK (f.gradient (full_x.segment (2,4), 0).isApprox (grad0));
+  BOOST_CHECK (f.gradient (full_x.segment (2,4), 1).isApprox (grad1));
+  BOOST_CHECK_SMALL (f (x)[0] - f (full_x.segment (2,4))[0], 1e-6);
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

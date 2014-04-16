@@ -42,7 +42,7 @@ namespace roboptim
   template <typename U>
   void
   Scalar<U>::impl_compute
-  (result_t& result, const argument_t& x)
+  (result_ref result, const_argument_ref x)
     const
   {
     origin_->operator () (result, x);
@@ -51,8 +51,8 @@ namespace roboptim
 
   template <typename U>
   void
-  Scalar<U>::impl_gradient (gradient_t& gradient,
-			 const argument_t& argument,
+  Scalar<U>::impl_gradient (gradient_ref gradient,
+			 const_argument_ref argument,
 			 size_type functionId)
     const
   {
@@ -62,8 +62,8 @@ namespace roboptim
 
   template <typename U>
   void
-  Scalar<U>::impl_jacobian (jacobian_t& jacobian,
-			 const argument_t& argument)
+  Scalar<U>::impl_jacobian (jacobian_ref jacobian,
+			 const_argument_ref argument)
     const
   {
     origin_->jacobian (jacobian, argument);

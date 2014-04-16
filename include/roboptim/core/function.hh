@@ -29,6 +29,7 @@
 
 # include <boost/algorithm/string/replace.hpp>
 # include <boost/tuple/tuple.hpp>
+# include <boost/preprocessor/punctuation/comma.hpp>
 
 # define EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET
 # define EIGEN_RUNTIME_NO_MALLOC
@@ -42,25 +43,50 @@
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/portability.hh>
 
-# define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT) \
-  typedef PARENT parent_t;                      \
-  typedef parent_t::value_type value_type;      \
-  typedef parent_t::size_type size_type;        \
-  typedef parent_t::argument_t argument_t;      \
-  typedef parent_t::result_t result_t;          \
-  typedef parent_t::vector_t vector_t;          \
-  typedef parent_t::matrix_t matrix_t;          \
-  typedef parent_t::names_t names_t
+# define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(NAME,TYPE)	\
+  typedef TYPE NAME##_t;					\
+  typedef Eigen::Ref<NAME##_t> NAME##_ref;			\
+  typedef const Eigen::Ref<const NAME##_t>& const_##NAME##_ref
+
+# define ROBOPTIM_GENERATE_TYPEDEFS_REF(NAME,TYPE)	\
+  typedef TYPE NAME##_t;				\
+  typedef NAME##_t& NAME##_ref;				\
+  typedef const NAME##_t& const_##NAME##_ref
+
+# define ROBOPTIM_GENERATE_FWD_REFS(NAME)			\
+  typedef parent_t::NAME##_t NAME##_t;				\
+  typedef parent_t::NAME##_ref NAME##_ref;			\
+  typedef parent_t::const_##NAME##_ref const_##NAME##_ref
+
+# define ROBOPTIM_GENERATE_FWD_REFS_(NAME)				\
+  typedef typename parent_t::NAME##_t NAME##_t;				\
+  typedef typename parent_t::NAME##_ref NAME##_ref;			\
+  typedef typename parent_t::const_##NAME##_ref const_##NAME##_ref
+
+# define ROBOPTIM_GENERATE_TRAITS_REFS_(NAME)				\
+  typedef typename GenericFunctionTraits<T>::NAME##_t NAME##_t;		\
+  typedef typename GenericFunctionTraits<T>::NAME##_ref NAME##_ref;	\
+  typedef typename GenericFunctionTraits<T>::const_##NAME##_ref const_##NAME##_ref
+
+# define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)	\
+  typedef PARENT parent_t;			\
+  typedef parent_t::value_type value_type;	\
+  typedef parent_t::size_type size_type;	\
+  typedef parent_t::names_t names_t;            \
+  ROBOPTIM_GENERATE_FWD_REFS(argument);		\
+  ROBOPTIM_GENERATE_FWD_REFS(result);		\
+  ROBOPTIM_GENERATE_FWD_REFS(vector);		\
+  ROBOPTIM_GENERATE_FWD_REFS(matrix)
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
   typedef PARENT parent_t;				\
   typedef typename parent_t::value_type value_type;	\
   typedef typename parent_t::size_type size_type;	\
-  typedef typename parent_t::argument_t argument_t;	\
-  typedef typename parent_t::result_t result_t;		\
-  typedef typename parent_t::vector_t vector_t;		\
-  typedef typename parent_t::matrix_t matrix_t;		\
-  typedef typename parent_t::names_t names_t
+  typedef typename parent_t::names_t names_t;           \
+  ROBOPTIM_GENERATE_FWD_REFS_(argument);		\
+  ROBOPTIM_GENERATE_FWD_REFS_(result);			\
+  ROBOPTIM_GENERATE_FWD_REFS_(vector);			\
+  ROBOPTIM_GENERATE_FWD_REFS_(matrix)
 
 namespace roboptim
 {
@@ -123,7 +149,7 @@ namespace roboptim
     /// \attention It is good practice in RobOptim to rely on this type
     /// when a vector of values is needed instead of relying on a particular
     /// implementation.
-    typedef typename GenericFunctionTraits<T>::vector_t vector_t;
+    ROBOPTIM_GENERATE_TRAITS_REFS_(vector);
 
     /// \brief Basic matrix type.
     ///
@@ -133,7 +159,7 @@ namespace roboptim
     /// \attention It is good practice in RobOptim to rely on this type
     /// when a matrix of values is needed instead of relying on a particular
     /// implementation.
-    typedef typename GenericFunctionTraits<T>::matrix_t  matrix_t;
+    ROBOPTIM_GENERATE_TRAITS_REFS_(matrix);
 
     /// \brief Size type.
     ///
@@ -141,10 +167,10 @@ namespace roboptim
     typedef typename GenericFunctionTraits<T>::size_type size_type;
 
     /// \brief Type of a function evaluation result.
-    typedef typename GenericFunctionTraits<T>::result_t result_t;
+    ROBOPTIM_GENERATE_TRAITS_REFS_(result);
 
     /// \brief Type of a function evaluation argument.
-    typedef typename GenericFunctionTraits<T>::argument_t argument_t;
+    ROBOPTIM_GENERATE_TRAITS_REFS_(argument);
 
     /// \brief Type of a function argument name.
     typedef std::string name_t;
@@ -392,7 +418,7 @@ namespace roboptim
     /// expected size.
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    result_t operator () (const argument_t& argument) const
+    result_t operator () (const_argument_ref argument) const
     {
       result_t result (outputSize ());
       result.setZero ();
@@ -406,7 +432,7 @@ namespace roboptim
     /// expected size.
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
-    void operator () (result_t& result, const argument_t& argument)
+    void operator () (result_ref result, const_argument_ref argument)
       const
     {
       LOG4CXX_TRACE
@@ -453,10 +479,10 @@ namespace roboptim
     ///
     /// Evaluate the function, has to be implemented in concrete
     /// classes.  \warning Do not call this function directly, call
-    /// #operator()(result_t&, const argument_t&) const
+    /// #operator()(result_ref, const_argument_ref) const
     /// instead.  \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
-    virtual void impl_compute (result_t& result, const argument_t& argument)
+    virtual void impl_compute (result_ref result, const_argument_ref argument)
       const = 0;
 
   private:
@@ -524,34 +550,58 @@ namespace roboptim
   template <>
   struct GenericFunctionTraits<EigenMatrixDense>
   {
-    typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> matrix_t;
-    typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
+    // For each type, we have:
+    //  - type_t:         the type itself
+    //  - type_ref:       reference to type object
+    //  - const_type_ref: const reference to type object
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
+    (matrix,
+     Eigen::Matrix<double BOOST_PP_COMMA()
+     Eigen::Dynamic BOOST_PP_COMMA()
+     Eigen::Dynamic BOOST_PP_COMMA()
+     Eigen::RowMajor>);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
+    (vector,
+     Eigen::Matrix<double BOOST_PP_COMMA()
+     Eigen::Dynamic BOOST_PP_COMMA()
+     1>);
 
     typedef matrix_t::Index size_type;
     typedef matrix_t::Scalar value_type;
 
-    typedef vector_t result_t;
-    typedef Eigen::Ref < vector_t > argument_t;
-
-    typedef vector_t gradient_t;
-    typedef matrix_t jacobian_t;
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(result,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(argument,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(gradient,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(jacobian,matrix_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(hessian,matrix_t);
   };
 
   /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
   template <>
   struct GenericFunctionTraits<EigenMatrixSparse>
   {
-    typedef Eigen::SparseMatrix<double, Eigen::RowMajor> matrix_t;
-    typedef Eigen::Matrix<double, Eigen::Dynamic, 1> vector_t;
+    // For each type, we have:
+    //  - type_t:         the type itself
+    //  - type_ref:       reference to type object
+    //  - const_type_ref: const reference to type object
+    ROBOPTIM_GENERATE_TYPEDEFS_REF
+    (matrix,
+     Eigen::SparseMatrix<double BOOST_PP_COMMA() Eigen::RowMajor>);
+
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
+    (vector,
+     Eigen::Matrix<double BOOST_PP_COMMA()
+     Eigen::Dynamic BOOST_PP_COMMA()
+     1>);
 
     typedef matrix_t::Index size_type;
     typedef matrix_t::Scalar value_type;
 
-    typedef vector_t result_t;
-    typedef Eigen::Ref < vector_t > argument_t;
-
-    typedef Eigen::SparseVector<double> gradient_t;
-    typedef matrix_t jacobian_t;
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(result,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(argument,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(gradient,Eigen::SparseVector<double>);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(jacobian,matrix_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(hessian,matrix_t);
   };
 
   /// @}

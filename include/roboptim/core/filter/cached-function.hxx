@@ -88,8 +88,8 @@ namespace roboptim
 
   template <typename T>
   void
-  CachedFunction<T>::impl_compute (result_t& result,
-				   const argument_t& argument)
+  CachedFunction<T>::impl_compute (result_ref result,
+				   const_argument_ref argument)
     const
   {
     typename CachedFunction<T>::functionCache_t::
@@ -106,8 +106,8 @@ namespace roboptim
 
   template <>
   inline void
-  CachedFunction<Function>::impl_gradient (gradient_t&,
-                                           const argument_t&,
+  CachedFunction<Function>::impl_gradient (gradient_ref,
+                                           const_argument_ref,
                                            size_type)
     const
   {
@@ -116,8 +116,8 @@ namespace roboptim
 
   template <>
   inline void
-  CachedFunction<SparseFunction>::impl_gradient (gradient_t&,
-                                                 const argument_t&,
+  CachedFunction<SparseFunction>::impl_gradient (gradient_ref,
+                                                 const_argument_ref,
                                                  size_type)
     const
   {
@@ -126,8 +126,8 @@ namespace roboptim
 
   template <typename T>
   void
-  CachedFunction<T>::impl_gradient (gradient_t& gradient,
-                                    const argument_t& argument,
+  CachedFunction<T>::impl_gradient (gradient_ref gradient,
+                                    const_argument_ref argument,
                                     size_type functionId)
     const
   {
@@ -148,8 +148,8 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<Function>::impl_jacobian
-  (jacobian_t&,
-   const argument_t&) const
+  (jacobian_ref,
+   const_argument_ref) const
   {
     assert (0);
   }
@@ -157,8 +157,8 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<SparseFunction>::impl_jacobian
-  (jacobian_t&,
-   const argument_t&) const
+  (jacobian_ref,
+   const_argument_ref) const
   {
     assert (0);
   }
@@ -167,8 +167,8 @@ namespace roboptim
   template <typename T>
   void
   CachedFunction<T>::impl_jacobian
-  (jacobian_t& jacobian,
-   const argument_t& argument) const
+  (jacobian_ref jacobian,
+   const_argument_ref argument) const
   {
     typename CachedFunction<T>::jacobianCache_t::
       const_iterator it = jacobianCache_.find (argument);
@@ -185,7 +185,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<Function>::impl_hessian
-  (hessian_t&, const argument_t&, size_type) const
+  (hessian_ref, const_argument_ref, size_type) const
   {
     assert (0);
   }
@@ -193,7 +193,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<SparseFunction>::impl_hessian
-  (hessian_t&, const argument_t&, size_type) const
+  (hessian_ref, const_argument_ref, size_type) const
   {
     assert (0);
   }
@@ -201,7 +201,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<DifferentiableFunction>::impl_hessian
-  (hessian_t&, const argument_t&, size_type) const
+  (hessian_ref, const_argument_ref, size_type) const
   {
     assert (0);
   }
@@ -209,7 +209,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<DifferentiableSparseFunction>::impl_hessian
-  (hessian_t&, const argument_t&, size_type) const
+  (hessian_ref, const_argument_ref, size_type) const
   {
     assert (0);
   }
@@ -217,8 +217,8 @@ namespace roboptim
 
   template <typename T>
   void
-  CachedFunction<T>::impl_hessian (hessian_t& hessian,
-  				   const argument_t& argument,
+  CachedFunction<T>::impl_hessian (hessian_ref hessian,
+  				   const_argument_ref argument,
   				   size_type functionId)
     const
   {
@@ -241,7 +241,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<Function>::impl_derivative
-  (gradient_t&, value_type, size_type) const
+  (gradient_ref, value_type, size_type) const
   {
     assert (0);
   }
@@ -249,7 +249,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<SparseFunction>::impl_derivative
-  (gradient_t&, value_type, size_type) const
+  (gradient_ref, value_type, size_type) const
   {
     assert (0);
   }
@@ -257,7 +257,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<DifferentiableFunction>::impl_derivative
-  (gradient_t&, value_type, size_type) const
+  (gradient_ref, value_type, size_type) const
   {
     assert (0);
   }
@@ -265,7 +265,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<DifferentiableSparseFunction>::impl_derivative
-  (gradient_t&, value_type, size_type) const
+  (gradient_ref, value_type, size_type) const
   {
     assert (0);
   }
@@ -273,7 +273,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<TwiceDifferentiableFunction>::impl_derivative
-  (gradient_t&, value_type, size_type) const
+  (gradient_ref, value_type, size_type) const
   {
     assert (0);
   }
@@ -281,14 +281,14 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<TwiceDifferentiableSparseFunction>::impl_derivative
-  (gradient_t&, value_type, size_type) const
+  (gradient_ref, value_type, size_type) const
   {
     assert (0);
   }
 
   template <typename T>
   void
-  CachedFunction<T>::impl_derivative (gradient_t& derivative,
+  CachedFunction<T>::impl_derivative (gradient_ref derivative,
   				      value_type argument,
   				      size_type order)
     const

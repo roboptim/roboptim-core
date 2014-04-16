@@ -63,16 +63,16 @@ namespace roboptim
       return origin_;
     }
 
-    void impl_compute (result_t& result, const argument_t& x)
-      const;
+    void impl_compute (result_ref result, const_argument_ref x)
+      const ;
 
-    void impl_gradient (gradient_t& gradient,
-			const argument_t& argument,
+    void impl_gradient (gradient_ref gradient,
+			const_argument_ref argument,
 			size_type functionId = 0)
-      const;
-    void impl_jacobian (jacobian_t& jacobian,
-			const argument_t& arg)
-      const;
+      const ;
+    void impl_jacobian (jacobian_ref jacobian,
+			const_argument_ref arg)
+      const ;
   private:
     boost::shared_ptr<U> origin_;
     size_type repeat_;

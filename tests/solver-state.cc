@@ -39,8 +39,8 @@ struct F1 : public Function
   F1 () : Function (4, 1, "a + b + c + d")
   {}
 
-  void impl_compute (result_t& res,
-                     const argument_t& x) const
+  void impl_compute (result_ref res,
+                     const_argument_ref x) const
   {
     res (0) = x[0] + x[1] + x[2] + x[3];
   }
@@ -54,8 +54,8 @@ struct F2 : public Function
   F2 () : Function (5, 2, "a + b + c + d + e, a * b * c * d * e")
   {}
 
-  void impl_compute (result_t& res,
-                     const argument_t& x) const
+  void impl_compute (result_ref res,
+                     const_argument_ref x) const
   {
     res (0) = x[0] + x[1] + x[2] + x[3] + x[4];
     res (1) = x[0] * x[1] * x[2] * x[3] * x[4];

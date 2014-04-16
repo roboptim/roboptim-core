@@ -20,6 +20,7 @@
 # include <boost/algorithm/string/replace.hpp>
 
 # include "roboptim/core/indent.hh"
+# include "roboptim/core/util.hh"
 
 namespace roboptim
 {
@@ -33,7 +34,7 @@ namespace roboptim
   template <>
   inline void
   GenericDifferentiableFunction<EigenMatrixSparse>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& argument)
+  (jacobian_ref jacobian, const_argument_ref argument)
     const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
@@ -59,15 +60,12 @@ namespace roboptim
 
   template <typename T>
   void
-  GenericDifferentiableFunction<T>::impl_jacobian (jacobian_t& jacobian,
-						   const argument_t& argument)
+  GenericDifferentiableFunction<T>::impl_jacobian (jacobian_ref jacobian,
+						   const_argument_ref argument)
     const
   {
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    Eigen::internal::set_is_malloc_allowed (true);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
-      jacobian.row (i) = gradient (argument, i);
+       gradient (jacobian.row (i), argument, i);
   }
 
   template <typename T>

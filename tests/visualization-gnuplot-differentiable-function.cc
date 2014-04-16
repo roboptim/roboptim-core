@@ -37,8 +37,8 @@ struct FortyTwoDense : public DifferentiableFunction
   {
   }
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result[0] = argument[0] + argument[4] + argument[5];
     result[1] = argument[0] + argument[2] + argument[6];
@@ -49,12 +49,12 @@ struct FortyTwoDense : public DifferentiableFunction
     result[6] = argument[2] + argument[4] + argument[5] + argument[6];
   }
 
-  void impl_gradient (gradient_t&, const argument_t&,  size_type)
+  void impl_gradient (gradient_ref, const_argument_ref,  size_type)
     const
   {
   }
 
-  void impl_jacobian (jacobian_t& jac, const argument_t&)
+  void impl_jacobian (jacobian_ref jac, const_argument_ref)
     const
   {
     jac.setZero();
@@ -91,8 +91,8 @@ struct FortyTwoSparse : public DifferentiableSparseFunction
   {
   }
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result[0] = argument[0] + argument[4] + argument[5];
     result[1] = argument[0] + argument[2] + argument[6];
@@ -103,12 +103,12 @@ struct FortyTwoSparse : public DifferentiableSparseFunction
     result[6] = argument[2] + argument[4] + argument[5] + argument[6];
   }
 
-  void impl_gradient (gradient_t&, const argument_t&,  size_type)
+  void impl_gradient (gradient_ref, const_argument_ref,  size_type)
     const
   {
   }
 
-  void impl_jacobian (jacobian_t& jac, const argument_t&)
+  void impl_jacobian (jacobian_ref jac, const_argument_ref)
     const
   {
     jac.setZero();

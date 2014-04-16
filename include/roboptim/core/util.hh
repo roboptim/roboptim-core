@@ -34,11 +34,11 @@ namespace roboptim
     /// \brief Copy the content of an Eigen vector into a C array.
     ROBOPTIM_DLLAPI void vector_to_array
     (Function::value_type* dst,
-     const Function::vector_t& src);
+     Function::const_vector_ref src);
 
     /// \internal
     /// \brief Copy the content of a C array into an Eigen vector.
-    ROBOPTIM_DLLAPI void array_to_vector (Function::vector_t& dst,
+    ROBOPTIM_DLLAPI void array_to_vector (Function::vector_ref dst,
 					  const Function::value_type* src);
 
     /// \internal
@@ -46,9 +46,9 @@ namespace roboptim
     /// The first line of the jacobian is the only one used.
     template <typename T>
     void
-    jacobian_from_gradients (typename DifferentiableFunction::matrix_t& jac,
+    jacobian_from_gradients (DifferentiableFunction::matrix_ref jac,
                              const std::vector<const T*>& c,
-                             const DifferentiableFunction::vector_t& x);
+                             DifferentiableFunction::const_vector_ref x);
   } // end of namespace detail.
 
   /// \brief Display a vector.
@@ -70,36 +70,32 @@ namespace roboptim
   /// \brief Convert a sparse matrix into a dense matrix.
   ROBOPTIM_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
-  (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t&);
+  (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m);
 
   /// \brief Convert a sparse vector into a dense vector.
   ROBOPTIM_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
-  (const GenericFunctionTraits<EigenMatrixSparse>::gradient_t& v);
-
-  /// \brief Compare dense vectors (matrices) using both relative and absolute
-  /// tolerances.
-  /// \see http://stackoverflow.com/a/15052131/1043187
-  template <typename DerivedA, typename DerivedB>
-  bool allclose
-  (const Eigen::DenseBase<DerivedA>& a,
-   const Eigen::DenseBase<DerivedB>& b,
-   const typename DerivedA::RealScalar& rtol
-   = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision (),
-   const typename DerivedA::RealScalar& atol
-   = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon ());
+  (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref v);
 
   /// \brief Compare sparse vectors (matrices) using both relative and absolute
   /// tolerances.
   /// \see http://stackoverflow.com/a/15052131/1043187
-  template <typename DerivedA, typename DerivedB>
+  ROBOPTIM_DLLAPI
   bool allclose
-  (const Eigen::SparseMatrixBase<DerivedA>& a,
-   const Eigen::SparseMatrixBase<DerivedB>& b,
-   const typename DerivedA::RealScalar& rtol
-   = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision (),
-   const typename DerivedA::RealScalar& atol
-   = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon ());
+  (const Eigen::SparseMatrix<double>& a,
+   const Eigen::SparseMatrix<double>& b,
+   double rtol = Eigen::NumTraits<double>::dummy_precision (),
+   double atol = Eigen::NumTraits<double>::epsilon ());
+
+  /// \brief Compare dense vectors (matrices) using both relative and absolute
+  /// tolerances.
+  /// \see http://stackoverflow.com/a/15052131/1043187
+  ROBOPTIM_DLLAPI
+  bool allclose
+  (const Eigen::Ref<const Eigen::MatrixXd>& a,
+   const Eigen::Ref<const Eigen::MatrixXd>& b,
+   double rtol = Eigen::NumTraits<double>::dummy_precision (),
+   double atol = Eigen::NumTraits<double>::epsilon ());
 
   /// \brief Copy a sparse block into a sparse matrix.
   /// \param matrix matrix to fill.

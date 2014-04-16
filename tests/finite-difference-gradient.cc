@@ -41,29 +41,29 @@ struct FGood : public GenericDifferentiableFunction<T>
   FGood () : GenericDifferentiableFunction<T> (1, 1, "x * x")
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result (0) = argument[0] * argument[0];
   }
 
-  void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const;
+  void impl_gradient (gradient_ref gradient,
+		      const_argument_ref argument, size_type) const;
 
 };
 
 template <>
 void
 FGood<EigenMatrixSparse>::impl_gradient
-(gradient_t& gradient, const argument_t& argument, size_type) const
+(gradient_ref gradient, const_argument_ref argument, size_type) const
 {
   gradient.insert (0) = 2 * argument[0];
 }
 
 template <typename T>
 void
-FGood<T>::impl_gradient (gradient_t& gradient,
-			 const argument_t& argument, size_type) const
+FGood<T>::impl_gradient (gradient_ref gradient,
+			 const_argument_ref argument, size_type) const
 {
   gradient (0) = 2 * argument[0];
 }
@@ -79,28 +79,28 @@ struct FBad : public GenericDifferentiableFunction<T>
   FBad () : GenericDifferentiableFunction<T> (1, 1, "x * x")
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result (0) = argument[0] * argument[0];
   }
 
-  void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const;
+  void impl_gradient (gradient_ref gradient,
+		      const_argument_ref argument, size_type) const;
 };
 
 template <>
 void
 FBad<EigenMatrixSparse>::impl_gradient
-(gradient_t& gradient, const argument_t& argument, size_type) const
+(gradient_ref gradient, const_argument_ref argument, size_type) const
 {
   gradient.insert (0) = 5 * argument[0] + 42;
 }
 
 template <typename T>
 void
-FBad<T>::impl_gradient (gradient_t& gradient,
-			const argument_t& argument, size_type) const
+FBad<T>::impl_gradient (gradient_ref gradient,
+			const_argument_ref argument, size_type) const
 {
   gradient (0) = 5 * argument[0] + 42;
 }
@@ -116,28 +116,28 @@ struct Polynomial : public GenericDifferentiableFunction<T>
   Polynomial () : GenericDifferentiableFunction<T> (1, 1)
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result (0) = -24 * argument[0] * argument[0] + 33 * argument[0] + 5;
   }
 
-  void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const;
+  void impl_gradient (gradient_ref gradient,
+		      const_argument_ref argument, size_type) const;
 };
 
 template <>
 void
 Polynomial<EigenMatrixSparse>::impl_gradient
-(gradient_t& gradient, const argument_t& argument, size_type) const
+(gradient_ref gradient, const_argument_ref argument, size_type) const
 {
   gradient.insert (0) = -42 * argument[0] + 33;
 }
 
 template <typename T>
 void
-Polynomial<T>::impl_gradient (gradient_t& gradient,
-			      const argument_t& argument, size_type)
+Polynomial<T>::impl_gradient (gradient_ref gradient,
+			      const_argument_ref argument, size_type)
   const
 {
   gradient (0) = -42 * argument[0] + 33;
@@ -154,22 +154,22 @@ struct CircleXY : public GenericDifferentiableFunction<T>
   CircleXY () : GenericDifferentiableFunction<T> (1, 2)
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result (0) = sin (argument[0]);
     result (1) = cos (argument[0]);
   }
 
-  void impl_gradient (gradient_t& result,
-		      const argument_t& argument,
+  void impl_gradient (gradient_ref result,
+		      const_argument_ref argument,
 		      size_type idFunction) const;
 };
 
 template <>
 void
-CircleXY<EigenMatrixSparse>::impl_gradient (gradient_t& gradient,
-					    const argument_t& argument,
+CircleXY<EigenMatrixSparse>::impl_gradient (gradient_ref gradient,
+					    const_argument_ref argument,
 					    size_type idFunction) const
 {
   switch (idFunction)
@@ -189,8 +189,8 @@ CircleXY<EigenMatrixSparse>::impl_gradient (gradient_t& gradient,
 
 template <typename T>
 void
-CircleXY<T>::impl_gradient (gradient_t& gradient,
-			    const argument_t& argument,
+CircleXY<T>::impl_gradient (gradient_ref gradient,
+			    const_argument_ref argument,
 			    size_type idFunction) const
 {
   switch (idFunction)
@@ -219,21 +219,21 @@ struct Times : public GenericDifferentiableFunction<T>
   Times () : GenericDifferentiableFunction<T> (2, 1)
   {}
 
-  void impl_compute (result_t& result,
-		     const vector_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result (0) = argument[0] * argument[1];
   }
 
-  void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument,
+  void impl_gradient (gradient_ref gradient,
+		      const_argument_ref argument,
 		      size_type) const;
 };
 
 template <>
 void
-Times<EigenMatrixSparse>::impl_gradient (gradient_t& gradient,
-					 const argument_t& argument,
+Times<EigenMatrixSparse>::impl_gradient (gradient_ref gradient,
+					 const_argument_ref argument,
 					 size_type) const
 {
   gradient.insert (0) = argument[1];
@@ -242,8 +242,8 @@ Times<EigenMatrixSparse>::impl_gradient (gradient_t& gradient,
 
 template <typename T>
 void
-Times<T>::impl_gradient (gradient_t& gradient,
-			 const argument_t& argument,
+Times<T>::impl_gradient (gradient_ref gradient,
+			 const_argument_ref argument,
 			 size_type) const
 {
   gradient (0) = argument[1];
@@ -255,7 +255,7 @@ template <typename T>
 void displayGradient
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const GenericDifferentiableFunction<T>&,
- const typename GenericDifferentiableFunction<T>::vector_t&,
+ typename GenericDifferentiableFunction<T>::const_argument_ref,
  typename GenericDifferentiableFunction<T>::size_type i = 0);
 
 template <typename T>
@@ -263,7 +263,7 @@ void
 displayGradient
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const GenericDifferentiableFunction<T>& function,
- const typename GenericDifferentiableFunction<T>::vector_t& x,
+ typename GenericDifferentiableFunction<T>::const_argument_ref x,
  typename GenericDifferentiableFunction<T>::size_type i)
 {
   GenericFiniteDifferenceGradient<T> fdfunction (function);
@@ -281,8 +281,7 @@ void
 displayGradient<roboptim::EigenMatrixSparse>
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>& function,
- const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
- vector_t& x,
+ GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::const_argument_ref x,
  GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
  size_type i)
 {

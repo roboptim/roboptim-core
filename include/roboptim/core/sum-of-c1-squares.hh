@@ -46,14 +46,8 @@ namespace roboptim {
   public:
     /// @name Types
     /// @{
-    typedef GenericDifferentiableFunction<T> parent_t;
-    typedef typename parent_t::argument_t argument_t;
-    typedef typename parent_t::jacobian_t jacobian_t;
-    typedef typename parent_t::gradient_t gradient_t;
-    typedef typename parent_t::jacobianSize_t jacobianSize_t;
-    typedef typename parent_t::size_type size_type;
-    typedef typename parent_t::value_type value_t;
-    typedef typename parent_t::result_t result_t;
+    ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+      (GenericDifferentiableFunction<T>);
     /// @}
     /// \brief Constructor by vector valued functions
     /// The value of this scalar valued function is the sum of the
@@ -73,14 +67,14 @@ namespace roboptim {
     /// \brief Compute value of function
     /// Value is sum of squares of coordinates of vector valued base function
     virtual void
-      impl_compute (result_t &result, const argument_t &x) const;
+      impl_compute (result_ref result, const_argument_ref x) const;
     /// \brief Gradient
     virtual void
-      impl_gradient (gradient_t& gradient, const argument_t& x,
+      impl_gradient (gradient_ref gradient, const_argument_ref x,
                      size_type row = 0) const;
   private:
     /// Compute base function and store result in value_.
-    void computeFunction (const argument_t x) const;
+    void computeFunction (const_argument_ref x) const;
     /// \brief Vector valued function given at construction
     boost::shared_ptr<const parent_t> baseFunction_;
     /// \brief Store last argument for which the function has been computed

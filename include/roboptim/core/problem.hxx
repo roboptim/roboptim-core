@@ -517,6 +517,13 @@ namespace roboptim
   {
     template <typename T>
     std::ostream&
+    impl_print (std::ostream& o, Eigen::Ref<T> t)
+    {
+      return o << t;
+    }
+
+    template <typename T>
+    std::ostream&
     impl_print (std::ostream& o, const T* t)
     {
       return o << *t;
@@ -556,8 +563,9 @@ namespace roboptim
 
 	if (problem_.startingPoint ())
 	  {
+	    typename P::function_t::argument_t x0 = *problem_.startingPoint ();
 	    U g = get<U> (problem_.constraints ()[i_]);
-            typename P::vector_t x = (*g) (*problem_.startingPoint ());
+            typename P::function_t::result_t x = (*g) (x0);
 	    bool satisfied = true;
             o_ << iendl << "Initial value: ";
 	    o_ << "[" << x.size () << "](";
@@ -653,8 +661,9 @@ namespace roboptim
 	      o << fg::fail << (*startingPoint_)[i];
 	    o << fg::reset;
 	  }
+	typename F::argument_t x0 = *startingPoint_;
 	o << ")" << iendl << "Starting value: "
-	  << this->function () (*startingPoint_);
+	  << this->function () (x0);
       }
     else
       o << iendl << fg::warn << "No starting point." << fg::reset;

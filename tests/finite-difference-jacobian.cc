@@ -42,8 +42,8 @@ struct FGood : public GenericDifferentiableFunction<T>
              (2, 2, "x * x + x * y + 2 * y, 3 * x * x * y")
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result (0) =   argument[0] * argument[0]
       + argument[0] * argument[1]
@@ -51,11 +51,11 @@ struct FGood : public GenericDifferentiableFunction<T>
     result (1) = 3. * argument[0] * argument[0] * argument[1];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t& argument,
+  void impl_gradient (gradient_ref grad, const_argument_ref argument,
 		      size_type) const;
 
-  void impl_jacobian (jacobian_t& jacobian,
-                      const argument_t& argument) const;
+  void impl_jacobian (jacobian_ref jacobian,
+                      const_argument_ref argument) const;
 
 };
 
@@ -63,7 +63,7 @@ struct FGood : public GenericDifferentiableFunction<T>
 template <typename T>
 void
 FGood<T>::impl_gradient
-(gradient_t&, const argument_t&, size_type) const
+(gradient_ref, const_argument_ref, size_type) const
 {
   // This method should not be called since we provide impl_jacobian
   assert(0);
@@ -73,7 +73,7 @@ FGood<T>::impl_gradient
 template <>
 void
 FGood<EigenMatrixSparse>::impl_jacobian
-(jacobian_t& jacobian, const argument_t& argument) const
+(jacobian_ref jacobian, const_argument_ref argument) const
 {
   jacobian.setZero ();
   jacobian.insert(0,0) = 2. * argument[0] + argument[1];
@@ -85,7 +85,7 @@ FGood<EigenMatrixSparse>::impl_jacobian
 template <typename T>
 void
 FGood<T>::impl_jacobian
-(jacobian_t& jacobian, const argument_t& argument) const
+(jacobian_ref jacobian, const_argument_ref argument) const
 {
   jacobian.setZero ();
   jacobian(0,0) = 2. * argument[0] + argument[1];
@@ -106,8 +106,8 @@ struct FBad : public GenericDifferentiableFunction<T>
             (2, 2, "x * x + x * y + 2 * y, 3 * x * x * y")
   {}
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result (0) =   argument[0] * argument[0]
       + argument[0] * argument[1]
@@ -115,17 +115,17 @@ struct FBad : public GenericDifferentiableFunction<T>
     result (1) = 3. * argument[0] * argument[0] * argument[1];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t& argument,
+  void impl_gradient (gradient_ref grad, const_argument_ref argument,
 		      size_type) const;
 
-  void impl_jacobian (jacobian_t& jacobian,
-                      const argument_t& argument) const;
+  void impl_jacobian (jacobian_ref jacobian,
+                      const_argument_ref argument) const;
 };
 
 template <typename T>
 void
 FBad<T>::impl_gradient
-(gradient_t&, const argument_t&, size_type) const
+(gradient_ref, const_argument_ref, size_type) const
 {
   // This method should not be called since we provide impl_jacobian
   assert(0);
@@ -135,7 +135,7 @@ FBad<T>::impl_gradient
 template <>
 void
 FBad<EigenMatrixSparse>::impl_jacobian
-(jacobian_t& jacobian, const argument_t& argument) const
+(jacobian_ref jacobian, const_argument_ref argument) const
 {
   jacobian.setZero ();
   jacobian.insert(0,0) = 2. * argument[0] + argument[1];
@@ -147,7 +147,7 @@ FBad<EigenMatrixSparse>::impl_jacobian
 template <typename T>
 void
 FBad<T>::impl_jacobian
-(jacobian_t& jacobian, const argument_t& argument) const
+(jacobian_ref jacobian, const_argument_ref argument) const
 {
   jacobian.setZero ();
   jacobian(0,0) = 2. * argument[0] + argument[1];
@@ -161,13 +161,13 @@ template <typename T>
 void displayJacobian
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const GenericDifferentiableFunction<T>&,
- const typename GenericDifferentiableFunction<T>::vector_t&);
+ typename GenericDifferentiableFunction<T>::const_argument_ref);
 
 template <typename T>
 void displayJacobian
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const GenericDifferentiableFunction<T>& function,
- const typename GenericDifferentiableFunction<T>::vector_t& x)
+ typename GenericDifferentiableFunction<T>::const_argument_ref x)
 {
   GenericFiniteDifferenceGradient<T> fdfunction (function);
   typename GenericFiniteDifferenceGradient<T>::jacobian_t jac =
@@ -184,8 +184,8 @@ template <>
 void displayJacobian<roboptim::EigenMatrixSparse>
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
  const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>& function,
- const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
- vector_t& x)
+ GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
+ const_argument_ref x)
 {
   GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>
     fdfunction (function);

@@ -104,12 +104,12 @@ namespace roboptim
     }
 
   protected:
-    void impl_compute (result_t& , const argument_t&) const;
-    void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
+    void impl_compute (result_ref, const_argument_ref) const;
+    void impl_gradient (gradient_ref, const_argument_ref, size_type = 0)
       const;
-    void impl_jacobian (jacobian_t&, const argument_t&) const;
-    void impl_hessian (hessian_t& hessian,
-		       const argument_t& argument,
+    void impl_jacobian (jacobian_ref, const_argument_ref) const;
+    void impl_hessian (hessian_ref hessian,
+		       const_argument_ref argument,
 		       size_type functionId = 0) const;
   private:
     /// \brief A matrix.

@@ -64,8 +64,8 @@ namespace roboptim
   // A * x + b
   template <typename T>
   void
-  GenericNumericLinearFunction<T>::impl_compute (result_t& result,
-						 const argument_t& argument)
+  GenericNumericLinearFunction<T>::impl_compute (result_ref result,
+						 const_argument_ref argument)
     const
   {
     result.noalias () = a_* argument;
@@ -76,7 +76,7 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericLinearFunction<T>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t&) const
+  (jacobian_ref jacobian, const_argument_ref) const
   {
     jacobian = this->a_;
   }
@@ -85,7 +85,7 @@ namespace roboptim
   template <>
   inline void
   GenericNumericLinearFunction<EigenMatrixSparse>::impl_gradient
-  (gradient_t& gradient, const argument_t&, size_type idFunction)
+  (gradient_ref gradient, const_argument_ref, size_type idFunction)
     const
   {
     for (size_type j = 0; j < this->inputSize (); ++j)
@@ -95,8 +95,8 @@ namespace roboptim
   // A(i)
   template <typename T>
   void
-  GenericNumericLinearFunction<T>::impl_gradient (gradient_t& gradient,
-					const argument_t&,
+  GenericNumericLinearFunction<T>::impl_gradient (gradient_ref gradient,
+					const_argument_ref,
 					size_type idFunction) const
   {
     for (size_type j = 0; j < this->inputSize (); ++j)

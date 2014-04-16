@@ -50,15 +50,15 @@ namespace roboptim
 
       ROBOPTIM_DLLAPI
       Command plot_mat
-      (const GenericFunctionTraits<EigenMatrixDense>::matrix_t& mat);
+      (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat);
 
       ROBOPTIM_DLLAPI
       Command plot_mat
-      (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& mat);
+      (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat);
 
       template <typename T>
       Command plot_mat
-      (const typename GenericFunctionTraits<T>::matrix_t&)
+      (typename GenericFunctionTraits<T>::const_matrix_ref)
       {
         BOOST_MPL_ASSERT_MSG (false, NOT_IMPLEMENTED, ());
         return Command ("");

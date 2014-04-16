@@ -33,14 +33,14 @@ struct F : public DifferentiableFunction
   F () : DifferentiableFunction (1, 10, "f_n (x) = n * x")
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const
+  void impl_compute (result_ref res, const_argument_ref argument) const
   {
     res.setZero ();
     for (size_type i = 0; i < outputSize (); ++i)
       res[i] = (value_type)i * argument[0];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_ref grad, const_argument_ref,
 		      size_type functionId) const
   {
     grad.setZero ();

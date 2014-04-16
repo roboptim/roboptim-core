@@ -31,12 +31,12 @@ struct F2 : public NTimesDerivableFunction<2>
   F2 () : NTimesDerivableFunction<2> (4, "0")
   {}
 
-  virtual void impl_compute (result_t& result, double) const
+  virtual void impl_compute (result_ref result, double) const
   {
     result.setZero ();
   }
 
-  virtual void impl_derivative (gradient_t& derivative,
+  virtual void impl_derivative (gradient_ref derivative,
 				double,
 				size_type ROBOPTIM_DEBUG_ONLY (order = 1)) const
   {
@@ -53,12 +53,12 @@ struct F10 : public NTimesDerivableFunction<10>
   F10 () : NTimesDerivableFunction<10> (4, "0")
   {}
 
-  virtual void impl_compute (result_t& result, double) const
+  virtual void impl_compute (result_ref result, double) const
   {
     result.setZero ();
   }
 
-  virtual void impl_derivative (gradient_t& derivative,
+  virtual void impl_derivative (gradient_ref derivative,
 				double,
 				size_type ROBOPTIM_DEBUG_ONLY (order = 1)) const
   {

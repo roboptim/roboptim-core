@@ -30,18 +30,18 @@ struct Null : public TwiceDifferentiableFunction
   Null () : TwiceDifferentiableFunction (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const
+  void impl_compute (result_ref res, const_argument_ref) const throw ()
   {
     res.setZero ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_ref grad, const_argument_ref,
 		      size_type) const
   {
     grad.setZero ();
   }
 
-  void impl_hessian (hessian_t& h, const argument_t&,
+  void impl_hessian (hessian_ref h, const_argument_ref,
 		     size_type) const
   {
     h.setZero ();
@@ -53,18 +53,18 @@ struct NoTitle : public TwiceDifferentiableFunction
   NoTitle () : TwiceDifferentiableFunction (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const
+  void impl_compute (result_ref res, const_argument_ref) const throw ()
   {
     res.setZero ();
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&,
+  void impl_gradient (gradient_ref grad, const_argument_ref,
 		      size_type) const
   {
     grad.setZero ();
   }
 
-  void impl_hessian (hessian_t& h, const argument_t&, size_type)
+  void impl_hessian (hessian_ref h, const_argument_ref, size_type)
     const
   {
     h.setZero ();

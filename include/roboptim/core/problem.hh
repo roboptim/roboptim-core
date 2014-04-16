@@ -284,6 +284,9 @@ namespace roboptim
     /// \brief Vector type.
     typedef typename function_t::vector_t vector_t;
 
+    /// \brief Argument type
+    typedef typename function_t::argument_t argument_t;
+
     /// \brief Size type.
     typedef typename function_t::size_type size_type;
 

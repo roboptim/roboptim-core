@@ -15,7 +15,6 @@ Problem:
       Bounds: (0, 5)
       Scales: 3.5
       Initial value: [1](0)
-      
   Starting point: [4](0,0,0,0)
   Starting value: [1](0)
   Infinity value (for all functions): inf
@@ -31,15 +30,16 @@ Solver:
         Bounds: (0, 5)
         Scales: 3.5
         Initial value: [1](0)
-        
     Starting point: [4](0,0,0,0)
     Starting value: [1](0)
     Infinity value (for all functions): inf
+  Result:
+    Solver error: The dummy solver always fail.
   Parameters:
     dummy-parameter (dummy parameter): 42
     dummy-parameter2 (yet another dummy parameter): 3
     dummy-parameter3 (just a dummy key): ...and a dummy value!
-    
+
 The dummy solver always fail.
 Discrete point: 2.3 (cnt: 1)
 Discrete point: 2.8 (cnt: 2)

@@ -31,8 +31,8 @@ namespace roboptim
 
   template <typename T>
   void
-  GenericLinearFunction<T>::impl_hessian (hessian_t& hessian,
-					  const argument_t&,
+  GenericLinearFunction<T>::impl_hessian (hessian_ref hessian,
+					  const_argument_ref,
 					  size_type) const
   {
     this->setZero (hessian);

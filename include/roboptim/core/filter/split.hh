@@ -33,22 +33,12 @@ namespace roboptim
   class Split : public T
   {
   public:
-    /// \brief Import value type.
-    typedef typename DifferentiableFunction::value_type value_type;
-    /// \brief Import size type.
-    typedef typename DifferentiableFunction::size_type size_type;
-    /// \brief Import vector type.
-    typedef typename DifferentiableFunction::vector_t vector_t;
-    /// \brief Import result type.
-    typedef typename DifferentiableFunction::result_t result_t;
-    /// \brief Import argument type.
-    typedef typename DifferentiableFunction::argument_t argument_t;
-    /// \brief Import gradient type.
-    typedef typename DifferentiableFunction::gradient_t gradient_t;
-    /// \brief Import hessian type.
-    typedef typename TwiceDifferentiableFunction::hessian_t hessian_t;
-    /// \brief Import jacobian type.
-    typedef typename DifferentiableFunction::jacobian_t jacobian_t;
+    /// \brief Import traits type.
+    typedef typename T::traits_t traits_t;
+
+    ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+    (GenericTwiceDifferentiableFunction<traits_t>);
+
     /// \brief Import interval type.
     typedef typename DifferentiableFunction::interval_t interval_t;
 
@@ -60,20 +50,20 @@ namespace roboptim
     ~Split ();
 
   protected:
-    virtual void impl_compute (result_t& result, const argument_t& argument)
+    virtual void impl_compute (result_ref result, const_argument_ref argument)
       const;
 
 
-    virtual void impl_gradient (gradient_t& gradient,
-				const argument_t& argument,
+    virtual void impl_gradient (gradient_ref gradient,
+				const_argument_ref argument,
 				size_type functionId = 0)
       const;
 
-    virtual void impl_hessian (hessian_t& hessian,
-    			       const argument_t& argument,
+    virtual void impl_hessian (hessian_ref hessian,
+    			       const_argument_ref argument,
     			       size_type functionId = 0) const;
 
-    virtual void impl_derivative (gradient_t& derivative,
+    virtual void impl_derivative (gradient_ref derivative,
     				  value_type argument,
     				  size_type order = 1) const;
 

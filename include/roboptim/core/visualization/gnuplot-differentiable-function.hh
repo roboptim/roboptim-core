@@ -53,22 +53,22 @@ namespace roboptim
       /// \return Gnuplot command
       template <typename T>
       Command plot_jac (const GenericDifferentiableFunction<T>& f,
-                        const typename GenericDifferentiableFunction<T>::
-                        argument_t& arg);
+                        typename GenericDifferentiableFunction<T>::
+                        const_argument_ref arg);
 
       template <>
       ROBOPTIM_DLLAPI
       Command plot_jac (const DifferentiableFunction& f,
-                        const DifferentiableFunction::argument_t& arg);
+                        DifferentiableFunction::const_argument_ref arg);
       template <>
       ROBOPTIM_DLLAPI
       Command plot_jac (const DifferentiableSparseFunction& f,
-                        const DifferentiableSparseFunction::argument_t& arg);
+                        DifferentiableSparseFunction::const_argument_ref arg);
 
       template <typename T>
       Command plot_jac (const GenericDifferentiableFunction<T>&,
-                        const typename GenericDifferentiableFunction<T>::
-                        argument_t&)
+                        typename GenericDifferentiableFunction<T>::
+                        const_argument_ref)
       {
 	BOOST_MPL_ASSERT_MSG (false, NOT_IMPLEMENTED, ());
 	return Command ("");

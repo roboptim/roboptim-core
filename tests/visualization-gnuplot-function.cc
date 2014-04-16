@@ -37,8 +37,8 @@ struct Square : public Function
   {
   }
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result[0] = argument[0] * argument[0];
   }
@@ -53,8 +53,8 @@ struct Circle : public Function
   {
   }
 
-  void impl_compute (result_t& result,
-		     const argument_t& argument) const
+  void impl_compute (result_ref result,
+		     const_argument_ref argument) const
   {
     result[0] = sin (argument[0]) * r_;
     result[1] = cos (argument[0]) * r_;
@@ -71,8 +71,8 @@ struct Poly : public Function
   {
   }
 
-  void impl_compute (result_t& result,
-                     const argument_t& argument) const
+  void impl_compute (result_ref result,
+                     const_argument_ref argument) const
   {
     result[0] = argument[0] * argument[0] * argument[0];
     result[1] = result[0] * argument[0];

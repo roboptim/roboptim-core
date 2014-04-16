@@ -31,8 +31,8 @@ struct F : public Function
   F () : Function (1, 1, "x")
   {}
 
-  void impl_compute (result_t& res,
-                     const argument_t& x) const
+  void impl_compute (result_ref res,
+                     const_argument_ref x) const
   {
     res (0) = x[0];
   }
