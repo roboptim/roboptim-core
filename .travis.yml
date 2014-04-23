@@ -13,6 +13,7 @@ env:
     - DEBSIGN_KEYID=5AE5CD75
     - PPA_URI="roboptim/ppa"
     - NSIQCPPSTYLE_FILEFILTERPATH=cmake/filefilter.txt
+    - LCOV_IGNORE_RULES="*tests*"
 notifications:
   hipchat:
     rooms:
@@ -22,6 +23,7 @@ branches:
   only:
   - master
   - debian
+  - travis
 script: ./.travis/run build
 after_success: ./.travis/run after_success
 after_failure: ./.travis/run after_failure
