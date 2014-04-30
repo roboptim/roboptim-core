@@ -12,7 +12,6 @@ env:
     - GIT_DEPENDENCIES=""
     - DEBSIGN_KEYID=5AE5CD75
     - PPA_URI="roboptim/ppa"
-    - NSIQCPPSTYLE_FILEFILTERPATH=cmake/filefilter.txt
     - LCOV_IGNORE_RULES="*tests*"
 notifications:
   hipchat:
