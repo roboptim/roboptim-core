@@ -337,6 +337,10 @@ namespace roboptim
 	boost::format fmt
 	  ("Failed to add constraint '%s': scale vector size is invalid "
 	   "(%d, expected size is %d)");
+	// Ignore some irrelevant exceptions
+	fmt.exceptions (boost::io::all_error_bits ^ (boost::io::too_many_args_bit
+						     | boost::io::too_few_args_bit
+						     | boost::io::bad_format_string_bit));
 	fmt
 	  % x->getName ()
 	  % b.size ()

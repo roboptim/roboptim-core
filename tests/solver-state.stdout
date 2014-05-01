@@ -22,6 +22,8 @@ callback_t.callback ()
 Solver state:
   x: [4](2,2,2,2)
   Cost: 42
+solver_t.setIterationCallback ()
+solver_t.solve ()
 
 ********************************************************************************
 
@@ -49,4 +51,6 @@ callback_t.callback ()
 Solver state:
   x: [5](2,2,2,2,2)
   Cost: 42
+solver_t.setIterationCallback ()
+solver_t.solve ()
 

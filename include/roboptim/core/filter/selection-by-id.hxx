@@ -43,6 +43,10 @@ namespace roboptim
       {
 	boost::format fmt
 	  ("selector size is invalid (size is %d but %d was expected)");
+	// Ignore some irrelevant exceptions
+	fmt.exceptions (boost::io::all_error_bits ^ (boost::io::too_many_args_bit
+						     | boost::io::too_few_args_bit
+						     | boost::io::bad_format_string_bit));
 	fmt % selector.size () % origin->outputSize ();
 	throw std::runtime_error (fmt.str ());
       }

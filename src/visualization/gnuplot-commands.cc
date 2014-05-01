@@ -74,21 +74,47 @@ namespace roboptim
       Command
       set (const char* var, const char* value) throw (std::runtime_error)
       {
-	if (!*value)
-	  return Command ((boost::format ("set %1%") % var).str ());
-	return Command ((boost::format ("set %1% %2%") % var % value).str ());
+        if (!*value)
+	  {
+	    boost::format fmt = boost::format ("set %1%");
+	    // Ignore some irrelevant exceptions
+	    fmt.exceptions (boost::io::all_error_bits
+			    ^ (boost::io::too_many_args_bit
+			       | boost::io::too_few_args_bit
+			       | boost::io::bad_format_string_bit));
+	    return Command ((fmt % var).str ());
+	  }
+        boost::format fmt = boost::format ("set %1% %2%");
+	// Ignore some irrelevant exceptions
+        fmt.exceptions (boost::io::all_error_bits
+                        ^ (boost::io::too_many_args_bit
+                           | boost::io::too_few_args_bit
+                           | boost::io::bad_format_string_bit));
+        return Command ((fmt % var % value).str ());
       }
 
       Command
       unset (const char* var) throw (std::runtime_error)
       {
-	return Command ((boost::format ("unset %1%") % var).str ());
+        boost::format fmt ("unset %1%");
+        // Ignore some irrelevant exceptions
+        fmt.exceptions (boost::io::all_error_bits
+                        ^ (boost::io::too_many_args_bit
+                           | boost::io::too_few_args_bit
+                           | boost::io::bad_format_string_bit));
+        return Command ((fmt % var).str ());
       }
 
       Command
       show (const char* var) throw (std::runtime_error)
       {
-	return Command ((boost::format ("show %1%") % var).str ());
+        boost::format fmt ("show %1%");
+        // Ignore some irrelevant exceptions
+        fmt.exceptions (boost::io::all_error_bits
+                        ^ (boost::io::too_many_args_bit
+                           | boost::io::too_few_args_bit
+                           | boost::io::bad_format_string_bit));
+        return Command ((fmt % var).str ());
       }
 
       GNUPLOT_UNARY_COMMAND (clear)

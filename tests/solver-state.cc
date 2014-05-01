@@ -118,7 +118,14 @@ public:
     if (callback_)
       {
         // call user-defined callback
-        callback_ (problem (), solverState_);
+        try {
+          callback_ (problem (), solverState_);
+        }
+        catch (boost::bad_function_call e)
+	  {
+	    // Should never happen.
+	    assert (0);
+	  }
       }
 
     result_ = SolverError ("The dummy solver always fail.");
@@ -174,6 +181,10 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
   solver##N->solve ();                                          \
   /* Modify callback */                                         \
   dummy##N.x_val_ = 2.;                                         \
+  solver##N->solve ();                                          \
+  /* Test empty callback */                                     \
+  solver_t::callback_t emptyCallback##N;                        \
+  solver##N->setIterationCallback (emptyCallback##N);           \
   solver##N->solve ();                                          \
   (*output) << std::endl;
 
