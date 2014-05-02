@@ -30,7 +30,7 @@ documentation][doxygen-documentation].
 
 It can also be generated locally by running the `make doc`
 command. After the package is installed, the documentation will be
-located in the `$prefix/share/doc/roboptim-core` directoy where
+located in the `$prefix/share/doc/roboptim-core` directory where
 `$prefix` is your installation prefix (`/usr/local` by default).
 
 
@@ -138,7 +138,7 @@ Contributing
 ------------
 
 If you want to contribute, please refer to the
-[CONTRIBUTING.md](CONTRIBUTING.md) file
+[CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 
 Credits
