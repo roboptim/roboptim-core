@@ -121,7 +121,7 @@ public:
         try {
           callback_ (problem (), solverState_);
         }
-        catch (boost::bad_function_call e)
+        catch (boost::bad_function_call& e)
 	  {
 	    // Should never happen.
 	    assert (0);
