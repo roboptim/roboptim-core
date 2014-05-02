@@ -107,6 +107,10 @@ BOOST_AUTO_TEST_CASE (solver)
   result2 = solver2.minimum ();
   (*output) << result2 << std::endl;
 
+  // Test iteration callback throw.
+  BOOST_CHECK_THROW (solver.setIterationCallback (solver_t::callback_t ()),
+                     std::runtime_error);
+
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }

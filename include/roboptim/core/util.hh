@@ -27,13 +27,13 @@ namespace roboptim
   namespace detail
   {
     /// \internal
-    /// \brief Copy the content of a uBLAS vector into a C array.
+    /// \brief Copy the content of an Eigen vector into a C array.
     ROBOPTIM_DLLAPI void vector_to_array
     (Function::value_type* dst,
      const Function::vector_t& src);
 
     /// \internal
-    /// \brief Copy the content of a C array into a uBLAS vector.
+    /// \brief Copy the content of a C array into an Eigen vector.
     ROBOPTIM_DLLAPI void array_to_vector (Function::vector_t& dst,
 					  const Function::value_type* src);
 

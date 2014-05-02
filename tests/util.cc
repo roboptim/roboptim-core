@@ -26,6 +26,9 @@
 
 using namespace roboptim;
 
+typedef Function::value_type value_type;
+typedef Function::size_type  size_type;
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (util)
@@ -41,33 +44,49 @@ BOOST_AUTO_TEST_CASE (util)
   v.push_back (1);
   (*output) << v << std::endl;
 
-  std::cout << output->str () << std::endl;
-  BOOST_CHECK (output->match_pattern ());
-
   // Test operations on dense matrices
-  Eigen::MatrixXd dense_a(5,5);
-  Eigen::MatrixXd dense_b(5,5);
+  Eigen::MatrixXd dense_a (5,5);
+  Eigen::MatrixXd dense_b (5,5);
 
-  for (int i = 0; i < dense_a.rows(); ++i)
-    for (int j = 0; j < dense_a.cols(); ++j)
+  for (int i = 0; i < dense_a.rows (); ++i)
+    for (int j = 0; j < dense_a.cols (); ++j)
       {
-        dense_a(i,j) = dense_b(i,j) = (double)(i*j);
+        dense_a (i,j) = dense_b (i,j) = (double)(i*j);
       }
 
-  BOOST_CHECK (allclose(dense_a, dense_b));
+  BOOST_CHECK (allclose (dense_a, dense_b));
 
   // Test operations on sparse matrices
-  Eigen::SparseMatrix<double> sparse_a(5,5);
-  Eigen::SparseMatrix<double> sparse_b(5,5);
+  Eigen::SparseMatrix<double> sparse_a (5,5);
+  Eigen::SparseMatrix<double> sparse_b (5,5);
 
-  for (int i = 0; i < sparse_a.rows(); ++i)
-    for (int j = 0; j < sparse_a.cols(); ++j)
+  for (int i = 0; i < sparse_a.rows (); ++i)
+    for (int j = 0; j < sparse_a.cols (); ++j)
       {
-        sparse_a.insert(i,j) = (double)(i*j);
-        sparse_b.insert(i,j) = (double)(i*j);
+        sparse_a.insert (i,j) = (double)(i*j);
+        sparse_b.insert (i,j) = (double)(i*j);
       }
 
-  BOOST_CHECK (allclose(sparse_a, sparse_b));
+  BOOST_CHECK (allclose (sparse_a, sparse_b));
+
+  const size_type vec_size = 4;
+  Function::vector_t eigen_vec (vec_size);
+  std::vector<value_type> stl_vec (vec_size);
+  eigen_vec.setRandom ();
+
+  // Copy Eigen vector to C array
+  detail::vector_to_array (stl_vec.data (), eigen_vec);
+
+  for (size_type i = 0; i < vec_size; ++i)
+    BOOST_CHECK_CLOSE (eigen_vec[i], stl_vec[i], 1e-6);
+
+  // Copy C array to Eigen vector
+  Function::vector_t eigen_vec2 (vec_size);
+  detail::array_to_vector (eigen_vec2, stl_vec.data ());
+  BOOST_CHECK (allclose (eigen_vec, eigen_vec2));
+
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
