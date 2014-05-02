@@ -85,6 +85,9 @@ ROBOPTIM_CORE_TEST(n-times-derivable-function)
 ROBOPTIM_CORE_TEST(parametrized-function)
 ROBOPTIM_CORE_TEST(derivable-parametrized-function)
 
+# Solver.
+ROBOPTIM_CORE_TEST(solver)
+
 # Results.
 ROBOPTIM_CORE_TEST(result)
 ROBOPTIM_CORE_TEST(result-with-warnings)

@@ -23,7 +23,6 @@
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver.hh>
-#include <roboptim/core/solver-warning.hh>
 
 using namespace roboptim;
 
@@ -47,56 +46,66 @@ struct F : public Function
   // No gradient, hessian.
 };
 
-class DummyWarningSolver : public parent_solver_t
+class NullSolver : public parent_solver_t
 {
 public:
   /// Define parent's type.
   typedef parent_solver_t parent_t;
   typedef Function::argument_t argument_t;
 
-  DummyWarningSolver (const problem_t& pb) throw ()
+  NullSolver (const problem_t& pb) throw ()
     : parent_t (pb)
   {
   }
 
-  ~DummyWarningSolver () throw ()
+  ~NullSolver () throw ()
   {
   }
 
-  void solve () throw ()
+  void
+  solve () throw ()
   {
     (*output) << "solve ()" << std::endl;
 
-    argument_t x (problem ().function ().inputSize ());
-    x.setZero ();
-
-    ResultWithWarnings result (problem ().function ().inputSize (),
-			       problem ().function ().outputSize ());
-    result.x = x;
-    result.value = problem ().function () (result.x);
-    result.warnings.push_back (SolverWarning ("Dummy warning message."));
-
-    result_ = result;
+    result_ = SolverError ("the null solver always fails.");
   }
 };
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
-BOOST_AUTO_TEST_CASE (result_with_warnings)
+BOOST_AUTO_TEST_CASE (solver)
 {
-  typedef DummyWarningSolver solver_t;
+  typedef NullSolver solver_t;
 
-  output = retrievePattern ("result-with-warnings");
+  output = retrievePattern ("solver");
 
   // Instantiate the function, the problem, and solve it.
   F f;
   solver_t::problem_t pb (f);
-  boost::shared_ptr<solver_t> solver (new solver_t (pb));
-  solver_t::result_t result = solver->minimum ();
+  solver_t::argument_t x (f.inputSize ());
+  x.setZero ();
+  pb.startingPoint () = x;
 
-  // Get the result.
-  ResultWithWarnings& result_warnings = boost::get<ResultWithWarnings> (result);
-  (*output) << result_warnings << std::endl;
+  solver_t solver (pb);
+  (*output) << solver << std::endl;
+  solver_t::result_t result = solver.minimum ();
+  (*output) << result << std::endl;
+
+  (*output) << std::endl;
+
+  // Test solver copy.
+  solver_t solver2 (solver);
+  (*output) << solver2 << std::endl;
+  solver_t::result_t result2 = solver2.minimum ();
+  (*output) << result2 << std::endl;
+
+  (*output) << std::endl;
+
+  // Test solver reset.
+  solver2.reset ();
+  (*output) << solver2 << std::endl;
+  result2 = solver2.minimum ();
+  (*output) << result2 << std::endl;
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

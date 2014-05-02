@@ -1,0 +1,37 @@
+Solver:
+  Problem:
+    x (not differentiable)
+    Argument's bounds: (-inf, inf)
+    Argument's scales: 1
+    No constraints.
+    Starting point: [1](0)
+    Starting value: [1](0)
+    Infinity value (for all functions): inf
+
+solve ()
+Solver error: the null solver always fails.
+
+Solver:
+  Problem:
+    x (not differentiable)
+    Argument's bounds: (-inf, inf)
+    Argument's scales: 1
+    No constraints.
+    Starting point: [1](0)
+    Starting value: [1](0)
+    Infinity value (for all functions): inf
+
+Solver error: the null solver always fails.
+
+Solver:
+  Problem:
+    x (not differentiable)
+    Argument's bounds: (-inf, inf)
+    Argument's scales: 1
+    No constraints.
+    Starting point: [1](0)
+    Starting value: [1](0)
+    Infinity value (for all functions): inf
+
+solve ()
+Solver error: the null solver always fails.

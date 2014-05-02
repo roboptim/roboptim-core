@@ -47,7 +47,7 @@ namespace roboptim
   std::ostream&
   SolverError::print (std::ostream& o) const throw ()
   {
-    return o << fg::fail << "Solver error:" << what () << fg::reset;
+    return o << fg::fail << "Solver error: " << what () << fg::reset;
   }
 
   const boost::optional<Result>& SolverError::lastState () const throw ()
