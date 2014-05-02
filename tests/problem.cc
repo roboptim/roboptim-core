@@ -44,12 +44,14 @@ BOOST_AUTO_TEST_CASE (problem)
   pb_fail.startingPoint () = bad_x;
 
   {
-    BOOST_CHECK_THROW (startingPoint_t test_sp = pb_fail.startingPoint (),
+    BOOST_CHECK_THROW (startingPoint_t test_sp = pb_fail.startingPoint ();
+                       std::cout << (*test_sp) << std::endl,
                        std::runtime_error);
   }
 
   {
-    BOOST_CHECK_THROW (const startingPoint_t& test_sp = pb_fail.startingPoint (),
+    BOOST_CHECK_THROW (const startingPoint_t& test_sp = pb_fail.startingPoint ();
+                       std::cout << (*test_sp) << std::endl,
                        std::runtime_error);
   }
 
