@@ -44,12 +44,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (identity_function, T, functionTypes_t)
 
   std::cout
     << id << std::endl
-    << "Evaluate: " << std::endl
+    << "Evaluate:" << std::endl
     << id (x) << std::endl
-    << "Gradient: " << std::endl
+    << "Gradient:" << std::endl
     << id.gradient (x) << std::endl
-    << "Jacobian: " << std::endl
-    << id.jacobian (x) << std::endl;
+    << "Jacobian:" << std::endl
+    << id.jacobian (x) << std::endl
+    << "Hessian:" << std::endl
+    << id.hessian (x) << std::endl;
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

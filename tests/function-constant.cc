@@ -37,19 +37,21 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (constant_function, T, functionTypes_t)
   offset[2] = 2.;
   offset[3] = -9.;
 
-  ConstantFunction cst (offset);
+  GenericConstantFunction<T> cst (offset);
 
   typename GenericConstantFunction<T>::vector_t x (4);
   x.setZero ();
 
   std::cout
     << cst << std::endl
-    << "Evaluate: " << std::endl
+    << "Evaluate:" << std::endl
     << cst (x) << std::endl
-    << "Gradient: " << std::endl
+    << "Gradient:" << std::endl
     << cst.gradient (x) << std::endl
-    << "Jacobian: " << std::endl
-    << cst.jacobian (x) << std::endl;
+    << "Jacobian:" << std::endl
+    << cst.jacobian (x) << std::endl
+    << "Hessian:" << std::endl
+    << cst.hessian (x) << std::endl;
 
   typename GenericConstantFunction<T>::vector_t result = cst (x);
   BOOST_CHECK (allclose (offset, result));

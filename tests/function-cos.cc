@@ -42,9 +42,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (cos_test, T, functionTypes_t)
   typename Cos<T>::argument_t x (1);
   x.setZero ();
   std::cout
-    << (*fct) (x) << "\n"
-    << fct->gradient (x, 0) << "\n"
-    << fct->jacobian (x) << std::endl;
+    << (*fct) << std::endl
+    << "Evaluate:" << std::endl
+    << (*fct) (x) << std::endl
+    << "Gradient:" << std::endl
+    << fct->gradient (x, 0) << std::endl
+    << "Jacobian:" << std::endl
+    << fct->jacobian (x) << std::endl
+    << "Hessian:" << std::endl
+    << fct->hessian (x) << std::endl;
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
