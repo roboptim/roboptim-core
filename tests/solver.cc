@@ -111,6 +111,10 @@ BOOST_AUTO_TEST_CASE (solver)
   BOOST_CHECK_THROW (solver.setIterationCallback (solver_t::callback_t ()),
                      std::runtime_error);
 
+  // Test get minimum throw.
+  BOOST_CHECK_THROW (solver.getMinimum<Result> (),
+                     boost::bad_get);
+
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }

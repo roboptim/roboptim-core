@@ -73,6 +73,7 @@ TARGET_LINK_LIBRARIES(simple roboptim-core ${Boost_LIBRARIES})
 # Basic types.
 ROBOPTIM_CORE_TEST(interval)
 ROBOPTIM_CORE_TEST(util)
+ROBOPTIM_CORE_TEST(indent)
 ROBOPTIM_CORE_TEST(function)
 ROBOPTIM_CORE_TEST(derivable-function)
 ROBOPTIM_CORE_TEST(twice-derivable-function)
