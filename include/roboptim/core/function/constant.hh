@@ -71,8 +71,7 @@ namespace roboptim
     virtual std::ostream& print (std::ostream& o) const throw ()
     {
       return o << "Constant function" << incindent << iendl
-	       << "offset = " << this->offset_ << iendl
-	       << decindent;
+	       << "offset = " << this->offset_ << decindent;
     }
 
   protected:
