@@ -281,6 +281,16 @@ namespace roboptim
           }
     }
 
+    /// \brief Append extra information to the log file.
+    /// \param text text to append.
+    void append (const std::string& text)
+    {
+      output_
+	<< std::string (80, '+') << iendl
+	<< text << iendl
+	<< std::string (80, '-') << iendl;
+    }
+
   private:
     /// \brief Process constraints in the callback.
     /// This method is needed as long as unconstrained problem_t do not have
