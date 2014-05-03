@@ -64,16 +64,16 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
     x[0] = 31.;								\
     (*output)								\
       << cst << std::endl						\
-      << "Evaluate: " << std::endl					\
+      << "Evaluate:" << std::endl					\
       << cst (x) << std::endl						\
-      << "Gradient: " << std::endl					\
+      << "Gradient:" << std::endl					\
       << cst.gradient (x) << std::endl					\
-      << "Jacobian: " << std::endl					\
+      << "Jacobian:" << std::endl					\
       << cst.jacobian (x) << std::endl					\
-      << "Derivative w.r.t params: " << std::endl			\
+      << "Derivative w.r.t params:" << std::endl			\
       << cst.jacobian (x) << std::endl					\
       << std::endl;							\
-  }									\
+  }
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
@@ -99,7 +99,15 @@ BOOST_AUTO_TEST_CASE (derivable_parametrized_function)
     // Natural evaluation in one line.
     IdentityFunction::result_t res = pf (parameter) (x);
 
+    (*output) << pf << std::endl
+      << "Evaluate:" << std::endl
+      << pf (x) << std::endl
+      << "Gradient:" << std::endl
+      << pf.gradient (x, 0) << std::endl;
+
     BOOST_CHECK_EQUAL (res[0], 128. + 256.);
+    BOOST_CHECK (pf.functionInputSize () == 1);
+    BOOST_CHECK (pf.functionOutputSize () == 1);
   }
 
   std::cout << output->str () << std::endl;

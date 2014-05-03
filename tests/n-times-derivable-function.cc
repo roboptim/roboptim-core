@@ -53,10 +53,19 @@ BOOST_AUTO_TEST_CASE (n_times_derivable_function)
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("n-times-derivable-function");
 
-  F f;
-  (*output) << f << std::endl;
+  boost::shared_ptr<F> fct = boost::make_shared<F> ();
+  F::argument_t x (1);
+  x.setZero ();
 
-  BOOST_CHECK (f.derivabilityOrderMax () == 10);
+  (*output) << (*fct) << std::endl
+	    << "Evaluate:" << std::endl
+	    << (*fct) (x[0]) << std::endl
+	    << "Gradient:" << std::endl
+	    << fct->gradient (x, 0) << std::endl
+	    << "Jacobian:" << std::endl
+	    << fct->jacobian (x) << std::endl;
+
+  BOOST_CHECK (fct->derivabilityOrderMax () == 10);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

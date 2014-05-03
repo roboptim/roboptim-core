@@ -41,6 +41,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (cos_test, T, functionTypes_t)
 
   typename Cos<T>::argument_t x (1);
   x.setZero ();
+
   std::cout
     << (*fct) << std::endl
     << "Evaluate:" << std::endl
