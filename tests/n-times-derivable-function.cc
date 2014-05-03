@@ -56,6 +56,8 @@ BOOST_AUTO_TEST_CASE (n_times_derivable_function)
   F f;
   (*output) << f << std::endl;
 
+  BOOST_CHECK (f.derivabilityOrderMax () == 10);
+
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }

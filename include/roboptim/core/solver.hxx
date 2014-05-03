@@ -99,6 +99,13 @@ namespace roboptim
 
     o << iendl << this->problem_;
 
+    if (result_.which () != SOLVER_NO_SOLUTION)
+      {
+	o << iendl << "Result:" << incindent;
+	o << iendl << result_;
+	o << decindent;
+      }
+
     if (!parameters_.empty ())
       {
         o << iendl << "Parameters:" << incindent;

@@ -88,24 +88,20 @@ BOOST_AUTO_TEST_CASE (solver)
 
   solver_t solver (pb);
   (*output) << solver << std::endl;
-  solver_t::result_t result = solver.minimum ();
-  (*output) << result << std::endl;
-
-  (*output) << std::endl;
+  solver.solve ();
+  (*output) << solver << std::endl;
 
   // Test solver copy.
   solver_t solver2 (solver);
   (*output) << solver2 << std::endl;
-  solver_t::result_t result2 = solver2.minimum ();
-  (*output) << result2 << std::endl;
-
-  (*output) << std::endl;
+  solver2.solve ();
+  (*output) << solver2 << std::endl;
 
   // Test solver reset.
   solver2.reset ();
   (*output) << solver2 << std::endl;
-  result2 = solver2.minimum ();
-  (*output) << result2 << std::endl;
+  solver2.solve ();
+  (*output) << solver2 << std::endl;
 
   // Test iteration callback throw.
   BOOST_CHECK_THROW (solver.setIterationCallback (solver_t::callback_t ()),

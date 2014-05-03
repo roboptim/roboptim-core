@@ -44,9 +44,9 @@ namespace roboptim
   /// \addtogroup roboptim_meta_function
   /// @{
 
-  /// \brief Define an abstract function which is derivable twice (\f$C^2\f$).
+  /// \brief Define an abstract function which is twice-derivable (\f$C^2\f$).
   ///
-  /// A twice derivable function is a derivable function
+  /// A twice-derivable function is a derivable function
   /// which provides a way to compute its hessian.
   ///
   /// \f[ f : x \rightarrow f(x) \f]
@@ -61,7 +61,7 @@ namespace roboptim
   /// function where \f$n > 1\f$ and \f$m > 1\f$ is a tensor.
   /// To avoid this costly representation, the function is split
   /// into \f$m\f$ \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$ functions.
-  /// See #DifferentialeFunction documentation for more information.
+  /// See #DifferentiableFunction documentation for more information.
   template <typename T>
   class GenericTwiceDifferentiableFunction
     : public GenericDifferentiableFunction<T>
@@ -81,7 +81,7 @@ namespace roboptim
 
     /// \brief Return the size of a hessian.
     ///
-    /// Hessian size is equales to (input size, input size).
+    /// Hessian size is equal to (input size, input size).
     /// \return hessian's size as a pair
     hessianSize_t hessianSize () const throw ()
     {

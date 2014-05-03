@@ -139,7 +139,7 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const throw ()
     {
-      o << "Function derivable " << derivabilityOrderMax () << " times.";
+      o << derivabilityOrderMax () << "-time derivable function.";
       return o;
     }
 
