@@ -1,30 +1,37 @@
 Parameter is 0
 Constant function
   offset = [1](0)
-Evaluate: 
+Evaluate:
 [1](0)
-Gradient: 
+Gradient:
 [1](0)
-Jacobian: 
+Jacobian:
+[1](0)
+Hessian:
 [1](0)
 
 Parameter is 3.14
 Constant function
   offset = [1](3.14)
-Evaluate: 
+Evaluate:
 [1](3.14)
-Gradient: 
+Gradient:
 [1](0)
-Jacobian: 
+Jacobian:
+[1](0)
+Hessian:
 [1](0)
 
 Parameter is 42
 Constant function
   offset = [1](42)
-Evaluate: 
+Evaluate:
 [1](42)
-Gradient: 
+Gradient:
 [1](0)
-Jacobian: 
+Jacobian:
+[1](0)
+Hessian:
 [1](0)
 
+Parametrized function

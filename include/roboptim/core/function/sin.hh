@@ -90,7 +90,7 @@ namespace roboptim
   Sin<EigenMatrixSparse>::impl_jacobian
   (jacobian_t& jacobian, const argument_t& x) const throw ()
   {
-    jacobian.insert (0, 0) = std::cos (x[0]);
+    jacobian.coeffRef (0, 0) = std::cos (x[0]);
   }
   template <typename T>
   void
@@ -115,7 +115,7 @@ namespace roboptim
 					const argument_t& x,
 					size_type) const throw ()
   {
-    hessian.insert (0, 0) = -std::sin (x[0]);
+    hessian.coeffRef (0, 0) = -std::sin (x[0]);
   }
 
 

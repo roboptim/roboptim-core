@@ -116,7 +116,7 @@ namespace roboptim
 					const argument_t& x,
 					size_type) const throw ()
   {
-    hessian.insert (0, 0) = -std::cos (x[0]);
+    hessian.coeffRef (0, 0) = -std::cos (x[0]);
   }
 
 
