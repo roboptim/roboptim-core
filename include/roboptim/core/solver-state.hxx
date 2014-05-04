@@ -29,15 +29,22 @@ namespace roboptim
     /// \param val value.
     /// \return string describing the value.
     template <typename T>
-    void StateParameterPrint (std::ostream& o, T val)
+    void StateParameterPrint (std::ostream& o, const T& val)
     {
       o << val;
     }
 
     template <>
-    inline void StateParameterPrint<bool> (std::ostream& o, bool val)
+    inline void StateParameterPrint<bool> (std::ostream& o, const bool& val)
     {
       o << (val ? "true" : "false");
+    }
+
+    template <>
+    inline void StateParameterPrint<std::string>
+    (std::ostream& o, const std::string& val)
+    {
+      o << "\"" << val << "\"";
     }
 
     /// \brief Visitor used to print state parameters (variant).
@@ -51,7 +58,7 @@ namespace roboptim
       }
 
       template <typename T>
-      void operator () (T val) const
+      void operator () (const T& val) const
       {
         StateParameterPrint<T> (o_, val);
       }

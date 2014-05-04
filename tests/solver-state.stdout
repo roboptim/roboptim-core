@@ -15,7 +15,7 @@ Solver state:
     data.bool (dummy bool): true
     data.double (dummy double): 42
     data.int (dummy integer): 10
-    data.string (dummy string): dummy data
+    data.string (dummy string): "dummy data"
     data.vector (dummy vector): [4](0,0,0,0)
 solver_t.setIterationCallback ()
 solver_t.solve ()
@@ -27,7 +27,7 @@ Solver state:
     data.bool (dummy bool): true
     data.double (dummy double): 42
     data.int (dummy integer): 10
-    data.string (dummy string): dummy data
+    data.string (dummy string): "dummy data"
     data.vector (dummy vector): [4](0,0,0,0)
 solver_t.solve ()
 callback_t.callback ()
@@ -38,7 +38,7 @@ Solver state:
     data.bool (dummy bool): true
     data.double (dummy double): 42
     data.int (dummy integer): 10
-    data.string (dummy string): dummy data
+    data.string (dummy string): "dummy data"
     data.vector (dummy vector): [4](0,0,0,0)
 solver_t.setIterationCallback ()
 solver_t.solve ()
@@ -62,7 +62,7 @@ Solver state:
     data.bool (dummy bool): true
     data.double (dummy double): 42
     data.int (dummy integer): 10
-    data.string (dummy string): dummy data
+    data.string (dummy string): "dummy data"
     data.vector (dummy vector): [5](0,0,0,0,0)
 solver_t.setIterationCallback ()
 solver_t.solve ()
@@ -74,7 +74,7 @@ Solver state:
     data.bool (dummy bool): true
     data.double (dummy double): 42
     data.int (dummy integer): 10
-    data.string (dummy string): dummy data
+    data.string (dummy string): "dummy data"
     data.vector (dummy vector): [5](0,0,0,0,0)
 solver_t.solve ()
 callback_t.callback ()
@@ -85,7 +85,7 @@ Solver state:
     data.bool (dummy bool): true
     data.double (dummy double): 42
     data.int (dummy integer): 10
-    data.string (dummy string): dummy data
+    data.string (dummy string): "dummy data"
     data.vector (dummy vector): [5](0,0,0,0,0)
 solver_t.setIterationCallback ()
 solver_t.solve ()
