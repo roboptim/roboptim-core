@@ -89,6 +89,7 @@ ROBOPTIM_CORE_TEST(derivable-parametrized-function)
 
 # Solver.
 ROBOPTIM_CORE_TEST(solver)
+ROBOPTIM_CORE_TEST(solver-factory)
 
 # Results.
 ROBOPTIM_CORE_TEST(result)
