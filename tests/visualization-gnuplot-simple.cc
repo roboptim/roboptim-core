@@ -43,7 +43,14 @@ BOOST_AUTO_TEST_CASE (visualization_gnuplot_simple)
 	<< set ("term", "x11 enhanced persist")
 	<< comment ("Hello, world!")
 	<< cd ("/tmp")
+	<< help ("pwd")
+	<< show ("foo")
+	<< replot
+	<< pwd
+	<< reread
+	<< clear
 	<< reset
+	<< quit
 	);
 
   std::cout << output->str () << std::endl;

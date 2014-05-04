@@ -3,4 +3,11 @@
 set term x11 enhanced persist
 #Hello, world!
 cd '/tmp'
+help 'pwd'
+show foo
+replot
+pwd
+reread
+clear
 reset
+quit
