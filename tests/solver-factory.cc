@@ -86,16 +86,19 @@ BOOST_AUTO_TEST_CASE (solver_factory)
   (*output) << solver << std::endl;
 
   BOOST_CHECK_THROW (SolverFactory<solver_t> factory_size ("dummy", pb);
-                     solver_t& solver_size = factory_size (),
+                     solver_t& solver_size = factory_size ();
+                     (*output) << solver_size << std::endl,
                      std::runtime_error);
 
   BOOST_CHECK_THROW (SolverFactory<solver_t> factory_plugin ("dummy-foo", pb);
-                     solver_t& solver_plugin = factory_plugin (),
+                     solver_t& solver_plugin = factory_plugin ();
+                     (*output) << solver_plugin << std::endl,
                      std::runtime_error);
 
   solver_uc_t::problem_t pb_uc (f);
   BOOST_CHECK_THROW (SolverFactory<solver_uc_t> factory_type ("dummy-td", pb_uc);
-                     solver_uc_t& solver_type = factory_type (),
+                     solver_uc_t& solver_type = factory_type ();
+                     (*output) << solver_type << std::endl,
                      std::runtime_error);
 
   std::cout << output->str () << std::endl;
