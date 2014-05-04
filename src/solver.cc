@@ -24,7 +24,7 @@ namespace roboptim
   std::ostream& operator<< (std::ostream& o,
 			    const Parameter& parameter)
   {
-    o << parameter.description;
+    o << "(" << parameter.description << "): " << parameter.value;
     return o;
   }
 } // end of namespace roboptim
