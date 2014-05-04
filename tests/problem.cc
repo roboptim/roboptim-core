@@ -68,6 +68,28 @@ BOOST_AUTO_TEST_CASE (problem)
     intervals[i] = Function::makeInfiniteInterval ();
   pb.addConstraint (cstr, intervals, scales);
 
+  // Check null ptr
+  BOOST_CHECK_THROW (boost::shared_ptr<ConstantFunction> null_ptr;
+                     pb.addConstraint (null_ptr, intervals, scales),
+                     std::runtime_error);
+
+  // Check invalid input size
+  BOOST_CHECK_THROW (ConstantFunction::vector_t v_size (4);
+                     boost::shared_ptr<ConstantFunction>
+                     cstr_size = boost::make_shared<ConstantFunction> (v_size);
+                     pb.addConstraint (cstr_size, intervals, scales),
+                     std::runtime_error);
+
+  // Check invalid interval size
+  BOOST_CHECK_THROW (problem_t::intervals_t intervals_size (6);
+                     pb.addConstraint (cstr, intervals_size, scales),
+                     std::runtime_error);
+
+  // Check invalid scale vector size
+  BOOST_CHECK_THROW (problem_t::scales_t scales_size (6);
+                     pb.addConstraint (cstr, intervals, scales_size),
+                     std::runtime_error);
+
   std::cout << pb << std::endl;
 }
 
