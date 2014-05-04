@@ -8,7 +8,6 @@ Solver:
     Starting value: [1](0)
     Infinity value (for all functions): inf
 
-solve ()
 Solver:
   Problem:
     x (not differentiable)
@@ -18,20 +17,10 @@ Solver:
     Starting point: [1](0)
     Starting value: [1](0)
     Infinity value (for all functions): inf
-  Result:
-    Solver error: the null solver always fails.
-
-Solver:
-  Problem:
-    x (not differentiable)
-    Argument's bounds: (-inf, inf)
-    Argument's scales: 1
-    No constraints.
-    Starting point: [1](0)
-    Starting value: [1](0)
-    Infinity value (for all functions): inf
-  Result:
-    Solver error: the null solver always fails.
+  Parameters:
+    data.int (dummy integer): 10
+    data.string (dummy string): dummy data
+    data.value_type (dummy value_type): 42
 
 solve ()
 Solver:
@@ -45,6 +34,10 @@ Solver:
     Infinity value (for all functions): inf
   Result:
     Solver error: the null solver always fails.
+  Parameters:
+    data.int (dummy integer): 10
+    data.string (dummy string): dummy data
+    data.value_type (dummy value_type): 42
 
 Solver:
   Problem:
@@ -55,6 +48,12 @@ Solver:
     Starting point: [1](0)
     Starting value: [1](0)
     Infinity value (for all functions): inf
+  Result:
+    Solver error: the null solver always fails.
+  Parameters:
+    data.int (dummy integer): 10
+    data.string (dummy string): dummy data
+    data.value_type (dummy value_type): 42
 
 solve ()
 Solver:
@@ -68,4 +67,39 @@ Solver:
     Infinity value (for all functions): inf
   Result:
     Solver error: the null solver always fails.
+  Parameters:
+    data.int (dummy integer): 10
+    data.string (dummy string): dummy data
+    data.value_type (dummy value_type): 42
+
+Solver:
+  Problem:
+    x (not differentiable)
+    Argument's bounds: (-inf, inf)
+    Argument's scales: 1
+    No constraints.
+    Starting point: [1](0)
+    Starting value: [1](0)
+    Infinity value (for all functions): inf
+  Parameters:
+    data.int (dummy integer): 10
+    data.string (dummy string): dummy data
+    data.value_type (dummy value_type): 42
+
+solve ()
+Solver:
+  Problem:
+    x (not differentiable)
+    Argument's bounds: (-inf, inf)
+    Argument's scales: 1
+    No constraints.
+    Starting point: [1](0)
+    Starting value: [1](0)
+    Infinity value (for all functions): inf
+  Result:
+    Solver error: the null solver always fails.
+  Parameters:
+    data.int (dummy integer): 10
+    data.string (dummy string): dummy data
+    data.value_type (dummy value_type): 42
 

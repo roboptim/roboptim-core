@@ -88,6 +88,13 @@ BOOST_AUTO_TEST_CASE (solver)
 
   solver_t solver (pb);
   (*output) << solver << std::endl;
+  solver.parameters ()["data.string"].value = std::string ("dummy data");
+  solver.parameters ()["data.string"].description = "dummy string";
+  solver.parameters ()["data.int"].value = int (10);
+  solver.parameters ()["data.int"].description = "dummy integer";
+  solver.parameters ()["data.value_type"].value = F::value_type (42.);
+  solver.parameters ()["data.value_type"].description = "dummy value_type";
+  (*output) << solver << std::endl;
   solver.solve ();
   (*output) << solver << std::endl;
 
