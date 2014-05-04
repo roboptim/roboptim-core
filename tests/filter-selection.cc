@@ -56,6 +56,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
     << (*fct) (x) << "\n"
     << fct->gradient (x, 0) << "\n"
     << fct->jacobian (x) << std::endl;
+
+  BOOST_CHECK_THROW (fct = selection (identity, 0, 10), std::runtime_error);
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

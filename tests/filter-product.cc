@@ -60,6 +60,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (product_test, T, functionTypes_t)
     << fct->gradient (x, 3) << "\n"
     << fct->gradient (x, 4) << "\n"
     << fct->jacobian (x) << std::endl;
+
+  typename GenericIdentityFunction<T>::result_t offset_throw (6);
+  offset_throw.setZero ();
+  boost::shared_ptr<GenericConstantFunction<T> > constant_throw =
+    boost::make_shared<GenericConstantFunction<T> > (offset_throw);
+  BOOST_CHECK_THROW (fct = identity * constant_throw, std::runtime_error);
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

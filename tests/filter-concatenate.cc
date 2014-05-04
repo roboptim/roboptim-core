@@ -28,6 +28,7 @@
 
 #include <roboptim/core/function/cos.hh>
 #include <roboptim/core/function/sin.hh>
+#include <roboptim/core/function/constant.hh>
 
 using namespace roboptim;
 
@@ -54,6 +55,17 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (concatenate_test, T, functionTypes_t)
     << fct->gradient (x, 0) << "\n"
     << fct->gradient (x, 1) << "\n"
     << fct->jacobian (x) << std::endl;
+
+  typename GenericConstantFunction<T>::result_t offset1 (2);
+  offset1.setZero ();
+  typename GenericConstantFunction<T>::result_t offset2 (4);
+  offset2.setZero ();
+  boost::shared_ptr<GenericConstantFunction<T> > constant1 =
+    boost::make_shared<GenericConstantFunction<T> > (offset1);
+  boost::shared_ptr<GenericConstantFunction<T> > constant2 =
+    boost::make_shared<GenericConstantFunction<T> > (offset2);
+  BOOST_CHECK_THROW (fct = concatenate (constant1, constant2),
+                     std::runtime_error);
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
