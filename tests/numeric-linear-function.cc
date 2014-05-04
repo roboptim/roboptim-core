@@ -62,7 +62,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function, T, functionTypes_t)
   x[4] = 4.5;
 
   (*output) << "f(x) = " << f (x) << std::endl;
+  (*output) << "G(x) = " << f.gradient (x, 0) << std::endl;
   (*output) << "J(x) = " << f.jacobian (x) << std::endl;
+  (*output) << "H(x) = " << f.hessian (x) << std::endl;
 
   GenericNumericLinearFunction<T> numericLinearFunction (a, b);
   GenericLinearFunction<T>* linearFunction = &numericLinearFunction;

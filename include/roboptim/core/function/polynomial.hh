@@ -98,45 +98,49 @@ namespace roboptim
     virtual std::ostream& print (std::ostream& o) const throw ()
     {
       try
-      {
-        boost::format fmt (" + %d pow(x, %d)");
+	{
+	  boost::format fmt (" + %d pow(x, %d)");
 
 
-        o << "Polynomial function:" << iendl;
-        o << coeffs_[0];
+	  o << "Polynomial function:" << incindent;
 
-        for (typename vector_t::Index deg = 1; deg < coeffs_.size (); ++deg)
-	      {
-	        fmt % coeffs_[deg] % deg;
-	        o << fmt.str ();
-	      }
-        o << iendl;
+	  o << iendl << "Expression:" << incindent;
+	  o << iendl << coeffs_[0];
 
-        o << "First derivative:" << iendl;
-        o << dCoeffs_[0];
-        for (typename vector_t::Index deg = 1; deg < dCoeffs_.size (); ++deg)
-	      {
-	        fmt % dCoeffs_[deg] % deg;
-	        o << fmt.str ();
-	      }
-        o << iendl;
+	  for (typename vector_t::Index deg = 1; deg < coeffs_.size (); ++deg)
+	    {
+	      fmt % coeffs_[deg] % deg;
+	      o << fmt.str ();
+	    }
+	  o << decindent;
 
-        o << "Second derivative:" << iendl;
-        o << dDCoeffs_[0];
-        for(typename vector_t::Index deg = 1; deg < dDCoeffs_.size (); ++deg)
-	      {
-	        fmt % dDCoeffs_[deg] % deg;
-	        o << fmt.str ();
-	      }
-        o << iendl;
+	  o << iendl << "First derivative:" << incindent;
+	  o << iendl << dCoeffs_[0];
+	  for (typename vector_t::Index deg = 1; deg < dCoeffs_.size (); ++deg)
+	    {
+	      fmt % dCoeffs_[deg] % deg;
+	      o << fmt.str ();
+	    }
+	  o << decindent;
 
-        return o;
-      }
+	  o << iendl << "Second derivative:" << incindent;
+	  o << iendl << dDCoeffs_[0];
+	  for(typename vector_t::Index deg = 1; deg < dDCoeffs_.size (); ++deg)
+	    {
+	      fmt % dDCoeffs_[deg] % deg;
+	      o << fmt.str ();
+	    }
+	  o << decindent;
+
+	  o << decindent;
+
+	  return o;
+	}
       catch (std::exception& e)
-      {
-        o << "Failed to display function, formatting error." << e.what ();
-        return o;
-      }
+	{
+	  o << "Failed to display function, formatting error." << e.what ();
+	  return o;
+	}
     }
 
   protected:
