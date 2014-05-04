@@ -22,6 +22,54 @@
 
 namespace roboptim
 {
+  namespace detail
+  {
+    /// \brief Print the value of a state parameter.
+    /// \tparam T value type.
+    /// \param val value.
+    /// \return string describing the value.
+    template <typename T>
+    void StateParameterPrint (std::ostream& o, T val)
+    {
+      o << val;
+    }
+
+    template <>
+    inline void StateParameterPrint<bool> (std::ostream& o, bool val)
+    {
+      o << (val ? "true" : "false");
+    }
+
+    /// \brief Visitor used to print state parameters (variant).
+    /// \tparam F function type.
+    struct StateParameterPrintVisitor : boost::static_visitor<void>
+    {
+      StateParameterPrintVisitor (std::ostream& o)
+        : boost::static_visitor<void> (),
+          o_ (o)
+      {
+      }
+
+      template <typename T>
+      void operator () (T val) const
+      {
+        StateParameterPrint<T> (o_, val);
+      }
+
+      std::ostream& o_;
+    };
+  } // end of namespace detail
+
+  template <typename F>
+  std::ostream&
+  StateParameter<F>::print (std::ostream& o) const throw ()
+  {
+    o << "(" << description << ")" << ": ";
+    boost::apply_visitor (detail::StateParameterPrintVisitor (o), value);
+
+    return o;
+  }
+
   template <typename P>
   SolverState<P>::SolverState (const problem_t& pb) throw ()
     : boost::noncopyable (),
@@ -137,8 +185,7 @@ namespace roboptim
         typedef const std::pair<const std::string, StateParameter<function_t> >
           const_iterator_t;
         BOOST_FOREACH (const_iterator_t& it, parameters_)
-          o << iendl << it.first << " (" << it.second.description << ")"
-            << ": " << it.second.value;
+          o << iendl << it.first << " " << it.second;
         o << decindent;
       }
     o << decindent;

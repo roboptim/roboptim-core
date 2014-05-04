@@ -55,6 +55,11 @@ namespace roboptim
     typedef boost::variant<value_type, vector_t,
                            int, std::string, bool> stateParameterValues_t;
 
+    /// \brief Display the solver parameter on the specified output stream.
+    /// \param o output stream used for display
+    /// \return output stream
+    virtual std::ostream& print (std::ostream&) const throw ();
+
     /// \brief Parameter description (for humans).
     std::string description;
 

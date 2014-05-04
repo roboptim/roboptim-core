@@ -113,6 +113,16 @@ public:
     // set dummy solver state
     solverState_.x ().setZero ();
     solverState_.cost () = 0.;
+    solverState_.parameters ()["data.string"].value = std::string ("dummy data");
+    solverState_.parameters ()["data.string"].description = "dummy string";
+    solverState_.parameters ()["data.int"].value = int (10);
+    solverState_.parameters ()["data.int"].description = "dummy integer";
+    solverState_.parameters ()["data.double"].value = double (42.);
+    solverState_.parameters ()["data.double"].description = "dummy double";
+    solverState_.parameters ()["data.bool"].value = bool (true);
+    solverState_.parameters ()["data.bool"].description = "dummy bool";
+    solverState_.parameters ()["data.vector"].value = solverState_.x ();
+    solverState_.parameters ()["data.vector"].description = "dummy vector";
 
     // call user-defined callback
     if (callback_)
