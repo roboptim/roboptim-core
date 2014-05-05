@@ -210,7 +210,7 @@ namespace roboptim
     hessian.coeffRef (0, 0) = applyPolynomial (dDCoeffs_, x);
   }
 
-  /// Example shows constant function use.
+  /// Example shows polynomial function use.
   /// \example function-polynomial.cc
 
   /// @}
