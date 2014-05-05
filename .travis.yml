@@ -10,6 +10,7 @@ env:
     - secure: "ZKC2yAvUcDb2nyrZQNqpLgEbi2pYFSKDn/+xIj9ZH+5nkn6iA5RT4AunK13qxuBkjIr2HJcUBtMFvk/mfpvpWynX+v9i3OhpVZCbkmcjQrATjiUcG6r95oEcex7NAM5uKd/41CqV/0fzTPc3uJgPozDJlt0wsBmCEarHiRNAoo0="
     - APT_DEPENDENCIES="doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev"
     - GIT_DEPENDENCIES=""
+    - GH_REPO=roboptim/roboptim-core
     - DEBSIGN_KEYID=5AE5CD75
     - PPA_URI="roboptim/ppa"
     - LCOV_IGNORE_RULES="*tests*"
