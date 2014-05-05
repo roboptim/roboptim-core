@@ -72,27 +72,39 @@ namespace roboptim
   /// \brief Compare dense vectors (matrices) using both relative and absolute
   /// tolerances.
   /// \see http://stackoverflow.com/a/15052131/1043187
-  template<typename DerivedA, typename DerivedB>
+  template <typename DerivedA, typename DerivedB>
   bool allclose
   (const Eigen::DenseBase<DerivedA>& a,
    const Eigen::DenseBase<DerivedB>& b,
    const typename DerivedA::RealScalar& rtol
-   = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
+   = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision (),
    const typename DerivedA::RealScalar& atol
-   = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon());
+   = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon ());
 
   /// \brief Compare sparse vectors (matrices) using both relative and absolute
   /// tolerances.
   /// \see http://stackoverflow.com/a/15052131/1043187
-  template<typename DerivedA, typename DerivedB>
+  template <typename DerivedA, typename DerivedB>
   bool allclose
   (const Eigen::SparseMatrixBase<DerivedA>& a,
    const Eigen::SparseMatrixBase<DerivedB>& b,
    const typename DerivedA::RealScalar& rtol
-   = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
+   = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision (),
    const typename DerivedA::RealScalar& atol
-   = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon());
+   = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon ());
 
+  /// \brief Copy a sparse block into a sparse matrix.
+  /// \param matrix matrix to fill.
+  /// \param block block to copy.
+  /// \param startRow start row of the block.
+  /// \param startCol start col of the block.
+  /// \param compress whether to compress the sparse matrix at the end.
+  template <typename U>
+  void copySparseBlock
+  (U& matrix,
+   const U& block,
+   Function::size_type startRow, Function::size_type startCol,
+   bool compress = false);
 } // end of namespace roboptim.
 
 # include <roboptim/core/util.hxx>

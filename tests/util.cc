@@ -85,6 +85,28 @@ BOOST_AUTO_TEST_CASE (util)
   detail::array_to_vector (eigen_vec2, stl_vec.data ());
   BOOST_CHECK (allclose (eigen_vec, eigen_vec2));
 
+  // Test sparse block copy
+  GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparse_c (5,5);
+  GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparse_d (5,5);
+  GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparse_block (2,2);
+  sparse_block.coeffRef (0, 0) = 42.;
+  sparse_block.coeffRef (1, 0) = 2.;
+  sparse_block.coeffRef (1, 1) = -1.;
+  sparse_c = sparse_a;
+  sparse_d = sparse_a;
+  BOOST_CHECK (allclose (sparse_c, sparse_d));
+  Eigen::SparseMatrix<double>::Index startRow = 2;
+  Eigen::SparseMatrix<double>::Index startCol = 1;
+  for (Eigen::SparseMatrix<double>::Index i = 0; i < sparse_block.rows (); ++i)
+    for (Eigen::SparseMatrix<double>::Index j = 0; j < sparse_block.cols (); ++j)
+      sparse_d.coeffRef (startRow + i, startCol + j) = sparse_block.coeffRef (i, j);
+  copySparseBlock (sparse_c, sparse_block, startRow, startCol);
+  BOOST_CHECK (allclose (sparse_c, sparse_d));
+  sparse_c.setZero ();
+  sparse_c = sparse_a;
+  copySparseBlock (sparse_c, sparse_block, startRow, startCol, true);
+  BOOST_CHECK (allclose (sparse_c, sparse_d));
+
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }

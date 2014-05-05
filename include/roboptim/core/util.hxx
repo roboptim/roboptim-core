@@ -95,11 +95,11 @@ namespace roboptim
    const typename DerivedA::RealScalar& rtol,
    const typename DerivedA::RealScalar& atol)
   {
-    assert(a.cols() == b.cols());
-    assert(a.rows() == b.rows());
+    assert (a.cols () == b.cols ());
+    assert (a.rows () == b.rows ());
 
-    return ((a.derived() - b.derived()).array().abs()
-            <= (atol + rtol * b.derived().array().abs())).all();
+    return ((a.derived () - b.derived ()).array ().abs ()
+            <= (atol + rtol * b.derived ().array ().abs ())).all ();
   }
 
   template<typename DerivedA, typename DerivedB>
@@ -109,24 +109,24 @@ namespace roboptim
    const typename DerivedA::RealScalar& rtol,
    const typename DerivedA::RealScalar& atol)
   {
-    assert(a.cols() == b.cols());
-    assert(a.rows() == b.rows());
-    assert(a.outerSize() == b.outerSize());
+    assert (a.cols () == b.cols ());
+    assert (a.rows () == b.rows ());
+    assert (a.outerSize () == b.outerSize ());
 
-    for (int k = 0; k < a.outerSize(); ++k)
+    for (int k = 0; k < a.outerSize (); ++k)
       {
 	// Iterator over a
-	typename DerivedA::InnerIterator it_a(a.derived(),k);
+	typename DerivedA::InnerIterator it_a (a.derived (), k);
 	// Iterator over b
-	typename DerivedB::InnerIterator it_b(b.derived(),k);
+	typename DerivedB::InnerIterator it_b (b.derived (), k);
 
 	while (it_a && it_b)
           {
-	    assert(it_a.col() == it_b.col());
-	    assert(it_a.row() == it_b.row());
+	    assert (it_a.col () == it_b.col ());
+	    assert (it_a.row () == it_b.row ());
 
-	    if(fabs(it_a.value() - it_b.value())
-	       > atol + rtol * fabs(it_b.value()))
+	    if (std::abs (it_a.value () - it_b.value ())
+		> atol + rtol * std::abs (it_b.value ()))
 	      return false;
 
 	    ++it_a;
@@ -136,6 +136,38 @@ namespace roboptim
     return true;
   }
 
+
+  template <typename U>
+  void copySparseBlock
+  (U& matrix,
+   const U& block,
+   Function::size_type startRow, Function::size_type startCol,
+   bool compress)
+  {
+    typedef U matrix_t;
+    typedef typename U::Index index_t;
+
+    // Make sure that the block fits in the matrix
+    assert (startRow + block.rows () <= matrix.rows ());
+    assert (startCol + block.cols () <= matrix.cols ());
+
+    // Iterate over outer size
+    for (int k = 0; k < block.outerSize (); ++k)
+      {
+	// Iterator over inner size
+	for (typename matrix_t::InnerIterator it (block.derived (), k);
+	     it; ++it)
+          {
+	    matrix.coeffRef (static_cast<index_t> (startRow + it.row ()),
+			     static_cast<index_t> (startCol + it.col ()))
+	      = it.value ();
+          }
+      }
+
+    // Compress sparse matrix if asked
+    if (compress)
+      matrix.makeCompressed ();
+  }
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_UTIL_HXX
