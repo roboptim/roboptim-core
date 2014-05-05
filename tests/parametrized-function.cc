@@ -31,7 +31,7 @@ struct ParametrizedF : public ParametrizedFunction<ConstantFunction>
   ParametrizedF () : ParametrizedFunction<ConstantFunction> (1, 1, 1)
   {}
 
-  result_t impl_compute (const argument_t& argument) const throw ()
+  result_t impl_compute (const argument_t& argument) const
   {
     return result_t (argument);
   }

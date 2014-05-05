@@ -472,24 +472,24 @@ namespace roboptim
     }
 
   protected:
-    const solver_t& solver () const throw ()
+    const solver_t& solver () const
     {
       solver_;
     }
-    solver_t& solver () throw ()
+    solver_t& solver ()
     {
       solver_;
     }
 
-    boost::filesystem::path& path () const throw ()
+    boost::filesystem::path& path () const
     {
       return path_;
     }
-    boost::filesystem::path& path () throw ()
+    boost::filesystem::path& path ()
     {
       return path_;
     }
-    unsigned callbackCallId () const throw ()
+    unsigned callbackCallId () const
     {
       return callbackCallId_;
     }

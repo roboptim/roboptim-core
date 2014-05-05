@@ -28,7 +28,7 @@
 namespace roboptim
 {
   Result::Result (const size_type inputSize_,
-                  const size_type outputSize_) throw ()
+                  const size_type outputSize_)
     : inputSize (inputSize_),
       outputSize (outputSize_),
       x (inputSize),
@@ -42,12 +42,12 @@ namespace roboptim
     lambda.setZero ();
   }
 
-  Result::~Result () throw ()
+  Result::~Result ()
   {
   }
 
   std::ostream&
-  Result::print (std::ostream& o) const throw ()
+  Result::print (std::ostream& o) const
   {
     o << "Result: " << incindent << iendl
       << "Size (input, output): " << inputSize << ", " << outputSize << iendl

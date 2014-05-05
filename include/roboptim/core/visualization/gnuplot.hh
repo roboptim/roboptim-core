@@ -92,12 +92,12 @@ namespace roboptim
     class ROBOPTIM_DLLAPI Gnuplot
     {
     public:
-      ~Gnuplot () throw ();
+      ~Gnuplot ();
 
       /// \brief Instanciate a Gnuplot without setting a term.
       /// \param with_header whether to print the header or not
       /// \return Gnuplot instance
-      static Gnuplot make_gnuplot (bool with_header = true) throw ()
+      static Gnuplot make_gnuplot (bool with_header = true)
       {
 	return Gnuplot (with_header);
       }
@@ -108,7 +108,7 @@ namespace roboptim
       /// suitable for user interaction.
       /// \param with_header whether to print the header or not
       /// \return Gnuplot instance
-      static Gnuplot make_interactive_gnuplot (bool with_header = true) throw ()
+      static Gnuplot make_interactive_gnuplot (bool with_header = true)
       {
 	Gnuplot gp(with_header);
 	gp.push_command (gnuplot::set ("terminal", "wxt persist"));
@@ -117,23 +117,23 @@ namespace roboptim
 
       /// \brief Add a new Gnuplot command to the script.
       /// \param cmd command that will be pushed
-      void push_command (gnuplot::Command cmd) throw ();
+      void push_command (gnuplot::Command cmd);
 
 
       /// \brief Display the Gnuplot script on the specified output stream.
       ///
       /// \param o output stream used for display
       /// \return output stream
-      std::ostream& print (std::ostream&) const throw ();
+      std::ostream& print (std::ostream&) const;
 
-      Gnuplot& operator << (gnuplot::Command) throw ();
+      Gnuplot& operator << (gnuplot::Command);
 
     protected:
       /// \brief Default constructor can not be called directly.
       ///
       /// Use of the named constructor (see static methods) to
       /// instantiate this class.
-      explicit Gnuplot (bool with_header = true) throw ();
+      explicit Gnuplot (bool with_header = true);
     private:
       /// \brief Vector of commands.
       std::vector<gnuplot::Command> commands_;

@@ -103,7 +103,7 @@ namespace roboptim
     /// \brief Instantiate a solver from a problem.
     ///
     /// \param problem problem that should be solved
-    explicit Solver (const problem_t& problem) throw ();
+    explicit Solver (const problem_t& problem);
 
 
     /// \brief Instantiate a solver from a problem in a different problem class.
@@ -122,18 +122,18 @@ namespace roboptim
     /// \tparam C_ original constraints functions type
     /// \param problem problem that should be solved
     template <typename F_, typename C_>
-    explicit Solver (const Problem<F_, C_>& problem) throw ();
+    explicit Solver (const Problem<F_, C_>& problem);
 
-    virtual ~Solver () throw ();
+    virtual ~Solver ();
 
     /// \brief Retrieve the problem.
     /// \return problem this solver is solving
-    const problem_t& problem () const throw ();
+    const problem_t& problem () const;
 
     /// \name Parameters
     /// \{
-    const parameters_t& parameters () const throw ();
-    parameters_t& parameters () throw ();
+    const parameters_t& parameters () const;
+    parameters_t& parameters ();
 
     template <typename T>
     const T& getParameter (const std::string& key) const;
@@ -141,8 +141,8 @@ namespace roboptim
 
     /// \name Plugin name
     /// \{
-    const std::string& pluginName () const throw ();
-    std::string& pluginName () throw ();
+    const std::string& pluginName () const;
+    std::string& pluginName ();
     /// \}
 
     /// \brief Set the per-iteration callback.
@@ -153,8 +153,9 @@ namespace roboptim
     /// Not all the solvers support such a callback so this method may
     /// throw a std::runtime_error to let you know this feature is
     /// unsupported.
+    /// \throw std::runtime_error
     virtual void
-    setIterationCallback (callback_t /*callback*/) throw (std::runtime_error)
+    setIterationCallback (callback_t /*callback*/)
     {
       throw std::runtime_error
 	("iteration callback is not supported by this solver");
@@ -164,7 +165,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
   protected:
     /// \brief Problem that will be solved.

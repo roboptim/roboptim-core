@@ -28,15 +28,15 @@ namespace roboptim
   {
     namespace gnuplot
     {
-      Command::Command (std::string cmd) throw ()
+      Command::Command (std::string cmd)
 	: command_ (cmd)
       {}
 
-      Command::~Command () throw ()
+      Command::~Command ()
       {}
 
       const std::string&
-      Command::command () const throw ()
+      Command::command () const
       {
 	return command_;
       }
@@ -44,14 +44,14 @@ namespace roboptim
 
 # define GNUPLOT_UNARY_COMMAND(NAME)		\
       Command					\
-      NAME () throw ()				\
+      NAME ()				\
       {						\
 	return Command (#NAME);			\
       }
 
 # define GNUPLOT_STR_COMMAND(NAME, ARG)		\
       Command					\
-      NAME (const char* ARG) throw ()		\
+      NAME (const char* ARG)		\
       {						\
 	std::string command = #NAME;		\
 	if (*ARG != 0)				\
@@ -64,7 +64,7 @@ namespace roboptim
       }
 
       Command
-      comment (const char* content) throw (std::runtime_error)
+      comment (const char* content)
       {
 	std::string str = "#";
 	str += content;
@@ -72,7 +72,7 @@ namespace roboptim
       }
 
       Command
-      set (const char* var, const char* value) throw (std::runtime_error)
+      set (const char* var, const char* value)
       {
         if (!*value)
 	  {
@@ -94,7 +94,7 @@ namespace roboptim
       }
 
       Command
-      unset (const char* var) throw (std::runtime_error)
+      unset (const char* var)
       {
         boost::format fmt ("unset %1%");
         // Ignore some irrelevant exceptions
@@ -106,7 +106,7 @@ namespace roboptim
       }
 
       Command
-      show (const char* var) throw (std::runtime_error)
+      show (const char* var)
       {
         boost::format fmt ("show %1%");
         // Ignore some irrelevant exceptions

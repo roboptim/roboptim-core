@@ -36,7 +36,7 @@ struct F : public Function
   {}
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result (0) = argument[0] * argument[3]
       * (argument[0] + argument[1] + argument[2]) + argument[3];

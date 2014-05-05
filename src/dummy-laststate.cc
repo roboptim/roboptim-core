@@ -25,7 +25,7 @@
 
 namespace roboptim
 {
-  DummySolverLastState::DummySolverLastState (const problem_t& pb) throw ()
+  DummySolverLastState::DummySolverLastState (const problem_t& pb)
     : parent_t (pb)
   {
     parameters_["dummy-parameter"].description = "dummy parameter";
@@ -38,12 +38,12 @@ namespace roboptim
     parameters_["dummy-parameter3"].value = "...and a dummy value!";
   }
 
-  DummySolverLastState::~DummySolverLastState () throw ()
+  DummySolverLastState::~DummySolverLastState ()
   {
   }
 
   void
-  DummySolverLastState::solve () throw ()
+  DummySolverLastState::solve ()
   {
     // Set some dummy values for the last state of the solver
     Result res (1, 1);

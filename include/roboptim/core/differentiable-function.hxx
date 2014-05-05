@@ -27,7 +27,6 @@ namespace roboptim
   template <typename T>
   GenericDifferentiableFunction<T>::GenericDifferentiableFunction
   (size_type inputSize, size_type outputSize, std::string name)
-    throw (std::runtime_error)
     : GenericFunction<T> (inputSize, outputSize, name)
   {
   }
@@ -36,7 +35,7 @@ namespace roboptim
   inline void
   GenericDifferentiableFunction<EigenMatrixSparse>::impl_jacobian
   (jacobian_t& jacobian, const argument_t& argument)
-    const throw ()
+    const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     Eigen::internal::set_is_malloc_allowed (true);
@@ -64,7 +63,7 @@ namespace roboptim
   void
   GenericDifferentiableFunction<T>::impl_jacobian (jacobian_t& jacobian,
 						   const argument_t& argument)
-    const throw ()
+    const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     Eigen::internal::set_is_malloc_allowed (true);
@@ -75,7 +74,7 @@ namespace roboptim
 
   template <typename T>
   std::ostream&
-  GenericDifferentiableFunction<T>::print (std::ostream& o) const throw ()
+  GenericDifferentiableFunction<T>::print (std::ostream& o) const
   {
     if (this->getName ().empty ())
       return o << "Differentiable function";

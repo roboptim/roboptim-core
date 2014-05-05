@@ -21,13 +21,13 @@
 
 namespace roboptim
 {
-  SolverWarning::SolverWarning (const std::string& msg) throw ()
+  SolverWarning::SolverWarning (const std::string& msg)
     : SolverError (msg)
   {
   }
 
   std::ostream&
-  SolverWarning::print (std::ostream& o) const throw ()
+  SolverWarning::print (std::ostream& o) const
   {
     return o << what ();
   }

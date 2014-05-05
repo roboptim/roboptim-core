@@ -58,7 +58,7 @@ namespace roboptim
     /// \brief Display the solver parameter on the specified output stream.
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
     /// \brief Parameter description (for humans).
     std::string description;
@@ -93,36 +93,45 @@ namespace roboptim
     /// \brief Instantiate a solver from a problem.
     ///
     /// \param problem problem that should be solved
-    explicit SolverState (const problem_t& problem) throw ();
+    explicit SolverState (const problem_t& problem);
 
-    virtual ~SolverState () throw ();
+    virtual ~SolverState ();
 
     /// \brief Retrieve the current optimization parameters.
     /// \return current optimization parameters
-    const vector_t& x () const throw ();
-    vector_t& x () throw ();
+    const vector_t& x () const;
+    vector_t& x ();
 
     /// \brief Retrieve the current cost.
     /// \return current cost
-    const boost::optional<value_type>& cost () const throw ();
-    boost::optional<value_type>& cost () throw ();
+    const boost::optional<value_type>& cost () const;
+    boost::optional<value_type>& cost ();
 
     /// \brief Retrieve the current constraint violation.
     /// \return current constraint violation
-    const boost::optional<value_type>& constraintViolation () const throw ();
-    boost::optional<value_type>& constraintViolation () throw ();
+    const boost::optional<value_type>& constraintViolation () const;
+    boost::optional<value_type>& constraintViolation ();
 
     /// \name Parameters
     /// \{
-    const parameters_t& parameters () const throw ();
-    parameters_t& parameters () throw ();
+    const parameters_t& parameters () const;
+    parameters_t& parameters ();
 
+    /// \brief Get a parameter.
+    /// \tparam T parameter type.
+    /// \param key parameter key.
+    /// \return parameter.
+    /// \throw std::out_of_range
     template <typename T>
-    const T& getParameter (const std::string& key) const
-      throw (std::out_of_range);
+    const T& getParameter (const std::string& key) const;
 
+    /// \brief Get a parameter.
+    /// \tparam T parameter type.
+    /// \param key parameter key.
+    /// \return parameter.
+    /// \throw std::out_of_range
     template <typename T>
-    T& getParameter (const std::string& key) throw (std::out_of_range);
+    T& getParameter (const std::string& key);
     /// \}
 
 
@@ -130,7 +139,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
   protected:
     /// \brief Current optimization parameters.

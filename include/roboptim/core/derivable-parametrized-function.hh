@@ -62,7 +62,7 @@ namespace roboptim
     /// \brief Return the gradient size.
     ///
     /// Gradient size is equals to the input size.
-    size_type gradientSize () const throw ()
+    size_type gradientSize () const
     {
       return this->inputSize ();
     }
@@ -70,7 +70,7 @@ namespace roboptim
     /// \brief Return the jacobian size as a pair.
     ///
     /// Gradient size is equals to (output size, input size).
-    jacobianSize_t jacobianSize () const throw ()
+    jacobianSize_t jacobianSize () const
     {
       return std::make_pair (this->inputSize (),
 			     this->functionOutputSize ());
@@ -79,7 +79,7 @@ namespace roboptim
     /// \brief Check if the gradient is valid (check size).
     /// \param gradient checked gradient
     /// \return true if valid, false if not
-    bool isValidGradient (const gradient_t& gradient) const throw ()
+    bool isValidGradient (const gradient_t& gradient) const
     {
       return gradient.size () == this->gradientSize ();
     }
@@ -88,7 +88,7 @@ namespace roboptim
     ///
     /// \param jacobian checked jacobian
     /// \return true if valid, false if not
-    bool isValidJacobian (const jacobian_t& jacobian) const throw ()
+    bool isValidJacobian (const jacobian_t& jacobian) const
     {
       return jacobian.rows () == this->jacobianSize ().first
 	&& jacobian.cols () == this->jacobianSize ().second;
@@ -100,7 +100,7 @@ namespace roboptim
     /// \param order derivation order
     /// \return jacobian matrix
     jacobian_t jacobian (const argument_t& argument, size_type order = 0)
-      const throw ()
+      const
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
       jacobian.setZero ();
@@ -116,7 +116,7 @@ namespace roboptim
     /// \param order derivation order
     /// \param argument inner function point argument value
     void jacobian (jacobian_t& jacobian, const argument_t& argument,
-		   size_type order = 0) const throw ()
+		   size_type order = 0) const
     {
       assert (argument.size () == this->inputSize ());
       assert (this->isValidJacobian (jacobian));
@@ -132,7 +132,7 @@ namespace roboptim
     /// \return gradient vector
     gradient_t gradient (const argument_t& argument,
 			 size_type functionId = 0,
-			 size_type order = 0) const throw ()
+			 size_type order = 0) const
     {
       gradient_t gradient (gradientSize ());
       gradient.setZero ();
@@ -152,7 +152,7 @@ namespace roboptim
     void gradient (gradient_t& gradient,
 		   const argument_t& argument,
 		   size_type functionId = 0,
-		   size_type order = 0) const throw ()
+		   size_type order = 0) const
     {
       assert (argument.size () == this->inputSize ());
       assert (this->isValidGradient (gradient));
@@ -164,7 +164,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ()
+    virtual std::ostream& print (std::ostream& o) const
     {
       return o << "Derivable parametrized function";
     }
@@ -177,7 +177,7 @@ namespace roboptim
     /// \param functionOutputSize inner function result size
     DerivableParametrizedFunction (size_type inputSize,
 			  size_type functionInputSize,
-			  size_type functionOutputSize) throw ()
+			  size_type functionOutputSize)
       : ParametrizedFunction<F> (inputSize,
 				 functionInputSize,
 				 functionOutputSize)
@@ -192,7 +192,7 @@ namespace roboptim
     /// \param jacobian jacobian will be store in this argument
     /// \param arg point where the jacobian will be computed
     virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
-      const throw ()
+      const
     {
       for (size_type i = 0; i < this->functionOutputSize (); ++i)
 	{
@@ -216,7 +216,7 @@ namespace roboptim
 				const argument_t& argument,
 				size_type functionId = 0,
 				size_type order = 0)
-      const throw () = 0;
+      const = 0;
   };
 
   /// @}

@@ -38,7 +38,7 @@ struct F : public Function
   {}
 
   void impl_compute (result_t& res,
-                     const argument_t& x) const throw ()
+                     const argument_t& x) const
   {
     res (0) = x[0];
   }
@@ -53,17 +53,17 @@ public:
   typedef parent_solver_t parent_t;
   typedef Function::argument_t argument_t;
 
-  NullSolver (const problem_t& pb) throw ()
+  NullSolver (const problem_t& pb)
     : parent_t (pb)
   {
   }
 
-  ~NullSolver () throw ()
+  ~NullSolver ()
   {
   }
 
   void
-  solve () throw ()
+  solve ()
   {
     (*output) << "solve ()" << std::endl;
 

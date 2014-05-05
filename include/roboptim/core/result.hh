@@ -49,15 +49,15 @@ namespace roboptim
     /// \param inputSize input size value
     /// \param outputSize output size value
     explicit Result (const size_type inputSize,
-		     const size_type outputSize = 1) throw ();
+		     const size_type outputSize = 1);
 
-    virtual ~Result () throw ();
+    virtual ~Result ();
 
     /// \brief Display the result on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ();
+    virtual std::ostream& print (std::ostream& o) const;
 
     /// \brief Input size (i.e. argument size).
     size_type inputSize;

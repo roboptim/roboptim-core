@@ -41,15 +41,15 @@ namespace roboptim
 
     /// \brief Build a solver from a problem.
     /// \param problem problem that will be solved
-    explicit DummySolverTd (const problem_t& problem) throw ();
+    explicit DummySolverTd (const problem_t& problem);
 
-    virtual ~DummySolverTd () throw ();
+    virtual ~DummySolverTd ();
 
     /// \brief Implement the solve algorithm.
     ///
     /// Implement the solve method as required by the
     /// #GenericSolver class.
-    virtual void solve () throw ();
+    virtual void solve ();
   };
 
 } // end of namespace roboptim

@@ -44,20 +44,18 @@ namespace roboptim
     /// See class documentation for A and b definition.
     /// \param A A matrix
     /// \param b b vector
-    GenericNumericLinearFunction (const matrix_t& A, const vector_t& b)
-      throw ();
+    GenericNumericLinearFunction (const matrix_t& A, const vector_t& b);
 
     /// \brief Build a linear function from another one.
-    GenericNumericLinearFunction (const GenericLinearFunction<T>&)
-      throw ();
+    GenericNumericLinearFunction (const GenericLinearFunction<T>&);
 
-    ~GenericNumericLinearFunction () throw ();
+    ~GenericNumericLinearFunction ();
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
     const matrix_t& A () const
     {
@@ -80,10 +78,10 @@ namespace roboptim
     }
 
 
-    void impl_compute (result_t& , const argument_t&) const throw ();
+    void impl_compute (result_t& , const argument_t&) const;
     void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
-      const throw ();
-    void impl_jacobian (jacobian_t&, const argument_t&) const throw ();
+      const;
+    void impl_jacobian (jacobian_t&, const argument_t&) const;
 
   private:
     /// \brief A matrix.

@@ -25,7 +25,7 @@ namespace roboptim
   template <typename T>
   GenericLinearFunction<T>::GenericLinearFunction (size_type inputSize,
 						   size_type outputSize,
-						   std::string name) throw ()
+						   std::string name)
     : GenericQuadraticFunction<T> (inputSize, outputSize, name)
   {}
 
@@ -33,14 +33,14 @@ namespace roboptim
   void
   GenericLinearFunction<T>::impl_hessian (hessian_t& hessian,
 					  const argument_t&,
-					  size_type) const throw ()
+					  size_type) const
   {
     this->setZero (hessian);
   }
 
   template <typename T>
   std::ostream&
-  GenericLinearFunction<T>::print (std::ostream& o) const throw ()
+  GenericLinearFunction<T>::print (std::ostream& o) const
   {
     if (this->getName ().empty ())
       return o << "Linear function";

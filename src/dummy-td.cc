@@ -25,7 +25,7 @@
 
 namespace roboptim
 {
-  DummySolverTd::DummySolverTd (const problem_t& pb) throw ()
+  DummySolverTd::DummySolverTd (const problem_t& pb)
     : parent_t (pb)
   {
     parameters_["dummy-parameter"].description = "dummy parameter";
@@ -38,12 +38,12 @@ namespace roboptim
     parameters_["dummy-parameter3"].value = "...and a dummy value!";
   }
 
-  DummySolverTd::~DummySolverTd () throw ()
+  DummySolverTd::~DummySolverTd ()
   {
   }
 
   void
-  DummySolverTd::solve () throw ()
+  DummySolverTd::solve ()
   {
     result_ = SolverError ("The dummy solver always fail.");
   }

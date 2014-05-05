@@ -129,16 +129,16 @@ namespace roboptim
     /// \{
 
     /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
-    explicit Problem (const function_t&) throw ();
+    explicit Problem (const function_t&);
 
     /// \brief Copy constructor.
-    explicit Problem (const Problem<F, boost::mpl::vector<> >&) throw ();
+    explicit Problem (const Problem<F, boost::mpl::vector<> >&);
 
     /// \brief Copy constructor (convert from another class of problem).
     template <typename F_>
-    explicit Problem (const Problem<F_, boost::mpl::vector<> >&) throw ();
+    explicit Problem (const Problem<F_, boost::mpl::vector<> >&);
 
-    ~Problem () throw ();
+    ~Problem ();
 
     /// \}
 
@@ -148,31 +148,31 @@ namespace roboptim
 
     /// \brief Retrieve cost function.
     /// \return cost function
-    const function_t& function () const throw ();
+    const function_t& function () const;
 
     /// \brief Retrieve arguments bounds.
     /// Arguments bounds define in which interval
     /// each argument is valid.
     /// \return arguments bounds
-    intervals_t& argumentBounds () throw ();
+    intervals_t& argumentBounds ();
 
     /// \brief Retrieve arguments bounds.
     /// Arguments bounds define in which interval
     /// each argument is valid.
     /// \return arguments bounds
-    const intervals_t& argumentBounds () const throw ();
+    const intervals_t& argumentBounds () const;
 
     /// \brief Retrieve arguments scales.
     /// Arguments scales define which scale is applied for
     /// each argument.
     /// \return arguments scales
-    scales_t& argumentScales () throw ();
+    scales_t& argumentScales ();
 
     /// \brief Retrieve arguments scales.
     /// Arguments scales define which scale is applied for
     /// each argument.
     /// \return arguments scales
-    const scales_t& argumentScales () const throw ();
+    const scales_t& argumentScales () const;
 
     /// \}
 
@@ -181,11 +181,13 @@ namespace roboptim
 
     /// \brief Set the initial guess.
     /// \return reference on the initial guess
-    startingPoint_t& startingPoint () throw (std::runtime_error);
+    /// \throw std::runtime_error
+    startingPoint_t& startingPoint ();
 
     /// \brief Get the initial guess.
     /// \return reference on the initial guess
-    const startingPoint_t& startingPoint () const throw (std::runtime_error);
+    /// \throw std::runtime_error
+    const startingPoint_t& startingPoint () const;
 
     /// \}
 
@@ -194,7 +196,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    std::ostream& print (std::ostream& o) const throw ();
+    std::ostream& print (std::ostream& o) const;
 
   private:
     /// \brief Objective function.
@@ -343,16 +345,16 @@ namespace roboptim
     /// \{
 
     /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
-    explicit Problem (const function_t&) throw ();
+    explicit Problem (const function_t&);
 
     /// \brief Copy constructor.
-    explicit Problem (const Problem<F, CLIST>&) throw ();
+    explicit Problem (const Problem<F, CLIST>&);
 
     /// \brief Copy constructor (convert from another class of problem).
     template <typename F_, typename CLIST_>
-    explicit Problem (const Problem<F_, CLIST_>&) throw ();
+    explicit Problem (const Problem<F_, CLIST_>&);
 
-    ~Problem () throw ();
+    ~Problem ();
 
     /// \}
 
@@ -362,31 +364,31 @@ namespace roboptim
 
     /// \brief Retrieve cost function.
     /// \return cost function
-    const function_t& function () const throw ();
+    const function_t& function () const;
 
     /// \brief Retrieve arguments bounds.
     /// Arguments bounds define in which interval
     /// each argument is valid.
     /// \return arguments bounds
-    intervals_t& argumentBounds () throw ();
+    intervals_t& argumentBounds ();
 
     /// \brief Retrieve arguments bounds.
     /// Arguments bounds define in which interval
     /// each argument is valid.
     /// \return arguments bounds
-    const intervals_t& argumentBounds () const throw ();
+    const intervals_t& argumentBounds () const;
 
     /// \brief Retrieve arguments scales.
     /// Arguments scales define which scale is applied for
     /// each argument.
     /// \return arguments scales
-    scales_t& argumentScales () throw ();
+    scales_t& argumentScales ();
 
     /// \brief Retrieve arguments scales.
     /// Arguments scales define which scale is applied for
     /// each argument.
     /// \return arguments scales
-    const scales_t& argumentScales () const throw ();
+    const scales_t& argumentScales () const;
 
     /// \}
 
@@ -396,7 +398,7 @@ namespace roboptim
 
     /// \brief Retrieve constraints.
     /// \return constraints
-    const constraints_t& constraints () const throw ();
+    const constraints_t& constraints () const;
 
     /// \brief Add a constraint to the problem.
     ///
@@ -408,11 +410,11 @@ namespace roboptim
     /// \param interval interval in which the constraint is satisfied
     /// \param scale constraint scale
     /// \tparam C constraint type (has to be in CLIST)
+    /// \throw std::runtime_error
     template <typename C>
     void addConstraint (boost::shared_ptr<C> constraint,
 			interval_t interval,
-			value_type scale = 1.)
-      throw (std::runtime_error);
+			value_type scale = 1.);
 
     /// \brief Add a constraint to the problem.
     ///
@@ -423,19 +425,19 @@ namespace roboptim
     /// is satisfied
     /// \param scale constraint scale
     /// \tparam C constraint type (has to be in CLIST)
+    /// \throw std::runtime_error
     template <typename C>
     void addConstraint (boost::shared_ptr<C> constraint,
 			intervals_t intervals,
-			scales_t scales)
-      throw (std::runtime_error);
+			scales_t scales);
 
     /// \brief Retrieve constraints bounds vector.
     /// \return constraints bounds vector
-    const intervalsVect_t& boundsVector () const throw ();
+    const intervalsVect_t& boundsVector () const;
 
     /// \brief Retrieve constraints scales vector.
     /// \return constraints scales vector
-    const scalesVect_t& scalesVector () const throw ();
+    const scalesVect_t& scalesVector () const;
 
     /// \}
 
@@ -445,11 +447,13 @@ namespace roboptim
 
     /// \brief Set the initial guess.
     /// \return reference on the initial guess
-    startingPoint_t& startingPoint () throw (std::runtime_error);
+    /// \throw std::runtime_error
+    startingPoint_t& startingPoint ();
 
     /// \brief Get the initial guess.
     /// \return reference on the initial guess
-    const startingPoint_t& startingPoint () const throw (std::runtime_error);
+    /// \throw std::runtime_error
+    const startingPoint_t& startingPoint () const;
 
     /// \}
 
@@ -458,7 +462,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    std::ostream& print (std::ostream& o) const throw ();
+    std::ostream& print (std::ostream& o) const;
 
   private:
     /// \brief Objective function.

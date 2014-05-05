@@ -69,7 +69,7 @@ namespace roboptim
     typedef boost::shared_ptr<Derivative> DerivativeShPtr_t;
 
     explicit Derivative (boost::shared_ptr<U> origin,
-			size_type variableId) throw ()
+			size_type variableId)
       : DerivativeParent<U>::result_t
 	(origin->inputSize (),
 	 origin->outputSize (),
@@ -84,7 +84,7 @@ namespace roboptim
       assert (variableId_ < this->inputSize ());
     }
 
-    ~Derivative () throw ()
+    ~Derivative ()
     {}
 
     const boost::shared_ptr<U>& origin () const
@@ -100,7 +100,7 @@ namespace roboptim
   protected:
     // FIXME: this is inefficient.
     void impl_compute (result_t& result, const argument_t& x)
-      const throw ()
+      const
     {
       origin_->jacobian (jacobian_, x);
       result = jacobian_.block (0, variableId_, this->outputSize (), 1);
@@ -109,7 +109,7 @@ namespace roboptim
     void impl_gradient (gradient_t& gradient,
 			const argument_t& x,
 			size_type functionId = 0)
-      const throw ()
+      const
     {
       origin_->hessian (hessian_, x, functionId);
       for (size_type i = 0; i < this->inputSize (); ++i)

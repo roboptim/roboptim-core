@@ -150,14 +150,14 @@ namespace roboptim
     /// floating types comparison.
 
     /// \return machine epsilon value.
-    static value_type epsilon () throw ()
+    static value_type epsilon ()
     {
       return std::numeric_limits<value_type>::epsilon ();
     }
 
     /// \brief Get the value that symbolizes positive infinity.
     /// \return representation of positive infinity in the value type
-    static value_type infinity () throw ()
+    static value_type infinity ()
     {
       return std::numeric_limits<value_type>::infinity ();
     }
@@ -177,7 +177,7 @@ namespace roboptim
     /// \param l lower bound
     /// \param u upper bound
     /// \return interval representing \f$[l, u]\f$
-    static interval_t makeInterval (value_type l, value_type u) throw ()
+    static interval_t makeInterval (value_type l, value_type u)
     {
       assert (l <= u);
       return std::make_pair (l, u);
@@ -185,7 +185,7 @@ namespace roboptim
 
     /// \brief Construct an infinite interval.
     /// \return interval representing \f$[-\infty, +\infty]\f$
-    static interval_t makeInfiniteInterval () throw ()
+    static interval_t makeInfiniteInterval ()
     {
       return std::make_pair (-infinity (), infinity  ());
     }
@@ -193,7 +193,7 @@ namespace roboptim
     /// \brief Construct an interval from a lower bound.
     /// \param l lower bound
     /// \return interval representing \f$[l, +\infty]\f$
-    static interval_t makeLowerInterval (value_type l) throw ()
+    static interval_t makeLowerInterval (value_type l)
     {
       return makeInterval (l, infinity  ());
     }
@@ -201,7 +201,7 @@ namespace roboptim
     /// \brief Construct an interval from an upper bound.
     /// \param u upper bound
     /// \return interval representing \f$[-\infty, u]\f$
-    static interval_t makeUpperInterval (value_type u) throw ()
+    static interval_t makeUpperInterval (value_type u)
     {
       return makeInterval (-infinity  (), u);
     }
@@ -209,7 +209,7 @@ namespace roboptim
     /// \brief Get the lower bound of an interval
     /// \param interval accessed interval
     /// \return lower bound of the interval
-    static double getLowerBound (const interval_t& interval) throw ()
+    static double getLowerBound (const interval_t& interval)
     {
       return interval.first;
     }
@@ -217,7 +217,7 @@ namespace roboptim
     /// \brief Get the upper bound of an interval
     /// \param interval accessed interval
     /// \return upper bound of the interval
-    static double getUpperBound (const interval_t& interval) throw ()
+    static double getUpperBound (const interval_t& interval)
     {
       return interval.second;
     }
@@ -265,7 +265,7 @@ namespace roboptim
     ///
     /// \param interval accessed discrete interval
     /// \return lower bound of the discrete interval
-    static double getLowerBound (const discreteInterval_t& interval) throw ()
+    static double getLowerBound (const discreteInterval_t& interval)
     {
       return boost::get<0> (interval);
     }
@@ -274,7 +274,7 @@ namespace roboptim
     ///
     /// \param interval accessed discrete interval
     /// \return upper bound of the discrete interval
-    static double getUpperBound (const discreteInterval_t& interval) throw ()
+    static double getUpperBound (const discreteInterval_t& interval)
     {
       return boost::get<1> (interval);
     }
@@ -283,7 +283,7 @@ namespace roboptim
     ///
     /// \param interval accessed discrete interval
     /// \return upper step of the discrete interval
-    static double getStep (const discreteInterval_t& interval) throw ()
+    static double getStep (const discreteInterval_t& interval)
     {
       return boost::get<2> (interval);
     }
@@ -356,7 +356,7 @@ namespace roboptim
     ///
     /// \param result result that will be checked
     /// \return true if valid, false if not
-    bool isValidResult (const result_t& result) const throw ()
+    bool isValidResult (const result_t& result) const
     {
       return result.size () == outputSize ();
     }
@@ -364,7 +364,7 @@ namespace roboptim
     /// \brief Return the input size (i.e. argument's vector size).
     ///
     /// \return input size
-    typename GenericFunction<T>::size_type inputSize () const throw ()
+    typename GenericFunction<T>::size_type inputSize () const
     {
       return inputSize_;
     }
@@ -372,13 +372,13 @@ namespace roboptim
     /// \brief Return the output size (i.e. result's vector size).
     ///
     /// \return input size
-    typename GenericFunction<T>::size_type  outputSize () const throw ()
+    typename GenericFunction<T>::size_type  outputSize () const
     {
       return outputSize_;
     }
 
     /// \brief Trivial destructor.
-    virtual ~GenericFunction () throw ();
+    virtual ~GenericFunction ();
 
     /// \brief Evaluate the function at a specified point.
     ///
@@ -386,7 +386,7 @@ namespace roboptim
     /// expected size.
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    result_t operator () (const argument_t& argument) const throw ()
+    result_t operator () (const argument_t& argument) const
     {
       result_t result (outputSize ());
       result.setZero ();
@@ -401,7 +401,7 @@ namespace roboptim
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
     void operator () (result_t& result, const argument_t& argument)
-      const throw ()
+      const
     {
       LOG4CXX_TRACE
 	(logger, "Evaluating function at point: " << argument);
@@ -420,7 +420,7 @@ namespace roboptim
     /// \brief Get function name.
     ///
     /// \return Function name.
-    const std::string& getName () const throw ()
+    const std::string& getName () const
     {
       return name_;
     }
@@ -429,7 +429,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
   protected:
     /// \brief Concrete class constructor should call this constructor.
@@ -437,21 +437,21 @@ namespace roboptim
     /// \param inputSize function arity
     /// \param outputSize result size
     /// \param name function's name
+    /// \throw std::runtime_error
     GenericFunction (size_type inputSize,
                      size_type outputSize = 1,
-                     std::string name = std::string ())
-      throw (std::runtime_error);
+                     std::string name = std::string ());
 
 
     /// \brief Function evaluation.
     ///
     /// Evaluate the function, has to be implemented in concrete
     /// classes.  \warning Do not call this function directly, call
-    /// #operator()(result_t&, const argument_t&) const throw ()
+    /// #operator()(result_t&, const argument_t&) const
     /// instead.  \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
     virtual void impl_compute (result_t& result, const argument_t& argument)
-      const throw () = 0;
+      const = 0;
 
   private:
     /// \brief Problem dimension.
@@ -476,7 +476,6 @@ namespace roboptim
   GenericFunction<T>::GenericFunction (size_type inputSize,
                                        size_type outputSize,
                                        std::string name)
-    throw (std::runtime_error)
     : inputSize_ (inputSize),
       outputSize_ (outputSize),
       name_ (name)
@@ -486,13 +485,13 @@ namespace roboptim
   }
 
   template <typename T>
-  GenericFunction<T>::~GenericFunction () throw ()
+  GenericFunction<T>::~GenericFunction ()
   {
   }
 
   template <typename T>
   std::ostream&
-  GenericFunction<T>::print (std::ostream& o) const throw ()
+  GenericFunction<T>::print (std::ostream& o) const
   {
     if (getName ().empty ())
       return o << "Function";

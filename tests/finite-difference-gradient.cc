@@ -42,20 +42,20 @@ struct FGood : public GenericDifferentiableFunction<T>
   {}
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result (0) = argument[0] * argument[0];
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const throw ();
+		      const argument_t& argument, size_type) const;
 
 };
 
 template <>
 void
 FGood<EigenMatrixSparse>::impl_gradient
-(gradient_t& gradient, const argument_t& argument, size_type) const throw ()
+(gradient_t& gradient, const argument_t& argument, size_type) const
 {
   gradient.insert (0) = 2 * argument[0];
 }
@@ -63,7 +63,7 @@ FGood<EigenMatrixSparse>::impl_gradient
 template <typename T>
 void
 FGood<T>::impl_gradient (gradient_t& gradient,
-			 const argument_t& argument, size_type) const throw ()
+			 const argument_t& argument, size_type) const
 {
   gradient (0) = 2 * argument[0];
 }
@@ -80,19 +80,19 @@ struct FBad : public GenericDifferentiableFunction<T>
   {}
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result (0) = argument[0] * argument[0];
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const throw ();
+		      const argument_t& argument, size_type) const;
 };
 
 template <>
 void
 FBad<EigenMatrixSparse>::impl_gradient
-(gradient_t& gradient, const argument_t& argument, size_type) const throw ()
+(gradient_t& gradient, const argument_t& argument, size_type) const
 {
   gradient.insert (0) = 5 * argument[0] + 42;
 }
@@ -100,7 +100,7 @@ FBad<EigenMatrixSparse>::impl_gradient
 template <typename T>
 void
 FBad<T>::impl_gradient (gradient_t& gradient,
-			const argument_t& argument, size_type) const throw ()
+			const argument_t& argument, size_type) const
 {
   gradient (0) = 5 * argument[0] + 42;
 }
@@ -117,19 +117,19 @@ struct Polynomial : public GenericDifferentiableFunction<T>
   {}
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result (0) = -24 * argument[0] * argument[0] + 33 * argument[0] + 5;
   }
 
   void impl_gradient (gradient_t& gradient,
-		      const argument_t& argument, size_type) const throw ();
+		      const argument_t& argument, size_type) const;
 };
 
 template <>
 void
 Polynomial<EigenMatrixSparse>::impl_gradient
-(gradient_t& gradient, const argument_t& argument, size_type) const throw ()
+(gradient_t& gradient, const argument_t& argument, size_type) const
 {
   gradient.insert (0) = -42 * argument[0] + 33;
 }
@@ -138,7 +138,7 @@ template <typename T>
 void
 Polynomial<T>::impl_gradient (gradient_t& gradient,
 			      const argument_t& argument, size_type)
-  const throw ()
+  const
 {
   gradient (0) = -42 * argument[0] + 33;
 }
@@ -155,7 +155,7 @@ struct CircleXY : public GenericDifferentiableFunction<T>
   {}
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result (0) = sin (argument[0]);
     result (1) = cos (argument[0]);
@@ -163,14 +163,14 @@ struct CircleXY : public GenericDifferentiableFunction<T>
 
   void impl_gradient (gradient_t& result,
 		      const argument_t& argument,
-		      size_type idFunction) const throw ();
+		      size_type idFunction) const;
 };
 
 template <>
 void
 CircleXY<EigenMatrixSparse>::impl_gradient (gradient_t& gradient,
 					    const argument_t& argument,
-					    size_type idFunction) const throw ()
+					    size_type idFunction) const
 {
   switch (idFunction)
     {
@@ -191,7 +191,7 @@ template <typename T>
 void
 CircleXY<T>::impl_gradient (gradient_t& gradient,
 			    const argument_t& argument,
-			    size_type idFunction) const throw ()
+			    size_type idFunction) const
 {
   switch (idFunction)
     {
@@ -220,21 +220,21 @@ struct Times : public GenericDifferentiableFunction<T>
   {}
 
   void impl_compute (result_t& result,
-		     const vector_t& argument) const throw ()
+		     const vector_t& argument) const
   {
     result (0) = argument[0] * argument[1];
   }
 
   void impl_gradient (gradient_t& gradient,
 		      const argument_t& argument,
-		      size_type) const throw ();
+		      size_type) const;
 };
 
 template <>
 void
 Times<EigenMatrixSparse>::impl_gradient (gradient_t& gradient,
 					 const argument_t& argument,
-					 size_type) const throw ()
+					 size_type) const
 {
   gradient.insert (0) = argument[1];
   gradient.insert (1) = argument[0];
@@ -244,7 +244,7 @@ template <typename T>
 void
 Times<T>::impl_gradient (gradient_t& gradient,
 			 const argument_t& argument,
-			 size_type) const throw ()
+			 size_type) const
 {
   gradient (0) = argument[1];
   gradient (1) = argument[0];

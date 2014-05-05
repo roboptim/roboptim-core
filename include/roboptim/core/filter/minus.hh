@@ -36,9 +36,8 @@ namespace roboptim
 
     typedef boost::shared_ptr<Minus> MinusShPtr_t;
 
-    explicit Minus (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
-      throw (std::runtime_error);
-    ~Minus () throw ();
+    explicit Minus (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
+    ~Minus ();
 
     const boost::shared_ptr<U>& left () const
     {
@@ -61,15 +60,15 @@ namespace roboptim
     }
 
     void impl_compute (result_t& result, const argument_t& x)
-      const throw ();
+      const;
 
     void impl_gradient (gradient_t& gradient,
 			const argument_t& argument,
 			size_type functionId = 0)
-      const throw ();
+      const;
     void impl_jacobian (jacobian_t& jacobian,
 			const argument_t& arg)
-      const throw ();
+      const;
   private:
     boost::shared_ptr<U> left_;
     boost::shared_ptr<V> right_;

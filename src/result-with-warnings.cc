@@ -30,14 +30,13 @@ namespace roboptim
 {
   ResultWithWarnings::ResultWithWarnings (const Function::size_type n,
                                           const Function::size_type m)
-    throw ()
     : Result (n, m),
       warnings ()
   {
   }
 
   std::ostream&
-  ResultWithWarnings::print (std::ostream& o) const throw ()
+  ResultWithWarnings::print (std::ostream& o) const
   {
     Result::print (o);
     if (!warnings.empty ())
@@ -45,7 +44,7 @@ namespace roboptim
     return o << incindent << iendl << decindent;
   }
 
-  ResultWithWarnings::~ResultWithWarnings () throw ()
+  ResultWithWarnings::~ResultWithWarnings ()
   {
   }
 

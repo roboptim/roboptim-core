@@ -69,7 +69,7 @@ namespace roboptim
 
   template <typename F>
   std::ostream&
-  StateParameter<F>::print (std::ostream& o) const throw ()
+  StateParameter<F>::print (std::ostream& o) const
   {
     o << "(" << description << ")" << ": ";
     boost::apply_visitor (detail::StateParameterPrintVisitor (o), value);
@@ -78,7 +78,7 @@ namespace roboptim
   }
 
   template <typename P>
-  SolverState<P>::SolverState (const problem_t& pb) throw ()
+  SolverState<P>::SolverState (const problem_t& pb)
     : boost::noncopyable (),
       cost_ (),
       constraintViolation_ ()
@@ -88,62 +88,62 @@ namespace roboptim
   }
 
   template <typename P>
-  SolverState<P>::~SolverState () throw ()
+  SolverState<P>::~SolverState ()
   {
   }
 
   template <typename P>
   const typename SolverState<P>::vector_t&
-  SolverState<P>::x () const throw ()
+  SolverState<P>::x () const
   {
     return x_;
   }
 
   template <typename P>
   typename SolverState<P>::vector_t&
-  SolverState<P>::x () throw ()
+  SolverState<P>::x ()
   {
     return x_;
   }
 
   template <typename P>
   const boost::optional<typename SolverState<P>::value_type>&
-  SolverState<P>::cost () const throw ()
+  SolverState<P>::cost () const
   {
     return cost_;
   }
 
   template <typename P>
   boost::optional<typename SolverState<P>::value_type>&
-  SolverState<P>::cost () throw ()
+  SolverState<P>::cost ()
   {
     return cost_;
   }
 
   template <typename P>
   const boost::optional<typename SolverState<P>::value_type>&
-  SolverState<P>::constraintViolation () const throw ()
+  SolverState<P>::constraintViolation () const
   {
     return constraintViolation_;
   }
 
   template <typename P>
   boost::optional<typename SolverState<P>::value_type>&
-  SolverState<P>::constraintViolation () throw ()
+  SolverState<P>::constraintViolation ()
   {
     return constraintViolation_;
   }
 
   template <typename P>
   const typename SolverState<P>::parameters_t&
-  SolverState<P>::parameters () const throw ()
+  SolverState<P>::parameters () const
   {
     return parameters_;
   }
 
   template <typename P>
   typename SolverState<P>::parameters_t&
-  SolverState<P>::parameters () throw ()
+  SolverState<P>::parameters ()
   {
     return parameters_;
   }
@@ -152,7 +152,6 @@ namespace roboptim
   template <typename T>
   const T&
   SolverState<P>::getParameter (const std::string& key) const
-    throw (std::out_of_range)
   {
     typename parameters_t::const_iterator it = parameters_.find (key);
     if(it == parameters_.end())
@@ -164,7 +163,6 @@ namespace roboptim
   template <typename T>
   T&
   SolverState<P>::getParameter (const std::string& key)
-    throw (std::out_of_range)
   {
     typename parameters_t::iterator it = parameters_.find (key);
     if (it == parameters_.end ())
@@ -174,7 +172,7 @@ namespace roboptim
 
   template <typename P>
   std::ostream&
-  SolverState<P>::print (std::ostream& o) const throw ()
+  SolverState<P>::print (std::ostream& o) const
   {
     o << "Solver state:" << incindent;
 

@@ -24,7 +24,6 @@ namespace roboptim
   template <typename U, typename V>
   Minus<U, V>::Minus
   (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
-    throw (std::runtime_error)
     : detail::PromoteTrait<U, V>::T_promote
       (left->inputSize (),
        left->outputSize (),
@@ -47,14 +46,14 @@ namespace roboptim
   }
 
   template <typename U, typename V>
-  Minus<U, V>::~Minus () throw ()
+  Minus<U, V>::~Minus ()
   {}
 
   template <typename U, typename V>
   void
   Minus<U, V>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     result.setZero ();
     (*left_) (result, x);
@@ -67,7 +66,7 @@ namespace roboptim
   Minus<U, V>::impl_gradient (gradient_t& gradient,
 			 const argument_t& argument,
 			 size_type functionId)
-    const throw ()
+    const
   {
     left_->gradient (gradient, argument, functionId);
     right_->gradient (gradient_, argument, functionId);
@@ -78,7 +77,7 @@ namespace roboptim
   void
   Minus<U, V>::impl_jacobian (jacobian_t& jacobian,
 			 const argument_t& argument)
-    const throw ()
+    const
   {
     left_->jacobian (jacobian, argument);
     right_->jacobian (jacobian_, argument);

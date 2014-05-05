@@ -72,28 +72,28 @@ namespace roboptim
     /// expected size.
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    result_t operator () (const argument_t& argument) const throw ();
+    result_t operator () (const argument_t& argument) const;
 
     /// \brief Return the input size (i.e. argument's vector size).
     ///
     /// \return input size
-    size_type inputSize () const throw ();
+    size_type inputSize () const;
 
     /// \brief Return the function's input size (i.e. argument's vector size).
     ///
     /// \return input size
-    size_type functionInputSize () const throw ();
+    size_type functionInputSize () const;
 
     /// \brief Return the function's output size (i.e. result's vector size).
     ///
     /// \return output size
-    size_type functionOutputSize () const throw ();
+    size_type functionOutputSize () const;
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
   protected:
     /// \brief Concrete class constructor should call this constructor.
@@ -103,17 +103,17 @@ namespace roboptim
     /// \param functionOutputSize inner function result size
     ParametrizedFunction (size_type inputSize,
 			  size_type functionInputSize,
-			  size_type functionOutputSize) throw ();
+			  size_type functionOutputSize);
     virtual ~ParametrizedFunction() {};
 
     /// \brief Function evaluation.
     ///
     /// Evaluate the function, has to be implemented in concrete
     /// classes.  \warning Do not call this function directly, call
-    /// #operator()(const argument_t&) const throw () instead.  \param
+    /// #operator()(const argument_t&) const instead.  \param
     /// argument point at which the function will be evaluated
     virtual result_t impl_compute (const argument_t& argument)
-      const throw () = 0;
+      const = 0;
 
   private:
     /// Parameter size.

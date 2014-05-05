@@ -33,7 +33,7 @@ struct F : public DifferentiableFunction
   F () : DifferentiableFunction (1, 10, "f_n (x) = n * x")
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const throw ()
+  void impl_compute (result_t& res, const argument_t& argument) const
   {
     res.setZero ();
     for (size_type i = 0; i < outputSize (); ++i)
@@ -41,7 +41,7 @@ struct F : public DifferentiableFunction
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
-		      size_type functionId) const throw ()
+		      size_type functionId) const
   {
     grad.setZero ();
     grad[0] = (value_type)functionId;
@@ -63,14 +63,14 @@ BOOST_AUTO_TEST_CASE (split)
 
       (*output) << splitF << ":" << std::endl
 		<< std::endl;
-      
+
       Function::vector_t x (1);
       for (double i = 0.; i < 10.; i += 0.5)
 	{
 	  x[0] = i;
 	  (*output) << splitF (x) << std::endl;
 	  (*output) << splitF (x) << std::endl;
-	  
+
 	  (*output) << splitF.gradient (x) << std::endl;
 	  (*output) << splitF.gradient (x) << std::endl;
 	}

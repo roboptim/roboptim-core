@@ -60,11 +60,10 @@ namespace roboptim {
     /// squares of the coordinates of the vector valued base function.
     explicit GenericSumOfC1Squares (const boost::shared_ptr<parent_t>&
                                     function,
-                                    const std::string& name) throw ();
-    explicit GenericSumOfC1Squares (const GenericSumOfC1Squares<T>& function)
-      throw ();
+                                    const std::string& name);
+    explicit GenericSumOfC1Squares (const GenericSumOfC1Squares<T>& function);
 
-    virtual ~GenericSumOfC1Squares () throw ();
+    virtual ~GenericSumOfC1Squares ();
 
     /// \brief Get base function
     /// Base function is the vector valued function given at construction
@@ -74,11 +73,11 @@ namespace roboptim {
     /// \brief Compute value of function
     /// Value is sum of squares of coordinates of vector valued base function
     virtual void
-      impl_compute (result_t &result, const argument_t &x) const throw ();
+      impl_compute (result_t &result, const argument_t &x) const;
     /// \brief Gradient
     virtual void
       impl_gradient (gradient_t& gradient, const argument_t& x,
-                     size_type row = 0) const throw ();
+                     size_type row = 0) const;
   private:
     /// Compute base function and store result in value_.
     void computeFunction (const argument_t x) const;

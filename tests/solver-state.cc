@@ -40,7 +40,7 @@ struct F1 : public Function
   {}
 
   void impl_compute (result_t& res,
-                     const argument_t& x) const throw ()
+                     const argument_t& x) const
   {
     res (0) = x[0] + x[1] + x[2] + x[3];
   }
@@ -55,7 +55,7 @@ struct F2 : public Function
   {}
 
   void impl_compute (result_t& res,
-                     const argument_t& x) const throw ()
+                     const argument_t& x) const
   {
     res (0) = x[0] + x[1] + x[2] + x[3] + x[4];
     res (1) = x[0] * x[1] * x[2] * x[3] * x[4];
@@ -94,19 +94,19 @@ public:
   typedef parent_t::solverState_t solverState_t;
   typedef parent_t::callback_t callback_t;
 
-  DummyCallbackSolver (const problem_t& pb) throw ()
+  DummyCallbackSolver (const problem_t& pb)
     : parent_t (pb),
       solverState_ (pb),
       callback_ ()
   {
   }
 
-  ~DummyCallbackSolver () throw ()
+  ~DummyCallbackSolver ()
   {
   }
 
   void
-  solve () throw ()
+  solve ()
   {
     (*output) << "solver_t.solve ()" << std::endl;
 
@@ -142,7 +142,7 @@ public:
   }
 
   virtual void
-  setIterationCallback (callback_t callback) throw (std::runtime_error)
+  setIterationCallback (callback_t callback)
   {
     (*output) << "solver_t.setIterationCallback ()" << std::endl;
     callback_ = callback;

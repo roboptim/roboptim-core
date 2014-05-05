@@ -23,7 +23,7 @@
 namespace roboptim
 {
   template <typename F, typename C>
-  Solver<F, C>::Solver (const problem_t& pb) throw ()
+  Solver<F, C>::Solver (const problem_t& pb)
     : GenericSolver (),
       problem_ (pb),
       plugin_name_ ("")
@@ -32,7 +32,7 @@ namespace roboptim
 
   template <typename F, typename C>
   template <typename F_, typename C_>
-  Solver<F, C>::Solver (const Problem<F_, C_>& pb) throw ()
+  Solver<F, C>::Solver (const Problem<F_, C_>& pb)
     : GenericSolver (),
       problem_ (pb),
       plugin_name_ ("")
@@ -40,27 +40,27 @@ namespace roboptim
   }
 
   template <typename F, typename C>
-  Solver<F, C>::~Solver () throw ()
+  Solver<F, C>::~Solver ()
   {
   }
 
   template <typename F, typename C>
   const typename Solver<F, C>::problem_t&
-  Solver<F, C>::problem () const throw ()
+  Solver<F, C>::problem () const
   {
     return problem_;
   }
 
   template <typename F, typename C>
   const typename Solver<F, C>::parameters_t&
-  Solver<F, C>::parameters () const throw ()
+  Solver<F, C>::parameters () const
   {
     return parameters_;
   }
 
   template <typename F, typename C>
   typename Solver<F, C>::parameters_t&
-  Solver<F, C>::parameters () throw ()
+  Solver<F, C>::parameters ()
   {
     return parameters_;
   }
@@ -76,21 +76,21 @@ namespace roboptim
 
   template <typename F, typename C>
   const std::string&
-  Solver<F, C>::pluginName () const throw ()
+  Solver<F, C>::pluginName () const
   {
     return plugin_name_;
   }
 
   template <typename F, typename C>
   std::string&
-  Solver<F, C>::pluginName () throw ()
+  Solver<F, C>::pluginName ()
   {
     return plugin_name_;
   }
 
   template <typename F, typename C>
   std::ostream&
-  Solver<F, C>::print (std::ostream& o) const throw ()
+  Solver<F, C>::print (std::ostream& o) const
   {
     o << incindent << "Solver:";
 

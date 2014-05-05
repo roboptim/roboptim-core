@@ -51,12 +51,12 @@ namespace roboptim
       return 2;
     }
 
-    virtual ~NTimesDerivableFunction () throw () {}
+    virtual ~NTimesDerivableFunction () {}
 
 
     /// \brief Return the size of the derivative vector.
     /// \return derivative vector size
-    size_type derivativeSize () const throw ()
+    size_type derivativeSize () const
     {
       return outputSize ();
     }
@@ -64,7 +64,7 @@ namespace roboptim
     /// \brief Check if a derivative is valid (check sizes).
     /// \param derivative derivative vector to be checked
     /// \return true if valid, false if not
-    bool isValidDerivative (const gradient_t& derivative) const throw ()
+    bool isValidDerivative (const gradient_t& derivative) const
     {
       return derivative.size () == this->derivativeSize ();
     }
@@ -77,7 +77,6 @@ namespace roboptim
     /// \param argument point at which the function will be evaluated
     /// \return computed result
     result_t operator () (double argument) const
-      throw ()
     {
       result_t result (outputSize ());
       result.setZero ();
@@ -93,7 +92,7 @@ namespace roboptim
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    void operator () (result_t& result, double argument) const throw ()
+    void operator () (result_t& result, double argument) const
     {
       assert (isValidResult (result));
       this->impl_compute (result, argument);
@@ -107,7 +106,6 @@ namespace roboptim
     /// \param order derivative order (if 0 then function is evaluated)
     /// \return derivative vector
     gradient_t derivative (double argument, size_type order = 1) const
-      throw ()
     {
       gradient_t derivative (derivativeSize ());
       derivative.setZero ();
@@ -124,7 +122,6 @@ namespace roboptim
     void derivative (gradient_t& derivative,
 		     double argument,
 		     size_type order = 1) const
-      throw ()
     {
       assert (order <= derivabilityOrderMax ()
 	      && isValidDerivative (derivative));
@@ -137,7 +134,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ()
+    virtual std::ostream& print (std::ostream& o) const
     {
       o << derivabilityOrderMax () << "-time derivable function.";
       return o;
@@ -149,7 +146,7 @@ namespace roboptim
     /// \param outputSize output size (result size)
     /// \param name function's name
     NTimesDerivableFunction (size_type outputSize = 1,
-			     std::string name = std::string ()) throw ()
+			     std::string name = std::string ())
       : TwiceDifferentiableFunction (1, outputSize, name)
     {}
 
@@ -160,13 +157,13 @@ namespace roboptim
     /// instead of a vector).
     ///
     /// \warning Do not call this function directly, call
-    /// #operator()(result_t&, const argument_t&) const throw ()
+    /// #operator()(result_t&, const argument_t&) const
     /// instead.
     ///
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
     void impl_compute (result_t& result, const argument_t& argument)
-      const throw ()
+      const
     {
       (*this) (result, argument[0]);
     }
@@ -175,10 +172,10 @@ namespace roboptim
     ///
     /// Evaluate the function, has to be implemented in concrete
     /// classes.  \warning Do not call this function directly, call
-    /// #operator()(double) const throw () instead.  \param result
+    /// #operator()(double) const instead.  \param result
     /// result will be stored in this vector \param t point at which
     /// the function will be evaluated
-    virtual void impl_compute (result_t& result, double t) const throw () = 0;
+    virtual void impl_compute (result_t& result, double t) const = 0;
 
     /// \brief Gradient evaluation.
     ///
@@ -192,7 +189,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     void impl_gradient (gradient_t& gradient,
 			const argument_t& argument,
-			size_type functionId = 0) const throw ()
+			size_type functionId = 0) const
     {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       Eigen::internal::set_is_malloc_allowed (true);
@@ -215,7 +212,7 @@ namespace roboptim
     /// \param order derivative order (if 0 evaluates the function)
     virtual void impl_derivative (gradient_t& derivative,
 				  double argument,
-				  size_type order = 1) const throw () = 0;
+				  size_type order = 1) const = 0;
 
     /// \brief Hessian evaluation.
     ///
@@ -229,7 +226,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     void impl_hessian (hessian_t& hessian,
 		       const argument_t& argument,
-		       size_type functionId = 0) const throw ()
+		       size_type functionId = 0) const
     {
 # ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       Eigen::internal::set_is_malloc_allowed (true);
@@ -264,13 +261,13 @@ namespace roboptim
       return DerivabilityOrder;
     }
 
-    virtual ~NTimesDerivableFunction () throw ();
+    virtual ~NTimesDerivableFunction ();
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
   protected:
     /// \brief Concrete class constructor should call this constructor.
@@ -278,7 +275,7 @@ namespace roboptim
     /// \param outputSize output size (result size)
     /// \param name function name
     NTimesDerivableFunction (size_type outputSize = 1,
-			     std::string name = std::string ()) throw ()
+			     std::string name = std::string ())
       : NTimesDerivableFunction<DerivabilityOrder - 1> (outputSize, name)
     {}
   };

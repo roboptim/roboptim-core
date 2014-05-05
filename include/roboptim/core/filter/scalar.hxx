@@ -24,7 +24,7 @@ namespace roboptim
   template <typename U>
   Scalar<U>::Scalar
   (boost::shared_ptr<U> origin,
-   value_type scalar) throw ()
+   value_type scalar)
     : detail::AutopromoteTrait<U>::T_type
       (origin->inputSize (),
        origin->outputSize (),
@@ -36,14 +36,14 @@ namespace roboptim
   {}
 
   template <typename U>
-  Scalar<U>::~Scalar () throw ()
+  Scalar<U>::~Scalar ()
   {}
 
   template <typename U>
   void
   Scalar<U>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     origin_->operator () (result, x);
     result *= scalar_;
@@ -54,7 +54,7 @@ namespace roboptim
   Scalar<U>::impl_gradient (gradient_t& gradient,
 			 const argument_t& argument,
 			 size_type functionId)
-    const throw ()
+    const
   {
     origin_->gradient (gradient, argument, functionId);
     gradient *= scalar_;
@@ -64,7 +64,7 @@ namespace roboptim
   void
   Scalar<U>::impl_jacobian (jacobian_t& jacobian,
 			 const argument_t& argument)
-    const throw ()
+    const
   {
     origin_->jacobian (jacobian, argument);
     jacobian *= scalar_;

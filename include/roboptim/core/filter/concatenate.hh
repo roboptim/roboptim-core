@@ -38,9 +38,8 @@ namespace roboptim
     typedef boost::shared_ptr<Concatenate> ConcatenateShPtr_t;
 
     explicit Concatenate (boost::shared_ptr<U> left,
-			  boost::shared_ptr<U> right)
-      throw (std::runtime_error);
-    ~Concatenate () throw ();
+			  boost::shared_ptr<U> right);
+    ~Concatenate ();
 
     const boost::shared_ptr<U>& left () const
     {
@@ -64,15 +63,15 @@ namespace roboptim
 
 
     void impl_compute (result_t& result, const argument_t& x)
-      const throw ();
+      const;
 
     void impl_gradient (gradient_t& gradient,
 			const argument_t& argument,
 			size_type functionId = 0)
-      const throw ();
+      const;
     void impl_jacobian (jacobian_t& jacobian,
 			const argument_t& arg)
-      const throw ();
+      const;
   private:
     boost::shared_ptr<U> left_;
     boost::shared_ptr<U> right_;

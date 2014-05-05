@@ -42,24 +42,24 @@ namespace roboptim
       {
       public:
 	/// \brief Make a command from a string.
-	explicit Command (std::string cmd) throw ();
+	explicit Command (std::string cmd);
 
-	~Command () throw ();
+	~Command ();
 
 	/// \brief Retrieve the command as a string.
-	const std::string& command () const throw ();
+	const std::string& command () const;
       protected:
 	/// \brief Store Gnuplot command.
 	std::string command_;
       };
 
       /// \brief Make a Gnuplot comment.
-      ROBOPTIM_DLLAPI Command comment (const char*)
-	throw (std::runtime_error);
+      /// \throw std::runtime_error
+      ROBOPTIM_DLLAPI Command comment (const char*);
 
       /// \brief Make a Gnuplot comment.
       template <typename T>
-      inline Command comment (const T& content) throw ()
+      inline Command comment (const T& content)
       {
         // Note: we do not use boost::lexical_cast because the << operators
         // need to be in the std:: or boost:: namespaces. As a result, if we
@@ -84,74 +84,71 @@ namespace roboptim
       /// \param var variable that will be set
       /// \param val new variable value
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command set (const char* var, const char* val = "")
-	throw (std::runtime_error);
+      ROBOPTIM_DLLAPI Command set (const char* var, const char* val = "");
 
       /// \brief Make a Gnuplot unset command.
       ///
       /// Make a Gnuplot unset command (destroy a variable).
       /// \param var variable that will be unset
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command unset (const char* var)
-	throw (std::runtime_error);
+      ROBOPTIM_DLLAPI Command unset (const char* var);
 
       /// \brief Make a Gnuplot show command.
       ///
       /// Make a Gnuplot show command (show a variable value).
       /// \param var variable that will be shown
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command show (const char* var)
-	throw (std::runtime_error);
+      ROBOPTIM_DLLAPI Command show (const char* var);
 
       /// \brief Make a Gnuplot clear command.
       ///
       /// Make a Gnuplot clear command (clear the screen).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command clear () throw ();
+      ROBOPTIM_DLLAPI Command clear ();
 
       /// \brief Make a Gnuplot pwdcommand.
       ///
       /// Make a Gnuplot pwd command (show the current directory).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command pwd () throw ();
+      ROBOPTIM_DLLAPI Command pwd ();
 
       /// \brief Make a Gnuplot quit command.
       ///
       /// Make a Gnuplot quit command (quit Gnuplot).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command quit () throw ();
+      ROBOPTIM_DLLAPI Command quit ();
 
       /// \brief Make a Gnuplot replot command.
       ///
       /// Make a Gnuplot replot command (redraw previously defined curves).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command replot () throw ();
+      ROBOPTIM_DLLAPI Command replot ();
 
       /// \brief Make a Gnuplot reread command.
       ///
       /// Make a Gnuplot reread command (reread data files).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command reread () throw ();
+      ROBOPTIM_DLLAPI Command reread ();
 
       /// \brief Make a Gnuplot reset command.
       ///
       /// Make a Gnuplot replot command (reset Gnuplot state).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command reset () throw ();
+      ROBOPTIM_DLLAPI Command reset ();
 
       /// \brief Make a Gnuplot cd command.
       ///
       /// Make a Gnuplot cd command (change current directory).
       /// \param dir new directory
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command cd (const char* dir) throw ();
+      ROBOPTIM_DLLAPI Command cd (const char* dir);
 
       /// \brief Make a Gnuplot help command.
       ///
       /// Make a Gnuplot help command (display Gnuplot help).
       /// \param topic help topic
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command help (const char* topic = "") throw ();
+      ROBOPTIM_DLLAPI Command help (const char* topic = "");
 
       /// @}
 

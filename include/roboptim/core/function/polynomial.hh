@@ -47,7 +47,8 @@ namespace roboptim
     ///
     /// \param coefficients polynomial coefficients
     /// given in increasing degree order
-    explicit Polynomial (vector_t coefficients) throw (std::runtime_error)
+    /// \throw std::runtime_error
+    explicit Polynomial (vector_t coefficients)
       : GenericTwiceDifferentiableFunction<T>
 	(1, 1, "polynomial"),
         coeffs_(coefficients),
@@ -88,14 +89,14 @@ namespace roboptim
 	  static_cast<double> (deg * (deg - 1)) * coeffs_[deg];
     }
 
-    virtual ~Polynomial () throw ()
+    virtual ~Polynomial ()
     {}
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ()
+    virtual std::ostream& print (std::ostream& o) const
     {
       try
 	{
@@ -144,23 +145,23 @@ namespace roboptim
     }
 
   protected:
-    void impl_compute (result_t& result, const argument_t& x) const throw ()
+    void impl_compute (result_t& result, const argument_t& x) const
     {
       result[0] = applyPolynomial (coeffs_, x);
     }
 
     void impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
-      const throw ();
+      const;
 
     void impl_jacobian (jacobian_t& jacobian, const argument_t& x)
-      const throw ();
+      const;
 
     void impl_hessian
-    (hessian_t& hessian, const argument_t& x, size_type) const throw ();
+    (hessian_t& hessian, const argument_t& x, size_type) const;
 
     /// \brief Implement Horner's method.
     double applyPolynomial
-    (const vector_t& coeffs, const argument_t& x) const throw ();
+    (const vector_t& coeffs, const argument_t& x) const;
 
   private:
     /// \brief Coefficients of the polynomial
@@ -173,7 +174,7 @@ namespace roboptim
 
   template <typename T>
   double Polynomial<T>::applyPolynomial
-  (const vector_t& coeffs, const argument_t& x) const throw ()
+  (const vector_t& coeffs, const argument_t& x) const
   {
     // Accumulator
     double acc = 0;
@@ -188,7 +189,7 @@ namespace roboptim
   void
   Polynomial<T>::impl_gradient (gradient_t& gradient,
 				const argument_t& x, size_type)
-    const throw ()
+    const
   {
     gradient.coeffRef (0) = applyPolynomial (dCoeffs_, x);
   }
@@ -196,7 +197,7 @@ namespace roboptim
   template <typename T>
   void
   Polynomial<T>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const throw ()
+  (jacobian_t& jacobian, const argument_t& x) const
   {
     jacobian.coeffRef (0, 0) = applyPolynomial (dCoeffs_, x);
   }
@@ -205,7 +206,7 @@ namespace roboptim
   void
   Polynomial<T>::impl_hessian (hessian_t& hessian,
 			       const argument_t& x,
-			       size_type) const throw ()
+			       size_type) const
   {
     hessian.coeffRef (0, 0) = applyPolynomial (dDCoeffs_, x);
   }

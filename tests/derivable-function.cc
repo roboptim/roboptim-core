@@ -37,13 +37,13 @@ struct Null : public GenericDifferentiableFunction<T>
   Null () : GenericDifferentiableFunction<T> (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t& res, const argument_t&) const
   {
     res.setZero ();
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
-		      size_type) const throw ()
+		      size_type) const
   {
     grad.setZero ();
   }
@@ -58,13 +58,13 @@ struct NoTitle : public GenericDifferentiableFunction<T>
   NoTitle () : GenericDifferentiableFunction<T> (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t& res, const argument_t&) const
   {
     res.setZero ();
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
-		      size_type) const throw ()
+		      size_type) const
   {
     grad.setZero ();
   }
@@ -157,20 +157,20 @@ struct F : public GenericDifferentiableFunction<T>
   F () : GenericDifferentiableFunction<T> (4, 2, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t& x) const throw ()
+  void impl_compute (result_t& res, const argument_t& x) const
   {
     res[0] = x[0] * x[1];
     res[1] = x[2] * x[3];
   }
 
   void impl_gradient (gradient_t& grad, const argument_t& x,
-		      size_type functionId) const throw ();
+		      size_type functionId) const;
 };
 
 template <>
 void
 F<roboptim::EigenMatrixSparse>::impl_gradient
-(gradient_t& grad, const argument_t& x, size_type functionId) const throw ()
+(gradient_t& grad, const argument_t& x, size_type functionId) const
 {
   grad.resize (4);
   if (functionId == 0)
@@ -194,7 +194,7 @@ F<roboptim::EigenMatrixSparse>::impl_gradient
 template <typename T>
 void
 F<T>::impl_gradient (gradient_t& grad, const argument_t& x,
-		     size_type functionId) const throw ()
+		     size_type functionId) const
 {
   if (functionId == 0)
     {

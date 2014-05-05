@@ -24,7 +24,7 @@ namespace roboptim
   template <typename U>
   Map<U>::Map
   (boost::shared_ptr<U> origin,
-   size_type repeat) throw ()
+   size_type repeat)
     : detail::AutopromoteTrait<U>::T_type
       (origin->inputSize () * repeat,
        origin->outputSize () * repeat,
@@ -46,14 +46,14 @@ namespace roboptim
   }
 
   template <typename U>
-  Map<U>::~Map () throw ()
+  Map<U>::~Map ()
   {}
 
   template <typename U>
   void
   Map<U>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     for (size_type i = 0; i < repeat_; ++i)
       {
@@ -69,7 +69,7 @@ namespace roboptim
   Map<U>::impl_gradient (gradient_t& gradient,
 			 const argument_t& x,
 			 size_type functionId)
-    const throw ()
+    const
   {
     for (size_type i = 0; i < repeat_; ++i)
       {
@@ -87,7 +87,7 @@ namespace roboptim
   void
   Map<U>::impl_jacobian (jacobian_t& jacobian,
 			 const argument_t& x)
-    const throw ()
+    const
   {
     for (size_type i = 0; i < repeat_; ++i)
       {

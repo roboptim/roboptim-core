@@ -50,7 +50,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ();
+    virtual std::ostream& print (std::ostream& o) const;
 
 
     /// \brief Gradient has been computed for this point.
@@ -101,7 +101,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ();
+    virtual std::ostream& print (std::ostream& o) const;
 
 
     /// \brief Jacobian has been computed for this point.
@@ -157,13 +157,13 @@ namespace roboptim
        gradient_t& gradient,
        const argument_t& argument,
        size_type idFunction,
-       argument_t& xEps) const throw () = 0;
+       argument_t& xEps) const = 0;
 
       virtual void computeJacobian
       (value_type epsilon,
        jacobian_t& jacobian,
        const argument_t& argument,
-       argument_t& xEps) const throw ();
+       argument_t& xEps) const;
 
     protected:
       const GenericFunction<T>& adaptee_;
@@ -192,7 +192,7 @@ namespace roboptim
        gradient_t& gradient,
        const argument_t& argument,
        size_type idFunction,
-       argument_t& xEps) const throw ();
+       argument_t& xEps) const;
 
     private:
       mutable result_t result_;
@@ -220,7 +220,7 @@ namespace roboptim
        gradient_t& gradient,
        const argument_t& argument,
        size_type idFunction,
-       argument_t& xEps) const throw ();
+       argument_t& xEps) const;
 
       void
       compute_deriv (typename GenericFunction<T>::size_type j,
@@ -231,7 +231,7 @@ namespace roboptim
 		     const typename GenericFunction<T>::argument_t& argument,
 		     typename GenericFunction<T>::size_type idFunction,
 		     typename GenericFunction<T>::argument_t& xEps)
-	const throw ();
+	const;
 
     private:
       mutable result_t tmpResult_;
@@ -274,16 +274,16 @@ namespace roboptim
     /// \param e epsilon used in finite difference computation
     GenericFiniteDifferenceGradient
     (const GenericFunction<T>& f,
-     value_type e = finiteDifferenceEpsilon) throw ();
-    ~GenericFiniteDifferenceGradient () throw ();
+     value_type e = finiteDifferenceEpsilon);
+    ~GenericFiniteDifferenceGradient ();
 
   protected:
-    virtual void impl_compute (result_t&, const argument_t&) const throw ();
+    virtual void impl_compute (result_t&, const argument_t&) const;
     virtual void impl_gradient (gradient_t&,
                                 const argument_t& argument,
-                                size_type = 0) const throw ();
+                                size_type = 0) const;
     virtual void impl_jacobian (jacobian_t& jacobian,
-                                const argument_t& argument) const throw ();
+                                const argument_t& argument) const;
 
     /// \brief Reference to the wrapped function.
     const GenericFunction<T>& adaptee_;
@@ -310,8 +310,7 @@ namespace roboptim
    typename GenericDifferentiableFunction<T>::size_type functionId,
    const typename GenericDifferentiableFunction<T>::vector_t& x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
-   finiteDifferenceThreshold)
-    throw ();
+   finiteDifferenceThreshold);
 
   template <typename T>
   void
@@ -337,8 +336,7 @@ namespace roboptim
   (const GenericDifferentiableFunction<T>& function,
    const typename GenericDifferentiableFunction<T>::vector_t& x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
-   finiteDifferenceThreshold)
-    throw ();
+   finiteDifferenceThreshold);
 
   template <typename T>
   void

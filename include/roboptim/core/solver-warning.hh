@@ -36,13 +36,13 @@ namespace roboptim
   public:
     /// \brief Instantiate the class with a message.
     /// \param arg message
-    explicit SolverWarning (const std::string& arg) throw ();
+    explicit SolverWarning (const std::string& arg);
 
     /// \brief Display the problem on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
   };
 
   /// @}
