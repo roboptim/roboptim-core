@@ -29,13 +29,13 @@ struct Null : public LinearFunction
   Null () : LinearFunction (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t& res, const argument_t&) const
   {
     res.setZero ();
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
-		      size_type) const throw ()
+		      size_type) const
   {
     grad.setZero ();
   }
@@ -46,13 +46,13 @@ struct NoTitle : public LinearFunction
   NoTitle () : LinearFunction (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const throw ()
+  void impl_compute (result_t& res, const argument_t&) const
   {
     res.setZero ();
   }
 
   void impl_gradient (gradient_t& grad, const argument_t&,
-		      size_type) const throw ()
+		      size_type) const
   {
     grad.setZero ();
   }

@@ -33,7 +33,7 @@ struct DenseF : public DifferentiableFunction
   DenseF () : DifferentiableFunction (2, 1, "2 * x * x + y")
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const throw ()
+  void impl_compute (result_t& res, const argument_t& argument) const
   {
     (*output) << "computation (not cached)" << std::endl;
     res.setZero ();
@@ -41,7 +41,7 @@ struct DenseF : public DifferentiableFunction
   }
 
   void impl_gradient (gradient_t& grad, const argument_t& argument,
-		      size_type) const throw ()
+		      size_type) const
   {
     (*output) << "gradient computation (not cached)" << std::endl;
     grad.setZero ();
@@ -50,7 +50,7 @@ struct DenseF : public DifferentiableFunction
   }
 
   void impl_jacobian (jacobian_t& jacobian, const argument_t& argument)
-    const throw ()
+    const
   {
     (*output) << "jacobian computation (not cached)" << std::endl;
     jacobian.setZero ();
@@ -64,7 +64,7 @@ struct SparseF : public DifferentiableSparseFunction
   SparseF () : DifferentiableSparseFunction (2, 1, "2 * x * x + y")
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const throw ()
+  void impl_compute (result_t& res, const argument_t& argument) const
   {
     (*output) << "computation (not cached)" << std::endl;
     res.setZero ();
@@ -72,7 +72,7 @@ struct SparseF : public DifferentiableSparseFunction
   }
 
   void impl_gradient (gradient_t& grad, const argument_t& argument,
-                      size_type) const throw ()
+                      size_type) const
   {
     (*output) << "gradient computation (not cached)" << std::endl;
     grad.setZero ();
@@ -81,7 +81,7 @@ struct SparseF : public DifferentiableSparseFunction
   }
 
   void impl_jacobian (jacobian_t& jacobian, const argument_t& argument)
-    const throw ()
+    const
   {
     (*output) << "jacobian computation (not cached)" << std::endl;
     jacobian.setZero ();

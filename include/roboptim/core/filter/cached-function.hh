@@ -40,7 +40,7 @@ namespace roboptim
       {
 	Function::size_type it1 = 0;
 	Function::size_type it2 = 0;
-	
+
 	while (it1 != v1.size () && it2 != v2.size ())
 	  {
 	    if (fabs (v1(it1) - v2(it2)) < Function::epsilon ())
@@ -107,31 +107,31 @@ namespace roboptim
     typedef std::map<argument_t, hessian_t, detail::ltvector>
     hessianCache_t;
 
-    explicit CachedFunction (boost::shared_ptr<const T> fct) throw ();
-    ~CachedFunction () throw ();
+    explicit CachedFunction (boost::shared_ptr<const T> fct);
+    ~CachedFunction ();
 
-    void reset () throw ();
+    void reset ();
 
   protected:
     virtual void impl_compute (result_t& result, const argument_t& argument)
-      const throw ();
+      const;
 
 
     virtual void impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
 				size_type functionId = 0)
-      const throw ();
+      const;
 
     virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
-      const throw ();
+      const;
 
     virtual void impl_hessian (hessian_t& hessian,
     			       const argument_t& argument,
-    			       size_type functionId = 0) const throw ();
+    			       size_type functionId = 0) const;
 
     virtual void impl_derivative (gradient_t& derivative,
     				  double argument,
-                                  size_type order = 1) const throw ();
+                                  size_type order = 1) const;
 
   protected:
     boost::shared_ptr<const T> function_;

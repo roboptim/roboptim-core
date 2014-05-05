@@ -40,7 +40,7 @@ namespace roboptim
 
   template <typename T>
   Split<T>::Split (boost::shared_ptr<const T> fct,
-		   size_type functionId) throw (std::runtime_error)
+		   size_type functionId)
     : T (fct->inputSize (), 1, splitName (*fct, functionId)),
       function_ (fct),
       functionId_ (functionId),
@@ -50,7 +50,7 @@ namespace roboptim
   }
 
   template <typename T>
-  Split<T>::~Split () throw ()
+  Split<T>::~Split ()
   {
   }
 
@@ -58,7 +58,7 @@ namespace roboptim
   void
   Split<T>::impl_compute (result_t& result,
 			  const argument_t& argument)
-    const throw ()
+    const
   {
     (*function_) (this->res_, argument);
     result[0] = this->res_[functionId_];
@@ -68,7 +68,7 @@ namespace roboptim
   template <>
   inline void
   Split<Function>::impl_gradient (gradient_t&, const argument_t&, size_type)
-    const throw ()
+    const
   {
     assert (0);
   }
@@ -78,7 +78,7 @@ namespace roboptim
   Split<T>::impl_gradient (gradient_t& gradient,
 			   const argument_t& argument,
 			   size_type functionId)
-    const throw ()
+    const
   {
     assert (functionId == 0);
     function_->gradient (gradient, argument, functionId_);
@@ -90,7 +90,7 @@ namespace roboptim
   template <>
   inline void
   Split<Function>::impl_hessian
-  (hessian_t&, const argument_t&, size_type) const throw ()
+  (hessian_t&, const argument_t&, size_type) const
   {
     assert (0);
   }
@@ -98,7 +98,7 @@ namespace roboptim
   template <>
   inline void
   Split<DifferentiableFunction>::impl_hessian
-  (hessian_t&, const argument_t&, size_type) const throw ()
+  (hessian_t&, const argument_t&, size_type) const
   {
     assert (0);
   }
@@ -110,7 +110,7 @@ namespace roboptim
   Split<T>::impl_hessian (hessian_t& hessian,
 			  const argument_t& argument,
 			  size_type functionId)
-    const throw ()
+    const
   {
     assert (functionId == 0);
     function_->hessian (hessian, argument, functionId_);
@@ -120,7 +120,7 @@ namespace roboptim
   template <>
   inline void
   Split<Function>::impl_derivative
-  (gradient_t&, double, size_type) const throw ()
+  (gradient_t&, double, size_type) const
   {
     assert (0);
   }
@@ -128,7 +128,7 @@ namespace roboptim
   template <>
   inline void
   Split<DifferentiableFunction>::impl_derivative
-  (gradient_t&, double, size_type) const throw ()
+  (gradient_t&, double, size_type) const
   {
     assert (0);
   }
@@ -136,7 +136,7 @@ namespace roboptim
   template <>
   inline void
   Split<TwiceDifferentiableFunction>::impl_derivative
-  (gradient_t&, double, size_type) const throw ()
+  (gradient_t&, double, size_type) const
   {
     assert (0);
   }
@@ -146,7 +146,7 @@ namespace roboptim
   Split<T>::impl_derivative (gradient_t& derivative,
 			     double argument,
 			     size_type order)
-    const throw ()
+    const
   {
     function_->derivative (derivative, argument, order);
   }
@@ -157,7 +157,6 @@ namespace roboptim
    boost::shared_ptr<C> constraint,
    std::vector<Function::interval_t> interval,
    std::vector<Function::value_type> scale)
-    throw (std::runtime_error)
   {
     assert (constraint);
     assert (interval.size () == constraint->outputSize ());

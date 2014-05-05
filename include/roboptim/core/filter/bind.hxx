@@ -25,7 +25,7 @@ namespace roboptim
   template <typename U>
   Bind<U>::Bind
   (boost::shared_ptr<U> origin,
-   const boundValues_t& boundValues) throw (std::exception)
+   const boundValues_t& boundValues)
     : detail::AutopromoteTrait<U>::T_type
       (static_cast<size_type>
        (std::count (boundValues.begin (), boundValues.end (),
@@ -57,14 +57,14 @@ namespace roboptim
   }
 
   template <typename U>
-  Bind<U>::~Bind () throw ()
+  Bind<U>::~Bind ()
   {}
 
   template <typename U>
   void
   Bind<U>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     size_type id = 0;
     for (std::size_t idx = 0; idx < boundValues_.size (); ++idx)
@@ -80,7 +80,7 @@ namespace roboptim
   Bind<U>::impl_gradient (gradient_t& gradient,
 			  const argument_t& argument,
 			  size_type functionId)
-    const throw ()
+    const
   {
     size_type id = 0;
     for (std::size_t idx = 0; idx < boundValues_.size (); ++idx)
@@ -101,7 +101,7 @@ namespace roboptim
   void
   Bind<U>::impl_jacobian (jacobian_t& jacobian,
 			  const argument_t& argument)
-    const throw ()
+    const
   {
     size_type id = 0;
     for (std::size_t idx = 0; idx < boundValues_.size (); ++idx)

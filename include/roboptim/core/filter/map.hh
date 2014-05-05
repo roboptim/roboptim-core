@@ -42,8 +42,8 @@ namespace roboptim
 
     typedef boost::shared_ptr<Map> MapShPtr_t;
 
-    explicit Map (boost::shared_ptr<U> origin, size_type repeat) throw ();
-    ~Map () throw ();
+    explicit Map (boost::shared_ptr<U> origin, size_type repeat);
+    ~Map ();
 
     const boost::shared_ptr<U>& origin () const
     {
@@ -56,15 +56,15 @@ namespace roboptim
     }
 
     void impl_compute (result_t& result, const argument_t& x)
-      const throw ();
+      const;
 
     void impl_gradient (gradient_t& gradient,
 			const argument_t& argument,
 			size_type functionId = 0)
-      const throw ();
+      const;
     void impl_jacobian (jacobian_t& jacobian,
 			const argument_t& arg)
-      const throw ();
+      const;
   private:
     boost::shared_ptr<U> origin_;
     size_type repeat_;

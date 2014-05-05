@@ -50,9 +50,8 @@ namespace roboptim
 
     typedef boost::shared_ptr<Chain> ChainShPtr_t;
 
-    explicit Chain (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
-      throw (std::runtime_error);
-    ~Chain () throw ();
+    explicit Chain (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
+    ~Chain ();
 
     const boost::shared_ptr<U>& left () const
     {
@@ -75,15 +74,15 @@ namespace roboptim
     }
 
     void impl_compute (result_t& result, const argument_t& x)
-      const throw ();
+      const;
 
     void impl_gradient (gradient_t& gradient,
 			const argument_t& argument,
 			size_type functionId = 0)
-      const throw ();
+      const;
     void impl_jacobian (jacobian_t& jacobian,
 			const argument_t& arg)
-      const throw ();
+      const;
   private:
     /// \brief Shared pointer to the left function.
     boost::shared_ptr<U> left_;

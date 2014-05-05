@@ -70,37 +70,37 @@ namespace roboptim
 
     /// \name Constructors and destructors.
     /// \{
-    explicit GenericSolver () throw ();
-    explicit GenericSolver (const GenericSolver&) throw ();
-    virtual ~GenericSolver () throw ();
+    explicit GenericSolver ();
+    explicit GenericSolver (const GenericSolver&);
+    virtual ~GenericSolver ();
     /// \}
 
     /// \brief Force to restart the optimization.
     /// Reset the internal mechanism to force the solution to be
     /// re-computed next time getMinimum is called.
-    void reset () throw ();
+    void reset ();
 
     /// \brief Solve the problem.
     /// Called automatically by getMinimum if required.
-    virtual void solve () throw () = 0;
+    virtual void solve () = 0;
 
     /// \brief Returns the function minimum
     /// This solves the problem automatically, if it has not yet been solved.
     /// \see minimumType()
     /// \see getMinimum()
-    const result_t& minimum () throw ();
+    const result_t& minimum ();
 
     /// \brief Display the solver on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
 
     /// \brief Determine real minimum type.
     ///
     /// \return value representing result type
-    solutions minimumType () throw ()
+    solutions minimumType ()
     {
       switch (minimum ().which ())
 	{

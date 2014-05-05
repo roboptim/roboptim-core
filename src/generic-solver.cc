@@ -26,31 +26,31 @@ namespace roboptim
   log4cxx::LoggerPtr GenericSolver::logger
   (log4cxx::Logger::getLogger ("roboptim.solver"));
 
-  GenericSolver::GenericSolver () throw ()
+  GenericSolver::GenericSolver ()
     : boost::noncopyable (),
       result_ (NoSolution ())
   {
   }
 
-  GenericSolver::GenericSolver (const GenericSolver& solver) throw ()
+  GenericSolver::GenericSolver (const GenericSolver& solver)
     : boost::noncopyable (),
       result_ (solver.result_)
   {
   }
 
-  GenericSolver::~GenericSolver () throw ()
+  GenericSolver::~GenericSolver ()
   {
   }
 
   void
-  GenericSolver::reset () throw ()
+  GenericSolver::reset ()
   {
     LOG4CXX_INFO (logger, "Solver has been reset.");
     result_ = NoSolution ();
   }
 
   const GenericSolver::result_t&
-  GenericSolver::minimum () throw ()
+  GenericSolver::minimum ()
   {
     if (result_.which () != SOLVER_NO_SOLUTION)
       return result_;
@@ -61,7 +61,7 @@ namespace roboptim
   }
 
   std::ostream&
-  GenericSolver::print (std::ostream& o) const throw ()
+  GenericSolver::print (std::ostream& o) const
   {
     o << "Generic Solver";
     return o;

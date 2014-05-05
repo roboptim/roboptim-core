@@ -37,42 +37,42 @@ namespace roboptim
     /// \brief Build an constant function.
     ///
     /// \param offset constant function offset
-    Sin () throw ()
+    Sin ()
       : GenericTwiceDifferentiableFunction<T>
 	(1, 1, "sin")
     {}
 
-    ~Sin () throw ()
+    ~Sin ()
     {}
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ()
+    virtual std::ostream& print (std::ostream& o) const
     {
       return o << "Sin function";
     }
 
   protected:
-    void impl_compute (result_t& result, const argument_t& x) const throw ()
+    void impl_compute (result_t& result, const argument_t& x) const
     {
       result[0] = std::sin (x[0]);
     }
 
     void impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
-    const throw ();
+    const;
 
-    void impl_jacobian (jacobian_t& jacobian, const argument_t& x) const throw ();
+    void impl_jacobian (jacobian_t& jacobian, const argument_t& x) const;
 
     void impl_hessian
-    (hessian_t& hessian, const argument_t& x, size_type) const throw ();
+    (hessian_t& hessian, const argument_t& x, size_type) const;
   };
 
   template <>
   inline void
   Sin<EigenMatrixSparse>::impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
-    const throw ()
+    const
   {
     gradient.insert (0) = std::cos (x[0]);
   }
@@ -80,7 +80,7 @@ namespace roboptim
   template <typename T>
   void
   Sin<T>::impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
-    const throw ()
+    const
   {
     gradient[0] = std::cos (x[0]);
   }
@@ -88,14 +88,14 @@ namespace roboptim
   template <>
   inline void
   Sin<EigenMatrixSparse>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const throw ()
+  (jacobian_t& jacobian, const argument_t& x) const
   {
     jacobian.coeffRef (0, 0) = std::cos (x[0]);
   }
   template <typename T>
   void
   Sin<T>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const throw ()
+  (jacobian_t& jacobian, const argument_t& x) const
   {
     jacobian (0, 0) = std::cos (x[0]);
   }
@@ -104,7 +104,7 @@ namespace roboptim
   void
   Sin<T>::impl_hessian (hessian_t& hessian,
 			const argument_t& x,
-			size_type) const throw ()
+			size_type) const
   {
     hessian (0, 0) = -std::sin (x[0]);
   }
@@ -113,7 +113,7 @@ namespace roboptim
   inline void
   Sin<EigenMatrixSparse>::impl_hessian (hessian_t& hessian,
 					const argument_t& x,
-					size_type) const throw ()
+					size_type) const
   {
     hessian.coeffRef (0, 0) = -std::sin (x[0]);
   }

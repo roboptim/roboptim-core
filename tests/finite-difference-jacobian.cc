@@ -43,7 +43,7 @@ struct FGood : public GenericDifferentiableFunction<T>
   {}
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result (0) =   argument[0] * argument[0]
       + argument[0] * argument[1]
@@ -52,10 +52,10 @@ struct FGood : public GenericDifferentiableFunction<T>
   }
 
   void impl_gradient (gradient_t& grad, const argument_t& argument,
-		      size_type) const throw ();
+		      size_type) const;
 
   void impl_jacobian (jacobian_t& jacobian,
-                      const argument_t& argument) const throw ();
+                      const argument_t& argument) const;
 
 };
 
@@ -63,7 +63,7 @@ struct FGood : public GenericDifferentiableFunction<T>
 template <typename T>
 void
 FGood<T>::impl_gradient
-(gradient_t&, const argument_t&, size_type) const throw ()
+(gradient_t&, const argument_t&, size_type) const
 {
   // This method should not be called since we provide impl_jacobian
   assert(0);
@@ -73,7 +73,7 @@ FGood<T>::impl_gradient
 template <>
 void
 FGood<EigenMatrixSparse>::impl_jacobian
-(jacobian_t& jacobian, const argument_t& argument) const throw ()
+(jacobian_t& jacobian, const argument_t& argument) const
 {
   jacobian.setZero ();
   jacobian.insert(0,0) = 2. * argument[0] + argument[1];
@@ -85,7 +85,7 @@ FGood<EigenMatrixSparse>::impl_jacobian
 template <typename T>
 void
 FGood<T>::impl_jacobian
-(jacobian_t& jacobian, const argument_t& argument) const throw ()
+(jacobian_t& jacobian, const argument_t& argument) const
 {
   jacobian.setZero ();
   jacobian(0,0) = 2. * argument[0] + argument[1];
@@ -107,7 +107,7 @@ struct FBad : public GenericDifferentiableFunction<T>
   {}
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result (0) =   argument[0] * argument[0]
       + argument[0] * argument[1]
@@ -116,16 +116,16 @@ struct FBad : public GenericDifferentiableFunction<T>
   }
 
   void impl_gradient (gradient_t& grad, const argument_t& argument,
-		      size_type) const throw ();
+		      size_type) const;
 
   void impl_jacobian (jacobian_t& jacobian,
-                      const argument_t& argument) const throw ();
+                      const argument_t& argument) const;
 };
 
 template <typename T>
 void
 FBad<T>::impl_gradient
-(gradient_t&, const argument_t&, size_type) const throw ()
+(gradient_t&, const argument_t&, size_type) const
 {
   // This method should not be called since we provide impl_jacobian
   assert(0);
@@ -135,7 +135,7 @@ FBad<T>::impl_gradient
 template <>
 void
 FBad<EigenMatrixSparse>::impl_jacobian
-(jacobian_t& jacobian, const argument_t& argument) const throw ()
+(jacobian_t& jacobian, const argument_t& argument) const
 {
   jacobian.setZero ();
   jacobian.insert(0,0) = 2. * argument[0] + argument[1];
@@ -147,7 +147,7 @@ FBad<EigenMatrixSparse>::impl_jacobian
 template <typename T>
 void
 FBad<T>::impl_jacobian
-(jacobian_t& jacobian, const argument_t& argument) const throw ()
+(jacobian_t& jacobian, const argument_t& argument) const
 {
   jacobian.setZero ();
   jacobian(0,0) = 2. * argument[0] + argument[1];

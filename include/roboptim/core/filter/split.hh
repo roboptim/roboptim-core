@@ -52,26 +52,26 @@ namespace roboptim
     typedef typename DifferentiableFunction::interval_t interval_t;
 
     explicit Split (boost::shared_ptr<const T> fct,
-		    size_type functionId) throw (std::runtime_error);
-    ~Split () throw ();
+		    size_type functionId);
+    ~Split ();
 
   protected:
     virtual void impl_compute (result_t& result, const argument_t& argument)
-      const throw ();
+      const;
 
 
     virtual void impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
 				size_type functionId = 0)
-      const throw ();
+      const;
 
     virtual void impl_hessian (hessian_t& hessian,
     			       const argument_t& argument,
-    			       size_type functionId = 0) const throw ();
+    			       size_type functionId = 0) const;
 
     virtual void impl_derivative (gradient_t& derivative,
     				  double argument,
-    				  size_type order = 1) const throw ();
+    				  size_type order = 1) const;
 
   private:
     boost::shared_ptr<const T> function_;
@@ -85,8 +85,7 @@ namespace roboptim
    boost::shared_ptr<C> constraint,
    std::vector<Function::interval_t> interval,
    std::vector<Function::value_type> scale
-   = std::vector<Function::value_type> ())
-    throw (std::runtime_error);
+   = std::vector<Function::value_type> ());
 
 
   /// @}

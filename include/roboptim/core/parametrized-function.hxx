@@ -24,7 +24,6 @@ namespace roboptim
   ParametrizedFunction<F>::ParametrizedFunction (size_type inputSize,
 						 size_type functionInputSize,
 						 size_type functionOutputSize)
-    throw ()
     : inputSize_ (inputSize),
       functionInputSize_ (functionInputSize),
       functionOutputSize_ (functionOutputSize)
@@ -34,7 +33,7 @@ namespace roboptim
   template <typename F>
   typename ParametrizedFunction<F>::result_t
   ParametrizedFunction<F>::operator () (const argument_t& argument)
-    const throw ()
+    const
   {
     assert (argument.size () == inputSize ());
     return impl_compute (argument);
@@ -42,14 +41,14 @@ namespace roboptim
 
   template <typename F>
   typename ParametrizedFunction<F>::size_type
-  ParametrizedFunction<F>::inputSize () const throw ()
+  ParametrizedFunction<F>::inputSize () const
   {
     return inputSize_;
   }
 
   template <typename F>
   typename ParametrizedFunction<F>::size_type
-  ParametrizedFunction<F>::functionInputSize () const throw ()
+  ParametrizedFunction<F>::functionInputSize () const
   {
     return functionInputSize_;
   }
@@ -57,14 +56,14 @@ namespace roboptim
 
   template <typename F>
   typename ParametrizedFunction<F>::size_type
-  ParametrizedFunction<F>::functionOutputSize () const throw ()
+  ParametrizedFunction<F>::functionOutputSize () const
   {
     return functionOutputSize_;
   }
 
   template <typename F>
   std::ostream&
-  ParametrizedFunction<F>::print (std::ostream& o) const throw ()
+  ParametrizedFunction<F>::print (std::ostream& o) const
   {
     o << "Parametrized function";
     return o;

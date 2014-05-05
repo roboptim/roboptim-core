@@ -83,7 +83,7 @@ namespace roboptim
     ///
     /// Hessian size is equal to (input size, input size).
     /// \return hessian's size as a pair
-    hessianSize_t hessianSize () const throw ()
+    hessianSize_t hessianSize () const
     {
       return std::make_pair (this->inputSize (), this->inputSize ());
     }
@@ -92,7 +92,7 @@ namespace roboptim
     ///
     /// \param hessian hessian that will be checked
     /// \return true if valid, false if not
-    bool isValidHessian (const hessian_t& hessian) const throw ()
+    bool isValidHessian (const hessian_t& hessian) const
     {
       return hessian.rows () == this->hessianSize ().first
 	&& hessian.cols () == this->hessianSize ().second;
@@ -106,7 +106,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     /// \return computed hessian
     hessian_t hessian (const argument_t& argument,
-		       size_type functionId = 0) const throw ()
+		       size_type functionId = 0) const
     {
       hessian_t hessian (matrix_t(hessianSize ().first, hessianSize ().second));
       setZero (hessian);
@@ -122,7 +122,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     void hessian (hessian_t& hessian,
 		  const argument_t& argument,
-		  size_type functionId = 0) const throw ()
+		  size_type functionId = 0) const
     {
       LOG4CXX_TRACE (this->logger,
 		     "Evaluating hessian at point: " << argument);
@@ -143,7 +143,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
   protected:
     /// \brief Concrete class constructor should call this constructor.
@@ -151,9 +151,10 @@ namespace roboptim
     /// \param inputSize input size (argument size)
     /// \param outputSize output size (result size)
     /// \param name function's name
+    /// \throw std::runtime_error
     GenericTwiceDifferentiableFunction
     (size_type inputSize, size_type outputSize = 1,
-     std::string name = std::string ()) throw (std::runtime_error);
+     std::string name = std::string ());
 
     /// \brief Hessian evaluation.
     ///
@@ -166,7 +167,7 @@ namespace roboptim
     /// \param functionId evaluated function id in the split representation
     virtual void impl_hessian (hessian_t& hessian,
 			       const argument_t& argument,
-			       size_type functionId = 0) const throw () = 0;
+			       size_type functionId = 0) const = 0;
     /// \brief Set a symmetric matrix to zero
     ///
     /// \note there might be an eigen function to do that.

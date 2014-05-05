@@ -38,7 +38,7 @@ struct FortyTwoDense : public DifferentiableFunction
   }
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result[0] = argument[0] + argument[4] + argument[5];
     result[1] = argument[0] + argument[2] + argument[6];
@@ -50,12 +50,12 @@ struct FortyTwoDense : public DifferentiableFunction
   }
 
   void impl_gradient (gradient_t&, const argument_t&,  size_type)
-    const throw ()
+    const
   {
   }
 
   void impl_jacobian (jacobian_t& jac, const argument_t&)
-    const throw ()
+    const
   {
     jac.setZero();
     jac(0,0) = 1.0;
@@ -92,7 +92,7 @@ struct FortyTwoSparse : public DifferentiableSparseFunction
   }
 
   void impl_compute (result_t& result,
-		     const argument_t& argument) const throw ()
+		     const argument_t& argument) const
   {
     result[0] = argument[0] + argument[4] + argument[5];
     result[1] = argument[0] + argument[2] + argument[6];
@@ -104,12 +104,12 @@ struct FortyTwoSparse : public DifferentiableSparseFunction
   }
 
   void impl_gradient (gradient_t&, const argument_t&,  size_type)
-    const throw ()
+    const
   {
   }
 
   void impl_jacobian (jacobian_t& jac, const argument_t&)
-    const throw ()
+    const
   {
     jac.setZero();
     jac.insert(0,0) = 1.0;

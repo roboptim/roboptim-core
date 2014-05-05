@@ -24,7 +24,6 @@ namespace roboptim
   template <typename U, typename V>
   Product<U, V>::Product
   (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
-    throw (std::runtime_error)
     : detail::PromoteTrait<U, V>::T_promote
       (left->inputSize (),
        left->outputSize (),
@@ -54,14 +53,14 @@ namespace roboptim
   }
 
   template <typename U, typename V>
-  Product<U, V>::~Product () throw ()
+  Product<U, V>::~Product ()
   {}
 
   template <typename U, typename V>
   void
   Product<U, V>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     (*left_) (resultLeft_, x);
     (*right_) (resultRight_, x);
@@ -73,7 +72,7 @@ namespace roboptim
   Product<U, V>::impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
 				size_type functionId)
-    const throw ()
+    const
   {
     left_->gradient (gradientLeft_, argument, functionId);
     right_->gradient (gradientRight_, argument, functionId);
@@ -84,7 +83,7 @@ namespace roboptim
   void
   Product<U, V>::impl_jacobian (jacobian_t& jacobian,
 				const argument_t& argument)
-    const throw ()
+    const
   {
     left_->jacobian (jacobianLeft_, argument);
     right_->jacobian (jacobianRight_, argument);

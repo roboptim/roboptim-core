@@ -52,8 +52,7 @@ namespace roboptim
     /// \param A A symmetric matrix
     /// \param b b vector
     GenericNumericQuadraticFunction (const symmetric_t& A,
-				     const vector_t& b)
-    throw ();
+				     const vector_t& b);
 
     /// \brief Build a quadratic function from a matrix and a vector.
     ///
@@ -63,17 +62,16 @@ namespace roboptim
     /// \param c c vector (size one)
     GenericNumericQuadraticFunction (const symmetric_t& A,
 				     const vector_t& b,
-				     const vector_t& c)
-      throw ();
+				     const vector_t& c);
 
 
-    ~GenericNumericQuadraticFunction () throw ();
+    ~GenericNumericQuadraticFunction ();
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
     const matrix_t& A () const
     {
@@ -106,13 +104,13 @@ namespace roboptim
     }
 
   protected:
-    void impl_compute (result_t& , const argument_t&) const throw ();
+    void impl_compute (result_t& , const argument_t&) const;
     void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
-      const throw ();
-    void impl_jacobian (jacobian_t&, const argument_t&) const throw ();
+      const;
+    void impl_jacobian (jacobian_t&, const argument_t&) const;
     void impl_hessian (hessian_t& hessian,
 		       const argument_t& argument,
-		       size_type functionId = 0) const throw ();
+		       size_type functionId = 0) const;
   private:
     /// \brief A matrix.
     symmetric_t a_;

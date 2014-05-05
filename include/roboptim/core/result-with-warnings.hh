@@ -47,10 +47,9 @@ namespace roboptim
     /// \param inputSize input size
     /// \param outputSize output size
     explicit ResultWithWarnings (const Function::size_type inputSize,
-                                 const Function::size_type outputSize = 1)
-      throw ();
+                                 const Function::size_type outputSize = 1);
 
-    ~ResultWithWarnings () throw ();
+    ~ResultWithWarnings ();
 
     /// \brief Vector of warnings.
     /// Each element of this vector is a potential problem that occurred during
@@ -62,7 +61,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ();
+    virtual std::ostream& print (std::ostream& o) const;
   };
 
   /// @}

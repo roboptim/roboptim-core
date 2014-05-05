@@ -36,7 +36,7 @@ namespace roboptim
   // Template specialization for problem without constraint
   //
   template <typename F>
-  Problem<F, boost::mpl::vector <> >::Problem (const function_t& f) throw ()
+  Problem<F, boost::mpl::vector <> >::Problem (const function_t& f)
     : function_ (f),
       startingPoint_ (),
       argumentBounds_ (f.inputSize ()),
@@ -55,7 +55,7 @@ namespace roboptim
   // Copy constructor.
   template <typename F>
   Problem<F, boost::mpl::vector <> >::Problem
-  (const Problem<F, boost::mpl::vector <> >& pb) throw () :
+  (const Problem<F, boost::mpl::vector <> >& pb) :
     function_ (pb.function_),
     startingPoint_ (pb.startingPoint_),
     argumentBounds_ (pb.argumentBounds_),
@@ -67,7 +67,7 @@ namespace roboptim
   template <typename F>
   template <typename F_>
   Problem<F, boost::mpl::vector<> >::Problem
-  (const Problem<F_, boost::mpl::vector<> >& pb) throw ()
+  (const Problem<F_, boost::mpl::vector<> >& pb)
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       argumentBounds_ (pb.argumentBounds_),
@@ -80,20 +80,20 @@ namespace roboptim
   }
 
   template <typename F>
-  Problem<F, boost::mpl::vector<> >::~Problem () throw ()
+  Problem<F, boost::mpl::vector<> >::~Problem ()
   {
   }
 
   template <typename F>
   const typename Problem<F, boost::mpl::vector<> >::function_t&
-  Problem<F, boost::mpl::vector<> >::function () const throw ()
+  Problem<F, boost::mpl::vector<> >::function () const
   {
     return function_;
   }
 
   template <typename F>
   typename Problem<F, boost::mpl::vector<> >::startingPoint_t&
-  Problem<F, boost::mpl::vector<> >::startingPoint () throw (std::runtime_error)
+  Problem<F, boost::mpl::vector<> >::startingPoint ()
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
@@ -103,7 +103,7 @@ namespace roboptim
 
   template <typename F>
   const typename Problem<F, boost::mpl::vector<> >::startingPoint_t&
-  Problem<F, boost::mpl::vector<> >::startingPoint () const throw (std::runtime_error)
+  Problem<F, boost::mpl::vector<> >::startingPoint () const
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
@@ -122,7 +122,7 @@ namespace roboptim
   template <typename F>
   std::ostream&
   Problem<F, boost::mpl::vector<> >::
-  print (std::ostream& o) const throw ()
+  print (std::ostream& o) const
   {
     using namespace boost;
 
@@ -168,28 +168,28 @@ namespace roboptim
 
   template <typename F>
   typename Problem<F, boost::mpl::vector<> >::intervals_t&
-  Problem<F, boost::mpl::vector<> >::argumentBounds () throw ()
+  Problem<F, boost::mpl::vector<> >::argumentBounds ()
   {
     return argumentBounds_;
   }
 
   template <typename F>
   const typename Problem<F, boost::mpl::vector<> >::intervals_t&
-  Problem<F, boost::mpl::vector<> >::argumentBounds () const throw ()
+  Problem<F, boost::mpl::vector<> >::argumentBounds () const
   {
     return argumentBounds_;
   }
 
   template <typename F>
   typename Problem<F, boost::mpl::vector<> >::scales_t&
-  Problem<F, boost::mpl::vector<> >::argumentScales () throw ()
+  Problem<F, boost::mpl::vector<> >::argumentScales ()
   {
     return argumentScales_;
   }
 
   template <typename F>
   const typename Problem<F, boost::mpl::vector<> >::scales_t&
-  Problem<F, boost::mpl::vector<> >::argumentScales () const throw ()
+  Problem<F, boost::mpl::vector<> >::argumentScales () const
   {
     return argumentScales_;
   }
@@ -199,7 +199,7 @@ namespace roboptim
   // General template implementation
   //
   template <typename F, typename CLIST>
-  Problem<F, CLIST>::Problem (const function_t& f) throw ()
+  Problem<F, CLIST>::Problem (const function_t& f)
     : function_ (f),
       startingPoint_ (),
       constraints_ (),
@@ -216,13 +216,13 @@ namespace roboptim
   }
 
   template <typename F, typename CLIST>
-  Problem<F, CLIST>::~Problem () throw ()
+  Problem<F, CLIST>::~Problem ()
   {
   }
 
   // Copy constructor.
   template <typename F, typename CLIST>
-  Problem<F, CLIST>::Problem (const Problem<F, CLIST>& pb) throw ()
+  Problem<F, CLIST>::Problem (const Problem<F, CLIST>& pb)
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       constraints_ (pb.constraints_),
@@ -236,7 +236,7 @@ namespace roboptim
   // Copy constructor (convert from another class of problem).
   template <typename F, typename CLIST>
   template <typename F_, typename CLIST_>
-  Problem<F, CLIST>::Problem (const Problem<F_, CLIST_>& pb) throw ()
+  Problem<F, CLIST>::Problem (const Problem<F_, CLIST_>& pb)
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       constraints_ (),
@@ -256,14 +256,14 @@ namespace roboptim
 
   template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::function_t&
-  Problem<F, CLIST>::function () const throw ()
+  Problem<F, CLIST>::function () const
   {
     return function_;
   }
 
   template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::constraints_t&
-  Problem<F, CLIST>::constraints () const throw ()
+  Problem<F, CLIST>::constraints () const
   {
     return constraints_;
   }
@@ -274,7 +274,6 @@ namespace roboptim
   Problem<F, CLIST>::addConstraint (boost::shared_ptr<C> x,
 				    interval_t b,
 				    value_type s)
-    throw (std::runtime_error)
   {
     //FIXME: check that C is in CLIST.
 
@@ -302,7 +301,6 @@ namespace roboptim
   Problem<F, CLIST>::addConstraint (boost::shared_ptr<C> x,
 				    intervals_t b,
 				    scales_t s)
-    throw (std::runtime_error)
   {
     //FIXME: check that C is in CLIST.
 
@@ -366,7 +364,7 @@ namespace roboptim
 
   template <typename F, typename CLIST>
   typename Problem<F, CLIST>::startingPoint_t&
-  Problem<F, CLIST>::startingPoint () throw (std::runtime_error)
+  Problem<F, CLIST>::startingPoint ()
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
@@ -376,7 +374,7 @@ namespace roboptim
 
   template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::startingPoint_t&
-  Problem<F, CLIST>::startingPoint () const throw (std::runtime_error)
+  Problem<F, CLIST>::startingPoint () const
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
@@ -386,42 +384,42 @@ namespace roboptim
 
   template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::intervalsVect_t&
-  Problem<F, CLIST>::boundsVector () const throw ()
+  Problem<F, CLIST>::boundsVector () const
   {
     return boundsVect_;
   }
 
   template <typename F, typename CLIST>
   typename Problem<F, CLIST>::intervals_t&
-  Problem<F, CLIST>::argumentBounds () throw ()
+  Problem<F, CLIST>::argumentBounds ()
   {
     return argumentBounds_;
   }
 
   template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::intervals_t&
-  Problem<F, CLIST>::argumentBounds () const throw ()
+  Problem<F, CLIST>::argumentBounds () const
   {
     return argumentBounds_;
   }
 
   template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::scalesVect_t&
-  Problem<F, CLIST>::scalesVector () const throw ()
+  Problem<F, CLIST>::scalesVector () const
   {
     return scalesVect_;
   }
 
   template <typename F, typename CLIST>
   typename Problem<F, CLIST>::scales_t&
-  Problem<F, CLIST>::argumentScales () throw ()
+  Problem<F, CLIST>::argumentScales ()
   {
     return argumentScales_;
   }
 
   template <typename F, typename CLIST>
   const typename Problem<F, CLIST>::scales_t&
-  Problem<F, CLIST>::argumentScales () const throw ()
+  Problem<F, CLIST>::argumentScales () const
   {
     return argumentScales_;
   }
@@ -512,7 +510,7 @@ namespace roboptim
 
   template <typename F, typename CLIST>
   std::ostream&
-  Problem<F, CLIST>::print (std::ostream& o) const throw ()
+  Problem<F, CLIST>::print (std::ostream& o) const
   {
     using namespace boost;
 

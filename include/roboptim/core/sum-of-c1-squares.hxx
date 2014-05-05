@@ -28,7 +28,7 @@ namespace roboptim {
   template <typename T>
   GenericSumOfC1Squares<T>::GenericSumOfC1Squares (const boost::shared_ptr<parent_t>&
                                                    function,
-                                                   const std::string& name) throw () :
+                                                   const std::string& name) :
     parent_t (function->inputSize(), 1, name),
     baseFunction_ (function)
   {
@@ -40,7 +40,7 @@ namespace roboptim {
   }
 
   template <typename T>
-  GenericSumOfC1Squares<T>::GenericSumOfC1Squares (const GenericSumOfC1Squares<T>& src) throw ():
+  GenericSumOfC1Squares<T>::GenericSumOfC1Squares (const GenericSumOfC1Squares<T>& src):
     parent_t (src.inputSize(), 1, src.getName()),
     baseFunction_ (src.baseFunction_), x_ (src.x_),
     value_ (src.value_),
@@ -49,7 +49,7 @@ namespace roboptim {
   }
 
   template <typename T>
-  GenericSumOfC1Squares<T>::~GenericSumOfC1Squares () throw ()
+  GenericSumOfC1Squares<T>::~GenericSumOfC1Squares ()
   {
   }
 
@@ -62,7 +62,7 @@ namespace roboptim {
 
   template <typename T>
   void GenericSumOfC1Squares<T>::
-  impl_compute(result_t &result, const argument_t &x) const throw ()
+  impl_compute(result_t &result, const argument_t &x) const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     Eigen::internal::set_is_malloc_allowed (true);
@@ -80,7 +80,7 @@ namespace roboptim {
   template <typename T>
   void GenericSumOfC1Squares<T>::
   impl_gradient(gradient_t& gradient, const argument_t& x,
-                size_type ROBOPTIM_DEBUG_ONLY (row)) const throw ()
+                size_type ROBOPTIM_DEBUG_ONLY (row)) const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     Eigen::internal::set_is_malloc_allowed (true);

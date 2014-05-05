@@ -38,9 +38,8 @@ namespace roboptim
     typedef boost::shared_ptr<Selection> SelectionShPtr_t;
 
     explicit Selection (boost::shared_ptr<U> left,
-			size_type start, size_type size)
-      throw (std::runtime_error);
-    ~Selection () throw ();
+			size_type start, size_type size);
+    ~Selection ();
 
     const boost::shared_ptr<U>& origin () const
     {
@@ -53,15 +52,15 @@ namespace roboptim
     }
 
     void impl_compute (result_t& result, const argument_t& x)
-      const throw ();
+      const;
 
     void impl_gradient (gradient_t& gradient,
 			const argument_t& argument,
 			size_type functionId = 0)
-      const throw ();
+      const;
     void impl_jacobian (jacobian_t& jacobian,
 			const argument_t& arg)
-      const throw ();
+      const;
   private:
     boost::shared_ptr<U> origin_;
 

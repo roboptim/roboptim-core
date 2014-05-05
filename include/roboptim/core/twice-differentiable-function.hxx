@@ -28,14 +28,14 @@ namespace roboptim
   GenericTwiceDifferentiableFunction<T>::GenericTwiceDifferentiableFunction
   (size_type inputSize,
    size_type outputSize,
-   std::string name) throw (std::runtime_error)
+   std::string name)
     : GenericDifferentiableFunction<T> (inputSize, outputSize, name)
   {
   }
 
   template <typename T>
   std::ostream&
-  GenericTwiceDifferentiableFunction<T>::print (std::ostream& o) const throw ()
+  GenericTwiceDifferentiableFunction<T>::print (std::ostream& o) const
   {
     if (this->getName ().empty ())
       return o << "Twice differentiable function";

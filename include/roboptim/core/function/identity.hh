@@ -40,20 +40,20 @@ namespace roboptim
     /// \brief Build an identity function.
     ///
     /// \param offset identity function offset
-    GenericIdentityFunction (const vector_t& offset) throw ()
+    GenericIdentityFunction (const vector_t& offset)
       : GenericLinearFunction<T> (static_cast<size_type> (offset.size ()),
 				  static_cast<size_type> (offset.size ())),
 	offset_ (offset)
     {}
 
-    ~GenericIdentityFunction () throw ()
+    ~GenericIdentityFunction ()
     {}
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ()
+    virtual std::ostream& print (std::ostream& o) const
     {
       return o << "Identity function" << incindent << iendl
 	       << "offset = " << this->offset_
@@ -64,14 +64,14 @@ namespace roboptim
 
     void impl_compute (result_t& result,
 		       const argument_t& argument)
-      const throw ()
+      const
     {
       result = argument + this->offset_;
     }
 
     void
     impl_jacobian (jacobian_t& jacobian,
-		   const argument_t&) const throw ()
+		   const argument_t&) const
     {
       jacobian.setIdentity ();
     }
@@ -79,7 +79,7 @@ namespace roboptim
     void
     impl_gradient (gradient_t& gradient,
 		   const argument_t& ,
-		   size_type idFunction) const throw ();
+		   size_type idFunction) const;
 
   private:
     vector_t offset_;
@@ -88,7 +88,7 @@ namespace roboptim
   template <>
   inline void
   GenericIdentityFunction<EigenMatrixSparse>::impl_gradient
-  (gradient_t& gradient, const argument_t&, size_type idFunction) const throw ()
+  (gradient_t& gradient, const argument_t&, size_type idFunction) const
   {
     gradient.insert (idFunction) = 1.;
   }
@@ -96,7 +96,7 @@ namespace roboptim
   template <typename T>
   void
   GenericIdentityFunction<T>::impl_gradient
-  (gradient_t& gradient, const argument_t&, size_type idFunction) const throw ()
+  (gradient_t& gradient, const argument_t&, size_type idFunction) const
   {
     gradient.setZero ();
     gradient[idFunction] = 1.;

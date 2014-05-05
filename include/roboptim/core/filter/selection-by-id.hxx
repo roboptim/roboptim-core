@@ -24,7 +24,7 @@ namespace roboptim
   template <typename U>
   SelectionById<U>::SelectionById
   (boost::shared_ptr<U> origin,
-   std::vector<bool> selector) throw (std::runtime_error)
+   std::vector<bool> selector)
     : detail::AutopromoteTrait<U>::T_type
       (origin->inputSize (),
        static_cast<size_type>
@@ -53,14 +53,14 @@ namespace roboptim
   }
 
   template <typename U>
-  SelectionById<U>::~SelectionById () throw ()
+  SelectionById<U>::~SelectionById ()
   {}
 
   template <typename U>
   void
   SelectionById<U>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     origin_->operator () (result_, x);
 
@@ -80,7 +80,7 @@ namespace roboptim
   SelectionById<U>::impl_gradient (gradient_t& gradient,
 				   const argument_t& argument,
 				   size_type functionId)
-    const throw ()
+    const
   {
     size_type functionIdUpdated = functionId;
     for (size_type element = 0; element < functionId; ++element)
@@ -94,7 +94,7 @@ namespace roboptim
   void
   SelectionById<U>::impl_jacobian (jacobian_t& jacobian,
 				   const argument_t& argument)
-    const throw ()
+    const
   {
     size_type row = 0;
     for (size_type functionId = 0;

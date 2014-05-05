@@ -95,7 +95,7 @@ namespace roboptim
     /// \brief Return the gradient size.
     ///
     /// Gradient size is equals to the input size.
-    size_type gradientSize () const throw ()
+    size_type gradientSize () const
     {
       return this->inputSize ();
     }
@@ -103,7 +103,7 @@ namespace roboptim
     /// \brief Return the jacobian size as a pair.
     ///
     /// Gradient size is equals to (output size, input size).
-    jacobianSize_t jacobianSize () const throw ()
+    jacobianSize_t jacobianSize () const
     {
       return std::make_pair (this->outputSize (), this->inputSize ());
     }
@@ -111,7 +111,7 @@ namespace roboptim
     /// \brief Check if the gradient is valid (check size).
     /// \param gradient checked gradient
     /// \return true if valid, false if not
-    bool isValidGradient (const gradient_t& gradient) const throw ()
+    bool isValidGradient (const gradient_t& gradient) const
     {
       return gradient.size () == gradientSize ();
     }
@@ -120,7 +120,7 @@ namespace roboptim
     ///
     /// \param jacobian checked jacobian
     /// \return true if valid, false if not
-    bool isValidJacobian (const jacobian_t& jacobian) const throw ()
+    bool isValidJacobian (const jacobian_t& jacobian) const
     {
       return jacobian.rows () == jacobianSize ().first
 	&& jacobian.cols () == jacobianSize ().second;
@@ -130,7 +130,7 @@ namespace roboptim
     ///
     /// \param argument point at which the jacobian will be computed
     /// \return jacobian matrix
-    jacobian_t jacobian (const argument_t& argument) const throw ()
+    jacobian_t jacobian (const argument_t& argument) const
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
       jacobian.setZero ();
@@ -145,7 +145,7 @@ namespace roboptim
     /// \param jacobian jacobian will be stored in this argument
     /// \param argument point at which the jacobian will be computed
     void jacobian (jacobian_t& jacobian, const argument_t& argument)
-      const throw ()
+      const
     {
       LOG4CXX_TRACE (this->logger,
 		     "Evaluating jacobian at point: " << argument);
@@ -167,7 +167,7 @@ namespace roboptim
     /// \param functionId function id in split representation
     /// \return gradient vector
     gradient_t gradient (const argument_t& argument,
-			 size_type functionId = 0) const throw ()
+			 size_type functionId = 0) const
     {
       assert (functionId < this->outputSize ());
       gradient_t gradient (gradientSize ());
@@ -186,7 +186,7 @@ namespace roboptim
     /// \return gradient vector
     void gradient (gradient_t& gradient,
 		   const argument_t& argument,
-		   size_type functionId = 0) const throw ()
+		   size_type functionId = 0) const
     {
       LOG4CXX_TRACE (this->logger,
 		     "Evaluating gradient at point: "
@@ -209,7 +209,7 @@ namespace roboptim
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ();
+    virtual std::ostream& print (std::ostream& o) const;
 
   protected:
     /// \brief Concrete class constructor should call this constructor.
@@ -219,8 +219,7 @@ namespace roboptim
     /// \param name function's name
     GenericDifferentiableFunction (size_type inputSize,
 				   size_type outputSize = 1,
-				   std::string name = std::string ())
-      throw (std::runtime_error);
+				   std::string name = std::string ());
 
     /// \brief Jacobian evaluation.
     ///
@@ -230,7 +229,7 @@ namespace roboptim
     /// \param jacobian jacobian will be store in this argument
     /// \param arg point where the jacobian will be computed
     virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
-      const throw ();
+      const;
 
     /// \brief Gradient evaluation.
     ///
@@ -244,7 +243,7 @@ namespace roboptim
     virtual void impl_gradient (gradient_t& gradient,
 				const argument_t& argument,
 				size_type functionId = 0)
-      const throw () = 0;
+      const = 0;
   };
 
   /// @}

@@ -21,14 +21,13 @@
 namespace roboptim
 {
   template <unsigned dorder>
-  NTimesDerivableFunction<dorder>::~NTimesDerivableFunction () throw ()
+  NTimesDerivableFunction<dorder>::~NTimesDerivableFunction ()
   {
   }
 
   template <unsigned dorder>
   std::ostream&
   NTimesDerivableFunction<dorder>::print (std::ostream& o) const
-    throw ()
   {
     o << derivabilityOrder << "-time differentiable function.";
     return o;

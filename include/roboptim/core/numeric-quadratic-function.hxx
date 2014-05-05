@@ -28,7 +28,6 @@ namespace roboptim
   template <typename T>
   GenericNumericQuadraticFunction<T>::GenericNumericQuadraticFunction
   (const matrix_t& a, const vector_t& b)
-    throw ()
     : GenericQuadraticFunction<T>
       (a.rows (), 1, "numeric quadratic function"),
       a_ (a),
@@ -43,7 +42,6 @@ namespace roboptim
   template <typename T>
   GenericNumericQuadraticFunction<T>::GenericNumericQuadraticFunction
   (const matrix_t& a, const vector_t& b, const vector_t& c)
-    throw ()
     : GenericQuadraticFunction<T>
       (a.rows (), 1, "numeric quadratic function"),
       a_ (a),
@@ -56,7 +54,7 @@ namespace roboptim
   }
 
   template <typename T>
-  GenericNumericQuadraticFunction<T>::~GenericNumericQuadraticFunction () throw ()
+  GenericNumericQuadraticFunction<T>::~GenericNumericQuadraticFunction ()
   {
   }
 
@@ -65,7 +63,7 @@ namespace roboptim
   void
   GenericNumericQuadraticFunction<T>::impl_compute (result_t& result,
 						    const argument_t& argument)
-    const throw ()
+    const
   {
     buffer_.noalias () = a_ * argument;
     result = argument.adjoint ()  * buffer_;
@@ -77,7 +75,7 @@ namespace roboptim
   template <>
   inline void
   GenericNumericQuadraticFunction<EigenMatrixSparse>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const throw ()
+  (jacobian_t& jacobian, const argument_t& x) const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     Eigen::internal::set_is_malloc_allowed (true);
@@ -95,7 +93,7 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericQuadraticFunction<T>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const throw ()
+  (jacobian_t& jacobian, const argument_t& x) const
   {
     jacobian.noalias () = 2 * x.transpose () * a_;
     jacobian += b_.transpose ();
@@ -106,7 +104,7 @@ namespace roboptim
   inline void
   GenericNumericQuadraticFunction<EigenMatrixSparse>::impl_gradient
   (gradient_t& gradient, const argument_t& x, size_type)
-    const throw ()
+    const
   {
     buffer_.noalias () = 2 * a_ * x;
     buffer_ += b_;
@@ -118,7 +116,7 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericQuadraticFunction<T>::impl_gradient
-  (gradient_t& gradient, const argument_t& x, size_type) const throw ()
+  (gradient_t& gradient, const argument_t& x, size_type) const
   {
     gradient.noalias () = 2 * a_ * x;
     gradient += b_;
@@ -128,14 +126,14 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericQuadraticFunction<T>::impl_hessian
-  (hessian_t& hessian, const argument_t&, size_type) const throw ()
+  (hessian_t& hessian, const argument_t&, size_type) const
   {
     hessian = a_;
   }
 
   template <typename T>
   std::ostream&
-  GenericNumericQuadraticFunction<T>::print (std::ostream& o) const throw ()
+  GenericNumericQuadraticFunction<T>::print (std::ostream& o) const
   {
     return o << "Numeric quadratic function" << incindent << iendl
              << "A = " << this->a_ << iendl

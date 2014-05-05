@@ -26,13 +26,12 @@ namespace roboptim
   GenericQuadraticFunction<T>::GenericQuadraticFunction (size_type inputSize,
 							 size_type outputSize,
 							 std::string name)
-    throw ()
     : GenericTwiceDifferentiableFunction<T> (inputSize, outputSize, name)
   {}
 
   template <typename T>
   std::ostream&
-  GenericQuadraticFunction<T>::print (std::ostream& o) const throw ()
+  GenericQuadraticFunction<T>::print (std::ostream& o) const
   {
     if (this->getName ().empty ())
       return o << "Quadratic function";

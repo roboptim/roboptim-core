@@ -24,7 +24,6 @@ namespace roboptim
   template <typename U, typename V>
   Chain<U, V>::Chain
   (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
-    throw (std::runtime_error)
     : detail::PromoteTrait<U, V>::T_promote
       (right->inputSize (),
        left->outputSize (),
@@ -53,14 +52,14 @@ namespace roboptim
   }
 
   template <typename U, typename V>
-  Chain<U, V>::~Chain () throw ()
+  Chain<U, V>::~Chain ()
   {}
 
   template <typename U, typename V>
   void
   Chain<U, V>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     (*right_) (rightResult_, x);
     (*left_) (result, rightResult_);
@@ -71,7 +70,7 @@ namespace roboptim
   Chain<U, V>::impl_gradient (gradient_t& gradient,
 			 const argument_t& x,
 			 size_type functionId)
-    const throw ()
+    const
   {
     (*right_) (rightResult_, x);
     left_->gradient (gradientLeft_, rightResult_, functionId);
@@ -83,7 +82,7 @@ namespace roboptim
   void
   Chain<U, V>::impl_jacobian (jacobian_t& jacobian,
 			      const argument_t& x)
-    const throw ()
+    const
   {
     (*right_) (rightResult_, x);
     left_->jacobian (jacobianLeft_, rightResult_);

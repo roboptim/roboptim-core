@@ -90,7 +90,7 @@ namespace roboptim
 
   template <typename T>
   std::ostream&
-  BadGradient<T>::print (std::ostream& o) const throw ()
+  BadGradient<T>::print (std::ostream& o) const
   {
     o << this->what () << incindent << iendl
       << "X: " << x_ << iendl
@@ -114,7 +114,6 @@ namespace roboptim
   GenericFiniteDifferenceGradient<T, FdgPolicy>::GenericFiniteDifferenceGradient
   (const GenericFunction<T>& adaptee,
    typename GenericDifferentiableFunction<T>::value_type epsilon)
-    throw ()
     : GenericDifferentiableFunction<T>
       (adaptee.inputSize (), adaptee.outputSize ()),
       FdgPolicy (adaptee),
@@ -203,7 +202,7 @@ namespace roboptim
 
   template <typename T>
   std::ostream&
-  BadJacobian<T>::print (std::ostream& o) const throw ()
+  BadJacobian<T>::print (std::ostream& o) const
   {
     o << this->what () << incindent << iendl
       << "X: " << x_ << iendl
@@ -226,14 +225,14 @@ namespace roboptim
 
   template <typename T, typename FdgPolicy>
   GenericFiniteDifferenceGradient<
-    T, FdgPolicy>::~GenericFiniteDifferenceGradient () throw ()
+    T, FdgPolicy>::~GenericFiniteDifferenceGradient ()
   {
   }
 
   template <typename T, typename FdgPolicy>
   void
   GenericFiniteDifferenceGradient<T, FdgPolicy>::impl_compute
-  (result_t& result, const argument_t& argument) const throw ()
+  (result_t& result, const argument_t& argument) const
   {
     adaptee_ (result, argument);
   }
@@ -243,7 +242,7 @@ namespace roboptim
   GenericFiniteDifferenceGradient<T, FdgPolicy>::impl_gradient
   (gradient_t& gradient,
    const argument_t& argument,
-   size_type idFunction) const throw ()
+   size_type idFunction) const
   {
     this->computeGradient (epsilon_, gradient,
 			   argument, idFunction, xEps_);
@@ -253,7 +252,7 @@ namespace roboptim
   void
   GenericFiniteDifferenceGradient<T, FdgPolicy>::impl_jacobian
   (jacobian_t& jacobian,
-   const argument_t& argument) const throw ()
+   const argument_t& argument) const
   {
     this->computeJacobian(epsilon_, jacobian, argument, xEps_);
   }
@@ -265,7 +264,6 @@ namespace roboptim
    typename GenericDifferentiableFunction<T>::size_type functionId,
    const typename GenericDifferentiableFunction<T>::vector_t& x,
    typename GenericDifferentiableFunction<T>::value_type threshold)
-    throw ()
   {
     GenericFiniteDifferenceGradient<T> fdfunction (function);
     typename GenericDifferentiableFunction<T>::gradient_t grad =
@@ -301,7 +299,6 @@ namespace roboptim
   (const GenericDifferentiableFunction<T>& function,
    const typename GenericDifferentiableFunction<T>::vector_t& x,
    typename GenericDifferentiableFunction<T>::value_type threshold)
-    throw ()
   {
     GenericFiniteDifferenceGradient<T> fdfunction (function);
     typename GenericDifferentiableFunction<T>::jacobian_t jac =
@@ -343,7 +340,7 @@ namespace roboptim
      double& trunc,
      const typename GenericFunction<T>::argument_t& argument,
      typename GenericFunction<T>::size_type idFunction,
-     typename GenericFunction<T>::argument_t& xEps) const throw ()
+     typename GenericFunction<T>::argument_t& xEps) const
     {
       /* Compute the derivative using the 5-point rule (x-h, x-h/2, x,
 	 x+h/2, x+h). Note that the central point is not used.
@@ -401,7 +398,7 @@ namespace roboptim
     (value_type epsilon,
      jacobian_t& jacobian,
      const argument_t& argument,
-     argument_t& xEps) const throw ()
+     argument_t& xEps) const
     {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       Eigen::internal::set_is_malloc_allowed (true);
@@ -438,7 +435,7 @@ namespace roboptim
     (value_type epsilon,
      jacobian_t& jacobian,
      const argument_t& argument,
-     argument_t& xEps) const throw ()
+     argument_t& xEps) const
     {
       for (typename jacobian_t::Index i = 0;
 	   i < this->adaptee_.outputSize(); ++i)
@@ -456,7 +453,7 @@ namespace roboptim
      gradient_t& gradient,
      const argument_t& argument,
      size_type idFunction,
-     argument_t& xEps) const throw ()
+     argument_t& xEps) const
     {
       assert (adaptee_.outputSize () - idFunction > 0);
       adaptee_ (result_, argument);
@@ -477,7 +474,7 @@ namespace roboptim
      gradient_t& gradient,
      const argument_t& argument,
      size_type idFunction,
-     argument_t& xEps) const throw ()
+     argument_t& xEps) const
     {
       assert (this->adaptee_.outputSize () - idFunction > 0);
 
@@ -499,7 +496,7 @@ namespace roboptim
      gradient_t& gradient,
      const argument_t& argument,
      size_type idFunction,
-     argument_t& xEps) const throw ()
+     argument_t& xEps) const
     {
       assert (this->adaptee_.outputSize () - idFunction > 0);
 
@@ -556,7 +553,7 @@ namespace roboptim
      gradient_t& gradient,
      const argument_t& argument,
      size_type idFunction,
-     argument_t& xEps) const throw ()
+     argument_t& xEps) const
     {
       assert (this->adaptee_.outputSize () - idFunction > 0);
 

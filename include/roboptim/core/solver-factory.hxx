@@ -70,7 +70,6 @@ namespace roboptim
 
   template <typename T>
   SolverFactory<T>::SolverFactory (std::string plugin, const problem_t& pb)
-    throw (std::runtime_error)
     : handle_ (),
       solver_ ()
   {
@@ -199,7 +198,7 @@ namespace roboptim
   }
 
   template <typename T>
-  SolverFactory<T>::~SolverFactory () throw ()
+  SolverFactory<T>::~SolverFactory ()
   {
     typedef void destroy_t (solver_t*);
 
@@ -236,7 +235,7 @@ namespace roboptim
 
   template <typename T>
   typename SolverFactory<T>::solver_t&
-  SolverFactory<T>::operator () () throw ()
+  SolverFactory<T>::operator () ()
   {
     assert (solver_ != 0);
     return *solver_;

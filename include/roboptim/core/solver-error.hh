@@ -39,34 +39,34 @@ namespace roboptim
   public:
     /// \brief Instantiate an error from an error message.
     /// \param arg error message.
-    explicit SolverError (const std::string& arg) throw ();
+    explicit SolverError (const std::string& arg);
 
     /// \brief Instantiate an error from an error message.
     /// \param arg error message.
     /// \param res last state of the solver.
     SolverError (const std::string& arg,
-                 const Result& res) throw ();
+                 const Result& res);
 
     /// \brief Copy constructor.
     /// \param error other error to copy.
-    SolverError (const SolverError& error) throw ();
+    SolverError (const SolverError& error);
 
     /// \brief Trivial destructor.
-    ~SolverError() throw();
+    ~SolverError() throw ();
 
     /// \brief Display the error on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
 
     /// \brief Retrieve the (optional) last state of the solver.
     /// \return last state of the solver.
-    const boost::optional<Result>& lastState () const throw ();
+    const boost::optional<Result>& lastState () const;
 
     /// \brief Retrieve the (optional) last state of the solver.
     /// \return last state of the solver.
-    boost::optional<Result>& lastState () throw ();
+    boost::optional<Result>& lastState ();
 
   private:
     /// \brief (Optional) Last state of the solver before the error was raised.

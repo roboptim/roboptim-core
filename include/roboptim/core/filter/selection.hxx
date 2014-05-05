@@ -25,7 +25,7 @@ namespace roboptim
   Selection<U>::Selection
   (boost::shared_ptr<U> origin,
    size_type start,
-   size_type size) throw (std::runtime_error)
+   size_type size)
     : detail::AutopromoteTrait<U>::T_type
       (origin->inputSize (),
        size,
@@ -47,14 +47,14 @@ namespace roboptim
   }
 
   template <typename U>
-  Selection<U>::~Selection () throw ()
+  Selection<U>::~Selection ()
   {}
 
   template <typename U>
   void
   Selection<U>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     origin_->operator () (result_, x);
     result = result_.segment (start_, size_);
@@ -65,7 +65,7 @@ namespace roboptim
   Selection<U>::impl_gradient (gradient_t& gradient,
 			 const argument_t& argument,
 			 size_type functionId)
-    const throw ()
+    const
   {
     origin_->gradient (gradient, argument, functionId);
   }
@@ -74,7 +74,7 @@ namespace roboptim
   void
   Selection<U>::impl_jacobian (jacobian_t& jacobian,
 			 const argument_t& argument)
-    const throw ()
+    const
   {
     origin_->jacobian (jacobian_, argument);
     jacobian = jacobian_.block (start_, 0, size_, jacobian_.cols ());

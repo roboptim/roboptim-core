@@ -45,13 +45,13 @@ namespace roboptim
     /// \param name function's name
     GenericQuadraticFunction (size_type inputSize,
 			      size_type outputSize = 1,
-			      std::string name = std::string ()) throw ();
+			      std::string name = std::string ());
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream&) const throw ();
+    virtual std::ostream& print (std::ostream&) const;
   };
 
   /// @}

@@ -24,7 +24,7 @@ namespace roboptim
   template <typename U>
   Concatenate<U>::Concatenate
   (boost::shared_ptr<U> left,
-   boost::shared_ptr<U> right) throw (std::runtime_error)
+   boost::shared_ptr<U> right)
     : detail::AutopromoteTrait<U>::T_type
       (left->inputSize (),
        left->outputSize () + right->outputSize (),
@@ -51,14 +51,14 @@ namespace roboptim
   }
 
   template <typename U>
-  Concatenate<U>::~Concatenate () throw ()
+  Concatenate<U>::~Concatenate ()
   {}
 
   template <typename U>
   void
   Concatenate<U>::impl_compute
   (result_t& result, const argument_t& x)
-    const throw ()
+    const
   {
     left_->operator () (resultLeft_, x);
     right_->operator () (resultRight_, x);
@@ -71,7 +71,7 @@ namespace roboptim
   Concatenate<U>::impl_gradient (gradient_t& gradient,
 				 const argument_t& x,
 				 size_type functionId)
-    const throw ()
+    const
   {
     if (functionId < left_->outputSize ())
       left_->gradient (gradient, x, functionId);
@@ -83,7 +83,7 @@ namespace roboptim
   void
   Concatenate<U>::impl_jacobian (jacobian_t& jacobian,
 				 const argument_t& x)
-    const throw ()
+    const
   {
     left_->jacobian (jacobianLeft_, x);
     right_->jacobian (jacobianRight_, x);

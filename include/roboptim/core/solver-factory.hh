@@ -68,15 +68,15 @@ namespace roboptim
     ///
     /// \param solver solver name (for instance ``cfsqp'')
     /// \param problem problem that will be solved
-    explicit SolverFactory (std::string solver, const problem_t& problem)
-      throw (std::runtime_error);
+    /// \throw std::runtime_error
+    explicit SolverFactory (std::string solver, const problem_t& problem);
 
     /// Unload the plug-in and free the instantiated solver.
-    ~SolverFactory () throw ();
+    ~SolverFactory ();
 
     /// \brief Retrieve a reference on the solver.
     /// \return reference on a solver
-    solver_t& operator () () throw ();
+    solver_t& operator () ();
 
   private:
     /// \brief ltdl plug-in handle.

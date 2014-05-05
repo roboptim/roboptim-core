@@ -41,7 +41,7 @@ namespace roboptim
     /// \brief Build a constant function.
     ///
     /// \param offset constant function offset
-    GenericConstantFunction (const vector_t& offset) throw ()
+    GenericConstantFunction (const vector_t& offset)
       : GenericLinearFunction<T> (static_cast<size_type> (offset.size ()),
 				  static_cast<size_type> (offset.size ()),
 				  "constant function"),
@@ -53,7 +53,7 @@ namespace roboptim
     ///
     /// \param input_size input size of the function
     /// \param offset constant function offset
-    GenericConstantFunction (size_type input_size, const vector_t& offset) throw ()
+    GenericConstantFunction (size_type input_size, const vector_t& offset)
       : GenericLinearFunction<T> (input_size,
 				  static_cast<size_type> (offset.size ()),
 				  "constant function"),
@@ -61,32 +61,32 @@ namespace roboptim
     {
     }
 
-    ~GenericConstantFunction () throw ()
+    ~GenericConstantFunction ()
     {}
 
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
     /// \return output stream
-    virtual std::ostream& print (std::ostream& o) const throw ()
+    virtual std::ostream& print (std::ostream& o) const
     {
       return o << "Constant function" << incindent << iendl
 	       << "offset = " << this->offset_ << decindent;
     }
 
   protected:
-    void impl_compute (result_t& result, const argument_t&) const throw ()
+    void impl_compute (result_t& result, const argument_t&) const
     {
       result = this->offset_;
     }
 
     void impl_gradient (gradient_t& gradient, const argument_t&, size_type = 0)
-      const throw ()
+      const
     {
       gradient.setZero ();
     }
 
-    void impl_jacobian (jacobian_t& jacobian, const argument_t&) const throw ()
+    void impl_jacobian (jacobian_t& jacobian, const argument_t&) const
     {
       jacobian.setZero ();
     }

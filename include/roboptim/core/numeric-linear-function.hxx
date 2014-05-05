@@ -30,7 +30,6 @@ namespace roboptim
   template <typename T>
   GenericNumericLinearFunction<T>::GenericNumericLinearFunction
   (const matrix_t& a, const vector_t& b)
-    throw ()
     : GenericLinearFunction<T>
       (a.cols (), a.rows (), "numeric linear function"),
       a_ (a),
@@ -41,7 +40,7 @@ namespace roboptim
 
   template <typename T>
   GenericNumericLinearFunction<T>::GenericNumericLinearFunction
-  (const GenericLinearFunction<T>& function) throw ()
+  (const GenericLinearFunction<T>& function)
     : GenericLinearFunction<T>
       (function.inputSize (), function.outputSize (),
        (boost::format
@@ -59,7 +58,7 @@ namespace roboptim
   }
 
   template <typename T>
-  GenericNumericLinearFunction<T>::~GenericNumericLinearFunction () throw ()
+  GenericNumericLinearFunction<T>::~GenericNumericLinearFunction ()
   {
   }
 
@@ -68,7 +67,7 @@ namespace roboptim
   void
   GenericNumericLinearFunction<T>::impl_compute (result_t& result,
 						 const argument_t& argument)
-    const throw ()
+    const
   {
     result.noalias () = a_* argument;
     result += b_;
@@ -78,7 +77,7 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericLinearFunction<T>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t&) const throw ()
+  (jacobian_t& jacobian, const argument_t&) const
   {
     jacobian = this->a_;
   }
@@ -88,7 +87,7 @@ namespace roboptim
   inline void
   GenericNumericLinearFunction<EigenMatrixSparse>::impl_gradient
   (gradient_t& gradient, const argument_t&, size_type idFunction)
-    const throw ()
+    const
   {
     for (size_type j = 0; j < this->inputSize (); ++j)
       gradient.coeffRef (j) = a_.coeff (idFunction, j);
@@ -99,7 +98,7 @@ namespace roboptim
   void
   GenericNumericLinearFunction<T>::impl_gradient (gradient_t& gradient,
 					const argument_t&,
-					size_type idFunction) const throw ()
+					size_type idFunction) const
   {
     for (size_type j = 0; j < this->inputSize (); ++j)
       gradient[j] = a_ (idFunction, j);
@@ -107,7 +106,7 @@ namespace roboptim
 
   template <typename T>
   std::ostream&
-  GenericNumericLinearFunction<T>::print (std::ostream& o) const throw ()
+  GenericNumericLinearFunction<T>::print (std::ostream& o) const
   {
     return o << "Numeric linear function" << incindent << iendl
              << "A = " << this->a_ << iendl
