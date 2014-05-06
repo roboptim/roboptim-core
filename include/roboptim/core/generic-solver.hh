@@ -125,8 +125,9 @@ namespace roboptim
     /// class, this method has to be used to retrieve the
     /// real result type.
     /// \return real result
+    /// \throw boost::bad_get if a wrong type is used.
     template <typename T>
-    const T& getMinimum () throw (boost::bad_get)
+    const T& getMinimum ()
     {
       return boost::get<T> (minimum ());
     }
