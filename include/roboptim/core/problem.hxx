@@ -326,7 +326,7 @@ namespace roboptim
 	   "(%d, expected size is %d)");
 	fmt
 	  % x->getName ()
-	  % b.size ()
+	  % s.size ()
 	  % x->outputSize ();
 	throw std::runtime_error (fmt.str ());
       }
