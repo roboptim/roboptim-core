@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE (visualization_gnuplot_simple)
   (*output)
     << (gnuplot
 	<< set ("term", "x11 enhanced persist")
-	<< comment ("Hello, world!")
+	<< comment ("Hello, world!\nThis is a three-line comment!\nAmazing!")
 	<< cd ("/tmp")
 	<< help ("pwd")
 	<< show ("foo")

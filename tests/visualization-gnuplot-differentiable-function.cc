@@ -160,9 +160,9 @@ BOOST_AUTO_TEST_CASE (visualization_gnuplot_differentiable_function)
   (*output)
     << (gnuplot
     << set ("multiplot layout 2,1")
-    << comment (" Dense matrix")
+    << comment ("Dense matrix")
     << plot_jac (f_dense, arg_dense)
-    << comment (" Sparse matrix")
+    << comment ("Sparse matrix")
     << plot_jac (f_sparse, arg_sparse)
     << unset ("multiplot")
     );

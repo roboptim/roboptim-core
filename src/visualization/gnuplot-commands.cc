@@ -19,6 +19,7 @@
 #include "roboptim/core/config.hh"
 
 #include <boost/format.hpp>
+#include <boost/xpressive/xpressive.hpp>
 
 #include <roboptim/core/visualization/gnuplot-commands.hh>
 
@@ -44,31 +45,39 @@ namespace roboptim
 
 # define GNUPLOT_UNARY_COMMAND(NAME)		\
       Command					\
-      NAME ()				\
+      NAME ()					\
       {						\
 	return Command (#NAME);			\
       }
 
 # define GNUPLOT_STR_COMMAND(NAME, ARG)		\
       Command					\
-      NAME (const char* ARG)		\
+      NAME (const char* ARG)			\
       {						\
 	std::string command = #NAME;		\
-	if (*ARG != 0)				\
-	  {					\
-	    command += " '";			\
-	    command += ARG;			\
-	    command += "'";			\
-	  }					\
-	return Command (command);		\
+	  if (*ARG != 0)			\
+	    {					\
+	      command += " '";			\
+	      command += ARG;			\
+	      command += "'";			\
+	    }					\
+	  return Command (command);		\
       }
 
       Command
       comment (const char* content)
       {
-	std::string str = "#";
-	str += content;
-	return Command (str);
+	using namespace boost::xpressive;
+
+	// Comment character
+	std::string comment_char = "# ";
+
+	// Newlines should be prefixed by #
+	sregex pattern = sregex::compile ("(\n)");
+	std::string format ("$1" + comment_char);
+
+	return Command (comment_char +
+			regex_replace (std::string (content), pattern, format));
       }
 
       Command

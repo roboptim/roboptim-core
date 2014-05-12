@@ -58,6 +58,7 @@ namespace roboptim
       ROBOPTIM_DLLAPI Command comment (const char*);
 
       /// \brief Make a Gnuplot comment.
+      /// \throw std::runtime_error
       template <typename T>
       inline Command comment (const T& content)
       {
@@ -72,9 +73,9 @@ namespace roboptim
         using std::operator <<;
 
         std::stringstream ss;
-        ss << "# " << content;
+        ss << content;
 
-        return Command (ss.str ());
+        return comment (ss.str ().c_str ());
       }
 
       /// \brief Make a Gnuplot set command.
