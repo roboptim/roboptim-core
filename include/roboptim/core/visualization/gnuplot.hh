@@ -128,6 +128,9 @@ namespace roboptim
 
       Gnuplot& operator << (gnuplot::Command);
 
+      /// \brief Clear the vector of commands.
+      void clear ();
+
     protected:
       /// \brief Default constructor can not be called directly.
       ///

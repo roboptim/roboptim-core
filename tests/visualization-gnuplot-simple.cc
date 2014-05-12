@@ -53,6 +53,10 @@ BOOST_AUTO_TEST_CASE (visualization_gnuplot_simple)
 	<< quit
 	);
 
+  // Test clear function
+  gnuplot.clear ();
+  (*output) << gnuplot;
+
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
 }
