@@ -27,17 +27,20 @@ ADD_LIBRARY(roboptim-core SHARED
   finite-difference-gradient.cc
   generic-solver.cc
   indent.cc
-  result.cc
   result-with-warnings.cc
-  solver.cc
+  result.cc
   solver-error.cc
   solver-warning.cc
+  solver.cc
   util.cc
 
   visualization/gnuplot.cc
   visualization/gnuplot-commands.cc
   visualization/gnuplot-differentiable-function.cc
   visualization/gnuplot-matrix.cc
+
+  visualization/matplotlib.cc
+  visualization/matplotlib-commands.cc
   )
 
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)

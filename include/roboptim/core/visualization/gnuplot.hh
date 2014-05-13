@@ -29,6 +29,7 @@
 
 # include <roboptim/core/function.hh>
 # include <roboptim/core/visualization/fwd.hh>
+# include <roboptim/core/visualization/util.hh>
 # include <roboptim/core/visualization/gnuplot-commands.hh>
 
 namespace roboptim
@@ -37,49 +38,6 @@ namespace roboptim
   {
     /// \addtogroup roboptim_visualization
     /// @{
-
-    /// \brief Normalize floating point number output.
-    /// Normalization is done on all displayed floating
-    /// point numbers to get a consistent output.
-    double normalize (const double& x);
-
-    /// \brief Apply normalize to each element of a matrix.
-    Eigen::MatrixXd
-    normalize (const Eigen::MatrixXd& x);
-
-
-    /// \brief Apply normalize to each element of a container.
-    template <typename T>
-    T normalize (const T& x);
-
-    inline double
-    normalize (const double& x)
-    {
-      if (std::fabs (x) < 1e-8)
-	return 0.;
-      return x;
-    }
-
-    inline Eigen::MatrixXd
-    normalize (const Eigen::MatrixXd& x)
-    {
-      Eigen::MatrixXd res (x.rows (), x.cols ());
-      for (Function::size_type i = 0; i < x.rows (); ++i)
-	for (Function::size_type j = 0; j < x.cols (); ++j)
-	  res (i, j) = normalize (x (i, j));
-      return res;
-    }
-
-    template <typename T>
-    T
-    normalize (const T& x)
-    {
-      T res (x.size ());
-      for (Function::size_type i = 0; i < x.size (); ++i)
-	res[i] = normalize (x[i]);
-      return res;
-    }
-
 
     /// \brief Gnuplot script
     ///

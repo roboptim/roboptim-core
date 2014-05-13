@@ -1,0 +1,9 @@
+foo = 42
+# Hello, world!
+# This is a three-line comment!
+# Amazing!
+plt.figure ()
+plt.show ()
+
+
+

@@ -54,10 +54,10 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/product.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/scalar.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/scalar.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection-by-id.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection-by-id.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
@@ -66,8 +66,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/constant.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/cos.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/identity.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/sin.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/polynomial.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/sin.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/fwd.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/generic-solver.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/indent.hh
@@ -83,9 +83,9 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/optimization-logger.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/parametrized-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy-laststate.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy-td.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/plugin/dummy.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/portability.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hxx
@@ -96,11 +96,11 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-error.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-state.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-state.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-warning.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-state.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-state.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/sum-of-c1-squares.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/sum-of-c1-squares.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/sys.hh
@@ -116,6 +116,9 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot-matrix.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/gnuplot.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/matplotlib-commands.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/matplotlib.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/util.hh
   )
 
 SETUP_PROJECT()
