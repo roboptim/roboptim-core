@@ -37,6 +37,8 @@ namespace roboptim
       class replot;
       class reread;
       class reset;
+      class set;
+      class unset;
 
       class cd;
       class help;
@@ -45,7 +47,20 @@ namespace roboptim
 
     } // end of namespace gnuplot.
 
+    class Matplotlib;
+
+    namespace matplotlib
+    {
+      class Import;
+      class Command;
+
+      class figure;
+      class set;
+      class show;
+
+    } // end of namespace matplotlib.
+
   } // end of namespace visualization.
 } // end of namespace roboptim.
 
-#endif //! ROBOPTIM_CORE_VISUALIZATION_GNUPLOT_HH
+#endif //! ROBOPTIM_CORE_VISUALIZATION_FWD_HH
