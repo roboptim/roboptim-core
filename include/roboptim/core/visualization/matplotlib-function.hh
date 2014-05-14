@@ -87,14 +87,21 @@ namespace roboptim
         ss << "])" << std::endl;
 
         // For each output dimension of the function
-        for (typename GenericFunction<T>::size_type i = 0; i < f.outputSize (); ++i)
+        if (f.outputSize () == 1)
 	  {
-	    ss << (boost::format ("plt.plot (%1%[:,0], %1%[:,%2%], label=\"%3% (%4%)\")")
+	    ss << (boost::format ("plt.plot (%1%[:,0], %1%[:,1], label=\"%2%\")")
 		   % data_name
-		   % typename GenericFunction<T>::size_type (i+1)
-		   % f.getName ()
-		   % i).str () << std::endl;
+		   % f.getName ()).str () << std::endl;
 	  }
+        else for (typename GenericFunction<T>::size_type i = 0;
+                  i < f.outputSize (); ++i)
+	       {
+		 ss << (boost::format ("plt.plot (%1%[:,0], %1%[:,%2%], label=\"%3% (%4%)\")")
+			% data_name
+			% typename GenericFunction<T>::size_type (i+1)
+			% f.getName ()
+			% i).str () << std::endl;
+	       }
         ss << "plt.legend ()" << std::endl;
 
         return Command (ss.str ());
