@@ -30,8 +30,12 @@ namespace roboptim
   {
     namespace matplotlib
     {
-      Import::Import (const std::string& package)
-        : package_ (package)
+      Import::Import (const std::string& packages)
+        : command_ ("import " + packages)
+      {}
+
+      Import::Import (const std::string& from, const std::string& packages)
+        : command_ ("from " + from + " import " + packages)
       {}
 
       Import::~Import ()

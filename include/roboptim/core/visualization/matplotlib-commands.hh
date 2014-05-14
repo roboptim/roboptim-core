@@ -40,19 +40,27 @@ namespace roboptim
       {
       public:
         /// \brief Construct from a Python package.
-        /// \param package package to import
+        /// \param packages packages to import (separated by commas).
         Import (const std::string& package);
 
+        /// \brief Construct from a Python package. "from-import" version.
+        /// \param from Python module.
+        /// \param packages packages to import (separated by commas).
+        Import (const std::string& from, const std::string& packages);
+
+        /// \brief Import destructor.
         ~Import ();
 
-        const std::string& package () const
+        /// \brief Return the import command.
+        /// \return import command.
+        const std::string& command () const
         {
-          return package_;
+          return command_;
         }
 
       private:
-        /// \brief Package name.
-        std::string package_;
+        /// \brief Import command.
+        std::string command_;
       };
 
 
