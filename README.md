@@ -8,7 +8,7 @@ roboptim-core
 ![LGPL-3](https://www.gnu.org/graphics/lgplv3-88x31.png)
 
 
-[![Zenodo](https://zenodo.org/record/10332)](https://zenodo.org/badge/doi/10.5281/zenodo.10332.png)
+[![Zenodo](http://zenodo.org/record/10332)](https://zenodo.org/badge/doi/10.5281/zenodo.10332.png)
 
 This package is the Core layer of the RobOptim framework. It is
 released under the [LGPL-3](COPYING.LESSER) license.
