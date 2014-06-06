@@ -3,10 +3,12 @@ roboptim-core
 
 [![Build Status](https://travis-ci.org/roboptim/roboptim-core.png?branch=master)](https://travis-ci.org/roboptim/roboptim-core)
 [![Coverage Status](https://coveralls.io/repos/roboptim/roboptim-core/badge.png)](https://coveralls.io/r/roboptim/roboptim-core)
-[![Stories in Ready](https://badge.waffle.io/roboptim/roboptim-core.png?label=ready&title=Ready)](https://waffle.io/roboptim/roboptim-core)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/863/badge.svg)](https://scan.coverity.com/projects/863)
 
 ![LGPL-3](https://www.gnu.org/graphics/lgplv3-88x31.png)
+
+
+[![Zenodo](https://zenodo.org/record/10332)]https://zenodo.org/badge/doi/10.5281/zenodo.10332.png)
 
 This package is the Core layer of the RobOptim framework. It is
 released under the [LGPL-3](COPYING.LESSER) license.
