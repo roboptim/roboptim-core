@@ -78,7 +78,9 @@ BOOST_AUTO_TEST_CASE (util)
   detail::vector_to_array (stl_vec.data (), eigen_vec);
 
   for (size_type i = 0; i < vec_size; ++i)
-    BOOST_CHECK_CLOSE (eigen_vec[i], stl_vec[i], 1e-6);
+    BOOST_CHECK_CLOSE (eigen_vec[i],
+                       stl_vec[static_cast<size_t> (i)],
+                       1e-6);
 
   // Copy C array to Eigen vector
   Function::vector_t eigen_vec2 (vec_size);

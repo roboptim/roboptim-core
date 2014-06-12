@@ -49,8 +49,7 @@
   typedef parent_t::argument_t argument_t;      \
   typedef parent_t::result_t result_t;          \
   typedef parent_t::vector_t vector_t;          \
-  typedef parent_t::matrix_t matrix_t;          \
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+  typedef parent_t::matrix_t matrix_t
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
   typedef PARENT parent_t;				\
@@ -59,8 +58,7 @@
   typedef typename parent_t::argument_t argument_t;	\
   typedef typename parent_t::result_t result_t;		\
   typedef typename parent_t::vector_t vector_t;		\
-  typedef typename parent_t::matrix_t matrix_t;		\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+  typedef typename parent_t::matrix_t matrix_t
 
 namespace roboptim
 {

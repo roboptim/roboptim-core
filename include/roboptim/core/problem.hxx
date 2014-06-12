@@ -39,8 +39,8 @@ namespace roboptim
   Problem<F, boost::mpl::vector <> >::Problem (const function_t& f)
     : function_ (f),
       startingPoint_ (),
-      argumentBounds_ (f.inputSize ()),
-      argumentScales_ (f.inputSize ())
+      argumentBounds_ (static_cast<size_t> (f.inputSize ())),
+      argumentScales_ (static_cast<size_t> (f.inputSize ()))
   {
     // Check that in the objective function m = 1 (R^n -> R).
     assert (f.outputSize () == 1);

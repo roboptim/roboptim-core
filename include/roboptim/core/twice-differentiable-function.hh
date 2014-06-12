@@ -30,13 +30,11 @@
 
 # define ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
   ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT);		\
-  typedef parent_t::hessian_t hessian_t;				\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+  typedef parent_t::hessian_t hessian_t
 
 # define ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
   ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT);		\
-  typedef typename parent_t::hessian_t hessian_t;			\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+  typedef typename parent_t::hessian_t hessian_t
 
 
 namespace roboptim
