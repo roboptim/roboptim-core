@@ -28,7 +28,7 @@ namespace roboptim
     : detail::AutopromoteTrait<U>::T_type
       (origin->inputSize (),
        origin->outputSize (),
-       (boost::format ("%1% * %2%")
+       (boost::format ("%1% * (%2%)")
 	% scalar
 	% origin->getName ()).str ()),
       origin_ (origin),

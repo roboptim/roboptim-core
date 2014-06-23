@@ -27,7 +27,7 @@ namespace roboptim
     : detail::PromoteTrait<U, V>::T_promote
       (left->inputSize (),
        left->outputSize (),
-       (boost::format ("%1% + %2%")
+       (boost::format ("(%1%) * (%2%)")
 	% left->getName ()
 	% right->getName ()).str ()),
       left_ (left),
