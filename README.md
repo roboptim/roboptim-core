@@ -86,7 +86,7 @@ The manual compilation requires two steps:
  1. configuration of the build and generation of the build files
  2. compilation of the sources and installation of the package
 
-roboptim-core uses [CMake](http://www.cmake.org/) to generate build
+roboptim-core uses [CMake][] to generate build
 files. It is recommended to create a separate build directory:
 
 ```sh
@@ -177,7 +177,7 @@ Development Snapshost ( *unstable* ):
 [git-submodules]: http://git-scm.com/book/en/Git-Tools-Submodules
 
 [Boost]: http://www.boost.org/
-[CMake]: htttp://www.cmake.org/
+[CMake]: http://www.cmake.org/
 [Doxygen]: http://www.stack.nl/~dimitri/doxygen/
 [Eigen]: http://eigen.tuxfamily.org/
 [Git]: http://git-scm.com/
