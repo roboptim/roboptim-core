@@ -29,7 +29,7 @@ namespace roboptim
 
 
   template <typename T>
-  class ROBOPTIM_DLLAPI Split : public T
+  class Split : public T
   {
   public:
     /// \brief Import value type.
