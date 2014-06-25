@@ -1,3 +1,4 @@
 0001-Fix-SOVERSION.patch
 0002-Fix-warnings-with-gcc.patch
 0003-Fix-plugindir-for-multiarch.patch
+0004-Disable-output-check-in-tests-when-Eigen-output-vary.patch
