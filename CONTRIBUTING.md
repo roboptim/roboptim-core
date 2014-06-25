@@ -8,7 +8,7 @@ a just a few small guidelines you need to follow.
 
 Contributions to RobOptim must be accompanied by a Contributor License
 Agreement. This is not a copyright **assignment**, it simply gives
-Google permission to use and redistribute your contributions as part
+us permission to use and redistribute your contributions as part
 of the project.
 
   * If you are an individual writing original source code and you're sure you
