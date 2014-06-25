@@ -41,7 +41,7 @@ namespace roboptim {
   ///
   /// \tparam T function type
   template <typename T>
-  class ROBOPTIM_CORE_DLLAPI GenericSumOfC1Squares : public GenericDifferentiableFunction<T>
+  class GenericSumOfC1Squares : public GenericDifferentiableFunction<T>
   {
   public:
     /// @name Types

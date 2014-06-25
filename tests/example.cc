@@ -1,4 +1,4 @@
-// Copyright (C) 2013 by Benjamin Chretien, CNRS.
+﻿// Copyright (C) 2013 by Benjamin Chretien, CNRS.
 //
 // This file is part of the roboptim.
 //
