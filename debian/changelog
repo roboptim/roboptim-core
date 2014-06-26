@@ -1,3 +1,12 @@
+roboptim-core (2.0-7) unstable; urgency=medium
+
+  * debian/control: add branch information to Vcs-Git field (Closes: #741852)
+  * Disable output check in fragile tests (Closes: #751034, #741855)
+  * debian/control: bump Standards-Version to 3.9.5
+  * Update d/watch to check gpg signature
+
+ -- Thomas Moulard <thomas.moulard@gmail.com>  Thu, 26 Jun 2014 11:10:52 +0900
+
 roboptim-core (2.0-6) unstable; urgency=medium
 
   * Remove symbols file (Closes: #729671)
