@@ -12,7 +12,7 @@ Build-Depends: debhelper (>= 9),
 	       libeigen3-dev,
 	       libboost-all-dev,
 	       liblog4cxx10-dev
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Vcs-Browser: https://github.com/roboptim/roboptim-core
 Vcs-Git: git://github.com/roboptim/roboptim-core.git -b debian
 Homepage: http://www.roboptim.net/
