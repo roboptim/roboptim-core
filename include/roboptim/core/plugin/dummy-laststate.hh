@@ -21,6 +21,7 @@
 # include <boost/mpl/vector.hpp>
 
 # include <roboptim/core/solver.hh>
+# include <roboptim/core/solver-state.hh>
 
 namespace roboptim
 {
@@ -43,6 +44,9 @@ namespace roboptim
     /// \brief Define parent's type.
     typedef Solver<Function, boost::mpl::vector<Function> > parent_t;
 
+    /// \brief Callback function type.
+    typedef parent_t::callback_t callback_t;
+
     /// \brief Build a solver from a problem.
     /// \param problem problem that will be solved
     explicit DummySolverLastState (const problem_t& problem);
@@ -54,6 +58,22 @@ namespace roboptim
     /// Implement the solve method as required by the
     /// #GenericSolver class.
     virtual void solve ();
+
+    virtual void setIterationCallback (callback_t callback)
+    {
+      callback_ = callback;
+    }
+
+    const callback_t& callback () const
+    {
+      return callback_;
+    }
+
+    /// \brief Intermediate callback (called at each end of iteration).
+    callback_t callback_;
+
+    /// \brief Current state of the solver (used by the callback function).
+    solverState_t solverState_;
   };
 
 } // end of namespace roboptim

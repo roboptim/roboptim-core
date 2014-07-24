@@ -26,7 +26,9 @@
 namespace roboptim
 {
   DummySolverLastState::DummySolverLastState (const problem_t& pb)
-    : parent_t (pb)
+    : parent_t (pb),
+      callback_ (),
+      solverState_ (pb)
   {
     parameters_["dummy-parameter"].description = "dummy parameter";
     parameters_["dummy-parameter"].value = 42.;
@@ -51,6 +53,16 @@ namespace roboptim
     res.constraints.fill(0);
     res.lambda.fill(0);
     res.value.fill(42);
+
+
+    // Also fill solver state (for logger testing)
+    solverState_.x () = res.x;
+    solverState_.cost () = res.value[0];
+    solverState_.constraintViolation () = 42;
+
+    // call user-defined callback
+    if (callback_)
+      callback_ (problem (), solverState_);
 
     // Add these values to SolverError
     result_ = SolverError ("The dummy solver always fail.", res);

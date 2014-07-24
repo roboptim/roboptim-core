@@ -84,10 +84,11 @@ namespace roboptim
     template <typename P>
     struct EvaluateConstraintViolation
     {
-      typedef typename P::vector_t vector_t;
-      typedef typename P::value_type value_type;
+      typedef typename P::vector_t        vector_t;
+      typedef typename P::value_type      value_type;
+      typedef typename P::size_type       size_type;
       typedef typename P::intervalsVect_t intervalsVect_t;
-      typedef typename P::interval_t interval_t;
+      typedef typename P::interval_t      interval_t;
 
       EvaluateConstraintViolation
       (const std::vector<vector_t>& constraints,
@@ -115,10 +116,11 @@ namespace roboptim
         for (std::size_t i = 0; i < constraints_.size (); ++i)
           {
             // For each dimension of the constraint
-            for (std::size_t j = 0; j < constraints_[i].size (); ++j)
+            for (size_type j = 0; j < constraints_[i].size (); ++j)
               {
-                cstr_viol = computeViolation (constraints_[i][j],
-                                              bounds_[i][j]);
+                cstr_viol = computeViolation
+                  (constraints_[i][j],
+                   bounds_[i][static_cast<std::size_t> (j)]);
 
                 norm = std::max (norm, fabs (cstr_viol));
               }
@@ -138,11 +140,12 @@ namespace roboptim
   {
   public:
     typedef T solver_t;
-    typedef typename solver_t::problem_t problem_t;
-    typedef typename solver_t::problem_t::value_type value_type;
-    typedef typename solver_t::problem_t::vector_t vector_t;
+    typedef typename solver_t::problem_t                       problem_t;
+    typedef typename solver_t::problem_t::value_type           value_type;
+    typedef typename solver_t::problem_t::size_type            size_type;
+    typedef typename solver_t::problem_t::vector_t             vector_t;
     typedef typename solver_t::problem_t::function_t::matrix_t jacobian_t;
-    typedef typename solver_t::solverState_t solverState_t;
+    typedef typename solver_t::solverState_t                   solverState_t;
 
     explicit OptimizationLogger (solver_t& solver,
 				 const boost::filesystem::path& path)
@@ -231,15 +234,16 @@ namespace roboptim
       // X evolution over time.
       {
 	boost::filesystem::ofstream streamX (path_ / "x-evolution.csv");
-	const solver_t::problem_t::names_t
-	  argumentNames = solver_.argumentNames ();
+	const typename solver_t::problem_t::names_t
+	  argumentNames = solver_.problem ().argumentNames ();
 
 	// Whether to print X 0, X 1 etc... or user-provided names.
 	bool printDefaultX = (argumentNames.size () != x_.size ());
 
 	if (!x_.empty ())
 	  {
-	    for (std::size_t i = 0; i < x_[0].size (); ++i)
+	    for (std::size_t i = 0;
+		 i < static_cast<std::size_t> (x_[0].size ()); ++i)
 	      {
 		if (i > 0)
 		  streamX << ", ";
@@ -250,7 +254,7 @@ namespace roboptim
 	    streamX << "\n";
 	    for (std::size_t nIter = 0; nIter < x_.size (); ++nIter)
 	      {
-		for (std::size_t i = 0; i < x_[nIter].size (); ++i)
+		for (size_type i = 0; i < x_[nIter].size (); ++i)
 		  {
 		    if (i > 0)
 		      streamX << ", ";
@@ -269,7 +273,7 @@ namespace roboptim
 	  {
 	    boost::filesystem::ofstream streamConstraint
 	      (path_ / (boost::format ("constraint-%d-evolution.csv") % constraintId).str ());
-	    for (std::size_t i = 0; i < constraints_[0][constraintId].size (); ++i)
+	    for (size_type i = 0; i < constraints_[0][constraintId].size (); ++i)
 	      {
 		if (i > 0)
 		  streamConstraint << ", ";
@@ -278,7 +282,7 @@ namespace roboptim
 	    streamConstraint << "\n";
 	    for (std::size_t nIter = 0; nIter < constraints_.size (); ++nIter)
 	      {
-		for (std::size_t i = 0; i < constraints_[nIter][constraintId].size (); ++i)
+		for (size_type i = 0; i < constraints_[nIter][constraintId].size (); ++i)
 		  {
 		    if (i > 0)
 		      streamConstraint << ", ";
@@ -300,6 +304,51 @@ namespace roboptim
     }
 
   private:
+
+    /// \brief Process constraints Jacobian in the callback.
+    /// This method is needed since constraints may not be differentiable.
+    template <typename F>
+    typename boost::enable_if
+      <boost::is_base_of<DifferentiableFunction, F> >::type
+    process_constraints_jacobian
+    (const typename solver_t::problem_t& pb,
+     const typename solver_t::vector_t& x,
+     std::size_t constraintId,
+     const boost::filesystem::path& constraintPath)
+    {
+      boost::filesystem::ofstream
+        jacobianStream (constraintPath / "jacobian.csv");
+
+      jacobian_t jacobian = boost::apply_visitor
+        (::roboptim::detail::JacobianConstraint<problem_t> (x),
+         pb.constraints ()[constraintId]);
+
+      for (size_type i = 0;
+           i < static_cast<size_type> (jacobian.rows ()); ++i)
+	{
+	  for (size_type j = 0; j < jacobian.cols (); ++j)
+	    {
+	      jacobianStream << jacobian.coeffRef (i, j);
+	      if (j < jacobian.cols () - 1)
+		jacobianStream << ", ";
+	    }
+	  jacobianStream << "\n";
+	}
+    }
+
+    template <typename F>
+    typename boost::disable_if
+      <boost::is_base_of<DifferentiableFunction, F> >::type
+    process_constraints_jacobian
+    (const typename solver_t::problem_t&,
+     const typename solver_t::vector_t&,
+     std::size_t,
+     const boost::filesystem::path&)
+    {
+      // Non-differentiable function: do nothing
+    }
+
+
     /// \brief Process constraints in the callback.
     /// This method is needed as long as unconstrained problem_t do not have
     /// constraint_t and related methods defined.
@@ -331,8 +380,9 @@ namespace roboptim
           boost::filesystem::ofstream constraintValueStream (constraintPath / "value.csv");
 
           vector_t constraintValue = boost::apply_visitor
-            (::roboptim::detail::EvaluateConstraint<problem_t> (x), pb.constraints ()[constraintId]);
-          for (std::size_t i = 0; i < constraintValue.size (); ++i)
+            (::roboptim::detail::EvaluateConstraint<problem_t> (x),
+             pb.constraints ()[constraintId]);
+          for (size_type i = 0; i < constraintValue.size (); ++i)
             {
               constraintValueStream << constraintValue[i];
               if (i < constraintValue.size () - 1)
@@ -342,19 +392,10 @@ namespace roboptim
           constraintsOneIteration[constraintId] = constraintValue;
 
           // Jacobian
-          boost::filesystem::ofstream jacobianStream (constraintPath / "jacobian.csv");
-          jacobian_t jacobian = boost::apply_visitor
-            (::roboptim::detail::JacobianConstraint<problem_t> (x), pb.constraints ()[constraintId]);
-          for (std::size_t i = 0; i < jacobian.rows (); ++i)
-            {
-              for (std::size_t j = 0; j < jacobian.cols (); ++j)
-                {
-                  jacobianStream << jacobian.coeffRef (i, j);
-                  if (j < jacobian.cols () - 1)
-                    jacobianStream << ", ";
-                }
-              jacobianStream << "\n";
-            }
+          // FIXME: this test should be made on a per-constraint basis, since
+          // some of the constraints may be differentiable, some may not.
+          process_constraints_jacobian<typename solver_t::problem_t::function_t>
+            (pb, x, constraintId, constraintPath);
         }
       constraints_.push_back (constraintsOneIteration);
 
@@ -460,7 +501,7 @@ namespace roboptim
       // Log all data
       // x
       boost::filesystem::ofstream streamX (iterationPath / "x.csv");
-      for (std::size_t i = 0; i < x.size (); ++i)
+      for (size_type i = 0; i < x.size (); ++i)
 	{
 	  streamX << x[i];
 	  if (i < x.size () - 1)

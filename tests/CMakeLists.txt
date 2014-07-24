@@ -106,6 +106,7 @@ ROBOPTIM_CORE_TEST(plugin-laststate)
 
 # Callbacks.
 ROBOPTIM_CORE_TEST(solver-state)
+ROBOPTIM_CORE_TEST(optimization-logger)
 
 # Algorithm.
 ROBOPTIM_CORE_TEST(finite-difference-gradient)
