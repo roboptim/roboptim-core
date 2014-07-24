@@ -231,13 +231,21 @@ namespace roboptim
       // X evolution over time.
       {
 	boost::filesystem::ofstream streamX (path_ / "x-evolution.csv");
+	const solver_t::problem_t::names_t
+	  argumentNames = solver_.argumentNames ();
+
+	// Whether to print X 0, X 1 etc... or user-provided names.
+	bool printDefaultX = (argumentNames.size () != x_.size ());
+
 	if (!x_.empty ())
 	  {
 	    for (std::size_t i = 0; i < x_[0].size (); ++i)
 	      {
 		if (i > 0)
 		  streamX << ", ";
-		streamX << "X " << i;
+		if (printDefaultX)
+		  streamX << "X_" << i;
+		else streamX << argumentNames[i];
 	      }
 	    streamX << "\n";
 	    for (std::size_t nIter = 0; nIter < x_.size (); ++nIter)
