@@ -60,6 +60,11 @@ BOOST_AUTO_TEST_CASE (problem)
   x.setZero ();
   pb.startingPoint () = x;
 
+  ConstantFunction::names_t names (2);
+  names[0] = "x₀";
+  names[1] = "x₁";
+  pb.argumentNames () = names;
+
   boost::shared_ptr<ConstantFunction>
     cstr = boost::make_shared<ConstantFunction>  (v);
   problem_t::intervals_t intervals (2);

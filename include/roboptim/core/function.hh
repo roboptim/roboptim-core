@@ -49,7 +49,8 @@
   typedef parent_t::argument_t argument_t;      \
   typedef parent_t::result_t result_t;          \
   typedef parent_t::vector_t vector_t;          \
-  typedef parent_t::matrix_t matrix_t
+  typedef parent_t::matrix_t matrix_t;          \
+  typedef parent_t::names_t names_t
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
   typedef PARENT parent_t;				\
@@ -58,7 +59,8 @@
   typedef typename parent_t::argument_t argument_t;	\
   typedef typename parent_t::result_t result_t;		\
   typedef typename parent_t::vector_t vector_t;		\
-  typedef typename parent_t::matrix_t matrix_t
+  typedef typename parent_t::matrix_t matrix_t;		\
+  typedef typename parent_t::names_t names_t
 
 namespace roboptim
 {
@@ -143,6 +145,12 @@ namespace roboptim
 
     /// \brief Type of a function evaluation argument.
     typedef typename GenericFunctionTraits<T>::argument_t argument_t;
+
+    /// \brief Type of a function argument name.
+    typedef std::string name_t;
+
+    /// \brief Type of a vector of function argument names.
+    typedef std::vector<name_t> names_t;
 
     /// \brief Get the value of the machine epsilon, useful for
     /// floating types comparison.
