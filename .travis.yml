@@ -11,6 +11,7 @@ env:
     - APT_DEPENDENCIES="doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev"
     - HOMEBREW_DEPENDENCIES="doxygen libtool boost log4cxx"
     - GIT_DEPENDENCIES=""
+    - GH_USERNAME=thomas-moulard
     - GH_REPO=roboptim/roboptim-core
     - DEBSIGN_KEYID=5AE5CD75
     - PPA_URI="roboptim/ppa"
