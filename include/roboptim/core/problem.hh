@@ -366,14 +366,17 @@ namespace roboptim
     /// \{
 
     /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
-    explicit Problem (const function_t&);
+    /// \param cost cost function.
+    explicit Problem (const function_t& cost);
 
     /// \brief Copy constructor.
-    explicit Problem (const Problem<F, CLIST>&);
+    /// \param pb problem to copy.
+    explicit Problem (const Problem<F, CLIST>& pb);
 
     /// \brief Copy constructor (convert from another class of problem).
+    /// \param pb problem to copy and convert.
     template <typename F_, typename CLIST_>
-    explicit Problem (const Problem<F_, CLIST_>&);
+    explicit Problem (const Problem<F_, CLIST_>& pb);
 
     ~Problem ();
 
