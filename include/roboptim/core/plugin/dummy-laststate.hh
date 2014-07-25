@@ -37,21 +37,28 @@ namespace roboptim
   ///
   /// It is also a good starting point for users that
   /// want to develop their own solver.
-  class DummySolverLastState
-    : public Solver<Function, boost::mpl::vector<Function> >
+  template <typename F>
+  class GenericDummySolverLastState
+    : public Solver<F, boost::mpl::vector<F> >
   {
   public:
     /// \brief Define parent's type.
-    typedef Solver<Function, boost::mpl::vector<Function> > parent_t;
+    typedef Solver<F, boost::mpl::vector<F> > parent_t;
+
+    /// \brief Problem type.
+    typedef typename parent_t::problem_t problem_t;
 
     /// \brief Callback function type.
-    typedef parent_t::callback_t callback_t;
+    typedef typename parent_t::callback_t callback_t;
+
+    /// \brief Type of the state of the solver.
+    typedef SolverState<problem_t> solverState_t;
 
     /// \brief Build a solver from a problem.
     /// \param problem problem that will be solved
-    explicit DummySolverLastState (const problem_t& problem);
+    explicit GenericDummySolverLastState (const problem_t& problem);
 
-    virtual ~DummySolverLastState ();
+    virtual ~GenericDummySolverLastState ();
 
     /// \brief Implement the solve algorithm.
     ///
@@ -76,6 +83,16 @@ namespace roboptim
     solverState_t solverState_;
   };
 
+  typedef GenericDummySolverLastState<Function> DummySolverLastState;
+  typedef GenericDummySolverLastState<DifferentiableSparseFunction>
+    DummyDifferentiableSparseSolverLastState;
+
+  // Explicit instantiation
+  template class GenericDummySolverLastState<Function>;
+  template class GenericDummySolverLastState<DifferentiableSparseFunction>;
+
 } // end of namespace roboptim
+
+# include <roboptim/core/plugin/dummy-laststate.hxx>
 
 #endif //! ROBOPTIM_CORE_DUMMY_LASTSTATE_HH

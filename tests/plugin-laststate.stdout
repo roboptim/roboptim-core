@@ -22,7 +22,7 @@ Solver:
     dummy-parameter2 (yet another dummy parameter): 3
     dummy-parameter3 (just a dummy key): ...and a dummy value!
 
-Last dummy x: [1](1337)
+Last dummy x: [4](1337,1337,1337,1337)
 Last dummy value: [1](42)
 
 The dummy solver always fail.

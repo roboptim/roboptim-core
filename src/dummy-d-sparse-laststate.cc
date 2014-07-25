@@ -1,4 +1,4 @@
-// Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
+// Copyright (C) 2014 by Benjamin Chretien, CNRS-LIRMM.
 //
 // This file is part of the roboptim.
 //
@@ -26,12 +26,12 @@
 extern "C"
 {
   using namespace roboptim;
-  typedef DummySolverLastState::parent_t solver_t;
+  typedef DummyDifferentiableSparseSolverLastState::parent_t solver_t;
 
   ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ();
   ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ();
   ROBOPTIM_DLLEXPORT solver_t* create
-  (const DummySolverLastState::problem_t& pb);
+  (const DummyDifferentiableSparseSolverLastState::problem_t& pb);
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
 
   ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ()
@@ -45,9 +45,9 @@ extern "C"
   }
 
   ROBOPTIM_DLLEXPORT solver_t* create
-  (const DummySolverLastState::problem_t& pb)
+  (const DummyDifferentiableSparseSolverLastState::problem_t& pb)
   {
-    return new DummySolverLastState (pb);
+    return new DummyDifferentiableSparseSolverLastState (pb);
   }
 
   ROBOPTIM_DLLEXPORT void destroy (solver_t* p)

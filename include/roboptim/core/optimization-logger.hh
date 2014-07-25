@@ -146,6 +146,9 @@ namespace roboptim
     typedef typename solver_t::problem_t::vector_t             vector_t;
     typedef typename solver_t::problem_t::function_t::matrix_t jacobian_t;
     typedef typename solver_t::solverState_t                   solverState_t;
+    typedef typename solver_t::problem_t::function_t::traits_t traits_t;
+
+    typedef GenericDifferentiableFunction<traits_t> differentiableFunction_t;
 
     explicit OptimizationLogger (solver_t& solver,
 				 const boost::filesystem::path& path)
@@ -309,13 +312,14 @@ namespace roboptim
     /// This method is needed since constraints may not be differentiable.
     template <typename F>
     typename boost::enable_if
-      <boost::is_base_of<DifferentiableFunction, F> >::type
+      <boost::is_base_of<differentiableFunction_t, F> >::type
     process_constraints_jacobian
     (const typename solver_t::problem_t& pb,
      const typename solver_t::vector_t& x,
      std::size_t constraintId,
      const boost::filesystem::path& constraintPath)
     {
+      // Differentiable function: log Jacobian
       boost::filesystem::ofstream
         jacobianStream (constraintPath / "jacobian.csv");
 
@@ -338,7 +342,7 @@ namespace roboptim
 
     template <typename F>
     typename boost::disable_if
-      <boost::is_base_of<DifferentiableFunction, F> >::type
+      <boost::is_base_of<differentiableFunction_t, F> >::type
     process_constraints_jacobian
     (const typename solver_t::problem_t&,
      const typename solver_t::vector_t&,
