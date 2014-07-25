@@ -72,7 +72,7 @@ namespace roboptim
     o << "[";
 
     // Matrix
-    if (matrix.cols () == 1 || matrix.cols () == 1)
+    if (matrix.cols () == 1 || matrix.rows () == 1)
       {
 	// Vector
         ioformat = Eigen::IOFormat (Eigen::StreamPrecision,

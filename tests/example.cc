@@ -172,6 +172,8 @@ struct G1 : public TwiceDifferentiableFunction
   }
 };
 
+static const char* subscripts[] = {"₀", "₁", "₂", "₃", "₄",
+                                   "₅", "₆", "₇", "₈", "₉"};
 
 int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
 {
@@ -190,6 +192,13 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
   // Set the starting point.
   Function::vector_t start (pb.function ().inputSize ());
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
+
+  // Set arguments names (optional).
+  F::names_t names (static_cast<std::size_t> (f.inputSize ()));
+  for (std::size_t i = 0;
+       static_cast<Function::size_type> (i) < pb.function ().inputSize (); ++i)
+    names[i] = std::string ("x") + subscripts[i];
+  pb.argumentNames () = names;
 
   // Create constraints.
   boost::shared_ptr<G0> g0 (new G0 ());

@@ -1,8 +1,8 @@
 Solver:
   Problem:
     x (not differentiable)
-    Argument's bounds: (-inf, inf)
-    Argument's scales: 1
+    Arguments bounds: (-inf, inf)
+    Arguments scales: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
@@ -11,8 +11,8 @@ Solver:
 Solver:
   Problem:
     x (not differentiable)
-    Argument's bounds: (-inf, inf)
-    Argument's scales: 1
+    Arguments bounds: (-inf, inf)
+    Arguments scales: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
@@ -26,8 +26,8 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
-    Argument's bounds: (-inf, inf)
-    Argument's scales: 1
+    Arguments bounds: (-inf, inf)
+    Arguments scales: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
@@ -42,8 +42,8 @@ Solver:
 Solver:
   Problem:
     x (not differentiable)
-    Argument's bounds: (-inf, inf)
-    Argument's scales: 1
+    Arguments bounds: (-inf, inf)
+    Arguments scales: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
@@ -59,8 +59,8 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
-    Argument's bounds: (-inf, inf)
-    Argument's scales: 1
+    Arguments bounds: (-inf, inf)
+    Arguments scales: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
@@ -75,8 +75,8 @@ Solver:
 Solver:
   Problem:
     x (not differentiable)
-    Argument's bounds: (-inf, inf)
-    Argument's scales: 1
+    Arguments bounds: (-inf, inf)
+    Arguments scales: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
@@ -90,8 +90,8 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
-    Argument's bounds: (-inf, inf)
-    Argument's scales: 1
+    Arguments bounds: (-inf, inf)
+    Arguments scales: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)

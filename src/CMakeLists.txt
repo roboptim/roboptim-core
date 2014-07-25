@@ -82,6 +82,19 @@ IF(NOT APPLE)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
 
+# Dummy-laststate plug-in for differentiable sparse functions.
+ADD_LIBRARY(roboptim-core-plugin-dummy-d-sparse-laststate MODULE dummy-d-sparse-laststate.cc)
+ADD_DEPENDENCIES(roboptim-core-plugin-dummy-d-sparse-laststate roboptim-core)
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy-d-sparse-laststate liblog4cxx)
+TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-d-sparse-laststate roboptim-core)
+SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-d-sparse-laststate PROPERTIES PREFIX "")
+
+IF(NOT APPLE)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-d-sparse-laststate
+    PROPERTIES VERSION 2.0.0 SOVERSION 2)
+ENDIF()
+INSTALL(TARGETS roboptim-core-plugin-dummy-d-sparse-laststate DESTINATION ${PLUGINDIR})
+
 # Dummy-td plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy-td MODULE dummy-td.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy-td roboptim-core)

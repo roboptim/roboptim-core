@@ -40,7 +40,8 @@ namespace roboptim
     : function_ (f),
       startingPoint_ (),
       argumentBounds_ (static_cast<size_t> (f.inputSize ())),
-      argumentScales_ (static_cast<size_t> (f.inputSize ()))
+      argumentScales_ (static_cast<size_t> (f.inputSize ())),
+      argumentNames_ ()
   {
     // Check that in the objective function m = 1 (R^n -> R).
     assert (f.outputSize () == 1);
@@ -59,7 +60,8 @@ namespace roboptim
     function_ (pb.function_),
     startingPoint_ (pb.startingPoint_),
     argumentBounds_ (pb.argumentBounds_),
-    argumentScales_ (pb.argumentScales_)
+    argumentScales_ (pb.argumentScales_),
+    argumentNames_ (pb.argumentNames_)
   {
   }
 
@@ -71,7 +73,8 @@ namespace roboptim
     : function_ (pb.function_),
       startingPoint_ (pb.startingPoint_),
       argumentBounds_ (pb.argumentBounds_),
-      argumentScales_ (pb.argumentScales_)
+      argumentScales_ (pb.argumentScales_),
+      argumentNames_ (pb.argumentNames_)
   {
     // Check that F is a subtype of F_.
     BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
@@ -130,10 +133,13 @@ namespace roboptim
     // Function.
     o << this->function () << iendl;
 
-    // Arguments' bounds.
-    o << "Argument's bounds: " << this->argumentBounds () << iendl;
-    // Arguments' scales.
-    o << "Argument's scales: " << this->argumentScales () << iendl;
+    // Arguments bounds.
+    o << "Arguments bounds: " << this->argumentBounds () << iendl;
+    // Arguments scales.
+    o << "Arguments scales: " << this->argumentScales () << iendl;
+    // Arguments names.
+    if (!this->argumentNames ().empty ())
+      o << "Arguments names: " << this->argumentNames () << iendl;
 
     // Starting point.
     if (startingPoint_)
@@ -194,6 +200,20 @@ namespace roboptim
     return argumentScales_;
   }
 
+  template <typename F>
+  typename Problem<F, boost::mpl::vector<> >::names_t&
+  Problem<F, boost::mpl::vector<> >::argumentNames ()
+  {
+    return argumentNames_;
+  }
+
+  template <typename F>
+  const typename Problem<F, boost::mpl::vector<> >::names_t&
+  Problem<F, boost::mpl::vector<> >::argumentNames () const
+  {
+    return argumentNames_;
+  }
+
   //
   //
   // General template implementation
@@ -206,7 +226,8 @@ namespace roboptim
       boundsVect_ (),
       argumentBounds_ (static_cast<std::size_t> (f.inputSize ())),
       scalesVect_ (),
-      argumentScales_ (static_cast<std::size_t> (f.inputSize ()))
+      argumentScales_ (static_cast<std::size_t> (f.inputSize ())),
+      argumentNames_ ()
   {
     // Initialize bound.
     std::fill (argumentBounds_.begin (), argumentBounds_.end (),
@@ -229,7 +250,8 @@ namespace roboptim
       boundsVect_ (pb.boundsVect_),
       argumentBounds_ (pb.argumentBounds_),
       scalesVect_ (pb.scalesVect_),
-      argumentScales_ (pb.argumentScales_)
+      argumentScales_ (pb.argumentScales_),
+      argumentNames_ (pb.argumentNames_)
   {
   }
 
@@ -243,7 +265,8 @@ namespace roboptim
       boundsVect_ (pb.boundsVect_),
       argumentBounds_ (pb.argumentBounds_),
       scalesVect_ (pb.scalesVect_),
-      argumentScales_ (pb.argumentScales_)
+      argumentScales_ (pb.argumentScales_),
+      argumentNames_ (pb.argumentNames_)
   {
     // Check that F is a subtype of F_.
     BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
@@ -424,6 +447,19 @@ namespace roboptim
     return argumentScales_;
   }
 
+  template <typename F, typename CLIST>
+  typename Problem<F, CLIST>::names_t&
+  Problem<F, CLIST>::argumentNames ()
+  {
+    return argumentNames_;
+  }
+
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::names_t&
+  Problem<F, CLIST>::argumentNames () const
+  {
+    return argumentNames_;
+  }
 
   namespace detail
   {
@@ -518,10 +554,13 @@ namespace roboptim
     // Function.
     o << this->function () << iendl;
 
-    // Arguments' bounds.
-    o << "Argument's bounds: " << this->argumentBounds () << iendl;
-    // Arguments' scales.
-    o << "Argument's scales: " << this->argumentScales () << iendl;
+    // Arguments bounds.
+    o << "Arguments bounds: " << this->argumentBounds () << iendl;
+    // Arguments scales.
+    o << "Arguments scales: " << this->argumentScales () << iendl;
+    // Arguments names.
+    if (!this->argumentNames ().empty ())
+      o << "Arguments names: " << this->argumentNames () << iendl;
 
     // Constraints.
     if (this->constraints ().empty ())

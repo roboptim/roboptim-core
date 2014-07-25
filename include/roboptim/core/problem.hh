@@ -125,6 +125,9 @@ namespace roboptim
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
 
+    /// \brief Vector of names (e.g. for arguments).
+    typedef typename function_t::names_t names_t;
+
     /// \name Constructors and destructors.
     /// \{
 
@@ -151,28 +154,38 @@ namespace roboptim
     const function_t& function () const;
 
     /// \brief Retrieve arguments bounds.
-    /// Arguments bounds define in which interval
-    /// each argument is valid.
+    /// Arguments bounds define in which interval each argument is valid.
     /// \return arguments bounds
     intervals_t& argumentBounds ();
 
     /// \brief Retrieve arguments bounds.
-    /// Arguments bounds define in which interval
-    /// each argument is valid.
+    /// Arguments bounds define in which interval each argument is valid.
     /// \return arguments bounds
     const intervals_t& argumentBounds () const;
 
     /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for
-    /// each argument.
+    /// Arguments scales define which scale is applied for each argument.
     /// \return arguments scales
     scales_t& argumentScales ();
 
     /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for
-    /// each argument.
+    /// Arguments scales define which scale is applied for each argument.
     /// \return arguments scales
     const scales_t& argumentScales () const;
+
+    /// \brief Retrieve arguments names.
+    /// Arguments names define a name for each argument. This is particularly
+    /// useful when logging data.
+    /// Note: memory is not allocated by default since this is optional.
+    /// \return arguments names
+    names_t& argumentNames ();
+
+    /// \brief Retrieve arguments names.
+    /// Arguments names define a name for each argument. This is particularly
+    /// useful when logging data.
+    /// Note: memory is not allocated by default since this is optional.
+    /// \return arguments names
+    const names_t& argumentNames () const;
 
     /// \}
 
@@ -206,8 +219,10 @@ namespace roboptim
 
     /// \brief Arguments intervals.
     intervals_t argumentBounds_;
-    /// \brief Arguments' scales.
+    /// \brief Arguments scales.
     scales_t argumentScales_;
+    /// \brief Arguments names.
+    names_t argumentNames_;
   };
 
 
@@ -319,11 +334,17 @@ namespace roboptim
     /// \brief Optional vector defines a starting point.
     typedef boost::optional<vector_t> startingPoint_t;
 
+    /// \brief Interval type (e.g. for bounds).
     typedef typename function_t::interval_t interval_t;
+
+    /// \brief Intervals type.
     typedef typename function_t::intervals_t intervals_t;
 
     /// \brief Scale vector.
     typedef std::vector<value_type> scales_t;
+
+    /// \brief Vector of names (e.g. for arguments).
+    typedef typename function_t::names_t names_t;
 
     /// \brief Vector of interval vectors. This type is used to take
     /// into account the fact that constraints can have output values
@@ -367,20 +388,17 @@ namespace roboptim
     const function_t& function () const;
 
     /// \brief Retrieve arguments bounds.
-    /// Arguments bounds define in which interval
-    /// each argument is valid.
+    /// Arguments bounds define in which interval each argument is valid.
     /// \return arguments bounds
     intervals_t& argumentBounds ();
 
     /// \brief Retrieve arguments bounds.
-    /// Arguments bounds define in which interval
-    /// each argument is valid.
+    /// Arguments bounds define in which interval each argument is valid.
     /// \return arguments bounds
     const intervals_t& argumentBounds () const;
 
     /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for
-    /// each argument.
+    /// Arguments scales define which scale is applied for each argument.
     /// \return arguments scales
     scales_t& argumentScales ();
 
@@ -389,6 +407,18 @@ namespace roboptim
     /// each argument.
     /// \return arguments scales
     const scales_t& argumentScales () const;
+
+    /// \brief Retrieve arguments names.
+    /// Arguments names define a name for each argument. This is particularly
+    /// useful when logging data.
+    /// \return arguments names
+    names_t& argumentNames ();
+
+    /// \brief Retrieve arguments names.
+    /// Arguments names define a name for each argument. This is particularly
+    /// useful when logging data.
+    /// \return arguments names
+    const names_t& argumentNames () const;
 
     /// \}
 
@@ -481,9 +511,11 @@ namespace roboptim
     /// \brief Constraints scales vector.
     scalesVect_t scalesVect_;
 
-    /// \brief Arguments' scales.
+    /// \brief Arguments scales.
     scales_t argumentScales_;
 
+    /// \brief Arguments names.
+    names_t argumentNames_;
   };
 
   /// Example shows problem class use.

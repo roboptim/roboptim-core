@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 
     std::vector<boost::optional<value_type> > boundValues_throw
       (6, boost::optional<value_type> ());
-    boundValues[0] = 42.;
+    boundValues_throw[0] = 42.;
     BOOST_CHECK_THROW (fct = roboptim::bind (identity, boundValues_throw),
                        std::runtime_error);
   }
