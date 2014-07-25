@@ -524,35 +524,60 @@ namespace roboptim
       output_ << std::string (80, '-') << iendl;
     }
 
+  public:
+    /// \brief Return the path of the log directory.
+    /// \return path of the log directory.
+    const boost::filesystem::path& path () const
+    {
+      return path_;
+    }
+
+    /// \brief Return the path of the log directory.
+    /// \return path of the log directory.
+    boost::filesystem::path& path ()
+    {
+      return path_;
+    }
+
   protected:
+    /// \brief Return the solver associated with the logger.
+    /// \return solver associated with the logger.
     const solver_t& solver () const
     {
       solver_;
     }
+
+    /// \brief Return the solver associated with the logger.
+    /// \return solver associated with the logger.
     solver_t& solver ()
     {
       solver_;
     }
 
-    boost::filesystem::path& path () const
-    {
-      return path_;
-    }
-    boost::filesystem::path& path ()
-    {
-      return path_;
-    }
+    /// \brief Return the callback iteration index.
+    /// \return callback iteration index.
     unsigned callbackCallId () const
     {
       return callbackCallId_;
     }
 
   private:
+    /// \brief Solver associated with the logger.
     solver_t& solver_;
+
+    /// \brief Path of the logging directory.
     boost::filesystem::path path_;
+
+    /// \brief Output stream for journal.log.
     boost::filesystem::ofstream output_;
+
+    /// \brief Callback iteration index.
     unsigned callbackCallId_;
+
+    /// \brief Last time the logger was called (updated at each iteration).
     boost::posix_time::ptime lastTime_;
+
+    /// \brief First time the logger was called.
     boost::posix_time::ptime firstTime_;
 
     std::vector<vector_t> x_;

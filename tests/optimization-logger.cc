@@ -20,6 +20,7 @@
 #include <iostream>
 
 #include <boost/mpl/vector.hpp>
+#include <boost/filesystem.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver-factory.hh>
@@ -147,6 +148,11 @@ void testLogger
   (*output) << pb << std::endl
             << "---" << std::endl
             << solver;
+
+  // Test whether the logging directory exists
+  BOOST_CHECK (boost::filesystem::exists (logger.path ()));
+  // Test whether journal.log exists
+  BOOST_CHECK (boost::filesystem::exists (logger.path () / "journal.log"));
 }
 
 BOOST_AUTO_TEST_CASE (plugin)
