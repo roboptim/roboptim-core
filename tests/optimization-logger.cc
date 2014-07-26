@@ -150,9 +150,9 @@ void testLogger
             << solver;
 
   // Test whether the logging directory exists
-  BOOST_CHECK (boost::filesystem::exists (logger.path ()));
+  BOOST_CHECK (boost::filesystem::exists (logger.logPath ()));
   // Test whether journal.log exists
-  BOOST_CHECK (boost::filesystem::exists (logger.path () / "journal.log"));
+  BOOST_CHECK (boost::filesystem::exists (logger.logPath () / "journal.log"));
 }
 
 BOOST_AUTO_TEST_CASE (plugin)

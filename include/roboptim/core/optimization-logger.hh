@@ -39,7 +39,9 @@ namespace roboptim
     template <typename P>
     struct EvaluateConstraint : public boost::static_visitor<typename P::vector_t>
     {
-      EvaluateConstraint (const typename P::vector_t& x)
+      typedef typename P::function_t::argument_t argument_t;
+
+      EvaluateConstraint (const argument_t& x)
 	: x_ (x)
       {}
 
@@ -50,25 +52,7 @@ namespace roboptim
       }
 
     private:
-      typename P::vector_t x_;
-    };
-
-    template <typename P>
-    struct JacobianConstraint
-      : public boost::static_visitor<typename P::function_t::jacobian_t>
-    {
-      JacobianConstraint (const typename P::vector_t& x)
-	: x_ (x)
-      {}
-
-      template <typename U>
-      typename P::function_t::jacobian_t operator () (const U& constraint) const
-      {
-	return constraint->jacobian (x_);
-      }
-
-    private:
-      typename P::vector_t x_;
+      const argument_t& x_;
     };
 
 
@@ -132,6 +116,78 @@ namespace roboptim
     private:
       const std::vector<vector_t>& constraints_;
       const intervalsVect_t& bounds_;
+    };
+
+
+    template <typename P>
+    struct LogJacobianConstraint : public boost::static_visitor<void>
+    {
+      /// \brief Type of the problem.
+      typedef P problem_t;
+
+      /// \brief Function traits.
+      typedef typename problem_t::function_t::traits_t traits_t;
+
+      /// \brief Type of differentiable functions.
+      typedef GenericDifferentiableFunction<traits_t> differentiableFunction_t;
+
+      /// \brief Argument type.
+      typedef typename differentiableFunction_t::argument_t argument_t;
+
+      /// \brief Size type.
+      typedef typename problem_t::size_type size_type;
+
+      /// \brief Jacobian type.
+      typedef typename differentiableFunction_t::jacobian_t jacobian_t;
+
+      LogJacobianConstraint
+      (const argument_t& x,
+       const boost::filesystem::path& constraintPath)
+        : x_ (x),
+          constraintPath_ (constraintPath)
+      {}
+
+      // If the constraint is differentiable
+      template <typename U>
+      typename boost::enable_if
+      <boost::is_base_of<differentiableFunction_t, U> >::type
+      operator () (const boost::shared_ptr<U>& constraint) const
+      {
+        // Differentiable function: log Jacobian
+        boost::filesystem::ofstream
+          jacobianStream (constraintPath_ / "jacobian.csv");
+
+        // Get the Jacobian
+        jacobian_t jacobian = constraint->jacobian (x_);
+
+        for (size_type i = 0;
+             i < static_cast<size_type> (jacobian.rows ()); ++i)
+	  {
+	    for (size_type j = 0; j < jacobian.cols (); ++j)
+	      {
+		jacobianStream << jacobian.coeffRef (i, j);
+		if (j < jacobian.cols () - 1)
+		  jacobianStream << ", ";
+	      }
+	    jacobianStream << "\n";
+	  }
+      }
+
+      // If the constraint is not differentiable
+      template <typename U>
+      typename boost::disable_if
+      <boost::is_base_of<differentiableFunction_t, U> >::type
+      operator () (const boost::shared_ptr<U>&) const
+      {
+        // Do nothing
+      }
+
+    private:
+      /// \brief Argument.
+      const argument_t& x_;
+
+      /// \brief Path to the constraint log directory.
+      const boost::filesystem::path& constraintPath_;
     };
   } // end of namespace detail.
 
@@ -308,52 +364,6 @@ namespace roboptim
     }
 
   private:
-
-    /// \brief Process constraints Jacobian in the callback.
-    /// This method is needed since constraints may not be differentiable.
-    template <typename F>
-    typename boost::enable_if
-      <boost::is_base_of<differentiableFunction_t, F> >::type
-    process_constraints_jacobian
-    (const typename solver_t::problem_t& pb,
-     const typename solver_t::vector_t& x,
-     std::size_t constraintId,
-     const boost::filesystem::path& constraintPath)
-    {
-      // Differentiable function: log Jacobian
-      boost::filesystem::ofstream
-        jacobianStream (constraintPath / "jacobian.csv");
-
-      jacobian_t jacobian = boost::apply_visitor
-        (::roboptim::detail::JacobianConstraint<problem_t> (x),
-         pb.constraints ()[constraintId]);
-
-      for (size_type i = 0;
-           i < static_cast<size_type> (jacobian.rows ()); ++i)
-	{
-	  for (size_type j = 0; j < jacobian.cols (); ++j)
-	    {
-	      jacobianStream << jacobian.coeffRef (i, j);
-	      if (j < jacobian.cols () - 1)
-		jacobianStream << ", ";
-	    }
-	  jacobianStream << "\n";
-	}
-    }
-
-    template <typename F>
-    typename boost::disable_if
-      <boost::is_base_of<differentiableFunction_t, F> >::type
-    process_constraints_jacobian
-    (const typename solver_t::problem_t&,
-     const typename solver_t::vector_t&,
-     std::size_t,
-     const boost::filesystem::path&)
-    {
-      // Non-differentiable function: do nothing
-    }
-
-
     /// \brief Process constraints in the callback.
     /// This method is needed as long as unconstrained problem_t do not have
     /// constraint_t and related methods defined.
@@ -379,10 +389,12 @@ namespace roboptim
           // Log name
           boost::filesystem::ofstream nameStream (constraintPath / "name");
           nameStream << boost::apply_visitor
-            (::roboptim::detail::ConstraintName (), pb.constraints ()[constraintId])
+            (::roboptim::detail::ConstraintName (),
+             pb.constraints ()[constraintId])
                      << "\n";
           // Log value
-          boost::filesystem::ofstream constraintValueStream (constraintPath / "value.csv");
+          boost::filesystem::ofstream
+            constraintValueStream (constraintPath / "value.csv");
 
           vector_t constraintValue = boost::apply_visitor
             (::roboptim::detail::EvaluateConstraint<problem_t> (x),
@@ -396,11 +408,10 @@ namespace roboptim
           constraintValueStream << "\n";
           constraintsOneIteration[constraintId] = constraintValue;
 
-          // Jacobian
-          // FIXME: this test should be made on a per-constraint basis, since
-          // some of the constraints may be differentiable, some may not.
-          process_constraints_jacobian<typename solver_t::problem_t::function_t>
-            (pb, x, constraintId, constraintPath);
+          // Log the Jacobian (if the function is differentiable)
+          boost::apply_visitor
+            (::roboptim::detail::LogJacobianConstraint<problem_t>
+             (x, constraintPath), pb.constraints ()[constraintId]);
         }
       constraints_.push_back (constraintsOneIteration);
 
@@ -527,6 +538,19 @@ namespace roboptim
 
   public:
     /// \brief Return the path of the log directory.
+    /// \note Seeing that the non-const version of path () needs to be
+    /// protected, we need to rename this function to make it public, since
+    /// overload resolution takes place before accessibility checks.
+    /// \return path of the log directory.
+    const boost::filesystem::path& logPath () const
+    {
+      return path_;
+    }
+
+  protected:
+    /// \brief Return the path of the log directory.
+    /// \note This function should not be made public since the non-const
+    /// version is protected.
     /// \return path of the log directory.
     const boost::filesystem::path& path () const
     {
@@ -534,13 +558,14 @@ namespace roboptim
     }
 
     /// \brief Return the path of the log directory.
+    /// This method is protected since streams would need to be updated, and
+    /// files that were already written moved to the new location.
     /// \return path of the log directory.
     boost::filesystem::path& path ()
     {
       return path_;
     }
 
-  protected:
     /// \brief Return the solver associated with the logger.
     /// \return solver associated with the logger.
     const solver_t& solver () const
