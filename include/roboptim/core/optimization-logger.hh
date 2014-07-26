@@ -241,7 +241,8 @@ namespace roboptim
 	  argumentNames = solver_.problem ().argumentNames ();
 
 	// Whether to print X 0, X 1 etc... or user-provided names.
-	bool printDefaultX = (argumentNames.size () != x_.size ());
+	bool printDefaultX = (static_cast<size_type> (argumentNames.size ())
+			      != solver_.problem ().function ().inputSize ());
 
 	if (!x_.empty ())
 	  {
