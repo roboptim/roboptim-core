@@ -28,6 +28,8 @@ SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
 
 SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/multiplexer.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/multiplexer.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/debug.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
