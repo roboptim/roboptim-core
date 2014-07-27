@@ -95,8 +95,10 @@ namespace roboptim
   template <typename F>
   class Problem <F, boost::mpl::vector<> >
   {
-    BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
-		      boost::is_base_of<SparseFunction, F> >));
+    BOOST_MPL_ASSERT_MSG(
+      (boost::mpl::or_<boost::is_base_of<Function, F>,
+                       boost::is_base_of<SparseFunction, F> >::value),
+       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F));
 
     //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
   public:
@@ -273,12 +275,14 @@ namespace roboptim
   class Problem
   {
     // Check that F derives from Function or SparseFunction.
-    BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
-		      boost::is_base_of<SparseFunction, F> >));
+    BOOST_MPL_ASSERT_MSG(
+      (boost::mpl::or_<boost::is_base_of<Function, F>,
+                       boost::is_base_of<SparseFunction, F> >::value),
+       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F));
 
     // Check that all the elements of CLIST derive from Function or
     // SparseFunction.
-    BOOST_MPL_ASSERT(
+    BOOST_MPL_ASSERT_MSG(
       (boost::mpl::fold<CLIST,
                         boost::mpl::bool_<true>,
                         boost::mpl::if_<
@@ -287,9 +291,9 @@ namespace roboptim
                                           boost::is_base_of<SparseFunction,
                                                             boost::mpl::_2> >,
                           boost::mpl::_1,
-                          boost::mpl::bool_<false>
-                        >
-       >));
+                          boost::mpl::bool_<false> >
+       >::type::value),
+       ROBOPTIM_FUNCTIONS_EXPECTED_FOR_CONSTRAINTS, (CLIST));
 
   public:
     template <typename F_, typename CLIST_>
