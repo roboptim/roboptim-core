@@ -154,58 +154,58 @@
 /**
    \page design Design choices and libraries' internals
 
-   This package is divided in three parts:
+   This package is divided into three parts:
    <ul>
-   <li>Functions which represent different kind of mathematical functions and
-   theirs associated features (gradient, hessian...).</li>
-   <li>A problem class defines a whole optimization problem including some
+   <li>Functions which represent different kinds of mathematical functions and
+   their associated features (gradient, hessian, etc.).</li>
+   <li>A problem class defining a whole optimization problem including some
    technical details (scales).</li>
-   <li>Solvers hierarchy defines solvers that are working on a class of
-   optimizations problem (for instance QP solves problems where the
-   objective function is quadratic and the constraints are linear).</li>
+   <li>A solver hierarchy defining solvers that are working on a class of
+   optimizations problem (for instance, a QP solver solves problems with a
+   quadratic objective function and linear constraints).</li>
    </ul>
 
    \section fct The function hierarchy
 
    The function hierarchy is an abstract hierarchy which defines
-   <b>meta-function</b> in the sense that the user has to derive from
+   <b>meta-functions</b> in the sense that the user has to derive from
    these classes to define its <b>real</b> function.
 
    \code
    struct MyLinearFunction : public LinearFunction {
-   //FIXME: some code is missing
+     // FIXME: some code is missing
    };
 
    struct MyDerivableFunction : public DerivableFunction {
-   //FIXME: some code is missing
+     // FIXME: some code is missing
    };
    // etc...
    \endcode
 
-   The user can defines as many functions as he wants as long as he respects
-   the constraints defined by the classes he inherits from:
+   Users can define as many functions as they want as long as they respect
+   the constraints defined by the classes they inherit from:
    <ul>
    <li>Any function must be able to be evaluated (through operator()).</li>
-   <li>A derivable function has a gradient/jacobian.</li>
-   <li>A twice derivable function (\f$C^2\f$) has a hessian.</li>
-   <li>A quadratic function has the sames constraints than a \f$C^2\f$
+   <li>A derivable function has a gradient/Jacobian matrix.</li>
+   <li>A twice-derivable function (\f$C^2\f$) has a Hessian matrix.</li>
+   <li>A quadratic function has the same constraints as a \f$C^2\f$
    function.</li>
-   <li>A linear function has the same constraints except its hessian which
-   is null and computed automatically by the abstract class.</li>
+   <li>A linear function has the same constraints except its Hessian
+   matrix is null and computed automatically by the abstract class.</li>
    </ul>
 
-   It is important to note that all these functions are
+   It is important to note that all of these functions are
    \f$\mathbb{R}^n \rightarrow \mathbb{R}^m\f$ functions.
 
-   These functions have to be considered as m functions from to
+   These functions have to be considered as m functions such that
    \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$.
-   In particular, it means that in the gradient/hessian methods, the
+   In particular, it means that in the gradient/Hessian methods, the
    second argument (integer) refers to which function you want to get
-   the gradient/hessian.
+   the gradient/Hessian from.
 
    It avoids useless computations when the whole Jacobian is not needed.
-   Hence, it also avoid the use of a tensor as this structure is particularly
-   costly and not built-in in Eigen (the matrix library the package rely on).
+   Hence, it also avoids the use of a tensor as this structure is particularly
+   costly and not built-in in Eigen (the matrix library the package relies on).
 
 
    This set of meta-functions is completed by two generic implementations
@@ -235,12 +235,12 @@
    <li>The set of constraint's types (C).</li>
    </ul>
 
-   Those two parameters defines a class of problem.
-   For instance, QP solves problems where the objective function
+   Those two parameters define a class of problem.
+   For instance, a QP solver solvers problems where the objective function
    is quadratic and the constraints are linear.
 
-   To a class of problem matches a set of solvers designed to
-   exactly those problems.
+   Each class of problem matches a set of solvers designed to
+   solve exactly those problems.
 
    The copy constructor of the Problem class allows to make
    the problem more generic by replacing F or C by a more
@@ -248,28 +248,29 @@
 
    Examples:
    <ul>
-   <li>It is valid to convert a linear problem into a non-linear
+   <li>It is valid to convert a linear problem into a nonlinear
    problem and make a QP solve it.</li>
    <li>But, the opposite is not valid.</li>
    </ul>
 
-   Ie: you can always go higher in the function hierarchy
-   but you can not go deeper.
+   I.e.: you can always go higher in the function hierarchy
+   but you cannot go deeper.
 
-   However, this transformation as any dynamic typing makes
-   <b>forget</b> specific information and might slow-down the
-   process. Ie: solving a linear problem as a non-linear one
-   is slower than directly solving it.
+   However, this transformation (as any dynamic typing) causes to
+   <b>forget</b> specific information and might slow down the
+   process. For example: solving a linear problem as a nonlinear one
+   is slower than directly solving it with methods specific to linear
+   problems.
 
 
    \section slv The solver hierarchy
 
 
-   The solver hierarchy is divided in three parts:
+   The solver hierarchy is divided into three parts:
    <ul>
    <li>The generic solver.</li>
    <li>The solver for a class of problems.</li>
-   <li>The bridges (the leafs in the hierarchy's tree).</li>
+   <li>The bridges (the leaves in the hierarchy's tree).</li>
    </ul>
 
    \subsection gs Generic solver
@@ -289,7 +290,7 @@
    <code>result_</code>. It is implemented by the bridges at the bottom of the
    hierarchy.
 
-   By default <code>result_</code> contains an instance the
+   By default <code>result_</code> contains an instance of the
    <code>No_Solution</code> class.  It has to be changed to an instance of
    <code>Result</code>, <code>ResultWithWarnings</code> or
    <code>SolverError</code>.
@@ -300,16 +301,16 @@
    </li>
    <li><code>Result</code>, <code>ResultWithWarnings</code>: represents a
    <strong>valid</strong> result.  If <code>ResultWithWarnings</code> is used,
-   some non-critical problem might have happened and are specified in the object
-   (minor numerical instabilities for instance).</li>
-   <li><code>SolverError</code>: indicate that the optimization has
+   some non-critical problems might have happened and are specified in the
+   object (minor numerical instabilities for instance).</li>
+   <li><code>SolverError</code>: indicates that the optimization has
    <strong>failed</strong>.</li>
    </ul>
 
    The <code>solve</code> method should rarely be called by the user.
    Instead, the user calls <code>getMinimum</code> which calls
    <code>solve</code> if required.
-   If <code>getMinimum</code> is called several time, the problem is only
+   If <code>getMinimum</code> is called several times, the problem is only
    solved once.
 
    The <code>reset</code> method should be called when one wants to manually
@@ -331,12 +332,12 @@
 
    \subsection briges Bridges
 
-   The leafs of the hierarchy are bridges.  The role of a bridge is to convert
+   The leaves of the hierarchy are bridges. The role of a bridge is to convert
    the generic representation of the problem into the solver's representation.
    It might also emulate some missing features of the back-end solver.
 
    A bridge mainly implements the <code>solve</code> method. It may also
-   exposes the underlying solver's internal mechanism for fine tuning.
+   expose the underlying solver's internal mechanism for fine tuning.
 */
 
 
@@ -354,9 +355,9 @@
    The first step is determining if there is any interest in integrating
    the solver.
 
-   The solver should target one of the following optimization problem's:
+   The solver should target one of the following optimization problems:
    <ul>
-   <li>Non-linear optimization</li>
+   <li>Nonlinear optimization</li>
    <li>Linear optimization</li>
    </ul>
    ...with or without constraints.
@@ -365,7 +366,7 @@
    should be possible.
 
    Integrating solvers that solve very different problems will likely
-   not match the interface and lead to major changement in the package.
+   not match the interface and lead to major change in the package.
    These changes are beyond the scope of this document and should be
    discussed on the mailing-list.
 
@@ -387,14 +388,14 @@
    \subsection impl Implementing the bridge.
 
    The first step is choosing from which <code>Solver</code> you want to
-   inherit from. The <code>F</code> parameters should be straight-forward: it
+   inherit from. The <code>F</code> parameter should be straightforward: it
    is the kind of objective function you expect.
-   For the constraints, there is two cases:
+   For the constraints, there are two cases:
    <ul>
-   <li>Constraint's type are unique: set <code>C</code> to
+   <li>If there is a unique constraint type: set <code>C</code> to
    <code>const MyConstraintType*</code> where <code>MyConstraintType</code>
    is the solver's constraints type.</li>
-   <li>If you want to discriminate your constriants into different categories,
+   <li>If you want to discriminate your constraints into different categories,
    you will have to use a Boost.Variant. <code>C</code> should be:
    <code>boost::variant<const MyConstraintType1*, const MyConstraintType2*>
    </code>
@@ -407,11 +408,11 @@
    <ul>
    <li>Be sure to call <code>reset</code> if the result has to be recomputed
    the next time <code>getMinimum</code> is called.</li>
-   <li>Be sure that <code>solve</code> put the computed value in the
+   <li>Be sure that <code>solve</code> puts the computed value in the
    <code>result_</code> attribute.</li>
-   <li>Solver's arguments should be exposed to user through the class.</li>
+   <li>Solver's arguments should be exposed to users through the class.</li>
    <li>The solver should not display anything by default. If possible, use
-   the <code>print</code> method to display internal state.</li>
+   the <code>print</code> method to display internal states.</li>
    </ul>
 
 
@@ -427,19 +428,26 @@
 
 
 /// \namespace roboptim
-/// \brief Meta-functions, functions and solvers related classes.
+/// \brief Meta-functions, functions and solver-related classes.
 
 
 /// \namespace roboptim::visualization
-/// \brief Graphic visualization
+/// \brief Graphical visualization
 ///
-/// Visualization related code. Only Gnuplot is supported currently.
+/// Visualization-related code. Only Gnuplot and Matplotlib are currently
+/// supported.
 
 
 /// \namespace roboptim::visualization::gnuplot
 /// \brief Gnuplot rendering
 ///
 /// Gnuplot display classes.
+
+
+/// \namespace roboptim::visualization::matplotlib
+/// \brief Matplotlib rendering
+///
+/// Matplotlib display classes.
 
 
 /// \defgroup roboptim_meta_function Mathematical abstract functions
