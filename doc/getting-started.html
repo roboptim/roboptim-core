@@ -32,8 +32,8 @@ $$1 \leq x_0, x_1, x_2, x_3 \leq 5$$
 
 <ul>
   <li><code>roboptim::Function</code></li>
-  <li><code>roboptim::DerivableFunction</code></li>
-  <li><code>roboptim::TwiceDerivableFunction</code></li>
+  <li><code>roboptim::DifferentiableFunction</code></li>
+  <li><code>roboptim::TwiceDifferentiableFunction</code></li>
   <li><code>roboptim::QuadraticFunction</code></li>
   <li><code>roboptim::LinearFunction</code></li>
 </ul></p>
@@ -50,18 +50,18 @@ the framework to support your own types.</p>
   <li><code>impl_compute</code> that returns the function's result has
     to be defined for all functions.</li>
   <li><code>impl_gradient</code> which returns the function's gradient
-    is to be defined for DerivableFunction and its subclasses.</li>
-  <li><code>impl_hessian</code> for TwiceDerivableFunction functions and its subclasses.</li>
+    is to be defined for DifferentiableFunction and its subclasses.</li>
+  <li><code>impl_hessian</code> for TwiceDifferentiableFunction functions and its subclasses.</li>
 </ul></p>
 
 <p>It is usually recommended to derive from the deepest possible class
-  of the hierarchy (deriving from TwiceDerivableFunction is better
-  than DerivableFunction).</p>
+  of the hierarchy (deriving from TwiceDifferentiableFunction is better
+  than DifferentiableFunction).</p>
 
 <p>Keep in mind that the type of the function represents the amount of
   information the solver will get, not the real nature of a function
   (it is possible to avoid defining a Hessian by deriving from
-  DerivableFunction, even if your function can be derived twice).</p>
+  DifferentiableFunction, even if your function can be derived twice).</p>
 
 <p>In the following sample, a TwiceDifferentiableFunction will be
   defined.</p>
@@ -111,9 +111,9 @@ struct F : public TwiceDifferentiableFunction
 <h3 id="constraints">Defining the constraints</h3>
 
 <p>A constraint is no different from a cost function and can be
-defined in the same way than a cost function.</p>
+defined in the same way as a cost function.</p>
 
-<p>The following sample defines two constraints which are twice-derivable
+<p>The following sample defines two constraints which are twice-differentiable
 functions.</p>
 
 <pre><code>
