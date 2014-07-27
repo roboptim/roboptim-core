@@ -49,12 +49,14 @@ namespace roboptim
   std::ostream&
   Result::print (std::ostream& o) const
   {
-    o << "Result: " << incindent << iendl
-      << "Size (input, output): " << inputSize << ", " << outputSize << iendl
-      << "X: " << x << iendl
-      << "Value: " << value << iendl
-      << "Constraints values: " << constraints << iendl
-      << "Lambda: " << lambda;
+    o << "Result:" << incindent
+      << iendl << "Size (input, output): " << inputSize << ", " << outputSize
+      << iendl << "X: " << x
+      << iendl << "Value: " << value;
+    if (constraints.size () > 0)
+      o << iendl << "Constraints values: " << constraints;
+    if (lambda.size () > 0)
+      o << iendl << "Lambda: " << lambda;
 
     return o << decindent;
   }
