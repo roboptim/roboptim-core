@@ -23,6 +23,7 @@
 # include <boost/mpl/assert.hpp>
 # include <boost/mpl/back_inserter.hpp>
 # include <boost/mpl/copy.hpp>
+# include <boost/mpl/fold.hpp>
 # include <boost/mpl/logical.hpp>
 # include <boost/mpl/transform.hpp>
 # include <boost/mpl/vector.hpp>
@@ -48,7 +49,7 @@ namespace roboptim
     /// \code
     /// boost::mpl::vector<int, long>
     /// \endcode
-    ////
+    ///
     /// then the result (type) will be:
     /// \code
     /// boost::mpl::vector<boost::shared_ptr<int>,
@@ -263,18 +264,33 @@ namespace roboptim
   /// Unlike other classes which just copy functions, pointers are used
   /// here in order to allow sub-classes of constraints to be inserted
   /// in the problem.
-  /// For instance, a twice derivable function can be inserted in
-  /// a problem which expects a derivable function.
+  /// For instance, a twice-differentiable function can be inserted in
+  /// a problem which expects a differentiable function.
   ///
   /// \tparam F function type
   /// \tparam CLIST type list satisfying MPL's sequence concept
   template <typename F, typename CLIST>
   class Problem
   {
+    // Check that F derives from Function or SparseFunction.
     BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
 		      boost::is_base_of<SparseFunction, F> >));
 
-    //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
+    // Check that all the elements of CLIST derive from Function or
+    // SparseFunction.
+    BOOST_MPL_ASSERT(
+      (boost::mpl::fold<CLIST,
+                        boost::mpl::bool_<true>,
+                        boost::mpl::if_<
+                          boost::mpl::or_<boost::is_base_of<Function,
+                                                            boost::mpl::_2>,
+                                          boost::is_base_of<SparseFunction,
+                                                            boost::mpl::_2> >,
+                          boost::mpl::_1,
+                          boost::mpl::bool_<false>
+                        >
+       >));
+
   public:
     template <typename F_, typename CLIST_>
     friend class Problem;
