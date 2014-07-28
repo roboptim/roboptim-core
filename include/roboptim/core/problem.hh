@@ -95,12 +95,12 @@ namespace roboptim
   template <typename F>
   class Problem <F, boost::mpl::vector<> >
   {
+    // Check that F derives from Function or SparseFunction.
     BOOST_MPL_ASSERT_MSG(
       (boost::mpl::or_<boost::is_base_of<Function, F>,
                        boost::is_base_of<SparseFunction, F> >::value),
        ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F));
 
-    //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
   public:
     template <typename F_, typename CLIST_>
     friend class Problem;

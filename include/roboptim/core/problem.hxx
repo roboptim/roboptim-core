@@ -77,9 +77,8 @@ namespace roboptim
       argumentNames_ (pb.argumentNames_)
   {
     // Check that F is a subtype of F_.
-    BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
-
-    //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
+    BOOST_MPL_ASSERT_MSG((boost::is_base_of<F, F_>::value),
+                         SAME_COST_FUNCTION_TYPE_EXPECTED, (F, F_));
   }
 
   template <typename F>
@@ -291,6 +290,18 @@ namespace roboptim
     return constraints_;
   }
 
+// Verify that C is in CLIST or derives from one of its elements.
+#define ASSERT_CONSTRAINT_TYPE(C,CLIST)                       \
+  BOOST_MPL_ASSERT_MSG(                                       \
+    (boost::mpl::fold<CLIST,                                  \
+                      boost::mpl::bool_<false>,               \
+                      boost::mpl::if_<                        \
+                        boost::is_base_of<boost::mpl::_2, C>, \
+                        boost::mpl::bool_<true>,              \
+                        boost::mpl::_1>                       \
+     >::type::value),                                         \
+     CONSTRAINT_TYPE_IS_NOT_VALID, (C, CLIST))
+
   template <typename F, typename CLIST>
   template <typename C>
   void
@@ -298,7 +309,8 @@ namespace roboptim
 				    interval_t b,
 				    value_type s)
   {
-    //FIXME: check that C is in CLIST.
+    // Check that C is in CLIST.
+    ASSERT_CONSTRAINT_TYPE (C,CLIST);
 
     if (x->inputSize () != this->function ().inputSize ())
       throw std::runtime_error ("Invalid constraint (wrong input size)");
@@ -325,7 +337,8 @@ namespace roboptim
 				    intervals_t b,
 				    scales_t s)
   {
-    //FIXME: check that C is in CLIST.
+    // Check that C is in CLIST.
+    ASSERT_CONSTRAINT_TYPE (C,CLIST);
 
     if (!x)
       throw std::runtime_error
@@ -384,6 +397,8 @@ namespace roboptim
     boundsVect_.push_back (b);
     scalesVect_.push_back (s);
   }
+
+#undef ASSERT_CONSTRAINT_TYPE
 
   template <typename F, typename CLIST>
   typename Problem<F, CLIST>::startingPoint_t&
