@@ -96,6 +96,12 @@ BOOST_AUTO_TEST_CASE (problem)
                      std::runtime_error);
 
   std::cout << pb << std::endl;
+
+  // Test a problem with multiple types of constraints.
+  typedef Problem<DifferentiableFunction,
+		  boost::mpl::vector<LinearFunction, DifferentiableFunction> > mixedProblem_t;
+  mixedProblem_t mixedPb (f);
+  mixedPb.addConstraint (cstr, intervals, scales);
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
