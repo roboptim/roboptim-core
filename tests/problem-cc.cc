@@ -55,10 +55,26 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   names[0] = "x";
   pbSrc.argumentNames () = names;
 
+  boost::shared_ptr<ConstantFunction>
+    cstr = boost::make_shared<ConstantFunction>  (v);
+  problemSrc_t::intervals_t intervals (1);
+  problemSrc_t::scales_t scales (1, 1);
+  for (size_t i = 0; i < intervals.size (); ++i)
+    intervals[i] = Function::makeInfiniteInterval ();
+
+  // Add ConstantFunction constraint.
+  pbSrc.addConstraint (cstr, intervals, scales);
+
+  // Add DifferentiableFunction constraint.
+  pbSrc.addConstraint (boost::static_pointer_cast<DifferentiableFunction> (cstr),
+                       intervals, scales);
+
   // Check with same type.
   {
     problemSrc_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
+    BOOST_CHECK(pbDst.constraints ()[0].which () == 0);
+    BOOST_CHECK(pbDst.constraints ()[1].which () == 1);
   }
 
   // Check with a more general type.
@@ -71,6 +87,8 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   {
     ambiguousProblemDst_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
+    BOOST_CHECK(pbDst.constraints ()[0].which () == 0);
+    BOOST_CHECK(pbDst.constraints ()[1].which () == 1);
   }
 
   // With invalid constraints types, compilation would fail.
