@@ -42,13 +42,22 @@ BOOST_AUTO_TEST_CASE (visualization_matplotlib_simple)
     << (matplotlib
 	<< set ("foo", "42")
 	<< comment ("Hello, world!\nThis is a three-line comment!\nAmazing!")
+	<< import ("foo")
+	<< import ("foo", "bar")
 	<< figure ()
 	<< show ()
 	);
 
-  // Test clear function
+  // Test clear function.
   matplotlib.clear ();
+  // Enable header.
+  matplotlib.withHeader () = true;
+  BOOST_CHECK (matplotlib.withHeader () == true);
   (*output) << std::endl << matplotlib;
+
+  // Test some throws.
+  BOOST_CHECK_THROW ((*output) << (matplotlib << set ("bar", 0)),
+                     std::runtime_error);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

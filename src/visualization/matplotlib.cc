@@ -38,6 +38,16 @@ namespace roboptim
     {
     }
 
+    bool& Matplotlib::withHeader ()
+    {
+      return withHeader_;
+    }
+
+    bool Matplotlib::withHeader () const
+    {
+      return withHeader_;
+    }
+
     void
     Matplotlib::resetImports ()
     {
