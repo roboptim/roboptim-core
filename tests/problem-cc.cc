@@ -37,9 +37,12 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 BOOST_AUTO_TEST_CASE (problem_copy_constructor)
 {
   typedef Problem<DifferentiableFunction,
-		  boost::mpl::vector<DifferentiableFunction> >
+		  boost::mpl::vector<LinearFunction, DifferentiableFunction> >
     problemSrc_t;
   typedef Problem<Function, boost::mpl::vector<Function> > problemDst_t;
+  typedef Problem<Function,
+		  boost::mpl::vector<QuadraticFunction, DifferentiableFunction> >
+    ambiguousProblemDst_t;
 
   ConstantFunction::vector_t v (1);
   v.setZero ();
@@ -61,6 +64,12 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   // Check with a more general type.
   {
     problemDst_t pbDst (pbSrc);
+    CHECK_COPY(pbSrc, pbDst);
+  }
+
+  // Check with ambiguous constraints types.
+  {
+    ambiguousProblemDst_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
   }
 
