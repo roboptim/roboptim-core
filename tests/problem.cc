@@ -101,7 +101,21 @@ BOOST_AUTO_TEST_CASE (problem)
   typedef Problem<DifferentiableFunction,
 		  boost::mpl::vector<LinearFunction, DifferentiableFunction> > mixedProblem_t;
   mixedProblem_t mixedPb (f);
+  mixedPb.startingPoint () = x;
+  mixedPb.argumentNames () = names;
+
+  // First constraint: ConstantFunction automatically converted to LinearFunction
   mixedPb.addConstraint (cstr, intervals, scales);
+  // Second constraint: ConstantFunction converted to DifferentiableFunction
+  mixedPb.addConstraint (boost::static_pointer_cast<DifferentiableFunction> (cstr),
+                         intervals, scales);
+
+  // First constraint: LinearFunction
+  BOOST_CHECK (mixedPb.constraints() [0].which () == 0);
+  // Second constraint: DifferentiableFunction
+  BOOST_CHECK (mixedPb.constraints() [1].which () == 1);
+
+  std::cout << mixedPb << std::endl;
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

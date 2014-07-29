@@ -46,6 +46,20 @@ namespace roboptim
     struct contains_base_of
     : greater<int_<count_if<Sequence, is_base_of<_, Type> >::value>, int_<0> >
     {};
+
+
+    /// \brief Get the descendant of two relatives.
+    /// Type1 and Type2 are expected to be base/derivative of one another.
+    /// \tparam Type1 first relative.
+    /// \tparam Type2 second relative.
+    template<typename Type1, typename Type2>
+    struct get_descendant
+    : if_<is_base_of<Type1, Type2>, Type2, Type1>
+    {
+      BOOST_MPL_ASSERT_MSG((or_<is_base_of<Type1, Type2>,
+                                is_base_of<Type2, Type1> >::value),
+                           ONE_SHOULD_INHERIT_FROM_THE_OTHER, (Type1, Type2));
+    };
   } // end of namespace detail.
 
   //
@@ -343,6 +357,23 @@ namespace roboptim
      >::type::value),                                         \
      CONSTRAINT_TYPE_IS_NOT_VALID, (C, CLIST))
 
+// Find the appropriate type for boost::static_pointer_cast.
+#define GET_CONSTRAINT_CAST_TYPE(C,CLIST,NAME)                    \
+  typedef typename                                                \
+  boost::mpl::fold                                                \
+    <CLIST,                                                       \
+     void,                                                        \
+     boost::mpl::if_                                              \
+       <boost::is_base_of<boost::mpl::_2, C>,                     \
+        boost::mpl::if_                                           \
+          <boost::is_void<boost::mpl::_1>,                        \
+           boost::mpl::_2,                                        \
+           detail::get_descendant<boost::mpl::_1, boost::mpl::_2> \
+          >,                                                      \
+        boost::mpl::_1                                            \
+       >                                                          \
+     >::type NAME;
+
   template <typename F, typename CLIST>
   template <typename C>
   void
@@ -351,7 +382,10 @@ namespace roboptim
 				    value_type s)
   {
     // Check that C is in CLIST.
-    ASSERT_CONSTRAINT_TYPE (C,CLIST);
+    ASSERT_CONSTRAINT_TYPE (C, CLIST);
+
+    // Find the proper constraint type for upcasting.
+    GET_CONSTRAINT_CAST_TYPE (C, CLIST, constraintCast_t);
 
     if (x->inputSize () != this->function ().inputSize ())
       throw std::runtime_error ("Invalid constraint (wrong input size)");
@@ -362,7 +396,7 @@ namespace roboptim
     // Check that the pointer is not null.
     assert (!!x.get ());
     assert (b.first <= b.second);
-    constraints_.push_back (boost::static_pointer_cast<C> (x));
+    constraints_.push_back (boost::static_pointer_cast<constraintCast_t> (x));
     intervals_t bounds;
     bounds.push_back (b);
     boundsVect_.push_back (bounds);
@@ -379,7 +413,10 @@ namespace roboptim
 				    scales_t s)
   {
     // Check that C is in CLIST.
-    ASSERT_CONSTRAINT_TYPE (C,CLIST);
+    ASSERT_CONSTRAINT_TYPE (C, CLIST);
+
+    // Find the proper constraint type for upcasting.
+    GET_CONSTRAINT_CAST_TYPE (C, CLIST, constraintCast_t);
 
     if (!x)
       throw std::runtime_error
@@ -425,7 +462,7 @@ namespace roboptim
 
     // Check that the pointer is not null.
     assert (!!x.get ());
-    constraints_.push_back (boost::static_pointer_cast<C> (x));
+    constraints_.push_back (boost::static_pointer_cast<constraintCast_t> (x));
 
     // Check that the bounds are correctly defined.
     for (std::size_t i = 0; i < static_cast<std::size_t> (x->outputSize ());
@@ -440,6 +477,7 @@ namespace roboptim
   }
 
 #undef ASSERT_CONSTRAINT_TYPE
+#undef GET_CONSTRAINT_CAST_TYPE
 
   template <typename F, typename CLIST>
   typename Problem<F, CLIST>::startingPoint_t&
