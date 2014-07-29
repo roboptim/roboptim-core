@@ -44,7 +44,7 @@ namespace roboptim
     /// \tparam Type type.
     template <typename Sequence, typename Type>
     struct contains_base_of
-    : greater<int_<count_if<Sequence, is_base_of<_, Type> >::value>, int_<0> >
+      : greater<int_<count_if<Sequence, is_base_of<_, Type> >::value>, int_<0> >
     {};
 
 
@@ -54,10 +54,10 @@ namespace roboptim
     /// \tparam Type2 second relative.
     template <typename Type1, typename Type2>
     struct get_descendant
-    : if_<is_base_of<Type1, Type2>, Type2, Type1>
+      : if_<is_base_of<Type1, Type2>, Type2, Type1>
     {
       BOOST_MPL_ASSERT_MSG((or_<is_base_of<Type1, Type2>,
-                                is_base_of<Type2, Type1> >::value),
+			    is_base_of<Type2, Type1> >::value),
                            ONE_SHOULD_INHERIT_FROM_THE_OTHER, (Type1, Type2));
     };
 
@@ -67,9 +67,9 @@ namespace roboptim
     /// \tparam CLIST a vector of constraint types.
     template <typename C, typename CLIST>
     struct check_constraint_type
-    : fold<CLIST,
-           bool_<false>,
-           if_<is_base_of<_2, C>, bool_<true>, _1> >
+      : fold<CLIST,
+	     bool_<false>,
+	     if_<is_base_of<_2, C>, bool_<true>, _1> >
     {};
 
 
@@ -85,7 +85,37 @@ namespace roboptim
             if_<is_base_of<_2, C>,
                 mpl::if_<is_void<_1>, _2, detail::get_descendant<_1, _2> >,
                 _1>
-         >::type C_type;
+	    >::type C_type;
+    };
+
+
+    /// \brief Convert a constraint to a proper type.
+    /// \tparam CLIST a vector of valid constraint types.
+    template <typename CLIST>
+    struct ConvertConstraint
+    {
+      ConvertConstraint () {}
+
+      template <typename C>
+      boost::shared_ptr<typename cast_constraint_type<C, CLIST>::C_type>
+      operator () (const boost::shared_ptr<C>& c) const
+      {
+        return boost::static_pointer_cast
+          <typename cast_constraint_type<C, CLIST>::C_type> (c);
+      }
+    };
+
+
+    template <typename P>
+    struct ConvertConstraintVariant
+      : public boost::static_visitor<typename P::constraint_t>
+    {
+      template <typename U>
+      typename P::constraint_t operator () (const U& c) const
+      {
+        ConvertConstraint<typename P::constraintsList_t> converter;
+        return converter (c);
+      }
     };
   } // end of namespace detail.
 
@@ -354,8 +384,13 @@ namespace roboptim
        INCOMPATIBLE_TYPES_IN_LIST, (CLIST_, CLIST));
 
     // Copy constraints.
-    std::copy (pb.constraints_.begin (), pb.constraints_.end (),
-               constraints_.begin ());
+    constraints_.reserve (pb.constraints_.size ());
+    detail::ConvertConstraintVariant<Problem<F, CLIST> > converter;
+    for (typename Problem<F_, CLIST_>::constraints_t::const_iterator
+	   iter  = pb.constraints_.begin ();
+         iter != pb.constraints_.end ();
+         ++iter)
+      constraints_.push_back (apply_visitor (converter, *iter));
   }
 
   template <typename F, typename CLIST>
