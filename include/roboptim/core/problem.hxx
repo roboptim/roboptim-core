@@ -31,93 +31,10 @@
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/terminal-color.hh>
 # include <roboptim/core/util.hh>
+# include <roboptim/core/detail/utility.hh>
 
 namespace roboptim
 {
-  namespace detail
-  {
-    using namespace boost;
-    using namespace boost::mpl;
-
-    /// \brief Whether a sequence of types contains a base of a given type.
-    /// \tparam Sequence sequence of types.
-    /// \tparam Type type.
-    template <typename Sequence, typename Type>
-    struct contains_base_of
-      : greater<int_<count_if<Sequence, is_base_of<_, Type> >::value>, int_<0> >
-    {};
-
-
-    /// \brief Get the descendant among two relatives.
-    /// Type1 and Type2 are expected to be base/derivative of one another.
-    /// \tparam Type1 first relative.
-    /// \tparam Type2 second relative.
-    template <typename Type1, typename Type2>
-    struct get_descendant
-      : if_<is_base_of<Type1, Type2>, Type2, Type1>
-    {
-      BOOST_MPL_ASSERT_MSG((or_<is_base_of<Type1, Type2>,
-			    is_base_of<Type2, Type1> >::value),
-                           ONE_SHOULD_INHERIT_FROM_THE_OTHER, (Type1, Type2));
-    };
-
-
-    /// \brief Checks whether C is a valid constraint type in CLIST.
-    /// \tparam C constraint type.
-    /// \tparam CLIST a vector of constraint types.
-    template <typename C, typename CLIST>
-    struct check_constraint_type
-      : fold<CLIST,
-	     bool_<false>,
-	     if_<is_base_of<_2, C>, bool_<true>, _1> >
-    {};
-
-
-    /// \brief Get the constraint type of CLIST that best match C.
-    /// \tparam C constraint type.
-    /// \tparam CLIST a vector of constraint types.
-    template <typename C, typename CLIST>
-    struct cast_constraint_type
-    {
-      typedef typename
-      fold <CLIST,
-            void,
-            if_<is_base_of<_2, C>,
-                mpl::if_<is_void<_1>, _2, detail::get_descendant<_1, _2> >,
-                _1>
-	    >::type C_type;
-    };
-
-
-    /// \brief Convert a constraint to a proper type.
-    /// \tparam CLIST a vector of valid constraint types.
-    template <typename CLIST>
-    struct ConvertConstraint
-    {
-      ConvertConstraint () {}
-
-      template <typename C>
-      boost::shared_ptr<typename cast_constraint_type<C, CLIST>::C_type>
-      operator () (const boost::shared_ptr<C>& c) const
-      {
-        return boost::static_pointer_cast
-          <typename cast_constraint_type<C, CLIST>::C_type> (c);
-      }
-    };
-
-
-    template <typename P>
-    struct ConvertConstraintVariant
-      : public boost::static_visitor<typename P::constraint_t>
-    {
-      template <typename U>
-      typename P::constraint_t operator () (const U& c) const
-      {
-        ConvertConstraint<typename P::constraintsList_t> converter;
-        return converter (c);
-      }
-    };
-  } // end of namespace detail.
 
   //
   // Template specialization for problem without constraint
