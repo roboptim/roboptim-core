@@ -38,5 +38,11 @@ Derivable parametrized function
 Evaluate:
 Identity function
   offset = [1](256)
-Gradient:
+Gradient (order = 0):
 [1](1)
+Gradient (order = 1):
+[1](0)
+Jacobian (order = 0):
+[1](1)
+Jacobian (order = 1):
+[1](0)

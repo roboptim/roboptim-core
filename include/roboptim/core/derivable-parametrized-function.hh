@@ -191,12 +191,14 @@ namespace roboptim
     /// \warning Do not call this function directly, call #jacobian instead.
     /// \param jacobian jacobian will be store in this argument
     /// \param arg point where the jacobian will be computed
-    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
+    /// \param order derivation order
+    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg,
+                                size_type order = 0)
       const
     {
       for (size_type i = 0; i < this->functionOutputSize (); ++i)
 	{
-	  gradient_t grad = this->gradient (arg, i);
+	  gradient_t grad = this->gradient (arg, i, order);
 	  for (size_type j = 0; j < this->inputSize (); ++j)
 	    jacobian (i, j) = grad[j];
       }

@@ -47,7 +47,7 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
       case 0:
 	gradient[0] = 1.;
 	break;
-      case 1:
+      default:
 	gradient[0] = 0.;
 	break;
       }
@@ -102,8 +102,14 @@ BOOST_AUTO_TEST_CASE (derivable_parametrized_function)
     (*output) << pf << std::endl
       << "Evaluate:" << std::endl
       << pf (x) << std::endl
-      << "Gradient:" << std::endl
-      << pf.gradient (x, 0) << std::endl;
+      << "Gradient (order = 0):" << std::endl
+      << pf.gradient (x, 0) << std::endl
+      << "Gradient (order = 1):" << std::endl
+      << pf.gradient (x, 0, 1) << std::endl
+      << "Jacobian (order = 0):" << std::endl
+      << pf.jacobian (x) << std::endl
+      << "Jacobian (order = 1):" << std::endl
+      << pf.jacobian (x, 1) << std::endl;
 
     BOOST_CHECK_EQUAL (res[0], 128. + 256.);
     BOOST_CHECK (pf.functionInputSize () == 1);
