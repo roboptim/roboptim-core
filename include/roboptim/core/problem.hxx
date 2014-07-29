@@ -20,6 +20,8 @@
 # include <algorithm>
 # include <stdexcept>
 # include <boost/format.hpp>
+# include <boost/mpl/count_if.hpp>
+# include <boost/mpl/greater.hpp>
 # include <boost/type_traits/is_pointer.hpp>
 # include <boost/type_traits/remove_pointer.hpp>
 # include <boost/variant.hpp>
@@ -32,6 +34,20 @@
 
 namespace roboptim
 {
+  namespace detail
+  {
+    using namespace boost;
+    using namespace boost::mpl;
+
+    /// \brief Whether a sequence of types contains a base of a given type.
+    /// \tparam Sequence sequence of types.
+    /// \tparam Type type.
+    template<typename Sequence, typename Type>
+    struct contains_base_of
+    : greater<int_<count_if<Sequence, is_base_of<_, Type> >::value>, int_<0> >
+    {};
+  } // end of namespace detail.
+
   //
   // Template specialization for problem without constraint
   //
@@ -267,11 +283,36 @@ namespace roboptim
       argumentScales_ (pb.argumentScales_),
       argumentNames_ (pb.argumentNames_)
   {
+    using namespace boost;
+
     // Check that F is a subtype of F_.
-    BOOST_STATIC_ASSERT((boost::is_base_of<F, F_>::value));
+    BOOST_MPL_ASSERT_MSG((is_base_of<F, F_>::value),
+                         INCOMPATIBLE_TYPES_FOR_COST, (F, F_));
 
-    //FIXME: check that CLIST is a MPL vector of Function's sub-classes.
+    // Check that CLIST_ is a subset of CLIST (i.e. all the functions
+    // of CLIST_ derive from functions of CLIST).
+    // The algorithm is as follows:
+    // (0) outer_ok = true
+    // (1) for c_ in FLIST_:
+    // (2)   inner_ok = false
+    // (3)   for c in FLIST:
+    // (4)     if c is_base_of c_:
+    // (5)       inner_ok = true
+    // (6)   if not inner_ok:
+    // (7)     outer_ok = false
+    // (8) return outer_ok
+    BOOST_MPL_ASSERT_MSG(
+      (mpl::fold<CLIST_, // (1)
+                 mpl::bool_<true>, // (0)
+                 mpl::if_< // (6)
+                   detail::contains_base_of<CLIST,mpl::_2>, // (2,3,4,5)
+                   mpl::_1,
+                   mpl::bool_<false> // (7)
+                 >
+       >::type::value), // (8)
+       INCOMPATIBLE_TYPES_IN_LIST, (CLIST_, CLIST));
 
+    // Copy constraints.
     std::copy (pb.constraints_.begin (), pb.constraints_.end (),
                constraints_.begin ());
   }

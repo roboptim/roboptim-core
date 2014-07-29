@@ -63,6 +63,15 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
     problemDst_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
   }
+
+  // With invalid constraints types, compilation would fail.
+  //{
+  //  typedef Problem<Function, boost::mpl::vector<TwiceDifferentiableFunction> >
+  //    wrongProblemDst_t;
+
+  //  wrongProblemDst_t pbDst (pbSrc);
+  //  CHECK_COPY(pbSrc, pbDst);
+  //}
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
