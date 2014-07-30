@@ -67,7 +67,10 @@ public:
   {
     (*output) << "solve ()" << std::endl;
 
-    result_ = SolverError ("the null solver always fails.");
+    SolverError error ("the null solver always fails.");
+    error.lastState () = Result (1, 1);
+
+    result_ = error;
   }
 };
 
@@ -97,6 +100,12 @@ BOOST_AUTO_TEST_CASE (solver)
   (*output) << solver << std::endl;
   solver.solve ();
   (*output) << solver << std::endl;
+
+  SolverError error = solver.getMinimum<SolverError> ();
+  (*output) << error << std::endl;
+  if (error.lastState ())
+    (*output) << *(error.lastState ()) << std::endl;
+  (*output) << std::endl;
 
   // Test solver copy.
   solver_t solver2 (solver);

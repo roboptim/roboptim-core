@@ -74,7 +74,7 @@ namespace roboptim
     {
       BOOST_MPL_ASSERT_MSG((or_<is_base_of<Type1, Type2>,
 			    is_base_of<Type2, Type1> >::value),
-                           ONE_SHOULD_INHERIT_FROM_THE_OTHER, (Type1, Type2));
+                           ONE_SHOULD_INHERIT_FROM_THE_OTHER, (Type1&, Type2&));
     };
 
 

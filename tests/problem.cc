@@ -23,20 +23,29 @@
 
 using namespace roboptim;
 
+typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
+			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
-BOOST_AUTO_TEST_CASE (problem)
+BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 {
-  typedef Problem<DifferentiableFunction,
-		  boost::mpl::vector<DifferentiableFunction> >
+  typedef Problem<GenericDifferentiableFunction<T>,
+		  boost::mpl::vector<GenericDifferentiableFunction<T> > >
     problem_t;
-  typedef Function::argument_t argument_t;
-  typedef problem_t::startingPoint_t startingPoint_t;
 
-  ConstantFunction::vector_t v (2);
+  typedef typename problem_t::function_t      function_t;
+  typedef typename function_t::argument_t     argument_t;
+  typedef typename problem_t::startingPoint_t startingPoint_t;
+  typedef typename problem_t::intervals_t     intervals_t;
+  typedef typename problem_t::scales_t        scales_t;
+
+  typedef GenericConstantFunction<T>          constantFunction_t;
+
+  typename constantFunction_t::vector_t v (2);
   v.setZero ();
 
-  ConstantFunction f (v);
+  constantFunction_t f (v);
 
   problem_t pb_fail (f);
 
@@ -60,46 +69,47 @@ BOOST_AUTO_TEST_CASE (problem)
   x.setZero ();
   pb.startingPoint () = x;
 
-  ConstantFunction::names_t names (2);
+  typename constantFunction_t::names_t names (2);
   names[0] = "x₀";
   names[1] = "x₁";
   pb.argumentNames () = names;
 
-  boost::shared_ptr<ConstantFunction>
-    cstr = boost::make_shared<ConstantFunction>  (v);
-  problem_t::intervals_t intervals (2);
-  problem_t::scales_t scales (2, 1);
+  boost::shared_ptr<constantFunction_t>
+    cstr = boost::make_shared<constantFunction_t>  (v);
+  intervals_t intervals (2);
+  scales_t scales (2, 1);
   for (size_t i = 0; i < intervals.size (); ++i)
     intervals[i] = Function::makeInfiniteInterval ();
   pb.addConstraint (cstr, intervals, scales);
 
   // Check null ptr
-  BOOST_CHECK_THROW (boost::shared_ptr<ConstantFunction> null_ptr;
+  BOOST_CHECK_THROW (boost::shared_ptr<constantFunction_t> null_ptr;
                      pb.addConstraint (null_ptr, intervals, scales),
                      std::runtime_error);
 
   // Check invalid input size
-  BOOST_CHECK_THROW (ConstantFunction::vector_t v_size (4);
-                     boost::shared_ptr<ConstantFunction>
-                     cstr_size = boost::make_shared<ConstantFunction> (v_size);
+  BOOST_CHECK_THROW (typename constantFunction_t::vector_t v_size (4);
+                     boost::shared_ptr<constantFunction_t>
+                     cstr_size = boost::make_shared<constantFunction_t> (v_size);
                      pb.addConstraint (cstr_size, intervals, scales),
                      std::runtime_error);
 
   // Check invalid interval size
-  BOOST_CHECK_THROW (problem_t::intervals_t intervals_size (6);
+  BOOST_CHECK_THROW (intervals_t intervals_size (6);
                      pb.addConstraint (cstr, intervals_size, scales),
                      std::runtime_error);
 
   // Check invalid scale vector size
-  BOOST_CHECK_THROW (problem_t::scales_t scales_size (6);
+  BOOST_CHECK_THROW (scales_t scales_size (6);
                      pb.addConstraint (cstr, intervals, scales_size),
                      std::runtime_error);
 
   std::cout << pb << std::endl;
 
   // Test a problem with multiple types of constraints.
-  typedef Problem<DifferentiableFunction,
-		  boost::mpl::vector<LinearFunction, DifferentiableFunction> > mixedProblem_t;
+  typedef Problem<GenericDifferentiableFunction<T>,
+		  boost::mpl::vector<GenericLinearFunction<T>,
+				     GenericDifferentiableFunction<T> > > mixedProblem_t;
   mixedProblem_t mixedPb (f);
   mixedPb.startingPoint () = x;
   mixedPb.argumentNames () = names;
@@ -107,7 +117,7 @@ BOOST_AUTO_TEST_CASE (problem)
   // First constraint: ConstantFunction automatically converted to LinearFunction
   mixedPb.addConstraint (cstr, intervals, scales);
   // Second constraint: ConstantFunction converted to DifferentiableFunction
-  mixedPb.addConstraint (boost::static_pointer_cast<DifferentiableFunction> (cstr),
+  mixedPb.addConstraint (boost::static_pointer_cast<GenericDifferentiableFunction<T> > (cstr),
                          intervals, scales);
 
   // First constraint: LinearFunction

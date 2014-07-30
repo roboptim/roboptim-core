@@ -63,6 +63,12 @@ namespace roboptim
         std::string command_;
       };
 
+      /// \brief Import function that follows the style of commands.
+      ROBOPTIM_DLLAPI Import import (const std::string& packages);
+
+      /// \brief Import function that follows the style of commands.
+      ROBOPTIM_DLLAPI Import import (const std::string& from,
+                                     const std::string& packages);
 
       /// \brief matplotlib command.
       ///

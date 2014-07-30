@@ -80,6 +80,13 @@ namespace roboptim
       /// \brief Clear the vectors of imports and commands.
       void clear ();
 
+      /// \brief Whether to print the header (imports).
+      /// \return Reference to withHeader_.
+      bool& withHeader ();
+
+      /// \brief Whether to print the header (imports).
+      bool withHeader () const;
+
     protected:
       /// \brief Default constructor can not be called directly.
       ///

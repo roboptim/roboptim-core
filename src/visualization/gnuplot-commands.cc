@@ -83,7 +83,7 @@ namespace roboptim
       Command
       set (const char* var, const char* value)
       {
-        if (!*value)
+        if (!value || !*value)
 	  {
 	    boost::format fmt = boost::format ("set %1%");
 	    // Ignore some irrelevant exceptions

@@ -41,6 +41,18 @@ namespace roboptim
       Import::~Import ()
       {}
 
+      Import
+      import (const std::string& packages)
+      {
+        return Import (packages);
+      }
+
+      Import
+      import (const std::string& from, const std::string& packages)
+      {
+        return Import (from, packages);
+      }
+
       Command::Command (const std::string& cmd)
 	: command_ (cmd)
       {}
@@ -81,7 +93,7 @@ namespace roboptim
       Command
       set (const char* var, const char* value)
       {
-        if (!*value)
+        if (!value || !*value)
 	  {
 	    throw std::runtime_error ("matplotlib::set (var, value) expects an "
 				      "actual value.");

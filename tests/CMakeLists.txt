@@ -17,6 +17,7 @@
 # It allows the user to instrument the test suite easily to make it run
 # through Valgrind for instance.
 SET(CHECK_PREFIX "" CACHE STRING "Shell prefix used when running tests")
+SEPARATE_ARGUMENTS(CHECK_PREFIX)
 
 # Make sure local headers are found
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/tests)
@@ -42,7 +43,8 @@ ADD_DEFINITIONS(-DTESTS_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 #
 MACRO(ROBOPTIM_CORE_TEST NAME)
   ADD_EXECUTABLE(${NAME} ${NAME}.cc)
-  ADD_TEST(${NAME} ${CHECK_PREFIX} ${CMAKE_CURRENT_BINARY_DIR}/${NAME})
+  ADD_TEST(NAME ${NAME}
+    COMMAND ${CHECK_PREFIX} ${CMAKE_CURRENT_BINARY_DIR}/${NAME})
 
   TARGET_LINK_LIBRARIES(${NAME} roboptim-core)
   PKG_CONFIG_USE_DEPENDENCY(${NAME} eigen3)

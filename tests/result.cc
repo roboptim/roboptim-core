@@ -25,6 +25,21 @@
 
 using namespace roboptim;
 
+// Define a simple function.
+struct F : public Function
+{
+  F () : Function (1, 1, "x")
+  {}
+
+  void impl_compute (result_t& res,
+                     const argument_t& x) const
+  {
+    res (0) = x[0];
+  }
+
+  // No gradient, hessian.
+};
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (result)
@@ -34,10 +49,16 @@ BOOST_AUTO_TEST_CASE (result)
 
   // Instantiate some results.
   Result result (3, 8);
+  F f;
+  F::size_type c_size = 4;
+  result.constraints.resize (c_size);
+  result.constraints.setZero ();
+  result.lambda.resize (c_size);
+  result.lambda.setZero ();
 
   assert (result.x.size () == 3);
   assert (result.value.size () == 8);
-  assert (result.lambda.size () == 0);
+  assert (result.lambda.size () == c_size);
 
   Result result2 (result);
   Result result3 = result;
