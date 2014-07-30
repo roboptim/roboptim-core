@@ -101,7 +101,7 @@ namespace roboptim
             if_<is_base_of<_2, C>,
                 mpl::if_<is_void<_1>, _2, detail::get_descendant<_1, _2> >,
                 _1>
-	    >::type C_type;
+	    >::type type;
     };
 
 
@@ -111,11 +111,11 @@ namespace roboptim
     struct ConvertConstraint
     {
       template <typename C>
-      boost::shared_ptr<typename cast_constraint_type<C, CLIST>::C_type>
+      boost::shared_ptr<typename cast_constraint_type<C, CLIST>::type>
       operator () (const boost::shared_ptr<C>& c) const
       {
         return boost::static_pointer_cast
-          <typename cast_constraint_type<C, CLIST>::C_type> (c);
+          <typename cast_constraint_type<C, CLIST>::type> (c);
       }
     };
 

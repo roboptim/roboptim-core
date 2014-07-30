@@ -342,7 +342,7 @@ namespace roboptim
     ASSERT_CONSTRAINT_TYPE (C, CLIST);
 
     // Find the proper constraint type for upcasting.
-    typedef typename detail::cast_constraint_type<C, CLIST>::C_type
+    typedef typename detail::cast_constraint_type<C, CLIST>::type
       constraintCast_t;
 
     if (x->inputSize () != this->function ().inputSize ())
@@ -374,7 +374,7 @@ namespace roboptim
     ASSERT_CONSTRAINT_TYPE (C, CLIST);
 
     // Find the proper constraint type for upcasting.
-    typedef typename detail::cast_constraint_type<C, CLIST>::C_type
+    typedef typename detail::cast_constraint_type<C, CLIST>::type
       constraintCast_t;
 
     if (!x)
