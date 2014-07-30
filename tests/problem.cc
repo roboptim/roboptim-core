@@ -105,6 +105,27 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
                      std::runtime_error);
 
   std::cout << pb << std::endl;
+
+  // Test a problem with multiple types of constraints.
+  typedef Problem<GenericDifferentiableFunction<T>,
+		  boost::mpl::vector<GenericLinearFunction<T>,
+				     GenericDifferentiableFunction<T> > > mixedProblem_t;
+  mixedProblem_t mixedPb (f);
+  mixedPb.startingPoint () = x;
+  mixedPb.argumentNames () = names;
+
+  // First constraint: ConstantFunction automatically converted to LinearFunction
+  mixedPb.addConstraint (cstr, intervals, scales);
+  // Second constraint: ConstantFunction converted to DifferentiableFunction
+  mixedPb.addConstraint (boost::static_pointer_cast<GenericDifferentiableFunction<T> > (cstr),
+                         intervals, scales);
+
+  // First constraint: LinearFunction
+  BOOST_CHECK (mixedPb.constraints() [0].which () == 0);
+  // Second constraint: DifferentiableFunction
+  BOOST_CHECK (mixedPb.constraints() [1].which () == 1);
+
+  std::cout << mixedPb << std::endl;
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

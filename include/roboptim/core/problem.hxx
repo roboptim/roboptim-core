@@ -31,22 +31,10 @@
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/terminal-color.hh>
 # include <roboptim/core/util.hh>
+# include <roboptim/core/detail/utility.hh>
 
 namespace roboptim
 {
-  namespace detail
-  {
-    using namespace boost;
-    using namespace boost::mpl;
-
-    /// \brief Whether a sequence of types contains a base of a given type.
-    /// \tparam Sequence sequence of types.
-    /// \tparam Type type.
-    template<typename Sequence, typename Type>
-    struct contains_base_of
-    : greater<int_<count_if<Sequence, is_base_of<_, Type> >::value>, int_<0> >
-    {};
-  } // end of namespace detail.
 
   //
   // Template specialization for problem without constraint
@@ -313,8 +301,13 @@ namespace roboptim
        INCOMPATIBLE_TYPES_IN_LIST, (CLIST_, CLIST));
 
     // Copy constraints.
-    std::copy (pb.constraints_.begin (), pb.constraints_.end (),
-               constraints_.begin ());
+    constraints_.reserve (pb.constraints_.size ());
+    detail::ConvertConstraintVariant<Problem<F, CLIST> > converter;
+    for (typename Problem<F_, CLIST_>::constraints_t::const_iterator
+	   iter  = pb.constraints_.begin ();
+         iter != pb.constraints_.end ();
+         ++iter)
+      constraints_.push_back (apply_visitor (converter, *iter));
   }
 
   template <typename F, typename CLIST>
@@ -332,16 +325,11 @@ namespace roboptim
   }
 
 // Verify that C is in CLIST or derives from one of its elements.
-#define ASSERT_CONSTRAINT_TYPE(C,CLIST)                       \
-  BOOST_MPL_ASSERT_MSG(                                       \
-    (boost::mpl::fold<CLIST,                                  \
-                      boost::mpl::bool_<false>,               \
-                      boost::mpl::if_<                        \
-                        boost::is_base_of<boost::mpl::_2, C>, \
-                        boost::mpl::bool_<true>,              \
-                        boost::mpl::_1>                       \
-     >::type::value),                                         \
+#define ASSERT_CONSTRAINT_TYPE(C,CLIST)                     \
+  BOOST_MPL_ASSERT_MSG(                                     \
+    (detail::check_constraint_type<C, CLIST>::type::value), \
      CONSTRAINT_TYPE_IS_NOT_VALID, (C&, CLIST))
+
 
   template <typename F, typename CLIST>
   template <typename C>
@@ -351,7 +339,11 @@ namespace roboptim
 				    value_type s)
   {
     // Check that C is in CLIST.
-    ASSERT_CONSTRAINT_TYPE (C,CLIST);
+    ASSERT_CONSTRAINT_TYPE (C, CLIST);
+
+    // Find the proper constraint type for upcasting.
+    typedef typename detail::cast_constraint_type<C, CLIST>::C_type
+      constraintCast_t;
 
     if (x->inputSize () != this->function ().inputSize ())
       throw std::runtime_error ("Invalid constraint (wrong input size)");
@@ -362,7 +354,7 @@ namespace roboptim
     // Check that the pointer is not null.
     assert (!!x.get ());
     assert (b.first <= b.second);
-    constraints_.push_back (boost::static_pointer_cast<C> (x));
+    constraints_.push_back (boost::static_pointer_cast<constraintCast_t> (x));
     intervals_t bounds;
     bounds.push_back (b);
     boundsVect_.push_back (bounds);
@@ -379,7 +371,11 @@ namespace roboptim
 				    scales_t s)
   {
     // Check that C is in CLIST.
-    ASSERT_CONSTRAINT_TYPE (C,CLIST);
+    ASSERT_CONSTRAINT_TYPE (C, CLIST);
+
+    // Find the proper constraint type for upcasting.
+    typedef typename detail::cast_constraint_type<C, CLIST>::C_type
+      constraintCast_t;
 
     if (!x)
       throw std::runtime_error
@@ -425,7 +421,7 @@ namespace roboptim
 
     // Check that the pointer is not null.
     assert (!!x.get ());
-    constraints_.push_back (boost::static_pointer_cast<C> (x));
+    constraints_.push_back (boost::static_pointer_cast<constraintCast_t> (x));
 
     // Check that the bounds are correctly defined.
     for (std::size_t i = 0; i < static_cast<std::size_t> (x->outputSize ());

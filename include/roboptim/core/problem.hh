@@ -25,7 +25,6 @@
 # include <boost/mpl/copy.hpp>
 # include <boost/mpl/fold.hpp>
 # include <boost/mpl/logical.hpp>
-# include <boost/mpl/transform.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/optional.hpp>
 # include <boost/shared_ptr.hpp>
@@ -35,37 +34,10 @@
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/portability.hh>
 # include <roboptim/core/function.hh>
+# include <roboptim/core/detail/utility.hh>
 
 namespace roboptim
 {
-  namespace detail
-  {
-    using namespace boost;
-    using namespace boost::mpl;
-
-    /// \brief Transform a types list into a types list of shared pointers.
-    ///
-    /// If the input list is:
-    /// \code
-    /// boost::mpl::vector<int, long>
-    /// \endcode
-    ///
-    /// then the result (type) will be:
-    /// \code
-    /// boost::mpl::vector<boost::shared_ptr<int>,
-    ///                    boost::shared_ptr<long> >
-    /// \endcode
-    ///
-    /// \tparam CLIST list that will be transformed
-    template <typename CLIST>
-    struct add_shared_ptr
-    {
-      /// \brief Result.
-      typedef typename boost::mpl::transform
-      <CLIST, typename boost::shared_ptr<boost::mpl::_1> >::type type;
-    };
-  } // end of namespace detail.
-
 
   /// \addtogroup roboptim_problem
   /// @{
