@@ -94,7 +94,7 @@ namespace roboptim
   {
     // Check that F is a subtype of F_.
     BOOST_MPL_ASSERT_MSG((boost::is_base_of<F, F_>::value),
-                         SAME_COST_FUNCTION_TYPE_EXPECTED, (F, F_));
+                         SAME_COST_FUNCTION_TYPE_EXPECTED, (F&, F_&));
   }
 
   template <typename F>
@@ -287,7 +287,7 @@ namespace roboptim
 
     // Check that F is a subtype of F_.
     BOOST_MPL_ASSERT_MSG((is_base_of<F, F_>::value),
-                         INCOMPATIBLE_TYPES_FOR_COST, (F, F_));
+                         INCOMPATIBLE_TYPES_FOR_COST, (F&, F_&));
 
     // Check that CLIST_ is a subset of CLIST (i.e. all the functions
     // of CLIST_ derive from functions of CLIST).
@@ -341,7 +341,7 @@ namespace roboptim
                         boost::mpl::bool_<true>,              \
                         boost::mpl::_1>                       \
      >::type::value),                                         \
-     CONSTRAINT_TYPE_IS_NOT_VALID, (C, CLIST))
+     CONSTRAINT_TYPE_IS_NOT_VALID, (C&, CLIST))
 
   template <typename F, typename CLIST>
   template <typename C>
