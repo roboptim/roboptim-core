@@ -17,6 +17,9 @@
 
 #include "shared-tests/fixture.hh"
 
+#include <boost/mpl/equal.hpp>
+#include <boost/type_traits/is_same.hpp>
+
 #include <roboptim/core/fwd.hh>
 #include <roboptim/core/detail/utility.hh>
 
