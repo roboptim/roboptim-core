@@ -50,14 +50,15 @@ BOOST_AUTO_TEST_CASE (result)
   // Instantiate some results.
   Result result (3, 8);
   F f;
-  result.constraints.resize (4);
+  F::size_type c_size = 4;
+  result.constraints.resize (c_size);
   result.constraints.setZero ();
-  result.lambda.resize (4);
+  result.lambda.resize (c_size);
   result.lambda.setZero ();
 
   assert (result.x.size () == 3);
   assert (result.value.size () == 8);
-  assert (result.lambda.size () == 0);
+  assert (result.lambda.size () == c_size);
 
   Result result2 (result);
   Result result3 = result;
