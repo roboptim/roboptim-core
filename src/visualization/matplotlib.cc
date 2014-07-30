@@ -83,7 +83,8 @@ namespace roboptim
 	    o << it->command () << std::endl;
 
 	  o << std::endl;
-	  o << "plt.figure ()" << std::endl;
+	  o << "fig = plt.figure ()" << std::endl;
+	  o << "ax = plt.subplot(111)" << std::endl;
 	  o << std::endl;
 	}
 
@@ -94,6 +95,12 @@ namespace roboptim
 
       if (withHeader_)
 	{
+	  // Display legend on the right of the image
+	  o << "box = ax.get_position()" << std::endl;
+	  o << "ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])" << std::endl;
+	  o << "ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))" << std::endl;
+
+	  // Show image
 	  o << "plt.show ()" << std::endl;
 	}
 

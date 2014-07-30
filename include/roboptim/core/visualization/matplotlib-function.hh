@@ -102,7 +102,6 @@ namespace roboptim
 			% f.getName ()
 			% i).str () << std::endl;
 	       }
-        ss << "plt.legend ()" << std::endl;
 
         return Command (ss.str ());
       }

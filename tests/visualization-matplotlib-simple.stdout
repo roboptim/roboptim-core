@@ -2,7 +2,7 @@ foo = 42
 # Hello, world!
 # This is a three-line comment!
 # Amazing!
-plt.figure ()
+fig = plt.figure ()
 plt.show ()
 
 
@@ -11,8 +11,11 @@ plt.show ()
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.figure ()
+fig = plt.figure ()
+ax = plt.subplot(111)
 
 
+box = ax.get_position()
+ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.show ()
-
