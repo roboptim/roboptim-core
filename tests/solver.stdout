@@ -39,6 +39,12 @@ Solver:
     data.string (dummy string): dummy data
     data.value_type (dummy value_type): 42
 
+Solver error: the null solver always fails.
+Result:
+  Size (input, output): 1, 1
+  X: [1](0)
+  Value: [1](0)
+
 Solver:
   Problem:
     x (not differentiable)
