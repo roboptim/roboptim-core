@@ -99,7 +99,7 @@ namespace roboptim
     BOOST_MPL_ASSERT_MSG(
       (boost::mpl::or_<boost::is_base_of<Function, F>,
                        boost::is_base_of<SparseFunction, F> >::value),
-       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F));
+       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
 
   public:
     template <typename F_, typename CLIST_>
@@ -278,7 +278,7 @@ namespace roboptim
     BOOST_MPL_ASSERT_MSG(
       (boost::mpl::or_<boost::is_base_of<Function, F>,
                        boost::is_base_of<SparseFunction, F> >::value),
-       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F));
+       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
 
     // Check that all the elements of CLIST derive from Function or
     // SparseFunction.
