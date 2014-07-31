@@ -85,7 +85,7 @@ namespace roboptim
     struct check_constraint_type
       : fold<CLIST,
 	     bool_<false>,
-	     if_<is_base_of<_2, C>, bool_<true>, _1> >
+	     if_<is_base_of<boost::mpl::_2, C>, bool_<true>, boost::mpl::_1> >
     {};
 
 
@@ -98,9 +98,11 @@ namespace roboptim
       typedef typename
       fold <CLIST,
             void,
-            if_<is_base_of<_2, C>,
-                mpl::if_<is_void<_1>, _2, detail::get_descendant<_1, _2> >,
-                _1>
+            if_<is_base_of<boost::mpl::_2, C>,
+                mpl::if_<is_void<boost::mpl::_1>,
+                         boost::mpl::_2,
+                         detail::get_descendant<boost::mpl::_1, boost::mpl::_2> >,
+                boost::mpl::_1>
 	    >::type type;
     };
 
