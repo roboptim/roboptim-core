@@ -48,10 +48,10 @@ namespace roboptim
     /// \param coefficients polynomial coefficients
     /// given in increasing degree order
     /// \throw std::runtime_error
-    explicit Polynomial (vector_t coefficients)
+    explicit Polynomial (const vector_t& coefficients)
       : GenericTwiceDifferentiableFunction<T>
 	(1, 1, "polynomial"),
-        coeffs_(coefficients),
+        coeffs_ (coefficients),
         dCoeffs_ (),
         dDCoeffs_ ()
     {
