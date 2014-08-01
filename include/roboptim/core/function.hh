@@ -215,7 +215,7 @@ namespace roboptim
     /// \brief Get the lower bound of an interval
     /// \param interval accessed interval
     /// \return lower bound of the interval
-    static double getLowerBound (const interval_t& interval)
+    static value_type getLowerBound (const interval_t& interval)
     {
       return interval.first;
     }
@@ -223,7 +223,7 @@ namespace roboptim
     /// \brief Get the upper bound of an interval
     /// \param interval accessed interval
     /// \return upper bound of the interval
-    static double getUpperBound (const interval_t& interval)
+    static value_type getUpperBound (const interval_t& interval)
     {
       return interval.second;
     }
@@ -271,7 +271,7 @@ namespace roboptim
     ///
     /// \param interval accessed discrete interval
     /// \return lower bound of the discrete interval
-    static double getLowerBound (const discreteInterval_t& interval)
+    static value_type getLowerBound (const discreteInterval_t& interval)
     {
       return boost::get<0> (interval);
     }
@@ -280,7 +280,7 @@ namespace roboptim
     ///
     /// \param interval accessed discrete interval
     /// \return upper bound of the discrete interval
-    static double getUpperBound (const discreteInterval_t& interval)
+    static value_type getUpperBound (const discreteInterval_t& interval)
     {
       return boost::get<1> (interval);
     }
@@ -289,7 +289,7 @@ namespace roboptim
     ///
     /// \param interval accessed discrete interval
     /// \return upper step of the discrete interval
-    static double getStep (const discreteInterval_t& interval)
+    static value_type getStep (const discreteInterval_t& interval)
     {
       return boost::get<2> (interval);
     }

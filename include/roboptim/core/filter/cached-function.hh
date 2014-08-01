@@ -130,8 +130,8 @@ namespace roboptim
     			       size_type functionId = 0) const;
 
     virtual void impl_derivative (gradient_t& derivative,
-    				  double argument,
-                                  size_type order = 1) const;
+    				  value_type argument,
+    				  size_type order = 1) const;
 
   protected:
     boost::shared_ptr<const T> function_;

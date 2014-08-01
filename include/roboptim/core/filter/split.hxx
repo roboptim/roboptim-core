@@ -120,7 +120,7 @@ namespace roboptim
   template <>
   inline void
   Split<Function>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -128,7 +128,7 @@ namespace roboptim
   template <>
   inline void
   Split<DifferentiableFunction>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -136,7 +136,7 @@ namespace roboptim
   template <>
   inline void
   Split<TwiceDifferentiableFunction>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -144,7 +144,7 @@ namespace roboptim
   template <typename T>
   void
   Split<T>::impl_derivative (gradient_t& derivative,
-			     double argument,
+			     value_type argument,
 			     size_type order)
     const
   {

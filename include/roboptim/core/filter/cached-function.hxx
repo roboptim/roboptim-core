@@ -218,7 +218,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<Function>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -226,7 +226,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<SparseFunction>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -234,7 +234,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<DifferentiableFunction>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -242,7 +242,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<DifferentiableSparseFunction>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -250,7 +250,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<TwiceDifferentiableFunction>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -258,7 +258,7 @@ namespace roboptim
   template <>
   inline void
   CachedFunction<TwiceDifferentiableSparseFunction>::impl_derivative
-  (gradient_t&, double, size_type) const
+  (gradient_t&, value_type, size_type) const
   {
     assert (0);
   }
@@ -266,7 +266,7 @@ namespace roboptim
   template <typename T>
   void
   CachedFunction<T>::impl_derivative (gradient_t& derivative,
-  				      double argument,
+  				      value_type argument,
   				      size_type order)
     const
   {

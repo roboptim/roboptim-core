@@ -76,7 +76,7 @@ namespace roboptim
     /// expected size.
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    result_t operator () (double argument) const
+    result_t operator () (value_type argument) const
     {
       result_t result (outputSize ());
       result.setZero ();
@@ -92,7 +92,7 @@ namespace roboptim
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    void operator () (result_t& result, double argument) const
+    void operator () (result_t& result, value_type argument) const
     {
       assert (isValidResult (result));
       this->impl_compute (result, argument);
@@ -105,7 +105,7 @@ namespace roboptim
     /// \param argument point at which the derivative will be computed
     /// \param order derivative order (if 0 then function is evaluated)
     /// \return derivative vector
-    gradient_t derivative (double argument, size_type order = 1) const
+    gradient_t derivative (value_type argument, size_type order = 1) const
     {
       gradient_t derivative (derivativeSize ());
       derivative.setZero ();
@@ -120,7 +120,7 @@ namespace roboptim
     /// \param argument point at which the derivative will be computed
     /// \param order derivative order (if 0 then function is evaluated)
     void derivative (gradient_t& derivative,
-		     double argument,
+		     value_type argument,
 		     size_type order = 1) const
     {
       assert (order <= derivabilityOrderMax ()
@@ -175,7 +175,7 @@ namespace roboptim
     /// #operator()(double) const instead.  \param result
     /// result will be stored in this vector \param t point at which
     /// the function will be evaluated
-    virtual void impl_compute (result_t& result, double t) const = 0;
+    virtual void impl_compute (result_t& result, value_type t) const = 0;
 
     /// \brief Gradient evaluation.
     ///
@@ -211,7 +211,7 @@ namespace roboptim
     /// \param argument point where the gradient will be computed
     /// \param order derivative order (if 0 evaluates the function)
     virtual void impl_derivative (gradient_t& derivative,
-				  double argument,
+				  value_type argument,
 				  size_type order = 1) const = 0;
 
     /// \brief Hessian evaluation.

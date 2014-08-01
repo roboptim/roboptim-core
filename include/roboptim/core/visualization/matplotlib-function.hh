@@ -51,6 +51,8 @@ namespace roboptim
       template <typename T>
       Command plot (const GenericFunction<T>& f, discreteInterval_t window)
       {
+        typedef typename GenericFunction<T>::value_type value_type;
+
         assert (f.inputSize () == 1);
 
         assert (boost::get<0> (window) < boost::get<1> (window)
@@ -68,7 +70,7 @@ namespace roboptim
 
         ss << data_name << " = np.array ([";
 
-        for (double t = boost::get<0> (window); t < boost::get<1> (window);
+        for (value_type t = boost::get<0> (window); t < boost::get<1> (window);
              t += boost::get<2> (window))
 	  {
 	    // Evaluate the function

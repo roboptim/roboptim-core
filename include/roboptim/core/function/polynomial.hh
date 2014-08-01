@@ -83,10 +83,10 @@ namespace roboptim
       dCoeffs_.resize (coeffs_.size () - 1);
       dDCoeffs_.resize (coeffs_.size () - 2);
       for (typename vector_t::Index deg = 1; deg < coeffs_.size (); ++deg)
-	dCoeffs_[deg - 1] = static_cast<double> (deg) * coeffs_[deg];
+	dCoeffs_[deg - 1] = static_cast<value_type> (deg) * coeffs_[deg];
       for (typename vector_t::Index deg = 2; deg < coeffs_.size (); ++deg)
 	dDCoeffs_[deg - 2] =
-	  static_cast<double> (deg * (deg - 1)) * coeffs_[deg];
+	  static_cast<value_type> (deg * (deg - 1)) * coeffs_[deg];
     }
 
     virtual ~Polynomial ()
@@ -160,7 +160,7 @@ namespace roboptim
     (hessian_t& hessian, const argument_t& x, size_type) const;
 
     /// \brief Implement Horner's method.
-    double applyPolynomial
+    value_type applyPolynomial
     (const vector_t& coeffs, const argument_t& x) const;
 
   private:
@@ -173,11 +173,11 @@ namespace roboptim
   };
 
   template <typename T>
-  double Polynomial<T>::applyPolynomial
+  typename Polynomial<T>::value_type Polynomial<T>::applyPolynomial
   (const vector_t& coeffs, const argument_t& x) const
   {
     // Accumulator
-    double acc = 0;
+    value_type acc = 0;
 
     for (typename vector_t::Index degree = coeffs.size () - 1; degree >= 0;
 	 --degree)

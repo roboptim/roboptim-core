@@ -61,6 +61,8 @@ namespace roboptim
       template <typename T>
       Command plot (const GenericFunction<T>& f, discreteInterval_t window)
       {
+        typedef typename GenericFunction<T>::value_type value_type;
+
 	assert (f.inputSize () == 1);
 
 	assert (boost::get<0> (window) < boost::get<1> (window)
@@ -89,7 +91,7 @@ namespace roboptim
         // Vector used to store the result for each output
         std::vector<std::string> results ((size_t) f.outputSize ());
 
-        for (double t = boost::get<0> (window); t < boost::get<1> (window);
+        for (value_type t = boost::get<0> (window); t < boost::get<1> (window);
              t += boost::get<2> (window))
           {
             // Evaluate the function
@@ -119,6 +121,8 @@ namespace roboptim
       template <typename T>
       Command plot_xy (const GenericFunction<T>& f, discreteInterval_t window)
       {
+        typedef typename GenericFunction<T>::value_type value_type;
+
 	assert (f.inputSize () == 1 && f.outputSize () == 2);
 
 	assert (boost::get<0> (window) < boost::get<1> (window)
@@ -130,7 +134,7 @@ namespace roboptim
 
 	Function::vector_t x (f.inputSize ());
 
-	for (double t = boost::get<0> (window); t < boost::get<1> (window);
+	for (value_type t = boost::get<0> (window); t < boost::get<1> (window);
 	     t += boost::get<2> (window))
 	  {
 	    x[0] = t;
