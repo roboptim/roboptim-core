@@ -90,6 +90,7 @@ namespace roboptim
   GenericIdentityFunction<EigenMatrixSparse>::impl_gradient
   (gradient_t& gradient, const argument_t&, size_type idFunction) const
   {
+    gradient.setZero ();
     gradient.insert (idFunction) = 1.;
   }
 
