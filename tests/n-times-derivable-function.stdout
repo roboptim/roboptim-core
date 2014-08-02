@@ -1,3 +1,12 @@
+2-time differentiable function.
+Evaluate:
+[4](0,0,0,0)
+Gradient:
+[1](0)
+Jacobian:
+[4](0,0,0,0)
+Max derivability order: 2
+
 10-time differentiable function.
 Evaluate:
 [4](0,0,0,0)
@@ -5,4 +14,4 @@ Gradient:
 [1](0)
 Jacobian:
 [4](0,0,0,0)
-
+Max derivability order: 10

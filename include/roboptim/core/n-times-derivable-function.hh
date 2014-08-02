@@ -45,6 +45,7 @@ namespace roboptim
     /// \brief Function derivability order. One static const variable per class
     /// in inheritance structure.
     static const size_type derivabilityOrder = 2;
+
     /// \brief Returns the maximum derivability order (relevant for N>2 only)
     virtual size_type derivabilityOrderMax () const
     {
@@ -136,7 +137,7 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const
     {
-      o << derivabilityOrderMax () << "-time derivable function.";
+      o << derivabilityOrderMax () << "-time differentiable function.";
       return o;
     }
 

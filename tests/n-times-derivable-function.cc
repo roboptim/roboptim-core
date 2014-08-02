@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#undef NDEBUG
-
 #include "shared-tests/fixture.hh"
 
 #include <roboptim/core/io.hh>
@@ -24,12 +22,12 @@
 
 using namespace roboptim;
 
-// Define a 10 times derivable null function.
-struct F : public NTimesDerivableFunction<10>
+// Define a 2-times derivable null function.
+struct F2 : public NTimesDerivableFunction<2>
 {
-  using NTimesDerivableFunction<10>::impl_compute;
+  using NTimesDerivableFunction<2>::impl_compute;
 
-  F () : NTimesDerivableFunction<10> (4, "0")
+  F2 () : NTimesDerivableFunction<2> (4, "0")
   {}
 
   virtual void impl_compute (result_t& result, double) const
@@ -46,6 +44,39 @@ struct F : public NTimesDerivableFunction<10>
   }
 };
 
+// Define a 10-times derivable null function.
+struct F10 : public NTimesDerivableFunction<10>
+{
+  using NTimesDerivableFunction<10>::impl_compute;
+
+  F10 () : NTimesDerivableFunction<10> (4, "0")
+  {}
+
+  virtual void impl_compute (result_t& result, double) const
+  {
+    result.setZero ();
+  }
+
+  virtual void impl_derivative (gradient_t& derivative,
+				double,
+				size_type order = 1) const
+  {
+    assert (order <= derivabilityOrder);
+    derivative.setZero ();
+  }
+};
+
+#define PRINT_FUNC(func)                          \
+  (*output) << (*func) << std::endl               \
+            << "Evaluate:" << std::endl           \
+            << (*func) (x[0]) << std::endl        \
+            << "Gradient:" << std::endl           \
+            << func->gradient (x, 0) << std::endl \
+            << "Jacobian:" << std::endl           \
+            << func->jacobian (x) << std::endl    \
+            << "Max derivability order: "         \
+            << func->derivabilityOrderMax () << std::endl
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (n_times_derivable_function)
@@ -53,19 +84,18 @@ BOOST_AUTO_TEST_CASE (n_times_derivable_function)
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("n-times-derivable-function");
 
-  boost::shared_ptr<F> fct = boost::make_shared<F> ();
-  F::argument_t x (1);
+  boost::shared_ptr<F2> f2 = boost::make_shared<F2> ();
+  boost::shared_ptr<F10> f10 = boost::make_shared<F10> ();
+
+  F2::argument_t x (1);
   x.setZero ();
 
-  (*output) << (*fct) << std::endl
-	    << "Evaluate:" << std::endl
-	    << (*fct) (x[0]) << std::endl
-	    << "Gradient:" << std::endl
-	    << fct->gradient (x, 0) << std::endl
-	    << "Jacobian:" << std::endl
-	    << fct->jacobian (x) << std::endl;
+  PRINT_FUNC (f2);
+  (*output) << std::endl;
+  PRINT_FUNC (f10);
 
-  BOOST_CHECK (fct->derivabilityOrderMax () == 10);
+  BOOST_CHECK (f2->derivabilityOrderMax () == 2);
+  BOOST_CHECK (f10->derivabilityOrderMax () == 10);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

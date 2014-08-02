@@ -95,6 +95,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
     << (*fct) (x) << "\n"
     << fct->gradient (x, 0) << "\n"
     << fct->jacobian (x) << std::endl;
+
+  BOOST_CHECK_THROW
+    (boost::shared_ptr<GenericLinearFunction<T> >
+     fct2 = chain (constant, selec_constant),
+     std::runtime_error);
 }
 
 #define CHECK_GRADIENT(F, I, X)				\
