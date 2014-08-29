@@ -152,6 +152,9 @@ namespace roboptim
 	  gradient_ (adaptee.inputSize ())
       {}
 
+      /// \brief Virtual destructor.
+      virtual ~Policy () {}
+
       virtual void computeGradient
       (value_type epsilon,
        gradient_t& gradient,

@@ -65,8 +65,8 @@ namespace roboptim
       /// \param callbacks a vector of callbacks.
       explicit Multiplexer (solver_t& solver, const callbacks_t& callbacks);
 
-      /// \brief Default destructor.
-      ~Multiplexer ();
+      /// \brief Virtual destructor.
+      virtual ~Multiplexer ();
 
       /// \brief Return the vector of callbacks.
       /// \return vector of callbacks.

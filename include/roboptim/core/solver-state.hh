@@ -60,6 +60,9 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
 
+    /// \brief Virtual destructor.
+    virtual ~StateParameter () {}
+
     /// \brief Parameter description (for humans).
     std::string description;
 
