@@ -18,6 +18,7 @@
 #include "shared-tests/fixture.hh"
 
 #include <roboptim/core/io.hh>
+#include <roboptim/core/debug.hh>
 #include <roboptim/core/n-times-derivable-function.hh>
 
 using namespace roboptim;
@@ -37,7 +38,7 @@ struct F2 : public NTimesDerivableFunction<2>
 
   virtual void impl_derivative (gradient_t& derivative,
 				double,
-				size_type order = 1) const
+				size_type ROBOPTIM_DEBUG_ONLY (order = 1)) const
   {
     assert (order <= derivabilityOrder);
     derivative.setZero ();
@@ -59,7 +60,7 @@ struct F10 : public NTimesDerivableFunction<10>
 
   virtual void impl_derivative (gradient_t& derivative,
 				double,
-				size_type order = 1) const
+				size_type ROBOPTIM_DEBUG_ONLY (order = 1)) const
   {
     assert (order <= derivabilityOrder);
     derivative.setZero ();

@@ -20,7 +20,6 @@
 # include <boost/algorithm/string/replace.hpp>
 
 # include "roboptim/core/indent.hh"
-# include "roboptim/core/util.hh"
 
 namespace roboptim
 {

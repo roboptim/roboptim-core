@@ -17,7 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
 # define ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
-# include "debug.hh"
 
 # include <boost/format.hpp>
 

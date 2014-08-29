@@ -17,7 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HXX
 # define ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HXX
-# include "debug.hh"
 
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/numeric-linear-function.hh>

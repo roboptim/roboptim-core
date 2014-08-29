@@ -21,8 +21,6 @@
 #ifndef ROBOPTIM_CORE_SUM_OF_C1_SQUARES_HXX
 # define ROBOPTIM_CORE_SUM_OF_C1_SQUARES_HXX
 
-# include "roboptim/core/debug.hh"
-
 namespace roboptim {
 
   template <typename T>

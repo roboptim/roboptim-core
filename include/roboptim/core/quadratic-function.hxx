@@ -17,8 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX
 # define ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX
-# include "roboptim/core/indent.hh"
-# include "roboptim/core/util.hh"
 
 namespace roboptim
 {
