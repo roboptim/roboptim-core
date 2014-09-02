@@ -20,6 +20,10 @@
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/portability.hh>
 
+# include <vector>
+# include <utility>
+# include <map>
+
 # include <roboptim/core/twice-differentiable-function.hh>
 
 namespace roboptim
@@ -54,6 +58,10 @@ namespace roboptim
   /// \brief Display a pair.
   template <typename T1, typename T2>
   std::ostream& operator<< (std::ostream&, const std::pair<T1, T2>&);
+
+  /// \brief Display a map.
+  template <typename T1, typename T2>
+  std::ostream& operator<< (std::ostream&, const std::map<T1, T2>&);
 
   /// \brief Display an Eigen object with the appropriate IOFormat.
   template <typename T>

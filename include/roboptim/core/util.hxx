@@ -62,6 +62,23 @@ namespace roboptim
     return o << "(" << p.first << ", " << p.second << ")";
   }
 
+  template <typename T1, typename T2>
+  std::ostream& operator<< (std::ostream& o, const std::map<T1,T2>& m)
+  {
+    typedef typename std::map<T1,T2>::const_iterator citer_t;
+
+    if (m.empty ())
+      return o << "{}";
+
+    citer_t it = m.begin ();
+    o << "{" << it->first << ": " << it->second;
+    ++it;
+
+    for (; it != m.end (); ++it)
+      o << ", " << it->first << ": " << it->second;
+    return o << "}";
+  }
+
   template <typename T>
   std::ostream& operator<< (std::ostream& o, const Eigen::MatrixBase<T>& matrix)
   {

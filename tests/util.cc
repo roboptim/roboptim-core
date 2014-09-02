@@ -44,6 +44,17 @@ BOOST_AUTO_TEST_CASE (util)
   v.push_back (1);
   (*output) << v << std::endl;
 
+  // Check pair display.
+  std::pair<int, std::string> p (42, "foo");
+  (*output) << p << std::endl;
+
+  // Check map display.
+  std::map<std::string, int> m;
+  (*output) << m << std::endl;
+  m["foo"] = 42;
+  m["bar"] = 1337;
+  (*output) << m << std::endl;
+
   // Test operations on dense matrices
   Eigen::MatrixXd dense_a (5,5);
   Eigen::MatrixXd dense_b (5,5);

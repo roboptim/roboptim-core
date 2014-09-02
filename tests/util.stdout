@@ -1,2 +1,5 @@
 Empty vector
 1
+(42, foo)
+{}
+{bar: 1337, foo: 42}
