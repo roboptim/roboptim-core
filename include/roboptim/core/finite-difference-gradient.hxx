@@ -17,8 +17,10 @@
 
 #ifndef ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HXX
 # define ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HXX
-# include "boost/type_traits/is_same.hpp"
+# include <boost/type_traits/is_same.hpp>
 # include <boost/mpl/same_as.hpp>
+
+# include <roboptim/core/util.hh>
 
 namespace roboptim
 {
