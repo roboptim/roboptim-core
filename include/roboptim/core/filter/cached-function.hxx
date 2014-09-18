@@ -57,9 +57,31 @@ namespace roboptim
   void
   CachedFunction<T>::reset ()
   {
-    cache_.clear ();
-    gradientCache_.clear ();
-    hessianCache_.clear ();
+    for (typename std::vector<functionCache_t>::iterator
+	   iter  = cache_.begin ();
+         iter != cache_.end ();
+         ++iter)
+      {
+	iter->clear ();
+      }
+
+    for (typename std::vector<gradientCache_t>::iterator
+	   iter  = gradientCache_.begin ();
+         iter != gradientCache_.end ();
+         ++iter)
+      {
+	iter->clear ();
+      }
+
+    jacobianCache_.clear ();
+
+    for (typename std::vector<hessianCache_t>::iterator
+	   iter  = hessianCache_.begin ();
+         iter != hessianCache_.end ();
+         ++iter)
+      {
+	iter->clear ();
+      }
   }
 
 

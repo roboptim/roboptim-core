@@ -30,12 +30,15 @@ boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
 struct DenseF : public DifferentiableFunction
 {
-  DenseF () : DifferentiableFunction (2, 1, "2 * x * x + y")
+  DenseF (bool verbose = true)
+    : DifferentiableFunction (2, 1, "2 * x * x + y"),
+      verbose_ (verbose)
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const
   {
-    (*output) << "computation (not cached)" << std::endl;
+    if (verbose_)
+      (*output) << "computation (not cached)" << std::endl;
     res.setZero ();
     res[0] = 2. * argument[0] * argument[0] + argument[1];
   }
@@ -43,7 +46,8 @@ struct DenseF : public DifferentiableFunction
   void impl_gradient (gradient_t& grad, const argument_t& argument,
 		      size_type) const
   {
-    (*output) << "gradient computation (not cached)" << std::endl;
+    if (verbose_)
+      (*output) << "gradient computation (not cached)" << std::endl;
     grad.setZero ();
     grad[0] = 4. * argument[0];
     grad[1] = 1.;
@@ -52,21 +56,28 @@ struct DenseF : public DifferentiableFunction
   void impl_jacobian (jacobian_t& jacobian, const argument_t& argument)
     const
   {
-    (*output) << "jacobian computation (not cached)" << std::endl;
+    if (verbose_)
+      (*output) << "jacobian computation (not cached)" << std::endl;
     jacobian.setZero ();
     jacobian(0,0) = 4. * argument[0];
     jacobian(0,1) = 1.;
   }
+
+private:
+  bool verbose_;
 };
 
 struct SparseF : public DifferentiableSparseFunction
 {
-  SparseF () : DifferentiableSparseFunction (2, 1, "2 * x * x + y")
+  SparseF (bool verbose = true)
+    : DifferentiableSparseFunction (2, 1, "2 * x * x + y"),
+      verbose_ (verbose)
   {}
 
   void impl_compute (result_t& res, const argument_t& argument) const
   {
-    (*output) << "computation (not cached)" << std::endl;
+    if (verbose_)
+      (*output) << "computation (not cached)" << std::endl;
     res.setZero ();
     res[0] = 2. * argument[0] * argument[0] + argument[1];
   }
@@ -74,7 +85,8 @@ struct SparseF : public DifferentiableSparseFunction
   void impl_gradient (gradient_t& grad, const argument_t& argument,
                       size_type) const
   {
-    (*output) << "gradient computation (not cached)" << std::endl;
+    if (verbose_)
+      (*output) << "gradient computation (not cached)" << std::endl;
     grad.setZero ();
     grad.insert(0) = 4. * argument[0];
     grad.insert(1) = 1.;
@@ -83,12 +95,38 @@ struct SparseF : public DifferentiableSparseFunction
   void impl_jacobian (jacobian_t& jacobian, const argument_t& argument)
     const
   {
-    (*output) << "jacobian computation (not cached)" << std::endl;
+    if (verbose_)
+      (*output) << "jacobian computation (not cached)" << std::endl;
     jacobian.setZero ();
     jacobian.insert(0,0) = 4. * argument[0];
     jacobian.insert(0,1) = 1.0;
   }
+
+private:
+  bool verbose_;
 };
+
+
+template <typename U1, typename U2, typename V1, typename V2>
+void loopCachedFunction
+(boost::shared_ptr<U1>& denseF, CachedFunction<U2>& cachedDenseF,
+ boost::shared_ptr<V1>& sparseF, CachedFunction<V2>& cachedSparseF,
+ Function::vector_t& x, unsigned n_iter)
+{
+  double max_value = 100;
+  double step = max_value/n_iter;
+  for (double i = 0.; i < max_value; i+=step)
+    {
+      x[0] = i;
+      x[1] = 2*i;
+      cachedDenseF (x);
+      cachedDenseF (x);
+      cachedSparseF (x);
+      cachedSparseF (x);
+      BOOST_CHECK_EQUAL ((*denseF) (x)[0], cachedDenseF (x)[0]);
+      BOOST_CHECK_EQUAL ((*sparseF) (x)[0], cachedSparseF (x)[0]);
+    }
+}
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
@@ -146,6 +184,20 @@ BOOST_AUTO_TEST_CASE (cached_function)
       (*output) << sparse_to_dense (cachedSparseF.jacobian (x)) << std::endl;
       (*output) << sparse_to_dense (cachedSparseF.jacobian (x)) << std::endl;
     }
+
+  // More tests for memory usage (disabling verbose mode)
+  dense_f = boost::shared_ptr<DenseF> (new DenseF (false));
+  sparse_f = boost::shared_ptr<SparseF> (new SparseF (false));
+  cachedDenseF = CachedFunction<DifferentiableFunction> (dense_f);
+  cachedSparseF = CachedFunction<DifferentiableSparseFunction> (sparse_f);
+
+  // Loop over some values
+  loopCachedFunction (dense_f, cachedDenseF, sparse_f, cachedSparseF, x, 1e5);
+
+  // Reset and retry
+  cachedDenseF.reset ();
+  cachedSparseF.reset ();
+  loopCachedFunction (dense_f, cachedDenseF, sparse_f, cachedSparseF, x, 1e5);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

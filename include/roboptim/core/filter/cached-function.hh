@@ -110,6 +110,7 @@ namespace roboptim
     explicit CachedFunction (boost::shared_ptr<const T> fct);
     ~CachedFunction ();
 
+    /// \brief Reset the caches.
     void reset ();
 
   protected:
