@@ -23,38 +23,26 @@
 # include <map>
 
 # include <boost/shared_ptr.hpp>
+# include <boost/functional/hash.hpp>
 
 # include <roboptim/core/n-times-derivable-function.hh>
+# include <roboptim/core/cache.hh>
+
+namespace Eigen
+{
+  /// \brief Hash function for argument vectors.
+  /// \param x argument vector.
+  /// \return hash.
+  inline std::size_t hash_value (const roboptim::Function::argument_t& x)
+  {
+    return boost::hash_range (x.data (), x.data () + x.size ());
+  }
+} // end of namespace Eigen
 
 namespace roboptim
 {
   /// \addtogroup roboptim_filter
   /// @{
-
-  namespace detail
-  {
-    struct ltvector
-    {
-      bool operator()(const Function::vector_t& v1,
-		      const Function::vector_t& v2) const
-      {
-	Function::size_type it1 = 0;
-	Function::size_type it2 = 0;
-
-	while (it1 != v1.size () && it2 != v2.size ())
-	  {
-	    if (fabs (v1(it1) - v2(it2)) < Function::epsilon ())
-	      ++it1, ++it2;
-	    else if (v1(it1) - v2(it2) < - Function::epsilon ())
-	      return true;
-	    else return false;
-	  }
-	return false;
-      }
-    };
-
-  } // end of namespace detail.
-
 
   /// \brief Store previous function computation.
   ///
@@ -97,17 +85,19 @@ namespace roboptim
     typedef typename GenericDifferentiableFunction<traits_t>::
     interval_t interval_t;
 
+    /// \brief Key type for the cache.
+    typedef argument_t cacheKey_t;
 
-    typedef std::map<argument_t, vector_t, detail::ltvector>
-    functionCache_t;
-    typedef std::map<argument_t, gradient_t, detail::ltvector>
-    gradientCache_t;
-    typedef std::map<argument_t, jacobian_t, detail::ltvector>
-    jacobianCache_t;
-    typedef std::map<argument_t, hessian_t, detail::ltvector>
-    hessianCache_t;
+    typedef LRUCache<cacheKey_t, vector_t>   functionCache_t;
+    typedef LRUCache<cacheKey_t, gradient_t> gradientCache_t;
+    typedef LRUCache<cacheKey_t, jacobian_t> jacobianCache_t;
+    typedef LRUCache<cacheKey_t, hessian_t>  hessianCache_t;
 
-    explicit CachedFunction (boost::shared_ptr<const T> fct);
+    /// \brief Cache a RobOptim function.
+    /// \param fct function to cache.
+    /// \param size size of the LRU cache.
+    explicit CachedFunction (boost::shared_ptr<const T> fct,
+                             size_t size = 10);
     ~CachedFunction ();
 
     /// \brief Reset the caches.
