@@ -28,6 +28,8 @@ SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
 
 SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/cache.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/cache.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/multiplexer.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/multiplexer.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/debug.hh

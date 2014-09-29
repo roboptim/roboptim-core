@@ -144,6 +144,8 @@ namespace roboptim
   template <typename T>
   struct derivativeSize;
 
+  template <typename K, typename V> class LRUCache;
+
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_FWD_HH
