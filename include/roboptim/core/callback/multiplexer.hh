@@ -94,9 +94,11 @@ namespace roboptim
       (const problem_t& pb,
        solverState_t& state);
 
-      /// \brief Attach the multiplexer to a solver.
-      /// \param solver solver that will use this multiplexer.
+      /// \brief Register the multiplexer with the solver.
       void attach ();
+
+      /// \brief Unregister the multiplexer from the solver.
+      void unregister ();
 
     private:
 

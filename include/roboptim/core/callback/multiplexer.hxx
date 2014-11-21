@@ -45,13 +45,7 @@ namespace roboptim
     template <typename S>
     Multiplexer<S>::~Multiplexer ()
     {
-      // Unregister the callback, do not fail if this is impossible.
-      try
-      {
-        solver_.setIterationCallback (callback_t ());
-      }
-      catch (std::exception& e)
-      {}
+      unregister ();
     }
 
     template <typename S>
@@ -118,6 +112,17 @@ namespace roboptim
       }
     }
 
+    template <typename S>
+    void Multiplexer<S>::unregister ()
+    {
+      // Unregister the callback, do not fail if this is impossible.
+      try
+      {
+        solver_.setIterationCallback (callback_t ());
+      }
+      catch (std::exception& e)
+      {}
+    }
   } // end of namespace callback.
 } // end of namespace roboptim.
 
