@@ -34,6 +34,9 @@
 
 namespace roboptim
 {
+  /// \brief Log the optimization process (values, Jacobians, time taken
+  /// etc.).
+  /// \tparam T solver type.
   template <typename T>
   class OptimizationLogger
   {
@@ -45,18 +48,33 @@ namespace roboptim
     typedef typename solver_t::problem_t::vector_t             vector_t;
     typedef typename solver_t::problem_t::function_t::matrix_t jacobian_t;
     typedef typename solver_t::solverState_t                   solverState_t;
+    typedef typename solver_t::callback_t                      callback_t;
     typedef typename solver_t::problem_t::function_t::traits_t traits_t;
 
     typedef GenericDifferentiableFunction<traits_t> differentiableFunction_t;
 
+    /// \brief Constructor.
+    /// \param solver solver that will be logged.
+    /// \param path path to the log directory.
+    /// \param selfRegister whether the logger will register itself as a
+    /// callback with the solver. Set this to false if you use it with a
+    /// multiplexer.
     explicit OptimizationLogger (solver_t& solver,
-				 const boost::filesystem::path& path);
+				 const boost::filesystem::path& path,
+				 bool selfRegister = true);
 
+    /// \brief Destructor.
+    /// CSV files are written in this destructor.
     virtual ~OptimizationLogger ();
 
     /// \brief Append extra information to the log file.
     /// \param text text to append.
     void append (const std::string& text);
+
+    /// \brief Return the callback function.
+    /// This can be used with a callback multiplexer.
+    /// \return callback function.
+    callback_t callback ();
 
   private:
     /// \brief Process constraints in the callback.
@@ -81,6 +99,9 @@ namespace roboptim
 
     /// \brief Attach the logger to the solver.
     void attach ();
+
+    /// \brief Unregister the logger from the solver.
+    void unregister ();
 
   protected:
     void perIterationCallback (const problem_t& pb,
@@ -142,6 +163,10 @@ namespace roboptim
 
     /// \brief First time the logger was called.
     boost::posix_time::ptime firstTime_;
+
+    /// \brief Whether the logger should register itself to the solver.
+    /// Note: this provides a way to use the logger in a callback multiplexer.
+    bool selfRegister_;
 
     std::vector<vector_t> x_;
     std::vector<value_type> costs_;

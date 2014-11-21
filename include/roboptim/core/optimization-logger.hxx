@@ -193,17 +193,19 @@ namespace roboptim
 
   template <typename T>
   OptimizationLogger<T>::OptimizationLogger (solver_t& solver,
-					     const boost::filesystem::path& path)
+					     const boost::filesystem::path& path,
+					     bool selfRegister)
     : solver_ (solver),
       path_ (path),
       output_ (),
       callbackCallId_ (0),
-      firstTime_ (boost::posix_time::microsec_clock::universal_time ())
+      firstTime_ (boost::posix_time::microsec_clock::universal_time ()),
+      selfRegister_ (selfRegister)
   {
     lastTime_ = firstTime_;
 
     // Register the callback with the solver.
-    attach ();
+    if (selfRegister_) attach ();
 
     // Remove old logs.
     boost::filesystem::remove_all (path);
@@ -226,12 +228,7 @@ namespace roboptim
   OptimizationLogger<T>::~OptimizationLogger ()
   {
     // Unregister the callback, do not fail if this is impossible.
-    try
-      {
-	solver_.setIterationCallback (typename solver_t::callback_t ());
-      }
-    catch (std::exception& e)
-      {}
+    if (selfRegister_) unregister ();
 
     // Get current time
     boost::posix_time::ptime t =
@@ -338,6 +335,14 @@ namespace roboptim
   }
 
   template <typename T>
+  typename OptimizationLogger<T>::callback_t
+  OptimizationLogger<T>::callback ()
+  {
+    return boost::bind (&OptimizationLogger<T>::perIterationCallback,
+                        this, _1, _2);
+  }
+
+  template <typename T>
   template <typename U>
   typename boost::disable_if<boost::is_same<U, boost::mpl::vector<> > >::type
   OptimizationLogger<T>::process_constraints
@@ -427,9 +432,7 @@ namespace roboptim
   {
     try
       {
-	solver_.setIterationCallback
-	  (boost::bind (&OptimizationLogger<T>::perIterationCallback,
-			this, _1, _2));
+	solver_.setIterationCallback (callback ());
       }
     catch (std::runtime_error& e)
       {
@@ -438,6 +441,17 @@ namespace roboptim
 	  << "many information will be missing from logs:\n"
 	  << e.what () << std::endl;
       }
+  }
+
+  template <typename T>
+  void OptimizationLogger<T>::unregister ()
+  {
+    try
+      {
+	solver_.setIterationCallback (typename solver_t::callback_t ());
+      }
+    catch (std::exception& e)
+      {}
   }
 
   template <typename T>
