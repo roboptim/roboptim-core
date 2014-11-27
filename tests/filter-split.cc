@@ -53,7 +53,7 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 BOOST_AUTO_TEST_CASE (split)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("split");
+    output = retrievePattern ("filter-split");
 
   boost::shared_ptr<F> f (new F ());
 
