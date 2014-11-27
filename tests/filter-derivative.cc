@@ -47,7 +47,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (derivative_test, T, functionTypes_t)
   typename Cos<T>::argument_t x (1);
   x.setZero ();
   std::cout
-    << (*fct) << std::endl
+    << "Input: " << (*cos) << std::endl
+    << "Output: " << (*fct) << std::endl
     << "Evaluate:" << std::endl
     << (*fct) (x) << std::endl
     << "Gradient:" << std::endl
@@ -59,6 +60,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (derivative_test, T, functionTypes_t)
 BOOST_AUTO_TEST_CASE_TEMPLATE (nonscalar_derivative_test, T, functionTypes_t)
 {
   typename GenericIdentityFunction<T>::vector_t offset (3);
+  offset.setZero ();
   boost::shared_ptr<GenericIdentityFunction<T> > id =
     boost::make_shared<GenericIdentityFunction<T> > (offset);
   boost::shared_ptr<GenericDifferentiableFunction<T> > fct =
@@ -67,7 +69,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (nonscalar_derivative_test, T, functionTypes_t)
   typename GenericFunction<T>::argument_t x (offset.size ());
   x.setZero ();
   std::cout
-    << (*fct) << std::endl
+    << "Input: " << (*id) << std::endl
+    << "Output: " << (*fct) << std::endl
     << "Evaluate:" << std::endl
     << (*fct) (x) << std::endl
     << "Gradient:" << std::endl

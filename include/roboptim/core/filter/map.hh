@@ -26,6 +26,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_filter
+  /// @{
+
   /// \brief Apply a function several times to an input vector.
   ///
   /// Input:
@@ -33,6 +36,8 @@ namespace roboptim
   ///
   /// Output:
   /// [f(x_0^0 x_1^0 ... x_N^0) ... f(x_0^M x_1^M ... x_N^M)]
+  ///
+  /// \tparam U input function type.
   template <typename U>
   class Map : public detail::AutopromoteTrait<U>::T_type
   {
@@ -42,6 +47,9 @@ namespace roboptim
 
     typedef boost::shared_ptr<Map> MapShPtr_t;
 
+    /// \brief Map filter constructor.
+    /// \param origin input function.
+    /// \param repeat number of times to repeat the function.
     explicit Map (boost::shared_ptr<U> origin, size_type repeat);
     ~Map ();
 
@@ -81,6 +89,8 @@ namespace roboptim
   {
     return boost::make_shared<Map<U> > (origin, repeat);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 

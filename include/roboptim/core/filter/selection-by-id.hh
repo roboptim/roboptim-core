@@ -27,7 +27,11 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_filter
+  /// @{
+
   /// \brief Select part of a function.
+  /// \tparam U input function type.
   template <typename U>
   class SelectionById : public detail::AutopromoteTrait<U>::T_type
   {
@@ -76,6 +80,8 @@ namespace roboptim
   {
     return boost::make_shared<SelectionById<U> > (origin, selector);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 

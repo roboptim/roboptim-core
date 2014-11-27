@@ -26,7 +26,12 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_filter
+  /// @{
+
   /// \brief Product of two RobOptim functions.
+  /// \tparam U first input function type.
+  /// \tparam V second input function type.
   template <typename U, typename V>
   class Product : public detail::PromoteTrait<U, V>::T_promote
   {
@@ -96,6 +101,8 @@ namespace roboptim
   {
     return boost::make_shared<Product<U, V> > (left, right);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 

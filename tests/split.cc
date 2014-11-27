@@ -68,11 +68,10 @@ BOOST_AUTO_TEST_CASE (split)
       for (double i = 0.; i < 10.; i += 0.5)
 	{
 	  x[0] = i;
+	  (*output) << "x = " << x[0] << std::endl;
 	  (*output) << splitF (x) << std::endl;
-	  (*output) << splitF (x) << std::endl;
-
 	  (*output) << splitF.gradient (x) << std::endl;
-	  (*output) << splitF.gradient (x) << std::endl;
+	  (*output) << std::endl;
 	}
     }
 

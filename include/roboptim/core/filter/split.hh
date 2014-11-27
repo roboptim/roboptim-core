@@ -27,7 +27,8 @@ namespace roboptim
   /// \addtogroup roboptim_filter
   /// @{
 
-
+  /// \brief Select an element of a function's output.
+  /// \tparam T input function type.
   template <typename T>
   class Split : public T
   {
@@ -51,6 +52,9 @@ namespace roboptim
     /// \brief Import interval type.
     typedef typename DifferentiableFunction::interval_t interval_t;
 
+    /// \brief Split filter constructor.
+    /// \param fct input function.
+    /// \param functionId index of the output to select.
     explicit Split (boost::shared_ptr<const T> fct,
 		    size_type functionId);
     ~Split ();
@@ -86,7 +90,6 @@ namespace roboptim
    std::vector<Function::interval_t> interval,
    std::vector<Function::value_type> scale
    = std::vector<Function::value_type> ());
-
 
   /// @}
 

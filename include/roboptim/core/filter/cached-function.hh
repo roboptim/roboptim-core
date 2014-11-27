@@ -51,6 +51,7 @@ namespace roboptim
   /// computation by caching the function result.
   ///
   /// This filter is experimental in this release.
+  /// \tparam T input function type.
   template <typename T>
   class CachedFunction : public T
   {

@@ -29,10 +29,15 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_filter
+  /// @{
+
   /// \brief Bind some function input to a constant value.
   ///
-  // This allows to reduce any function input space by setting some
-  // inputs to particular values.
+  /// This allows to reduce any function input space by setting some
+  /// inputs to particular values.
+  ///
+  /// \tparam U input function type.
   template <typename U>
   class Bind : public detail::AutopromoteTrait<U>::T_type
   {
@@ -82,6 +87,8 @@ namespace roboptim
   {
     return boost::make_shared<Bind<U> > (origin, boundValues);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 

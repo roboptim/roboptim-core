@@ -27,7 +27,12 @@
 
 namespace roboptim
 {
-  /// \brief Select part of a function.
+  /// \addtogroup roboptim_filter
+  /// @{
+
+  /// \brief Select a block of a function's output.
+  /// The selected block is a range given by a start and a size.
+  /// \tparam U input function type.
   template <typename U>
   class Selection : public detail::AutopromoteTrait<U>::T_type
   {
@@ -37,7 +42,11 @@ namespace roboptim
 
     typedef boost::shared_ptr<Selection> SelectionShPtr_t;
 
-    explicit Selection (boost::shared_ptr<U> left,
+    /// \brief Create a selection given an input function and a block.
+    /// \param fct input function.
+    /// \param start start of the range.
+    /// \param size size of the range.
+    explicit Selection (boost::shared_ptr<U> fct,
 			size_type start, size_type size);
     ~Selection ();
 
@@ -80,6 +89,8 @@ namespace roboptim
   {
     return boost::make_shared<Selection<U> > (origin, start, size);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 

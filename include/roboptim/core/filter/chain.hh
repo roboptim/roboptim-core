@@ -28,6 +28,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_filter
+  /// @{
+
   /// \brief Chain two RobOptim functions.
   ///
   ///
@@ -39,8 +42,8 @@ namespace roboptim
   ///
   /// (left (right (x)))' = left'(right(x)) * right'(x)
   ///
-  /// \param left Left function
-  /// \param right Right function
+  /// \tparam U left input function type.
+  /// \tparam V right input function type.
   template <typename U, typename V>
   class Chain : public detail::PromoteTrait<U, V>::T_promote
   {
@@ -50,6 +53,10 @@ namespace roboptim
 
     typedef boost::shared_ptr<Chain> ChainShPtr_t;
 
+    /// \brief Chain filter constructor.
+    ///
+    /// \param left Left function
+    /// \param right Right function
     explicit Chain (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
     ~Chain ();
 
@@ -120,6 +127,8 @@ namespace roboptim
   {
     return boost::make_shared<Chain<U, V> > (left, right);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 

@@ -26,7 +26,11 @@
 
 namespace roboptim
 {
-  /// \brief Select part of a function.
+  /// \addtogroup roboptim_filter
+  /// @{
+
+  /// \brief Multiply by a constant scalar value.
+  /// \tparam U input function type.
   template <typename U>
   class Scalar : public detail::AutopromoteTrait<U>::T_type
   {
@@ -36,7 +40,10 @@ namespace roboptim
 
     typedef boost::shared_ptr<Scalar> ScalarShPtr_t;
 
-    explicit Scalar (boost::shared_ptr<U> left,
+    /// \brief Create a scalar filter.
+    /// \param fct input function.
+    /// \param scalar scalar value.
+    explicit Scalar (boost::shared_ptr<U> fct,
 		     value_type scalar);
     ~Scalar ();
 
@@ -105,6 +112,7 @@ namespace roboptim
     return boost::make_shared<Scalar<U> > (origin, -1.);
   }
 
+  /// @}
 
 } // end of namespace roboptim.
 

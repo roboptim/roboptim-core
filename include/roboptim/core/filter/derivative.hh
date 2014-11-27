@@ -30,9 +30,6 @@
 
 namespace roboptim
 {
-  /// \brief Return the derivative of a function.
-  ///
-  /// Know issue: for now it returns a non-differentiable function.
   template <typename U>
   class Derivative;
 
@@ -49,6 +46,13 @@ namespace roboptim
     };
   } // end of anonymous namespace.
 
+  /// \addtogroup roboptim_filter
+  /// @{
+
+  /// \brief Return the derivative of a function w.r.t. one of the parameters.
+  ///
+  /// Known issue: for now it returns a non-differentiable function.
+  /// \tparam U input function type.
   template <typename U>
   class Derivative : public DerivativeParent<U>::result_t
   {
@@ -68,8 +72,11 @@ namespace roboptim
 
     typedef boost::shared_ptr<Derivative> DerivativeShPtr_t;
 
+    /// \brief Derivative filter constructor.
+    /// \param origin input function.
+    /// \param variableId parameter index.
     explicit Derivative (boost::shared_ptr<U> origin,
-			size_type variableId)
+			 size_type variableId)
       : DerivativeParent<U>::result_t
 	(origin->inputSize (),
 	 origin->outputSize (),
@@ -126,10 +133,12 @@ namespace roboptim
   template <typename U>
   boost::shared_ptr<Derivative<U> >
   derivative (boost::shared_ptr<U> origin,
-	     typename Derivative<U>::size_type variableId = 0)
+	      typename Derivative<U>::size_type variableId = 0)
   {
     return boost::make_shared<Derivative<U> > (origin, variableId);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 

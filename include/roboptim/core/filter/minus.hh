@@ -26,7 +26,12 @@
 
 namespace roboptim
 {
-  /// \brief Substract two RobOptim functions.
+  /// \addtogroup roboptim_filter
+  /// @{
+
+  /// \brief Subtract two RobOptim functions.
+  /// \tparam U first input function type.
+  /// \tparam V second input function type.
   template <typename U, typename V>
   class Minus : public detail::PromoteTrait<U, V>::T_promote
   {
@@ -91,6 +96,8 @@ namespace roboptim
   {
     return boost::make_shared<Minus<U, V> > (left, right);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 

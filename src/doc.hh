@@ -51,6 +51,7 @@
 
    Table of content:
    - \subpage quickstart
+   - \subpage filters
    - \subpage faq
    - \subpage design
    - \subpage bridge
@@ -62,7 +63,7 @@
    and enhancement proposals are highly welcomed.
 
    To report a bug, please go this package's
-   <a href="http://www.roboptim.net/">web page</a>.
+   <a href="http://www.roboptim.net/">webpage</a>.
 
    To discuss about this package, please use <a
    href="https://groups.google.com/forum/?fromgroups#!forum/roboptim"
@@ -86,6 +87,24 @@
     <script>hljs.initHighlightingOnLoad();</script>
    \endhtmlonly
    \htmlinclude getting-started.html
+*/
+
+/**
+   \page filters Function filters
+   \htmlonly
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+	    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/styles/github.min.css" rel="stylesheet">
+    <script type="text/javascript"
+    src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js">
+    </script>
+    <script>hljs.initHighlightingOnLoad();</script>
+   \endhtmlonly
+   \htmlinclude filters.html
 */
 
 /**
@@ -350,7 +369,7 @@
 
    \section tutorial Intregrating a solver step by step.
 
-   \subsection prereq Pre-requesite
+   \subsection prereq Prerequisite
 
    The first step is determining if there is any interest in integrating
    the solver.

@@ -27,7 +27,11 @@
 
 namespace roboptim
 {
-  /// \brief Concatenate several functions output.
+  /// \addtogroup roboptim_filter
+  /// @{
+
+  /// \brief Concatenate the output of two functions.
+  /// \tparam U input functions type.
   template <typename U>
   class Concatenate : public detail::AutopromoteTrait<U>::T_type
   {
@@ -91,6 +95,8 @@ namespace roboptim
 
     return boost::make_shared<Concatenate<result_t> > (left, right);
   }
+
+  /// @}
 
 } // end of namespace roboptim.
 
