@@ -71,7 +71,7 @@ namespace roboptim
   };
 
   template <>
-  void
+  inline void
   Cos<EigenMatrixSparse>::impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
     const
   {
@@ -87,7 +87,7 @@ namespace roboptim
   }
 
   template <>
-  void
+  inline void
   Cos<EigenMatrixSparse>::impl_jacobian
   (jacobian_t& jacobian, const argument_t& x) const
   {
@@ -111,7 +111,7 @@ namespace roboptim
   }
 
   template <>
-  void
+  inline void
   Cos<EigenMatrixSparse>::impl_hessian (hessian_t& hessian,
 					const argument_t& x,
 					size_type) const
