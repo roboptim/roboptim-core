@@ -21,15 +21,9 @@
 # include <stdexcept>
 
 # include <boost/mpl/assert.hpp>
-# include <boost/mpl/back_inserter.hpp>
-# include <boost/mpl/copy.hpp>
-# include <boost/mpl/fold.hpp>
-# include <boost/mpl/logical.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/optional.hpp>
 # include <boost/shared_ptr.hpp>
-# include <boost/type_traits/is_base_of.hpp>
-# include <boost/variant.hpp>
 
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/portability.hh>
@@ -68,10 +62,8 @@ namespace roboptim
   class Problem <F, boost::mpl::vector<> >
   {
     // Check that F derives from Function or SparseFunction.
-    BOOST_MPL_ASSERT_MSG(
-      (boost::mpl::or_<boost::is_base_of<Function, F>,
-                       boost::is_base_of<SparseFunction, F> >::value),
-       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
+    BOOST_MPL_ASSERT_MSG((detail::derives_from_function<F>::type::value),
+                         ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
 
   public:
     template <typename F_, typename CLIST_>
@@ -247,25 +239,13 @@ namespace roboptim
   class Problem
   {
     // Check that F derives from Function or SparseFunction.
-    BOOST_MPL_ASSERT_MSG(
-      (boost::mpl::or_<boost::is_base_of<Function, F>,
-                       boost::is_base_of<SparseFunction, F> >::value),
-       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
+    BOOST_MPL_ASSERT_MSG((detail::derives_from_function<F>::type::value),
+                         ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
 
     // Check that all the elements of CLIST derive from Function or
     // SparseFunction.
-    BOOST_MPL_ASSERT_MSG(
-      (boost::mpl::fold<CLIST,
-                        boost::mpl::bool_<true>,
-                        boost::mpl::if_<
-                          boost::mpl::or_<boost::is_base_of<Function,
-                                                            boost::mpl::_2>,
-                                          boost::is_base_of<SparseFunction,
-                                                            boost::mpl::_2> >,
-                          boost::mpl::_1,
-                          boost::mpl::bool_<false> >
-       >::type::value),
-       ROBOPTIM_FUNCTIONS_EXPECTED_FOR_CONSTRAINTS, (CLIST));
+    BOOST_MPL_ASSERT_MSG((detail::list_derives_from_function<CLIST>::type::value),
+                         ROBOPTIM_FUNCTIONS_EXPECTED_FOR_CONSTRAINTS, (CLIST));
 
   public:
     template <typename F_, typename CLIST_>
@@ -275,14 +255,7 @@ namespace roboptim
     ///
     /// CLIST is converted to a boost::mpl::vector to ensure a similar behavior
     /// for codes using different random access sequences (vector, list, etc.).
-    ///
-    /// Moreover, in the case of boost::mpl::vector, this ensures a normalized
-    /// representation of the vector (boost::mpl::vector converted to
-    /// boost::mpl::v_item) and orders the constraints in a proper way. This
-    /// makes the use of typeid comparison possible.
-    typedef typename boost::mpl::copy
-    <CLIST, boost::mpl::back_inserter<boost::mpl::vector<> > >::type
-    constraintsList_t;
+    typedef typename detail::list_converter<CLIST>::type constraintsList_t;
 
     /// \brief Function type.
     ///
@@ -292,24 +265,10 @@ namespace roboptim
 
     /// \brief Constraint's type.
     ///
-    /// Generate a Boost.Variant of shared pointers tyle from the
+    /// Generate a Boost.Variant of shared pointers from the
     /// static constraints types list.
-    ///
-    /// For instance, if one instantiates
-    /// \code
-    ///  Problem<QuadraticFunction, vector<LinearFunction, QuadraticFunction> >
-    /// \endcode
-    /// then this type will be set to:
-    /// \code
-    /// boost::variant<boost::shared_ptr<LinearFunction>,
-    ///                boost::shared_ptr<QuadraticFunction> >
-    /// \endcode
-    ///
-    /// The meta-algorithm which add shared pointers is implemented
-    /// in detail::add_shared_pointer.
-    typedef typename boost::make_variant_over
-    <typename detail::add_shared_ptr<constraintsList_t>::type>::type
-    constraint_t;
+    typedef typename detail::shared_ptr_variant<constraintsList_t>::type
+      constraint_t;
 
     /// \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;

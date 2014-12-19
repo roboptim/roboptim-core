@@ -17,11 +17,16 @@
 
 #ifndef ROBOPTIM_CORE_DETAIL_UTILITY_HH
 # define ROBOPTIM_CORE_DETAIL_UTILITY_HH
+
 # include <boost/mpl/assert.hpp>
+# include <boost/mpl/back_inserter.hpp>
+# include <boost/mpl/copy.hpp>
 # include <boost/mpl/count_if.hpp>
+# include <boost/mpl/fold.hpp>
 # include <boost/mpl/greater.hpp>
 # include <boost/mpl/logical.hpp>
 # include <boost/mpl/transform.hpp>
+# include <boost/variant.hpp>
 # include <boost/shared_ptr.hpp>
 # include <boost/type_traits/is_base_of.hpp>
 
@@ -53,6 +58,43 @@ namespace roboptim
       typedef typename boost::mpl::transform
       <CLIST, typename boost::shared_ptr<boost::mpl::_1> >::type type;
     };
+
+
+    /// \brief  Generate a Boost.Variant of shared pointers from the static
+    /// constraints types list.
+    ///
+    /// For instance, if one instantiates
+    /// \code
+    ///  Problem<QuadraticFunction, vector<LinearFunction, QuadraticFunction> >
+    /// \endcode
+    /// then this type will be set to:
+    /// \code
+    /// boost::variant<boost::shared_ptr<LinearFunction>,
+    ///                boost::shared_ptr<QuadraticFunction> >
+    /// \endcode
+    ///
+    /// \tparam CLIST vector of types
+    template <typename CLIST>
+    struct shared_ptr_variant :
+      boost::make_variant_over<typename detail::add_shared_ptr<CLIST>::type>
+    {};
+
+
+    /// \brief Converts CLIST to a boost::mpl::vector to ensure a similar
+    /// behavior for codes using different random access sequences (vector,
+    /// list, etc.).
+    ///
+    /// In the case of boost::mpl::vector, this ensures a normalized
+    /// representation of the vector (boost::mpl::vector converted to
+    /// boost::mpl::v_item) and orders the constraints in a proper way. This
+    /// makes the use of typeid comparison possible.
+    ///
+    /// \tparam CLIST vector of types
+    template <typename CLIST>
+    struct list_converter :
+      boost::mpl::copy
+        <CLIST, boost::mpl::back_inserter<boost::mpl::vector<> > >
+    {};
 
 
     /// \brief Whether a sequence of types contains a base of a given type.
@@ -105,6 +147,32 @@ namespace roboptim
                 boost::mpl::_1>
 	    >::type type;
     };
+
+
+    /// \brief Checks whether the function types derives from Function or
+    /// SparseFunction.
+    ///
+    /// \tparam F function type.
+    template <typename F>
+    struct derives_from_function :
+      boost::mpl::or_<boost::is_base_of<Function, F>,
+                      boost::is_base_of<SparseFunction, F> >
+    {};
+
+    /// \brief Checks whether all the constraints derive from Function or
+    /// SparseFunction.
+    ///
+    /// \tparam CLIST a vector of constraint types.
+    template <typename CLIST>
+    struct list_derives_from_function :
+      boost::mpl::fold<CLIST,
+                       boost::mpl::bool_<true>,
+                       boost::mpl::if_<
+                         derives_from_function<boost::mpl::_2>,
+                         boost::mpl::_1,
+                         boost::mpl::bool_<false> >
+      >
+    {};
 
 
     /// \brief Convert a constraint to a proper type.
