@@ -83,6 +83,9 @@ namespace roboptim
     /// \brief Vector type.
     typedef typename function_t::vector_t vector_t;
 
+    /// \brief Size type.
+    typedef typename function_t::size_type size_type;
+
     /// \brief Optional vector defines a starting point.
     typedef boost::optional<vector_t> startingPoint_t;
 
