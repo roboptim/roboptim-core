@@ -1,0 +1,91 @@
+x = [3](0.785398,-0.785398,1.5708)
+Joint position pool (differentiable function):
+  Position of joint 0 (differentiable function)
+  Position of joint 1 (differentiable function)
+  Position of joint 2 (differentiable function)
+Engine: calling compute
+[6](0.707107,0.707107,1.70711,0.707107,1.70711,1.70711)
+Engine: calling jacobian
+[6,3]((-0.707107,0,0), (0.707107,0,0), (-0.707107,6.12323e-17,0), (1.70711,1,0), (-1.70711,-1,-1), (1.70711,1,1.22465e-16))
+Position of joint 0 (differentiable function)
+[2](0.707107,0.707107)
+[2,3]((-0.707107,0,0), (0.707107,0,0))
+Position of joint 1 (differentiable function)
+[2](1.70711,0.707107)
+[2,3]((-0.707107,6.12323e-17,0), (1.70711,1,0))
+Position of joint 2 (differentiable function)
+[2](1.70711,1.70711)
+[2,3]((-1.70711,-1,-1), (1.70711,1,1.22465e-16))
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+Engine: calling compute
+[6,3]((-0.707107,0,0), (0.707107,0,0), (-0.707107,0,0), (1.70711,1,0), (-1.70711,-1,-1), (1.70711,1,0))
