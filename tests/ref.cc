@@ -88,9 +88,7 @@ BOOST_AUTO_TEST_CASE (ref)
   F::jacobian_ref jac_ref (jac);
   F::const_argument_ref x_ref (map_x);
 
-  Eigen::internal::set_is_malloc_allowed (false);
   f.jacobian (jac_ref, x_ref);
-  Eigen::internal::set_is_malloc_allowed (true);
 
   (*output) << map_x << std::endl;
   (*output) << f << std::endl;

@@ -64,9 +64,13 @@ namespace roboptim
 						   const_argument_ref argument)
     const
   {
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
-       gradient (jacobian.row (i), argument, i);
+      jacobian.row (i) = gradient (argument, i);
   }
+
 
   template <typename T>
   std::ostream&

@@ -554,13 +554,13 @@ namespace roboptim
     //  - type_t:         the type itself
     //  - type_ref:       reference to type object
     //  - const_type_ref: const reference to type object
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
+    ROBOPTIM_GENERATE_TYPEDEFS_REF
     (matrix,
      Eigen::Matrix<double BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
      Eigen::RowMajor>);
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
+    ROBOPTIM_GENERATE_TYPEDEFS_REF
     (vector,
      Eigen::Matrix<double BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
@@ -569,11 +569,11 @@ namespace roboptim
     typedef matrix_t::Index size_type;
     typedef matrix_t::Scalar value_type;
 
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(result,vector_t);
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(argument,vector_t);
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(gradient,vector_t);
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(jacobian,matrix_t);
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(hessian,matrix_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(result,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(argument,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(gradient,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(jacobian,matrix_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(hessian,matrix_t);
   };
 
   /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
@@ -588,7 +588,7 @@ namespace roboptim
     (matrix,
      Eigen::SparseMatrix<double BOOST_PP_COMMA() Eigen::RowMajor>);
 
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
+    ROBOPTIM_GENERATE_TYPEDEFS_REF
     (vector,
      Eigen::Matrix<double BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
@@ -597,8 +597,8 @@ namespace roboptim
     typedef matrix_t::Index size_type;
     typedef matrix_t::Scalar value_type;
 
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(result,vector_t);
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(argument,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(result,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(argument,vector_t);
     ROBOPTIM_GENERATE_TYPEDEFS_REF(gradient,Eigen::SparseVector<double>);
     ROBOPTIM_GENERATE_TYPEDEFS_REF(jacobian,matrix_t);
     ROBOPTIM_GENERATE_TYPEDEFS_REF(hessian,matrix_t);
