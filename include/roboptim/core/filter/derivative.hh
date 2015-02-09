@@ -58,7 +58,11 @@ namespace roboptim
   {
   public:
     typedef typename DerivativeParent<U>::result_t parentType_t;
-    ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
+
+    // Note: we need gradient/jacobian typedefs, but since parentType_t may not
+    // be differentiable, we rely on DifferentiableFunction directly.
+    ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+      (GenericDifferentiableFunction<typename U::traits_t>);
 
     /// \brief Jacobian size type (pair of values).
     typedef std::pair<size_type, size_type> jacobianSize_t;
