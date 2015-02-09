@@ -40,13 +40,13 @@ struct F : public TwiceDifferentiableFunction
   }
 
   void
-  impl_compute (result_t& result, const argument_t& x) const
+  impl_compute (result_ref result, const_argument_ref x) const
   {
     result (0) = x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
   }
 
   void
-  impl_gradient (gradient_t& grad, const argument_t& x, size_type) const
+  impl_gradient (gradient_ref grad, const_argument_ref x, size_type) const
   {
     grad[0] = x[0] * x[3] + x[3] * (x[0] + x[1] + x[2]);
     grad[1] = x[0] * x[3];
@@ -55,7 +55,7 @@ struct F : public TwiceDifferentiableFunction
   }
 
   void
-  impl_hessian (hessian_t& h, const argument_t& x, size_type) const
+  impl_hessian (hessian_ref h, const_argument_ref x, size_type) const
   {
     h (0, 0) = 2 * x[3];
     h (0, 1) = x[3];
@@ -87,13 +87,13 @@ struct G0 : public TwiceDifferentiableFunction
   }
 
   void
-  impl_compute (result_t& result, const argument_t& x) const
+  impl_compute (result_ref result, const_argument_ref x) const
   {
     result (0) = x[0] * x[1] * x[2] * x[3];
   }
 
   void
-  impl_gradient (gradient_t& grad, const argument_t& x, size_type) const
+  impl_gradient (gradient_ref grad, const_argument_ref x, size_type) const
   {
     grad[0] = x[1] * x[2] * x[3];
     grad[1] = x[0] * x[2] * x[3];
@@ -102,7 +102,7 @@ struct G0 : public TwiceDifferentiableFunction
   }
 
   void
-  impl_hessian (hessian_t& h, const argument_t& x, size_type) const
+  impl_hessian (hessian_ref h, const_argument_ref x, size_type) const
   {
     h (0, 0) = 0.;
     h (0, 1) = x[2] * x[3];
@@ -133,13 +133,13 @@ struct G1 : public TwiceDifferentiableFunction
   }
 
   void
-  impl_compute (result_t& result, const argument_t& x) const
+  impl_compute (result_ref result, const_argument_ref x) const
   {
     result (0) = x[0]*x[0] + x[1]*x[1] + x[2]*x[2] + x[3]*x[3];
   }
 
   void
-  impl_gradient (gradient_t& grad, const argument_t& x, size_type) const
+  impl_gradient (gradient_ref grad, const_argument_ref x, size_type) const
   {
     grad[0] = 2 * x[0];
     grad[1] = 2 * x[1];
@@ -148,7 +148,7 @@ struct G1 : public TwiceDifferentiableFunction
   }
 
   void
-  impl_hessian (hessian_t& h, const argument_t& /*x*/, size_type) const
+  impl_hessian (hessian_ref h, const_argument_ref /*x*/, size_type) const
   {
     h (0, 0) = 2.;
     h (0, 1) = 0.;

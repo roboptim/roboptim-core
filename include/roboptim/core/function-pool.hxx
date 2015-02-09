@@ -76,8 +76,8 @@ namespace roboptim
     template <typename F>
     struct PoolComputeVisitor : public boost::static_visitor<void>
     {
-      PoolComputeVisitor (typename F::result_t& result,
-                          const typename F::argument_t& x)
+      PoolComputeVisitor (typename F::result_ref result,
+                          typename F::const_argument_ref x)
 	: result_ (result),
 	  x_ (x),
 	  idx_ (0)
@@ -91,16 +91,16 @@ namespace roboptim
       }
 
     private:
-      typename F::result_t& result_;
-      const typename F::argument_t& x_;
+      typename F::result_ref result_;
+      typename F::const_argument_ref x_;
       typename F::size_type idx_;
     };
 
     template <typename F>
     struct PoolJacobianVisitor : public boost::static_visitor<void>
     {
-      PoolJacobianVisitor (typename F::jacobian_t& jacobian,
-                           const typename F::argument_t& x)
+      PoolJacobianVisitor (typename F::jacobian_ref jacobian,
+                           typename F::const_argument_ref x)
 	: jacobian_ (jacobian),
 	  x_ (x),
 	  idx_ (0),
@@ -136,8 +136,8 @@ namespace roboptim
       }
 
     private:
-      typename F::jacobian_t& jacobian_;
-      const typename F::argument_t& x_;
+      typename F::jacobian_ref jacobian_;
+      typename F::const_argument_ref x_;
       typename F::size_type idx_;
       typename F::size_type m_;
     };
@@ -179,7 +179,7 @@ namespace roboptim
   }
 
   template <typename F, typename FLIST>
-  void FunctionPool<F,FLIST>::impl_compute (result_t& result, const argument_t& x)
+  void FunctionPool<F,FLIST>::impl_compute (result_ref result, const_argument_ref x)
     const
   {
     // First, run the engine (callback)
@@ -199,8 +199,8 @@ namespace roboptim
   }
 
   template <typename F, typename FLIST>
-  void FunctionPool<F,FLIST>::impl_gradient (gradient_t&,
-                                             const argument_t&,
+  void FunctionPool<F,FLIST>::impl_gradient (gradient_ref,
+                                             const_argument_ref,
                                              size_type)
     const
   {
@@ -210,8 +210,8 @@ namespace roboptim
   }
 
   template <typename F, typename FLIST>
-  void FunctionPool<F,FLIST>::impl_jacobian (jacobian_t& jacobian,
-                                             const argument_t& x) const
+  void FunctionPool<F,FLIST>::impl_jacobian (jacobian_ref jacobian,
+                                             const_argument_ref x) const
   {
     // First, run the engine (callback)
     callback_->jacobian (x);

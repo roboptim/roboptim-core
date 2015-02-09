@@ -75,18 +75,18 @@ namespace roboptim
     }
 
   protected:
-    void impl_compute (result_t& result, const argument_t&) const
+    void impl_compute (result_ref result, const_argument_ref) const
     {
       result = this->offset_;
     }
 
-    void impl_gradient (gradient_t& gradient, const argument_t&, size_type = 0)
+    void impl_gradient (gradient_ref gradient, const_argument_ref, size_type = 0)
       const
     {
       gradient.setZero ();
     }
 
-    void impl_jacobian (jacobian_t& jacobian, const argument_t&) const
+    void impl_jacobian (jacobian_ref jacobian, const_argument_ref) const
     {
       jacobian.setZero ();
     }

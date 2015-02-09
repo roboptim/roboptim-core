@@ -45,25 +45,33 @@ namespace roboptim
 
         typedef typename U::vector_t vectorU_t;
         typedef typename V::vector_t vectorV_t;
+        typedef typename U::vector_ref vectorU_ref;
+        typedef typename V::vector_ref vectorV_ref;
 
         typedef typename U::gradient_t gradientU_t;
         typedef typename V::gradient_t gradientV_t;
         typedef typename Product<U,V>::gradient_t gradient_t;
+        typedef typename U::gradient_ref gradientU_ref;
+        typedef typename V::gradient_ref gradientV_ref;
+        typedef typename Product<U,V>::gradient_ref gradient_ref;
 
         typedef typename U::jacobian_t jacobianU_t;
         typedef typename V::jacobian_t jacobianV_t;
         typedef typename Product<U,V>::jacobian_t jacobian_t;
+        typedef typename U::jacobian_ref jacobianU_ref;
+        typedef typename V::jacobian_ref jacobianV_ref;
+        typedef typename Product<U,V>::jacobian_ref jacobian_ref;
       };
 
 
       /// \brief Full dense version of gradient computation.
       template <typename U, typename V>
       static void gradient
-      (typename Types<U,V>::gradient_t& grad_uv,
-       const typename Types<U,V>::vectorU_t& u,
-       const typename Types<U,V>::vectorV_t& v,
-       const typename Types<U,V>::gradientU_t& grad_u,
-       const typename Types<U,V>::gradientV_t& grad_v,
+      (typename Types<U,V>::gradient_ref grad_uv,
+       const typename Types<U,V>::vectorU_ref u,
+       const typename Types<U,V>::vectorV_ref v,
+       const typename Types<U,V>::gradientU_ref grad_u,
+       const typename Types<U,V>::gradientV_ref grad_v,
        typename boost::enable_if<typename Types<U,V>::fullDense_t>::type* = 0)
       {
         grad_uv.noalias () = u.cwiseProduct (grad_v);
@@ -75,11 +83,11 @@ namespace roboptim
       /// apparently not available in Eigen.
       template <typename U, typename V>
       static void gradient
-      (typename Types<U,V>::gradient_t& grad_uv,
-       const typename Types<U,V>::vectorU_t& u,
-       const typename Types<U,V>::vectorV_t& v,
-       const typename Types<U,V>::gradientU_t& grad_u,
-       const typename Types<U,V>::gradientV_t& grad_v,
+      (typename Types<U,V>::gradient_ref grad_uv,
+       const typename Types<U,V>::vectorU_ref u,
+       const typename Types<U,V>::vectorV_ref v,
+       const typename Types<U,V>::gradientU_ref grad_u,
+       const typename Types<U,V>::gradientV_ref grad_v,
        typename boost::disable_if<typename Types<U,V>::fullDense_t>::type* = 0)
       {
         // Here, u and v are dense vectors, while grad_u and grad_v are sparse
@@ -108,11 +116,11 @@ namespace roboptim
       /// \brief Full dense version of Jacobian computation.
       template <typename U, typename V>
       static void jacobian
-      (typename Types<U,V>::jacobian_t& jac_uv,
-       const typename Types<U,V>::vectorU_t& u,
-       const typename Types<U,V>::vectorV_t& v,
-       const typename Types<U,V>::jacobianU_t& jac_u,
-       const typename Types<U,V>::jacobianV_t& jac_v,
+      (typename Types<U,V>::jacobian_ref jac_uv,
+       const typename Types<U,V>::vectorU_ref u,
+       const typename Types<U,V>::vectorV_ref v,
+       const typename Types<U,V>::jacobianU_ref jac_u,
+       const typename Types<U,V>::jacobianV_ref jac_v,
        typename boost::enable_if<typename Types<U,V>::fullDense_t>::type* = 0)
       {
         // For each column of the Jacobian
@@ -130,11 +138,11 @@ namespace roboptim
       /// apparently not available in Eigen.
       template <typename U, typename V>
       static void jacobian
-      (typename Types<U,V>::jacobian_t& jac_uv,
-       const typename Types<U,V>::vectorU_t& u,
-       const typename Types<U,V>::vectorV_t& v,
-       const typename Types<U,V>::jacobianU_t& jac_u,
-       const typename Types<U,V>::jacobianV_t& jac_v,
+      (typename Types<U,V>::jacobian_ref jac_uv,
+       const typename Types<U,V>::vectorU_ref u,
+       const typename Types<U,V>::vectorV_ref v,
+       const typename Types<U,V>::jacobianU_ref jac_u,
+       const typename Types<U,V>::jacobianV_ref jac_v,
        typename boost::disable_if<typename Types<U,V>::fullDense_t>::type* = 0)
       {
         jac_uv.setZero ();
@@ -214,7 +222,7 @@ namespace roboptim
   template <typename U, typename V>
   void
   Product<U, V>::impl_compute
-  (result_t& result, const argument_t& x)
+  (result_ref result, const_argument_ref x)
     const
   {
     (*left_) (resultLeft_, x);
@@ -224,8 +232,8 @@ namespace roboptim
 
   template <typename U, typename V>
   void
-  Product<U, V>::impl_gradient (gradient_t& gradient,
-				const argument_t& x,
+  Product<U, V>::impl_gradient (gradient_ref gradient,
+				const_argument_ref x,
 				size_type functionId)
     const
   {
@@ -247,8 +255,8 @@ namespace roboptim
 
   template <typename U, typename V>
   void
-  Product<U, V>::impl_jacobian (jacobian_t& jacobian,
-				const argument_t& x)
+  Product<U, V>::impl_jacobian (jacobian_ref jacobian,
+				const_argument_ref x)
     const
   {
     // Compute U and V

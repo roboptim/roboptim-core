@@ -57,7 +57,7 @@ namespace roboptim
   template <typename U>
   void
   Concatenate<U>::impl_compute
-  (result_t& result, const argument_t& x)
+  (result_ref result, const_argument_ref x)
     const
   {
     left_->operator () (resultLeft_, x);
@@ -68,8 +68,8 @@ namespace roboptim
 
   template <typename U>
   void
-  Concatenate<U>::impl_gradient (gradient_t& gradient,
-				 const argument_t& x,
+  Concatenate<U>::impl_gradient (gradient_ref gradient,
+				 const_argument_ref x,
 				 size_type functionId)
     const
   {
@@ -81,8 +81,8 @@ namespace roboptim
 
   template <typename U>
   void
-  Concatenate<U>::impl_jacobian (jacobian_t& jacobian,
-				 const argument_t& x)
+  Concatenate<U>::impl_jacobian (jacobian_ref jacobian,
+				 const_argument_ref x)
     const
   {
     left_->jacobian (jacobianLeft_, x);

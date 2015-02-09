@@ -78,10 +78,10 @@ namespace roboptim
     }
 
 
-    void impl_compute (result_t& , const argument_t&) const;
-    void impl_gradient (gradient_t&, const argument_t&, size_type = 0)
+    void impl_compute (result_ref , const_argument_ref) const;
+    void impl_gradient (gradient_ref, const_argument_ref, size_type = 0)
       const;
-    void impl_jacobian (jacobian_t&, const argument_t&) const;
+    void impl_jacobian (jacobian_ref, const_argument_ref) const;
 
   private:
     /// \brief A matrix.

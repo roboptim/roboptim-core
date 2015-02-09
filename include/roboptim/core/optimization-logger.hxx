@@ -39,9 +39,9 @@ namespace roboptim
     template <typename P>
     struct EvaluateConstraint : public boost::static_visitor<typename P::vector_t>
     {
-      typedef typename P::function_t::argument_t argument_t;
+      typedef typename P::function_t::const_argument_ref const_argument_ref;
 
-      EvaluateConstraint (const argument_t& x)
+      EvaluateConstraint (const_argument_ref x)
 	: x_ (x)
       {}
 
@@ -52,7 +52,7 @@ namespace roboptim
       }
 
     private:
-      const argument_t& x_;
+      const_argument_ref x_;
     };
 
 
@@ -132,7 +132,7 @@ namespace roboptim
       typedef GenericDifferentiableFunction<traits_t> differentiableFunction_t;
 
       /// \brief Argument type.
-      typedef typename differentiableFunction_t::argument_t argument_t;
+      typedef typename differentiableFunction_t::const_argument_ref const_argument_ref;
 
       /// \brief Size type.
       typedef typename problem_t::size_type size_type;
@@ -141,7 +141,7 @@ namespace roboptim
       typedef typename differentiableFunction_t::jacobian_t jacobian_t;
 
       LogJacobianConstraint
-      (const argument_t& x,
+      (const_argument_ref x,
        const boost::filesystem::path& constraintPath)
         : x_ (x),
           constraintPath_ (constraintPath)
@@ -184,7 +184,7 @@ namespace roboptim
 
     private:
       /// \brief Argument.
-      const argument_t& x_;
+      const_argument_ref x_;
 
       /// \brief Path to the constraint log directory.
       const boost::filesystem::path& constraintPath_;

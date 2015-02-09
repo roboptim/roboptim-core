@@ -119,14 +119,14 @@ namespace roboptim
   }
 
   template <typename T>
-  void Polynomial<T>::impl_compute (result_t& result, const argument_t& x) const
+  void Polynomial<T>::impl_compute (result_ref result, const_argument_ref x) const
   {
     result[0] = applyPolynomial (coeffs_, x);
   }
 
   template <typename T>
   typename Polynomial<T>::value_type Polynomial<T>::applyPolynomial
-  (const vector_t& coeffs, const argument_t& x) const
+  (const vector_t& coeffs, const_argument_ref x) const
   {
     // Accumulator
     value_type acc = 0;
@@ -139,8 +139,8 @@ namespace roboptim
 
   template <typename T>
   void
-  Polynomial<T>::impl_gradient (gradient_t& gradient,
-				const argument_t& x, size_type)
+  Polynomial<T>::impl_gradient (gradient_ref gradient,
+				const_argument_ref x, size_type)
     const
   {
     gradient.coeffRef (0) = applyPolynomial (dCoeffs_, x);
@@ -149,15 +149,15 @@ namespace roboptim
   template <typename T>
   void
   Polynomial<T>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const
+  (jacobian_ref jacobian, const_argument_ref x) const
   {
     jacobian.coeffRef (0, 0) = applyPolynomial (dCoeffs_, x);
   }
 
   template <typename T>
   void
-  Polynomial<T>::impl_hessian (hessian_t& hessian,
-			       const argument_t& x,
+  Polynomial<T>::impl_hessian (hessian_ref hessian,
+			       const_argument_ref x,
 			       size_type) const
   {
     hessian.coeffRef (0, 0) = applyPolynomial (dDCoeffs_, x);

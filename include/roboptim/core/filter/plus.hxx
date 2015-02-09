@@ -52,7 +52,7 @@ namespace roboptim
   template <typename U, typename V>
   void
   Plus<U, V>::impl_compute
-  (result_t& result, const argument_t& x)
+  (result_ref result, const_argument_ref x)
     const
   {
     result.setZero ();
@@ -63,8 +63,8 @@ namespace roboptim
 
   template <typename U, typename V>
   void
-  Plus<U, V>::impl_gradient (gradient_t& gradient,
-			 const argument_t& argument,
+  Plus<U, V>::impl_gradient (gradient_ref gradient,
+			 const_argument_ref argument,
 			 size_type functionId)
     const
   {
@@ -75,8 +75,8 @@ namespace roboptim
 
   template <typename U, typename V>
   void
-  Plus<U, V>::impl_jacobian (jacobian_t& jacobian,
-			 const argument_t& argument)
+  Plus<U, V>::impl_jacobian (jacobian_ref jacobian,
+			 const_argument_ref argument)
     const
   {
     left_->jacobian (jacobian, argument);

@@ -31,13 +31,13 @@
 
 # define ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
   ROBOPTIM_FUNCTION_FWD_TYPEDEFS (PARENT);			\
-  typedef parent_t::gradient_t gradient_t;			\
-  typedef parent_t::jacobian_t jacobian_t
+  ROBOPTIM_GENERATE_FWD_REFS (gradient);			\
+  ROBOPTIM_GENERATE_FWD_REFS (jacobian)
 
 # define ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
   ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (PARENT);			\
-  typedef typename parent_t::gradient_t gradient_t;		\
-  typedef typename parent_t::jacobian_t jacobian_t
+  ROBOPTIM_GENERATE_FWD_REFS_ (gradient);			\
+  ROBOPTIM_GENERATE_FWD_REFS_ (jacobian)
 
 namespace roboptim
 {
@@ -82,9 +82,9 @@ namespace roboptim
     ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<T>);
 
     /// \brief Gradient type.
-    typedef typename GenericFunctionTraits<T>::gradient_t gradient_t;
+    ROBOPTIM_GENERATE_TRAITS_REFS_(gradient);
     /// \brief Jacobian type.
-    typedef typename GenericFunctionTraits<T>::jacobian_t jacobian_t;
+    ROBOPTIM_GENERATE_TRAITS_REFS_(jacobian);
 
     /// \brief Jacobian size type (pair of values).
     typedef std::pair<size_type, size_type> jacobianSize_t;
@@ -109,7 +109,7 @@ namespace roboptim
     /// \brief Check if the gradient is valid (check size).
     /// \param gradient checked gradient
     /// \return true if valid, false if not
-    bool isValidGradient (const gradient_t& gradient) const
+    bool isValidGradient (const_gradient_ref gradient) const
     {
       return gradient.size () == gradientSize ();
     }
@@ -118,7 +118,7 @@ namespace roboptim
     ///
     /// \param jacobian checked jacobian
     /// \return true if valid, false if not
-    bool isValidJacobian (const jacobian_t& jacobian) const
+    bool isValidJacobian (const_jacobian_ref jacobian) const
     {
       return jacobian.rows () == jacobianSize ().first
 	&& jacobian.cols () == jacobianSize ().second;
@@ -128,7 +128,7 @@ namespace roboptim
     ///
     /// \param argument point at which the jacobian will be computed
     /// \return jacobian matrix
-    jacobian_t jacobian (const argument_t& argument) const
+    jacobian_t jacobian (const_argument_ref argument) const
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
       jacobian.setZero ();
@@ -142,7 +142,7 @@ namespace roboptim
     /// or after the jacobian computation.
     /// \param jacobian jacobian will be stored in this argument
     /// \param argument point at which the jacobian will be computed
-    void jacobian (jacobian_t& jacobian, const argument_t& argument)
+    void jacobian (jacobian_ref jacobian, const_argument_ref argument)
       const
     {
       LOG4CXX_TRACE (this->logger,
@@ -164,7 +164,7 @@ namespace roboptim
     /// \param argument point at which the gradient will be computed
     /// \param functionId function id in split representation
     /// \return gradient vector
-    gradient_t gradient (const argument_t& argument,
+    gradient_t gradient (const_argument_ref argument,
 			 size_type functionId = 0) const
     {
       assert (functionId < this->outputSize ());
@@ -182,8 +182,8 @@ namespace roboptim
     /// \param argument point at which the gradient will be computed
     /// \param functionId function id in split representation
     /// \return gradient vector
-    void gradient (gradient_t& gradient,
-		   const argument_t& argument,
+    void gradient (gradient_ref gradient,
+		   const_argument_ref argument,
 		   size_type functionId = 0) const
     {
       LOG4CXX_TRACE (this->logger,
@@ -226,7 +226,7 @@ namespace roboptim
     /// \warning Do not call this function directly, call #jacobian instead.
     /// \param jacobian jacobian will be store in this argument
     /// \param arg point where the jacobian will be computed
-    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg)
+    virtual void impl_jacobian (jacobian_ref jacobian, const_argument_ref arg)
       const;
 
     /// \brief Gradient evaluation.
@@ -238,8 +238,8 @@ namespace roboptim
     /// \param gradient gradient will be store in this argument
     /// \param argument point where the gradient will be computed
     /// \param functionId evaluated function id in the split representation
-    virtual void impl_gradient (gradient_t& gradient,
-				const argument_t& argument,
+    virtual void impl_gradient (gradient_ref gradient,
+				const_argument_ref argument,
 				size_type functionId = 0)
       const = 0;
   };

@@ -30,11 +30,11 @@
 
 # define ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
   ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT);		\
-  typedef parent_t::hessian_t hessian_t
+  ROBOPTIM_GENERATE_FWD_REFS (hessian)
 
 # define ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
   ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT);		\
-  typedef typename parent_t::hessian_t hessian_t
+  ROBOPTIM_GENERATE_FWD_REFS_ (hessian)
 
 
 namespace roboptim
@@ -71,7 +71,7 @@ namespace roboptim
     /// \brief Hessian type.
     ///
     /// Hessians are symmetric matrices.
-    typedef matrix_t hessian_t;
+    ROBOPTIM_GENERATE_TRAITS_REFS_(hessian);
 
     /// \brief Hessian size type represented as a pair of values.
     typedef std::pair<size_type, size_type> hessianSize_t;
@@ -90,7 +90,7 @@ namespace roboptim
     ///
     /// \param hessian hessian that will be checked
     /// \return true if valid, false if not
-    bool isValidHessian (const hessian_t& hessian) const
+    bool isValidHessian (const_hessian_ref hessian) const
     {
       return hessian.rows () == this->hessianSize ().first
 	&& hessian.cols () == this->hessianSize ().second;
@@ -103,7 +103,7 @@ namespace roboptim
     /// \param argument point where the hessian will be computed
     /// \param functionId evaluated function id in the split representation
     /// \return computed hessian
-    hessian_t hessian (const argument_t& argument,
+    hessian_t hessian (const_argument_ref argument,
 		       size_type functionId = 0) const
     {
       hessian_t hessian (matrix_t(hessianSize ().first, hessianSize ().second));
@@ -118,8 +118,8 @@ namespace roboptim
     /// \param hessian hessian will be stored here
     /// \param argument point where the hessian will be computed
     /// \param functionId evaluated function id in the split representation
-    void hessian (hessian_t& hessian,
-		  const argument_t& argument,
+    void hessian (hessian_ref hessian,
+		  const_argument_ref argument,
 		  size_type functionId = 0) const
     {
       LOG4CXX_TRACE (this->logger,
@@ -163,13 +163,13 @@ namespace roboptim
     /// \param hessian hessian will be stored here
     /// \param argument point where the hessian will be computed
     /// \param functionId evaluated function id in the split representation
-    virtual void impl_hessian (hessian_t& hessian,
-			       const argument_t& argument,
+    virtual void impl_hessian (hessian_ref hessian,
+			       const_argument_ref argument,
 			       size_type functionId = 0) const = 0;
     /// \brief Set a symmetric matrix to zero
     ///
     /// \note there might be an eigen function to do that.
-    void setZero (hessian_t& symmetric) const
+    void setZero (hessian_ref symmetric) const
     {
       symmetric.setZero ();
     }

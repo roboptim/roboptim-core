@@ -27,7 +27,7 @@ namespace roboptim
   namespace detail
   {
     void
-    vector_to_array (Function::value_type* dst, const Function::vector_t& src)
+    vector_to_array (Function::value_type* dst, Function::const_vector_ref src)
     {
       if (src.size () == 0)
 	return;
@@ -42,7 +42,7 @@ namespace roboptim
     }
 
     void
-    array_to_vector (Function::vector_t& dst, const Function::value_type* src)
+    array_to_vector (Function::vector_ref dst, const Function::value_type* src)
     {
       if (dst.size () == 0)
 	return;
@@ -58,7 +58,7 @@ namespace roboptim
   } // end of namespace detail.
 
   GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
-  (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& m)
+  (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m)
   {
     GenericFunctionTraits<EigenMatrixDense>::matrix_t
       dense(m.rows(), m.cols());
@@ -74,7 +74,7 @@ namespace roboptim
   }
 
   GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
-  (const GenericFunctionTraits<EigenMatrixSparse>::gradient_t& v)
+  (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref v)
   {
     GenericFunctionTraits<EigenMatrixDense>::vector_t dense(v.size());
     dense.setZero();
@@ -85,5 +85,53 @@ namespace roboptim
 	dense(it.index()) = it.value();
       }
     return dense;
+  }
+
+  bool allclose
+  (const Eigen::Ref<const Eigen::MatrixXd>& a,
+   const Eigen::Ref<const Eigen::MatrixXd>& b,
+   double rtol,
+   double atol)
+  {
+    assert (a.cols () == b.cols ());
+    assert (a.rows () == b.rows ());
+
+    return ((a.derived () - b.derived ()).array ().abs ()
+            <= (atol + rtol * b.derived ().array ().abs ())).all ();
+  }
+
+  bool allclose
+  (const Eigen::SparseMatrix<double>& a,
+   const Eigen::SparseMatrix<double>& b,
+   double rtol,
+   double atol)
+  {
+    assert (a.cols () == b.cols ());
+    assert (a.rows () == b.rows ());
+    assert (a.outerSize () == b.outerSize ());
+
+    typedef Eigen::SparseMatrix<double> matrix_t;
+
+    for (int k = 0; k < a.outerSize (); ++k)
+      {
+	// Iterator over a
+	matrix_t::InnerIterator it_a (a.derived (), k);
+	// Iterator over b
+	matrix_t::InnerIterator it_b (b.derived (), k);
+
+	while (it_a && it_b)
+          {
+	    assert(it_a.col() == it_b.col());
+	    assert(it_a.row() == it_b.row());
+
+	    if (std::abs (it_a.value () - it_b.value ())
+		> atol + rtol * std::abs (it_b.value ()))
+	      return false;
+
+	    ++it_a;
+	    ++it_b;
+          }
+      }
+    return true;
   }
 } // end of namespace roboptim.

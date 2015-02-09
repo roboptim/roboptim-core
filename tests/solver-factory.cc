@@ -43,17 +43,17 @@ struct F : public TwiceDifferentiableFunction
   }
 
   void
-  impl_compute (result_t&, const argument_t&) const
+  impl_compute (result_ref, const_argument_ref) const
   {
   }
 
   void
-  impl_gradient (gradient_t&, const argument_t&, size_type) const
+  impl_gradient (gradient_ref, const_argument_ref, size_type) const
   {
   }
 
   void
-  impl_hessian (hessian_t&, const argument_t&, size_type) const
+  impl_hessian (hessian_ref, const_argument_ref, size_type) const
   {
   }
 };

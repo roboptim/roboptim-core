@@ -63,8 +63,9 @@ namespace roboptim
     typedef typename F::matrix_t matrix_t;
     /// \brief Import  result type.
     typedef F result_t;
-    /// \brief Import argument type.
+    /// \brief Import argument types.
     typedef typename F::argument_t argument_t;
+    typedef typename F::const_argument_ref const_argument_ref;
 
     /// \brief Evaluate the function at a specified point.
     ///
@@ -72,7 +73,7 @@ namespace roboptim
     /// expected size.
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    result_t operator () (const argument_t& argument) const;
+    result_t operator () (const_argument_ref argument) const;
 
     /// \brief Return the input size (i.e. argument's vector size).
     ///
@@ -110,9 +111,9 @@ namespace roboptim
     ///
     /// Evaluate the function, has to be implemented in concrete
     /// classes.  \warning Do not call this function directly, call
-    /// #operator()(const argument_t&) const instead.  \param
+    /// #operator()(const_argument_ref) const instead.  \param
     /// argument point at which the function will be evaluated
-    virtual result_t impl_compute (const argument_t& argument)
+    virtual result_t impl_compute (const_argument_ref argument)
       const = 0;
 
   private:

@@ -60,16 +60,16 @@ namespace roboptim {
 
   template <typename T>
   void GenericSumOfC1Squares<T>::
-  impl_compute(result_t &result, const argument_t &x) const
+  impl_compute(result_ref result, const_argument_ref x) const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
     computeFunction (x);
-    value_t sumSquares = 0;
+    value_type sumSquares = 0;
     for (size_t i = 0; i < value_.size(); i++) {
-      value_t y = value_[i];
+      value_type y = value_[i];
       sumSquares += y*y;
     }
     result[0] = sumSquares;
@@ -77,7 +77,7 @@ namespace roboptim {
 
   template <typename T>
   void GenericSumOfC1Squares<T>::
-  impl_gradient(gradient_t& gradient, const argument_t& x,
+  impl_gradient(gradient_ref gradient, const_argument_ref x,
                 size_type ROBOPTIM_DEBUG_ONLY (row)) const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
@@ -88,7 +88,7 @@ namespace roboptim {
     computeFunction (x);
     gradient.setZero ();
     for (typename result_t::Index i = 0; i < value_.size (); i++) {
-      value_t y = value_[i];
+      value_type y = value_[i];
       gradient_.setZero ();
       baseFunction_->gradient (gradient_, x, static_cast<size_type> (i));
       gradient += 2*y*gradient_;
@@ -96,7 +96,7 @@ namespace roboptim {
   }
 
   template <typename T>
-  void GenericSumOfC1Squares<T>::computeFunction (const argument_t x) const
+  void GenericSumOfC1Squares<T>::computeFunction (const_argument_ref x) const
   {
     if (x != x_) {
       x_ = x;

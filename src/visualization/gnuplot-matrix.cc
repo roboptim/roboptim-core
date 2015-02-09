@@ -34,7 +34,7 @@ namespace roboptim
         template <typename T>
         void set_matrix_header
         (std::string& str,
-         const typename GenericFunctionTraits<T>::matrix_t& mat)
+         typename GenericFunctionTraits<T>::const_matrix_ref mat)
         {
           // White = 0, Blue = non zero
           str += "set palette defined(0 \"white\",1 \"blue\")\n";
@@ -57,7 +57,7 @@ namespace roboptim
         }
 
         std::string dense_matrix_to_gnuplot
-        (const GenericFunctionTraits<EigenMatrixDense>::matrix_t& mat)
+        (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat)
         {
           typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t matrix_t;
 
@@ -84,7 +84,7 @@ namespace roboptim
 
 
         std::string sparse_matrix_to_gnuplot
-        (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& mat)
+        (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat)
         {
           typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t matrix_t;
 
@@ -124,14 +124,14 @@ namespace roboptim
 
 
       Command plot_mat
-      (const GenericFunctionTraits<EigenMatrixDense>::matrix_t& mat)
+      (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat)
       {
         return Command (detail::dense_matrix_to_gnuplot (mat));
       }
 
 
       Command plot_mat
-      (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& mat)
+      (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat)
       {
         return Command (detail::sparse_matrix_to_gnuplot (mat));
       }

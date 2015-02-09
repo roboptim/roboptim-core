@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (minus_test, T, functionTypes_t)
   boost::shared_ptr<GenericLinearFunction<T> >
     fct = identity - constant - constant;
 
-  typename GenericIdentityFunction<T>::argument_t x (5);
+  typename GenericIdentityFunction<T>::vector_t x (5);
   x.setZero ();
   std::cout
     << (*fct) (x) << "\n"

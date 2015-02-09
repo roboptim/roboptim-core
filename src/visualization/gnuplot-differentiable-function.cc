@@ -33,7 +33,7 @@ namespace roboptim
       {
 
         std::string dense_jacobian_to_gnuplot
-        (const DifferentiableFunction::jacobian_t& jac,
+        (DifferentiableFunction::const_jacobian_ref jac,
          const std::string& name)
         {
           std::string str = "set title 'Dense Jacobian (" + name + ")'\n";
@@ -44,7 +44,7 @@ namespace roboptim
 
 
         std::string sparse_jacobian_to_gnuplot
-        (const DifferentiableSparseFunction::jacobian_t& jac,
+        (DifferentiableSparseFunction::const_jacobian_ref jac,
          const std::string& name)
         {
           std::string str = "set title 'Sparse Jacobian (" + name + ")'\n";
@@ -57,7 +57,7 @@ namespace roboptim
 
       template <>
       Command plot_jac (const DifferentiableFunction& f,
-                        const DifferentiableFunction::argument_t& arg)
+                        DifferentiableFunction::const_argument_ref arg)
       {
 	DifferentiableFunction::jacobian_t jac = f.jacobian(arg);
 
@@ -68,7 +68,7 @@ namespace roboptim
 
       template <>
       Command plot_jac (const DifferentiableSparseFunction& f,
-                        const DifferentiableSparseFunction::argument_t& arg)
+                        DifferentiableSparseFunction::const_argument_ref arg)
       {
         DifferentiableSparseFunction::jacobian_t jac = f.jacobian(arg);
 

@@ -55,24 +55,24 @@ namespace roboptim
     }
 
   protected:
-    void impl_compute (result_t& result, const argument_t& x) const
+    void impl_compute (result_ref result, const_argument_ref x) const
     {
       result[0] = std::cos (x[0]);
     }
 
-    void impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
+    void impl_gradient (gradient_ref gradient, const_argument_ref x, size_type)
     const;
 
-    void impl_jacobian (jacobian_t& jacobian, const argument_t& x) const;
+    void impl_jacobian (jacobian_ref jacobian, const_argument_ref x) const;
 
     void impl_hessian
-    (hessian_t& hessian, const argument_t& x, size_type) const;
+    (hessian_ref hessian, const_argument_ref x, size_type) const;
 
   };
 
   template <>
   inline void
-  Cos<EigenMatrixSparse>::impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
+  Cos<EigenMatrixSparse>::impl_gradient (gradient_ref gradient, const_argument_ref x, size_type)
     const
   {
     gradient.insert (0) = -std::sin (x[0]);
@@ -80,7 +80,7 @@ namespace roboptim
 
   template <typename T>
   void
-  Cos<T>::impl_gradient (gradient_t& gradient, const argument_t& x, size_type)
+  Cos<T>::impl_gradient (gradient_ref gradient, const_argument_ref x, size_type)
     const
   {
     gradient[0] = -std::sin (x[0]);
@@ -89,22 +89,22 @@ namespace roboptim
   template <>
   inline void
   Cos<EigenMatrixSparse>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const
+  (jacobian_ref jacobian, const_argument_ref x) const
   {
     jacobian.coeffRef (0, 0) = -std::sin (x[0]);
   }
   template <typename T>
   void
   Cos<T>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const
+  (jacobian_ref jacobian, const_argument_ref x) const
   {
     jacobian (0, 0) = -std::sin (x[0]);
   }
 
   template <typename T>
   void
-  Cos<T>::impl_hessian (hessian_t& hessian,
-			const argument_t& x,
+  Cos<T>::impl_hessian (hessian_ref hessian,
+			const_argument_ref x,
 			size_type) const
   {
     hessian (0, 0) = -std::cos (x[0]);
@@ -112,8 +112,8 @@ namespace roboptim
 
   template <>
   inline void
-  Cos<EigenMatrixSparse>::impl_hessian (hessian_t& hessian,
-					const argument_t& x,
+  Cos<EigenMatrixSparse>::impl_hessian (hessian_ref hessian,
+					const_argument_ref x,
 					size_type) const
   {
     hessian.coeffRef (0, 0) = -std::cos (x[0]);

@@ -32,12 +32,14 @@ template <typename T>
 struct Null : public GenericFunction<T>
 {
   typedef typename GenericFunction<T>::argument_t argument_t;
+  typedef typename GenericFunction<T>::const_argument_ref const_argument_ref;
   typedef typename GenericFunction<T>::result_t result_t;
+  typedef typename GenericFunction<T>::result_ref result_ref;
 
   Null () : GenericFunction<T> (1, 1, "null function")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const
+  void impl_compute (result_ref res, const_argument_ref) const
   {
     res.setZero ();
   }
@@ -47,12 +49,14 @@ template <typename T>
 struct NoTitle : public GenericFunction<T>
 {
   typedef typename GenericFunction<T>::argument_t argument_t;
+  typedef typename GenericFunction<T>::const_argument_ref const_argument_ref;
   typedef typename GenericFunction<T>::result_t result_t;
+  typedef typename GenericFunction<T>::result_ref result_ref;
 
   NoTitle () : GenericFunction<T> (1, 1)
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const
+  void impl_compute (result_ref res, const_argument_ref) const
   {
     res.setZero ();
   }
@@ -112,7 +116,7 @@ struct F : public Function
   F () : Function (1, 1, "first line\nsecond line\nthirdline")
   {}
 
-  void impl_compute (result_t& res, const argument_t&) const
+  void impl_compute (result_ref res, const_argument_ref) const
   {
     res.setZero ();
   }

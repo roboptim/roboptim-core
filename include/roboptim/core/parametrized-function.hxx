@@ -32,7 +32,7 @@ namespace roboptim
 
   template <typename F>
   typename ParametrizedFunction<F>::result_t
-  ParametrizedFunction<F>::operator () (const argument_t& argument)
+  ParametrizedFunction<F>::operator () (const_argument_ref argument)
     const
   {
     assert (argument.size () == inputSize ());

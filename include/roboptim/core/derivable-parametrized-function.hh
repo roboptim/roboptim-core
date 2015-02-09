@@ -48,12 +48,17 @@ namespace roboptim
     typedef typename F::matrix_t matrix_t;
     /// \brief Import  result type.
     typedef F result_t;
-    /// \brief Import argument type.
+    /// \brief Import argument types.
     typedef typename F::argument_t argument_t;
+    typedef typename F::const_argument_ref const_argument_ref;
     /// \brief Import gradient type.
-    typedef typename F::vector_t gradient_t;
+    typedef typename F::gradient_t gradient_t;
+    typedef typename F::gradient_ref gradient_ref;
+    typedef typename F::gradient_ref const_gradient_ref;
     /// \brief Import jacobian type.
-    typedef typename F::matrix_t jacobian_t;
+    typedef typename F::jacobian_t jacobian_t;
+    typedef typename F::jacobian_ref jacobian_ref;
+    typedef typename F::const_jacobian_ref const_jacobian_ref;
 
     /// \brief Import jacobian size type (pair of values).
     typedef typename F::jacobianSize_t jacobianSize_t;
@@ -79,7 +84,7 @@ namespace roboptim
     /// \brief Check if the gradient is valid (check size).
     /// \param gradient checked gradient
     /// \return true if valid, false if not
-    bool isValidGradient (const gradient_t& gradient) const
+    bool isValidGradient (const_gradient_ref gradient) const
     {
       return gradient.size () == this->gradientSize ();
     }
@@ -88,7 +93,7 @@ namespace roboptim
     ///
     /// \param jacobian checked jacobian
     /// \return true if valid, false if not
-    bool isValidJacobian (const jacobian_t& jacobian) const
+    bool isValidJacobian (const_jacobian_ref jacobian) const throw ()
     {
       return jacobian.rows () == this->jacobianSize ().first
 	&& jacobian.cols () == this->jacobianSize ().second;
@@ -99,7 +104,7 @@ namespace roboptim
     /// \param argument point at which the jacobian will be computed
     /// \param order derivation order
     /// \return jacobian matrix
-    jacobian_t jacobian (const argument_t& argument, size_type order = 0)
+    jacobian_t jacobian (const_argument_ref argument, size_type order = 0)
       const
     {
       jacobian_t jacobian (jacobianSize ().first, jacobianSize ().second);
@@ -115,7 +120,7 @@ namespace roboptim
     /// \param jacobian jacobian will be stored in this argument
     /// \param order derivation order
     /// \param argument inner function point argument value
-    void jacobian (jacobian_t& jacobian, const argument_t& argument,
+    void jacobian (jacobian_ref jacobian, const_argument_ref argument,
 		   size_type order = 0) const
     {
       assert (argument.size () == this->inputSize ());
@@ -130,7 +135,7 @@ namespace roboptim
     /// \param functionId function id in split representation
     /// \param order derivation order
     /// \return gradient vector
-    gradient_t gradient (const argument_t& argument,
+    gradient_t gradient (const_argument_ref argument,
 			 size_type functionId = 0,
 			 size_type order = 0) const
     {
@@ -149,8 +154,8 @@ namespace roboptim
     /// \param functionId function id in split representation
     /// \param order derivation order
     /// \return gradient vector
-    void gradient (gradient_t& gradient,
-		   const argument_t& argument,
+    void gradient (gradient_ref gradient,
+		   const_argument_ref argument,
 		   size_type functionId = 0,
 		   size_type order = 0) const
     {
@@ -192,8 +197,8 @@ namespace roboptim
     /// \param jacobian jacobian will be store in this argument
     /// \param arg point where the jacobian will be computed
     /// \param order derivation order
-    virtual void impl_jacobian (jacobian_t& jacobian, const argument_t& arg,
-                                size_type order = 0)
+    virtual void impl_jacobian (jacobian_ref jacobian, const_argument_ref arg,
+                                 size_type order = 0)
       const
     {
       for (size_type i = 0; i < this->functionOutputSize (); ++i)
@@ -214,8 +219,8 @@ namespace roboptim
     /// \param argument inner function point argument value
     /// \param functionId evaluated function id in the split representation
     /// \param order derivation order
-    virtual void impl_gradient (gradient_t& gradient,
-				const argument_t& argument,
+    virtual void impl_gradient (gradient_ref gradient,
+				const_argument_ref argument,
 				size_type functionId = 0,
 				size_type order = 0)
       const = 0;

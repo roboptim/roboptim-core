@@ -66,7 +66,7 @@ public:
     }
   };
 
-  typedef Function::argument_t argument_t;
+  typedef Function::const_argument_ref const_argument_ref;
   typedef EngineData data_t;
 
   Engine (std::size_t N) : data_ (N)
@@ -80,7 +80,7 @@ public:
     return data_;
   }
 
-  void compute (const argument_t& x)
+  void compute (const_argument_ref x)
   {
     (*output) << "Engine: calling compute" << std::endl;
 
@@ -97,7 +97,7 @@ public:
     }
   }
 
-  void jacobian (const argument_t& x)
+  void jacobian (const_argument_ref x)
   {
     (*output) << "Engine: calling jacobian" << std::endl;
 
@@ -151,17 +151,17 @@ public:
   {
   }
 
-  void impl_compute (result_t&, const argument_t& x) const
+  void impl_compute (result_ref, const_argument_ref x) const
   {
     engine_->compute (x);
   }
 
-  void impl_gradient (gradient_t&, const argument_t&, size_type) const
+  void impl_gradient (gradient_ref, const_argument_ref, size_type) const
   {
     assert (0);
   }
 
-  void impl_jacobian (jacobian_t&, const argument_t& x) const
+  void impl_jacobian (jacobian_ref, const_argument_ref x) const
   {
     engine_->jacobian (x);
   }
@@ -189,12 +189,12 @@ public:
   {
   }
 
-  void impl_compute (result_t& res, const argument_t&) const
+  void impl_compute (result_ref res, const_argument_ref) const
   {
     res = engine_->data ().points[1+idx_];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&, size_type dim) const
+  void impl_gradient (gradient_ref grad, const_argument_ref, size_type dim) const
   {
     // For each argument
     for (size_type i = 0; i < this->inputSize (); ++i)
@@ -208,7 +208,7 @@ private:
 
 template <>
 void Position<EigenMatrixSparse>::impl_gradient
-(gradient_t& grad, const argument_t&, size_type dim) const
+(gradient_ref grad, const_argument_ref, size_type dim) const
 {
   // For each argument
   for (size_type i = 0; i < this->inputSize (); ++i)
@@ -230,9 +230,9 @@ to_dense (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& m)
 
 struct PositionConstraintVisitor : public boost::static_visitor<>
 {
-  typedef Function::argument_t argument_t;
+  typedef Function::const_argument_ref const_argument_ref;
 
-  PositionConstraintVisitor (const argument_t& x)
+  PositionConstraintVisitor (const_argument_ref x)
     : x_ (x)
   {}
 
@@ -245,7 +245,7 @@ struct PositionConstraintVisitor : public boost::static_visitor<>
   }
 
   private:
-    const argument_t& x_;
+    const_argument_ref x_;
 };
 
 typedef boost::mpl::list< ::roboptim::EigenMatrixDense,

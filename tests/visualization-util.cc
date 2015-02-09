@@ -1,4 +1,4 @@
-// Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
+// Copyright (C) 2015 by Benjamin Chrétien, CNRS-LIRMM.
 //
 // This file is part of the roboptim.
 //
@@ -20,50 +20,40 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/result.hh>
-#include <roboptim/core/result-with-warnings.hh>
+
+#include <roboptim/core/function.hh>
+#include <roboptim/core/visualization/util.hh>
 
 using namespace roboptim;
-
-// Define a simple function.
-struct F : public Function
-{
-  F () : Function (1, 1, "x")
-  {}
-
-  void impl_compute (result_ref res,
-                     const_argument_ref x) const
-  {
-    res (0) = x[0];
-  }
-
-  // No gradient, hessian.
-};
+using namespace roboptim::visualization;
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
-BOOST_AUTO_TEST_CASE (result)
+BOOST_AUTO_TEST_CASE (visualization_util)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("result");
+    output = retrievePattern ("visualization-util");
 
-  // Instantiate some results.
-  Result result (3, 8);
-  F f;
-  F::size_type c_size = 4;
-  result.constraints.resize (c_size);
-  result.constraints.setZero ();
-  result.lambda.resize (c_size);
-  result.lambda.setZero ();
+  typedef Function::size_type size_type;
 
-  assert (result.x.size () == 3);
-  assert (result.value.size () == 8);
-  assert (result.lambda.size () == c_size);
+  Function::vector_t v (10);
+  for (size_type i = 0; i < v.size (); ++i)
+    {
+      v[i] = std::pow (10., -i);
+    }
 
-  Result result2 (result);
-  Result result3 = result;
+  (*output) << v << std::endl
+            << normalize (v) << std::endl;
 
-  (*output) << result << std::endl;
+  Function::matrix_t m (4,4);
+  for (size_type i = 0; i < m.rows (); ++i)
+    for (size_type j = 0; j < m.cols (); ++j)
+      {
+	m(i,j) = std::pow (10., -(m.cols () * i + j));
+      }
+
+  (*output) << m << std::endl
+            << normalize (m) << std::endl;
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

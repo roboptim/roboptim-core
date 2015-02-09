@@ -31,13 +31,13 @@ struct ParametrizedDF : public DerivableParametrizedFunction<IdentityFunction>
   ParametrizedDF () : DerivableParametrizedFunction<IdentityFunction> (1, 1, 1)
   {}
 
-  result_t impl_compute (const argument_t& argument) const
+  result_t impl_compute (const_argument_ref argument) const
   {
     return result_t (argument);
   }
 
-  void impl_gradient (gradient_t& gradient,
-		      const argument_t&,
+  void impl_gradient (gradient_ref gradient,
+		      const_argument_ref,
 		      size_type = 0,
 		      size_type order = 0) const
   {
@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE (derivable_parametrized_function)
 
   ParametrizedDF pf;
 
-  ParametrizedDF::argument_t parameter (1);
+  ParametrizedDF::vector_t parameter (1);
   parameter.setZero ();
 
   CHECKME (0.);
@@ -112,8 +112,6 @@ BOOST_AUTO_TEST_CASE (derivable_parametrized_function)
       << pf.jacobian (x, 1) << std::endl;
 
     BOOST_CHECK_EQUAL (res[0], 128. + 256.);
-    BOOST_CHECK (pf.functionInputSize () == 1);
-    BOOST_CHECK (pf.functionOutputSize () == 1);
   }
 
   std::cout << output->str () << std::endl;

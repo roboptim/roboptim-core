@@ -37,7 +37,7 @@ struct F1 : public Function
   F1 () : parent_t (4, 1, "a * d * (a + b + c) + d")
   {}
 
-  void impl_compute (result_t& result, const argument_t& x)
+  void impl_compute (result_ref result, const_argument_ref x)
     const
   {
     result (0) = x[0] * x[3] * (x[0] + x[1] + x[2]) + x[3];
@@ -54,13 +54,13 @@ struct F2 : public DifferentiableSparseFunction
   F2 () : parent_t (4, 1, "a + b + c + d")
   {}
 
-  void impl_compute (result_t& result, const argument_t& x)
+  void impl_compute (result_ref result, const_argument_ref x)
     const
   {
     result (0) = x[0] + x[1] + x[2] + x[3];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t&, size_type)
+  void impl_gradient (gradient_ref grad, const_argument_ref, size_type)
     const
   {
     grad.insert (0) = 1;

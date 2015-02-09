@@ -46,7 +46,7 @@ struct F : public Function
   F () : parent_t (4, 1, "a + b + c + d")
   {}
 
-  void impl_compute (result_t& result, const argument_t& x)
+  void impl_compute (result_ref result, const_argument_ref x)
     const
   {
     result (0) = x[0] + x[1] + x[2] + x[3];

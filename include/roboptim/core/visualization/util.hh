@@ -43,9 +43,8 @@ namespace roboptim
     double normalize (const double& x);
 
     /// \brief Apply normalize to each element of a matrix.
-    Eigen::MatrixXd
-    normalize (const Eigen::MatrixXd& x);
-
+    Function::matrix_t
+    normalize (Function::const_matrix_ref x);
 
     /// \brief Apply normalize to each element of a container.
     template <typename T>
@@ -59,10 +58,10 @@ namespace roboptim
       return x;
     }
 
-    inline Eigen::MatrixXd
-    normalize (const Eigen::MatrixXd& x)
+    inline Function::matrix_t
+    normalize (Function::const_matrix_ref x)
     {
-      Eigen::MatrixXd res (x.rows (), x.cols ());
+      Function::matrix_t res (x.rows (), x.cols ());
       for (Function::size_type i = 0; i < x.rows (); ++i)
 	for (Function::size_type j = 0; j < x.cols (); ++j)
 	  res (i, j) = normalize (x (i, j));

@@ -91,6 +91,7 @@ ROBOPTIM_CORE_TEST(numeric-quadratic-function)
 ROBOPTIM_CORE_TEST(n-times-derivable-function)
 ROBOPTIM_CORE_TEST(parametrized-function)
 ROBOPTIM_CORE_TEST(derivable-parametrized-function)
+ROBOPTIM_CORE_TEST(ref)
 
 # Solver.
 ROBOPTIM_CORE_TEST(solver)
@@ -141,6 +142,7 @@ ROBOPTIM_CORE_TEST(filter-selection-by-id)
 ROBOPTIM_CORE_TEST(filter-split)
 
 # Visualization
+ROBOPTIM_CORE_TEST(visualization-util)
 ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)
 ROBOPTIM_CORE_TEST(visualization-gnuplot-function)
 ROBOPTIM_CORE_TEST(visualization-gnuplot-differentiable-function)

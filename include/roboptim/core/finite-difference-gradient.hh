@@ -39,9 +39,9 @@ namespace roboptim
     (GenericDifferentiableFunction<T>);
 
     /// \brief Default constructor.
-    BadGradient (const vector_t& x,
-		 const gradient_t& analyticalGradient,
-		 const gradient_t& finiteDifferenceGradient,
+    BadGradient (const_argument_ref x,
+		 const_gradient_ref analyticalGradient,
+		 const_gradient_ref finiteDifferenceGradient,
 		 const value_type& threshold);
 
     virtual ~BadGradient () throw ();
@@ -90,9 +90,9 @@ namespace roboptim
     (GenericDifferentiableFunction<T>);
 
     /// \brief Default constructor.
-    BadJacobian (const vector_t& x,
-		 const jacobian_t& analyticalJacobian,
-		 const jacobian_t& finiteDifferenceJacobian,
+    BadJacobian (const_argument_ref x,
+		 const_jacobian_ref analyticalJacobian,
+		 const_jacobian_ref finiteDifferenceJacobian,
 		 const value_type& threshold);
 
     virtual ~BadJacobian () throw ();
@@ -157,16 +157,16 @@ namespace roboptim
 
       virtual void computeGradient
       (value_type epsilon,
-       gradient_t& gradient,
-       const argument_t& argument,
+       gradient_ref gradient,
+       const_argument_ref argument,
        size_type idFunction,
-       argument_t& xEps) const = 0;
+       argument_ref xEps) const = 0;
 
       virtual void computeJacobian
       (value_type epsilon,
-       jacobian_t& jacobian,
-       const argument_t& argument,
-       argument_t& xEps) const;
+       jacobian_ref jacobian,
+       const_argument_ref argument,
+       argument_ref xEps) const;
 
     protected:
       const GenericFunction<T>& adaptee_;
@@ -192,10 +192,10 @@ namespace roboptim
 
       void computeGradient
       (value_type epsilon,
-       gradient_t& gradient,
-       const argument_t& argument,
+       gradient_ref gradient,
+       const_argument_ref argument,
        size_type idFunction,
-       argument_t& xEps) const;
+       argument_ref xEps) const;
 
     private:
       mutable result_t result_;
@@ -220,10 +220,10 @@ namespace roboptim
 
       void computeGradient
       (value_type epsilon,
-       gradient_t& gradient,
-       const argument_t& argument,
+       gradient_ref gradient,
+       const_argument_ref argument,
        size_type idFunction,
-       argument_t& xEps) const;
+       argument_ref xEps) const;
 
       void
       compute_deriv (typename GenericFunction<T>::size_type j,
@@ -231,9 +231,9 @@ namespace roboptim
 		     double& result,
 		     double& round,
 		     double& trunc,
-		     const typename GenericFunction<T>::argument_t& argument,
+		     typename GenericFunction<T>::const_argument_ref argument,
 		     typename GenericFunction<T>::size_type idFunction,
-		     typename GenericFunction<T>::argument_t& xEps)
+		     typename GenericFunction<T>::argument_ref xEps)
 	const;
 
     private:
@@ -281,12 +281,12 @@ namespace roboptim
     ~GenericFiniteDifferenceGradient ();
 
   protected:
-    virtual void impl_compute (result_t&, const argument_t&) const;
-    virtual void impl_gradient (gradient_t&,
-                                const argument_t& argument,
+    virtual void impl_compute (result_ref, const_argument_ref) const;
+    virtual void impl_gradient (gradient_ref,
+                                const_argument_ref argument,
                                 size_type = 0) const;
-    virtual void impl_jacobian (jacobian_t& jacobian,
-                                const argument_t& argument) const;
+    virtual void impl_jacobian (jacobian_ref jacobian,
+                                const_argument_ref argument) const;
 
     /// \brief Reference to the wrapped function.
     const GenericFunction<T>& adaptee_;
@@ -311,7 +311,7 @@ namespace roboptim
   checkGradient
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::size_type functionId,
-   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold);
 
@@ -320,7 +320,7 @@ namespace roboptim
   checkGradientAndThrow
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::size_type functionId,
-   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold)
     throw (BadGradient<T>);
@@ -337,7 +337,7 @@ namespace roboptim
   bool
   checkJacobian
   (const GenericDifferentiableFunction<T>& function,
-   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold);
 
@@ -345,7 +345,7 @@ namespace roboptim
   void
   checkJacobianAndThrow
   (const GenericDifferentiableFunction<T>& function,
-   const typename GenericDifferentiableFunction<T>::vector_t& x,
+   typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
    finiteDifferenceThreshold)
     throw (BadJacobian<T>);

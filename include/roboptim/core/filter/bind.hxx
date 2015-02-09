@@ -63,7 +63,7 @@ namespace roboptim
   template <typename U>
   void
   Bind<U>::impl_compute
-  (result_t& result, const argument_t& x)
+  (result_ref result, const_argument_ref x)
     const
   {
     size_type id = 0;
@@ -77,8 +77,8 @@ namespace roboptim
 
   template <typename U>
   void
-  Bind<U>::impl_gradient (gradient_t& gradient,
-			  const argument_t& argument,
+  Bind<U>::impl_gradient (gradient_ref gradient,
+			  const_argument_ref argument,
 			  size_type functionId)
     const
   {
@@ -99,8 +99,8 @@ namespace roboptim
 
   template <typename U>
   void
-  Bind<U>::impl_jacobian (jacobian_t& jacobian,
-			  const argument_t& argument)
+  Bind<U>::impl_jacobian (jacobian_ref jacobian,
+			  const_argument_ref argument)
     const
   {
     size_type id = 0;

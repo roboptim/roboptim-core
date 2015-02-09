@@ -57,18 +57,15 @@ namespace roboptim
   class Derivative : public DerivativeParent<U>::result_t
   {
   public:
-    ROBOPTIM_FUNCTION_FWD_TYPEDEFS_
-    (typename DerivativeParent<U>::result_t);
+    typedef typename DerivativeParent<U>::result_t parentType_t;
 
-    /// \brief Gradient type.
-    typedef typename GenericFunctionTraits<typename U::traits_t>::gradient_t
-    gradient_t;
-    /// \brief Jacobian type.
-    typedef typename GenericFunctionTraits<typename U::traits_t>::jacobian_t
-    jacobian_t;
+    // Note: we need gradient/jacobian typedefs, but since parentType_t may not
+    // be differentiable, we rely on DifferentiableFunction directly.
+    ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+      (GenericDifferentiableFunction<typename U::traits_t>);
+
     /// \brief Jacobian size type (pair of values).
     typedef std::pair<size_type, size_type> jacobianSize_t;
-
 
     typedef boost::shared_ptr<Derivative> DerivativeShPtr_t;
 
@@ -106,15 +103,15 @@ namespace roboptim
 
   protected:
     // FIXME: this is inefficient.
-    void impl_compute (result_t& result, const argument_t& x)
+    void impl_compute (result_ref result, const_argument_ref x)
       const
     {
       origin_->jacobian (jacobian_, x);
       result = jacobian_.block (0, variableId_, this->outputSize (), 1);
     }
 
-    void impl_gradient (gradient_t& gradient,
-			const argument_t& x,
+    void impl_gradient (gradient_ref gradient,
+			const_argument_ref x,
 			size_type functionId = 0)
       const
     {

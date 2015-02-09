@@ -53,8 +53,8 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
   protected:
-    void impl_hessian (hessian_t& hessian,
-		       const argument_t& argument,
+    void impl_hessian (hessian_ref hessian,
+		       const_argument_ref argument,
 		       size_type functionId = 0) const;
   };
 

@@ -35,7 +35,7 @@ struct DenseF : public DifferentiableFunction
       verbose_ (verbose)
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const
+  void impl_compute (result_ref res, const_argument_ref argument) const throw ()
   {
     if (verbose_)
       (*output) << "computation (not cached)" << std::endl;
@@ -43,7 +43,7 @@ struct DenseF : public DifferentiableFunction
     res[0] = 2. * argument[0] * argument[0] + argument[1];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t& argument,
+  void impl_gradient (gradient_ref grad, const_argument_ref argument,
 		      size_type) const
   {
     if (verbose_)
@@ -53,7 +53,7 @@ struct DenseF : public DifferentiableFunction
     grad[1] = 1.;
   }
 
-  void impl_jacobian (jacobian_t& jacobian, const argument_t& argument)
+  void impl_jacobian (jacobian_ref jacobian, const_argument_ref argument)
     const
   {
     if (verbose_)
@@ -74,7 +74,7 @@ struct SparseF : public DifferentiableSparseFunction
       verbose_ (verbose)
   {}
 
-  void impl_compute (result_t& res, const argument_t& argument) const
+  void impl_compute (result_ref res, const_argument_ref argument) const throw ()
   {
     if (verbose_)
       (*output) << "computation (not cached)" << std::endl;
@@ -82,7 +82,7 @@ struct SparseF : public DifferentiableSparseFunction
     res[0] = 2. * argument[0] * argument[0] + argument[1];
   }
 
-  void impl_gradient (gradient_t& grad, const argument_t& argument,
+  void impl_gradient (gradient_ref grad, const_argument_ref argument,
                       size_type) const
   {
     if (verbose_)
@@ -92,7 +92,7 @@ struct SparseF : public DifferentiableSparseFunction
     grad.insert(1) = 1.;
   }
 
-  void impl_jacobian (jacobian_t& jacobian, const argument_t& argument)
+  void impl_jacobian (jacobian_ref jacobian, const_argument_ref argument)
     const
   {
     if (verbose_)

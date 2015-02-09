@@ -60,8 +60,8 @@ namespace roboptim
   // x^T * A * x + b^T * x + c
   template <typename T>
   void
-  GenericNumericQuadraticFunction<T>::impl_compute (result_t& result,
-						    const argument_t& argument)
+  GenericNumericQuadraticFunction<T>::impl_compute (result_ref result,
+						    const_argument_ref argument)
     const
   {
     buffer_.noalias () = a_ * argument;
@@ -74,7 +74,7 @@ namespace roboptim
   template <>
   inline void
   GenericNumericQuadraticFunction<EigenMatrixSparse>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const
+  (jacobian_ref jacobian, const_argument_ref x) const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     Eigen::internal::set_is_malloc_allowed (true);
@@ -92,7 +92,7 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericQuadraticFunction<T>::impl_jacobian
-  (jacobian_t& jacobian, const argument_t& x) const
+  (jacobian_ref jacobian, const_argument_ref x) const
   {
     jacobian.noalias () = 2 * x.transpose () * a_;
     jacobian += b_.transpose ();
@@ -102,7 +102,7 @@ namespace roboptim
   template <>
   inline void
   GenericNumericQuadraticFunction<EigenMatrixSparse>::impl_gradient
-  (gradient_t& gradient, const argument_t& x, size_type)
+  (gradient_ref gradient, const_argument_ref x, size_type)
     const
   {
     buffer_.noalias () = 2 * a_ * x;
@@ -115,7 +115,7 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericQuadraticFunction<T>::impl_gradient
-  (gradient_t& gradient, const argument_t& x, size_type) const
+  (gradient_ref gradient, const_argument_ref x, size_type) const
   {
     gradient.noalias () = 2 * a_ * x;
     gradient += b_;
@@ -125,7 +125,7 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericQuadraticFunction<T>::impl_hessian
-  (hessian_t& hessian, const argument_t&, size_type) const
+  (hessian_ref hessian, const_argument_ref, size_type) const
   {
     hessian = a_;
   }
