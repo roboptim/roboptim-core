@@ -142,6 +142,7 @@ ROBOPTIM_CORE_TEST(filter-selection-by-id)
 ROBOPTIM_CORE_TEST(filter-split)
 
 # Visualization
+ROBOPTIM_CORE_TEST(visualization-util)
 ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)
 ROBOPTIM_CORE_TEST(visualization-gnuplot-function)
 ROBOPTIM_CORE_TEST(visualization-gnuplot-differentiable-function)
