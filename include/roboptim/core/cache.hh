@@ -57,7 +57,7 @@ namespace roboptim
     LRUCache (size_t size = 10);
 
     /// \brief Destructor.
-    ~LRUCache ();
+    virtual ~LRUCache ();
 
     /// \brief Size of the cache.
     size_t size () const;
