@@ -67,6 +67,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/constant.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/cos.hh
