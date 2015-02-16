@@ -104,6 +104,12 @@ namespace roboptim
     /// \brief Overriden print function for pools.
     virtual std::ostream& print (std::ostream&) const;
 
+    /// \brief Get the input size from the function list.
+    static size_type inputSize (const functionList_t& functions);
+
+    /// \brief Get the output size from the function list.
+    static size_type outputSize (const functionList_t& functions);
+
   private:
     /// \brief Functions of the pool.
     functionList_t functions_;

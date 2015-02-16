@@ -245,4 +245,18 @@ namespace roboptim
     o << decindent;
     return o;
   }
+
+  template <typename F, typename FLIST>
+  typename FunctionPool<F,FLIST>::size_type FunctionPool<F,FLIST>::inputSize
+  (const typename FunctionPool<F,FLIST>::functionList_t& functions)
+  {
+    return poolInputSize<F,FLIST> (functions);
+  }
+
+  template <typename F, typename FLIST>
+  typename FunctionPool<F,FLIST>::size_type FunctionPool<F,FLIST>::outputSize
+  (const typename FunctionPool<F,FLIST>::functionList_t& functions)
+  {
+    return poolOutputSize<F,FLIST> (functions);
+  }
 } // end of namespace roboptim
