@@ -162,7 +162,7 @@ namespace roboptim
 
 
   template <typename F, typename FLIST>
-  FunctionPool<F,FLIST>::FunctionPool (const callback_t callback,
+  FunctionPool<F,FLIST>::FunctionPool (const callback_ptr callback,
                                        const functionList_t& functions,
                                        const std::string& name)
     : pool_t (poolInputSize<F,FLIST> (functions),

@@ -75,7 +75,8 @@ namespace roboptim
     typedef std::vector<function_t> functionList_t;
 
     /// \brief Type of the callback function (where the computation happens).
-    typedef boost::shared_ptr<F> callback_t;
+    typedef F callback_t;
+    typedef boost::shared_ptr<callback_t> callback_ptr;
 
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (pool_t);
 
@@ -84,7 +85,7 @@ namespace roboptim
     /// \param callback  callback function for the engine.
     /// \param functions functions of the pool.
     /// \param name      name of the pool.
-    explicit FunctionPool (const callback_t callback,
+    explicit FunctionPool (const callback_ptr callback,
                            const functionList_t& functions,
                            const std::string& name = "");
 
@@ -115,7 +116,7 @@ namespace roboptim
     functionList_t functions_;
 
     /// \brief Callback for the engine where computation happens.
-    callback_t callback_;
+    callback_ptr callback_;
   };
 
   /// @}
