@@ -213,6 +213,9 @@ namespace roboptim
   void FunctionPool<F,FLIST>::impl_jacobian (jacobian_ref jacobian,
                                              const_argument_ref x) const
   {
+    // Initialize the Jacobian
+    jacobian.setZero ();
+
     // First, run the engine (callback)
     callback_->jacobian (x);
 
