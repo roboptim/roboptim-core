@@ -550,6 +550,9 @@ namespace roboptim
   template <>
   struct GenericFunctionTraits<EigenMatrixDense>
   {
+    /// \brief Matrix storage order.
+    static const int StorageOrder = Eigen::RowMajor;
+
     // For each type, we have:
     //  - type_t:         the type itself
     //  - type_ref:       reference to type object
@@ -559,7 +562,7 @@ namespace roboptim
      Eigen::Matrix<double BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
-     Eigen::RowMajor>);
+     StorageOrder>);
     ROBOPTIM_GENERATE_TYPEDEFS_REF
     (vector,
      Eigen::Matrix<double BOOST_PP_COMMA()
@@ -580,13 +583,16 @@ namespace roboptim
   template <>
   struct GenericFunctionTraits<EigenMatrixSparse>
   {
+    /// \brief Matrix storage order.
+    static const int StorageOrder = Eigen::RowMajor;
+
     // For each type, we have:
     //  - type_t:         the type itself
     //  - type_ref:       reference to type object
     //  - const_type_ref: const reference to type object
     ROBOPTIM_GENERATE_TYPEDEFS_REF
     (matrix,
-     Eigen::SparseMatrix<double BOOST_PP_COMMA() Eigen::RowMajor>);
+     Eigen::SparseMatrix<double BOOST_PP_COMMA() StorageOrder>);
 
     ROBOPTIM_GENERATE_TYPEDEFS_REF
     (vector,
