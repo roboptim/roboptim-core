@@ -169,7 +169,9 @@ namespace roboptim
 	      poolOutputSize<F,FLIST> (functions),
 	      (name == "") ? "Function pool" : name),
       functions_ (functions),
-      callback_ (callback)
+      callback_ (callback),
+      callback_res_ (callback->outputSize ()),
+      callback_jac_ (callback->outputSize (), callback->inputSize ())
   {
   }
 
@@ -183,7 +185,10 @@ namespace roboptim
     const
   {
     // First, run the engine (callback)
-    (*callback_) (x);
+    // Note: callback_res_ should not be modified, since the callback does not
+    // directly fill the result vector. However, RobOptim functions expect
+    // a result vector if we want to avoid any allocation.
+    (*callback_) (callback_res_, x);
 
     // Second, process the functions of the pool.
     // Note: here a dummy x would work just as well since the computation
@@ -217,7 +222,10 @@ namespace roboptim
     jacobian.setZero ();
 
     // First, run the engine (callback)
-    callback_->jacobian (x);
+    // Note: callback_jac_ should not be modified, since the callback does not
+    // directly fill the Jacobian matrix. However, RobOptim functions expect
+    // a Jacobian matrix if we want to avoid any allocation.
+    callback_->jacobian (callback_jac_, x);
 
     // Second, process the functions of the pool.
     // Note: here a dummy x would work just as well since the computation
@@ -250,14 +258,14 @@ namespace roboptim
   }
 
   template <typename F, typename FLIST>
-  typename FunctionPool<F,FLIST>::size_type FunctionPool<F,FLIST>::inputSize
+  typename FunctionPool<F,FLIST>::size_type FunctionPool<F,FLIST>::listInputSize
   (const typename FunctionPool<F,FLIST>::functionList_t& functions)
   {
     return poolInputSize<F,FLIST> (functions);
   }
 
   template <typename F, typename FLIST>
-  typename FunctionPool<F,FLIST>::size_type FunctionPool<F,FLIST>::outputSize
+  typename FunctionPool<F,FLIST>::size_type FunctionPool<F,FLIST>::listOutputSize
   (const typename FunctionPool<F,FLIST>::functionList_t& functions)
   {
     return poolOutputSize<F,FLIST> (functions);

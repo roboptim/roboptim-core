@@ -265,6 +265,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
   typedef boost::mpl::list<GenericDifferentiableFunction<T> > poolTypes_t;
   typedef GenericDifferentiableFunction<T> poolFunction_t;
   typedef FunctionPool<poolFunction_t, poolTypes_t> pool_t;
+  typedef typename poolFunction_t::result_t result_t;
   typedef typename poolFunction_t::jacobian_t jacobian_t;
 
   typename pool_t::functionList_t position_vector;
@@ -281,14 +282,45 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
   x[2] =  M_PI/2.;
 
   boost::shared_ptr<pool_t> pool
-    = boost::make_shared<pool_t> (engine_wrapper, position_vector, "Joint position pool");
+    = boost::make_shared<pool_t> (engine_wrapper, position_vector,
+                                  "Joint position pool");
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
+  // Pre-allocate memory
+  result_t res (pool->outputSize ());
+  res.setZero ();
+  jacobian_t jac (pool->outputSize (), pool->inputSize ());
+  jac.setZero ();
+  jacobian_t fd_jac (pool->outputSize (), pool->inputSize ());
+  fd_jac.setZero ();
+
+  GenericFunctionTraits<EigenMatrixDense>::matrix_t
+    denseJac (pool->outputSize (), pool->inputSize ());
+  GenericFunctionTraits<EigenMatrixDense>::matrix_t
+    fd_denseJac (pool->outputSize (), pool->inputSize ());
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+  Eigen::internal::set_is_malloc_allowed (false);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
   // Call the pool
+  (*pool) (res, x);
+  pool->jacobian (jac, x);
+
+  // Compare gradient with finite differences
+  GenericFiniteDifferenceGradient<T> fd_pool (*pool);
+  fd_pool.jacobian (fd_jac, x);
+
+  denseJac = to_dense (jac);
+
+  // Print the result
   (*output) << "x = " << x << std::endl;
   (*output) << *pool << std::endl;
-  (*output) << (*pool) (x) << std::endl;
-  jacobian_t jac = pool->jacobian (x);
-  (*output) << to_dense (jac) << std::endl;
+  (*output) << res << std::endl;
+  (*output) << denseJac << std::endl;
 
   // Check the individual functions
   PositionConstraintVisitor visitor (x);
@@ -299,10 +331,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
     boost::apply_visitor (visitor, *iter);
   }
 
-  // Compare gradient with finite differences
-  GenericFiniteDifferenceGradient<T> fdPool (*pool);
-  jacobian_t fd_jac = fdPool.jacobian (x);
-  (*output) << to_dense (fd_jac) << std::endl;
+  fd_denseJac = to_dense (fd_jac);
+  (*output) << fd_denseJac << std::endl;
 
   BOOST_CHECK (allclose (jac, fd_jac, 1e-6, 1e-6));
 

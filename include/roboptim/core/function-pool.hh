@@ -106,10 +106,10 @@ namespace roboptim
     virtual std::ostream& print (std::ostream&) const;
 
     /// \brief Get the input size from the function list.
-    static size_type inputSize (const functionList_t& functions);
+    static size_type listInputSize (const functionList_t& functions);
 
     /// \brief Get the output size from the function list.
-    static size_type outputSize (const functionList_t& functions);
+    static size_type listOutputSize (const functionList_t& functions);
 
   private:
     /// \brief Functions of the pool.
@@ -117,6 +117,12 @@ namespace roboptim
 
     /// \brief Callback for the engine where computation happens.
     callback_ptr callback_;
+
+    /// \brief Dummy vector to avoid callback allocations.
+    mutable typename callback_t::result_t callback_res_;
+
+    /// \brief Dummy matrix to avoid callback allocations.
+    mutable typename callback_t::jacobian_t callback_jac_;
   };
 
   /// @}
