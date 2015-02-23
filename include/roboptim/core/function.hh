@@ -388,7 +388,7 @@ namespace roboptim
     ///
     /// \param result result that will be checked
     /// \return true if valid, false if not
-    bool isValidResult (const result_t& result) const
+    bool isValidResult (const_result_ref result) const
     {
       return result.size () == outputSize ();
     }
