@@ -58,6 +58,18 @@ namespace roboptim
       return x;
     }
 
+    //{ Ugly fix allowing normalize(m) for old eigen2 compliant declaration
+    inline Function::matrix_t
+    normalize (const Function::matrix_t& x)
+    {
+      Function::matrix_t res (x.rows (), x.cols ());
+      for (Function::size_type i = 0; i < x.rows (); ++i)
+	for (Function::size_type j = 0; j < x.cols (); ++j)
+	  res (i, j) = normalize (x (i, j));
+      return res;
+    }
+    //End of ugly fix
+
     inline Function::matrix_t
     normalize (Function::const_matrix_ref x)
     {
