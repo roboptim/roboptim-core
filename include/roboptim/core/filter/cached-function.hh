@@ -33,7 +33,7 @@ namespace Eigen
   /// \brief Hash function for argument vectors.
   /// \param x argument vector.
   /// \return hash.
-  inline std::size_t hash_value (const roboptim::Function::argument_t& x)
+  inline std::size_t hash_value (roboptim::Function::const_argument_ref x)
   {
     return boost::hash_range (x.data (), x.data () + x.size ());
   }
