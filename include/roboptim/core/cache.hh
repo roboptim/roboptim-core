@@ -22,6 +22,8 @@
 # include <vector>
 # include <boost/unordered_map.hpp>
 
+# include <roboptim/core/detail/utility.hh>
+
 namespace roboptim
 {
   /// \brief LRU (Least Recently Used) cache.
@@ -37,11 +39,23 @@ namespace roboptim
     /// \brief Type of keys.
     typedef K key_t;
 
+    /// \brief Type of const reference to key.
+    typedef typename detail::const_ref<key_t>::type const_key_ref;
+
     /// \brief Type of values.
     typedef V value_t;
 
-    typedef std::list<key_t> keyTracker_t;
+    /// \brief Type of const reference to key.
+    typedef typename detail::const_ref<value_t>::type const_value_ref;
+
     typedef std::vector<value_t> valuePool_t;
+
+    /// \brief List used to track key usage.
+    // TODO: find a way to store the hash rather than the key.
+    //       The problem is that the tracker's elements are used
+    //       to find elements in the map (and find expects an actual
+    //       key).
+    typedef std::list<key_t> keyTracker_t;
 
     /// \brief Map from key to iterator in the value pool.
     typedef boost::unordered_map
@@ -66,7 +80,7 @@ namespace roboptim
     void resize (size_t size);
 
     /// \brief Find an element in the cache.
-    const_iterator find (const K& key) const;
+    const_iterator find (const_key_ref key) const;
 
     /// \brief Iterator to the beginning of the cache.
     iterator begin ();
@@ -83,12 +97,12 @@ namespace roboptim
     /// \brief Access a cached element.
     /// \param key key to the element.
     /// \return reference to the element.
-    V& operator [] (const K& key);
+    V& operator [] (const_key_ref key);
 
     /// \brief Insert a value into the cache.
     /// \param key key of the element.
     /// \param value value of the element.
-    void insert (const K& key, const V& value);
+    void insert (const_key_ref key, const_value_ref value);
 
     /// \brief Clear the cache.
     void clear ();
@@ -101,16 +115,16 @@ namespace roboptim
     void allocate ();
 
     /// \brief Update an existing cached value.
-    void update (iterator iter, const V& value);
+    void update (iterator iter, const_value_ref value);
 
     /// \brief Update an existing cached value.
     V& update (iterator iter);
 
     /// \brief Insert a value into the cache.
-    V& insert (const K& key);
+    V& insert (const_key_ref key);
 
     /// \brief Notice the tracker that the key was used.
-    void bump (const K& key);
+    void bump (const_key_ref key);
 
     /// \brief Find Least Recently Used element.
     const_iterator findLRU () const;

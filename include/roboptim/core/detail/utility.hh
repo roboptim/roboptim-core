@@ -24,11 +24,14 @@
 # include <boost/mpl/count_if.hpp>
 # include <boost/mpl/fold.hpp>
 # include <boost/mpl/greater.hpp>
+# include <boost/mpl/has_xxx.hpp>
 # include <boost/mpl/logical.hpp>
 # include <boost/mpl/transform.hpp>
 # include <boost/variant.hpp>
 # include <boost/shared_ptr.hpp>
 # include <boost/type_traits/is_base_of.hpp>
+
+# include <Eigen/Core>
 
 namespace roboptim
 {
@@ -60,7 +63,7 @@ namespace roboptim
     };
 
 
-    /// \brief  Generate a Boost.Variant of shared pointers from the static
+    /// \brief Generate a Boost.Variant of shared pointers from the static
     /// constraints types list.
     ///
     /// For instance, if one instantiates
@@ -78,6 +81,58 @@ namespace roboptim
     struct shared_ptr_variant :
       boost::make_variant_over<typename detail::add_shared_ptr<CLIST>::type>
     {};
+
+    BOOST_MPL_HAS_XXX_TRAIT_DEF (Scalar)
+    BOOST_MPL_HAS_XXX_TRAIT_DEF (Index)
+    BOOST_MPL_HAS_XXX_TRAIT_DEF (StorageKind)
+
+    /// \brief Check whether the type provided is an Eigen type.
+    ///
+    /// This solution comes from a post in the Eigen forums:
+    /// https://forum.kde.org/viewtopic.php?f=74&t=121280
+    ///
+    /// \tparam T
+    template<typename T>
+    struct is_eigen_type
+      : and_<has_Scalar<T>,
+             has_Index<T>,
+             has_StorageKind<T> >
+    {};
+
+
+    /// \brief Return the type of a const reference to an Eigen matrix, using
+    /// Eigen's Ref.
+    ///
+    /// \tparam T Eigen dense matrix/vector type.
+    template <typename T>
+    struct const_eigen_ref
+    {
+      typedef const Eigen::Ref<const T> type;
+    };
+
+    /// \brief Return the proper const reference type of a given type.
+    ///
+    /// For instance:
+    ///   * const_ref<float>::value_t == const float&
+    ///   * const_ref<argument_t>::value_t == const_argument_ref
+    ///
+    /// This returns a const Eigen::Ref for dense Eigen matrices, else a
+    /// simple const reference.
+    ///
+    /// Note: this currently does not cover all cases (e.g. sparse
+    /// vectors), but should work for argument_t/vector_t (dense
+    /// vectors).
+    ///
+    /// \tparam T type.
+    template <typename T>
+    struct const_ref
+    {
+    typedef typename
+      if_<is_eigen_type<T>,
+          const_eigen_ref<T>,
+          add_reference<typename add_const<T>::type> >
+      ::type::type type;
+    };
 
 
     /// \brief Converts CLIST to a boost::mpl::vector to ensure a similar

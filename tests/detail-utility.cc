@@ -50,6 +50,35 @@ BOOST_AUTO_TEST_CASE (detail_utility)
     TEST_PREDICATE (predicate_t);
   }
 
+  // Test is_eigen_type.
+  {
+    typedef is_eigen_type<Eigen::MatrixXd> predicate1_t;
+    typedef is_eigen_type<Eigen::Vector3d> predicate2_t;
+
+    typedef not_<is_eigen_type<std::string> > predicate3_t;
+    typedef not_<is_eigen_type<int> > predicate4_t;
+    typedef not_<is_eigen_type<float> > predicate5_t;
+
+    TEST_PREDICATE (predicate1_t);
+    TEST_PREDICATE (predicate2_t);
+    TEST_PREDICATE (predicate3_t);
+    TEST_PREDICATE (predicate4_t);
+    TEST_PREDICATE (predicate5_t);
+  }
+
+  // Test const_ref.
+  {
+    typedef is_same<const float&, const_ref<float>::type> predicate1_t;
+    typedef is_same<const std::vector<int>&,
+                    const_ref<std::vector<int> >::type> predicate2_t;
+    typedef is_same<const Eigen::Ref<const Eigen::Vector3d>,
+                    const_ref<Eigen::Vector3d>::type> predicate3_t;
+
+    TEST_PREDICATE (predicate1_t);
+    TEST_PREDICATE (predicate2_t);
+    TEST_PREDICATE (predicate3_t);
+  }
+
   // Test contains_base_of.
   {
     typedef vector<Function, DifferentiableFunction> testSeq_t;

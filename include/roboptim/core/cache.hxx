@@ -67,14 +67,14 @@ namespace roboptim
   }
 
   template <typename K, typename V>
-  void LRUCache<K,V>::insert (const K& key, const V& value)
+  void LRUCache<K,V>::insert (const_key_ref key, const_value_ref value)
   {
     V& v = insert (key);
     v = value;
   }
 
   template <typename K, typename V>
-  V& LRUCache<K,V>::insert (const K& key)
+  V& LRUCache<K,V>::insert (const_key_ref key)
   {
     typename valuePool_t::iterator v_it;
 
@@ -119,7 +119,7 @@ namespace roboptim
   }
 
   template <typename K, typename V>
-  void LRUCache<K,V>::update (iterator iter, const V& value)
+  void LRUCache<K,V>::update (iterator iter, const_value_ref value)
   {
     bump (iter->first);
     *(iter->second) = value;
@@ -162,13 +162,13 @@ namespace roboptim
 
   template <typename K, typename V>
   typename LRUCache<K,V>::const_iterator
-  LRUCache<K,V>::find (const K& key) const
+  LRUCache<K,V>::find (const_key_ref key) const
   {
     return map_.find (key);
   }
 
   template <typename K, typename V>
-  V& LRUCache<K,V>::operator [] (const K& key)
+  V& LRUCache<K,V>::operator [] (const_key_ref key)
   {
     typename map_t::iterator it = map_.find (key);
 
@@ -187,7 +187,7 @@ namespace roboptim
   }
 
   template <typename K, typename V>
-  void LRUCache<K,V>::bump (const K& key)
+  void LRUCache<K,V>::bump (const_key_ref key)
   {
     // TODO: optimize this (remove the need for a search algorithm)
     typename keyTracker_t::iterator
