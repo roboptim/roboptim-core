@@ -41,7 +41,7 @@ namespace roboptim
     /// \brief Build a constant function.
     ///
     /// \param offset constant function offset
-    GenericConstantFunction (const vector_t& offset)
+    GenericConstantFunction (const_vector_ref offset)
       : GenericLinearFunction<T> (static_cast<size_type> (offset.size ()),
 				  static_cast<size_type> (offset.size ()),
 				  "constant function"),
@@ -53,7 +53,7 @@ namespace roboptim
     ///
     /// \param input_size input size of the function
     /// \param offset constant function offset
-    GenericConstantFunction (size_type input_size, const vector_t& offset)
+    GenericConstantFunction (size_type input_size, const_vector_ref offset)
       : GenericLinearFunction<T> (input_size,
 				  static_cast<size_type> (offset.size ()),
 				  "constant function"),

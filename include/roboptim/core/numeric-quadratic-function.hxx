@@ -26,7 +26,7 @@ namespace roboptim
 {
   template <typename T>
   GenericNumericQuadraticFunction<T>::GenericNumericQuadraticFunction
-  (const matrix_t& a, const vector_t& b)
+  (const_matrix_ref a, const_vector_ref b)
     : GenericQuadraticFunction<T>
       (a.rows (), 1, "numeric quadratic function"),
       a_ (a),
@@ -40,7 +40,7 @@ namespace roboptim
 
   template <typename T>
   GenericNumericQuadraticFunction<T>::GenericNumericQuadraticFunction
-  (const matrix_t& a, const vector_t& b, const vector_t& c)
+  (const_matrix_ref a, const_vector_ref b, const_vector_ref c)
     : GenericQuadraticFunction<T>
       (a.rows (), 1, "numeric quadratic function"),
       a_ (a),

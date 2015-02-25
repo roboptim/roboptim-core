@@ -217,13 +217,13 @@ void Position<EigenMatrixSparse>::impl_gradient
 
 
 inline GenericFunctionTraits<EigenMatrixDense>::matrix_t
-to_dense (const GenericFunctionTraits<EigenMatrixDense>::matrix_t& m)
+to_dense (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref m)
 {
   return m;
 }
 
 inline GenericFunctionTraits<EigenMatrixDense>::matrix_t
-to_dense (const GenericFunctionTraits<EigenMatrixSparse>::matrix_t& m)
+to_dense (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m)
 {
   return sparse_to_dense (m);
 }

@@ -28,7 +28,7 @@ namespace roboptim
 {
   template <typename T>
   GenericNumericLinearFunction<T>::GenericNumericLinearFunction
-  (const matrix_t& a, const vector_t& b)
+  (const_matrix_ref a, const_vector_ref b)
     : GenericLinearFunction<T>
       (a.cols (), a.rows (), "numeric linear function"),
       a_ (a),

@@ -43,6 +43,7 @@ namespace roboptim
 
     /// \brief Symmetric matrix type.
     typedef matrix_t symmetric_t;
+    typedef const_matrix_ref const_symmetric_ref;
 
     /// \brief Build a quadratic function from a matrix and a vector.
     ///
@@ -51,8 +52,8 @@ namespace roboptim
     /// See class documentation for A and b definition.
     /// \param A A symmetric matrix
     /// \param b b vector
-    GenericNumericQuadraticFunction (const symmetric_t& A,
-				     const vector_t& b);
+    GenericNumericQuadraticFunction (const_symmetric_ref A,
+				     const_vector_ref b);
 
     /// \brief Build a quadratic function from a matrix and a vector.
     ///
@@ -60,9 +61,9 @@ namespace roboptim
     /// \param A A symmetric matrix (inputSize * inputSize)
     /// \param b b vector (size inputSize)
     /// \param c c vector (size one)
-    GenericNumericQuadraticFunction (const symmetric_t& A,
-				     const vector_t& b,
-				     const vector_t& c);
+    GenericNumericQuadraticFunction (const_symmetric_ref A,
+				     const_vector_ref b,
+				     const_vector_ref c);
 
 
     ~GenericNumericQuadraticFunction ();
@@ -73,32 +74,32 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
 
-    const matrix_t& A () const
+    const_matrix_ref A () const
     {
       return a_;
     }
 
-    const vector_t& b () const
+    const_vector_ref b () const
     {
       return b_;
     }
 
-    const vector_t& c () const
+    const_vector_ref c () const
     {
       return c_;
     }
 
-    matrix_t& A ()
+    matrix_ref A ()
     {
       return a_;
     }
 
-    vector_t& b ()
+    vector_ref b ()
     {
       return b_;
     }
 
-    vector_t& c ()
+    vector_ref c ()
     {
       return c_;
     }

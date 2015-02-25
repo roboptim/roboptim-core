@@ -46,10 +46,13 @@ namespace roboptim
     typedef typename solver_t::problem_t::value_type           value_type;
     typedef typename solver_t::problem_t::size_type            size_type;
     typedef typename solver_t::problem_t::vector_t             vector_t;
-    typedef typename solver_t::problem_t::function_t::matrix_t jacobian_t;
     typedef typename solver_t::solverState_t                   solverState_t;
     typedef typename solver_t::callback_t                      callback_t;
     typedef typename solver_t::problem_t::function_t::traits_t traits_t;
+
+    typedef typename solver_t::problem_t::function_t           function_t;
+    typedef typename function_t::matrix_t                      jacobian_t;
+    typedef typename function_t::const_argument_ref            const_argument_ref;
 
     typedef GenericDifferentiableFunction<traits_t> differentiableFunction_t;
 
@@ -85,7 +88,7 @@ namespace roboptim
     process_constraints (const typename solver_t::problem_t& pb,
                          const typename solver_t::solverState_t& state,
                          const boost::filesystem::path& iterationPath,
-                         const typename solver_t::vector_t& x,
+                         const_argument_ref x,
                          value_type& cstrViol);
 
 
@@ -94,7 +97,7 @@ namespace roboptim
     process_constraints (const typename solver_t::problem_t&,
                          const typename solver_t::solverState_t&,
                          const boost::filesystem::path&,
-                         const typename solver_t::vector_t&,
+                         const_argument_ref,
                          value_type&);
 
     /// \brief Attach the logger to the solver.

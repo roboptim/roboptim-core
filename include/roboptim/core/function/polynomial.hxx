@@ -28,7 +28,7 @@
 namespace roboptim
 {
   template <typename T>
-  Polynomial<T>::Polynomial (const vector_t& coefficients)
+  Polynomial<T>::Polynomial (const_vector_ref coefficients)
     : GenericTwiceDifferentiableFunction<T>
     (1, 1, "polynomial"),
     coeffs_ (coefficients),
@@ -126,7 +126,7 @@ namespace roboptim
 
   template <typename T>
   typename Polynomial<T>::value_type Polynomial<T>::applyPolynomial
-  (const vector_t& coeffs, const_argument_ref x) const
+  (const_vector_ref coeffs, const_argument_ref x) const
   {
     // Accumulator
     value_type acc = 0;

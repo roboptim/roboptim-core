@@ -81,8 +81,10 @@ namespace roboptim
     /// \brief Problem type
     typedef P problem_t;
 
-    /// \brief Import vector type from problem
-    typedef typename P::vector_t vector_t;
+    /// \brief Import argument types from problem
+    typedef typename P::function_t::argument_t argument_t;
+    typedef typename P::function_t::argument_ref argument_ref;
+    typedef typename P::function_t::const_argument_ref const_argument_ref;
 
     /// \brief Import value type from problem
     typedef typename P::value_type value_type;
@@ -102,8 +104,8 @@ namespace roboptim
 
     /// \brief Retrieve the current optimization parameters.
     /// \return current optimization parameters
-    const vector_t& x () const;
-    vector_t& x ();
+    const_argument_ref x () const;
+    argument_ref x ();
 
     /// \brief Retrieve the current cost.
     /// \return current cost
@@ -146,7 +148,7 @@ namespace roboptim
 
   protected:
     /// \brief Current optimization parameters.
-    vector_t x_;
+    argument_t x_;
 
     /// \brief Current cost.
     /// The solver may not provide the cost at each iteration, hence the use

@@ -111,7 +111,7 @@ template <typename U1, typename U2, typename V1, typename V2>
 void loopCachedFunction
 (boost::shared_ptr<U1>& denseF, CachedFunction<U2>& cachedDenseF,
  boost::shared_ptr<V1>& sparseF, CachedFunction<V2>& cachedSparseF,
- Function::vector_t& x, unsigned n_iter)
+ Function::argument_ref x, unsigned n_iter)
 {
   double max_value = 100;
   double step = max_value/n_iter;

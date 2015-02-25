@@ -45,7 +45,7 @@ namespace roboptim
     /// \param coefficients polynomial coefficients
     /// given in increasing degree order
     /// \throw std::runtime_error
-    explicit Polynomial (const vector_t& coefficients);
+    explicit Polynomial (const_vector_ref coefficients);
 
     virtual ~Polynomial ()
     {}
@@ -70,7 +70,7 @@ namespace roboptim
 
     /// \brief Implement Horner's method.
     value_type applyPolynomial
-    (const vector_t& coeffs, const_argument_ref x) const;
+    (const_vector_ref coeffs, const_argument_ref x) const;
 
   private:
     /// \brief Coefficients of the polynomial

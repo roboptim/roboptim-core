@@ -44,7 +44,7 @@ namespace roboptim
     /// See class documentation for A and b definition.
     /// \param A A matrix
     /// \param b b vector
-    GenericNumericLinearFunction (const matrix_t& A, const vector_t& b);
+    GenericNumericLinearFunction (const_matrix_ref A, const_vector_ref b);
 
     /// \brief Build a linear function from another one.
     GenericNumericLinearFunction (const GenericLinearFunction<T>&);
@@ -57,22 +57,22 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
 
-    const matrix_t& A () const
+    const_matrix_ref A () const
     {
       return a_;
     }
 
-    const vector_t& b () const
+    const_vector_ref b () const
     {
       return b_;
     }
 
-    matrix_t& A ()
+    matrix_ref A ()
     {
       return a_;
     }
 
-    vector_t& b ()
+    vector_ref b ()
     {
       return b_;
     }

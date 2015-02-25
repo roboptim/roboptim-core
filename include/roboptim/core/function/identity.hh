@@ -40,7 +40,7 @@ namespace roboptim
     /// \brief Build an identity function.
     ///
     /// \param offset identity function offset
-    GenericIdentityFunction (const vector_t& offset)
+    GenericIdentityFunction (const_vector_ref offset)
       : GenericLinearFunction<T> (static_cast<size_type> (offset.size ()),
 				  static_cast<size_type> (offset.size ()), "identity"),
       offset_ (offset)

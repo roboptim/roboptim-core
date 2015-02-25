@@ -349,7 +349,7 @@ namespace roboptim
   (const typename solver_t::problem_t& pb,
    const typename solver_t::solverState_t& state,
    const boost::filesystem::path& iterationPath,
-   const typename solver_t::vector_t& x,
+   const_argument_ref x,
    value_type& cstrViol)
   {
     // constraints
@@ -421,7 +421,7 @@ namespace roboptim
   (const typename solver_t::problem_t&,
    const typename solver_t::solverState_t&,
    const boost::filesystem::path&,
-   const typename solver_t::vector_t&,
+   const_argument_ref,
    value_type&)
   {
     // Unconstrained problem: do nothing
@@ -490,7 +490,7 @@ namespace roboptim
 
     // Compute intermediary values.
     // - Store X
-    const typename solver_t::vector_t& x = state.x ();
+    const_argument_ref x = state.x ();
     x_.push_back (x);
     // - Get current time
     boost::posix_time::ptime t =
