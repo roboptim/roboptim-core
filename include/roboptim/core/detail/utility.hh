@@ -27,6 +27,7 @@
 # include <boost/mpl/has_xxx.hpp>
 # include <boost/mpl/logical.hpp>
 # include <boost/mpl/transform.hpp>
+# include <boost/mpl/vector.hpp>
 # include <boost/variant.hpp>
 # include <boost/shared_ptr.hpp>
 # include <boost/type_traits/is_base_of.hpp>
