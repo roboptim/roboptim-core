@@ -28,19 +28,17 @@
 # include <roboptim/core/n-times-derivable-function.hh>
 # include <roboptim/core/cache.hh>
 
-namespace Eigen
-{
-  /// \brief Hash function for argument vectors.
-  /// \param x argument vector.
-  /// \return hash.
-  inline std::size_t hash_value (roboptim::Function::const_argument_ref x)
-  {
-    return boost::hash_range (x.data (), x.data () + x.size ());
-  }
-} // end of namespace Eigen
-
 namespace roboptim
 {
+  /// \brief Hash generator for argument vector.
+  struct Hasher
+  {
+    inline std::size_t operator() (roboptim::Function::const_argument_ref x) const
+    {
+      return boost::hash_range (x.data (), x.data () + x.size ());
+    }
+  };
+
   /// \addtogroup roboptim_filter
   /// @{
 
@@ -69,10 +67,10 @@ namespace roboptim
     /// \brief Key type for the cache.
     typedef argument_t cacheKey_t;
 
-    typedef LRUCache<cacheKey_t, vector_t>   functionCache_t;
-    typedef LRUCache<cacheKey_t, gradient_t> gradientCache_t;
-    typedef LRUCache<cacheKey_t, jacobian_t> jacobianCache_t;
-    typedef LRUCache<cacheKey_t, hessian_t>  hessianCache_t;
+    typedef LRUCache<cacheKey_t, vector_t, Hasher>   functionCache_t;
+    typedef LRUCache<cacheKey_t, gradient_t, Hasher> gradientCache_t;
+    typedef LRUCache<cacheKey_t, jacobian_t, Hasher> jacobianCache_t;
+    typedef LRUCache<cacheKey_t, hessian_t, Hasher>  hessianCache_t;
 
     /// \brief Cache a RobOptim function.
     /// \param fct function to cache.

@@ -22,27 +22,28 @@
 
 namespace roboptim
 {
-  template <typename K, typename V>
-  LRUCache<K,V>::LRUCache (size_t size)
+  template <typename K, typename V, typename H>
+  LRUCache<K,V,H>::LRUCache (size_t size)
     : size_ (size),
       tracker_ (),
       map_ (),
-      pool_ (size)
+      pool_ (size),
+      hasher_ ()
   {
   }
 
-  template <typename K, typename V>
-  LRUCache<K,V>::~LRUCache ()
+  template <typename K, typename V, typename H>
+  LRUCache<K,V,H>::~LRUCache ()
   {}
 
-  template <typename K, typename V>
-  size_t LRUCache<K,V>::size () const
+  template <typename K, typename V, typename H>
+  size_t LRUCache<K,V,H>::size () const
   {
     return size_;
   }
 
-  template <typename K, typename V>
-  void LRUCache<K,V>::resize (size_t size)
+  template <typename K, typename V, typename H>
+  void LRUCache<K,V,H>::resize (size_t size)
   {
     if (size != size_)
       {
@@ -51,35 +52,37 @@ namespace roboptim
       }
   }
 
-  template <typename K, typename V>
-  void LRUCache<K,V>::allocate ()
+  template <typename K, typename V, typename H>
+  void LRUCache<K,V,H>::allocate ()
   {
     // FIXME: breaks iterators in map_?
     map_.rehash (size_);
     tracker_.resize (size_);
   }
 
-  template <typename K, typename V>
-  void LRUCache<K,V>::clear ()
+  template <typename K, typename V, typename H>
+  void LRUCache<K,V,H>::clear ()
   {
     map_.clear ();
     tracker_.clear ();
   }
 
-  template <typename K, typename V>
-  void LRUCache<K,V>::insert (const_key_ref key, const_value_ref value)
+  template <typename K, typename V, typename H>
+  void LRUCache<K,V,H>::insert (const_key_ref key, const_value_ref value)
   {
     V& v = insert (key);
     v = value;
   }
 
-  template <typename K, typename V>
-  V& LRUCache<K,V>::insert (const_key_ref key)
+  template <typename K, typename V, typename H>
+  V& LRUCache<K,V,H>::insert (const_key_ref key)
   {
     typename valuePool_t::iterator v_it;
 
+    hash_t hash = hash_function (key);
+
     // If the key is already in the map
-    iterator iter = map_.find (key);
+    iterator iter = map_.find (hash);
     if (iter != map_.end ())
       {
 	bump (iter->first);
@@ -109,68 +112,68 @@ namespace roboptim
       }
 
     // Add the new key to the tracker
-    tracker_.push_back (key);
+    tracker_.push_back (hash);
 
     // Add the new key to the map
-    typename map_t::value_type p (key, v_it);
+    typename map_t::value_type p (hash, v_it);
     map_.insert (p);
 
     return *v_it;
   }
 
-  template <typename K, typename V>
-  void LRUCache<K,V>::update (iterator iter, const_value_ref value)
+  template <typename K, typename V, typename H>
+  void LRUCache<K,V,H>::update (iterator iter, const_value_ref value)
   {
     bump (iter->first);
     *(iter->second) = value;
   }
 
-  template <typename K, typename V>
-  V& LRUCache<K,V>::update (iterator iter)
+  template <typename K, typename V, typename H>
+  V& LRUCache<K,V,H>::update (iterator iter)
   {
     bump (iter->first);
     return *(iter->second);
   }
 
-  template <typename K, typename V>
-  typename LRUCache<K,V>::iterator
-  LRUCache<K,V>::begin ()
+  template <typename K, typename V, typename H>
+  typename LRUCache<K,V,H>::iterator
+  LRUCache<K,V,H>::begin ()
   {
     return map_.begin ();
   }
 
-  template <typename K, typename V>
-  typename LRUCache<K,V>::iterator
-  LRUCache<K,V>::end ()
+  template <typename K, typename V, typename H>
+  typename LRUCache<K,V,H>::iterator
+  LRUCache<K,V,H>::end ()
   {
     return map_.end ();
   }
 
-  template <typename K, typename V>
-  typename LRUCache<K,V>::const_iterator
-  LRUCache<K,V>::cbegin () const
+  template <typename K, typename V, typename H>
+  typename LRUCache<K,V,H>::const_iterator
+  LRUCache<K,V,H>::cbegin () const
   {
     return map_.cbegin ();
   }
 
-  template <typename K, typename V>
-  typename LRUCache<K,V>::const_iterator
-  LRUCache<K,V>::cend () const
+  template <typename K, typename V, typename H>
+  typename LRUCache<K,V,H>::const_iterator
+  LRUCache<K,V,H>::cend () const
   {
     return map_.cend ();
   }
 
-  template <typename K, typename V>
-  typename LRUCache<K,V>::const_iterator
-  LRUCache<K,V>::find (const_key_ref key) const
+  template <typename K, typename V, typename H>
+  typename LRUCache<K,V,H>::const_iterator
+  LRUCache<K,V,H>::find (const_key_ref key) const
   {
-    return map_.find (key);
+    return map_.find (hash_function (key));
   }
 
-  template <typename K, typename V>
-  V& LRUCache<K,V>::operator [] (const_key_ref key)
+  template <typename K, typename V, typename H>
+  V& LRUCache<K,V,H>::operator [] (const_key_ref key)
   {
-    typename map_t::iterator it = map_.find (key);
+    typename map_t::iterator it = map_.find (hash_function (key));
 
     if (it != map_.end ())
       return update (it);
@@ -178,16 +181,16 @@ namespace roboptim
       return insert (key);
   }
 
-  template <typename K, typename V>
-  typename LRUCache<K,V>::const_iterator
-  LRUCache<K,V>::findLRU () const
+  template <typename K, typename V, typename H>
+  typename LRUCache<K,V,H>::const_iterator
+  LRUCache<K,V,H>::findLRU () const
   {
     // Find the LRU element
     return map_.find (tracker_.front ());
   }
 
-  template <typename K, typename V>
-  void LRUCache<K,V>::bump (const_key_ref key)
+  template <typename K, typename V, typename H>
+  void LRUCache<K,V,H>::bump (const_mapKey_ref key)
   {
     // TODO: optimize this (remove the need for a search algorithm)
     typename keyTracker_t::iterator
@@ -201,9 +204,15 @@ namespace roboptim
     assert (tracker_.size () <= size_);
   }
 
+  template <typename K, typename V, typename H>
+  typename LRUCache<K,V,H>::hash_t
+  LRUCache<K,V,H>::hash_function (const_key_ref key) const
+  {
+    return hasher_ (key);
+  }
 
-  template <typename K, typename V>
-  std::ostream& LRUCache<K,V>::print (std::ostream& o) const
+  template <typename K, typename V, typename H>
+  std::ostream& LRUCache<K,V,H>::print (std::ostream& o) const
   {
     o << "{";
     for (const_iterator iter = map_.begin ();
@@ -211,16 +220,16 @@ namespace roboptim
       {
 	if (iter != map_.begin ())
 	  o << ", ";
-	o << iter->first << ": " << *(iter->second);
+	o << *(iter->second);
       }
     o << "}";
 
     return o;
   }
 
-  template <typename K, typename V>
+  template <typename K, typename V, typename H>
   std::ostream&
-  operator<< (std::ostream& o, const LRUCache<K,V>& cache)
+  operator<< (std::ostream& o, const LRUCache<K,V,H>& cache)
   {
     return cache.print (o);
   }

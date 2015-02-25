@@ -144,7 +144,7 @@ namespace roboptim
   template <typename T>
   struct derivativeSize;
 
-  template <typename K, typename V> class LRUCache;
+  template <typename K, typename V, typename H> class LRUCache;
 
 } // end of namespace roboptim.
 

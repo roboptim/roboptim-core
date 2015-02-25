@@ -27,12 +27,17 @@
 namespace roboptim
 {
   /// \brief LRU (Least Recently Used) cache.
+  ///
+  /// Note that the cache is unidirectional, i.e. the map does not store the
+  /// actual keys, since this was designed with large vectors in mind.
+  ///
   /// \tparam K type for keys.
   /// \tparam V type for values.
+  ///
   /// Some of the ideas used here come from
   /// Tim Day's "LRU cache implementation in C++"
   /// (http://timday.bitbucket.org/lru.html)
-  template <typename K, typename V>
+  template <typename K, typename V, typename H = boost::hash<K> >
   class LRUCache
   {
   public:
@@ -48,18 +53,26 @@ namespace roboptim
     /// \brief Type of const reference to key.
     typedef typename detail::const_ref<value_t>::type const_value_ref;
 
+    /// \brief Hasher type.
+    typedef H hasher_t;
+
+    /// \brief Hash type used by the Boost map.
+    typedef std::size_t hash_t;
+
     typedef std::vector<value_t> valuePool_t;
 
     /// \brief List used to track key usage.
-    // TODO: find a way to store the hash rather than the key.
-    //       The problem is that the tracker's elements are used
-    //       to find elements in the map (and find expects an actual
-    //       key).
-    typedef std::list<key_t> keyTracker_t;
+    /// Note: we use hashes rather than vectors to prevent costly
+    /// allocations.
+    typedef std::list<hash_t> keyTracker_t;
 
-    /// \brief Map from key to iterator in the value pool.
+    /// \brief Key type for the underlying map.
+    typedef hash_t mapKey_t;
+    typedef detail::const_ref<mapKey_t>::type const_mapKey_ref;
+
+    /// \brief Map from map's key to iterator in the value pool.
     typedef boost::unordered_map
-    <key_t, typename valuePool_t::iterator> map_t;
+    <mapKey_t, typename valuePool_t::iterator> map_t;
 
     typedef typename map_t::const_iterator const_iterator;
     typedef typename map_t::iterator       iterator;
@@ -110,6 +123,12 @@ namespace roboptim
     /// \brief Display the cache on the specified output stream.
     virtual std::ostream& print (std::ostream&) const;
 
+  protected:
+    /// \brief Hash function used in the cache.
+    /// \param key key to hash.
+    /// \return hashed key.
+    hash_t hash_function (const_key_ref key) const;
+
   private:
     /// \brief Allocate memory based on the cache's size.
     void allocate ();
@@ -124,7 +143,7 @@ namespace roboptim
     V& insert (const_key_ref key);
 
     /// \brief Notice the tracker that the key was used.
-    void bump (const_key_ref key);
+    void bump (const_mapKey_ref key);
 
     /// \brief Find Least Recently Used element.
     const_iterator findLRU () const;
@@ -141,11 +160,14 @@ namespace roboptim
 
     /// \brief Pool of values to prevent reallocations.
     valuePool_t pool_;
+
+    /// \brief Hasher for the cache.
+    hasher_t hasher_;
   };
 
-  template <typename K, typename V>
+  template <typename K, typename V, typename H>
   std::ostream&
-  operator<< (std::ostream& o, const LRUCache<K,V>& cache);
+  operator<< (std::ostream& o, const LRUCache<K,V,H>& cache);
 
 } // end of namespace roboptim
 
