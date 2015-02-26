@@ -83,8 +83,6 @@ namespace roboptim
 
     /// \brief Import argument types from problem
     typedef typename P::function_t::argument_t argument_t;
-    typedef typename P::function_t::argument_ref argument_ref;
-    typedef typename P::function_t::const_argument_ref const_argument_ref;
 
     /// \brief Import value type from problem
     typedef typename P::value_type value_type;
@@ -104,8 +102,12 @@ namespace roboptim
 
     /// \brief Retrieve the current optimization parameters.
     /// \return current optimization parameters
-    const_argument_ref x () const;
-    argument_ref x ();
+    ///
+    /// Note: we do not use (const_)argument_ref here since this would return a
+    /// reference to a local temporary variable when dealing with Eigen::Ref:
+    ///   const Eigen::Ref<const argument_t>&
+    const argument_t& x () const;
+    argument_t& x ();
 
     /// \brief Retrieve the current cost.
     /// \return current cost

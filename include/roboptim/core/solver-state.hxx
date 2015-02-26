@@ -93,14 +93,14 @@ namespace roboptim
   }
 
   template <typename P>
-  typename SolverState<P>::const_argument_ref
+  const typename SolverState<P>::argument_t&
   SolverState<P>::x () const
   {
     return x_;
   }
 
   template <typename P>
-  typename SolverState<P>::argument_ref
+  typename SolverState<P>::argument_t&
   SolverState<P>::x ()
   {
     return x_;
