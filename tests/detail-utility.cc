@@ -50,6 +50,17 @@ BOOST_AUTO_TEST_CASE (detail_utility)
     TEST_PREDICATE (predicate_t);
   }
 
+  // Test shared_ptr_variant.
+  {
+    typedef vector<int, std::string, bool> testVector_t;
+    typedef shared_ptr_variant<testVector_t>::type testVariant_ptr;
+    typedef variant<shared_ptr<int>, shared_ptr<std::string>, shared_ptr<bool> >
+      expectedTestVariant_ptr;
+    typedef boost::mpl::equal<testVariant_ptr, expectedTestVariant_ptr> predicate_t;
+
+    TEST_PREDICATE (predicate_t);
+  }
+
   // Test is_eigen_type.
   {
     typedef is_eigen_type<Eigen::MatrixXd> predicate1_t;
