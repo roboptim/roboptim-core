@@ -31,6 +31,32 @@ typedef Function::size_type  size_type;
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
+void test_normalization
+(boost::shared_ptr<boost::test_tools::output_test_stream> output)
+{
+  typedef Function::size_type size_type;
+
+  Function::vector_t v (10);
+  for (size_type i = 0; i < v.size (); ++i)
+    {
+      v[i] = std::pow (10., -i);
+    }
+
+  (*output) << v << std::endl
+            << normalize (v) << std::endl;
+
+  Function::matrix_t m (4,4);
+  for (size_type i = 0; i < m.rows (); ++i)
+    for (size_type j = 0; j < m.cols (); ++j)
+      {
+	m(i,j) = std::pow (10., -(m.cols () * i + j));
+      }
+
+  (*output) << m << std::endl
+            << normalize (m) << std::endl;
+
+}
+
 BOOST_AUTO_TEST_CASE (util)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
@@ -119,6 +145,9 @@ BOOST_AUTO_TEST_CASE (util)
   sparse_c = sparse_a;
   copySparseBlock (sparse_c, sparse_block, startRow, startCol, true);
   BOOST_CHECK (allclose (sparse_c, sparse_d));
+
+  // Test normalization
+  test_normalization (output);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

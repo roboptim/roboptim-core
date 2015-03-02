@@ -29,7 +29,6 @@
 
 # include <roboptim/core/function.hh>
 # include <roboptim/core/visualization/fwd.hh>
-# include <roboptim/core/visualization/util.hh>
 # include <roboptim/core/visualization/matplotlib-commands.hh>
 
 namespace roboptim

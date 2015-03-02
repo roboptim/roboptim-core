@@ -89,7 +89,6 @@
 # include <roboptim/core/visualization/matplotlib.hh>
 # include <roboptim/core/visualization/matplotlib-commands.hh>
 # include <roboptim/core/visualization/matplotlib-function.hh>
-# include <roboptim/core/visualization/util.hh>
 
 
 #endif //! ROBOPTIM_CORE_HH

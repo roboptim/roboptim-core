@@ -129,7 +129,6 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/matplotlib-commands.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/matplotlib-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/matplotlib.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/visualization/util.hh
   )
 
 SETUP_PROJECT()

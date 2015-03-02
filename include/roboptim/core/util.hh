@@ -109,6 +109,18 @@ namespace roboptim
    const U& block,
    Function::size_type startRow, Function::size_type startCol,
    bool compress = false);
+
+  /// \brief Apply normalize to each element of a matrix.
+  inline Function::matrix_t normalize (Function::const_matrix_ref x);
+
+  /// \brief Normalize floating point number output.
+  /// Normalization is done on all displayed floating
+  /// point numbers to get a consistent output.
+  inline double normalize (const double& x);
+
+  /// \brief Apply normalize to each element of a container.
+  template <typename T>
+  T normalize (const T& x);
 } // end of namespace roboptim.
 
 # include <roboptim/core/util.hxx>
