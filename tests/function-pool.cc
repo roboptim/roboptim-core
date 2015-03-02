@@ -69,7 +69,10 @@ public:
   typedef Function::const_argument_ref const_argument_ref;
   typedef EngineData data_t;
 
-  Engine (std::size_t N) : data_ (N)
+  Engine (std::size_t N)
+    : data_ (N),
+      compute_counter_ (0),
+      jacobian_counter_ (0)
   {
   }
 
@@ -83,6 +86,9 @@ public:
   void compute (const_argument_ref x)
   {
     (*output) << "Engine: calling compute" << std::endl;
+
+    // Increase the computer counter
+    compute_counter_++;
 
     point_t arm;
     arm << data_.length, 0.;
@@ -100,6 +106,9 @@ public:
   void jacobian (const_argument_ref x)
   {
     (*output) << "Engine: calling jacobian" << std::endl;
+
+    // Increase the Jacobian counter
+    jacobian_counter_++;
 
     point_t arm;
     arm << data_.length, 0.;
@@ -129,8 +138,15 @@ public:
     }
   }
 
+  size_t computeCounter () { return compute_counter_; }
+  size_t jacobianCounter () { return jacobian_counter_; }
+  void reset () { compute_counter_ = jacobian_counter_ = 0; }
+
 private:
   data_t data_;
+
+  size_t compute_counter_;
+  size_t jacobian_counter_;
 };
 
 
@@ -212,7 +228,11 @@ void Position<EigenMatrixSparse>::impl_gradient
 {
   // For each argument
   for (size_type i = 0; i < this->inputSize (); ++i)
-    grad.coeffRef (i) = engine_->data ().grad[static_cast<std::size_t> (i)][1+idx_][dim];
+  {
+    value_type val = engine_->data ().grad[static_cast<std::size_t> (i)][1+idx_][dim];
+    if (std::abs (val) > epsilon ())
+      grad.coeffRef (i) = val;
+  }
 }
 
 
@@ -241,7 +261,7 @@ struct PositionConstraintVisitor : public boost::static_visitor<>
   {
     (*output) << (*f) << std::endl;
     (*output) << (*f) (x_) << std::endl;
-    (*output) << to_dense (f->jacobian (x_)) << std::endl;
+    (*output) << normalize (to_dense (f->jacobian (x_))) << std::endl;
   }
 
   private:
@@ -292,6 +312,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
   // Pre-allocate memory
   result_t res (pool->outputSize ());
   res.setZero ();
+  result_t fd_res (pool->outputSize ());
+  fd_res.setZero ();
   jacobian_t jac (pool->outputSize (), pool->inputSize ());
   jac.setZero ();
   jacobian_t fd_jac (pool->outputSize (), pool->inputSize ());
@@ -308,13 +330,31 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
 
   // Call the pool
   (*pool) (res, x);
+  BOOST_CHECK_EQUAL (engine->computeCounter (), 1);
+  BOOST_CHECK_EQUAL (engine->jacobianCounter (), 0);
+  engine->reset ();
+
   pool->jacobian (jac, x);
+  BOOST_CHECK_EQUAL (engine->computeCounter (), 0);
+  BOOST_CHECK_EQUAL (engine->jacobianCounter (), 1);
+  engine->reset ();
 
   // Compare gradient with finite differences
-  GenericFiniteDifferenceGradient<T> fd_pool (*pool);
-  fd_pool.jacobian (fd_jac, x);
+  typedef typename finiteDifferenceGradientPolicies::Simple<T> fdRule_t;
+  GenericFiniteDifferenceGradient<T, fdRule_t> fd_pool (*pool);
 
-  denseJac = to_dense (jac);
+  (fd_pool) (fd_res, x);
+  BOOST_CHECK_EQUAL (engine->computeCounter (), 1);
+  BOOST_CHECK_EQUAL (engine->jacobianCounter (), 0);
+  engine->reset ();
+
+  fd_pool.jacobian (fd_jac, x);
+  // For the simple rule, we only need: f(x), f(x+h₀), f(x+h₁) etc.
+  BOOST_CHECK_EQUAL (engine->computeCounter (), 1 + pool->inputSize ());
+  BOOST_CHECK_EQUAL (engine->jacobianCounter (), 0);
+  engine->reset ();
+
+  denseJac = normalize (to_dense (jac));
 
   // Print the result
   (*output) << "x = " << x << std::endl;
@@ -331,10 +371,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
     boost::apply_visitor (visitor, *iter);
   }
 
-  fd_denseJac = to_dense (fd_jac);
+  fd_denseJac = normalize (to_dense (fd_jac));
   (*output) << fd_denseJac << std::endl;
 
-  BOOST_CHECK (allclose (jac, fd_jac, 1e-6, 1e-6));
+  BOOST_CHECK (res.isApprox (fd_res, 1e-6));
+  BOOST_CHECK (jac.isApprox (fd_jac, 1e-6));
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

@@ -149,6 +149,7 @@ namespace roboptim
 
       explicit Policy (const GenericFunction<T>& adaptee)
 	: adaptee_ (adaptee),
+	  column_ (adaptee.outputSize ()),
 	  gradient_ (adaptee.inputSize ())
       {}
 
@@ -162,6 +163,13 @@ namespace roboptim
        size_type idFunction,
        argument_ref xEps) const = 0;
 
+      virtual void computeColumn
+      (value_type epsilon,
+       gradient_ref column,
+       const_argument_ref argument,
+       size_type colIdx,
+       argument_ref xEps) const = 0;
+
       virtual void computeJacobian
       (value_type epsilon,
        jacobian_ref jacobian,
@@ -169,8 +177,13 @@ namespace roboptim
        argument_ref xEps) const;
 
     protected:
+      /// \brief Wrapped function.
       const GenericFunction<T>& adaptee_;
-    private:
+
+      /// \brief Vector storing temporary Jacobian row.
+      mutable gradient_t column_;
+
+      /// \brief Vector storing temporary Jacobian column.
       mutable gradient_t gradient_;
     };
 
@@ -184,17 +197,32 @@ namespace roboptim
       ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
       (GenericDifferentiableFunction<T>);
 
+      typedef Policy<T> policy_t;
+
       explicit Simple (const GenericFunction<T>& adaptee)
 	: Policy<T> (adaptee),
-	  result_ (adaptee.outputSize ()),
-	  resultEps_ (adaptee.outputSize ())
+	result_ (adaptee.outputSize ()),
+	resultEps_ (adaptee.outputSize ())
       {}
+
+      void computeColumn
+      (value_type epsilon,
+       gradient_ref column,
+       const_argument_ref argument,
+       size_type colIdx,
+       argument_ref xEps) const;
 
       void computeGradient
       (value_type epsilon,
        gradient_ref gradient,
        const_argument_ref argument,
        size_type idFunction,
+       argument_ref xEps) const;
+
+      void computeJacobian
+      (value_type epsilon,
+       jacobian_ref jacobian,
+       const_argument_ref argument,
        argument_ref xEps) const;
 
     private:
@@ -215,14 +243,27 @@ namespace roboptim
 
       explicit FivePointsRule (const GenericFunction<T>& adaptee)
 	: Policy<T> (adaptee),
-	  tmpResult_ (adaptee.outputSize ())
+	tmpResult_ (adaptee.outputSize ())
       {}
+
+      void computeColumn
+      (value_type epsilon,
+       gradient_ref column,
+       const_argument_ref argument,
+       size_type colIdx,
+       argument_ref xEps) const;
 
       void computeGradient
       (value_type epsilon,
        gradient_ref gradient,
        const_argument_ref argument,
        size_type idFunction,
+       argument_ref xEps) const;
+
+      void computeJacobian
+      (value_type epsilon,
+       jacobian_ref jacobian,
+       const_argument_ref argument,
        argument_ref xEps) const;
 
       void

@@ -117,11 +117,11 @@ namespace roboptim
   (const GenericFunction<T>& adaptee,
    typename GenericDifferentiableFunction<T>::value_type epsilon)
     : GenericDifferentiableFunction<T>
-      (adaptee.inputSize (), adaptee.outputSize ()),
-      FdgPolicy (adaptee),
-      adaptee_ (adaptee),
-      epsilon_ (epsilon),
-      xEps_ (adaptee.inputSize ())
+    (adaptee.inputSize (), adaptee.outputSize ()),
+    FdgPolicy (adaptee),
+    adaptee_ (adaptee),
+    epsilon_ (epsilon),
+    xEps_ (adaptee.inputSize ())
   {
     // Avoid meaningless values for epsilon such as 0 or NaN.
     assert (epsilon != 0. && epsilon == epsilon);
@@ -226,8 +226,7 @@ namespace roboptim
   }
 
   template <typename T, typename FdgPolicy>
-  GenericFiniteDifferenceGradient<
-    T, FdgPolicy>::~GenericFiniteDifferenceGradient ()
+  GenericFiniteDifferenceGradient<T, FdgPolicy>::~GenericFiniteDifferenceGradient ()
   {
   }
 
@@ -394,6 +393,7 @@ namespace roboptim
       round = std::fabs (e5 / h) + dy; // Rounding error (cancellations)
     }
 
+
     template <>
     inline void
     Policy<EigenMatrixSparse>::computeJacobian
@@ -409,23 +409,25 @@ namespace roboptim
       typedef Eigen::Triplet<double> triplet_t;
 
       std::vector<triplet_t> coefficients;
-      for (jacobian_t::Index i = 0; i < this->adaptee_.outputSize (); ++i)
+
+      // For each column
+      for (jacobian_t::Index j = 0; j < this->adaptee_.inputSize (); ++j)
         {
-          gradient_t grad (this->adaptee_.inputSize ());
+          gradient_t col (this->adaptee_.outputSize ());
 
-          computeGradient (epsilon, grad, argument, i, xEps);
+          computeColumn (epsilon, col, argument, j, xEps);
 
-          const matrix_t::Index i_ = static_cast<const matrix_t::Index> (i);
-          for (gradient_t::InnerIterator it (grad); it; ++it)
+          const matrix_t::Index j_ = static_cast<const matrix_t::Index> (j);
+          for (gradient_t::InnerIterator it (col); it; ++it)
             {
               const matrix_t::Index idx =
                 static_cast<const matrix_t::Index> (it.index ());
 
               assert (idx < static_cast<const matrix_t::Index>
-                      (this->adaptee_.inputSize ()));
+                      (this->adaptee_.outputSize ()));
 
               coefficients.push_back
-		(triplet_t (i_, idx, it.value ()));
+		(triplet_t (idx, j_, it.value ()));
 	    }
 	}
       jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
@@ -439,12 +441,13 @@ namespace roboptim
      const_argument_ref argument,
      argument_ref xEps) const
     {
-      for (typename jacobian_t::Index i = 0;
-	   i < this->adaptee_.outputSize(); ++i)
+      // For each Jacobian column
+      for (typename jacobian_t::Index j = 0;
+	   j < this->adaptee_.inputSize(); ++j)
 	{
-          gradient_.setZero();
-          computeGradient (epsilon, gradient_, argument, i, xEps);
-          jacobian.row (i) = gradient_;
+          column_.setZero();
+          computeColumn (epsilon, column_, argument, j, xEps);
+          jacobian.col (j) = column_;
 	}
     }
 
@@ -489,6 +492,57 @@ namespace roboptim
 	  gradient (j) =
 	    (resultEps_[idFunction] - result_[idFunction]) / epsilon;
 	}
+    }
+
+
+    template <>
+    inline void
+    Simple<EigenMatrixSparse>::computeColumn
+    (value_type epsilon,
+     gradient_ref column,
+     const_argument_ref argument,
+     size_type colIdx,
+     argument_ref xEps) const
+    {
+      assert (adaptee_.inputSize () - colIdx > 0);
+      // Note: result_ = f(x) should have been called already
+      xEps = argument;
+      xEps[colIdx] += epsilon;
+      adaptee_ (resultEps_, xEps);
+      // Note: actual zeros won't be added to the sparse matrix
+      column = ((resultEps_ - result_) / epsilon).sparseView ();
+    }
+
+    template <typename T>
+    void
+    Simple<T>::computeColumn
+    (value_type epsilon,
+     gradient_ref column,
+     const_argument_ref argument,
+     size_type colIdx,
+     argument_ref xEps) const
+    {
+      assert (this->adaptee_.inputSize () - colIdx > 0);
+      // Note: result_ = f(x) should have been called already
+      xEps = argument;
+      xEps[colIdx] += epsilon;
+      this->adaptee_ (resultEps_, xEps);
+      column = (resultEps_ - result_) / epsilon;
+    }
+
+    template <typename T>
+    void
+    Simple<T>::computeJacobian
+    (value_type epsilon,
+     jacobian_ref jacobian,
+     const_argument_ref argument,
+     argument_ref xEps) const
+    {
+      // Data used by each computeColumn
+      this->adaptee_ (result_, argument);
+
+      // Call parent Jacobian
+      policy_t::computeJacobian (epsilon, jacobian, argument, xEps);
     }
 
     template <>
@@ -603,6 +657,87 @@ namespace roboptim
 
 	  gradient[j] = r_0;
 	}
+    }
+
+
+    template <>
+    inline void FivePointsRule<EigenMatrixSparse>::computeJacobian
+    (value_type epsilon,
+     jacobian_ref jacobian,
+     const_argument_ref argument,
+     argument_ref xEps) const
+    {
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      Eigen::internal::set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
+      typedef Eigen::Triplet<double> triplet_t;
+
+      std::vector<triplet_t> coefficients;
+      for (jacobian_t::Index i = 0; i < this->adaptee_.outputSize (); ++i)
+        {
+          gradient_t grad (this->adaptee_.inputSize ());
+
+          computeGradient (epsilon, grad, argument, i, xEps);
+
+          const matrix_t::Index i_ = static_cast<const matrix_t::Index> (i);
+          for (gradient_t::InnerIterator it (grad); it; ++it)
+            {
+              const matrix_t::Index idx =
+                static_cast<const matrix_t::Index> (it.index ());
+
+              assert (idx < static_cast<const matrix_t::Index>
+                      (this->adaptee_.inputSize ()));
+
+              coefficients.push_back
+		(triplet_t (i_, idx, it.value ()));
+	    }
+	}
+      jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
+    }
+
+    template <typename T>
+    void FivePointsRule<T>::computeJacobian
+    (value_type epsilon,
+     jacobian_ref jacobian,
+     const_argument_ref argument,
+     argument_ref xEps) const
+    {
+      for (typename jacobian_t::Index i = 0;
+	   i < this->adaptee_.outputSize(); ++i)
+	{
+          this->gradient_.setZero();
+          computeGradient (epsilon, this->gradient_, argument, i, xEps);
+          jacobian.row (i) = this->gradient_;
+	}
+    }
+
+
+    template <>
+    inline void
+    FivePointsRule<EigenMatrixSparse>::computeColumn
+    (value_type /*epsilon*/,
+     gradient_ref /*column*/,
+     const_argument_ref /*argument*/,
+     size_type /*colIdx*/,
+     argument_ref /*xEps*/) const
+    {
+      // TODO: implement for the column-wise Jacobian computation
+      throw std::runtime_error ("Not implemented");
+    }
+
+
+    template <typename T>
+    void
+    FivePointsRule<T>::computeColumn
+    (value_type /*epsilon*/,
+     gradient_ref /*column*/,
+     const_argument_ref /*argument*/,
+     size_type /*colIdx*/,
+     argument_ref /*xEps*/) const
+    {
+      // TODO: implement for the column-wise Jacobian computation
+      throw std::runtime_error ("Not implemented");
     }
   } // end of namespace finiteDifferenceGradientPolicies.
 
