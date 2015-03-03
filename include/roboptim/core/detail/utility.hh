@@ -215,6 +215,35 @@ namespace roboptim
                       boost::is_base_of<SparseFunction, F> >
     {};
 
+    /// \brief Checks whether the function type derives from
+    /// DifferentiableFunction or DifferentiableSparseFunction.
+    ///
+    /// \tparam F function type.
+    template <typename F>
+    struct derives_from_differentiable_function :
+      boost::mpl::or_<boost::is_base_of<DifferentiableFunction, F>,
+                      boost::is_base_of<DifferentiableSparseFunction, F> >
+    {};
+
+    /// \brief Checks whether the function type derives from
+    /// TwiceDifferentiableFunction or TwiceDifferentiableSparseFunction.
+    ///
+    /// \tparam F function type.
+    template <typename F>
+    struct derives_from_twice_differentiable_function :
+      boost::mpl::or_<boost::is_base_of<TwiceDifferentiableFunction, F>,
+                      boost::is_base_of<TwiceDifferentiableSparseFunction, F> >
+    {};
+
+    /// \brief Checks whether the function type derives from
+    /// NTimesDerivableFunction.
+    ///
+    /// \tparam F function type.
+    template <typename F>
+    struct derives_from_ntimes_derivable_function :
+      boost::is_base_of<NTimesDerivableFunction<2>, F>
+    {};
+
     /// \brief Checks whether all the constraints derive from Function or
     /// SparseFunction.
     ///
