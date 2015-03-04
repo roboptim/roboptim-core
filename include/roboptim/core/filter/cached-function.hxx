@@ -17,9 +17,13 @@
 
 #ifndef ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HXX
 # define ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HXX
+
 # include <boost/format.hpp>
+# include <boost/utility/enable_if.hpp>
 
 # include <roboptim/core/derivative-size.hh>
+# include <roboptim/core/n-times-derivable-function.hh>
+# include <roboptim/core/detail/utility.hh>
 
 namespace roboptim
 {
@@ -35,8 +39,44 @@ namespace roboptim
       fmt % fct.getName ();
       return fmt.str ();
     }
-
   } // end of anonymous namespace.
+
+  namespace detail
+  {
+    template <typename T>
+    struct CachedFunctionTypes
+    {
+      typedef typename T::traits_t traits_t;
+      typedef CachedFunction<T> cachedFunction_t;
+
+      ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+      (GenericTwiceDifferentiableFunction<traits_t>);
+
+      typedef typename boost::enable_if<detail::
+					derives_from_differentiable_function<T> >
+      isDifferentiable_t;
+
+      typedef typename boost::disable_if<detail::
+					 derives_from_differentiable_function<T> >
+      isNotDifferentiable_t;
+
+      typedef typename boost::enable_if<detail::
+					derives_from_twice_differentiable_function<T> >
+      isTwiceDifferentiable_t;
+
+      typedef typename boost::disable_if<detail::
+					 derives_from_twice_differentiable_function<T> >
+      isNotTwiceDifferentiable_t;
+
+      typedef typename boost::enable_if<detail::
+					derives_from_twice_differentiable_function<T> >
+      isNTimesDerivable_t;
+
+      typedef typename boost::disable_if<detail::
+					 derives_from_ntimes_derivable_function<T> >
+      isNotNTimesDerivable_t;
+    };
+  } // end of namespace detail
 
   template <typename T>
   CachedFunction<T>::CachedFunction (boost::shared_ptr<const T> fct,
@@ -103,26 +143,37 @@ namespace roboptim
     cache_[0][argument] = result;
   }
 
-
-  template <>
-  inline void
-  CachedFunction<Function>::impl_gradient (gradient_ref,
-                                           const_argument_ref,
-                                           size_type)
+  template <typename T>
+  template <typename U>
+  void CachedFunction<T>::cachedFunctionGradient (gradient_ref gradient,
+                                                  const_argument_ref argument,
+                                                  size_type functionId,
+                                                  typename detail::CachedFunctionTypes<U>::isDifferentiable_t::type*)
     const
   {
+    typename gradientCache_t::const_iterator it = gradientCache_
+      [static_cast<std::size_t> (functionId)].find (argument);
+    if (it != gradientCache_[static_cast<std::size_t> (functionId)].end ())
+      {
+	gradient = *(it->second);
+	return;
+      }
+    function_->gradient (gradient, argument, functionId);
+    gradientCache_[static_cast<std::size_t> (functionId)][argument] = gradient;
+  }
+
+  template <typename T>
+  template <typename U>
+  void CachedFunction<T>::cachedFunctionGradient (gradient_ref,
+                                                  const_argument_ref,
+                                                  size_type,
+                                                  typename detail::CachedFunctionTypes<U>::isNotDifferentiable_t::type*)
+    const
+  {
+    // Not differentiable
     assert (0);
   }
 
-  template <>
-  inline void
-  CachedFunction<SparseFunction>::impl_gradient (gradient_ref,
-                                                 const_argument_ref,
-                                                 size_type)
-    const
-  {
-    assert (0);
-  }
 
   template <typename T>
   void
@@ -131,44 +182,15 @@ namespace roboptim
                                     size_type functionId)
     const
   {
-    typename CachedFunction<T>::gradientCache_t::
-      const_iterator it = gradientCache_
-      [static_cast<std::size_t> (functionId)].find (argument);
-    if (it != gradientCache_[static_cast<std::size_t> (functionId)].end ())
-      {
-        gradient = *(it->second);
-        return;
-      }
-    function_->gradient (gradient, argument, functionId);
-    gradientCache_[static_cast<std::size_t> (functionId)][argument]
-      = gradient;
+    cachedFunctionGradient<T> (gradient, argument, functionId);
   }
-
-
-  template <>
-  inline void
-  CachedFunction<Function>::impl_jacobian
-  (jacobian_ref,
-   const_argument_ref) const
-  {
-    assert (0);
-  }
-
-  template <>
-  inline void
-  CachedFunction<SparseFunction>::impl_jacobian
-  (jacobian_ref,
-   const_argument_ref) const
-  {
-    assert (0);
-  }
-
 
   template <typename T>
-  void
-  CachedFunction<T>::impl_jacobian
-  (jacobian_ref jacobian,
-   const_argument_ref argument) const
+  template <typename U>
+  void CachedFunction<T>::cachedFunctionJacobian (jacobian_ref jacobian,
+                                                  const_argument_ref argument,
+                                                  typename detail::CachedFunctionTypes<U>::isDifferentiable_t::type*)
+    const
   {
     typename CachedFunction<T>::jacobianCache_t::
       const_iterator it = jacobianCache_.find (argument);
@@ -181,45 +203,34 @@ namespace roboptim
     jacobianCache_[argument] = jacobian;
   }
 
-
-  template <>
-  inline void
-  CachedFunction<Function>::impl_hessian
-  (hessian_ref, const_argument_ref, size_type) const
+  template <typename T>
+  template <typename U>
+  void CachedFunction<T>::cachedFunctionJacobian (jacobian_ref,
+                                                  const_argument_ref,
+                                                  typename detail::CachedFunctionTypes<U>::isNotDifferentiable_t::type*)
+    const
   {
-    assert (0);
-  }
-
-  template <>
-  inline void
-  CachedFunction<SparseFunction>::impl_hessian
-  (hessian_ref, const_argument_ref, size_type) const
-  {
-    assert (0);
-  }
-
-  template <>
-  inline void
-  CachedFunction<DifferentiableFunction>::impl_hessian
-  (hessian_ref, const_argument_ref, size_type) const
-  {
-    assert (0);
-  }
-
-  template <>
-  inline void
-  CachedFunction<DifferentiableSparseFunction>::impl_hessian
-  (hessian_ref, const_argument_ref, size_type) const
-  {
+    // Not differentiable
     assert (0);
   }
 
 
   template <typename T>
   void
-  CachedFunction<T>::impl_hessian (hessian_ref hessian,
-  				   const_argument_ref argument,
-  				   size_type functionId)
+  CachedFunction<T>::impl_jacobian
+  (jacobian_ref jacobian,
+   const_argument_ref argument) const
+  {
+    cachedFunctionJacobian<T> (jacobian, argument);
+  }
+
+
+  template <typename T>
+  template <typename U>
+  void CachedFunction<T>::cachedFunctionHessian (hessian_ref hessian,
+                                                 const_argument_ref argument,
+                                                 size_type functionId,
+                                                 typename detail::CachedFunctionTypes<U>::isTwiceDifferentiable_t::type*)
     const
   {
     //FIXME: bug detected by Clang. To be fixed.
@@ -238,59 +249,36 @@ namespace roboptim
   }
 
 
-  template <>
-  inline void
-  CachedFunction<Function>::impl_derivative
-  (gradient_ref, value_type, size_type) const
+  template <typename T>
+  template <typename U>
+  void CachedFunction<T>::cachedFunctionHessian (hessian_ref,
+                                                 const_argument_ref,
+                                                 size_type,
+                                                 typename detail::CachedFunctionTypes<U>::isNotTwiceDifferentiable_t::type*)
+    const
   {
+    // Not twice-differentiable
     assert (0);
   }
 
-  template <>
-  inline void
-  CachedFunction<SparseFunction>::impl_derivative
-  (gradient_ref, value_type, size_type) const
-  {
-    assert (0);
-  }
-
-  template <>
-  inline void
-  CachedFunction<DifferentiableFunction>::impl_derivative
-  (gradient_ref, value_type, size_type) const
-  {
-    assert (0);
-  }
-
-  template <>
-  inline void
-  CachedFunction<DifferentiableSparseFunction>::impl_derivative
-  (gradient_ref, value_type, size_type) const
-  {
-    assert (0);
-  }
-
-  template <>
-  inline void
-  CachedFunction<TwiceDifferentiableFunction>::impl_derivative
-  (gradient_ref, value_type, size_type) const
-  {
-    assert (0);
-  }
-
-  template <>
-  inline void
-  CachedFunction<TwiceDifferentiableSparseFunction>::impl_derivative
-  (gradient_ref, value_type, size_type) const
-  {
-    assert (0);
-  }
 
   template <typename T>
   void
-  CachedFunction<T>::impl_derivative (gradient_ref derivative,
-  				      value_type argument,
-  				      size_type order)
+  CachedFunction<T>::impl_hessian (hessian_ref hessian,
+  				   const_argument_ref argument,
+  				   size_type functionId)
+    const
+  {
+    cachedFunctionHessian<T> (hessian, argument, functionId);
+  }
+
+
+  template <typename T>
+  template <typename U>
+  void CachedFunction<T>::cachedFunctionDerivative (gradient_ref derivative,
+                                                    value_type argument,
+                                                    size_type order,
+                                                    typename detail::CachedFunctionTypes<U>::isNTimesDerivable_t::type*)
     const
   {
     typename T::vector_t x (1);
@@ -304,6 +292,30 @@ namespace roboptim
       }
     function_->derivative (derivative, x, order);
     cache_[order][x] = derivative;
+  }
+
+
+  template <typename T>
+  template <typename U>
+  void CachedFunction<T>::cachedFunctionDerivative (gradient_ref,
+                                                    value_type,
+                                                    size_type,
+                                                    typename detail::CachedFunctionTypes<U>::isNotNTimesDerivable_t::type*)
+    const
+  {
+    // Not n-times derivable
+    assert (0);
+  }
+
+
+  template <typename T>
+  void
+  CachedFunction<T>::impl_derivative (gradient_ref derivative,
+  				      value_type argument,
+  				      size_type order)
+    const
+  {
+    cachedFunctionDerivative<T> (derivative, argument, order);
   }
 
 } // end of namespace roboptim
