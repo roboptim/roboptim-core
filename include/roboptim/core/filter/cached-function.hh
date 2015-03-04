@@ -80,7 +80,7 @@ namespace roboptim
     /// \brief Cache a RobOptim function.
     /// \param fct function to cache.
     /// \param size size of the LRU cache.
-    explicit CachedFunction (boost::shared_ptr<const T> fct,
+    explicit CachedFunction (boost::shared_ptr<T> fct,
                              size_t size = 10);
     ~CachedFunction ();
 
@@ -165,7 +165,7 @@ namespace roboptim
                                   size_type order = 1) const;
 
   protected:
-    boost::shared_ptr<const T> function_;
+    boost::shared_ptr<T> function_;
     mutable std::vector<functionCache_t> cache_;
     mutable std::vector<gradientCache_t> gradientCache_;
     mutable jacobianCache_t jacobianCache_;

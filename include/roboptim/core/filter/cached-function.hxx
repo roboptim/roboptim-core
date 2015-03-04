@@ -79,7 +79,7 @@ namespace roboptim
   } // end of namespace detail
 
   template <typename T>
-  CachedFunction<T>::CachedFunction (boost::shared_ptr<const T> fct,
+  CachedFunction<T>::CachedFunction (boost::shared_ptr<T> fct,
                                      size_t size)
     : T (fct->inputSize (), fct->outputSize (), cachedFunctionName (*fct)),
       function_ (fct),
