@@ -138,29 +138,15 @@ namespace roboptim
       matrix.makeCompressed ();
   }
 
-  inline double normalize (const double& x)
+  inline double normalize (double x)
   {
-    if (std::fabs (x) < 1e-8)
-      return 0.;
-    return x;
-  }
-
-  inline Function::matrix_t normalize (Function::const_matrix_ref x)
-  {
-    Function::matrix_t res (x.rows (), x.cols ());
-    for (Function::size_type i = 0; i < x.rows (); ++i)
-      for (Function::size_type j = 0; j < x.cols (); ++j)
-        res (i, j) = normalize (x (i, j));
-    return res;
+      return (std::fabs (x) < 1e-8)? 0:x;
   }
 
   template <typename T>
-  T normalize (const T& x)
+  inline T normalize (const T& x)
   {
-    T res (x.size ());
-    for (Function::size_type i = 0; i < x.size (); ++i)
-      res[i] = normalize (x[i]);
-    return res;
+    return (x.array ().abs () < 1e-8).select (0, x);
   }
 } // end of namespace roboptim.
 
