@@ -30,7 +30,6 @@
 # include <roboptim/core/result-with-warnings.hh>
 # include <roboptim/core/derivable-function.hh>
 # include <roboptim/core/derivable-parametrized-function.hh>
-# include <roboptim/core/finite-difference-gradient.hh>
 # include <roboptim/core/function.hh>
 # include <roboptim/core/generic-solver.hh>
 # include <roboptim/core/function/constant.hh>
@@ -55,10 +54,12 @@
 // Callbacks.
 # include <roboptim/core/callback/multiplexer.hh>
 
+// Decorators.
+# include <roboptim/core/decorator/cached-function.hh>
+# include <roboptim/core/decorator/finite-difference-gradient.hh>
 
-// Filters.
+// Operators.
 # include <roboptim/core/operator/bind.hh>
-# include <roboptim/core/operator/cached-function.hh>
 # include <roboptim/core/operator/chain.hh>
 # include <roboptim/core/operator/concatenate.hh>
 # include <roboptim/core/operator/derivative.hh>

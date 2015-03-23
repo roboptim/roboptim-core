@@ -20,7 +20,7 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/finite-difference-gradient.hh>
+#include <roboptim/core/decorator/finite-difference-gradient.hh>
 #include <roboptim/core/numeric-quadratic-function.hh>
 #include <roboptim/core/util.hh>
 

@@ -25,7 +25,7 @@
 
 #include <iostream>
 
-#include <roboptim/core/finite-difference-gradient.hh>
+#include <roboptim/core/decorator/finite-difference-gradient.hh>
 #include <roboptim/core/io.hh>
 #include <roboptim/core/operator/chain.hh>
 #include <roboptim/core/operator/selection.hh>

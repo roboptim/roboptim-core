@@ -32,7 +32,7 @@
 #include <roboptim/core/io.hh>
 #include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/function-pool.hh>
-#include <roboptim/core/finite-difference-gradient.hh>
+#include <roboptim/core/decorator/finite-difference-gradient.hh>
 #include <roboptim/core/util.hh>
 
 using namespace roboptim;

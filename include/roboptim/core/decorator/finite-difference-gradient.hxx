@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HXX
-# define ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HXX
+#ifndef ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX
+# define ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX
 # include <boost/type_traits/is_same.hpp>
 # include <boost/mpl/same_as.hpp>
 
@@ -743,4 +743,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_FINITE_DIFFERENCE_GRADIENT_HXX
+#endif //! ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX

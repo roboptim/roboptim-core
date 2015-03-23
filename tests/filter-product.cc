@@ -28,7 +28,7 @@
 
 #include <roboptim/core/function/constant.hh>
 #include <roboptim/core/function/identity.hh>
-#include <roboptim/core/finite-difference-gradient.hh>
+#include <roboptim/core/decorator/finite-difference-gradient.hh>
 
 using namespace roboptim;
 

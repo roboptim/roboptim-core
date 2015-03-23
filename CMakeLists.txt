@@ -42,6 +42,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/decorator/cached-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/decorator/cached-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/decorator/finite-difference-gradient.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/decorator/finite-difference-gradient.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/bind.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/bind.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/chain.hh
@@ -66,7 +68,6 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/split.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/split.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hh
