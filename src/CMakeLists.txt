@@ -52,7 +52,7 @@ PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 TARGET_LINK_LIBRARIES(roboptim-core ltdl)
-SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 2 VERSION 2.0.0)
+SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 3 VERSION 3.0.0)
 INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 
@@ -65,7 +65,7 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES PREFIX "")
 
 IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy
-    PROPERTIES VERSION 2.0.0 SOVERSION 2)
+    PROPERTIES VERSION 3.0.0 SOVERSION 3)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
 
@@ -78,7 +78,7 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES PREFIX "")
 
 IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate
-    PROPERTIES VERSION 2.0.0 SOVERSION 2)
+    PROPERTIES VERSION 3.0.0 SOVERSION 3)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
 
@@ -91,7 +91,7 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-d-sparse-laststate PROPERTIES P
 
 IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-d-sparse-laststate
-    PROPERTIES VERSION 2.0.0 SOVERSION 2)
+    PROPERTIES VERSION 3.0.0 SOVERSION 3)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-d-sparse-laststate DESTINATION ${PLUGINDIR})
 
@@ -104,7 +104,7 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td PROPERTIES PREFIX "")
 
 IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td
-    PROPERTIES VERSION 2.0.0 SOVERSION 2)
+    PROPERTIES VERSION 3.0.0 SOVERSION 3)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-td DESTINATION ${PLUGINDIR})
 
