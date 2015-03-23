@@ -206,7 +206,7 @@ typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
 BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_jacobian, T, functionTypes_t)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("finite-difference-jacobian");
+    output = retrievePattern ("decorator-finite-difference-jacobian");
 
   FGood<T> fg;
   FBad<T> fb;

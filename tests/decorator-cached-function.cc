@@ -132,7 +132,7 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (cached_function)
 {
-  output = retrievePattern ("filter-cached-function");
+  output = retrievePattern ("decorator-cached-function");
 
   // First: test dense cached function
   boost::shared_ptr<DenseF> dense_f (new DenseF ());
@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE (cached_function)
   BOOST_CHECK (output->match_pattern (true));
 
   // Second: test sparse cached function
-  output = retrievePattern ("filter-cached-function");
+  output = retrievePattern ("decorator-cached-function");
   boost::shared_ptr<SparseF> sparse_f (new SparseF ());
 
   CachedFunction<DifferentiableSparseFunction> cachedSparseF (sparse_f);

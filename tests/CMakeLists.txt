@@ -115,10 +115,6 @@ ROBOPTIM_CORE_TEST(solver-state)
 ROBOPTIM_CORE_TEST(optimization-logger)
 ROBOPTIM_CORE_TEST(multiplexer)
 
-# Algorithm.
-ROBOPTIM_CORE_TEST(finite-difference-gradient)
-ROBOPTIM_CORE_TEST(finite-difference-jacobian)
-
 # Built-in mathematical functions.
 ROBOPTIM_CORE_TEST(function-constant)
 ROBOPTIM_CORE_TEST(function-cos)
@@ -126,20 +122,24 @@ ROBOPTIM_CORE_TEST(function-identity)
 ROBOPTIM_CORE_TEST(function-sin)
 ROBOPTIM_CORE_TEST(function-polynomial)
 
-# Filters.
-ROBOPTIM_CORE_TEST(filter-bind)
-ROBOPTIM_CORE_TEST(filter-cached-function)
-ROBOPTIM_CORE_TEST(filter-chain)
-ROBOPTIM_CORE_TEST(filter-concatenate)
-ROBOPTIM_CORE_TEST(filter-derivative)
-ROBOPTIM_CORE_TEST(filter-map)
-ROBOPTIM_CORE_TEST(filter-minus)
-ROBOPTIM_CORE_TEST(filter-plus)
-ROBOPTIM_CORE_TEST(filter-product)
-ROBOPTIM_CORE_TEST(filter-scalar)
-ROBOPTIM_CORE_TEST(filter-selection)
-ROBOPTIM_CORE_TEST(filter-selection-by-id)
-ROBOPTIM_CORE_TEST(filter-split)
+# Decorators.
+ROBOPTIM_CORE_TEST(decorator-cached-function)
+ROBOPTIM_CORE_TEST(decorator-finite-difference-gradient)
+ROBOPTIM_CORE_TEST(decorator-finite-difference-jacobian)
+
+# Operators.
+ROBOPTIM_CORE_TEST(operator-bind)
+ROBOPTIM_CORE_TEST(operator-chain)
+ROBOPTIM_CORE_TEST(operator-concatenate)
+ROBOPTIM_CORE_TEST(operator-derivative)
+ROBOPTIM_CORE_TEST(operator-map)
+ROBOPTIM_CORE_TEST(operator-minus)
+ROBOPTIM_CORE_TEST(operator-plus)
+ROBOPTIM_CORE_TEST(operator-product)
+ROBOPTIM_CORE_TEST(operator-scalar)
+ROBOPTIM_CORE_TEST(operator-selection)
+ROBOPTIM_CORE_TEST(operator-selection-by-id)
+ROBOPTIM_CORE_TEST(operator-split)
 
 # Visualization
 ROBOPTIM_CORE_TEST(visualization-gnuplot-simple)

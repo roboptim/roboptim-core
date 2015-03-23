@@ -304,7 +304,7 @@ typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
 BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("finite-difference-gradient");
+    output = retrievePattern ("decorator-finite-difference-gradient");
 
   FGood<T> fg;
   FBad<T> fb;

@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 BOOST_AUTO_TEST_CASE_TEMPLATE (product_test, T, functionTypes_t)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
-    output = retrievePattern ("filter-product");
+    output = retrievePattern ("operator-product");
 
   typename GenericFunction<T>::value_type eps = 1e-6;
 
