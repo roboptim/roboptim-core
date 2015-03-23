@@ -24,7 +24,7 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/filter/map.hh>
+#include <roboptim/core/operator/map.hh>
 
 #include <roboptim/core/function/cos.hh>
 

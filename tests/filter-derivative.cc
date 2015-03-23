@@ -24,7 +24,7 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/filter/derivative.hh>
+#include <roboptim/core/operator/derivative.hh>
 
 #include <roboptim/core/function/cos.hh>
 #include <roboptim/core/function/identity.hh>

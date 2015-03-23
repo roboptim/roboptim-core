@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HH
-# define ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HH
+#ifndef ROBOPTIM_CORE_DECORATOR_CACHED_FUNCTION_HH
+# define ROBOPTIM_CORE_DECORATOR_CACHED_FUNCTION_HH
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
 
@@ -176,5 +176,5 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-# include <roboptim/core/filter/cached-function.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HH
+# include <roboptim/core/decorator/cached-function.hxx>
+#endif //! ROBOPTIM_CORE_DECORATOR_CACHED_FUNCTION_HH

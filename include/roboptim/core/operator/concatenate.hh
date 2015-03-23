@@ -15,12 +15,10 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_BIND_HH
-# define ROBOPTIM_CORE_FILTER_BIND_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_CONCATENATE_HH
+# define ROBOPTIM_CORE_OPERATOR_CONCATENATE_HH
 # include <stdexcept>
 # include <vector>
-# include <boost/make_shared.hpp>
-# include <boost/optional.hpp>
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
@@ -32,35 +30,41 @@ namespace roboptim
   /// \addtogroup roboptim_filter
   /// @{
 
-  /// \brief Bind some function input to a constant value.
-  ///
-  /// This allows to reduce any function input space by setting some
-  /// inputs to particular values.
-  ///
-  /// \tparam U input function type.
+  /// \brief Concatenate the output of two functions.
+  /// \tparam U input functions type.
   template <typename U>
-  class Bind : public detail::AutopromoteTrait<U>::T_type
+  class Concatenate : public detail::AutopromoteTrait<U>::T_type
   {
   public:
     typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<Bind> BindShPtr_t;
-    typedef std::vector<boost::optional<value_type> > boundValues_t;
+    typedef boost::shared_ptr<Concatenate> ConcatenateShPtr_t;
 
-    explicit Bind (boost::shared_ptr<U> origin,
-		   const boundValues_t& selector);
-    ~Bind ();
+    explicit Concatenate (boost::shared_ptr<U> left,
+			  boost::shared_ptr<U> right);
+    ~Concatenate ();
 
-    const boost::shared_ptr<U>& origin () const
+    const boost::shared_ptr<U>& left () const
     {
-      return origin_;
+      return left_;
     }
 
-    boost::shared_ptr<U>& origin ()
+    boost::shared_ptr<U>& left ()
     {
-      return origin_;
+      return left_;
     }
+
+    const boost::shared_ptr<U>& right () const
+    {
+      return right_;
+    }
+
+    boost::shared_ptr<U>& right ()
+    {
+      return right_;
+    }
+
 
     void impl_compute (result_ref result, const_argument_ref x)
       const;
@@ -73,24 +77,28 @@ namespace roboptim
 			const_argument_ref arg)
       const;
   private:
-    boost::shared_ptr<U> origin_;
-    boundValues_t boundValues_;
-    mutable vector_t x_;
-    mutable gradient_t gradient_;
-    mutable jacobian_t jacobian_;
+    boost::shared_ptr<U> left_;
+    boost::shared_ptr<U> right_;
+
+    mutable result_t resultLeft_;
+    mutable result_t resultRight_;
+    mutable jacobian_t jacobianLeft_;
+    mutable jacobian_t jacobianRight_;
   };
 
-  template <typename U>
-  boost::shared_ptr<Bind<U> >
-  bind (boost::shared_ptr<U> origin,
-	const typename Bind<U>::boundValues_t& boundValues)
+  template <typename U, typename V>
+  boost::shared_ptr<Concatenate<typename detail::PromoteTrait<U, V>::T_promote > >
+  concatenate (boost::shared_ptr<U> left,
+	       boost::shared_ptr<V> right)
   {
-    return boost::make_shared<Bind<U> > (origin, boundValues);
+    typedef typename detail::PromoteTrait<U, V>::T_promote result_t;
+
+    return boost::make_shared<Concatenate<result_t> > (left, right);
   }
 
   /// @}
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/bind.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_BIND_HH
+# include <roboptim/core/operator/concatenate.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_CONCATENATE_HH

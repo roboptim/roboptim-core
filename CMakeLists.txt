@@ -40,31 +40,31 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/detail/utility.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/bind.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/bind.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/cached-function.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/chain.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/concatenate.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/concatenate.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/derivative.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/map.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/map.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/minus.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/minus.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/plus.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/product.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/product.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/scalar.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/scalar.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection-by-id.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection-by-id.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/selection.hxx
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hh
-  ${CMAKE_SOURCE_DIR}/include/roboptim/core/filter/split.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/decorator/cached-function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/decorator/cached-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/bind.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/bind.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/chain.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/chain.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/concatenate.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/concatenate.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/derivative.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/map.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/map.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/minus.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/minus.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/plus.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/plus.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/product.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/product.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/scalar.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/scalar.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/selection-by-id.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/selection-by-id.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/selection.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/selection.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/split.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/operator/split.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/finite-difference-gradient.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hh

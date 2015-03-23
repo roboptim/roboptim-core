@@ -27,8 +27,8 @@
 
 #include <roboptim/core/finite-difference-gradient.hh>
 #include <roboptim/core/io.hh>
-#include <roboptim/core/filter/chain.hh>
-#include <roboptim/core/filter/selection.hh>
+#include <roboptim/core/operator/chain.hh>
+#include <roboptim/core/operator/selection.hh>
 #include <roboptim/core/numeric-linear-function.hh>
 #include <roboptim/core/numeric-quadratic-function.hh>
 

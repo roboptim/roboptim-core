@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_CONCATENATE_HH
-# define ROBOPTIM_CORE_FILTER_CONCATENATE_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_SELECTION_HH
+# define ROBOPTIM_CORE_OPERATOR_SELECTION_HH
 # include <stdexcept>
 # include <vector>
 # include <boost/shared_ptr.hpp>
@@ -30,41 +30,35 @@ namespace roboptim
   /// \addtogroup roboptim_filter
   /// @{
 
-  /// \brief Concatenate the output of two functions.
-  /// \tparam U input functions type.
+  /// \brief Select a block of a function's output.
+  /// The selected block is a range given by a start and a size.
+  /// \tparam U input function type.
   template <typename U>
-  class Concatenate : public detail::AutopromoteTrait<U>::T_type
+  class Selection : public detail::AutopromoteTrait<U>::T_type
   {
   public:
     typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<Concatenate> ConcatenateShPtr_t;
+    typedef boost::shared_ptr<Selection> SelectionShPtr_t;
 
-    explicit Concatenate (boost::shared_ptr<U> left,
-			  boost::shared_ptr<U> right);
-    ~Concatenate ();
+    /// \brief Create a selection given an input function and a block.
+    /// \param fct input function.
+    /// \param start start of the range.
+    /// \param size size of the range.
+    explicit Selection (boost::shared_ptr<U> fct,
+			size_type start, size_type size);
+    ~Selection ();
 
-    const boost::shared_ptr<U>& left () const
+    const boost::shared_ptr<U>& origin () const
     {
-      return left_;
+      return origin_;
     }
 
-    boost::shared_ptr<U>& left ()
+    boost::shared_ptr<U>& origin ()
     {
-      return left_;
+      return origin_;
     }
-
-    const boost::shared_ptr<U>& right () const
-    {
-      return right_;
-    }
-
-    boost::shared_ptr<U>& right ()
-    {
-      return right_;
-    }
-
 
     void impl_compute (result_ref result, const_argument_ref x)
       const;
@@ -77,28 +71,28 @@ namespace roboptim
 			const_argument_ref arg)
       const;
   private:
-    boost::shared_ptr<U> left_;
-    boost::shared_ptr<U> right_;
+    boost::shared_ptr<U> origin_;
 
-    mutable result_t resultLeft_;
-    mutable result_t resultRight_;
-    mutable jacobian_t jacobianLeft_;
-    mutable jacobian_t jacobianRight_;
+    size_type start_;
+    size_type size_;
+
+    mutable result_t result_;
+    mutable gradient_t gradient_;
+    mutable jacobian_t jacobian_;
   };
 
-  template <typename U, typename V>
-  boost::shared_ptr<Concatenate<typename detail::PromoteTrait<U, V>::T_promote > >
-  concatenate (boost::shared_ptr<U> left,
-	       boost::shared_ptr<V> right)
+  template <typename U>
+  boost::shared_ptr<Selection<U> >
+  selection (boost::shared_ptr<U> origin,
+	     typename Selection<U>::size_type start = 0,
+	     typename Selection<U>::size_type size = 1)
   {
-    typedef typename detail::PromoteTrait<U, V>::T_promote result_t;
-
-    return boost::make_shared<Concatenate<result_t> > (left, right);
+    return boost::make_shared<Selection<U> > (origin, start, size);
   }
 
   /// @}
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/concatenate.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_CONCATENATE_HH
+# include <roboptim/core/operator/selection.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_SELECTION_HH

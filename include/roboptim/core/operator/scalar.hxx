@@ -15,71 +15,61 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_SELECTION_HXX
-# define ROBOPTIM_CORE_FILTER_SELECTION_HXX
+#ifndef ROBOPTIM_CORE_OPERATOR_SCALAR_HXX
+# define ROBOPTIM_CORE_OPERATOR_SCALAR_HXX
 # include <boost/format.hpp>
 
 namespace roboptim
 {
   template <typename U>
-  Selection<U>::Selection
+  Scalar<U>::Scalar
   (boost::shared_ptr<U> origin,
-   size_type start,
-   size_type size)
+   value_type scalar)
     : detail::AutopromoteTrait<U>::T_type
       (origin->inputSize (),
-       size,
-       (boost::format ("selection(%1%)")
+       origin->outputSize (),
+       (boost::format ("%1% * (%2%)")
+	% scalar
 	% origin->getName ()).str ()),
       origin_ (origin),
-      start_ (start),
-      size_ (size),
-      result_ (origin->outputSize ()),
-      jacobian_ (origin->outputSize (),
-		 origin->inputSize ())
-  {
-    if (start + size > origin->inputSize ())
-      throw std::runtime_error ("invalid start/size");
-
-    result_.setZero ();
-    gradient_.setZero ();
-    jacobian_.setZero ();
-  }
+      scalar_ (scalar)
+  {}
 
   template <typename U>
-  Selection<U>::~Selection ()
+  Scalar<U>::~Scalar ()
   {}
 
   template <typename U>
   void
-  Selection<U>::impl_compute
+  Scalar<U>::impl_compute
   (result_ref result, const_argument_ref x)
     const
   {
-    origin_->operator () (result_, x);
-    result = result_.segment (start_, size_);
+    origin_->operator () (result, x);
+    result *= scalar_;
   }
 
   template <typename U>
   void
-  Selection<U>::impl_gradient (gradient_ref gradient,
+  Scalar<U>::impl_gradient (gradient_ref gradient,
 			 const_argument_ref argument,
 			 size_type functionId)
     const
   {
     origin_->gradient (gradient, argument, functionId);
+    gradient *= scalar_;
   }
 
   template <typename U>
   void
-  Selection<U>::impl_jacobian (jacobian_ref jacobian,
+  Scalar<U>::impl_jacobian (jacobian_ref jacobian,
 			 const_argument_ref argument)
     const
   {
-    origin_->jacobian (jacobian_, argument);
-    jacobian = jacobian_.block (start_, 0, size_, jacobian_.cols ());
+    origin_->jacobian (jacobian, argument);
+    jacobian *= scalar_;
   }
 
 } // end of namespace roboptim.
 
-#endif //! ROBOPTIM_CORE_FILTER_SELECTION_HXX
+#endif //! ROBOPTIM_CORE_OPERATOR_SCALAR_HXX

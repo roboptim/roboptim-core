@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_SPLIT_HXX
-# define ROBOPTIM_CORE_FILTER_SPLIT_HXX
+#ifndef ROBOPTIM_CORE_OPERATOR_SPLIT_HXX
+# define ROBOPTIM_CORE_OPERATOR_SPLIT_HXX
 # include <boost/format.hpp>
 
 # include <roboptim/core/derivative-size.hh>
@@ -181,4 +181,4 @@ namespace roboptim
   }
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_FILTER_SPLIT_HXX
+#endif //! ROBOPTIM_CORE_OPERATOR_SPLIT_HXX

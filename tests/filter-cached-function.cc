@@ -22,7 +22,7 @@
 #include <roboptim/core/io.hh>
 #include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/util.hh>
-#include <roboptim/core/filter/cached-function.hh>
+#include <roboptim/core/decorator/cached-function.hh>
 
 using namespace roboptim;
 

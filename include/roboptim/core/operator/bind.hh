@@ -15,9 +15,12 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_MAP_HH
-# define ROBOPTIM_CORE_FILTER_MAP_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_BIND_HH
+# define ROBOPTIM_CORE_OPERATOR_BIND_HH
+# include <stdexcept>
 # include <vector>
+# include <boost/make_shared.hpp>
+# include <boost/optional.hpp>
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
@@ -29,29 +32,25 @@ namespace roboptim
   /// \addtogroup roboptim_filter
   /// @{
 
-  /// \brief Apply a function several times to an input vector.
+  /// \brief Bind some function input to a constant value.
   ///
-  /// Input:
-  ///  [x_0^0 x_1^0 ... x_N^0 ... x_0^M x_1^M ... x_N^M]
-  ///
-  /// Output:
-  /// [f(x_0^0 x_1^0 ... x_N^0) ... f(x_0^M x_1^M ... x_N^M)]
+  /// This allows to reduce any function input space by setting some
+  /// inputs to particular values.
   ///
   /// \tparam U input function type.
   template <typename U>
-  class Map : public detail::AutopromoteTrait<U>::T_type
+  class Bind : public detail::AutopromoteTrait<U>::T_type
   {
   public:
     typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<Map> MapShPtr_t;
+    typedef boost::shared_ptr<Bind> BindShPtr_t;
+    typedef std::vector<boost::optional<value_type> > boundValues_t;
 
-    /// \brief Map filter constructor.
-    /// \param origin input function.
-    /// \param repeat number of times to repeat the function.
-    explicit Map (boost::shared_ptr<U> origin, size_type repeat);
-    ~Map ();
+    explicit Bind (boost::shared_ptr<U> origin,
+		   const boundValues_t& selector);
+    ~Bind ();
 
     const boost::shared_ptr<U>& origin () const
     {
@@ -64,35 +63,34 @@ namespace roboptim
     }
 
     void impl_compute (result_ref result, const_argument_ref x)
-      const ;
+      const;
 
     void impl_gradient (gradient_ref gradient,
 			const_argument_ref argument,
 			size_type functionId = 0)
-      const ;
+      const;
     void impl_jacobian (jacobian_ref jacobian,
 			const_argument_ref arg)
-      const ;
+      const;
   private:
     boost::shared_ptr<U> origin_;
-    size_type repeat_;
-
-    mutable argument_t x_;
-    mutable result_t result_;
+    boundValues_t boundValues_;
+    mutable vector_t x_;
     mutable gradient_t gradient_;
     mutable jacobian_t jacobian_;
   };
 
   template <typename U>
-  boost::shared_ptr<Map<U> >
-  map (boost::shared_ptr<U> origin, typename U::size_type repeat)
+  boost::shared_ptr<Bind<U> >
+  bind (boost::shared_ptr<U> origin,
+	const typename Bind<U>::boundValues_t& boundValues)
   {
-    return boost::make_shared<Map<U> > (origin, repeat);
+    return boost::make_shared<Bind<U> > (origin, boundValues);
   }
 
   /// @}
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/map.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_MAP_HH
+# include <roboptim/core/operator/bind.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_BIND_HH

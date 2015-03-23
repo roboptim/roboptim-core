@@ -15,9 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_SELECTION_BY_ID_HH
-# define ROBOPTIM_CORE_FILTER_SELECTION_BY_ID_HH
-# include <stdexcept>
+#ifndef ROBOPTIM_CORE_OPERATOR_MAP_HH
+# define ROBOPTIM_CORE_OPERATOR_MAP_HH
 # include <vector>
 # include <boost/shared_ptr.hpp>
 
@@ -30,20 +29,29 @@ namespace roboptim
   /// \addtogroup roboptim_filter
   /// @{
 
-  /// \brief Select part of a function.
+  /// \brief Apply a function several times to an input vector.
+  ///
+  /// Input:
+  ///  [x_0^0 x_1^0 ... x_N^0 ... x_0^M x_1^M ... x_N^M]
+  ///
+  /// Output:
+  /// [f(x_0^0 x_1^0 ... x_N^0) ... f(x_0^M x_1^M ... x_N^M)]
+  ///
   /// \tparam U input function type.
   template <typename U>
-  class SelectionById : public detail::AutopromoteTrait<U>::T_type
+  class Map : public detail::AutopromoteTrait<U>::T_type
   {
   public:
     typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<SelectionById> SelectionByIdShPtr_t;
+    typedef boost::shared_ptr<Map> MapShPtr_t;
 
-    explicit SelectionById (boost::shared_ptr<U> origin,
-			    std::vector<bool> selector);
-    ~SelectionById ();
+    /// \brief Map filter constructor.
+    /// \param origin input function.
+    /// \param repeat number of times to repeat the function.
+    explicit Map (boost::shared_ptr<U> origin, size_type repeat);
+    ~Map ();
 
     const boost::shared_ptr<U>& origin () const
     {
@@ -56,34 +64,35 @@ namespace roboptim
     }
 
     void impl_compute (result_ref result, const_argument_ref x)
-      const;
+      const ;
 
     void impl_gradient (gradient_ref gradient,
 			const_argument_ref argument,
 			size_type functionId = 0)
-      const;
+      const ;
     void impl_jacobian (jacobian_ref jacobian,
 			const_argument_ref arg)
-      const;
+      const ;
   private:
     boost::shared_ptr<U> origin_;
-    std::vector<bool> selector_;
+    size_type repeat_;
 
+    mutable argument_t x_;
     mutable result_t result_;
     mutable gradient_t gradient_;
+    mutable jacobian_t jacobian_;
   };
 
   template <typename U>
-  boost::shared_ptr<SelectionById<U> >
-  selectionById (boost::shared_ptr<U> origin,
-		 std::vector<bool> selector)
+  boost::shared_ptr<Map<U> >
+  map (boost::shared_ptr<U> origin, typename U::size_type repeat)
   {
-    return boost::make_shared<SelectionById<U> > (origin, selector);
+    return boost::make_shared<Map<U> > (origin, repeat);
   }
 
   /// @}
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/selection-by-id.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_SELECTION_BY_ID_HH
+# include <roboptim/core/operator/map.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_MAP_HH

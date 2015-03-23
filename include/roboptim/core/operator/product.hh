@@ -15,50 +15,34 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_CHAIN_HH
-# define ROBOPTIM_CORE_FILTER_CHAIN_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_PRODUCT_HH
+# define ROBOPTIM_CORE_OPERATOR_PRODUCT_HH
 # include <stdexcept>
 # include <vector>
-# include <boost/make_shared.hpp>
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
 # include <roboptim/core/differentiable-function.hh>
-
 
 namespace roboptim
 {
   /// \addtogroup roboptim_filter
   /// @{
 
-  /// \brief Chain two RobOptim functions.
-  ///
-  ///
-  /// Input: (size: right function input size)
-  ///  x
-  ///
-  /// Output: x (size: left function output size)
-  ///  left (right (x))
-  ///
-  /// (left (right (x)))' = left'(right(x)) * right'(x)
-  ///
-  /// \tparam U left input function type.
-  /// \tparam V right input function type.
+  /// \brief Product of two RobOptim functions.
+  /// \tparam U first input function type.
+  /// \tparam V second input function type.
   template <typename U, typename V>
-  class Chain : public detail::PromoteTrait<U, V>::T_promote
+  class Product : public detail::PromoteTrait<U, V>::T_promote
   {
   public:
     typedef typename detail::PromoteTrait<U, V>::T_promote parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<Chain> ChainShPtr_t;
+    typedef boost::shared_ptr<Product> ProductShPtr_t;
 
-    /// \brief Chain filter constructor.
-    ///
-    /// \param left Left function
-    /// \param right Right function
-    explicit Chain (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
-    ~Chain ();
+    explicit Product (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
+    ~Product ();
 
     const boost::shared_ptr<U>& left () const
     {
@@ -91,46 +75,36 @@ namespace roboptim
 			const_argument_ref arg)
       const;
   private:
-    /// \brief Shared pointer to the left function.
     boost::shared_ptr<U> left_;
-    /// \brief Shared pointer to the right function.
     boost::shared_ptr<V> right_;
 
-    /// \name Buffers
-    /// \{
+    mutable result_t resultLeft_;
+    mutable result_t resultRight_;
 
-    /// \brief Temporary buffer to store right function result.
-    mutable result_t rightResult_;
-
-    /// \brief Temporary buffer to store left function gradient.
     mutable gradient_t gradientLeft_;
-
-    /// \brief Temporary buffer to store right function gradient.
     mutable gradient_t gradientRight_;
 
-    /// \brief Temporary buffer to store left function jacobian.
     mutable jacobian_t jacobianLeft_;
-
-    /// \brief Temporary buffer to store right function jacobian.
     mutable jacobian_t jacobianRight_;
-
-    /// \}
   };
 
-  /// \brief Chain two RobOptim functions.
-  ///
-  /// This will instantiate a Chain<U,V> RobOptim filter that will
-  /// realize the underlying computations.
   template <typename U, typename V>
-  boost::shared_ptr<Chain<U, V> >
-  chain (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+  boost::shared_ptr<Product<U, V> >
+  product (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
   {
-    return boost::make_shared<Chain<U, V> > (left, right);
+    return boost::make_shared<Product<U, V> > (left, right);
+  }
+
+  template <typename U, typename V>
+  boost::shared_ptr<Product<U, V> >
+  operator* (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+  {
+    return boost::make_shared<Product<U, V> > (left, right);
   }
 
   /// @}
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/chain.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_CHAIN_HH
+# include <roboptim/core/operator/product.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_PRODUCT_HH

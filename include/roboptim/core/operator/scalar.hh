@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_SCALAR_HH
-# define ROBOPTIM_CORE_FILTER_SCALAR_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_SCALAR_HH
+# define ROBOPTIM_CORE_OPERATOR_SCALAR_HH
 # include <vector>
 # include <boost/shared_ptr.hpp>
 
@@ -116,5 +116,5 @@ namespace roboptim
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/scalar.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_SCALAR_HH
+# include <roboptim/core/operator/scalar.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_SCALAR_HH

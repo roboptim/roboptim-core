@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_PLUS_HH
-# define ROBOPTIM_CORE_FILTER_PLUS_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_MINUS_HH
+# define ROBOPTIM_CORE_OPERATOR_MINUS_HH
 # include <stdexcept>
 # include <vector>
 # include <boost/shared_ptr.hpp>
@@ -29,20 +29,20 @@ namespace roboptim
   /// \addtogroup roboptim_filter
   /// @{
 
-  /// \brief Sum two RobOptim functions.
+  /// \brief Subtract two RobOptim functions.
   /// \tparam U first input function type.
   /// \tparam V second input function type.
   template <typename U, typename V>
-  class Plus : public detail::PromoteTrait<U, V>::T_promote
+  class Minus : public detail::PromoteTrait<U, V>::T_promote
   {
   public:
     typedef typename detail::PromoteTrait<U, V>::T_promote parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<Plus> PlusShPtr_t;
+    typedef boost::shared_ptr<Minus> MinusShPtr_t;
 
-    explicit Plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
-    ~Plus ();
+    explicit Minus (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
+    ~Minus ();
 
     const boost::shared_ptr<U>& left () const
     {
@@ -84,22 +84,22 @@ namespace roboptim
   };
 
   template <typename U, typename V>
-  boost::shared_ptr<Plus<U, V> >
-  plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+  boost::shared_ptr<Minus<U, V> >
+  minus (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
   {
-    return boost::make_shared<Plus<U, V> > (left, right);
+    return boost::make_shared<Minus<U, V> > (left, right);
   }
 
   template <typename U, typename V>
-  boost::shared_ptr<Plus<U, V> >
-  operator+ (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+  boost::shared_ptr<Minus<U, V> >
+  operator- (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
   {
-    return boost::make_shared<Plus<U, V> > (left, right);
+    return boost::make_shared<Minus<U, V> > (left, right);
   }
 
   /// @}
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/plus.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_PLUS_HH
+# include <roboptim/core/operator/minus.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_MINUS_HH

@@ -24,7 +24,7 @@
 #include <roboptim/core/io.hh>
 #include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/util.hh>
-#include <roboptim/core/filter/split.hh>
+#include <roboptim/core/operator/split.hh>
 
 using namespace roboptim;
 

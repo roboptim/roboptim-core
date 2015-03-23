@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_MINUS_HH
-# define ROBOPTIM_CORE_FILTER_MINUS_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_SELECTION_BY_ID_HH
+# define ROBOPTIM_CORE_OPERATOR_SELECTION_BY_ID_HH
 # include <stdexcept>
 # include <vector>
 # include <boost/shared_ptr.hpp>
@@ -24,44 +24,35 @@
 # include <roboptim/core/detail/autopromote.hh>
 # include <roboptim/core/differentiable-function.hh>
 
+
 namespace roboptim
 {
   /// \addtogroup roboptim_filter
   /// @{
 
-  /// \brief Subtract two RobOptim functions.
-  /// \tparam U first input function type.
-  /// \tparam V second input function type.
-  template <typename U, typename V>
-  class Minus : public detail::PromoteTrait<U, V>::T_promote
+  /// \brief Select part of a function.
+  /// \tparam U input function type.
+  template <typename U>
+  class SelectionById : public detail::AutopromoteTrait<U>::T_type
   {
   public:
-    typedef typename detail::PromoteTrait<U, V>::T_promote parentType_t;
+    typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<Minus> MinusShPtr_t;
+    typedef boost::shared_ptr<SelectionById> SelectionByIdShPtr_t;
 
-    explicit Minus (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
-    ~Minus ();
+    explicit SelectionById (boost::shared_ptr<U> origin,
+			    std::vector<bool> selector);
+    ~SelectionById ();
 
-    const boost::shared_ptr<U>& left () const
+    const boost::shared_ptr<U>& origin () const
     {
-      return left_;
+      return origin_;
     }
 
-    U& left ()
+    boost::shared_ptr<U>& origin ()
     {
-      return left_;
-    }
-
-    const boost::shared_ptr<V>& right () const
-    {
-      return right_;
-    }
-
-    V& right ()
-    {
-      return right_;
+      return origin_;
     }
 
     void impl_compute (result_ref result, const_argument_ref x)
@@ -75,31 +66,24 @@ namespace roboptim
 			const_argument_ref arg)
       const;
   private:
-    boost::shared_ptr<U> left_;
-    boost::shared_ptr<V> right_;
+    boost::shared_ptr<U> origin_;
+    std::vector<bool> selector_;
 
     mutable result_t result_;
     mutable gradient_t gradient_;
-    mutable jacobian_t jacobian_;
   };
 
-  template <typename U, typename V>
-  boost::shared_ptr<Minus<U, V> >
-  minus (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+  template <typename U>
+  boost::shared_ptr<SelectionById<U> >
+  selectionById (boost::shared_ptr<U> origin,
+		 std::vector<bool> selector)
   {
-    return boost::make_shared<Minus<U, V> > (left, right);
-  }
-
-  template <typename U, typename V>
-  boost::shared_ptr<Minus<U, V> >
-  operator- (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
-  {
-    return boost::make_shared<Minus<U, V> > (left, right);
+    return boost::make_shared<SelectionById<U> > (origin, selector);
   }
 
   /// @}
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/minus.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_MINUS_HH
+# include <roboptim/core/operator/selection-by-id.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_SELECTION_BY_ID_HH

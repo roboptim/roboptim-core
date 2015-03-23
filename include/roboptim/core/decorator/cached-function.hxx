@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HXX
-# define ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HXX
+#ifndef ROBOPTIM_CORE_DECORATOR_CACHED_FUNCTION_HXX
+# define ROBOPTIM_CORE_DECORATOR_CACHED_FUNCTION_HXX
 
 # include <boost/format.hpp>
 # include <boost/utility/enable_if.hpp>
@@ -320,4 +320,4 @@ namespace roboptim
 
 } // end of namespace roboptim
 
-#endif //! ROBOPTIM_CORE_FILTER_CACHED_FUNCTION_HXX
+#endif //! ROBOPTIM_CORE_DECORATOR_CACHED_FUNCTION_HXX

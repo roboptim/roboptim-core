@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_BIND_HXX
-# define ROBOPTIM_CORE_FILTER_BIND_HXX
+#ifndef ROBOPTIM_CORE_OPERATOR_BIND_HXX
+# define ROBOPTIM_CORE_OPERATOR_BIND_HXX
 # include <stdexcept>
 # include <boost/format.hpp>
 
@@ -126,4 +126,4 @@ namespace roboptim
 
 } // end of namespace roboptim.
 
-#endif //! ROBOPTIM_CORE_FILTER_BIND_HXX
+#endif //! ROBOPTIM_CORE_OPERATOR_BIND_HXX

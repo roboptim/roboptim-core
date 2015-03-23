@@ -24,7 +24,7 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/filter/selection.hh>
+#include <roboptim/core/operator/selection.hh>
 
 #include <roboptim/core/function/constant.hh>
 #include <roboptim/core/function/identity.hh>

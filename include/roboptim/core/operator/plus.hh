@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_SELECTION_HH
-# define ROBOPTIM_CORE_FILTER_SELECTION_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_PLUS_HH
+# define ROBOPTIM_CORE_OPERATOR_PLUS_HH
 # include <stdexcept>
 # include <vector>
 # include <boost/shared_ptr.hpp>
@@ -24,40 +24,44 @@
 # include <roboptim/core/detail/autopromote.hh>
 # include <roboptim/core/differentiable-function.hh>
 
-
 namespace roboptim
 {
   /// \addtogroup roboptim_filter
   /// @{
 
-  /// \brief Select a block of a function's output.
-  /// The selected block is a range given by a start and a size.
-  /// \tparam U input function type.
-  template <typename U>
-  class Selection : public detail::AutopromoteTrait<U>::T_type
+  /// \brief Sum two RobOptim functions.
+  /// \tparam U first input function type.
+  /// \tparam V second input function type.
+  template <typename U, typename V>
+  class Plus : public detail::PromoteTrait<U, V>::T_promote
   {
   public:
-    typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
+    typedef typename detail::PromoteTrait<U, V>::T_promote parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
 
-    typedef boost::shared_ptr<Selection> SelectionShPtr_t;
+    typedef boost::shared_ptr<Plus> PlusShPtr_t;
 
-    /// \brief Create a selection given an input function and a block.
-    /// \param fct input function.
-    /// \param start start of the range.
-    /// \param size size of the range.
-    explicit Selection (boost::shared_ptr<U> fct,
-			size_type start, size_type size);
-    ~Selection ();
+    explicit Plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right);
+    ~Plus ();
 
-    const boost::shared_ptr<U>& origin () const
+    const boost::shared_ptr<U>& left () const
     {
-      return origin_;
+      return left_;
     }
 
-    boost::shared_ptr<U>& origin ()
+    U& left ()
     {
-      return origin_;
+      return left_;
+    }
+
+    const boost::shared_ptr<V>& right () const
+    {
+      return right_;
+    }
+
+    V& right ()
+    {
+      return right_;
     }
 
     void impl_compute (result_ref result, const_argument_ref x)
@@ -71,28 +75,31 @@ namespace roboptim
 			const_argument_ref arg)
       const;
   private:
-    boost::shared_ptr<U> origin_;
-
-    size_type start_;
-    size_type size_;
+    boost::shared_ptr<U> left_;
+    boost::shared_ptr<V> right_;
 
     mutable result_t result_;
     mutable gradient_t gradient_;
     mutable jacobian_t jacobian_;
   };
 
-  template <typename U>
-  boost::shared_ptr<Selection<U> >
-  selection (boost::shared_ptr<U> origin,
-	     typename Selection<U>::size_type start = 0,
-	     typename Selection<U>::size_type size = 1)
+  template <typename U, typename V>
+  boost::shared_ptr<Plus<U, V> >
+  plus (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
   {
-    return boost::make_shared<Selection<U> > (origin, start, size);
+    return boost::make_shared<Plus<U, V> > (left, right);
+  }
+
+  template <typename U, typename V>
+  boost::shared_ptr<Plus<U, V> >
+  operator+ (boost::shared_ptr<U> left, boost::shared_ptr<V> right)
+  {
+    return boost::make_shared<Plus<U, V> > (left, right);
   }
 
   /// @}
 
 } // end of namespace roboptim.
 
-# include <roboptim/core/filter/selection.hxx>
-#endif //! ROBOPTIM_CORE_FILTER_SELECTION_HH
+# include <roboptim/core/operator/plus.hxx>
+#endif //! ROBOPTIM_CORE_OPERATOR_PLUS_HH

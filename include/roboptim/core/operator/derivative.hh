@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_DERIVATIVE_HH
-# define ROBOPTIM_CORE_FILTER_DERIVATIVE_HH
+#ifndef ROBOPTIM_CORE_OPERATOR_DERIVATIVE_HH
+# define ROBOPTIM_CORE_OPERATOR_DERIVATIVE_HH
 # include <cassert>
 # include <vector>
 
@@ -139,4 +139,4 @@ namespace roboptim
 
 } // end of namespace roboptim.
 
-#endif //! ROBOPTIM_CORE_FILTER_DERIVATIVE_HH
+#endif //! ROBOPTIM_CORE_OPERATOR_DERIVATIVE_HH

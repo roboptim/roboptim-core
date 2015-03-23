@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ROBOPTIM_CORE_FILTER_PRODUCT_HXX
-# define ROBOPTIM_CORE_FILTER_PRODUCT_HXX
+#ifndef ROBOPTIM_CORE_OPERATOR_PRODUCT_HXX
+# define ROBOPTIM_CORE_OPERATOR_PRODUCT_HXX
 # include <boost/format.hpp>
 # include <boost/utility/enable_if.hpp>
 # include <boost/type_traits/is_same.hpp>
@@ -274,4 +274,4 @@ namespace roboptim
   }
 } // end of namespace roboptim.
 
-#endif //! ROBOPTIM_CORE_FILTER_PRODUCT_HXX
+#endif //! ROBOPTIM_CORE_OPERATOR_PRODUCT_HXX
