@@ -109,7 +109,6 @@ BOOST_AUTO_TEST_CASE (simple)
   pb.addConstraint (boost::shared_ptr<F> (g),
   		    Function::makeInterval (0., 5.), 3.5);
   BOOST_CHECK_EQUAL (pb.constraints ().size (), 1u);
-  BOOST_CHECK (&pb.constraints ()[0] != 0);
   BOOST_CHECK_EQUAL (pb.boundsVector ().size (), 1u);
   BOOST_CHECK_EQUAL (pb.boundsVector ()[0][0].first,
 		     0.);
