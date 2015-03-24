@@ -24,7 +24,6 @@ notifications:
 branches:
   only:
   - master
-  - "3.0"
   - debian
   - travis
 script: ./.travis/run build
