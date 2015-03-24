@@ -1,0 +1,25 @@
+var a00087 =
+[
+    [ "callback_t", "a00087.html#a8a8b67820eca81c2071abab2dc7491ba", null ],
+    [ "differentiableFunction_t", "a00087.html#aac7b9411f87e66936a28dbd648bdf996", null ],
+    [ "jacobian_t", "a00087.html#a91e94c3d6530fbbd8221b328f77dd222", null ],
+    [ "problem_t", "a00087.html#a0212b30a8be78730debbb9b9bab8526a", null ],
+    [ "size_type", "a00087.html#a613629ff4ed7781b6b1ed4024a18fcbf", null ],
+    [ "solver_t", "a00087.html#a4bf684ba2187335313cc8382b635a8a9", null ],
+    [ "solverState_t", "a00087.html#a734201c75aebed2ca9afe09d58c0d5cd", null ],
+    [ "traits_t", "a00087.html#ac695f321fe96a817b5f3afac87153630", null ],
+    [ "value_type", "a00087.html#aa961d523ab2d00705723330fe52870cd", null ],
+    [ "vector_t", "a00087.html#a0f6518966c5ceaba887f2fabe153aa38", null ],
+    [ "OptimizationLogger", "a00087.html#aed34e9f3f55c67a875575d552f69f0e8", null ],
+    [ "~OptimizationLogger", "a00087.html#a7a0d794cc294617474adc0a499d42040", null ],
+    [ "append", "a00087.html#ae7780abb8e2422fde009f12e39f0c96d", null ],
+    [ "callback", "a00087.html#a7c9ba7e965df0cab92f0e7021c38cbd8", null ],
+    [ "callbackCallId", "a00087.html#a6e35f515b0affa5541a048c289458e12", null ],
+    [ "logPath", "a00087.html#a9e7878a17d1c10a9ba477bd27521739d", null ],
+    [ "path", "a00087.html#a046deb8bf8d4d59ac41008bcc88c4052", null ],
+    [ "path", "a00087.html#a3bf8f33ae661284aac96f17b5bbf659c", null ],
+    [ "perIterationCallback", "a00087.html#a875c3dad03fcf29633a0f0bfa801815f", null ],
+    [ "perIterationCallbackUnsafe", "a00087.html#ae377f28f521a02a0d45e1601a1180a36", null ],
+    [ "solver", "a00087.html#ad83299fdcc325b94a904721f4b9fe9c9", null ],
+    [ "solver", "a00087.html#a7d655721636abb6a57d0f07a791f8e8e", null ]
+];

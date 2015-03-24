@@ -1,0 +1,41 @@
+\form#0:$C^1$
+\form#1:\[ f : x \rightarrow f(x) \]
+\form#2:$x \in \mathbb{R}^n$
+\form#3:$f(x) \in \mathbb{R}^m$
+\form#4:$n$
+\form#5:$m$
+\form#6:$\mathbb{R}^n \rightarrow \mathbb{R}^m$
+\form#7:$n > 1$
+\form#8:$m > 1$
+\form#9:$\mathbb{R}^n \rightarrow \mathbb{R}$
+\form#10:$m = 1$
+\form#11:\[f'(x)\approx {f(x+\epsilon)-f(x)\over \epsilon}\]
+\form#12:$\epsilon$
+\form#13:$\{x-2h, x-h, x, x+h, x+2h\}$
+\form#14:\[f(x) = offset\]
+\form#15:$offset$
+\form#16:\[f(x) = x + offset\]
+\form#17:$A$
+\form#18:$b$
+\form#19:\[f(x) = a_0 + a_1 * x + a_2 * x^2 + a_3 * x^3 + ...\]
+\form#20:$a_i$
+\form#21:$C^0$
+\form#22:$[l, u]$
+\form#23:$[-\infty, +\infty]$
+\form#24:$[l, +\infty]$
+\form#25:$[-\infty, u]$
+\form#26:$\mathbb{R} \rightarrow \mathbb{R}^m$
+\form#27:$n \geq 2$
+\form#28:\[f(x) = A x + b\]
+\form#29:\[f(x) = x^t A x + b^t x + c\]
+\form#30:$B$
+\form#31:\[ f : p \rightarrow g \]
+\form#32:$p \in \mathbb{R}^p$
+\form#33:$g \in G$
+\form#34:$p$
+\form#35:$G = \mathbb{R}^n \in \mathbb{R}^m$
+\form#36:$n, m \in \mathbb{R}^2$
+\form#37:$\mathbb{C}^{m}$
+\form#38:$m=1$
+\form#39:$\mathbb{R}^m$
+\form#40:$C^2$
