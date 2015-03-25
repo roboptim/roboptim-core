@@ -26,7 +26,7 @@
 
 namespace roboptim
 {
-  /// \addtogroup roboptim_filter
+  /// \addtogroup roboptim_operator
   /// @{
 
   /// \brief Multiply by a constant scalar value.
@@ -40,7 +40,7 @@ namespace roboptim
 
     typedef boost::shared_ptr<Scalar> ScalarShPtr_t;
 
-    /// \brief Create a scalar filter.
+    /// \brief Create a scalar operator.
     /// \param fct input function.
     /// \param scalar scalar value.
     explicit Scalar (boost::shared_ptr<U> fct,

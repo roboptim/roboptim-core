@@ -44,7 +44,7 @@ namespace roboptim
     struct CachedFunctionTypes;
   } // end of namespace detail
 
-  /// \addtogroup roboptim_filter
+  /// \addtogroup roboptim_decorator
   /// @{
 
   /// \brief Store previous function computation.
@@ -53,7 +53,7 @@ namespace roboptim
   /// point (exactly!), the cached function prevents useless
   /// computation by caching the function result.
   ///
-  /// This filter is experimental in this release.
+  /// This decorator is experimental in this release.
   /// \tparam T input function type.
   template <typename T>
   class CachedFunction : public T

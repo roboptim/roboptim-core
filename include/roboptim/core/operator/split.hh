@@ -24,7 +24,7 @@
 
 namespace roboptim
 {
-  /// \addtogroup roboptim_filter
+  /// \addtogroup roboptim_operator
   /// @{
 
   /// \brief Select an element of a function's output.
@@ -42,7 +42,7 @@ namespace roboptim
     /// \brief Import interval type.
     typedef typename DifferentiableFunction::interval_t interval_t;
 
-    /// \brief Split filter constructor.
+    /// \brief Split operator constructor.
     /// \param fct input function.
     /// \param functionId index of the output to select.
     explicit Split (boost::shared_ptr<const T> fct,

@@ -26,7 +26,7 @@
 
 namespace roboptim
 {
-  /// \addtogroup roboptim_filter
+  /// \addtogroup roboptim_operator
   /// @{
 
   /// \brief Sum two RobOptim functions.

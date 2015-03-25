@@ -46,7 +46,7 @@ namespace roboptim
     };
   } // end of anonymous namespace.
 
-  /// \addtogroup roboptim_filter
+  /// \addtogroup roboptim_operator
   /// @{
 
   /// \brief Return the derivative of a function w.r.t. one of the parameters.
@@ -69,7 +69,7 @@ namespace roboptim
 
     typedef boost::shared_ptr<Derivative> DerivativeShPtr_t;
 
-    /// \brief Derivative filter constructor.
+    /// \brief Derivative operator constructor.
     /// \param origin input function.
     /// \param variableId parameter index.
     explicit Derivative (boost::shared_ptr<U> origin,

@@ -28,7 +28,7 @@
 
 namespace roboptim
 {
-  /// \addtogroup roboptim_filter
+  /// \addtogroup roboptim_operator
   /// @{
 
   /// \brief Chain two RobOptim functions.
@@ -53,7 +53,7 @@ namespace roboptim
 
     typedef boost::shared_ptr<Chain> ChainShPtr_t;
 
-    /// \brief Chain filter constructor.
+    /// \brief Chain operator constructor.
     ///
     /// \param left Left function
     /// \param right Right function
@@ -119,7 +119,7 @@ namespace roboptim
 
   /// \brief Chain two RobOptim functions.
   ///
-  /// This will instantiate a Chain<U,V> RobOptim filter that will
+  /// This will instantiate a Chain<U,V> RobOptim operator that will
   /// realize the underlying computations.
   template <typename U, typename V>
   boost::shared_ptr<Chain<U, V> >

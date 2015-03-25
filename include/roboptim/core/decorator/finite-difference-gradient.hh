@@ -25,6 +25,9 @@
 
 namespace roboptim
 {
+  /// \addtogroup roboptim_decorator
+  /// @{
+
   /// \brief Default threshold for checkGradient.
   static const double finiteDifferenceThreshold = 1e-4;
   /// \brief Default epsilon for finite difference class.
@@ -282,10 +285,6 @@ namespace roboptim
 
     };
   } // end of namespace policy.
-
-
-  /// \addtogroup roboptim_function
-  /// @{
 
   /// \brief Compute automatically a gradient with finite differences.
   ///

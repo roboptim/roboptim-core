@@ -26,7 +26,7 @@
 
 namespace roboptim
 {
-  /// \addtogroup roboptim_filter
+  /// \addtogroup roboptim_operator
   /// @{
 
   /// \brief Apply a function several times to an input vector.
@@ -47,7 +47,7 @@ namespace roboptim
 
     typedef boost::shared_ptr<Map> MapShPtr_t;
 
-    /// \brief Map filter constructor.
+    /// \brief Map operator constructor.
     /// \param origin input function.
     /// \param repeat number of times to repeat the function.
     explicit Map (boost::shared_ptr<U> origin, size_type repeat);
