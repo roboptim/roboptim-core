@@ -4,9 +4,9 @@ roboptim-core
 [![Build Status](https://travis-ci.org/roboptim/roboptim-core.png?branch=master)](https://travis-ci.org/roboptim/roboptim-core)
 [![Coverage Status](https://coveralls.io/repos/roboptim/roboptim-core/badge.png)](https://coveralls.io/r/roboptim/roboptim-core)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/863/badge.svg)](https://scan.coverity.com/projects/863)
+[![Join the chat at https://gitter.im/roboptim/development](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/roboptim/development?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ![LGPL-3](https://www.gnu.org/graphics/lgplv3-88x31.png)
-
 
 [![Zenodo](https://zenodo.org/badge/doi/10.5281/zenodo.10332.png)](http://zenodo.org/record/10332)
 
@@ -41,7 +41,7 @@ Getting Help
 
 Support is provided through:
  * the RobOptim mailing-list: roboptim@googlegroups.com
- * the following HipChat room: http://www.hipchat.com/gh4wQrZeV
+ * the following Gitter room: https://gitter.im/roboptim/development
 
 
 How can I install roboptim-core?
