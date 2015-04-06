@@ -136,6 +136,20 @@ namespace roboptim
     };
 
 
+    /// \brief Get the matrix stride type for a row vector, given a matrix
+    /// storage order.
+    ///
+    /// This solves compiler errors in Eigen when dealing with Eigen::Refs,
+    /// row vectors and different storage orders.
+    ///
+    /// \tparam SO storage order (Eigen::ColMajor or Eigen::RowMajor).
+    template <int SO>
+    struct row_vector_stride
+    {
+      typedef Eigen::InnerStride<(SO == Eigen::RowMajor)? 1:-1> type;
+    };
+
+
     /// \brief Converts CLIST to a boost::mpl::vector to ensure a similar
     /// behavior for codes using different random access sequences (vector,
     /// list, etc.).

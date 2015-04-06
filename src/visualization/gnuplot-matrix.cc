@@ -86,38 +86,9 @@ namespace roboptim
         std::string sparse_matrix_to_gnuplot
         (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat)
         {
-          typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t matrix_t;
+          typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t denseMatrix_t;
 
-          std::string str = "";
-
-          // Set the header of the Gnuplot output (range, etc.)
-          set_matrix_header<EigenMatrixSparse> (str, mat);
-
-          // Since Gnuplot does not support sparse matrices, we will need to
-          // plot all the zeros of the sparse matrices.
-          // Outer dimension
-          for (int k = 0; k < mat.outerSize (); ++k)
-            {
-              // Inner dimension
-              matrix_t::InnerIterator it (mat,k);
-              for (int col_it = 0; col_it < mat.cols (); ++col_it)
-                {
-                  // Sparse nonzero: return 1
-                  if (col_it == it.col ())
-                    {
-                      str += "1";
-                      ++it;
-                    }
-                  // Sparse zero: return 0
-                  else str += "0";
-
-                  if (col_it < mat.cols () - 1) str += " ";
-                  else str += "\n";
-                }
-            }
-          str += "e\n";
-          str += "e\n";
-          return str;
+          return dense_matrix_to_gnuplot (denseMatrix_t (mat));
         }
 
       } // end of namespace detail.

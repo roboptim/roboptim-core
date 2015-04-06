@@ -48,6 +48,11 @@ namespace roboptim
         typedef typename U::vector_ref vectorU_ref;
         typedef typename V::vector_ref vectorV_ref;
 
+        typedef typename U::rowVector_t rowVectorU_t;
+        typedef typename V::rowVector_t rowVectorV_t;
+        typedef typename U::rowVector_ref rowVectorU_ref;
+        typedef typename V::rowVector_ref rowVectorV_ref;
+
         typedef typename U::gradient_t gradientU_t;
         typedef typename V::gradient_t gradientV_t;
         typedef typename Product<U,V>::gradient_t gradient_t;
@@ -68,8 +73,8 @@ namespace roboptim
       template <typename U, typename V>
       static void gradient
       (typename Types<U,V>::gradient_ref grad_uv,
-       const typename Types<U,V>::vectorU_ref u,
-       const typename Types<U,V>::vectorV_ref v,
+       const typename Types<U,V>::rowVectorU_ref u,
+       const typename Types<U,V>::rowVectorV_ref v,
        const typename Types<U,V>::gradientU_ref grad_u,
        const typename Types<U,V>::gradientV_ref grad_v,
        typename boost::enable_if<typename Types<U,V>::fullDense_t>::type* = 0)
@@ -84,8 +89,8 @@ namespace roboptim
       template <typename U, typename V>
       static void gradient
       (typename Types<U,V>::gradient_ref grad_uv,
-       const typename Types<U,V>::vectorU_ref u,
-       const typename Types<U,V>::vectorV_ref v,
+       const typename Types<U,V>::rowVectorU_ref u,
+       const typename Types<U,V>::rowVectorV_ref v,
        const typename Types<U,V>::gradientU_ref grad_u,
        const typename Types<U,V>::gradientV_ref grad_v,
        typename boost::disable_if<typename Types<U,V>::fullDense_t>::type* = 0)

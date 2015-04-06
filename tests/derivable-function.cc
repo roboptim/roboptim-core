@@ -224,13 +224,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (jacobian_check, T, functionTypes_t)
   x[2] = 7.;
   x[3] = 2.;
 
-  BOOST_REQUIRE_EQUAL (f.jacobian (x).row (0).size (),
+  // TODO: use row() once Eigen is fixed
+  // cf. http://eigen.tuxfamily.org/bz/show_bug.cgi?id=980
+  BOOST_REQUIRE_EQUAL (f.jacobian (x).block (0,0,1,4).size (),
 		       f.gradient (x, 0).size ());
-  BOOST_REQUIRE_EQUAL (f.jacobian (x).row (1).size (),
+  BOOST_REQUIRE_EQUAL (f.jacobian (x).block (1,0,1,4).size (),
 		       f.gradient (x, 1).size ());
 
-  BOOST_CHECK (f.jacobian (x).row (0).isApprox (f.gradient (x, 0).adjoint ()));
-  BOOST_CHECK (f.jacobian (x).row (1).isApprox (f.gradient (x, 1).adjoint ()));
+  BOOST_CHECK (f.jacobian (x).block (0,0,1,4).isApprox (f.gradient (x, 0)));
+  BOOST_CHECK (f.jacobian (x).block (1,0,1,4).isApprox (f.gradient (x, 1)));
 
   typename F<T>::jacobian_t jac = f.jacobian (x);
   typename F<T>::gradient_t grad0 = f.gradient (x, 0);
@@ -239,8 +241,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (jacobian_check, T, functionTypes_t)
   // Call f with a map to a C-style array.
   typename F<T>::value_type ar[4] = {10., -1., 7., 2.};
   Eigen::Map<typename F<T>::argument_t> map_x (ar, 4);
-  BOOST_CHECK (f.jacobian (map_x).row (0).isApprox (f.gradient (map_x, 0).adjoint ()));
-  BOOST_CHECK (f.jacobian (map_x).row (1).isApprox (f.gradient (map_x, 1).adjoint ()));
+  BOOST_CHECK (f.jacobian (map_x).block (0,0,1,4).isApprox (f.gradient (map_x, 0)));
+  BOOST_CHECK (f.jacobian (map_x).block (1,0,1,4).isApprox (f.gradient (map_x, 1)));
   BOOST_CHECK (f.jacobian (map_x).isApprox (jac));
   BOOST_CHECK (f.gradient (map_x, 0).isApprox (grad0));
   BOOST_CHECK (f.gradient (map_x, 1).isApprox (grad1));
@@ -250,10 +252,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (jacobian_check, T, functionTypes_t)
   typename F<T>::argument_t full_x (8);
   full_x.setZero ();
   full_x.segment (2,4) = x;
-  BOOST_CHECK (f.jacobian (full_x.segment (2,4)).row (0).isApprox
-               (f.gradient (full_x.segment (2,4), 0).adjoint ()));
-  BOOST_CHECK (f.jacobian (full_x.segment (2,4)).row (1).isApprox
-               (f.gradient (full_x.segment (2,4), 1).adjoint ()));
+  BOOST_CHECK (f.jacobian (full_x.segment (2,4)).block (0,0,1,4).isApprox
+               (f.gradient (full_x.segment (2,4), 0)));
+  BOOST_CHECK (f.jacobian (full_x.segment (2,4)).block (1,0,1,4).isApprox
+               (f.gradient (full_x.segment (2,4), 1)));
   BOOST_CHECK (f.jacobian (full_x.segment (2,4)).isApprox (jac));
   BOOST_CHECK (f.gradient (full_x.segment (2,4), 0).isApprox (grad0));
   BOOST_CHECK (f.gradient (full_x.segment (2,4), 1).isApprox (grad1));

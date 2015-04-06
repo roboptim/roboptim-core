@@ -72,6 +72,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (null_function, T, functionTypes_t)
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("function");
 
+  // Check storage order
+  BOOST_CHECK (roboptim::StorageOrder == Eigen::ROBOPTIM_STORAGE_ORDER);
+
   Null<T> null;
   NoTitle<T> notitle;
 
