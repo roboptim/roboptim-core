@@ -79,6 +79,11 @@
   typedef typename GenericFunctionTraits<T>::NAME##_ref NAME##_ref;	\
   typedef typename GenericFunctionTraits<T>::const_##NAME##_ref const_##NAME##_ref
 
+# define ROBOPTIM_GENERATE_TRAITS_REFS_T(NAME,TRAITS)				\
+  typedef typename GenericFunctionTraits<TRAITS>::NAME##_t NAME##_t;		\
+  typedef typename GenericFunctionTraits<TRAITS>::NAME##_ref NAME##_ref;	\
+  typedef typename GenericFunctionTraits<TRAITS>::const_##NAME##_ref const_##NAME##_ref
+
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)	\
   typedef PARENT parent_t;			\
   typedef parent_t::value_type value_type;	\
@@ -621,6 +626,7 @@ namespace roboptim
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF_VEC(gradient,rowVector_t);
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(jacobian,matrix_t);
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(hessian,matrix_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(derivative,vector_t);
   };
 
   /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
@@ -665,6 +671,7 @@ namespace roboptim
                                    BOOST_PP_COMMA() Eigen::RowMajor>);
     ROBOPTIM_GENERATE_TYPEDEFS_REF(jacobian,matrix_t);
     ROBOPTIM_GENERATE_TYPEDEFS_REF(hessian,matrix_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(derivative,vector_t);
   };
 
   /// @}

@@ -25,6 +25,14 @@
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/twice-differentiable-function.hh>
 
+# define ROBOPTIM_NTIMES_DERIVABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
+  ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT);		\
+  ROBOPTIM_GENERATE_FWD_REFS (derivative)
+
+# define ROBOPTIM_NTIMES_DERIVABLE_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
+  ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_(PARENT);		\
+  ROBOPTIM_GENERATE_FWD_REFS_ (derivative)
+
 namespace roboptim
 {
   /// \addtogroup roboptim_function
@@ -42,6 +50,18 @@ namespace roboptim
   class NTimesDerivableFunction<2> : public TwiceDifferentiableFunction
   {
   public:
+
+    /// \brief Parent type.
+    typedef TwiceDifferentiableFunction parent_t;
+
+    /// \brief Traits type.
+    typedef parent_t::traits_t traits_t;
+
+    /// \brief Derivative type.
+    ///
+    /// Derivatives are column vectors.
+    ROBOPTIM_GENERATE_TRAITS_REFS_T(derivative,traits_t);
+
     /// \brief Function derivability order. One static const variable per class
     /// in inheritance structure.
     static const size_type derivabilityOrder = 2;
@@ -65,7 +85,7 @@ namespace roboptim
     /// \brief Check if a derivative is valid (check sizes).
     /// \param derivative derivative vector to be checked
     /// \return true if valid, false if not
-    bool isValidDerivative (const_gradient_ref derivative) const
+    bool isValidDerivative (const_derivative_ref derivative) const
     {
       return derivative.size () == this->derivativeSize ();
     }
@@ -106,9 +126,9 @@ namespace roboptim
     /// \param argument point at which the derivative will be computed
     /// \param order derivative order (if 0 then function is evaluated)
     /// \return derivative vector
-    gradient_t derivative (value_type argument, size_type order = 1) const
+    derivative_t derivative (value_type argument, size_type order = 1) const
     {
-      gradient_t derivative (derivativeSize ());
+      derivative_t derivative (derivativeSize ());
       derivative.setZero ();
       this->derivative (derivative, argument, order);
       return derivative;
@@ -120,7 +140,7 @@ namespace roboptim
     /// \param derivative derivative will be stored in this vector
     /// \param argument point at which the derivative will be computed
     /// \param order derivative order (if 0 then function is evaluated)
-    void derivative (gradient_ref derivative,
+    void derivative (derivative_ref derivative,
 		     value_type argument,
 		     size_type order = 1) const
     {
@@ -184,7 +204,7 @@ namespace roboptim
     /// The gradient is computed for a specific sub-function which id
     /// is passed through the functionId argument.
     /// \warning Do not call this function directly, call #gradient
-    //// or #derivative instead.
+    /// or #derivative instead.
     /// \param gradient gradient will be store in this argument
     /// \param argument point where the gradient will be computed
     /// \param functionId evaluated function id in the split representation
@@ -196,7 +216,7 @@ namespace roboptim
       Eigen::internal::set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
-      gradient_t derivative (derivativeSize ());
+      derivative_t derivative (derivativeSize ());
       derivative.setZero ();
 
       this->derivative (derivative, argument[0], 1);
@@ -211,7 +231,7 @@ namespace roboptim
     /// \param derivative derivative will be store in this argument
     /// \param argument point where the gradient will be computed
     /// \param order derivative order (if 0 evaluates the function)
-    virtual void impl_derivative (gradient_ref derivative,
+    virtual void impl_derivative (derivative_ref derivative,
 				  value_type argument,
 				  size_type order = 1) const = 0;
 
@@ -235,7 +255,7 @@ namespace roboptim
 
       assert (functionId == 0);
 
-      gradient_t derivative (derivativeSize ());
+      derivative_t derivative (derivativeSize ());
       derivative.setZero ();
 
       this->derivative (derivative, argument[0], 2);
