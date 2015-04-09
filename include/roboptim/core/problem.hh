@@ -116,7 +116,11 @@ namespace roboptim
     template <typename F_>
     explicit Problem (const Problem<F_, boost::mpl::vector<> >&);
 
-    ~Problem ();
+    /// \brief Virtual destructor.
+    ///
+    /// One may want to inherit from Problem to provide extra information to
+    /// a solver plugin.
+    virtual ~Problem ();
 
     /// \}
 
@@ -340,7 +344,11 @@ namespace roboptim
     template <typename F_, typename CLIST_>
     explicit Problem (const Problem<F_, CLIST_>& pb);
 
-    ~Problem ();
+    /// \brief Virtual destructor.
+    ///
+    /// One may want to inherit from Problem to provide extra information to
+    /// a solver plugin.
+    virtual ~Problem ();
 
     /// \}
 
