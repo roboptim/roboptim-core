@@ -19,11 +19,8 @@
 # define ROBOPTIM_CORE_PROBLEM_HXX
 # include <algorithm>
 # include <stdexcept>
+
 # include <boost/format.hpp>
-# include <boost/mpl/count_if.hpp>
-# include <boost/mpl/greater.hpp>
-# include <boost/type_traits/is_pointer.hpp>
-# include <boost/type_traits/remove_pointer.hpp>
 # include <boost/variant.hpp>
 # include <boost/variant/get.hpp>
 # include <boost/variant/apply_visitor.hpp>
