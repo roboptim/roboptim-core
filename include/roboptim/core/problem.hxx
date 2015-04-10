@@ -279,25 +279,8 @@ namespace roboptim
 
     // Check that CLIST_ is a subset of CLIST (i.e. all the functions
     // of CLIST_ derive from functions of CLIST).
-    // The algorithm is as follows:
-    // (0) outer_ok = true
-    // (1) for c_ in FLIST_:
-    // (2)   inner_ok = false
-    // (3)   for c in FLIST:
-    // (4)     if c is_base_of c_:
-    // (5)       inner_ok = true
-    // (6)   if not inner_ok:
-    // (7)     outer_ok = false
-    // (8) return outer_ok
     BOOST_MPL_ASSERT_MSG(
-      (mpl::fold<CLIST_, // (1)
-                 mpl::bool_<true>, // (0)
-                 mpl::if_< // (6)
-                   detail::contains_base_of<CLIST,mpl::_2>, // (2,3,4,5)
-                   mpl::_1,
-                   mpl::bool_<false> // (7)
-                 >
-       >::type::value), // (8)
+      (detail::is_compatible_list<CLIST_, CLIST>::type::value),
        INCOMPATIBLE_TYPES_IN_LIST, (CLIST_, CLIST));
 
     // Copy constraints.

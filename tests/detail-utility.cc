@@ -139,6 +139,30 @@ BOOST_AUTO_TEST_CASE (detail_utility)
     TEST_PREDICATE (predicate3_t);
   }
 
+  // Test is_compatible_list.
+  {
+    typedef vector<QuadraticFunction, DifferentiableFunction> testSeq1_t;
+    typedef vector<Function, QuadraticFunction> testSeq2_t;
+    typedef vector<SparseFunction, QuadraticFunction> testSeq3_t;
+
+    typedef is_compatible_list<testSeq1_t, testSeq1_t> predicate1_t;
+    typedef is_compatible_list<testSeq1_t, testSeq2_t> predicate2_t;
+    typedef not_<is_compatible_list<testSeq2_t, testSeq1_t> > predicate3_t;
+
+    typedef not_<is_compatible_list<testSeq1_t, testSeq3_t> > predicate4_t;
+    typedef not_<is_compatible_list<testSeq2_t, testSeq3_t> > predicate5_t;
+    typedef not_<is_compatible_list<testSeq3_t, testSeq1_t> > predicate6_t;
+    typedef not_<is_compatible_list<testSeq3_t, testSeq2_t> > predicate7_t;
+
+    TEST_PREDICATE (predicate1_t);
+    TEST_PREDICATE (predicate2_t);
+    TEST_PREDICATE (predicate3_t);
+    TEST_PREDICATE (predicate4_t);
+    TEST_PREDICATE (predicate5_t);
+    TEST_PREDICATE (predicate6_t);
+    TEST_PREDICATE (predicate7_t);
+  }
+
   // Test derives_from_function.
   {
     typedef derives_from_function<Function> predicate1_t;
