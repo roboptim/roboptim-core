@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#define EIGEN_RUNTIME_NO_MALLOC
+#include <Eigen/Core>
+
 #include "shared-tests/fixture.hh"
 
 #include <boost/mpl/equal.hpp>
@@ -32,6 +35,38 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 #define TEST_PREDICATE(PRED) \
   BOOST_MPL_ASSERT ((PRED)); \
   BOOST_CHECK ((PRED::type::value));
+
+namespace detail
+{
+  using namespace Eigen;
+  using namespace ::roboptim::detail;
+
+  template <int SO>
+  struct TestRowVectorStride
+  {
+    typedef Matrix<double, Dynamic, Dynamic, SO> matrix_t;
+    typedef Matrix<double, 1, Dynamic> rowVector_t;
+    typedef Ref<rowVector_t, 0, typename row_vector_stride<SO>::type> rowVector_ref;
+
+    void foo (rowVector_ref v)
+    {
+      v.fill (0.);
+    }
+
+    void run ()
+    {
+      matrix_t m (2, 2);
+      m << 1., 2., 3., 4.;
+
+      internal::set_is_malloc_allowed (false);
+      foo (m.row (1));
+      internal::set_is_malloc_allowed (true);
+
+      BOOST_CHECK (!m.row (0).isZero ());
+      BOOST_CHECK (m.row (1).isZero ());
+    }
+  };
+} // end of namespace detail
 
 
 BOOST_AUTO_TEST_CASE (detail_utility)
@@ -89,6 +124,15 @@ BOOST_AUTO_TEST_CASE (detail_utility)
     TEST_PREDICATE (predicate1_t);
     TEST_PREDICATE (predicate2_t);
     TEST_PREDICATE (predicate3_t);
+  }
+
+  // Test row_vector_stride.
+  {
+    detail::TestRowVectorStride<Eigen::ColMajor> testCol;
+    testCol.run ();
+
+    detail::TestRowVectorStride<Eigen::RowMajor> testRow;
+    testRow.run ();
   }
 
   // Test contains_base_of.

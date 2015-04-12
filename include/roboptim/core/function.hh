@@ -27,6 +27,7 @@
 # include <utility>
 # include <vector>
 
+# include <boost/static_assert.hpp>
 # include <boost/algorithm/string/replace.hpp>
 # include <boost/tuple/tuple.hpp>
 # include <boost/preprocessor/punctuation/comma.hpp>
@@ -43,10 +44,20 @@
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/portability.hh>
 
+# include <roboptim/core/detail/utility.hh>
+
+// Generate Eigen::Ref types for a given data type.
 # define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(NAME,TYPE)	\
   typedef TYPE NAME##_t;					\
   typedef Eigen::Ref<NAME##_t> NAME##_ref;			\
   typedef const Eigen::Ref<const NAME##_t>& const_##NAME##_ref
+
+// Generate Eigen::Ref types for a given data type. Specialized version for row
+// vectors with the proper stride, no matter what the storage order is.
+# define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF_VEC(NAME,TYPE)	\
+  typedef TYPE NAME##_t;					\
+  typedef Eigen::Ref<NAME##_t, 0, detail::row_vector_stride<StorageOrder>::type> NAME##_ref;			\
+  typedef const Eigen::Ref<const NAME##_t, 0, detail::row_vector_stride<StorageOrder>::type>& const_##NAME##_ref
 
 # define ROBOPTIM_GENERATE_TYPEDEFS_REF(NAME,TYPE)	\
   typedef TYPE NAME##_t;				\
@@ -68,6 +79,11 @@
   typedef typename GenericFunctionTraits<T>::NAME##_ref NAME##_ref;	\
   typedef typename GenericFunctionTraits<T>::const_##NAME##_ref const_##NAME##_ref
 
+# define ROBOPTIM_GENERATE_TRAITS_REFS_T(NAME,TRAITS)				\
+  typedef typename GenericFunctionTraits<TRAITS>::NAME##_t NAME##_t;		\
+  typedef typename GenericFunctionTraits<TRAITS>::NAME##_ref NAME##_ref;	\
+  typedef typename GenericFunctionTraits<TRAITS>::const_##NAME##_ref const_##NAME##_ref
+
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)	\
   typedef PARENT parent_t;			\
   typedef parent_t::value_type value_type;	\
@@ -76,6 +92,7 @@
   ROBOPTIM_GENERATE_FWD_REFS(argument);		\
   ROBOPTIM_GENERATE_FWD_REFS(result);		\
   ROBOPTIM_GENERATE_FWD_REFS(vector);		\
+  ROBOPTIM_GENERATE_FWD_REFS(rowVector);		\
   ROBOPTIM_GENERATE_FWD_REFS(matrix)
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
@@ -86,12 +103,25 @@
   ROBOPTIM_GENERATE_FWD_REFS_(argument);		\
   ROBOPTIM_GENERATE_FWD_REFS_(result);			\
   ROBOPTIM_GENERATE_FWD_REFS_(vector);			\
+  ROBOPTIM_GENERATE_FWD_REFS_(rowVector);			\
   ROBOPTIM_GENERATE_FWD_REFS_(matrix)
+
+// Default storage order = ColMajor
+# ifndef ROBOPTIM_STORAGE_ORDER
+#  define ROBOPTIM_STORAGE_ORDER ColMajor
+# endif //! ROBOPTIM_STORAGE_ORDER
+
+BOOST_STATIC_ASSERT_MSG (Eigen::ROBOPTIM_STORAGE_ORDER == Eigen::ColMajor \
+                         || Eigen::ROBOPTIM_STORAGE_ORDER == Eigen::RowMajor, \
+                         "Wrong storage order provided by ROBOPTIM_STORAGE_ORDER.");
 
 namespace roboptim
 {
   /// \addtogroup roboptim_meta_function
   /// @{
+
+  /// \brief Default matrix storage order.
+  static const int StorageOrder = Eigen::ROBOPTIM_STORAGE_ORDER;
 
   /// \brief GenericFunction traits
   ///
@@ -141,7 +171,7 @@ namespace roboptim
     /// used for computations.
     typedef typename GenericFunctionTraits<T>::value_type value_type;
 
-    /// \brief Basic vector type.
+    /// \brief Basic (column) vector type.
     ///
     /// This basic vector type is used each time a vector of values
     /// is required.
@@ -150,6 +180,12 @@ namespace roboptim
     /// when a vector of values is needed instead of relying on a particular
     /// implementation.
     ROBOPTIM_GENERATE_TRAITS_REFS_(vector);
+
+    /// \brief Row vector type.
+    ///
+    /// This basic vector type is used each time a row vector of values
+    /// is required (e.g. gradients).
+    ROBOPTIM_GENERATE_TRAITS_REFS_(rowVector);
 
     /// \brief Basic matrix type.
     ///
@@ -551,32 +587,46 @@ namespace roboptim
   struct GenericFunctionTraits<EigenMatrixDense>
   {
     /// \brief Matrix storage order.
-    static const int StorageOrder = Eigen::RowMajor;
+    static const int StorageOrder = roboptim::StorageOrder;
+
+    /// \brief Value type.
+    typedef double value_type;
 
     // For each type, we have:
     //  - type_t:         the type itself
     //  - type_ref:       reference to type object
     //  - const_type_ref: const reference to type object
+
+    // Matrix types
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
     (matrix,
-     Eigen::Matrix<double BOOST_PP_COMMA()
+     Eigen::Matrix<value_type BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
      StorageOrder>);
+
+    // Vector types
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
     (vector,
-     Eigen::Matrix<double BOOST_PP_COMMA()
+     Eigen::Matrix<value_type BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
      1>);
 
+    // Row vector types
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
+    (rowVector,
+     Eigen::Matrix<value_type BOOST_PP_COMMA()
+     1 BOOST_PP_COMMA()
+     Eigen::Dynamic>);
+
     typedef matrix_t::Index size_type;
-    typedef matrix_t::Scalar value_type;
 
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(result,vector_t);
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(argument,vector_t);
-    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(gradient,vector_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF_VEC(gradient,rowVector_t);
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(jacobian,matrix_t);
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(hessian,matrix_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(derivative,vector_t);
   };
 
   /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
@@ -584,30 +634,44 @@ namespace roboptim
   struct GenericFunctionTraits<EigenMatrixSparse>
   {
     /// \brief Matrix storage order.
-    static const int StorageOrder = Eigen::RowMajor;
+    static const int StorageOrder = roboptim::StorageOrder;
+
+    /// \brief Value type.
+    typedef double value_type;
 
     // For each type, we have:
     //  - type_t:         the type itself
     //  - type_ref:       reference to type object
     //  - const_type_ref: const reference to type object
+
+    // Matrix types
     ROBOPTIM_GENERATE_TYPEDEFS_REF
     (matrix,
-     Eigen::SparseMatrix<double BOOST_PP_COMMA() StorageOrder>);
+     Eigen::SparseMatrix<value_type BOOST_PP_COMMA() StorageOrder>);
 
+    // Vector types
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
     (vector,
-     Eigen::Matrix<double BOOST_PP_COMMA()
+     Eigen::Matrix<value_type BOOST_PP_COMMA()
      Eigen::Dynamic BOOST_PP_COMMA()
      1>);
 
+    // Row vector types
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF
+    (rowVector,
+     Eigen::Matrix<value_type BOOST_PP_COMMA()
+     1 BOOST_PP_COMMA()
+     Eigen::Dynamic>);
+
     typedef matrix_t::Index size_type;
-    typedef matrix_t::Scalar value_type;
 
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(result,vector_t);
     ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(argument,vector_t);
-    ROBOPTIM_GENERATE_TYPEDEFS_REF(gradient,Eigen::SparseVector<double>);
+    ROBOPTIM_GENERATE_TYPEDEFS_REF(gradient,Eigen::SparseVector<value_type \
+                                   BOOST_PP_COMMA() Eigen::RowMajor>);
     ROBOPTIM_GENERATE_TYPEDEFS_REF(jacobian,matrix_t);
     ROBOPTIM_GENERATE_TYPEDEFS_REF(hessian,matrix_t);
+    ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(derivative,vector_t);
   };
 
   /// @}

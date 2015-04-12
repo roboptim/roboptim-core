@@ -19,7 +19,10 @@
 # define ROBOPTIM_CORE_OPERATOR_CONCATENATE_HH
 # include <stdexcept>
 # include <vector>
+
 # include <boost/shared_ptr.hpp>
+# include <boost/utility/enable_if.hpp>
+# include <boost/type_traits/is_same.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
 # include <roboptim/core/differentiable-function.hh>
@@ -27,6 +30,12 @@
 
 namespace roboptim
 {
+  namespace detail
+  {
+    template <typename T>
+    struct ConcatenateTypes;
+  } // end of namespace detail
+
   /// \addtogroup roboptim_operator
   /// @{
 
@@ -38,6 +47,9 @@ namespace roboptim
   public:
     typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
+
+    /// \brief Traits type.
+    typedef typename parentType_t::traits_t traits_t;
 
     typedef boost::shared_ptr<Concatenate> ConcatenateShPtr_t;
 
@@ -76,6 +88,21 @@ namespace roboptim
     void impl_jacobian (jacobian_ref jacobian,
 			const_argument_ref arg)
       const;
+
+  private:
+
+    template <typename T>
+    void concatenateJacobian (jacobian_ref jacobian,
+                              const_argument_ref argument,
+                              typename detail::ConcatenateTypes<T>::isDense_t::type* = 0)
+      const;
+
+    template <typename T>
+    void concatenateJacobian (jacobian_ref jacobian,
+                              const_argument_ref argument,
+                              typename detail::ConcatenateTypes<T>::isNotDense_t::type* = 0)
+      const;
+
   private:
     boost::shared_ptr<U> left_;
     boost::shared_ptr<U> right_;

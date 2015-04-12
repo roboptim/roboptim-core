@@ -55,9 +55,8 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const;
 
-
     /// \brief Gradient has been computed for this point.
-    vector_t x_;
+    argument_t x_;
 
     /// \brief Analytical gradient.
     gradient_t analyticalGradient_;
@@ -106,9 +105,8 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const;
 
-
     /// \brief Jacobian has been computed for this point.
-    vector_t x_;
+    argument_t x_;
 
     /// \brief Analytical Jacobian.
     gradient_t analyticalJacobian_;
@@ -183,10 +181,10 @@ namespace roboptim
       /// \brief Wrapped function.
       const GenericFunction<T>& adaptee_;
 
-      /// \brief Vector storing temporary Jacobian row.
-      mutable gradient_t column_;
-
       /// \brief Vector storing temporary Jacobian column.
+      mutable vector_t column_;
+
+      /// \brief Vector storing temporary Jacobian row.
       mutable gradient_t gradient_;
     };
 

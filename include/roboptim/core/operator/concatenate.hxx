@@ -17,10 +17,31 @@
 
 #ifndef ROBOPTIM_CORE_OPERATOR_CONCATENATE_HXX
 # define ROBOPTIM_CORE_OPERATOR_CONCATENATE_HXX
+
 # include <boost/format.hpp>
+# include <boost/utility/enable_if.hpp>
+
+# include <roboptim/core/util.hh>
 
 namespace roboptim
 {
+  namespace detail
+  {
+    template <typename T>
+    struct ConcatenateTypes
+    {
+      typedef typename T::traits_t traits_t;
+
+      typedef typename boost::enable_if<
+        boost::is_same<traits_t, EigenMatrixDense> >
+      isDense_t;
+
+      typedef typename boost::disable_if<
+        boost::is_same<traits_t, EigenMatrixDense> >
+      isNotDense_t;
+    };
+  } // end of namespace detail
+
   template <typename U>
   Concatenate<U>::Concatenate
   (boost::shared_ptr<U> left,
@@ -80,9 +101,10 @@ namespace roboptim
   }
 
   template <typename U>
-  void
-  Concatenate<U>::impl_jacobian (jacobian_ref jacobian,
-				 const_argument_ref x)
+  template <typename T>
+  void Concatenate<U>::concatenateJacobian (jacobian_ref jacobian,
+                                            const_argument_ref x,
+                                            typename detail::ConcatenateTypes<T>::isDense_t::type*)
     const
   {
     left_->jacobian (jacobianLeft_, x);
@@ -91,6 +113,29 @@ namespace roboptim
       jacobianLeft_;
     jacobian.middleRows (left_->outputSize (), right_->outputSize ()) =
       jacobianRight_;
+  }
+
+  template <typename U>
+  template <typename T>
+  void Concatenate<U>::concatenateJacobian (jacobian_ref jacobian,
+                                            const_argument_ref x,
+                                            typename detail::ConcatenateTypes<T>::isNotDense_t::type*)
+    const
+  {
+    left_->jacobian (jacobianLeft_, x);
+    right_->jacobian (jacobianRight_, x);
+
+    copySparseBlock (jacobian, jacobianLeft_, 0, 0);
+    copySparseBlock (jacobian, jacobianRight_, left_->outputSize (), 0);
+  }
+
+  template <typename U>
+  void
+  Concatenate<U>::impl_jacobian (jacobian_ref jacobian,
+				 const_argument_ref x)
+    const
+  {
+    concatenateJacobian<U> (jacobian, x);
   }
 } // end of namespace roboptim.
 

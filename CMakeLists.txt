@@ -181,6 +181,19 @@ PKG_CONFIG_APPEND_LIBS(ltdl)
 PKG_CONFIG_APPEND_CFLAGS (-DEIGEN_RUNTIME_NO_MALLOC)
 HEADER_INSTALL("${HEADERS}")
 
+# Set the default storage order for Eigen matrices (ColMajor or RowMajor).
+# Note: RowMajor may yield better results for the dense Jacobian filling process
+# if most functions only implement impl_gradient, but ColMajor is the usual
+# default storage order for this kind of scenario.
+SET(STORAGE_ORDER "ColMajor" CACHE
+  STRING "Storage order for Eigen matrices (ColMajor or RowMajor")
+IF(NOT (STORAGE_ORDER STREQUAL "ColMajor" OR STORAGE_ORDER STREQUAL "RowMajor"))
+  MESSAGE(FATAL_ERROR "Storage order should be either ColMajor or RowMajor.")
+ENDIF()
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DROBOPTIM_STORAGE_ORDER=${STORAGE_ORDER}")
+PKG_CONFIG_APPEND_CFLAGS (-DROBOPTIM_STORAGE_ORDER=${STORAGE_ORDER})
+
 OPTION(DISABLE_TESTS "Disable test programs" OFF)
 
 ADD_SUBDIRECTORY(src)

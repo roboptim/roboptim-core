@@ -25,11 +25,6 @@
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/operator/scalar.hh>
-#include <roboptim/core/operator/plus.hh>
-#include <roboptim/core/operator/minus.hh>
-#include <roboptim/core/operator/product.hh>
-
-#include <roboptim/core/function/constant.hh>
 #include <roboptim/core/function/identity.hh>
 
 using namespace roboptim;
@@ -43,15 +38,12 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 BOOST_AUTO_TEST_CASE_TEMPLATE (scalar_test, T, functionTypes_t)
 {
   typename GenericIdentityFunction<T>::result_t offset (5);
-  offset.setZero ();
+  offset << 1., 2., 0., 4., 5.;
 
   boost::shared_ptr<GenericIdentityFunction<T> > identity =
     boost::make_shared<GenericIdentityFunction<T> > (offset);
-  boost::shared_ptr<GenericConstantFunction<T> > constant =
-    boost::make_shared<GenericConstantFunction<T> > (offset);
 
-  boost::shared_ptr<GenericLinearFunction<T> >
-    fct = 2. * identity * constant + constant - constant;
+  boost::shared_ptr<GenericLinearFunction<T> > fct = 2. * identity;
 
   typename GenericIdentityFunction<T>::vector_t x (5);
   x.setZero ();
