@@ -117,8 +117,9 @@ namespace roboptim
   GenericNumericQuadraticFunction<T>::impl_gradient
   (gradient_ref gradient, const_argument_ref x, size_type) const
   {
-    gradient.noalias () = 2 * a_ * x;
-    gradient += b_;
+    buffer_.noalias () = 2 * a_ * x;
+    buffer_ += b_;
+    gradient = buffer_;
   }
 
   // A
