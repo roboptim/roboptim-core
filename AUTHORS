@@ -7,7 +7,20 @@ This package was written by and with the assistance of
 - Polynomial function.
 
 * Benjamin Chrétien             chretien@lirmm.fr
+- Package maintainer.
 - Solver error reporting enhancement.
+- Callback system.
+- Eigen::Ref support.
+- NLopt bridge implementation.
+- PaGMO bridge implementation.
+- Python bindings implementation.
+- Analysis scripts.
+
+* Félix Darricau                felix.darricau@gmail.com
+- Manifold support.
+
+* Grégoire Duchemin             greg.duchemin@gmail.com
+- Manifold support.
 
 * Antonio El Khoury             antonio.elkhoury@gmail.com
 - Non-scalar constraints support.
@@ -25,6 +38,10 @@ This package was written by and with the assistance of
 - Interface implementation.
 - CFSQP bridge implementation.
 - Ipopt bridge implementation.
+- NAG bridge implementation.
+- KNITRO bridge implementation.
+- Tutorials.
+- Homebrew repository.
 
 * Olivier Stasse                olivier.stasse@aist.go.jp
 - Interface design.

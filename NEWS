@@ -1,5 +1,24 @@
                                                                 -*- outline -*-
 
+New in 3.0, 2015-03-24
+* [MAJOR ABI BREAKING CHANGE] Add Eigen::Ref support: now RobOptim functions
+  accept blocks/segments of Eigen matrices as input.
+* Lots of new functions (cos, sin, etc.), operators (plus, minus, scalar, map
+  etc.) and decorators (cached function etc.).
+* Callback system (logger, callback multiplexer).
+* Simple Matplotlib support for visualization.
+* Function pools.
+* Set argument names (useful for plotting).
+* Improved CachedFunction with LRU cache.
+* Automatic conversion of constraints/cost function types when creating
+  problems.
+* Faster forward-difference rule for finite differences.
+* Removed exception specifiers (void function(...) throw()).
+* Storage order was changed from Eigen's default (column-major) to row-major.
+  The storage order is available in the GenericFunctionTraits (StorageOrder).
+* Move metaprogramming magic to roboptim/core/detail/utility.hh.
+* Merge roboptim/core/visualization/util.hh with roboptim/core/util.hh.
+
 New in 2.0, 2013-04-09
 * [MAJOR ABI BREAKING CHANGE] Switch from uBlas to Eigen for matrix computation.
 * Add support for Eigen sparse matrices.
