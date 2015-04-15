@@ -37,12 +37,9 @@ namespace roboptim
   (jacobian_ref jacobian, const_argument_ref argument)
     const
   {
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    Eigen::internal::set_is_malloc_allowed (true);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-
     typedef Eigen::Triplet<value_type> triplet_t;
     std::vector<triplet_t> coefficients;
+
     for (jacobian_t::Index i = 0; i < this->outputSize (); ++i)
       {
         gradient_t grad = gradient (argument, i);

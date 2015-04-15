@@ -24,6 +24,7 @@ ADD_LIBRARY(roboptim-core SHARED
   ${HEADERS}
   debug.hh
   doc.hh
+  alloc.cc
   finite-difference-gradient.cc
   generic-solver.cc
   indent.cc

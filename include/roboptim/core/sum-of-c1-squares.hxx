@@ -62,13 +62,9 @@ namespace roboptim {
   void GenericSumOfC1Squares<T>::
   impl_compute(result_ref result, const_argument_ref x) const
   {
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    Eigen::internal::set_is_malloc_allowed (true);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-
     computeFunction (x);
     value_type sumSquares = 0;
-    for (size_t i = 0; i < value_.size(); i++) {
+    for (typename result_t::Index i = 0; i < value_.size(); i++) {
       value_type y = value_[i];
       sumSquares += y*y;
     }
@@ -80,10 +76,6 @@ namespace roboptim {
   impl_gradient(gradient_ref gradient, const_argument_ref x,
                 size_type ROBOPTIM_DEBUG_ONLY (row)) const
   {
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    Eigen::internal::set_is_malloc_allowed (true);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-
     assert (row == 0);
     computeFunction (x);
     gradient.setZero ();

@@ -126,11 +126,11 @@ namespace roboptim
 		     "Evaluating hessian at point: " << argument);
       assert (isValidHessian (hessian));
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (false);
+      set_is_malloc_allowed (false);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       this->impl_hessian (hessian, argument, functionId);
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
       assert (isValidHessian (hessian));

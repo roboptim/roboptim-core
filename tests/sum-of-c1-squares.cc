@@ -1,4 +1,4 @@
-// Copyright (C) 2014 by Benjamin Chrétien, CNRS-LIRMM.
+// Copyright (C) 2015 by Félix Darricau, AIST, CNRS, EPITA
 //
 // This file is part of the roboptim.
 //
@@ -20,11 +20,9 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
-#include <roboptim/core/differentiable-function.hh>
+#include <roboptim/core/sum-of-c1-squares.hh>
 
 using namespace roboptim;
-
-boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
 struct F : public DifferentiableFunction
 {
@@ -68,34 +66,43 @@ struct F : public DifferentiableFunction
   }
 };
 
-
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
-BOOST_AUTO_TEST_CASE (ref)
+BOOST_AUTO_TEST_CASE (sum_of_c1_squares)
 {
-  output = retrievePattern ("ref");
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("sum-of-c1-squares");
 
-  // Instantiate the function and the problem.
-  F f;
+  boost::shared_ptr<F> fptr =
+    boost::make_shared<F>();
 
-  F::value_type x[8] = {0., 1., 0., 1., 0., 1., 0., 1. };
-  F::jacobian_t jac (2,4);
-  jac.setZero ();
+  SumOfC1Squares fSum(fptr, "null");
 
-  Eigen::Map<const Function::vector_t, Eigen::RowMajor, Eigen::Stride<1, 2> >
-    map_x (x, 4, Eigen::Stride<1,2> ());
+  SumOfC1Squares::vector_t x (4);
+  x << 1., 2., 1., 2.;
+  SumOfC1Squares::gradient_t grad (fSum.gradientSize ());
 
-  F::jacobian_ref jac_ref (jac);
-  F::const_argument_ref x_ref (map_x);
+  (*output) << fSum << std::endl;
 
-  set_is_malloc_allowed (false);
-  f.jacobian (jac_ref, x_ref);
-  set_is_malloc_allowed (true);
+  BOOST_CHECK (fSum.inputSize () == 4);
 
-  (*output) << map_x << std::endl;
-  (*output) << f << std::endl;
-  (*output) << f (map_x) << std::endl;
-  (*output) << f.jacobian (map_x) << std::endl;
+  BOOST_CHECK (fSum.outputSize () == 1);
+
+  BOOST_CHECK (fSum.getName () == "null");
+
+  BOOST_CHECK (fSum.isValidResult (fSum (x)));
+
+  BOOST_CHECK (fSum(x)[0] == 101);
+
+  (*output) << fSum.gradient (x) << std::endl;
+
+  fSum.gradient (grad, x);
+  (*output) << grad << std::endl;
+
+  BOOST_CHECK (fSum.gradientSize () == 4);
+
+  BOOST_CHECK (fSum.isValidGradient (fSum.gradient (x)));
+
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

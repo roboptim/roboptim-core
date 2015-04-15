@@ -33,7 +33,8 @@
 # include <boost/preprocessor/punctuation/comma.hpp>
 
 # define EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET
-# define EIGEN_RUNTIME_NO_MALLOC
+
+# include <roboptim/core/alloc.hh>
 # include <Eigen/Core>
 # include <Eigen/Dense>
 # include <Eigen/Sparse>
@@ -476,11 +477,11 @@ namespace roboptim
       assert (argument.size () == inputSize ());
       assert (isValidResult (result));
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (false);
+      set_is_malloc_allowed (false);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       this->impl_compute (result, argument);
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       assert (isValidResult (result));
     }

@@ -122,6 +122,9 @@ ROBOPTIM_CORE_TEST(function-identity)
 ROBOPTIM_CORE_TEST(function-sin)
 ROBOPTIM_CORE_TEST(function-polynomial)
 
+# Sum Of C1 Squares.
+ROBOPTIM_CORE_TEST(sum-of-c1-squares)
+
 # Decorators.
 ROBOPTIM_CORE_TEST(decorator-cached-function)
 ROBOPTIM_CORE_TEST(decorator-finite-difference-gradient)

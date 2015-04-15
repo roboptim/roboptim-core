@@ -403,7 +403,7 @@ namespace roboptim
      argument_ref xEps) const
     {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
       typedef Eigen::Triplet<double> triplet_t;
@@ -431,6 +431,10 @@ namespace roboptim
 	    }
 	}
       jacobian.setFromTriplets (coefficients.begin (), coefficients.end ());
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      set_is_malloc_allowed (false);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
     }
 
     template <typename T>
@@ -668,7 +672,7 @@ namespace roboptim
      argument_ref xEps) const
     {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
       typedef Eigen::Triplet<double> triplet_t;
