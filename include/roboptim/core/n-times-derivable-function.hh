@@ -213,10 +213,15 @@ namespace roboptim
 			size_type functionId = 0) const
     {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
       derivative_t derivative (derivativeSize ());
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      set_is_malloc_allowed (false);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       derivative.setZero ();
 
       this->derivative (derivative, argument[0], 1);
@@ -250,12 +255,17 @@ namespace roboptim
 		       size_type functionId = 0) const
     {
 # ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 # endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
       assert (functionId == 0);
 
       derivative_t derivative (derivativeSize ());
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      set_is_malloc_allowed (false);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       derivative.setZero ();
 
       this->derivative (derivative, argument[0], 2);

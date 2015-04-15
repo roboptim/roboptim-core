@@ -150,11 +150,11 @@ namespace roboptim
       assert (argument.size () == this->inputSize ());
       assert (isValidJacobian (jacobian));
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (false);
+      set_is_malloc_allowed (false);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       this->impl_jacobian (jacobian, argument);
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       assert (isValidJacobian (jacobian));
     }
@@ -194,11 +194,11 @@ namespace roboptim
       assert (argument.size () == this->inputSize ());
       assert (isValidGradient (gradient));
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (false);
+      set_is_malloc_allowed (false);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       this->impl_gradient (gradient, argument, functionId);
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      Eigen::internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       assert (isValidGradient (gradient));
     }

@@ -58,9 +58,9 @@ namespace detail
       matrix_t m (2, 2);
       m << 1., 2., 3., 4.;
 
-      internal::set_is_malloc_allowed (false);
+      set_is_malloc_allowed (false);
       foo (m.row (1));
-      internal::set_is_malloc_allowed (true);
+      set_is_malloc_allowed (true);
 
       BOOST_CHECK (!m.row (0).isZero ());
       BOOST_CHECK (m.row (1).isZero ());
