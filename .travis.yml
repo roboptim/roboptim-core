@@ -16,6 +16,9 @@ env:
     - DEBSIGN_KEYID=5AE5CD75
     - PPA_URI="roboptim/ppa"
     - LCOV_IGNORE_RULES="*tests*"
+  matrix:
+    - ROBOPTIM_STORAGE_ORDER=ColMajor
+    - ROBOPTIM_STORAGE_ORDER=RowMajor
 notifications:
   hipchat:
     rooms:
@@ -26,7 +29,9 @@ branches:
   - master
   - debian
   - travis
-script: ./.travis/run build
+script:
+  - export CMAKE_ADDITIONAL_OPTIONS="-DSTORAGE_ORDER=${ROBOPTIM_STORAGE_ORDER}"
+  - ./.travis/run build
 after_success: ./.travis/run after_success
 after_failure: ./.travis/run after_failure
 before_install:
