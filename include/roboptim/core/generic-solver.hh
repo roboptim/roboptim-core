@@ -22,6 +22,10 @@
 
 # include <stdexcept>
 
+// Fix bug in Boost 1.58.
+// cf. https://svn.boost.org/trac/boost/ticket/11199
+# include <boost/type_traits/remove_cv.hpp>
+
 # include <boost/variant/get.hpp>
 # include <boost/variant/variant.hpp>
 # include <boost/utility.hpp>
