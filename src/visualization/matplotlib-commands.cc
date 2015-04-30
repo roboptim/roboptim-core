@@ -53,12 +53,19 @@ namespace roboptim
         return Import (from, packages);
       }
 
-      Command::Command (const std::string& cmd)
-	: command_ (cmd)
+      Command::Command (const std::string& cmd, bool isPlot)
+	: command_ (cmd),
+	  isPlot_ (isPlot)
       {}
 
       Command::~Command ()
       {}
+
+      const bool&
+      Command::isPlot () const
+      {
+	return isPlot_;
+      }
 
       const std::string&
       Command::command () const
@@ -79,6 +86,14 @@ namespace roboptim
       NAME ()								\
       {									\
 	return Command (BOOST_PP_STRINGIZE(VAR) " = plt." BOOST_PP_STRINGIZE(NAME) " ()"); \
+      }
+
+# define MATPLOTLIB_UNARY_COMMAND_ARG(NAME, ARG)			\
+      Command								\
+      NAME (const char* ARG)						\
+      {									\
+	return Command ((boost::format("plt." BOOST_PP_STRINGIZE(NAME) "(\"%1%\")") \
+			 % ARG).str());					\
       }
 
       Command
@@ -119,6 +134,7 @@ namespace roboptim
 
       MATPLOTLIB_UNARY_COMMAND (show)
       MATPLOTLIB_UNARY_COMMAND_VAR (fig, figure)
+      MATPLOTLIB_UNARY_COMMAND_ARG (title, argument)
 
 # undef MATPLOTLIB_UNARY_COMMAND
 

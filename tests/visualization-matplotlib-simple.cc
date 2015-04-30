@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE (visualization_matplotlib_simple)
     output = retrievePattern ("visualization-matplotlib-simple");
 
   using namespace roboptim::visualization::matplotlib;
-  Matplotlib matplotlib = Matplotlib::make_matplotlib (false);
+  Matplotlib matplotlib = Matplotlib::make_matplotlib (std::make_pair(1, 1), false);
 
   // Display nothing, generate just some valid matplotlib commands.
   (*output)
