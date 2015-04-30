@@ -79,16 +79,20 @@ namespace roboptim
       {
       public:
 	/// \brief Make a command from a string.
-	explicit Command (const std::string& cmd);
+	explicit Command (const std::string& cmd, bool isPlot = false);
 
 	~Command ();
 
 	/// \brief Retrieve the command as a string.
 	const std::string& command () const;
 
+	const bool& isPlot() const;
+
       protected:
 	/// \brief Store matplotlib command.
 	std::string command_;
+	/// \brief Whether the command is a plot or not
+	bool isPlot_;
       };
 
       /// \brief Make a matplotlib comment.
@@ -127,6 +131,7 @@ namespace roboptim
 
       ROBOPTIM_DLLAPI Command show ();
       ROBOPTIM_DLLAPI Command figure ();
+      ROBOPTIM_DLLAPI Command title (const char* argument);
 
       /// @}
 

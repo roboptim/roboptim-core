@@ -105,7 +105,7 @@ namespace roboptim
 			% i).str () << std::endl;
 	       }
 
-        return Command (ss.str ());
+        return Command (ss.str (), true);
       }
 
       /// @}

@@ -21,6 +21,7 @@
 # include <roboptim/core/debug.hh>
 # include <roboptim/core/function.hh>
 
+# include <utility>
 # include <vector>
 
 # define EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET
@@ -54,9 +55,9 @@ namespace roboptim
       /// \brief Instanciate a matplotlib without setting a term.
       /// \param with_header whether to print the header or not
       /// \return matplotlib instance
-      static Matplotlib make_matplotlib (bool with_header = true)
+      static Matplotlib make_matplotlib (std::pair<int, int> multiplot = std::make_pair(1, 1), bool with_header = true)
       {
-	return Matplotlib (with_header);
+	return Matplotlib (multiplot, with_header);
       }
 
       /// \brief Add a new matplotlib command to the script.
@@ -86,12 +87,18 @@ namespace roboptim
       /// \brief Whether to print the header (imports).
       bool withHeader () const;
 
+      /// \brief Plots layout. {1,1} if unspecified.
+      /// \return Reference to multiplot_
+      std::pair<int, int>& multiplot ();
+
+      /// \brief Plots layout. {1,1} if unspecified.
+      std::pair<int, int> multiplot () const;
     protected:
       /// \brief Default constructor can not be called directly.
       ///
       /// Use of the named constructor (see static methods) to
       /// instantiate this class.
-      explicit Matplotlib (bool with_header = true);
+      explicit Matplotlib (std::pair<int, int> multiplot = std::make_pair(1, 1), bool with_header = true);
 
       /// \brief Reset imports to initial values.
       void resetImports ();
@@ -105,6 +112,9 @@ namespace roboptim
 
       /// \brief Whether to export the header (imports etc.).
       bool withHeader_;
+
+      /// \brief Whether to expect multiple plots or not.
+      std::pair<int, int> multiplot_;
     };
 
     /// Example shows simple matplotlib visualization.

@@ -28,8 +28,9 @@ namespace roboptim
 {
   namespace visualization
   {
-    Matplotlib::Matplotlib (bool with_header)
-      : withHeader_ (with_header)
+    Matplotlib::Matplotlib (std::pair<int, int> multiplot, bool with_header)
+      : withHeader_ (with_header),
+        multiplot_ (multiplot)
     {
       resetImports ();
     }
@@ -46,6 +47,16 @@ namespace roboptim
     bool Matplotlib::withHeader () const
     {
       return withHeader_;
+    }
+
+    std::pair<int, int>& Matplotlib::multiplot ()
+    {
+      return multiplot_;
+    }
+
+    std::pair<int, int> Matplotlib::multiplot () const
+    {
+      return multiplot_;
     }
 
     void
@@ -73,6 +84,7 @@ namespace roboptim
     {
       typedef std::vector<matplotlib::Import>::const_iterator citer_imp_t;
       typedef std::vector<matplotlib::Command>::const_iterator citer_cmd_t;
+      int n = 1; // number of the plot
 
       if (withHeader_)
 	{
@@ -84,21 +96,39 @@ namespace roboptim
 
 	  o << std::endl;
 	  o << "fig = plt.figure ()" << std::endl;
-	  o << "ax = plt.subplot(111)" << std::endl;
+	  if (multiplot().first == 1 && multiplot().second == 1)
+	    o << "ax = plt.subplot(111)" << std::endl;
 	  o << std::endl;
 	}
 
       for (citer_cmd_t it = commands_.begin (); it != commands_.end (); ++it)
-	o << it->command () << std::endl;
+	{
+	  if (!it->isPlot() || (multiplot().first == 1 && multiplot().second == 1))
+	    o << it->command () << std::endl;
+	  else
+	    {
+	      assert (multiplot().first > 0 && multiplot().second > 0);
+	      o << "ax" << n << " = plt.subplot(" << multiplot().first
+		<< ", " << multiplot().second << ", " << n << ")" << std::endl;
+	      o << it->command () << std::endl;
+	      o << "box = ax" << n << ".get_position()" << std::endl;
+	      o << "ax" << n << ".set_position([box.x0, box.y0, box.width * 0.8, box.height])" << std::endl;
+	      o << "ax" << n << ".legend(loc='center left', bbox_to_anchor=(1, 0.5))" << std::endl;
+	      ++n;
+	    }
+	}
 
       o << std::endl;
 
-      if (withHeader_)
+      if (withHeader())
 	{
-	  // Display legend on the right of the image
-	  o << "box = ax.get_position()" << std::endl;
-	  o << "ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])" << std::endl;
-	  o << "ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))" << std::endl;
+	  if (multiplot().first == 1 && multiplot().second == 1)
+	    {
+	      // Display legend on the right of the image
+	      o << "box = ax.get_position()" << std::endl;
+	      o << "ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])" << std::endl;
+	      o << "ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))" << std::endl;
+	    }
 
 	  // Show image
 	  o << "plt.show ()" << std::endl;
