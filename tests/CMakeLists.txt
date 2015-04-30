@@ -91,6 +91,7 @@ ROBOPTIM_CORE_TEST(numeric-quadratic-function)
 ROBOPTIM_CORE_TEST(n-times-derivable-function)
 ROBOPTIM_CORE_TEST(parametrized-function)
 ROBOPTIM_CORE_TEST(derivable-parametrized-function)
+ROBOPTIM_CORE_TEST(storage-order)
 ROBOPTIM_CORE_TEST(ref)
 
 # Solver.
