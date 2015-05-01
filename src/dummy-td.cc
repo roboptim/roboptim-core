@@ -35,7 +35,14 @@ namespace roboptim
     parameters_["dummy-parameter2"].value = 3;
 
     parameters_["dummy-parameter3"].description = "just a dummy key";
-    parameters_["dummy-parameter3"].value = "...and a dummy value!";
+    parameters_["dummy-parameter3"].value = std::string ("...and a dummy value!");
+
+    Parameter::vector_t v (4);
+    v << 1., 2., 3., 4.;
+    parameters_["dummy-parameter4"].value = v;
+
+    parameters_["dummy-parameter5"].description = "dummy boolean";
+    parameters_["dummy-parameter5"].value = false;
   }
 
   DummySolverTd::~DummySolverTd ()

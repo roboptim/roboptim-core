@@ -112,7 +112,7 @@ namespace roboptim
 
         typedef const std::pair<const std::string, Parameter> const_iterator_t;
         BOOST_FOREACH (const_iterator_t& it, parameters_)
-          o  << iendl << it.first << " " << it.second;
+          o  << iendl << it.first << it.second;
         o << decindent;
       }
 

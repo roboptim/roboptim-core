@@ -41,12 +41,23 @@ namespace roboptim
   /// \addtogroup roboptim_problem
   /// @{
 
-  /// \brief Parameters type.
+  /// \brief Solver parameter type.
   struct Parameter
   {
-    /// \brief Allowed types for parameters.
-    typedef boost::variant<Function::value_type,
-			   int, std::string> parameterValues_t;
+    typedef Function::value_type value_type;
+    typedef Function::vector_t vector_t;
+
+    /// \brief Allowed types for solver parameters:
+    ///   - value (double)
+    ///   - vector (of double)
+    ///   - integer
+    ///   - string
+    ///   - bool
+    typedef boost::variant<value_type, vector_t,
+                           int, std::string, bool> parameterValues_t;
+
+    /// \brief Default constructor.
+    ROBOPTIM_DLLAPI Parameter ();
 
     /// \brief Parameter description (for humans).
     std::string description;

@@ -33,7 +33,14 @@ namespace roboptim
     parent_t::parameters_["dummy-parameter2"].value = 3;
 
     parent_t::parameters_["dummy-parameter3"].description = "just a dummy key";
-    parent_t::parameters_["dummy-parameter3"].value = "...and a dummy value!";
+    parent_t::parameters_["dummy-parameter3"].value = std::string ("...and a dummy value!");
+
+    Parameter::vector_t v (4);
+    v << 1., 2., 3., 4.;
+    parent_t::parameters_["dummy-parameter4"].value = v;
+
+    parent_t::parameters_["dummy-parameter5"].description = "dummy boolean";
+    parent_t::parameters_["dummy-parameter5"].value = false;
   }
 
   template <typename F>

@@ -21,10 +21,47 @@
 
 namespace roboptim
 {
+  namespace detail
+  {
+    struct PrintSolverParameter : public boost::static_visitor<std::ostream&>
+    {
+      PrintSolverParameter (std::ostream& o) : o_ (o)
+      {}
+
+      template <typename T>
+      std::ostream& operator () (const T& val)
+      {
+        o_ << val;
+        return o_;
+      }
+
+      std::ostream& operator () (const bool& val)
+      {
+        o_ << (val? "true" : "false");
+        return o_;
+      }
+
+    private:
+      std::ostream& o_;
+    };
+  } // end of namespace detail
+
+  Parameter::Parameter ()
+    : description (""),
+      value ()
+  {}
+
   std::ostream& operator<< (std::ostream& o,
 			    const Parameter& parameter)
   {
-    o << "(" << parameter.description << "): " << parameter.value;
+    detail::PrintSolverParameter psp (o);
+
+    if (!parameter.description.empty ())
+      o << " (" << parameter.description << ")";
+    o << ": ";
+
+    boost::apply_visitor (psp, parameter.value);
+
     return o;
   }
 } // end of namespace roboptim
