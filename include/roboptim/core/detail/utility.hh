@@ -38,9 +38,6 @@ namespace roboptim
 {
   namespace detail
   {
-    using namespace boost;
-    using namespace boost::mpl;
-
     /// \brief Transform a types list into a types list of shared pointers.
     ///
     /// If the input list is:
@@ -95,9 +92,9 @@ namespace roboptim
     /// \tparam T
     template<typename T>
     struct is_eigen_type
-      : and_<has_Scalar<T>,
-             has_Index<T>,
-             has_StorageKind<T> >
+      : boost::mpl::and_<has_Scalar<T>,
+                         has_Index<T>,
+                         has_StorageKind<T> >
     {};
 
 
@@ -129,9 +126,9 @@ namespace roboptim
     struct const_ref
     {
     typedef typename
-      if_<is_eigen_type<T>,
-          const_eigen_ref<T>,
-          add_reference<typename add_const<T>::type> >
+      boost::mpl::if_<is_eigen_type<T>,
+                      const_eigen_ref<T>,
+                      boost::add_reference<typename boost::add_const<T>::type> >
       ::type::type type;
     };
 
@@ -172,7 +169,12 @@ namespace roboptim
     /// \tparam Type type.
     template <typename Sequence, typename Type>
     struct contains_base_of
-      : greater<int_<count_if<Sequence, is_base_of<_, Type> >::value>, int_<0> >
+      : boost::mpl::greater<
+          boost::mpl::int_<
+            boost::mpl::count_if<Sequence,
+                                 boost::is_base_of<boost::mpl::_, Type> >
+            ::value>,
+          boost::mpl::int_<0> >
     {};
 
 
@@ -182,10 +184,10 @@ namespace roboptim
     /// \tparam Type2 second relative.
     template <typename Type1, typename Type2>
     struct get_descendant
-      : if_<is_base_of<Type1, Type2>, Type2, Type1>
+      : boost::mpl::if_<boost::is_base_of<Type1, Type2>, Type2, Type1>
     {
-      BOOST_MPL_ASSERT_MSG((or_<is_base_of<Type1, Type2>,
-			    is_base_of<Type2, Type1> >::value),
+      BOOST_MPL_ASSERT_MSG((boost::mpl::or_<boost::is_base_of<Type1, Type2>,
+			    boost::is_base_of<Type2, Type1> >::value),
                            ONE_SHOULD_INHERIT_FROM_THE_OTHER, (Type1&, Type2&));
     };
 
@@ -195,9 +197,12 @@ namespace roboptim
     /// \tparam CLIST a vector of constraint types.
     template <typename C, typename CLIST>
     struct check_constraint_type
-      : fold<CLIST,
-	     bool_<false>,
-	     if_<is_base_of<boost::mpl::_2, C>, bool_<true>, boost::mpl::_1> >
+      : boost::mpl::fold<CLIST,
+          boost::mpl::bool_<false>,
+          boost::mpl::if_<boost::is_base_of<boost::mpl::_2, C>,
+                          boost::mpl::bool_<true>,
+                          boost::mpl::_1>
+        >
     {};
 
 
@@ -208,10 +213,10 @@ namespace roboptim
     struct cast_constraint_type
     {
       typedef typename
-      fold <CLIST,
+      boost::mpl::fold <CLIST,
             void,
-            if_<is_base_of<boost::mpl::_2, C>,
-                mpl::if_<is_void<boost::mpl::_1>,
+            boost::mpl::if_<boost::is_base_of<boost::mpl::_2, C>,
+                boost::mpl::if_<boost::is_void<boost::mpl::_1>,
                          boost::mpl::_2,
                          detail::get_descendant<boost::mpl::_1, boost::mpl::_2> >,
                 boost::mpl::_1>
