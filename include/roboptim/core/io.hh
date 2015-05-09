@@ -23,4 +23,4 @@
 # include <boost/tuple/tuple_io.hpp>
 # include <boost/variant/detail/variant_io.hpp>
 
-#endif //! ROBOPTIM_CORE_FWD_HH
+#endif //! ROBOPTIM_CORE_IO_HH
