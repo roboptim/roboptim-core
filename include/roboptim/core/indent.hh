@@ -48,4 +48,4 @@ namespace roboptim
   ROBOPTIM_DLLAPI std::ostream& decendl (std::ostream& o);
 }
 
-#endif // !MISC_INDENT_HH
+#endif //! ROBOPTIM_CORE_INDENT_HH
