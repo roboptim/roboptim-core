@@ -105,7 +105,7 @@ namespace roboptim
     template <typename T>
     struct const_eigen_ref
     {
-      typedef const Eigen::Ref<const T> type;
+      typedef const Eigen::Ref<const T>& type;
     };
 
     /// \brief Return the proper const reference type of a given type.

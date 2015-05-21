@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE (detail_utility)
     typedef is_same<const float&, const_ref<float>::type> predicate1_t;
     typedef is_same<const std::vector<int>&,
                     const_ref<std::vector<int> >::type> predicate2_t;
-    typedef is_same<const Eigen::Ref<const Eigen::Vector3d>,
+    typedef is_same<const Eigen::Ref<const Eigen::Vector3d>&,
                     const_ref<Eigen::Vector3d>::type> predicate3_t;
 
     TEST_PREDICATE (predicate1_t);
