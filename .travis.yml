@@ -53,6 +53,6 @@ addons:
       name: "roboptim/roboptim-core"
       description: "Build submitted via Travis CI"
     notification_email: roboptim@googlegroups.com
-    build_command_prepend: "mkdir coverity && cd coverity && cmake .."
+    build_command_prepend: ". .travis/common.sh && mkdir coverity && cd coverity && cmake .."
     build_command: "make"
     branch_pattern: coverity_scan
