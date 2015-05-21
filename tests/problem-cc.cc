@@ -58,16 +58,16 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   boost::shared_ptr<ConstantFunction>
     cstr = boost::make_shared<ConstantFunction>  (v);
   problemSrc_t::intervals_t intervals (1);
-  problemSrc_t::scales_t scales (1, 1);
+  problemSrc_t::scaling_t scaling (1, 1);
   for (size_t i = 0; i < intervals.size (); ++i)
     intervals[i] = Function::makeInfiniteInterval ();
 
   // Add ConstantFunction constraint.
-  pbSrc.addConstraint (cstr, intervals, scales);
+  pbSrc.addConstraint (cstr, intervals, scaling);
 
   // Add DifferentiableFunction constraint.
   pbSrc.addConstraint (boost::static_pointer_cast<DifferentiableFunction> (cstr),
-                       intervals, scales);
+                       intervals, scaling);
 
   // Check with same type.
   {

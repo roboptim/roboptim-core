@@ -30,6 +30,8 @@
 # include <roboptim/core/function.hh>
 # include <roboptim/core/detail/utility.hh>
 
+# include <roboptim/core/deprecated.hh>
+
 namespace roboptim
 {
 
@@ -39,8 +41,7 @@ namespace roboptim
   ///
   /// An optimization problem is defined as:
   /// - a cost function (\f$\mathbb{R}^n \rightarrow \mathbb{R}\f$)
-  /// - a set of intervals and scales for arguments.
-  /// .
+  /// - a set of intervals and scale factors for arguments.
   ///
   /// The goal of the optimization process is finding a point which
   /// minimizes the cost function
@@ -97,8 +98,11 @@ namespace roboptim
     typedef typename function_t::interval_t interval_t;
     typedef typename function_t::intervals_t intervals_t;
 
-    /// \brief Scale vector.
-    typedef std::vector<value_type> scales_t;
+    /// \brief Scaling vector.
+    typedef std::vector<value_type> scaling_t;
+
+    /// \brief Scaling vector (deprecated typedef).
+    typedef scaling_t scales_t ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Vector of names (e.g. for arguments).
     typedef typename function_t::names_t names_t;
@@ -142,15 +146,21 @@ namespace roboptim
     /// \return arguments bounds
     const intervals_t& argumentBounds () const;
 
-    /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for each argument.
-    /// \return arguments scales
-    scales_t& argumentScales ();
+    /// \brief Retrieve arguments scaling.
+    /// Arguments scaling define which scale factor is applied for each argument.
+    /// \return arguments scaling
+    scaling_t& argumentScaling ();
 
-    /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for each argument.
-    /// \return arguments scales
-    const scales_t& argumentScales () const;
+    /// \brief Retrieve arguments scaling.
+    /// Arguments scaling define which scale factor is applied for each argument.
+    /// \return arguments scaling
+    const scaling_t& argumentScaling () const;
+
+    /// \brief Retrieve arguments scaling (deprecated version).
+    scales_t& argumentScales () ROBOPTIM_CORE_DEPRECATED;
+
+    /// \brief Retrieve arguments scaling (deprecated version).
+    const scales_t& argumentScales () const ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Retrieve arguments names.
     /// Arguments names define a name for each argument. This is particularly
@@ -198,8 +208,8 @@ namespace roboptim
 
     /// \brief Arguments intervals.
     intervals_t argumentBounds_;
-    /// \brief Arguments scales.
-    scales_t argumentScales_;
+    /// \brief Arguments scaling.
+    scaling_t argumentScaling_;
     /// \brief Arguments names.
     names_t argumentNames_;
   };
@@ -214,8 +224,7 @@ namespace roboptim
   /// - one or more constraints functions,
   ///   (\f$\mathbb{R}^n \rightarrow \mathbb{R}^m\f$)
   ///  associated with an interval and a scale,
-  /// - a set of intervals and scales for arguments.
-  /// .
+  /// - a set of intervals and scale factors for arguments.
   ///
   /// The goal of the optimization process is finding a point which
   /// minimizes the cost function and which respects the constraints
@@ -306,8 +315,11 @@ namespace roboptim
     /// \brief Intervals type.
     typedef typename function_t::intervals_t intervals_t;
 
-    /// \brief Scale vector.
-    typedef std::vector<value_type> scales_t;
+    /// \brief Scaling vector.
+    typedef std::vector<value_type> scaling_t;
+
+    /// \brief Scaling vector (deprecated typedef)
+    typedef scaling_t scales_t ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Vector of names (e.g. for arguments).
     typedef typename function_t::names_t names_t;
@@ -320,13 +332,16 @@ namespace roboptim
     /// only one element of interval_t type.
     typedef std::vector<intervals_t> intervalsVect_t;
 
-    /// \brief Vector of scale vectors. This type is used to take into
+    /// \brief Vector of scaling vectors. This type is used to take into
     /// account the fact that constraints can have output values in
     /// \f$\mathbb{R}^m\f$.
     ///
-    /// If \f$m=1\f$, then the associated scale vector contains only
-    /// one element of scale_t type.
-    typedef std::vector<scales_t> scalesVect_t;
+    /// If \f$m=1\f$, then the associated scaling vector contains only
+    /// one element of scaling_t type.
+    typedef std::vector<scaling_t> scalingVect_t;
+
+    /// \brief Vector of scaling vectors (deprecated typedef).
+    typedef scalingVect_t scalesVect_t ROBOPTIM_CORE_DEPRECATED;
 
     /// \name Constructors and destructors.
     /// \{
@@ -370,16 +385,22 @@ namespace roboptim
     /// \return arguments bounds
     const intervals_t& argumentBounds () const;
 
-    /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for each argument.
-    /// \return arguments scales
-    scales_t& argumentScales ();
+    /// \brief Retrieve arguments scaling.
+    /// Arguments scaling define which scale factor is applied for each argument.
+    /// \return arguments scaling
+    scaling_t& argumentScaling ();
 
-    /// \brief Retrieve arguments scales.
-    /// Arguments scales define which scale is applied for
+    /// \brief Retrieve arguments scaling.
+    /// Arguments scaling define which scale factor is applied for
     /// each argument.
-    /// \return arguments scales
-    const scales_t& argumentScales () const;
+    /// \return arguments scaling
+    const scaling_t& argumentScaling () const;
+
+    /// \brief Retrieve arguments scaling (deprecated version).
+    scales_t& argumentScales () ROBOPTIM_CORE_DEPRECATED;
+
+    /// \brief Retrieve arguments scaling (deprecated version).
+    const scales_t& argumentScales () const ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Retrieve arguments names.
     /// Arguments names define a name for each argument. This is particularly
@@ -407,7 +428,7 @@ namespace roboptim
     ///
     /// Useful only when \f$m=1\f$, use addConstraint
     /// (boost::shared_ptr<C> constraint, intervals_t intervals,
-    /// scales_t scales) instead.
+    /// scaling_t scaling) instead.
     ///
     /// \param constraint the constraint that will be added
     /// \param interval interval in which the constraint is satisfied
@@ -426,21 +447,24 @@ namespace roboptim
     /// \param constraint the constraint that will be added
     /// \param intervals interval vector in which the constraint
     /// is satisfied
-    /// \param scale constraint scale
+    /// \param scaling constraint scaling
     /// \tparam C constraint type (has to be in CLIST)
     /// \throw std::runtime_error
     template <typename C>
     void addConstraint (boost::shared_ptr<C> constraint,
 			intervals_t intervals,
-			scales_t scales);
+			scaling_t scaling);
 
     /// \brief Retrieve constraints bounds vector.
     /// \return constraints bounds vector
     const intervalsVect_t& boundsVector () const;
 
-    /// \brief Retrieve constraints scales vector.
-    /// \return constraints scales vector
-    const scalesVect_t& scalesVector () const;
+    /// \brief Retrieve constraints scaling vector.
+    /// \return constraints scaling vector
+    const scalingVect_t& scalingVector () const;
+
+    /// \brief Retrieve constraints scaling vector (deprecated version).
+    const scalesVect_t& scalesVector () const ROBOPTIM_CORE_DEPRECATED;
 
     /// \}
 
@@ -481,11 +505,11 @@ namespace roboptim
     /// \brief Arguments intervals.
     intervals_t argumentBounds_;
 
-    /// \brief Constraints scales vector.
-    scalesVect_t scalesVect_;
+    /// \brief Constraints scaling vector.
+    scalingVect_t scalingVect_;
 
-    /// \brief Arguments scales.
-    scales_t argumentScales_;
+    /// \brief Arguments scaling.
+    scaling_t argumentScaling_;
 
     /// \brief Arguments names.
     names_t argumentNames_;

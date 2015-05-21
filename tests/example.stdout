@@ -3,17 +3,17 @@ Solver:
   Problem:
     x₀ * x₃ * (x₀ + x₁ + x₂) + x₃ (twice differentiable function)
     Arguments bounds: (1, 5), (1, 5), (1, 5), (1, 5)
-    Arguments scales: 1, 1, 1, 1
+    Arguments scaling: 1, 1, 1, 1
     Arguments names: x₀, x₁, x₂, x₃
     Number of constraints: 2
     Constraint 0
         x₀ * x₁ * x₂ * x₃ (twice differentiable function)
         Bounds: (25, inf)
-        Scales: 1
+        Scaling: 1
     Constraint 1
         x₀² + x₁² + x₂² + x₃² (twice differentiable function)
         Bounds: (40, 40)
-        Scales: 1
+        Scaling: 1
     No starting point.
     Infinity value (for all functions): inf
   Result:

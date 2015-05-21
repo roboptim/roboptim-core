@@ -3,7 +3,7 @@ Solver:
   Problem:
     0 (twice differentiable function)
     Arguments bounds: (0, 1)
-    Arguments scales: 1
+    Arguments scaling: 1
     No constraints.
     No starting point.
     Infinity value (for all functions): inf

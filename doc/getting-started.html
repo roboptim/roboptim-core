@@ -214,23 +214,23 @@ int run_test ()
   boost::shared_ptr&lt;G1&gt; g1 (new G1 ());
 
   F::intervals_t bounds;
-  solver_t::problem_t::scales_t scales;
+  solver_t::problem_t::scaling_t scaling;
 
   // Add constraints
   bounds.push_back(Function::makeLowerInterval (25.));
-  scales.push_back (1.);
+  scaling.push_back (1.);
   pb.addConstraint
     (boost::static_pointer_cast&lt;TwiceDifferentiableFunction&gt; (g0),
-     bounds, scales);
+     bounds, scaling);
 
   bounds.clear ();
-  scales.clear ();
+  scaling.clear ();
 
   bounds.push_back(Function::makeInterval (40., 40.));
-  scales.push_back (1.);
+  scaling.push_back (1.);
   pb.addConstraint
     (boost::static_pointer_cast&lt;TwiceDifferentiableFunction&gt; (g1),
-     bounds, scales);
+     bounds, scaling);
 
   // Initialize solver.
 
@@ -305,17 +305,17 @@ Solver:
   Problem:
     x&#8320; x&#8323; (x&#8320; + x&#8321; + x&#8322;) + x&#8322; (twice differentiable function)
     Argument's bounds: (1, 5), (1, 5), (1, 5), (1, 5)
-    Argument's scales: 1, 1, 1, 1
+    Argument's scaling: 1, 1, 1, 1
     Number of constraints: 2
     Constraint 0
         x&#8320; x&#8321; x&#8322; x&#8323; (twice differentiable function)
         Bounds: (25, inf)
-        Scales: 1
+        Scaling: 1
         Initial value: [1](25)
     Constraint 1
         x&#8320;&sup2; + x&#8321;&sup2; + x&#8322;&sup2; + x&#8323;&sup2; (twice differentiable function)
         Bounds: (40, 40)
-        Scales: 1
+        Scaling: 1
         Initial value: [1](52) (constraint not satisfied)
     Starting point: [4](1,5,5,1)
     Starting value: [1](16)

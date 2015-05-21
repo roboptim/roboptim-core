@@ -156,27 +156,27 @@ namespace roboptim
   (P& problem,
    boost::shared_ptr<C> constraint,
    std::vector<Function::interval_t> interval,
-   std::vector<Function::value_type> scale)
+   std::vector<Function::value_type> scaling)
   {
     assert (constraint);
     assert (interval.size () == constraint->outputSize ());
-    assert (scale.empty () || scale.size () == constraint->outputSize ());
+    assert (scaling.empty () || scaling.size () == constraint->outputSize ());
 
     if (constraint->outputSize () == 1)
     {
-      if (scale.empty ())
+      if (scaling.empty ())
 	problem.addConstraint (constraint, interval[0]);
       else
-	problem.addConstraint (constraint, interval[0], scale[0]);
+	problem.addConstraint (constraint, interval[0], scaling[0]);
       return;
     }
     for (unsigned i = 0; i < constraint->outputSize (); ++i)
       {
 	boost::shared_ptr<Split<C> > split (new Split<C> (constraint, i));
-	if (scale.empty ())
+	if (scaling.empty ())
 	  problem.addConstraint (split, interval[i]);
 	else
-	  problem.addConstraint (split, interval[i], scale[i]);
+	  problem.addConstraint (split, interval[i], scaling[i]);
       }
   }
 } // end of namespace roboptim

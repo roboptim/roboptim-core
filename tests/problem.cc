@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   typedef typename function_t::argument_t     argument_t;
   typedef typename problem_t::startingPoint_t startingPoint_t;
   typedef typename problem_t::intervals_t     intervals_t;
-  typedef typename problem_t::scales_t        scales_t;
+  typedef typename problem_t::scaling_t        scaling_t;
 
   typedef GenericConstantFunction<T>          constantFunction_t;
 
@@ -77,31 +77,31 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   boost::shared_ptr<constantFunction_t>
     cstr = boost::make_shared<constantFunction_t>  (v);
   intervals_t intervals (2);
-  scales_t scales (2, 1);
+  scaling_t scaling (2, 1);
   for (size_t i = 0; i < intervals.size (); ++i)
     intervals[i] = Function::makeInfiniteInterval ();
-  pb.addConstraint (cstr, intervals, scales);
+  pb.addConstraint (cstr, intervals, scaling);
 
   // Check null ptr
   BOOST_CHECK_THROW (boost::shared_ptr<constantFunction_t> null_ptr;
-                     pb.addConstraint (null_ptr, intervals, scales),
+                     pb.addConstraint (null_ptr, intervals, scaling),
                      std::runtime_error);
 
   // Check invalid input size
   BOOST_CHECK_THROW (typename constantFunction_t::vector_t v_size (4);
                      boost::shared_ptr<constantFunction_t>
                      cstr_size = boost::make_shared<constantFunction_t> (v_size);
-                     pb.addConstraint (cstr_size, intervals, scales),
+                     pb.addConstraint (cstr_size, intervals, scaling),
                      std::runtime_error);
 
   // Check invalid interval size
   BOOST_CHECK_THROW (intervals_t intervals_size (6);
-                     pb.addConstraint (cstr, intervals_size, scales),
+                     pb.addConstraint (cstr, intervals_size, scaling),
                      std::runtime_error);
 
-  // Check invalid scale vector size
-  BOOST_CHECK_THROW (scales_t scales_size (6);
-                     pb.addConstraint (cstr, intervals, scales_size),
+  // Check invalid scaling vector size
+  BOOST_CHECK_THROW (scaling_t scaling_size (6);
+                     pb.addConstraint (cstr, intervals, scaling_size),
                      std::runtime_error);
 
   std::cout << pb << std::endl;
@@ -115,10 +115,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   mixedPb.argumentNames () = names;
 
   // First constraint: ConstantFunction automatically converted to LinearFunction
-  mixedPb.addConstraint (cstr, intervals, scales);
+  mixedPb.addConstraint (cstr, intervals, scaling);
   // Second constraint: ConstantFunction converted to DifferentiableFunction
   mixedPb.addConstraint (boost::static_pointer_cast<GenericDifferentiableFunction<T> > (cstr),
-                         intervals, scales);
+                         intervals, scaling);
 
   // First constraint: LinearFunction
   BOOST_CHECK (mixedPb.constraints() [0].which () == 0);

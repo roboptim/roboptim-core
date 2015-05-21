@@ -2,7 +2,7 @@ Solver:
   Problem:
     a + b + c + d (not differentiable)
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
-    Arguments scales: 1, 1, 1, 1
+    Arguments scaling: 1, 1, 1, 1
     No constraints.
     No starting point.
     Infinity value (for all functions): inf
@@ -49,7 +49,7 @@ Solver:
   Problem:
     a + b + c + d + e, a * b * c * d * e (not differentiable)
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
-    Arguments scales: 1, 1, 1, 1, 1
+    Arguments scaling: 1, 1, 1, 1, 1
     No constraints.
     No starting point.
     Infinity value (for all functions): inf

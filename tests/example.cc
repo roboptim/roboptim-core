@@ -205,23 +205,23 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
   boost::shared_ptr<G1> g1 (new G1 ());
 
   F::intervals_t bounds;
-  solver_t::problem_t::scales_t scales;
+  solver_t::problem_t::scaling_t scaling;
 
   // Add constraints
   bounds.push_back(Function::makeLowerInterval (25.));
-  scales.push_back (1.);
+  scaling.push_back (1.);
   pb.addConstraint
     (boost::static_pointer_cast<TwiceDifferentiableFunction> (g0),
-     bounds, scales);
+     bounds, scaling);
 
   bounds.clear ();
-  scales.clear ();
+  scaling.clear ();
 
   bounds.push_back(Function::makeInterval (40., 40.));
-  scales.push_back (1.);
+  scaling.push_back (1.);
   pb.addConstraint
     (boost::static_pointer_cast<TwiceDifferentiableFunction> (g1),
-     bounds, scales);
+     bounds, scaling);
 
   // Initialize solver.
 

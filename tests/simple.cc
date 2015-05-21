@@ -97,13 +97,13 @@ BOOST_AUTO_TEST_CASE (simple)
      && pb.argumentBounds ()[3] == Function::makeInfiniteInterval ());
 
 
-  BOOST_CHECK_EQUAL (pb.scalesVector ().size (), 0u);
-  BOOST_CHECK_EQUAL (pb.argumentScales ().size (), 4u);
+  BOOST_CHECK_EQUAL (pb.scalingVector ().size (), 0u);
+  BOOST_CHECK_EQUAL (pb.argumentScaling ().size (), 4u);
   BOOST_CHECK
-    (pb.argumentScales ()[0] == 1.
-     && pb.argumentScales ()[1] == 1.
-     && pb.argumentScales ()[2] == 1.
-     && pb.argumentScales ()[3] == 1.);
+    (pb.argumentScaling ()[0] == 1.
+     && pb.argumentScaling ()[1] == 1.
+     && pb.argumentScaling ()[2] == 1.
+     && pb.argumentScaling ()[3] == 1.);
 
   F* g = new F ();
   pb.addConstraint (boost::shared_ptr<F> (g),
@@ -114,8 +114,8 @@ BOOST_AUTO_TEST_CASE (simple)
 		     0.);
   BOOST_CHECK_EQUAL (pb.boundsVector ()[0][0].second,
 		     5.);
-  BOOST_CHECK_EQUAL (pb.scalesVector ().size (), 1u);
-  BOOST_CHECK_EQUAL (pb.scalesVector ()[0][0], 3.5);
+  BOOST_CHECK_EQUAL (pb.scalingVector ().size (), 1u);
+  BOOST_CHECK_EQUAL (pb.scalingVector ()[0][0], 3.5);
 
 
   // Try to solve it with the DummySolver (direct instantiation, no plug-in).

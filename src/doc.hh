@@ -178,7 +178,7 @@
    <li>Functions which represent different kinds of mathematical functions and
    their associated features (gradient, hessian, etc.).</li>
    <li>A problem class defining a whole optimization problem including some
-   technical details (scales).</li>
+   technical details (scaling).</li>
    <li>A solver hierarchy defining solvers that are working on a class of
    optimizations problem (for instance, a QP solver solves problems with a
    quadratic objective function and linear constraints).</li>
@@ -244,8 +244,8 @@
    <li>A set of functions constraints.</li>
    <li>Bounds on the input arguments.</li>
    <li>Bounds on the constraints functions output.</li>
-   <li>Scales on the input arguments.</li>
-   <li>Scales on the constraints functions output.</li>
+   <li>Scaling on the input arguments.</li>
+   <li>Scaling on the constraint functions output.</li>
    </ul>
 
    The problem class is templated by two parameters:
@@ -381,7 +381,7 @@
    </ul>
    ...with or without constraints.
 
-   It should also support bounds and scales. If not, emulating them
+   It should also support bounds and scaling. If not, emulating them
    should be possible.
 
    Integrating solvers that solve very different problems will likely
