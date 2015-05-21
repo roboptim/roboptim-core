@@ -654,7 +654,6 @@ namespace roboptim
 	      if (error_opt < error && std::fabs (r_opt - r_0) < 4. * error)
 		{
 		  r_0 = r_opt;
-		  error = error_opt;
 		}
 	    }
 
