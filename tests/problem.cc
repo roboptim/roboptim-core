@@ -26,10 +26,14 @@ using namespace roboptim;
 typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
 			  ::roboptim::EigenMatrixSparse> functionTypes_t;
 
+boost::shared_ptr<boost::test_tools::output_test_stream> output;
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 {
+  output = retrievePattern ("problem");
+
   typedef Problem<GenericDifferentiableFunction<T>,
 		  boost::mpl::vector<GenericDifferentiableFunction<T> > >
     problem_t;
@@ -54,13 +58,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 
   {
     BOOST_CHECK_THROW (startingPoint_t test_sp = pb_fail.startingPoint ();
-                       std::cout << (*test_sp) << std::endl,
+                       (*output) << (*test_sp) << std::endl,
                        std::runtime_error);
   }
 
   {
     BOOST_CHECK_THROW (const startingPoint_t& test_sp = pb_fail.startingPoint ();
-                       std::cout << (*test_sp) << std::endl,
+                       (*output) << (*test_sp) << std::endl,
                        std::runtime_error);
   }
 
@@ -104,7 +108,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
                      pb.addConstraint (cstr, intervals, scaling_size),
                      std::runtime_error);
 
-  std::cout << pb << std::endl;
+  (*output) << pb << std::endl;
+
+  // Backward compatibility
+  // Disable deprecated warning
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  BOOST_CHECK (pb.argumentScales () == pb.argumentScaling ());
+  BOOST_CHECK (pb.scalesVector () == pb.scalingVector ());
+#pragma GCC diagnostic pop
 
   // Test a problem with multiple types of constraints.
   typedef Problem<GenericDifferentiableFunction<T>,
@@ -125,7 +137,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   // Second constraint: DifferentiableFunction
   BOOST_CHECK (mixedPb.constraints() [1].which () == 1);
 
-  std::cout << mixedPb << std::endl;
+  (*output) << mixedPb << std::endl;
+
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

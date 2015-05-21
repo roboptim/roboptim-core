@@ -201,6 +201,20 @@ namespace roboptim
   }
 
   template <typename F>
+  typename Problem<F, boost::mpl::vector<> >::scales_t&
+  Problem<F, boost::mpl::vector<> >::argumentScales ()
+  {
+    return argumentScaling ();
+  }
+
+  template <typename F>
+  const typename Problem<F, boost::mpl::vector<> >::scales_t&
+  Problem<F, boost::mpl::vector<> >::argumentScales () const
+  {
+    return argumentScaling ();
+  }
+
+  template <typename F>
   typename Problem<F, boost::mpl::vector<> >::names_t&
   Problem<F, boost::mpl::vector<> >::argumentNames ()
   {
@@ -466,6 +480,13 @@ namespace roboptim
   }
 
   template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::scalesVect_t&
+  Problem<F, CLIST>::scalesVector () const
+  {
+    return scalingVector ();
+  }
+
+  template <typename F, typename CLIST>
   typename Problem<F, CLIST>::scaling_t&
   Problem<F, CLIST>::argumentScaling ()
   {
@@ -477,6 +498,20 @@ namespace roboptim
   Problem<F, CLIST>::argumentScaling () const
   {
     return argumentScaling_;
+  }
+
+  template <typename F, typename CLIST>
+  typename Problem<F, CLIST>::scales_t&
+  Problem<F, CLIST>::argumentScales ()
+  {
+    return argumentScaling ();
+  }
+
+  template <typename F, typename CLIST>
+  const typename Problem<F, CLIST>::scales_t&
+  Problem<F, CLIST>::argumentScales () const
+  {
+    return argumentScaling ();
   }
 
   template <typename F, typename CLIST>
