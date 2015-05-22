@@ -214,6 +214,7 @@ namespace roboptim
 	std::stringstream sserror;
 	sserror << "libltdl failed to call ``destroy'': "
 		<< lt_dlerror ();
+	std::cerr << sserror.str () << std::endl;
       }
 
     if (lt_dlclose (handle_))
@@ -221,7 +222,7 @@ namespace roboptim
 	std::stringstream sserror;
 	sserror << "libltdl failed to close plug-in: "
 		<< lt_dlerror ();
-	std::cerr << sserror << std::endl;
+	std::cerr << sserror.str () << std::endl;
       }
 
     if (lt_dlexit ())
@@ -229,7 +230,7 @@ namespace roboptim
 	std::stringstream sserror;
 	sserror << "libltdl failed to call ``create'': "
 		<< lt_dlerror ();
-	std::cerr << sserror << std::endl;
+	std::cerr << sserror.str () << std::endl;
       }
   }
 
