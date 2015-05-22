@@ -75,6 +75,7 @@ TARGET_LINK_LIBRARIES(simple roboptim-core ${Boost_LIBRARIES})
 # Basic types.
 ROBOPTIM_CORE_TEST(interval)
 ROBOPTIM_CORE_TEST(util)
+ROBOPTIM_CORE_TEST(terminal-color)
 ROBOPTIM_CORE_TEST(indent)
 ROBOPTIM_CORE_TEST(detail-utility)
 ROBOPTIM_CORE_TEST(cache)

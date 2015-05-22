@@ -26,32 +26,27 @@
 #  include <unistd.h>
 # endif // _WIN32
 
-# ifdef _WIN32
-#  define ROBOPTIM_CORE_FILTER_TTY()			\
-  do							\
-    {							\
-      return o;						\
-    }							\
-  while (0)
-# else
-#  define ROBOPTIM_CORE_FILTER_TTY()			\
-  do							\
-    {							\
-      if (o == std::cout && !isatty (fileno (stdout)))	\
-	return o;					\
-      if (o == std::cerr && !isatty (fileno (stderr)))	\
-	return o;					\
-      if (o != std::cout && o != std::cerr)		\
-	return o;					\
-    }							\
-  while (0)
-#endif // _WIN32
+# define ROBOPTIM_CORE_FILTER_TTY()		\
+  if (!roboptim::fg::isTtyStream (o))		\
+    return o
 
 
 namespace roboptim
 {
   namespace fg
   {
+    inline bool isTtyStream (const std::ostream& o)
+    {
+
+# ifdef _WIN32
+      return false;
+# else
+      return !((o.rdbuf () == std::cout.rdbuf () && !isatty (fileno (stdout))) ||
+               (o.rdbuf () == std::cerr.rdbuf () && !isatty (fileno (stderr))) ||
+               (o.rdbuf () != std::cout.rdbuf () && o.rdbuf () != std::cerr.rdbuf ()));
+#endif // _WIN32
+    }
+
     inline std::ostream& reset (std::ostream& o)
     {
       ROBOPTIM_CORE_FILTER_TTY ();
