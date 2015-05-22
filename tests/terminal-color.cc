@@ -20,7 +20,6 @@
 #include <iostream>
 
 #include <roboptim/core/terminal-color.hh>
-#include <roboptim/core/indent.hh>
 
 using namespace roboptim;
 

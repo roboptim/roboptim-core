@@ -37,7 +37,6 @@ namespace roboptim
   {
     inline bool isTtyStream (const std::ostream& o)
     {
-
 # ifdef _WIN32
       return false;
 # else
