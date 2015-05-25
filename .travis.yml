@@ -32,7 +32,7 @@ branches:
   - coverity_scan
 script:
   - export CMAKE_ADDITIONAL_OPTIONS="-DSTORAGE_ORDER=${ROBOPTIM_STORAGE_ORDER}"
-  - if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then ./.travis/run build; fi
+  - if [ "${COVERITY_SCAN_BRANCH}" != "1" ]; then ./.travis/run build; fi
 after_success: ./.travis/run after_success
 after_failure: ./.travis/run after_failure
 before_install:
