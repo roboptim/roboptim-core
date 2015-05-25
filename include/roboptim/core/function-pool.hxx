@@ -86,7 +86,7 @@ namespace roboptim
       template <typename U>
       void operator () (const boost::shared_ptr<U>& f)
       {
-        result_.segment (idx_, f->outputSize ()) = (*f)(x_);
+        (*f) (result_.segment (idx_, f->outputSize ()), x_);
         idx_ += f->outputSize ();
       }
 
@@ -116,8 +116,7 @@ namespace roboptim
       {
         assert (f->inputSize () == m_);
 
-        jacobian_.block (idx_, 0, f->outputSize (), m_)
-          = f->jacobian (x_);
+        f->jacobian (jacobian_.block (idx_, 0, f->outputSize (), m_), x_);
         idx_ += f->outputSize ();
       }
 
@@ -130,8 +129,18 @@ namespace roboptim
       {
         assert (f->inputSize () == m_);
 
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+        bool cur_malloc_allowed = is_malloc_allowed ();
+        set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
         // TODO: update once sparse submatrix support makes it possible
         copySparseBlock (jacobian_, f->jacobian (x_), idx_, 0);
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+        set_is_malloc_allowed (cur_malloc_allowed);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
         idx_ += f->outputSize ();
       }
 

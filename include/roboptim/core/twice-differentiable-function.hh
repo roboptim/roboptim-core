@@ -125,12 +125,16 @@ namespace roboptim
       LOG4CXX_TRACE (this->logger,
 		     "Evaluating hessian at point: " << argument);
       assert (isValidHessian (hessian));
+
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      bool cur_malloc_allowed = is_malloc_allowed ();
       set_is_malloc_allowed (false);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       this->impl_hessian (hessian, argument, functionId);
+
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      set_is_malloc_allowed (true);
+      set_is_malloc_allowed (cur_malloc_allowed);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
       assert (isValidHessian (hessian));

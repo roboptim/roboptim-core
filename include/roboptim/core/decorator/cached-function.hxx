@@ -140,7 +140,17 @@ namespace roboptim
         return;
       }
     (*function_) (result, argument);
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    bool cur_malloc_allowed = is_malloc_allowed ();
+    set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
     cache_[0][argument] = result;
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    set_is_malloc_allowed (cur_malloc_allowed);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
   }
 
   template <typename T>
@@ -159,7 +169,17 @@ namespace roboptim
 	return;
       }
     function_->gradient (gradient, argument, functionId);
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    bool cur_malloc_allowed = is_malloc_allowed ();
+    set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
     gradientCache_[static_cast<std::size_t> (functionId)][argument] = gradient;
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    set_is_malloc_allowed (cur_malloc_allowed);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
   }
 
   template <typename T>
@@ -200,7 +220,17 @@ namespace roboptim
         return;
       }
     function_->jacobian (jacobian, argument);
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    bool cur_malloc_allowed = is_malloc_allowed ();
+    set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
     jacobianCache_[argument] = jacobian;
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    set_is_malloc_allowed (cur_malloc_allowed);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
   }
 
   template <typename T>
@@ -245,7 +275,17 @@ namespace roboptim
       }
 #endif
     function_->hessian (hessian, argument, functionId);
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    bool cur_malloc_allowed = is_malloc_allowed ();
+    set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
     hessianCache_[static_cast<std::size_t> (functionId)][argument] = hessian;
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    set_is_malloc_allowed (cur_malloc_allowed);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
   }
 
 

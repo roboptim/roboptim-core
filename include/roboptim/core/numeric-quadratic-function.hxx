@@ -77,13 +77,14 @@ namespace roboptim
   (jacobian_ref jacobian, const_argument_ref x) const
   {
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+    bool cur_malloc_allowed = is_malloc_allowed ();
     set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
     Eigen::MatrixXd j = 2 * x.transpose () * a_;
 
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    set_is_malloc_allowed (false);
+    set_is_malloc_allowed (cur_malloc_allowed);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
     for (size_type i = 0; i < this->inputSize (); ++i)

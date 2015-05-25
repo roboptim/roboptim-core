@@ -306,7 +306,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
                                   "Joint position pool");
 
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-    set_is_malloc_allowed (true);
+  bool cur_malloc_allowed = is_malloc_allowed ();
+  set_is_malloc_allowed (true);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
   // Pre-allocate memory
@@ -325,7 +326,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
     fd_denseJac (pool->outputSize (), pool->inputSize ());
 
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-  set_is_malloc_allowed (false);
+  set_is_malloc_allowed (cur_malloc_allowed);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
 
   // Call the pool

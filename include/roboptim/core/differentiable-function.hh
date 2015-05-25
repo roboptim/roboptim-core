@@ -149,13 +149,18 @@ namespace roboptim
 		     "Evaluating jacobian at point: " << argument);
       assert (argument.size () == this->inputSize ());
       assert (isValidJacobian (jacobian));
+
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      bool cur_malloc_allowed = is_malloc_allowed ();
       set_is_malloc_allowed (false);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       this->impl_jacobian (jacobian, argument);
+
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      set_is_malloc_allowed (true);
+      set_is_malloc_allowed (cur_malloc_allowed);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       assert (isValidJacobian (jacobian));
     }
 
@@ -193,13 +198,18 @@ namespace roboptim
       assert (functionId < this->outputSize ());
       assert (argument.size () == this->inputSize ());
       assert (isValidGradient (gradient));
+
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+      bool cur_malloc_allowed = is_malloc_allowed ();
       set_is_malloc_allowed (false);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       this->impl_gradient (gradient, argument, functionId);
+
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      set_is_malloc_allowed (true);
+      set_is_malloc_allowed (cur_malloc_allowed);
 #endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
       assert (isValidGradient (gradient));
     }
 

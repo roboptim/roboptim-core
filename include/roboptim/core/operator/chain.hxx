@@ -75,7 +75,7 @@ namespace roboptim
     (*right_) (rightResult_, x);
     left_->gradient (gradientLeft_, rightResult_, functionId);
     right_->jacobian (jacobianRight_, x);
-    gradient = gradientLeft_.adjoint () * jacobianRight_;
+    gradient.noalias () = gradientLeft_.adjoint () * jacobianRight_;
   }
 
   template <typename U, typename V>
@@ -87,7 +87,8 @@ namespace roboptim
     (*right_) (rightResult_, x);
     left_->jacobian (jacobianLeft_, rightResult_);
     right_->jacobian (jacobianRight_, x);
-    jacobian = jacobianLeft_ * jacobianRight_;
+
+    jacobian.noalias () = jacobianLeft_ * jacobianRight_;
   }
 
 } // end of namespace roboptim.

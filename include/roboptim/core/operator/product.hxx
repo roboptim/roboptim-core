@@ -184,7 +184,16 @@ namespace roboptim
 	      }
 	  }
 
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+        bool cur_malloc_allowed = is_malloc_allowed ();
+        set_is_malloc_allowed (true);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+
         jac_uv.setFromTriplets (tripletList.begin (), tripletList.end ());
+
+#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
+        set_is_malloc_allowed (cur_malloc_allowed);
+#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
       }
     };
   } // end of namespace detail.
