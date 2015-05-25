@@ -17,10 +17,12 @@
 
 #ifndef ROBOPTIM_CORE_DETAIL_STRUCTURED_INPUT_HH
 # define ROBOPTIM_CORE_DETAIL_STRUCTURED_INPUT_HH
+
 # include <boost/mpl/assert.hpp>
 # include <boost/type_traits.hpp>
 
 # include <vector>
+# include <utility>
 
 # include <roboptim/core/fwd.hh>
 
@@ -39,8 +41,8 @@ namespace roboptim
       std::vector<std::pair<size_t, size_t> > blocks;
     };
 
-    /// \brief This class gives access to the getJacobianBlock() method, which implementation
-    /// is to be spacialized according to the type of matrix handled by the function.
+    /// \brief This class gives access to the getJacobianBlock() method, whose implementation
+    /// is to be specialized according to the type of matrix handled by the function.
     template<typename FuncType, typename MatType>
     struct StructuredInputJacobianInternal : public BlockProvider
     {};
@@ -49,10 +51,15 @@ namespace roboptim
     template<typename FuncType>
     struct StructuredInputJacobianInternal<FuncType, roboptim::EigenMatrixDense> : public BlockProvider
     {
+      /// \brief Differentiable function type.
+      // TODO: this should be removed once the error on Travis (Boost 1.46.1) is properly understood.
+      // cf. https://github.com/roboptim/roboptim-core/pull/96
+      typedef roboptim::GenericDifferentiableFunction<typename FuncType::traits_t> differentiableFunction_t;
+
       /// \brief return type of the getJacobianBlock() method
-      typedef typename FuncType::jacobian_ref JacBlock;
+      typedef typename differentiableFunction_t::jacobian_ref JacBlock;
       /// \brief input type of the jacobian given by the user
-      typedef typename FuncType::jacobian_ref InputJacBlock;
+      typedef typename differentiableFunction_t::jacobian_ref InputJacBlock;
 
       /// \brief retrieve a specific block of the jacobian given as an input
       /// \param jacobian the jacobian to operate upon
@@ -64,6 +71,11 @@ namespace roboptim
     template<typename FuncType>
     struct StructuredInputJacobianInternal<FuncType, roboptim::EigenMatrixSparse> : public BlockProvider
     {
+      /// \brief Differentiable function type.
+      // TODO: this should be removed once the error on Travis (Boost 1.46.1) is properly understood.
+      // cf. https://github.com/roboptim/roboptim-core/pull/96
+      typedef roboptim::GenericDifferentiableFunction<typename FuncType::traits_t> differentiableFunction_t;
+
       /// \brief return type of the getJacobianBlock() method
       // Why is the InputPanel set to false ? According to the documentation, the
       // InputPanel parameter allows eigen to check if aligend access to the memory is feasible.
@@ -80,9 +92,9 @@ namespace roboptim
       // reverse the meaning of the InputPanel attribute, but for lack of a better explanation,
       // we just use the magical value "false" here. Everything compiles and works in both
       // RowMajor and ColMajor mode, so we get the result we expected.
-      typedef typename Eigen::Block<typename FuncType::jacobian_t, Eigen::Dynamic, Eigen::Dynamic, false> JacBlock;
+      typedef typename Eigen::Block<typename differentiableFunction_t::jacobian_t, Eigen::Dynamic, Eigen::Dynamic, false> JacBlock;
       /// \brief input type of the jacobian given by the user
-      typedef typename FuncType::jacobian_ref InputJacBlock;
+      typedef typename differentiableFunction_t::jacobian_ref InputJacBlock;
 
       /// \brief retrieve a specific block of the jacobian given as an input
       /// \param jacobian the jacobian to operate upon

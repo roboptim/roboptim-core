@@ -23,6 +23,7 @@
 #include <roboptim/core/detail/structured-input.hh>
 
 #include <boost/type_traits.hpp>
+#include <boost/static_assert.hpp>
 
 typedef boost::mpl::list< ::roboptim::EigenMatrixDense
 			  ,::roboptim::EigenMatrixSparse
@@ -135,14 +136,14 @@ boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
-BOOST_AUTO_TEST_CASE_TEMPLATE (manifold_map_test_0, T, functionTypes_t)
+BOOST_AUTO_TEST_CASE_TEMPLATE (detail_structured_input, T, functionTypes_t)
 {
   F<T> f;
 
   // F is a DifferentiableFunction, and as such exposes the getJacobianBlock() method
-  BOOST_STATIC_ASSERT(boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename F<T>::parent_t, typename F<T>::traits_t>, F<T> >::value);
+  BOOST_STATIC_ASSERT((boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename F<T>::parent_t, typename F<T>::traits_t>, F<T> >::value));
   // G is just a Function, and as such does not expose the getJacobianBlock() method
-  BOOST_STATIC_ASSERT(!boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename G<T>::parent_t, typename G<T>::traits_t>, G<T> >::value);
+  BOOST_STATIC_ASSERT((!boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename G<T>::parent_t, typename G<T>::traits_t>, G<T> >::value));
 
   typename F<T>::argument_t arg(22);
   for(int i = 0; i < arg.size(); ++i)
