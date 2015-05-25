@@ -18,18 +18,24 @@
 #ifndef ROBOPTIM_CORE_ALLOC_HH
 # define ROBOPTIM_CORE_ALLOC_HH
 
-# include <roboptim/core/sys.hh>
-
 # define EIGEN_RUNTIME_NO_MALLOC
 # include <Eigen/Core>
 
+# include <roboptim/core/sys.hh>
+
 namespace roboptim
 {
-  ROBOPTIM_LOCAL
-  bool is_malloc_allowed_update(bool update, bool new_value);
-
+  /// \brief Update the static variable used for Eigen::set_is_malloc_allowed.
   ROBOPTIM_DLLAPI
-  bool set_is_malloc_allowed (bool allow);
+  bool is_malloc_allowed_update (bool update = false, bool new_value = false);
+
+  /// \brief Manage the calls to Eigen::set_is_malloc_allowed.
+  inline bool set_is_malloc_allowed (bool allow)
+  {
+    is_malloc_allowed_update (true, allow);
+
+    return Eigen::internal::set_is_malloc_allowed (allow);
+  }
 }
 
 #endif //! ROBOPTIM_CORE_ALLOC_HH

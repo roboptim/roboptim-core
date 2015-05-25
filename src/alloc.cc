@@ -19,19 +19,11 @@
 
 namespace roboptim
 {
-  bool is_malloc_allowed_update(bool update = false, bool new_value = false)
+  bool is_malloc_allowed_update (bool update, bool new_value)
   {
     static bool value = true;
     if (update)
       value = new_value;
     return value;
-  }
-
-  /// \brief Manage the calls to Eigen::set_is_malloc_allowed.
-  bool set_is_malloc_allowed (bool allow)
-  {
-    is_malloc_allowed_update(true, allow);
-
-    return Eigen::internal::set_is_malloc_allowed(allow);
   }
 } // end of namespace roboptim.
