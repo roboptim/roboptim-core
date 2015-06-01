@@ -18,7 +18,6 @@
 #ifndef ROBOPTIM_CORE_ALLOC_HH
 # define ROBOPTIM_CORE_ALLOC_HH
 
-# define EIGEN_RUNTIME_NO_MALLOC
 # include <Eigen/Core>
 
 # include <roboptim/core/sys.hh>
@@ -35,7 +34,11 @@ namespace roboptim
   {
     is_malloc_allowed_update (true, allow);
 
+# ifdef EIGEN_RUNTIME_NO_MALLOC
     return Eigen::internal::set_is_malloc_allowed (allow);
+# else
+    return true;
+# endif //! EIGEN_RUNTIME_NO_MALLOC
   }
 
   /// \brief Whether dynamic allocation is allowed.
