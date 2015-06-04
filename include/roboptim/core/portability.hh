@@ -65,6 +65,18 @@
   #define ROBOPTIM_LOCAL ROBOPTIM_DLLLOCAL
 #endif // ROBOPTIM_STATIC
 
+// Extra useful attributes
+#if defined _WIN32 || defined __CYGWIN__
+  #define ROBOPTIM_UNUSED
+#else
+// On Linux, for GCC >= 4
+  #if __GNUC__ >= 4
+    #define ROBOPTIM_UNUSED __attribute__ ((__unused__))
+  #else
+// Otherwise (GCC < 4 or another compiler is used)
+    #define ROBOPTIM_UNUSED
+#endif // __GNUC__ >= 4
+#endif // defined _WIN32 || defined __CYGWIN__
 
 // Required to avoid size_t resolution error with MSVC. Triggered by
 // the boost/tuple/tuple_io.hpp inclusion in roboptim/core/io.hh.

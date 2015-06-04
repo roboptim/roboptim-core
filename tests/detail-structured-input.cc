@@ -19,6 +19,7 @@
 
 #include <iostream>
 
+#include <roboptim/core/sys.hh>
 #include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/detail/structured-input.hh>
 
@@ -140,10 +141,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (detail_structured_input, T, functionTypes_t)
 {
   F<T> f;
 
+  // Note: here we use ROBOPTIM_UNUSED to prevent compiler warnings
+  // For more information, cf. https://svn.boost.org/trac/boost/ticket/7242
   // F is a DifferentiableFunction, and as such exposes the getJacobianBlock() method
-  BOOST_STATIC_ASSERT((boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename F<T>::parent_t, typename F<T>::traits_t>, F<T> >::value));
+  BOOST_STATIC_ASSERT((boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename F<T>::parent_t, typename F<T>::traits_t>, F<T> >::value)) ROBOPTIM_UNUSED;
   // G is just a Function, and as such does not expose the getJacobianBlock() method
-  BOOST_STATIC_ASSERT((!boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename G<T>::parent_t, typename G<T>::traits_t>, G<T> >::value));
+  BOOST_STATIC_ASSERT((!boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename G<T>::parent_t, typename G<T>::traits_t>, G<T> >::value)) ROBOPTIM_UNUSED;
 
   typename F<T>::argument_t arg(22);
   for(int i = 0; i < arg.size(); ++i)
