@@ -38,6 +38,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivative-size.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/detail/autopromote.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/detail/structured-input.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/detail/structured-input.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/detail/utility.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/differentiable-function.hxx
