@@ -18,7 +18,14 @@
 #ifndef ROBOPTIM_CORE_ALLOC_HH
 # define ROBOPTIM_CORE_ALLOC_HH
 
-# include <Eigen/Core>
+# if defined(EIGEN_RUNTIME_NO_MALLOC) && !defined(ROBOPTIM_DO_NOT_CHECK_ALLOCATION)
+#  define ROBOPTIM_CHECK_ALLOCATION
+# endif //! defined(EIGEN_RUNTIME_NO_MALLOC) && !defined(ROBOPTIM_DO_NOT_CHECK_ALLOCATION)
+
+// Include only relevant if we check allocations
+# ifdef ROBOPTIM_CHECK_ALLOCATION
+#  include <Eigen/Core>
+# endif //! ROBOPTIM_CHECK_ALLOCATION
 
 # include <roboptim/core/sys.hh>
 
@@ -34,11 +41,11 @@ namespace roboptim
   {
     is_malloc_allowed_update (true, allow);
 
-# ifdef EIGEN_RUNTIME_NO_MALLOC
+# ifdef ROBOPTIM_CHECK_ALLOCATION
     return Eigen::internal::set_is_malloc_allowed (allow);
 # else
     return true;
-# endif //! EIGEN_RUNTIME_NO_MALLOC
+# endif //! ROBOPTIM_CHECK_ALLOCATION
   }
 
   /// \brief Whether dynamic allocation is allowed.
@@ -47,5 +54,9 @@ namespace roboptim
     return is_malloc_allowed_update (false);
   }
 }
+
+# ifdef ROBOPTIM_CHECK_ALLOCATION
+#  undef ROBOPTIM_CHECK_ALLOCATION
+# endif //! ROBOPTIM_CHECK_ALLOCATION
 
 #endif //! ROBOPTIM_CORE_ALLOC_HH
