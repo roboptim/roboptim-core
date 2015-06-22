@@ -47,6 +47,12 @@ namespace roboptim
 			   size_type outputSize = 1,
 			   std::string name = std::string ());
 
+    /// \brief Get the type-checking flag
+    static unsigned long getFlag()
+    {
+      return flag_;
+    }
+
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
@@ -56,6 +62,9 @@ namespace roboptim
     void impl_hessian (hessian_ref hessian,
 		       const_argument_ref argument,
 		       size_type functionId = 0) const;
+
+    /// \brief Flag representing the Roboptim Function type
+    static unsigned long flag_;
   };
 
   /// @}

@@ -50,6 +50,12 @@ namespace roboptim
     virtual ~Polynomial ()
     {}
 
+    /// \brief Get the type-checking flag
+    static unsigned long getFlag()
+    {
+      return flag_;
+    }
+
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
@@ -72,6 +78,9 @@ namespace roboptim
     value_type applyPolynomial
     (const_vector_ref coeffs, const_argument_ref x) const;
 
+    /// \brief Flag representing the Roboptim Function type
+    static unsigned long flag_;
+
   private:
     /// \brief Coefficients of the polynomial
     vector_t coeffs_;
@@ -85,6 +94,9 @@ namespace roboptim
   /// \example function-polynomial.cc
 
   /// @}
+
+  template <typename T>
+  unsigned long Polynomial<T>::flag_ = ROBOPTIM_IS_POLYNOMIAL|Polynomial::parent_t::getFlag();
 
 } // end of namespace roboptim
 

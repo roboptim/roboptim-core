@@ -51,6 +51,12 @@ namespace roboptim
 
     ~GenericNumericLinearFunction ();
 
+    /// \brief Get the type-checking flag
+    static unsigned long getFlag()
+    {
+      return flag_;
+    }
+
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
@@ -88,6 +94,10 @@ namespace roboptim
     matrix_t a_;
     /// \brief B vector.
     vector_t b_;
+
+  protected:
+    /// \brief Flag representing the Roboptim Function type
+    static unsigned long flag_;
   };
 
   /// Example shows numeric linear function use.

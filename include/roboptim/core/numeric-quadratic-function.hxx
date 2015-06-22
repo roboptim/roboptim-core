@@ -148,6 +148,8 @@ namespace roboptim
              << decindent;
   }
 
+  template <typename T>
+  unsigned long GenericNumericQuadraticFunction<T>::flag_ = ROBOPTIM_IS_NUMERIC_QUADRATIC|GenericNumericQuadraticFunction::parent_t::getFlag();
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX

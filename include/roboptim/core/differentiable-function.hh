@@ -124,6 +124,12 @@ namespace roboptim
 	&& jacobian.cols () == jacobianSize ().second;
     }
 
+    /// \brief Get the type-checking flag
+    static unsigned long getFlag()
+    {
+      return flag_;
+    }
+
     /// \brief Computes the jacobian.
     ///
     /// \param argument point at which the jacobian will be computed
@@ -252,6 +258,9 @@ namespace roboptim
 				const_argument_ref argument,
 				size_type functionId = 0)
       const = 0;
+
+    /// \brief Flag representing the Roboptim Function type
+    static unsigned long flag_;
   };
 
   /// @}

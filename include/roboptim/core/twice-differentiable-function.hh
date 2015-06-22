@@ -96,6 +96,11 @@ namespace roboptim
 	&& hessian.cols () == this->hessianSize ().second;
     }
 
+    /// \brief Get the type-checking flag
+    static unsigned long getFlag()
+    {
+      return flag_;
+    }
 
     /// \brief Compute the hessian at a given point.
     ///
@@ -177,6 +182,9 @@ namespace roboptim
     {
       symmetric.setZero ();
     }
+
+    /// \brief Flag representing the Roboptim Function type
+    static unsigned long flag_;
   };
 
   /// @}
