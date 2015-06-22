@@ -96,12 +96,6 @@ namespace roboptim
 	&& hessian.cols () == this->hessianSize ().second;
     }
 
-    /// \brief Get the type-checking flag
-    static unsigned long getFlag()
-    {
-      return flag_;
-    }
-
     /// \brief Compute the hessian at a given point.
     ///
     /// Program will abort if the argument size is wrong.
@@ -181,6 +175,13 @@ namespace roboptim
     void setZero (hessian_ref symmetric) const
     {
       symmetric.setZero ();
+    }
+
+  public:
+    /// \brief Get the type-checking flag
+    virtual unsigned long flag()
+    {
+      return flag_;
     }
 
     /// \brief Flag representing the Roboptim Function type

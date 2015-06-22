@@ -75,12 +75,6 @@ namespace roboptim
     virtual ~NTimesDerivableFunction () {}
 
 
-    /// \brief Get the type-checking flag
-    static unsigned long getFlag()
-    {
-      return flag_;
-    }
-
     /// \brief Return the size of the derivative vector.
     /// \return derivative vector size
     size_type derivativeSize () const
@@ -317,9 +311,6 @@ namespace roboptim
 			     std::string name = std::string ())
       : NTimesDerivableFunction<DerivabilityOrder - 1> (outputSize, name)
     {}
-
-    /// \brief Flag representing the Roboptim Function type
-    static unsigned long flag_;
   };
 
   /// @}

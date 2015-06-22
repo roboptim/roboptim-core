@@ -38,7 +38,7 @@ namespace roboptim
   }
 
   template <typename T>
-  unsigned long GenericQuadraticFunction<T>::flag_ = ROBOPTIM_IS_QUADRATIC|GenericQuadraticFunction::parent_t::getFlag();
+  unsigned long GenericQuadraticFunction<T>::flag_ = ROBOPTIM_IS_QUADRATIC|GenericQuadraticFunction<T>::parent_t::flag_;
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX

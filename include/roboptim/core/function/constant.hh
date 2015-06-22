@@ -64,12 +64,6 @@ namespace roboptim
     ~GenericConstantFunction ()
     {}
 
-    /// \brief Get the type-checking flag
-    static unsigned long getFlag()
-    {
-      return flag_;
-    }
-
     /// \brief Display the function on the specified output stream.
     ///
     /// \param o output stream used for display
@@ -97,6 +91,13 @@ namespace roboptim
       jacobian.setZero ();
     }
 
+  public:
+    /// \brief Get the type-checking flag
+    virtual unsigned long flag()
+    {
+      return flag_;
+    }
+
     /// \brief Flag representing the Roboptim Function type
     static unsigned long flag_;
 
@@ -110,7 +111,7 @@ namespace roboptim
   /// @}
 
   template <typename T>
-  unsigned long GenericConstantFunction<T>::flag_ = ROBOPTIM_IS_CONSTANT|GenericConstantFunction::parent_t::getFlag();
+  unsigned long GenericConstantFunction<T>::flag_ = ROBOPTIM_IS_CONSTANT|GenericConstantFunction<T>::parent_t::flag_;
 
 } // end of namespace roboptim
 

@@ -32,8 +32,5 @@ namespace roboptim
     o << derivabilityOrder << "-time differentiable function.";
     return o;
   }
-
-  template <unsigned dorder>
-  unsigned long NTimesDerivableFunction<dorder>::flag_ = ROBOPTIM_IS_N_TIMES_DIFFERENTIABLE|NTimesDerivableFunction::parent_t::getFlag() + dorder;
 }
 #endif //! ROBOPTIM_CORE_N_TIMES_DERIVABLE_HXX
