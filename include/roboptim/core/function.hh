@@ -47,6 +47,20 @@
 
 # include <roboptim/core/detail/utility.hh>
 
+// We should probably move these templates out of function.hh
+// Flags used for type checking inside the RobOptim function architecture
+// First 2 bytes will store infos about RobOptim function types
+// Next 2 bytes will be available to add-on parts
+# define ROBOPTIM_IS_DIFFERENTIABLE 1UL << 0
+# define ROBOPTIM_IS_TWICE_DIFFERENTIABLE 1UL << 1
+# define ROBOPTIM_IS_LINEAR 1UL << 2
+# define ROBOPTIM_IS_NUMERIC_LINEAR 1UL << 3
+# define ROBOPTIM_IS_QUADRATIC 1UL << 4
+# define ROBOPTIM_IS_NUMERIC_QUADRATIC 1UL << 5
+# define ROBOPTIM_IS_CONSTANT 1UL << 6
+# define ROBOPTIM_IS_POLYNOMIAL 1UL << 7
+
+
 // Generate Eigen::Ref types for a given data type.
 # define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(NAME,TYPE)	\
   typedef TYPE NAME##_t;					\
@@ -357,6 +371,33 @@ namespace roboptim
       return boost::get<2> (interval);
     }
 
+    /// \brief Get the type-checking flag
+    virtual unsigned long flag() const
+    {
+      return flag_;
+    }
+
+    /// \brief Fonction cast as.
+    ///
+    /// \tparam ExpectedType type we want to cast the function into
+    template <class ExpectedType>
+    ExpectedType* castInto()
+    {
+      if (asType<ExpectedType>())
+        return reinterpret_cast<ExpectedType*>(this);
+
+      throw std::runtime_error("Forbidden cast !");
+    }
+
+    /// \brief Fonction type checking.
+    ///
+    /// \tparam ExpectedType type the function could be compatible with
+    template <class ExpectedType>
+    bool asType() const
+    {
+      return (ExpectedType::flag_&flag()) == ExpectedType::flag_;
+    }
+
     /// \brief Iterate on an interval
     ///
     /// Call the functor to each discretization point of the discrete
@@ -526,7 +567,6 @@ namespace roboptim
     /// \param argument point at which the function will be evaluated
     virtual void impl_compute (result_ref result, const_argument_ref argument)
       const = 0;
-
   private:
     /// \brief Problem dimension.
     size_type inputSize_;
@@ -540,6 +580,10 @@ namespace roboptim
   protected:
     /// \brief Pointer to function logger (see log4cxx documentation).
     static log4cxx::LoggerPtr logger;
+
+  public:
+    /// \brief Flag representing the Roboptim Function type
+    static const unsigned long flag_;
   };
 
   template <typename T>
@@ -587,6 +631,9 @@ namespace roboptim
   {
     return f.print (o);
   }
+
+  template <typename T>
+  const unsigned long GenericFunction<T>::flag_ = 0;
 
   /// \brief Trait specializing GenericFunction for Eigen dense matrices.
   template <>

@@ -52,6 +52,15 @@ namespace roboptim
     /// \param o output stream used for display
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
+
+    /// \brief Get the type-checking flag
+    virtual unsigned long flag() const
+    {
+      return flag_;
+    }
+
+    /// \brief Flag representing the Roboptim Function type
+    static const unsigned long flag_;
   };
 
   /// @}

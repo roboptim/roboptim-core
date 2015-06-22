@@ -72,6 +72,16 @@ namespace roboptim
     value_type applyPolynomial
     (const_vector_ref coeffs, const_argument_ref x) const;
 
+  public:
+    /// \brief Get the type-checking flag
+    virtual unsigned long flag() const
+    {
+      return flag_;
+    }
+
+    /// \brief Flag representing the Roboptim Function type
+    static const unsigned long flag_;
+
   private:
     /// \brief Coefficients of the polynomial
     vector_t coeffs_;
@@ -85,6 +95,9 @@ namespace roboptim
   /// \example function-polynomial.cc
 
   /// @}
+
+  template <typename T>
+  const unsigned long Polynomial<T>::flag_ = ROBOPTIM_IS_POLYNOMIAL|Polynomial<T>::parent_t::flag_;
 
 } // end of namespace roboptim
 

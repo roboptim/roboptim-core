@@ -47,6 +47,9 @@ namespace roboptim
     else
       return o << this->getName () << " (linear function)";
   }
+
+  template <typename T>
+  const unsigned long GenericLinearFunction<T>::flag_ = ROBOPTIM_IS_LINEAR|GenericLinearFunction<T>::parent_t::flag_;
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HXX

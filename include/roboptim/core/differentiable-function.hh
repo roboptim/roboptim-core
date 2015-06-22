@@ -252,6 +252,16 @@ namespace roboptim
 				const_argument_ref argument,
 				size_type functionId = 0)
       const = 0;
+
+  public:
+    /// \brief Get the type-checking flag
+    virtual unsigned long flag() const
+    {
+      return flag_;
+    }
+
+    /// \brief Flag representing the Roboptim Function type
+    static const unsigned long flag_;
   };
 
   /// @}
