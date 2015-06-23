@@ -393,7 +393,7 @@ namespace roboptim
     template <class ExpectedType>
     bool asType()
     {
-      return (ExpectedType::flag_&this->flag()) == ExpectedType::flag_;
+      return (ExpectedType::flag_&flag()) == ExpectedType::flag_;
     }
 
     /// \brief Iterate on an interval
