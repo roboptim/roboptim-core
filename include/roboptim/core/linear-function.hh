@@ -65,7 +65,7 @@ namespace roboptim
     }
 
     /// \brief Flag representing the Roboptim Function type
-    static unsigned long flag_;
+    static const unsigned long flag_;
   };
 
   /// @}

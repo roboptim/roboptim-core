@@ -49,7 +49,7 @@ namespace roboptim
   }
 
   template <typename T>
-  unsigned long GenericLinearFunction<T>::flag_ = ROBOPTIM_IS_LINEAR|GenericLinearFunction<T>::parent_t::flag_;
+  const unsigned long GenericLinearFunction<T>::flag_ = ROBOPTIM_IS_LINEAR|GenericLinearFunction<T>::parent_t::flag_;
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HXX

@@ -95,7 +95,7 @@ namespace roboptim
   }
 
   template <typename T>
-  unsigned long GenericDifferentiableFunction<T>::flag_ = ROBOPTIM_IS_DIFFERENTIABLE|GenericDifferentiableFunction<T>::parent_t::flag_;
+  const unsigned long GenericDifferentiableFunction<T>::flag_ = ROBOPTIM_IS_DIFFERENTIABLE|GenericDifferentiableFunction<T>::parent_t::flag_;
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION

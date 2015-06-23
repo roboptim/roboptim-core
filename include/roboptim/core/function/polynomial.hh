@@ -80,7 +80,7 @@ namespace roboptim
     }
 
     /// \brief Flag representing the Roboptim Function type
-    static unsigned long flag_;
+    static const unsigned long flag_;
 
   private:
     /// \brief Coefficients of the polynomial
@@ -97,7 +97,7 @@ namespace roboptim
   /// @}
 
   template <typename T>
-  unsigned long Polynomial<T>::flag_ = ROBOPTIM_IS_POLYNOMIAL|Polynomial<T>::parent_t::flag_;
+  const unsigned long Polynomial<T>::flag_ = ROBOPTIM_IS_POLYNOMIAL|Polynomial<T>::parent_t::flag_;
 
 } // end of namespace roboptim
 

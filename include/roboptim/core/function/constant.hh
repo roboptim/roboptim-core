@@ -99,7 +99,7 @@ namespace roboptim
     }
 
     /// \brief Flag representing the Roboptim Function type
-    static unsigned long flag_;
+    static const unsigned long flag_;
 
   private:
     const vector_t offset_;
@@ -111,7 +111,7 @@ namespace roboptim
   /// @}
 
   template <typename T>
-  unsigned long GenericConstantFunction<T>::flag_ = ROBOPTIM_IS_CONSTANT|GenericConstantFunction<T>::parent_t::flag_;
+  const unsigned long GenericConstantFunction<T>::flag_ = ROBOPTIM_IS_CONSTANT|GenericConstantFunction<T>::parent_t::flag_;
 
 } // end of namespace roboptim
 
