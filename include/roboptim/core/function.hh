@@ -49,6 +49,8 @@
 
 // We should probably move these templates out of function.hh
 // Flags used for type checking inside the RobOptim function architecture
+// First 2 bytes will store infos about RobOptim function types
+// Next 2 bytes will be available to add-on parts
 # define ROBOPTIM_IS_DIFFERENTIABLE 1UL << 0
 # define ROBOPTIM_IS_TWICE_DIFFERENTIABLE 1UL << 1
 # define ROBOPTIM_IS_LINEAR 1UL << 2
@@ -370,7 +372,7 @@ namespace roboptim
     }
 
     /// \brief Get the type-checking flag
-    virtual unsigned long flag()
+    virtual unsigned long flag() const
     {
       return flag_;
     }
@@ -391,7 +393,7 @@ namespace roboptim
     ///
     /// \tparam ExpectedType type the function could be compatible with
     template <class ExpectedType>
-    bool asType()
+    bool asType() const
     {
       return (ExpectedType::flag_&flag()) == ExpectedType::flag_;
     }

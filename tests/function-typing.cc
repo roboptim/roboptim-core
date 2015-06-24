@@ -1,4 +1,4 @@
-// Copyright (C) 2014 by Félix Darricau, AIST, CNRS, EPITA
+// Copyright (C) 2015 by Félix Darricau, AIST, CNRS, EPITA
 //
 // This file is part of the roboptim.
 //

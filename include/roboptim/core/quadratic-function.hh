@@ -54,7 +54,7 @@ namespace roboptim
     virtual std::ostream& print (std::ostream&) const;
 
     /// \brief Get the type-checking flag
-    virtual unsigned long flag()
+    virtual unsigned long flag() const
     {
       return flag_;
     }
