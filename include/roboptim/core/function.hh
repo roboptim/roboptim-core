@@ -47,20 +47,6 @@
 
 # include <roboptim/core/detail/utility.hh>
 
-// We should probably move these templates out of function.hh
-// Flags used for type checking inside the RobOptim function architecture
-// First 2 bytes will store infos about RobOptim function types
-// Next 2 bytes will be available to add-on parts
-# define ROBOPTIM_IS_DIFFERENTIABLE 1UL << 0
-# define ROBOPTIM_IS_TWICE_DIFFERENTIABLE 1UL << 1
-# define ROBOPTIM_IS_LINEAR 1UL << 2
-# define ROBOPTIM_IS_NUMERIC_LINEAR 1UL << 3
-# define ROBOPTIM_IS_QUADRATIC 1UL << 4
-# define ROBOPTIM_IS_NUMERIC_QUADRATIC 1UL << 5
-# define ROBOPTIM_IS_CONSTANT 1UL << 6
-# define ROBOPTIM_IS_POLYNOMIAL 1UL << 7
-
-
 // Generate Eigen::Ref types for a given data type.
 # define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF(NAME,TYPE)	\
   typedef TYPE NAME##_t;					\
@@ -69,9 +55,9 @@
 
 // Generate Eigen::Ref types for a given data type. Specialized version for row
 // vectors with the proper stride, no matter what the storage order is.
-# define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF_VEC(NAME,TYPE)	\
-  typedef TYPE NAME##_t;					\
-  typedef Eigen::Ref<NAME##_t, 0, detail::row_vector_stride<StorageOrder>::type> NAME##_ref;			\
+# define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF_VEC(NAME,TYPE)		\
+  typedef TYPE NAME##_t;						\
+  typedef Eigen::Ref<NAME##_t, 0, detail::row_vector_stride<StorageOrder>::type> NAME##_ref; \
   typedef const Eigen::Ref<const NAME##_t, 0, detail::row_vector_stride<StorageOrder>::type>& const_##NAME##_ref
 
 # define ROBOPTIM_GENERATE_TYPEDEFS_REF(NAME,TYPE)	\
@@ -94,9 +80,9 @@
   typedef typename GenericFunctionTraits<T>::NAME##_ref NAME##_ref;	\
   typedef typename GenericFunctionTraits<T>::const_##NAME##_ref const_##NAME##_ref
 
-# define ROBOPTIM_GENERATE_TRAITS_REFS_T(NAME,TRAITS)				\
-  typedef typename GenericFunctionTraits<TRAITS>::NAME##_t NAME##_t;		\
-  typedef typename GenericFunctionTraits<TRAITS>::NAME##_ref NAME##_ref;	\
+# define ROBOPTIM_GENERATE_TRAITS_REFS_T(NAME,TRAITS)			\
+  typedef typename GenericFunctionTraits<TRAITS>::NAME##_t NAME##_t;	\
+  typedef typename GenericFunctionTraits<TRAITS>::NAME##_ref NAME##_ref; \
   typedef typename GenericFunctionTraits<TRAITS>::const_##NAME##_ref const_##NAME##_ref
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)	\
@@ -107,7 +93,7 @@
   ROBOPTIM_GENERATE_FWD_REFS(argument);		\
   ROBOPTIM_GENERATE_FWD_REFS(result);		\
   ROBOPTIM_GENERATE_FWD_REFS(vector);		\
-  ROBOPTIM_GENERATE_FWD_REFS(rowVector);		\
+  ROBOPTIM_GENERATE_FWD_REFS(rowVector);	\
   ROBOPTIM_GENERATE_FWD_REFS(matrix)
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
@@ -118,8 +104,25 @@
   ROBOPTIM_GENERATE_FWD_REFS_(argument);		\
   ROBOPTIM_GENERATE_FWD_REFS_(result);			\
   ROBOPTIM_GENERATE_FWD_REFS_(vector);			\
-  ROBOPTIM_GENERATE_FWD_REFS_(rowVector);			\
+  ROBOPTIM_GENERATE_FWD_REFS_(rowVector);		\
   ROBOPTIM_GENERATE_FWD_REFS_(matrix)
+
+# define ROBOPTIM_DEFINE_FLAG_TYPE()		\
+  typedef unsigned int flag_t;
+
+# define ROBOPTIM_ADD_FLAG(FLAG)				\
+  ROBOPTIM_DEFINE_FLAG_TYPE()					\
+  public:							\
+  /* /// \brief Flag representing the Roboptim Function type*/	\
+  static const flag_t flags = parent_t::flags|FLAG;			\
+								\
+  /* /// \brief Get the type-checking flag*/			\
+  virtual flag_t getFlags() const				\
+  {								\
+    return flags;						\
+  }								\
+private:
+
 
 // Default storage order = ColMajor
 # ifndef ROBOPTIM_STORAGE_ORDER
@@ -137,6 +140,19 @@ namespace roboptim
 
   /// \brief Default matrix storage order.
   static const int StorageOrder = Eigen::ROBOPTIM_STORAGE_ORDER;
+
+  enum FunctionFlag
+    {
+      ROBOPTIM_IS_FUNCTION              = 1 << 0,
+      ROBOPTIM_IS_DIFFERENTIABLE        = 1 << 1,
+      ROBOPTIM_IS_TWICE_DIFFERENTIABLE  = 1 << 2,
+      ROBOPTIM_IS_QUADRATIC             = 1 << 3,
+      ROBOPTIM_IS_NUMERIC_QUADRATIC     = 1 << 4,
+      ROBOPTIM_IS_LINEAR                = 1 << 5,
+      ROBOPTIM_IS_NUMERIC_LINEAR        = 1 << 6,
+      ROBOPTIM_IS_POLYNOMIAL            = 1 << 7,
+      ROBOPTIM_IS_CONSTANT              = 1 << 8
+    };
 
   /// \brief GenericFunction traits
   ///
@@ -173,7 +189,8 @@ namespace roboptim
   template <typename T>
   class GenericFunction
   {
-  public:
+    ROBOPTIM_DEFINE_FLAG_TYPE()
+    public:
     /// \brief Traits type.
     ///
     /// Represents the matrix type used to store the underlying data. This
@@ -371,12 +388,6 @@ namespace roboptim
       return boost::get<2> (interval);
     }
 
-    /// \brief Get the type-checking flag
-    virtual unsigned long flag() const
-    {
-      return flag_;
-    }
-
     /// \brief Fonction cast as.
     ///
     /// \tparam ExpectedType type we want to cast the function into
@@ -384,7 +395,7 @@ namespace roboptim
     ExpectedType* castInto()
     {
       if (asType<ExpectedType>())
-        return reinterpret_cast<ExpectedType*>(this);
+        return static_cast<ExpectedType*>(this);
 
       throw std::runtime_error("Forbidden cast !");
     }
@@ -395,7 +406,7 @@ namespace roboptim
     template <class ExpectedType>
     bool asType() const
     {
-      return (ExpectedType::flag_&flag()) == ExpectedType::flag_;
+      return (ExpectedType::flags & getFlags()) == ExpectedType::flags;
     }
 
     /// \brief Iterate on an interval
@@ -546,6 +557,15 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
 
+    /// \brief Flag representing the Roboptim Function type
+    static const flag_t flags = ROBOPTIM_IS_FUNCTION;
+
+    /// \brief Get the type-checking flag
+    virtual flag_t getFlags() const
+    {
+      return flags;
+    }
+
   protected:
     /// \brief Concrete class constructor should call this constructor.
     ///
@@ -580,10 +600,6 @@ namespace roboptim
   protected:
     /// \brief Pointer to function logger (see log4cxx documentation).
     static log4cxx::LoggerPtr logger;
-
-  public:
-    /// \brief Flag representing the Roboptim Function type
-    static const unsigned long flag_;
   };
 
   template <typename T>
@@ -631,9 +647,6 @@ namespace roboptim
   {
     return f.print (o);
   }
-
-  template <typename T>
-  const unsigned long GenericFunction<T>::flag_ = 0;
 
   /// \brief Trait specializing GenericFunction for Eigen dense matrices.
   template <>

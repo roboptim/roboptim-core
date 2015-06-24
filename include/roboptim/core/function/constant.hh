@@ -37,6 +37,8 @@ namespace roboptim
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericLinearFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_CONSTANT)
+  public:
 
     /// \brief Build a constant function.
     ///
@@ -91,16 +93,6 @@ namespace roboptim
       jacobian.setZero ();
     }
 
-  public:
-    /// \brief Get the type-checking flag
-    virtual unsigned long flag() const
-    {
-      return flag_;
-    }
-
-    /// \brief Flag representing the Roboptim Function type
-    static const unsigned long flag_;
-
   private:
     const vector_t offset_;
   };
@@ -109,9 +101,6 @@ namespace roboptim
   /// \example constant-function.cc
 
   /// @}
-
-  template <typename T>
-  const unsigned long GenericConstantFunction<T>::flag_ = ROBOPTIM_IS_CONSTANT|GenericConstantFunction<T>::parent_t::flag_;
 
 } // end of namespace roboptim
 

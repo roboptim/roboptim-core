@@ -37,6 +37,8 @@ namespace roboptim
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericQuadraticFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_LINEAR)
+  public:
 
     /// \brief Concrete class constructor should call this constructor.
     ///
@@ -57,15 +59,6 @@ namespace roboptim
 		       const_argument_ref argument,
 		       size_type functionId = 0) const;
 
-  public:
-    /// \brief Get the type-checking flag
-    virtual unsigned long flag() const
-    {
-      return flag_;
-    }
-
-    /// \brief Flag representing the Roboptim Function type
-    static const unsigned long flag_;
   };
 
   /// @}

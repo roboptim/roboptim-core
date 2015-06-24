@@ -76,8 +76,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (differentiable_function_typing, T, functionTypes_
 {
   F<T> func;
 
-  BOOST_CHECK(func.flag() == GenericDifferentiableFunction<T>::flag_);
-
   BOOST_CHECK(func.template asType<GenericFunction<T> >()                     == true);
   BOOST_CHECK(func.template asType<GenericDifferentiableFunction<T> >()       == true);
 
@@ -104,8 +102,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (differentiable_function_typing, T, functionTypes_
 BOOST_AUTO_TEST_CASE_TEMPLATE (twice_differentiable_function_typing, T, functionTypes_t)
 {
   G<T> func;
-
-  BOOST_CHECK(func.flag() == GenericTwiceDifferentiableFunction<T>::flag_);
 
   BOOST_CHECK(func.template asType<GenericFunction<T> >()                     == true);
   BOOST_CHECK(func.template asType<GenericDifferentiableFunction<T> >()       == true);
@@ -138,8 +134,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function_typing, T, functionTyp
   A.setZero();
   GenericNumericQuadraticFunction<T> func(A,B);
 
-  BOOST_CHECK(func.flag() == GenericNumericQuadraticFunction<T>::flag_);
-
   BOOST_CHECK(func.template asType<GenericFunction<T> >()                     == true);
   BOOST_CHECK(func.template asType<GenericDifferentiableFunction<T> >()       == true);
   BOOST_CHECK(func.template asType<GenericTwiceDifferentiableFunction<T> >()  == true);
@@ -171,8 +165,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function_typing, T, functionTypes_
   A.setZero();
   GenericNumericLinearFunction<T> func(A,B);
 
-  BOOST_CHECK(func.flag() == GenericNumericLinearFunction<T>::flag_);
-
   BOOST_CHECK(func.template asType<GenericFunction<T> >()                     == true);
   BOOST_CHECK(func.template asType<GenericDifferentiableFunction<T> >()       == true);
   BOOST_CHECK(func.template asType<GenericTwiceDifferentiableFunction<T> >()  == true);
@@ -202,8 +194,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (constant_function_typing, T, functionTypes_t)
   offset[0] = 1;
   GenericConstantFunction<T> func(offset);
 
-  BOOST_CHECK(func.flag() == GenericConstantFunction<T>::flag_);
-
   BOOST_CHECK(func.template asType<GenericFunction<T> >()                     == true);
   BOOST_CHECK(func.template asType<GenericDifferentiableFunction<T> >()       == true);
   BOOST_CHECK(func.template asType<GenericTwiceDifferentiableFunction<T> >()  == true);
@@ -232,8 +222,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (polynomial_function_typing, T, functionTypes_t)
   typename Polynomial<T>::vector_t offset (1);
   offset[0] = 1;
   Polynomial<T> func(offset);
-
-  BOOST_CHECK(func.flag() == Polynomial<T>::flag_);
 
   BOOST_CHECK(func.template asType<GenericFunction<T> >()                     == true);
   BOOST_CHECK(func.template asType<GenericDifferentiableFunction<T> >()       == true);

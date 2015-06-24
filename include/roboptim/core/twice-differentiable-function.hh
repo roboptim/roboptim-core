@@ -67,6 +67,8 @@ namespace roboptim
   public:
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericDifferentiableFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_TWICE_DIFFERENTIABLE)
+  public:
 
     /// \brief Hessian type.
     ///
@@ -177,15 +179,6 @@ namespace roboptim
       symmetric.setZero ();
     }
 
-  public:
-    /// \brief Get the type-checking flag
-    virtual unsigned long flag() const
-    {
-      return flag_;
-    }
-
-    /// \brief Flag representing the Roboptim Function type
-    static const unsigned long flag_;
   };
 
   /// @}

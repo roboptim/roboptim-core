@@ -80,6 +80,8 @@ namespace roboptim
   {
   public:
     ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_DIFFERENTIABLE)
+  public:
 
     /// \brief Gradient type.
     ROBOPTIM_GENERATE_TRAITS_REFS_(gradient);
@@ -253,15 +255,6 @@ namespace roboptim
 				size_type functionId = 0)
       const = 0;
 
-  public:
-    /// \brief Get the type-checking flag
-    virtual unsigned long flag() const
-    {
-      return flag_;
-    }
-
-    /// \brief Flag representing the Roboptim Function type
-    static const unsigned long flag_;
   };
 
   /// @}
