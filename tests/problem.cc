@@ -34,15 +34,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 {
   output = retrievePattern ("problem");
 
-  typedef Problem<GenericDifferentiableFunction<T>,
-		  boost::mpl::vector<GenericDifferentiableFunction<T> > >
-    problem_t;
+  typedef Problem<T> problem_t;
 
   typedef typename problem_t::function_t      function_t;
   typedef typename function_t::argument_t     argument_t;
   typedef typename problem_t::startingPoint_t startingPoint_t;
   typedef typename problem_t::intervals_t     intervals_t;
-  typedef typename problem_t::scaling_t        scaling_t;
+  typedef typename problem_t::scaling_t       scaling_t;
 
   typedef GenericConstantFunction<T>          constantFunction_t;
 
@@ -119,9 +117,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 #pragma GCC diagnostic pop
 
   // Test a problem with multiple types of constraints.
-  typedef Problem<GenericDifferentiableFunction<T>,
-		  boost::mpl::vector<GenericLinearFunction<T>,
-				     GenericDifferentiableFunction<T> > > mixedProblem_t;
+  typedef Problem<T> mixedProblem_t;
   mixedProblem_t mixedPb (f);
   mixedPb.startingPoint () = x;
   mixedPb.argumentNames () = names;

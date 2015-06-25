@@ -36,13 +36,9 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (problem_copy_constructor)
 {
-  typedef Problem<DifferentiableFunction,
-		  boost::mpl::vector<LinearFunction, DifferentiableFunction> >
-    problemSrc_t;
-  typedef Problem<Function, boost::mpl::vector<Function> > problemDst_t;
-  typedef Problem<Function,
-		  boost::mpl::vector<QuadraticFunction, DifferentiableFunction> >
-    ambiguousProblemDst_t;
+  typedef Problem<EigenMatrixDense> problemSrc_t;
+  typedef Problem<EigenMatrixDense> problemDst_t;
+  typedef Problem<EigenMatrixDense> ambiguousProblemDst_t;
 
   ConstantFunction::vector_t v (1);
   v.setZero ();
