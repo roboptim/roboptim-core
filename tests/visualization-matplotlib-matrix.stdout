@@ -16,7 +16,13 @@ data = np.array ([[2.00000000,0.00000000,0.00000000,0.00000000,2.00000000,2.0000
 [0.00000000,0.00000000,2.00000000,0.00000000,2.00000000,0.00000000,0.00000000],
 [0.00000000,0.00000000,2.00000000,0.00000000,2.00000000,2.00000000,2.00000000],
 ])
-im = plt.imshow(data, interpolation='nearest', cmap='YlGnBu')
+cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
+         name='red_white_blue',
+         colors =[(0, 0, 1),
+                  (1, 1., 1),
+                  (1, 0, 0)])
+crange = abs(data).max()
+im = plt.imshow(data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)
 cbar = plt.colorbar(im)
 cbar.draw_all()
 
@@ -63,7 +69,13 @@ data[6,5] = 2.00000000
 data[1,6] = 2.00000000
 data[2,6] = 2.00000000
 data[6,6] = 2.00000000
-im = plt.imshow(data, interpolation='nearest', cmap='YlGnBu')
+cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
+         name='red_white_blue',
+         colors =[(0, 0, 1),
+                  (1, 1., 1),
+                  (1, 0, 0)])
+crange = abs(data).max()
+im = plt.imshow(data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)
 cbar = plt.colorbar(im)
 cbar.draw_all()
 

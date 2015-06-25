@@ -32,6 +32,19 @@ namespace roboptim
     {
       namespace detail
       {
+        std::string set_red_to_blue_cmap ()
+        {
+          std::stringstream ss;
+
+          ss << "cmap = matplotlib.colors.LinearSegmentedColormap.from_list(\n"
+             << "         name='red_white_blue',\n"
+             << "         colors =[(0, 0, 1),\n"
+             << "                  (1, 1., 1),\n"
+             << "                  (1, 0, 0)])\n";
+
+          return ss.str ();
+        }
+
         std::string dense_matrix_to_matplotlib
         (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat,
          bool structureOnly)
@@ -66,9 +79,12 @@ namespace roboptim
           }
           else
           {
-            ss << "im = plt.imshow(data, interpolation='nearest', cmap='YlGnBu')\n";
-            ss << "cbar = plt.colorbar(im)\n";
-            ss << "cbar.draw_all()\n";
+            std::string set_cmap = set_red_to_blue_cmap ();
+            ss << set_cmap
+               << "crange = abs(data).max()\n"
+               << "im = plt.imshow(data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
+               << "cbar = plt.colorbar(im)\n"
+               << "cbar.draw_all()\n";
           }
 
           return ss.str ();
@@ -108,9 +124,12 @@ namespace roboptim
           }
           else
           {
-            ss << "im = plt.imshow(data, interpolation='nearest', cmap='YlGnBu')\n";
-            ss << "cbar = plt.colorbar(im)\n";
-            ss << "cbar.draw_all()\n";
+            std::string set_cmap = set_red_to_blue_cmap ();
+            ss << set_cmap
+               << "crange = abs(data).max()\n"
+               << "im = plt.imshow(data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
+               << "cbar = plt.colorbar(im)\n"
+               << "cbar.draw_all()\n";
           }
 
           return ss.str ();
