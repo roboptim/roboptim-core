@@ -63,6 +63,7 @@ namespace roboptim
     Matplotlib::resetImports ()
     {
       imports_.clear ();
+      imports_.push_back (std::string ("matplotlib"));
       imports_.push_back (std::string ("matplotlib.pyplot as plt"));
       imports_.push_back (std::string ("numpy as np"));
     }

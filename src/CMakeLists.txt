@@ -42,6 +42,7 @@ ADD_LIBRARY(roboptim-core SHARED
 
   visualization/matplotlib.cc
   visualization/matplotlib-commands.cc
+  visualization/matplotlib-matrix.cc
   )
 
 IF(MSVC)
