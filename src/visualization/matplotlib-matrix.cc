@@ -32,17 +32,9 @@ namespace roboptim
     {
       namespace detail
       {
-
-        template <typename T>
-        void set_matrix_header
-        (std::string& str,
-         typename GenericFunctionTraits<T>::const_matrix_ref mat)
-        {
-          assert (0);
-        }
-
         std::string dense_matrix_to_matplotlib
-        (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat)
+        (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat,
+         bool structureOnly)
         {
           typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t matrix_t;
 
@@ -53,7 +45,7 @@ namespace roboptim
           for (matrix_t::Index cstr_id = 0;
                cstr_id < mat.rows (); ++cstr_id)
           {
-            ss << "[" << std::endl;
+            ss << "[";
             for (matrix_t::Index out_id = 0;
                  out_id < mat.cols (); ++out_id)
               {
@@ -67,15 +59,24 @@ namespace roboptim
 
           ss << "])" << std::endl;
 
-          std::string cmap = "matplotlib.colors.ListedColormap(['white', 'blue'])";
-          ss << "plt.imshow(data, interpolation='nearest', cmap="
-             << cmap << ")" << std::endl;
+          if (structureOnly)
+          {
+            std::string cmap = "matplotlib.colors.ListedColormap(['white', 'blue'])";
+            ss << "plt.imshow(data > 0, interpolation='nearest', cmap=" << cmap << ")\n";
+          }
+          else
+          {
+            ss << "im = plt.imshow(data, interpolation='nearest', cmap='YlGnBu')\n";
+            ss << "cbar = plt.colorbar(im)\n";
+            ss << "cbar.draw_all()\n";
+          }
 
           return ss.str ();
         }
 
         std::string sparse_matrix_to_matplotlib
-        (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat)
+        (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat,
+         bool structureOnly)
         {
           typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t matrix_t;
 
@@ -91,14 +92,26 @@ namespace roboptim
                         ||
                         (StorageOrder == Eigen::RowMajor && it.col () == it.index ()));
 
+                double value = 1.;
+                if (!structureOnly)
+                  value = normalize (it.value ());
+
                 ss << (boost::format("data[%i,%i] = %2.8f\n")
-                       % it.row () % it.col () % normalize (it.value ())).str();
+                       % it.row () % it.col () % value).str();
               }
           }
 
-          std::string cmap = "matplotlib.colors.ListedColormap(['white', 'blue'])";
-          ss << "plt.imshow(data, interpolation='nearest', cmap="
-             << cmap << ")" << std::endl;
+          if (structureOnly)
+          {
+            std::string cmap = "matplotlib.colors.ListedColormap(['white', 'blue'])";
+            ss << "plt.imshow(data, interpolation='nearest', cmap=" << cmap << ")" << std::endl;
+          }
+          else
+          {
+            ss << "im = plt.imshow(data, interpolation='nearest', cmap='YlGnBu')\n";
+            ss << "cbar = plt.colorbar(im)\n";
+            ss << "cbar.draw_all()\n";
+          }
 
           return ss.str ();
         }
@@ -107,16 +120,18 @@ namespace roboptim
 
 
       Command plot_mat
-      (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat)
+      (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat,
+       bool structureOnly)
       {
-        return Command (detail::dense_matrix_to_matplotlib (mat), true);
+        return Command (detail::dense_matrix_to_matplotlib (mat, structureOnly), true);
       }
 
 
       Command plot_mat
-      (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat)
+      (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat,
+       bool structureOnly)
       {
-        return Command (detail::sparse_matrix_to_matplotlib (mat), true);
+        return Command (detail::sparse_matrix_to_matplotlib (mat, structureOnly), true);
       }
 
     } // end of namespace matplotlib.

@@ -47,6 +47,7 @@ struct FortyTwoDense : public DifferentiableFunction
     result[4] = argument[2] + argument[4];
     result[5] = argument[2] + argument[4];
     result[6] = argument[2] + argument[4] + argument[5] + argument[6];
+    result *= 2.;
   }
 
   void impl_gradient (gradient_ref, const_argument_ref,  size_type)
@@ -58,27 +59,27 @@ struct FortyTwoDense : public DifferentiableFunction
     const
   {
     jac.setZero();
-    jac(0,0) = 1.0;
-    jac(0,4) = 1.0;
-    jac(0,5) = 1.0;
-    jac(1,0) = 1.0;
-    jac(1,2) = 1.0;
-    jac(1,6) = 1.0;
-    jac(2,0) = 1.0;
-    jac(2,2) = 1.0;
-    jac(2,6) = 1.0;
-    jac(3,0) = 1.0;
-    jac(3,1) = 1.0;
-    jac(3,2) = 1.0;
-    jac(3,5) = 1.0;
-    jac(4,2) = 1.0;
-    jac(4,4) = 1.0;
-    jac(5,2) = 1.0;
-    jac(5,4) = 1.0;
-    jac(6,2) = 1.0;
-    jac(6,4) = 1.0;
-    jac(6,5) = 1.0;
-    jac(6,6) = 1.0;
+    jac(0,0) = 2.0;
+    jac(0,4) = 2.0;
+    jac(0,5) = 2.0;
+    jac(1,0) = 2.0;
+    jac(1,2) = 2.0;
+    jac(1,6) = 2.0;
+    jac(2,0) = 2.0;
+    jac(2,2) = 2.0;
+    jac(2,6) = 2.0;
+    jac(3,0) = 2.0;
+    jac(3,1) = 2.0;
+    jac(3,2) = 2.0;
+    jac(3,5) = 2.0;
+    jac(4,2) = 2.0;
+    jac(4,4) = 2.0;
+    jac(5,2) = 2.0;
+    jac(5,4) = 2.0;
+    jac(6,2) = 2.0;
+    jac(6,4) = 2.0;
+    jac(6,5) = 2.0;
+    jac(6,6) = 2.0;
   }
 };
 
@@ -101,6 +102,7 @@ struct FortyTwoSparse : public DifferentiableSparseFunction
     result[4] = argument[2] + argument[4];
     result[5] = argument[2] + argument[4];
     result[6] = argument[2] + argument[4] + argument[5] + argument[6];
+    result *= 2.;
   }
 
   void impl_gradient (gradient_ref, const_argument_ref,  size_type)
@@ -112,28 +114,30 @@ struct FortyTwoSparse : public DifferentiableSparseFunction
     const
   {
     jac.setZero();
-    jac.insert(0,0) = 1.0;
-    jac.insert(0,4) = 1.0;
-    jac.insert(0,5) = 1.0;
-    jac.insert(1,0) = 1.0;
-    jac.insert(1,2) = 1.0;
-    jac.insert(1,6) = 1.0;
-    jac.insert(2,0) = 1.0;
-    jac.insert(2,2) = 1.0;
-    jac.insert(2,6) = 1.0;
-    jac.insert(3,0) = 1.0;
-    jac.insert(3,1) = 1.0;
-    jac.insert(3,2) = 1.0;
-    jac.insert(3,5) = 1.0;
-    jac.insert(4,2) = 1.0;
-    jac.insert(4,4) = 1.0;
-    jac.insert(5,2) = 1.0;
-    jac.insert(5,4) = 1.0;
-    jac.insert(6,2) = 1.0;
-    jac.insert(6,4) = 1.0;
-    jac.insert(6,5) = 1.0;
-    jac.insert(6,6) = 1.0;
-    jac.makeCompressed ();
+    jac.insert(0,0) = 2.0;
+    jac.insert(0,4) = 2.0;
+    jac.insert(0,5) = 2.0;
+    jac.insert(1,0) = 2.0;
+    jac.insert(1,2) = 2.0;
+    jac.insert(1,6) = 2.0;
+    jac.insert(2,0) = 2.0;
+    jac.insert(2,2) = 2.0;
+    jac.insert(2,6) = 2.0;
+    jac.insert(3,0) = 2.0;
+    jac.insert(3,1) = 2.0;
+    jac.insert(3,2) = 2.0;
+    jac.insert(3,5) = 2.0;
+    jac.insert(4,2) = 2.0;
+    jac.insert(4,4) = 2.0;
+    jac.insert(5,2) = 2.0;
+    jac.insert(5,4) = 2.0;
+    jac.insert(6,2) = 2.0;
+    jac.insert(6,4) = 2.0;
+    jac.insert(6,5) = 2.0;
+    jac.insert(6,6) = 2.0;
+
+    // To confirm differentiation between structure and value plot
+    jac.insert(6,0) = 0.;
   }
 };
 
@@ -145,7 +149,7 @@ BOOST_AUTO_TEST_CASE (visualization_matplotlib_differentiable_function)
     output = retrievePattern("visualization-matplotlib-matrix");
 
   using namespace roboptim::visualization::matplotlib;
-  Matplotlib matplotlib = Matplotlib::make_matplotlib (std::make_pair (2, 1));
+  Matplotlib matplotlib = Matplotlib::make_matplotlib (std::make_pair (4, 1));
 
   // Test #1: dense version
   FortyTwoDense f_dense;
@@ -161,8 +165,12 @@ BOOST_AUTO_TEST_CASE (visualization_matplotlib_differentiable_function)
     << (matplotlib
     << comment ("Dense matrix")
     << plot_mat (f_dense.jacobian (arg_dense))
+    << comment ("Dense matrix (structure)")
+    << plot_mat (f_dense.jacobian (arg_dense), true)
     << comment ("Sparse matrix")
     << plot_mat (f_sparse.jacobian (arg_sparse))
+    << comment ("Sparse matrix (structure)")
+    << plot_mat (f_sparse.jacobian (arg_sparse), true)
     );
 
   std::cout << output->str () << std::endl;

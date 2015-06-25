@@ -47,19 +47,23 @@ namespace roboptim
       /// and 0 for actual zeros.
       ///
       /// \param mat matrix to plot.
+      /// \param structureOnly plot only the matrix structure.
       /// \return Gnuplot command.
 
       ROBOPTIM_DLLAPI
       Command plot_mat
-      (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat);
+      (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat,
+       bool structureOnly = false);
 
       ROBOPTIM_DLLAPI
       Command plot_mat
-      (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat);
+      (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat,
+       bool structureOnly = false);
 
       template <typename T>
       Command plot_mat
-      (typename GenericFunctionTraits<T>::const_matrix_ref)
+      (typename GenericFunctionTraits<T>::const_matrix_ref,
+       bool /*structureOnly*/ = false)
       {
         BOOST_MPL_ASSERT_MSG (false, NOT_IMPLEMENTED, ());
         return Command ("");
