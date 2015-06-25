@@ -136,7 +136,7 @@ namespace roboptim
   typedef GenericQuadraticFunction<EigenMatrixDense> QuadraticFunction;
   typedef GenericQuadraticFunction<EigenMatrixSparse> QuadraticSparseFunction;
 
-  template <typename F, typename C = F> class Problem;
+  template <typename T> class Problem;
   template <typename F, typename C = F> class Solver;
   template <typename T> class SolverFactory;
   template <unsigned DerivabilityOrder> class NTimesDerivableFunction;

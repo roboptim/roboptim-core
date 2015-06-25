@@ -88,7 +88,7 @@ namespace roboptim
     /// The solver can solve problems of this type.
     /// If another kind of problem is given, a conversion will be
     /// required.
-    typedef Problem<F, C> problem_t;
+    typedef Problem<typename F::traits_t> problem_t;
 
     /// \brief Import vector type from cost function
     typedef typename F::vector_t vector_t;
@@ -116,24 +116,6 @@ namespace roboptim
     /// \param problem problem that should be solved
     explicit Solver (const problem_t& problem);
 
-
-    /// \brief Instantiate a solver from a problem in a different problem class.
-    ///
-    /// This constructor is called when the problem cost function or/and
-    /// constraints type does not match solver's types.
-    ///
-    /// This is only possible if the problem provides too much information
-    /// compared to the solver requirements:
-    /// if the problem contains twice derivable function and the solver requires
-    /// only derivable function, it will work however the opposite will fail.
-    /// Problem compatibility is known at compile-time, so the failure will be
-    /// at compile-time.
-    ///
-    /// \tparam F_ original cost function type
-    /// \tparam C_ original constraints functions type
-    /// \param problem problem that should be solved
-    template <typename F_, typename C_>
-    explicit Solver (const Problem<F_, C_>& problem);
 
     virtual ~Solver ();
 

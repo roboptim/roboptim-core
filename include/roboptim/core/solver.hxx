@@ -31,15 +31,6 @@ namespace roboptim
   }
 
   template <typename F, typename C>
-  template <typename F_, typename C_>
-  Solver<F, C>::Solver (const Problem<F_, C_>& pb)
-    : GenericSolver (),
-      problem_ (pb),
-      plugin_name_ ("")
-  {
-  }
-
-  template <typename F, typename C>
   Solver<F, C>::~Solver ()
   {
   }
