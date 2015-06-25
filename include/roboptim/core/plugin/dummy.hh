@@ -31,11 +31,11 @@ namespace roboptim
   ///
   /// It is also a good starting point for users that
   /// want to develop their own solver.
-  class DummySolver : public Solver<Function, boost::mpl::vector<Function> >
+  class DummySolver : public Solver<EigenMatrixDense>
   {
   public:
     /// \brief Define parent's type.
-    typedef Solver<Function, boost::mpl::vector<Function> > parent_t;
+    typedef Solver<EigenMatrixDense> parent_t;
 
     /// \brief Build a solver from a problem.
     /// \param problem problem that will be solved

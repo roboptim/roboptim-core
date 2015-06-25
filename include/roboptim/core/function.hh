@@ -389,6 +389,18 @@ namespace roboptim
       throw std::runtime_error("Forbidden cast !");
     }
 
+    /// \brief Fonction cast as, const version.
+    ///
+    /// \tparam ExpectedType type we want to cast the function into
+    template <class ExpectedType>
+    const ExpectedType* castInto() const
+    {
+      if (asType<const ExpectedType>())
+        return static_cast<const ExpectedType*>(this);
+
+      throw std::runtime_error("Forbidden cast !");
+    }
+
     /// \brief Fonction type checking.
     ///
     /// \tparam ExpectedType type the function could be compatible with

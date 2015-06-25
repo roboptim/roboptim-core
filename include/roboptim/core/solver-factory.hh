@@ -49,17 +49,17 @@ namespace roboptim
   /// \warning The solver lifetime is bound to the factory lifetime,
   /// when the factory goes out of scope, the solver is destroyed too.
   ///
-  /// \tparam T solver type
-  /// \pre T has to be a subtype of Solver<F,C>.
-  template <typename T>
+  /// \tparam S solver type
+  /// \pre S has to be a subtype of Solver<T>.
+  template <typename S>
   class SolverFactory
   {
-    BOOST_STATIC_ASSERT((boost::is_base_of<GenericSolver, T>::value));
+    BOOST_STATIC_ASSERT((boost::is_base_of<GenericSolver, S>::value));
   public:
     /// \brief Solver type.
-    typedef T solver_t;
+    typedef S solver_t;
     /// \brief Problem type.
-    typedef typename T::problem_t problem_t;
+    typedef typename solver_t::problem_t problem_t;
 
     /// \brief Instantiate a factory and load the plug-in.
     ///
