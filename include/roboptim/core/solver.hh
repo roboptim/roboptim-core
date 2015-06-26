@@ -74,24 +74,20 @@ namespace roboptim
   /// Solver classes are immutable, the problem can
   /// not be changed after the class instantiation.
   ///
-  /// \tparam F cost function type
-  /// \tparam C constraints functions type
-  /// \pre F is a subtype of Function
-  template <typename F>
+  /// \tparam T matrix type
+  template <typename T>
   class Solver : public GenericSolver
   {
-    BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
-		      boost::is_base_of<SparseFunction, F> >));
   public:
     /// \brief Solver problem type.
     ///
     /// The solver can solve problems of this type.
     /// If another kind of problem is given, a conversion will be
     /// required.
-    typedef Problem<typename F::traits_t> problem_t;
+    typedef Problem<T> problem_t;
 
     /// \brief Import vector type from cost function
-    typedef typename F::vector_t vector_t;
+    typedef typename GenericFunction<T>::vector_t vector_t;
 
     /// \brief Map of parameters.
     typedef std::map<std::string, Parameter> parameters_t;
@@ -128,8 +124,8 @@ namespace roboptim
     const parameters_t& parameters () const;
     parameters_t& parameters ();
 
-    template <typename T>
-    const T& getParameter (const std::string& key) const;
+    template <typename U>
+    const U& getParameter (const std::string& key) const;
     /// \}
 
     /// \name Plugin name

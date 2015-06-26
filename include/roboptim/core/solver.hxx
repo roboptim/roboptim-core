@@ -22,66 +22,66 @@
 
 namespace roboptim
 {
-  template <typename F>
-  Solver<F>::Solver (const problem_t& pb)
+  template <typename T>
+  Solver<T>::Solver (const problem_t& pb)
     : GenericSolver (),
       problem_ (pb),
       plugin_name_ ("")
   {
   }
 
-  template <typename F>
-  Solver<F>::~Solver ()
+  template <typename T>
+  Solver<T>::~Solver ()
   {
   }
 
-  template <typename F>
-  const typename Solver<F>::problem_t&
-  Solver<F>::problem () const
+  template <typename T>
+  const typename Solver<T>::problem_t&
+  Solver<T>::problem () const
   {
     return problem_;
   }
 
-  template <typename F>
-  const typename Solver<F>::parameters_t&
-  Solver<F>::parameters () const
-  {
-    return parameters_;
-  }
-
-  template <typename F>
-  typename Solver<F>::parameters_t&
-  Solver<F>::parameters ()
-  {
-    return parameters_;
-  }
-
-  template <typename F>
   template <typename T>
-  const T&
-  Solver<F>::getParameter (const std::string& key) const
+  const typename Solver<T>::parameters_t&
+  Solver<T>::parameters () const
+  {
+    return parameters_;
+  }
+
+  template <typename T>
+  typename Solver<T>::parameters_t&
+  Solver<T>::parameters ()
+  {
+    return parameters_;
+  }
+
+  template <typename T>
+  template <typename U>
+  const U&
+  Solver<T>::getParameter (const std::string& key) const
   {
     parameters_t::const_iterator it = parameters_.find (key);
-    return boost::get<T> (it->second.value);
+    return boost::get<U> (it->second.value);
   }
 
-  template <typename F>
+  template <typename T>
   const std::string&
-  Solver<F>::pluginName () const
+  Solver<T>::pluginName () const
   {
     return plugin_name_;
   }
 
-  template <typename F>
+  template <typename T>
   std::string&
-  Solver<F>::pluginName ()
+  Solver<T>::pluginName ()
   {
     return plugin_name_;
   }
 
-  template <typename F>
+  template <typename T>
   std::ostream&
-  Solver<F>::print (std::ostream& o) const
+  Solver<T>::print (std::ostream& o) const
   {
     o << incindent << "Solver:";
 

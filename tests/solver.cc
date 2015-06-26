@@ -27,7 +27,7 @@
 using namespace roboptim;
 
 // Specify the solver that will be used.
-typedef Solver<Function> parent_solver_t;
+typedef Solver<EigenMatrixDense> parent_solver_t;
 
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
