@@ -96,8 +96,8 @@ namespace roboptim
             ss << set_cmap
                << "cmap.set_bad('w',1.)\n"
                << "log_data = np.log10(abs(data))\n"
-               << "masked_data = np.ma.array (log_data, mask=np.isnan(log_data))\n"
-               << "crange = log_data.max()\n"
+               << "masked_data = np.ma.array (log_data, mask=np.isinf(log_data))\n"
+               << "crange = abs(masked_data).max()\n"
                << "im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
                << "cbar = plt.colorbar(im)\n"
                << "cbar.draw_all()\n";
@@ -153,8 +153,8 @@ namespace roboptim
             ss << set_cmap
                << "cmap.set_bad('w',1.)\n"
                << "log_data = np.log10(abs(data))\n"
-               << "masked_data = np.ma.array (log_data, mask=np.isnan(log_data))\n"
-               << "crange = log_data.max()\n"
+               << "masked_data = np.ma.array (log_data, mask=np.isinf(log_data))\n"
+               << "crange = abs(masked_data).max()\n"
                << "im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
                << "cbar = plt.colorbar(im)\n"
                << "cbar.draw_all()\n";
