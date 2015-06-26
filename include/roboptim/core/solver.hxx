@@ -22,66 +22,66 @@
 
 namespace roboptim
 {
-  template <typename F, typename C>
-  Solver<F, C>::Solver (const problem_t& pb)
+  template <typename F>
+  Solver<F>::Solver (const problem_t& pb)
     : GenericSolver (),
       problem_ (pb),
       plugin_name_ ("")
   {
   }
 
-  template <typename F, typename C>
-  Solver<F, C>::~Solver ()
+  template <typename F>
+  Solver<F>::~Solver ()
   {
   }
 
-  template <typename F, typename C>
-  const typename Solver<F, C>::problem_t&
-  Solver<F, C>::problem () const
+  template <typename F>
+  const typename Solver<F>::problem_t&
+  Solver<F>::problem () const
   {
     return problem_;
   }
 
-  template <typename F, typename C>
-  const typename Solver<F, C>::parameters_t&
-  Solver<F, C>::parameters () const
+  template <typename F>
+  const typename Solver<F>::parameters_t&
+  Solver<F>::parameters () const
   {
     return parameters_;
   }
 
-  template <typename F, typename C>
-  typename Solver<F, C>::parameters_t&
-  Solver<F, C>::parameters ()
+  template <typename F>
+  typename Solver<F>::parameters_t&
+  Solver<F>::parameters ()
   {
     return parameters_;
   }
 
-  template <typename F, typename C>
+  template <typename F>
   template <typename T>
   const T&
-  Solver<F, C>::getParameter (const std::string& key) const
+  Solver<F>::getParameter (const std::string& key) const
   {
     parameters_t::const_iterator it = parameters_.find (key);
     return boost::get<T> (it->second.value);
   }
 
-  template <typename F, typename C>
+  template <typename F>
   const std::string&
-  Solver<F, C>::pluginName () const
+  Solver<F>::pluginName () const
   {
     return plugin_name_;
   }
 
-  template <typename F, typename C>
+  template <typename F>
   std::string&
-  Solver<F, C>::pluginName ()
+  Solver<F>::pluginName ()
   {
     return plugin_name_;
   }
 
-  template <typename F, typename C>
+  template <typename F>
   std::ostream&
-  Solver<F, C>::print (std::ostream& o) const
+  Solver<F>::print (std::ostream& o) const
   {
     o << incindent << "Solver:";
 

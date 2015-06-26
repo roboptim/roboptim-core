@@ -39,11 +39,11 @@ namespace roboptim
   /// want to develop their own solver.
   template <typename F>
   class GenericDummySolverLastState
-    : public Solver<F, boost::mpl::vector<F> >
+    : public Solver<F>
   {
   public:
     /// \brief Define parent's type.
-    typedef Solver<F, boost::mpl::vector<F> > parent_t;
+    typedef Solver<F> parent_t;
 
     /// \brief Problem type.
     typedef typename parent_t::problem_t problem_t;

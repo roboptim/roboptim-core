@@ -34,7 +34,7 @@ using namespace roboptim;
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
 // Solver type.
-typedef Solver<Function, boost::mpl::vector<Function> > solver_t;
+typedef Solver<Function> solver_t;
 
 // Multiplexer type.
 typedef callback::Multiplexer<solver_t> multiplexer_t;

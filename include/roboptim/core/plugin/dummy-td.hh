@@ -31,13 +31,11 @@ namespace roboptim
   ///
   /// It is also a good starting point for users that
   /// want to develop their own solver.
-  class DummySolverTd : public Solver<TwiceDifferentiableFunction,
-                                      boost::mpl::vector<TwiceDifferentiableFunction> >
+  class DummySolverTd : public Solver<TwiceDifferentiableFunction>
   {
   public:
     /// \brief Define parent's type.
-    typedef Solver<TwiceDifferentiableFunction,
-                   boost::mpl::vector<TwiceDifferentiableFunction> > parent_t;
+    typedef Solver<TwiceDifferentiableFunction> parent_t;
 
     /// \brief Build a solver from a problem.
     /// \param problem problem that will be solved

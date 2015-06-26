@@ -27,7 +27,7 @@
 using namespace roboptim;
 
 // Specify the solver that will be used.
-typedef Solver<Function, boost::mpl::vector<Function> > solver_t;
+typedef Solver<Function> solver_t;
 
 // Define a simple function.
 struct F : public Function

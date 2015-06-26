@@ -77,7 +77,7 @@ namespace roboptim
   /// \tparam F cost function type
   /// \tparam C constraints functions type
   /// \pre F is a subtype of Function
-  template <typename F, typename C>
+  template <typename F>
   class Solver : public GenericSolver
   {
     BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
