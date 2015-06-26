@@ -81,7 +81,7 @@ namespace roboptim
   public:
     ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<T>);
     ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_DIFFERENTIABLE)
-  public:
+    public:
 
     /// \brief Gradient type.
     ROBOPTIM_GENERATE_TRAITS_REFS_(gradient);

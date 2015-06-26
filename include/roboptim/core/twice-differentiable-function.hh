@@ -68,7 +68,7 @@ namespace roboptim
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericDifferentiableFunction<T>);
     ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_TWICE_DIFFERENTIABLE)
-  public:
+    public:
 
     /// \brief Hessian type.
     ///

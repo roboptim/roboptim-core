@@ -38,7 +38,7 @@ namespace roboptim
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericQuadraticFunction<T>);
     ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_LINEAR)
-  public:
+    public:
 
     /// \brief Concrete class constructor should call this constructor.
     ///

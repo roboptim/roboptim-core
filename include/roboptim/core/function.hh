@@ -114,7 +114,7 @@
   ROBOPTIM_DEFINE_FLAG_TYPE()					\
   public:							\
   /* /// \brief Flag representing the Roboptim Function type*/	\
-  static const flag_t flags = parent_t::flags|FLAG;			\
+  static const flag_t flags = parent_t::flags|FLAG;		\
 								\
   /* /// \brief Get the type-checking flag*/			\
   virtual flag_t getFlags() const				\

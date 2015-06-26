@@ -38,7 +38,7 @@ namespace roboptim
     typedef GenericTwiceDifferentiableFunction<T> parent_t;
     typedef typename parent_t::size_type size_type;
     ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_QUADRATIC)
-  public:
+    public:
 
     /// \brief Concrete class constructor should call this constructor.
     ///

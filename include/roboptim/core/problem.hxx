@@ -90,8 +90,8 @@ namespace roboptim
   template <typename T>
   void
   Problem<T>::addConstraint (boost::shared_ptr<GenericFunction<T> > x,
-				    interval_t b,
-				    value_type s)
+			     interval_t b,
+			     value_type s)
   {
     if (x->inputSize () != this->function ().inputSize ())
       throw std::runtime_error ("Invalid constraint (wrong input size)");
@@ -114,8 +114,8 @@ namespace roboptim
   template <typename T>
   void
   Problem<T>::addConstraint (boost::shared_ptr<GenericFunction<T> > x,
-				    intervals_t b,
-				    scaling_t s)
+			     intervals_t b,
+			     scaling_t s)
   {
     if (!x)
       throw std::runtime_error
@@ -392,7 +392,7 @@ namespace roboptim
 	detail::printConstraint<Problem<T> > pc (o, *this, i);
 	try
 	  {
-      pc(this->constraints()[i]);
+	    pc(this->constraints()[i]);
 	  }
 	catch (const boost::bad_get& e)
 	  {

@@ -72,7 +72,7 @@ namespace roboptim
     const
   {
     for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
-       gradient (jacobian.row (i), argument, i);
+      gradient (jacobian.row (i), argument, i);
   }
 
   template <typename T>

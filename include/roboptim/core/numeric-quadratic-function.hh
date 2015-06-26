@@ -41,7 +41,7 @@ namespace roboptim
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericQuadraticFunction<T>);
     ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_NUMERIC_QUADRATIC)
-  public:
+    public:
 
     /// \brief Symmetric matrix type.
     typedef matrix_t symmetric_t;

@@ -38,16 +38,16 @@ namespace roboptim
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericLinearFunction<T>);
     ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_CONSTANT)
-  public:
+    public:
 
     /// \brief Build a constant function.
     ///
     /// \param offset constant function offset
     GenericConstantFunction (const_vector_ref offset)
-      : GenericLinearFunction<T> (static_cast<size_type> (offset.size ()),
-				  static_cast<size_type> (offset.size ()),
-				  "constant function"),
-	offset_ (offset)
+    : GenericLinearFunction<T> (static_cast<size_type> (offset.size ()),
+				static_cast<size_type> (offset.size ()),
+				"constant function"),
+      offset_ (offset)
     {
     }
 
@@ -59,7 +59,7 @@ namespace roboptim
       : GenericLinearFunction<T> (input_size,
 				  static_cast<size_type> (offset.size ()),
 				  "constant function"),
-	offset_ (offset)
+      offset_ (offset)
     {
     }
 

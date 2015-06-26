@@ -27,9 +27,9 @@
 using namespace roboptim;
 
 // Check that a problem has really been copied.
-#define CHECK_COPY(A, B)                                             \
-  assert (&(A).function () == &(B).function ());                     \
-  assert ((A).constraints ().size () == (B).constraints ().size ()); \
+#define CHECK_COPY(A, B)						\
+  assert (&(A).function () == &(B).function ());			\
+  assert ((A).constraints ().size () == (B).constraints ().size ());	\
   assert ((A).argumentNames ().size () == (B).argumentNames ().size ());
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)

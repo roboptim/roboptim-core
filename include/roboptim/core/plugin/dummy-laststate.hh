@@ -85,7 +85,7 @@ namespace roboptim
 
   typedef GenericDummySolverLastState<EigenMatrixDense> DummySolverLastState;
   typedef GenericDummySolverLastState<EigenMatrixSparse>
-    DummyDifferentiableSparseSolverLastState;
+  DummyDifferentiableSparseSolverLastState;
 
   // Explicit instantiation
   template class GenericDummySolverLastState<EigenMatrixDense>;
