@@ -299,7 +299,7 @@ namespace roboptim
   namespace detail
   {
     template <typename P>
-    struct printConstraint : public boost::static_visitor<void>
+    struct printConstraint
     {
       printConstraint (std::ostream& o,
 		       const P& problem,
@@ -323,8 +323,8 @@ namespace roboptim
 	if (problem_.startingPoint ())
 	  {
 	    typename P::function_t::argument_t x0 = *problem_.startingPoint ();
-	    U g = get<U> (problem_.constraints ()[i_]);
-            typename P::function_t::result_t x = (*g) (x0);
+            typename P::function_t::result_t x =
+              (*problem_.constraints ()[i_]) (x0);
 	    bool satisfied = true;
             o_ << iendl << "Initial value: ";
 	    o_ << "[" << x.size () << "](";
@@ -392,7 +392,7 @@ namespace roboptim
 	detail::printConstraint<Problem<T> > pc (o, *this, i);
 	try
 	  {
-	    boost::apply_visitor (pc, this->constraints ()[i]);
+      pc(this->constraints()[i]);
 	  }
 	catch (const boost::bad_get& e)
 	  {

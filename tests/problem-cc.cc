@@ -69,8 +69,8 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   {
     problemSrc_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
-    BOOST_CHECK(pbDst.constraints ()[0].which () == 0);
-    BOOST_CHECK(pbDst.constraints ()[1].which () == 1);
+    BOOST_CHECK(pbDst.constraints ()[0]->asType<ConstantFunction>());
+    BOOST_CHECK(pbDst.constraints ()[1]->asType<DifferentiableFunction>());
   }
 
   // Check with a more general type.
@@ -83,8 +83,8 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   {
     ambiguousProblemDst_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
-    BOOST_CHECK(pbDst.constraints ()[0].which () == 0);
-    BOOST_CHECK(pbDst.constraints ()[1].which () == 1);
+    BOOST_CHECK(pbDst.constraints ()[0]->asType<ConstantFunction>());
+    BOOST_CHECK(pbDst.constraints ()[1]->asType<DifferentiableFunction>());
   }
 
   // With invalid constraints types, compilation would fail.

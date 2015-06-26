@@ -79,21 +79,20 @@ namespace roboptim
   class Problem
   {
   public:
-    /// \brief Constraints types list.
-    typedef typename boost::mpl::vector<GenericFunction<T> > constraintsList_t;
-
     /// \brief Function type.
     ///
     /// This has to be either Function or one of its
     /// sub-classes.
     typedef GenericFunction<T> function_t;
 
+    /// \brief Constraints types list.
+    typedef boost::mpl::vector<function_t> constraintsList_t;
+
     /// \brief Constraint's type.
     ///
     /// Generate a Boost.Variant of shared pointers from the
     /// static constraints types list.
-    typedef typename detail::shared_ptr_variant<constraintsList_t>::type
-      constraint_t;
+    typedef boost::shared_ptr<function_t> constraint_t;
 
     /// \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;

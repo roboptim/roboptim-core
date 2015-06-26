@@ -129,9 +129,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
                          intervals, scaling);
 
   // First constraint: LinearFunction
-  BOOST_CHECK (mixedPb.constraints() [0].which () == 0);
+  BOOST_CHECK (mixedPb.constraints()[0]->template asType<constantFunction_t>());
   // Second constraint: DifferentiableFunction
-  BOOST_CHECK (mixedPb.constraints() [1].which () == 1);
+  BOOST_CHECK (mixedPb.constraints()[1]->template asType<GenericDifferentiableFunction<T> >());
 
   (*output) << mixedPb << std::endl;
 
