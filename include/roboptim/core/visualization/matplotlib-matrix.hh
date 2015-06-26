@@ -33,6 +33,18 @@ namespace roboptim
       /// \addtogroup roboptim_visualization
       /// @{
 
+      /// \brief Wrap enum for matrix plotting type.
+      struct MatrixPlotType
+      {
+        /// \brief Plotting type for matrices.
+        enum Type
+        {
+          Values,
+          Log,
+          Structure
+        };
+      };
+
       /// \brief Plot the structure of a matrix with matplotlib.
       ///
       /// Plot the structure of a matrix with matplotlib. Nonzero values will be
@@ -47,23 +59,23 @@ namespace roboptim
       /// and 0 for actual zeros.
       ///
       /// \param mat matrix to plot.
-      /// \param structureOnly plot only the matrix structure.
+      /// \param type type of plotting for the matrix.
       /// \return Gnuplot command.
 
       ROBOPTIM_DLLAPI
       Command plot_mat
       (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat,
-       bool structureOnly = false);
+       MatrixPlotType::Type type = MatrixPlotType::Values);
 
       ROBOPTIM_DLLAPI
       Command plot_mat
       (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat,
-       bool structureOnly = false);
+       MatrixPlotType::Type type = MatrixPlotType::Values);
 
       template <typename T>
       Command plot_mat
       (typename GenericFunctionTraits<T>::const_matrix_ref,
-       bool /*structureOnly*/ = false)
+       MatrixPlotType::Type /*type*/ = MatrixPlotType::Values)
       {
         BOOST_MPL_ASSERT_MSG (false, NOT_IMPLEMENTED, ());
         return Command ("");

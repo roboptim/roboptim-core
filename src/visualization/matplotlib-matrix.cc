@@ -32,14 +32,27 @@ namespace roboptim
     {
       namespace detail
       {
-        std::string set_red_to_blue_cmap ()
+        std::string set_red_white_blue_cmap ()
         {
           std::stringstream ss;
 
           ss << "cmap = matplotlib.colors.LinearSegmentedColormap.from_list(\n"
              << "         name='red_white_blue',\n"
              << "         colors =[(0, 0, 1),\n"
-             << "                  (1, 1., 1),\n"
+             << "                  (1, 1, 1),\n"
+             << "                  (1, 0, 0)])\n";
+
+          return ss.str ();
+        }
+
+        std::string set_red_yellow_blue_cmap ()
+        {
+          std::stringstream ss;
+
+          ss << "cmap = matplotlib.colors.LinearSegmentedColormap.from_list(\n"
+             << "         name='red_yellow_blue',\n"
+             << "         colors =[(0, 0, 1),\n"
+             << "                  (1, 1, 0),\n"
              << "                  (1, 0, 0)])\n";
 
           return ss.str ();
@@ -47,7 +60,7 @@ namespace roboptim
 
         std::string dense_matrix_to_matplotlib
         (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat,
-         bool structureOnly)
+         MatrixPlotType::Type type)
         {
           typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t matrix_t;
 
@@ -72,14 +85,26 @@ namespace roboptim
 
           ss << "])" << std::endl;
 
-          if (structureOnly)
+          if (type == MatrixPlotType::Structure)
           {
             std::string cmap = "matplotlib.colors.ListedColormap(['white', 'blue'])";
             ss << "plt.imshow(data > 0, interpolation='nearest', cmap=" << cmap << ")\n";
           }
-          else
+          else if (type == MatrixPlotType::Log)
           {
-            std::string set_cmap = set_red_to_blue_cmap ();
+            std::string set_cmap = set_red_yellow_blue_cmap ();
+            ss << set_cmap
+               << "cmap.set_bad('w',1.)\n"
+               << "log_data = np.log10(abs(data))\n"
+               << "masked_data = np.ma.array (log_data, mask=np.isnan(log_data))\n"
+               << "crange = log_data.max()\n"
+               << "im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
+               << "cbar = plt.colorbar(im)\n"
+               << "cbar.draw_all()\n";
+          }
+          else // values
+          {
+            std::string set_cmap = set_red_white_blue_cmap ();
             ss << set_cmap
                << "crange = abs(data).max()\n"
                << "im = plt.imshow(data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
@@ -92,7 +117,7 @@ namespace roboptim
 
         std::string sparse_matrix_to_matplotlib
         (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat,
-         bool structureOnly)
+         MatrixPlotType::Type type)
         {
           typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t matrix_t;
 
@@ -109,7 +134,7 @@ namespace roboptim
                         (StorageOrder == Eigen::RowMajor && it.col () == it.index ()));
 
                 double value = 1.;
-                if (!structureOnly)
+                if (type != MatrixPlotType::Structure)
                   value = normalize (it.value ());
 
                 ss << (boost::format("data[%i,%i] = %2.8f\n")
@@ -117,14 +142,26 @@ namespace roboptim
               }
           }
 
-          if (structureOnly)
+          if (type == MatrixPlotType::Structure)
           {
             std::string cmap = "matplotlib.colors.ListedColormap(['white', 'blue'])";
             ss << "plt.imshow(data, interpolation='nearest', cmap=" << cmap << ")" << std::endl;
           }
-          else
+          else if (type == MatrixPlotType::Log)
           {
-            std::string set_cmap = set_red_to_blue_cmap ();
+            std::string set_cmap = set_red_yellow_blue_cmap ();
+            ss << set_cmap
+               << "cmap.set_bad('w',1.)\n"
+               << "log_data = np.log10(abs(data))\n"
+               << "masked_data = np.ma.array (log_data, mask=np.isnan(log_data))\n"
+               << "crange = log_data.max()\n"
+               << "im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
+               << "cbar = plt.colorbar(im)\n"
+               << "cbar.draw_all()\n";
+          }
+          else // values
+          {
+            std::string set_cmap = set_red_white_blue_cmap ();
             ss << set_cmap
                << "crange = abs(data).max()\n"
                << "im = plt.imshow(data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
@@ -140,17 +177,17 @@ namespace roboptim
 
       Command plot_mat
       (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat,
-       bool structureOnly)
+       MatrixPlotType::Type type)
       {
-        return Command (detail::dense_matrix_to_matplotlib (mat, structureOnly), true);
+        return Command (detail::dense_matrix_to_matplotlib (mat, type), true);
       }
 
 
       Command plot_mat
       (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat,
-       bool structureOnly)
+       MatrixPlotType::Type type)
       {
-        return Command (detail::sparse_matrix_to_matplotlib (mat, structureOnly), true);
+        return Command (detail::sparse_matrix_to_matplotlib (mat, type), true);
       }
 
     } // end of namespace matplotlib.
