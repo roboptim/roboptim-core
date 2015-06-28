@@ -5,13 +5,14 @@ compiler:
 env:
   global:
     - secure: "cz8Eo/xP13SCH6j38LE4eFqAfI7H5BUQaWaK9yObZWYxCm3M6FL6TOUJ0vecwKJoPyUuk5Z9qYwZCZstkID5Vyn1xNm5PavdZcRhhb7E9knJeBSTMLAqn51I8KL64E0lyqvqgM89knotGvjgY+HshwWYmR+f9v/sbFyVoUvBvvo="
-    - secure: "Slm+HqRT+Vy0SG7E9gEShuHvNz6XWRUmBhVBLVJEaYy/0Lo2qp4OjFEWDjiJwFIiXstW2Wclds4SuewAn3Tc4x7dsY+5uaMCX7S/HPzsBCjLXUwjKasUqEGaVTIYmtFJm57hOkz6K2SLUUV4intkMiwtCiq/R0xe92QTTKkHyfo="
     - secure: "F9mibfsT3Ezk0RRsgOHy8RUO82H05REGmJKLDKdHiHE3toxykQX64oNBB8txjHoi+UF0H1Gwmk4oB/pNeILtyHdSuB7hB1Muod9wspOuKrzO7SMTGdjpPw7nDjQEmtfrZFhXEGb/3xm66uSGojhwe0RJF5mOzyfno+G8SIJyos4="
     - secure: "ZKC2yAvUcDb2nyrZQNqpLgEbi2pYFSKDn/+xIj9ZH+5nkn6iA5RT4AunK13qxuBkjIr2HJcUBtMFvk/mfpvpWynX+v9i3OhpVZCbkmcjQrATjiUcG6r95oEcex7NAM5uKd/41CqV/0fzTPc3uJgPozDJlt0wsBmCEarHiRNAoo0="
+    - secure: "Se9hb+L4Sxr6lv6cPm5CA6lFyhy2yk/wrN6Ye2yGdqRPeBZUlch9BDs821Frvf0UhcJYPxA2fcHk7aWQcjg2oXNrdVV0RSU3buvQnwHehuXrbjvRVZjx2amGc1uCv7hhZzsUFr2/O6nvfT2/1520ZP2QjtFqwgaLzOxQgNYG1gE="
+    - secure: "Hn0mNkHgP0azydZUqq3CXifrDw+6adcJ541/EInw59BhM9Q7orJEDsfkqSMICLsIQxe+qNb0pYjCze10GZQPqhNBKcsDGmMDOqvwNPyOqEy8TOWl0j6emO3K0QVbfz7l2I9Gvwym/ZVQ+4XH1oZgmfJOPgxLmWZ69wZUDFBlMCg="
     - APT_DEPENDENCIES="doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev"
     - HOMEBREW_DEPENDENCIES="doxygen libtool boost log4cxx"
     - GIT_DEPENDENCIES=""
-    - GH_USERNAME=thomas-moulard
+    - GH_USERNAME=bchretien
     - GH_REPO=roboptim/roboptim-core
     - DEBSIGN_KEYID=5AE5CD75
     - PPA_URI="roboptim/ppa"
