@@ -6,8 +6,8 @@ env:
   global:
     - secure: "cz8Eo/xP13SCH6j38LE4eFqAfI7H5BUQaWaK9yObZWYxCm3M6FL6TOUJ0vecwKJoPyUuk5Z9qYwZCZstkID5Vyn1xNm5PavdZcRhhb7E9knJeBSTMLAqn51I8KL64E0lyqvqgM89knotGvjgY+HshwWYmR+f9v/sbFyVoUvBvvo="
     - secure: "F9mibfsT3Ezk0RRsgOHy8RUO82H05REGmJKLDKdHiHE3toxykQX64oNBB8txjHoi+UF0H1Gwmk4oB/pNeILtyHdSuB7hB1Muod9wspOuKrzO7SMTGdjpPw7nDjQEmtfrZFhXEGb/3xm66uSGojhwe0RJF5mOzyfno+G8SIJyos4="
-    - secure: "Se9hb+L4Sxr6lv6cPm5CA6lFyhy2yk/wrN6Ye2yGdqRPeBZUlch9BDs821Frvf0UhcJYPxA2fcHk7aWQcjg2oXNrdVV0RSU3buvQnwHehuXrbjvRVZjx2amGc1uCv7hhZzsUFr2/O6nvfT2/1520ZP2QjtFqwgaLzOxQgNYG1gE="
     - secure: "Hn0mNkHgP0azydZUqq3CXifrDw+6adcJ541/EInw59BhM9Q7orJEDsfkqSMICLsIQxe+qNb0pYjCze10GZQPqhNBKcsDGmMDOqvwNPyOqEy8TOWl0j6emO3K0QVbfz7l2I9Gvwym/ZVQ+4XH1oZgmfJOPgxLmWZ69wZUDFBlMCg="
+    - secure: "Atmvwjxe3WqmUPumdDubBTvgC1v5JbIVtgBwuvZOsYdQ36eKOCSBuS0uVS0WbHHmeljeVUzb1EEGitKKjS6hYAkdg3F5eFmHPophL8zUHkY4fGAE80oGyPAFOeqZzIYp5cpStR8540K32C7vkqKqPFkufwLGKI0QZ87HP3U60AM="
     - APT_DEPENDENCIES="doxygen doxygen-latex libltdl-dev libboost-all-dev liblog4cxx10-dev"
     - HOMEBREW_DEPENDENCIES="doxygen libtool boost log4cxx"
     - GIT_DEPENDENCIES=""
