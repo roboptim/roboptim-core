@@ -72,7 +72,7 @@ namespace roboptim
     const
   {
     for (typename jacobian_t::Index i = 0; i < this->outputSize (); ++i)
-       gradient (jacobian.row (i), argument, i);
+      gradient (jacobian.row (i), argument, i);
   }
 
   template <typename T>
@@ -93,7 +93,6 @@ namespace roboptim
 
     return o << name << " (differentiable function)";
   }
-
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION

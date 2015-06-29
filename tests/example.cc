@@ -26,8 +26,7 @@
 using namespace roboptim;
 
 // Specify the solver that will be used.
-typedef Solver<TwiceDifferentiableFunction,
-               boost::mpl::vector<TwiceDifferentiableFunction> > solver_t;
+typedef Solver<EigenMatrixDense> solver_t;
 
 // Output stream
 boost::shared_ptr<boost::test_tools::output_test_stream> output;

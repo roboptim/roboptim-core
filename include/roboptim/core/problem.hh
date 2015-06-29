@@ -37,186 +37,6 @@ namespace roboptim
 
   /// \addtogroup roboptim_problem
   /// @{
-  /// \brief Optimization problem without constraints.
-  ///
-  /// An optimization problem is defined as:
-  /// - a cost function (\f$\mathbb{R}^n \rightarrow \mathbb{R}\f$)
-  /// - a set of intervals and scale factors for arguments.
-  ///
-  /// The goal of the optimization process is finding a point which
-  /// minimizes the cost function
-  ///
-  /// To use the class, one has to instantiate a problem with
-  /// a reference to a cost function.
-  /// method: a reference to a function and an interval is needed.
-  ///
-  /// The cost function is immutable.
-  ///
-  /// Unlike other classes which just copy functions, pointers are used
-  /// here in order to allow sub-classes of constraints to be inserted
-  /// in the problem.
-  /// For instance, a twice derivable function can be inserted in
-  /// a problem which expects a derivable function.
-  ///
-  /// \tparam F function type
-  template <typename F>
-  class Problem <F, boost::mpl::vector<> >
-  {
-    // Check that F derives from Function or SparseFunction.
-    BOOST_MPL_ASSERT_MSG(
-      (boost::mpl::or_<boost::is_base_of<Function, F>,
-                       boost::is_base_of<SparseFunction, F> >::value),
-       ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
-
-  public:
-    template <typename F_, typename CLIST_>
-    friend class Problem;
-
-    typedef typename boost::mpl::vector<> constraintsList_t;
-
-    /// \brief Function type.
-    ///
-    /// This has to be either Function or one of its
-    /// sub-classes.
-    typedef F function_t;
-
-    // \brief Import function's value_type type.
-    typedef typename function_t::value_type value_type;
-
-    /// \brief Vector type.
-    typedef typename function_t::vector_t vector_t;
-
-    /// \brief Argument type
-    typedef typename function_t::argument_t argument_t;
-
-    /// \brief Size type.
-    typedef typename function_t::size_type size_type;
-
-    /// \brief Optional vector defines a starting point.
-    typedef boost::optional<argument_t> startingPoint_t;
-
-    typedef typename function_t::interval_t interval_t;
-    typedef typename function_t::intervals_t intervals_t;
-
-    /// \brief Scaling vector.
-    typedef std::vector<value_type> scaling_t;
-
-    /// \brief Scaling vector (deprecated typedef).
-    typedef scaling_t scales_t ROBOPTIM_CORE_DEPRECATED;
-
-    /// \brief Vector of names (e.g. for arguments).
-    typedef typename function_t::names_t names_t;
-
-    /// \name Constructors and destructors.
-    /// \{
-
-    /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
-    explicit Problem (const function_t&);
-
-    /// \brief Copy constructor.
-    explicit Problem (const Problem<F, boost::mpl::vector<> >&);
-
-    /// \brief Copy constructor (convert from another class of problem).
-    template <typename F_>
-    explicit Problem (const Problem<F_, boost::mpl::vector<> >&);
-
-    /// \brief Virtual destructor.
-    ///
-    /// One may want to inherit from Problem to provide extra information to
-    /// a solver plugin.
-    virtual ~Problem ();
-
-    /// \}
-
-
-    /// \name Cost function.
-    /// \{
-
-    /// \brief Retrieve cost function.
-    /// \return cost function
-    const function_t& function () const;
-
-    /// \brief Retrieve arguments bounds.
-    /// Arguments bounds define in which interval each argument is valid.
-    /// \return arguments bounds
-    intervals_t& argumentBounds ();
-
-    /// \brief Retrieve arguments bounds.
-    /// Arguments bounds define in which interval each argument is valid.
-    /// \return arguments bounds
-    const intervals_t& argumentBounds () const;
-
-    /// \brief Retrieve arguments scaling.
-    /// Arguments scaling define which scale factor is applied for each argument.
-    /// \return arguments scaling
-    scaling_t& argumentScaling ();
-
-    /// \brief Retrieve arguments scaling.
-    /// Arguments scaling define which scale factor is applied for each argument.
-    /// \return arguments scaling
-    const scaling_t& argumentScaling () const;
-
-    /// \brief Retrieve arguments scaling (deprecated version).
-    scales_t& argumentScales () ROBOPTIM_CORE_DEPRECATED;
-
-    /// \brief Retrieve arguments scaling (deprecated version).
-    const scales_t& argumentScales () const ROBOPTIM_CORE_DEPRECATED;
-
-    /// \brief Retrieve arguments names.
-    /// Arguments names define a name for each argument. This is particularly
-    /// useful when logging data.
-    /// Note: memory is not allocated by default since this is optional.
-    /// \return arguments names
-    names_t& argumentNames ();
-
-    /// \brief Retrieve arguments names.
-    /// Arguments names define a name for each argument. This is particularly
-    /// useful when logging data.
-    /// Note: memory is not allocated by default since this is optional.
-    /// \return arguments names
-    const names_t& argumentNames () const;
-
-    /// \}
-
-    /// \name Starting point (initial guess).
-    /// \{
-
-    /// \brief Set the initial guess.
-    /// \return reference on the initial guess
-    /// \throw std::runtime_error
-    startingPoint_t& startingPoint ();
-
-    /// \brief Get the initial guess.
-    /// \return reference on the initial guess
-    /// \throw std::runtime_error
-    const startingPoint_t& startingPoint () const;
-
-    /// \}
-
-
-    /// \brief Display the problem on the specified output stream.
-    ///
-    /// \param o output stream used for display
-    /// \return output stream
-    std::ostream& print (std::ostream& o) const;
-
-  private:
-    /// \brief Objective function.
-    const function_t& function_;
-    /// \brief Starting point.
-    startingPoint_t startingPoint_;
-
-    /// \brief Arguments intervals.
-    intervals_t argumentBounds_;
-    /// \brief Arguments scaling.
-    scaling_t argumentScaling_;
-    /// \brief Arguments names.
-    names_t argumentNames_;
-  };
-
-
-  /// \addtogroup roboptim_problem
-  /// @{
   /// \brief Optimization problem.
   ///
   /// An optimization problem is defined as:
@@ -254,42 +74,25 @@ namespace roboptim
   /// For instance, a twice-differentiable function can be inserted in
   /// a problem which expects a differentiable function.
   ///
-  /// \tparam F function type
-  /// \tparam CLIST type list satisfying MPL's sequence concept
-  template <typename F, typename CLIST>
+  /// \tparam T matrix type
+  template <typename T>
   class Problem
   {
-    // Check that F derives from Function or SparseFunction.
-    BOOST_MPL_ASSERT_MSG((detail::derives_from_function<F>::type::value),
-                         ROBOPTIM_FUNCTION_EXPECTED_FOR_COST, (F&));
-
-    // Check that all the elements of CLIST derive from Function or
-    // SparseFunction.
-    BOOST_MPL_ASSERT_MSG((detail::list_derives_from_function<CLIST>::type::value),
-                         ROBOPTIM_FUNCTIONS_EXPECTED_FOR_CONSTRAINTS, (CLIST));
-
   public:
-    template <typename F_, typename CLIST_>
-    friend class Problem;
-
-    /// \brief Constraints types list.
-    ///
-    /// CLIST is converted to a boost::mpl::vector to ensure a similar behavior
-    /// for codes using different random access sequences (vector, list, etc.).
-    typedef typename detail::list_converter<CLIST>::type constraintsList_t;
-
     /// \brief Function type.
     ///
     /// This has to be either Function or one of its
     /// sub-classes.
-    typedef F function_t;
+    typedef GenericFunction<T> function_t;
+
+    /// \brief Constraints types list.
+    typedef boost::mpl::vector<function_t> constraintsList_t;
 
     /// \brief Constraint's type.
     ///
     /// Generate a Boost.Variant of shared pointers from the
     /// static constraints types list.
-    typedef typename detail::shared_ptr_variant<constraintsList_t>::type
-      constraint_t;
+    typedef boost::shared_ptr<function_t> constraint_t;
 
     /// \brief Import function's value_type type.
     typedef typename function_t::value_type value_type;
@@ -352,12 +155,7 @@ namespace roboptim
 
     /// \brief Copy constructor.
     /// \param pb problem to copy.
-    explicit Problem (const Problem<F, CLIST>& pb);
-
-    /// \brief Copy constructor (convert from another class of problem).
-    /// \param pb problem to copy and convert.
-    template <typename F_, typename CLIST_>
-    explicit Problem (const Problem<F_, CLIST_>& pb);
+    explicit Problem (const Problem<T>& pb);
 
     /// \brief Virtual destructor.
     ///
@@ -433,10 +231,8 @@ namespace roboptim
     /// \param constraint the constraint that will be added
     /// \param interval interval in which the constraint is satisfied
     /// \param scale constraint scale
-    /// \tparam C constraint type (has to be in CLIST)
     /// \throw std::runtime_error
-    template <typename C>
-    void addConstraint (boost::shared_ptr<C> constraint,
+    void addConstraint (boost::shared_ptr<GenericFunction<T> > constraint,
 			interval_t interval,
 			value_type scale = 1.);
 
@@ -448,10 +244,8 @@ namespace roboptim
     /// \param intervals interval vector in which the constraint
     /// is satisfied
     /// \param scaling constraint scaling
-    /// \tparam C constraint type (has to be in CLIST)
     /// \throw std::runtime_error
-    template <typename C>
-    void addConstraint (boost::shared_ptr<C> constraint,
+    void addConstraint (boost::shared_ptr<GenericFunction<T> > constraint,
 			intervals_t intervals,
 			scaling_t scaling);
 
@@ -525,17 +319,17 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param pb problem to be displayed
   /// \return output stream
-  template <typename F>
+  template <typename T>
   std::ostream& operator<< (std::ostream& o,
-			    const Problem<F, boost::mpl::vector<> >& pb);
+			    const Problem<T>& pb);
 
   /// \brief Override operator<< to handle problem display.
   ///
   /// \param o output stream used for display
   /// \param pb problem to be displayed
   /// \return output stream
-  template <typename F, typename CLIST>
-  std::ostream& operator<< (std::ostream& o, const Problem<F, CLIST>& pb);
+  template <typename T>
+  std::ostream& operator<< (std::ostream& o, const Problem<T>& pb);
 
 } // end of namespace roboptim
 # include <roboptim/core/problem.hxx>

@@ -37,6 +37,8 @@ namespace roboptim
   public:
     typedef GenericTwiceDifferentiableFunction<T> parent_t;
     typedef typename parent_t::size_type size_type;
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_QUADRATIC)
+    public:
 
     /// \brief Concrete class constructor should call this constructor.
     ///
@@ -52,6 +54,7 @@ namespace roboptim
     /// \param o output stream used for display
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
+
   };
 
   /// @}

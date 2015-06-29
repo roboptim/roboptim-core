@@ -67,6 +67,8 @@ namespace roboptim
   public:
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericDifferentiableFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_TWICE_DIFFERENTIABLE)
+    public:
 
     /// \brief Hessian type.
     ///
@@ -95,7 +97,6 @@ namespace roboptim
       return hessian.rows () == this->hessianSize ().first
 	&& hessian.cols () == this->hessianSize ().second;
     }
-
 
     /// \brief Compute the hessian at a given point.
     ///
@@ -177,6 +178,7 @@ namespace roboptim
     {
       symmetric.setZero ();
     }
+
   };
 
   /// @}

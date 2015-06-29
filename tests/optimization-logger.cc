@@ -106,8 +106,7 @@ void testLogger
 (boost::shared_ptr<boost::test_tools::output_test_stream> output)
 {
   // Specify the solver that will be used.
-  typedef Solver<typename F::parent_t,
-		 boost::mpl::vector<typename F::parent_t> > solver_t;
+  typedef Solver<typename F::traits_t> solver_t;
 
   // Instantiate the function and the problem.
   F f;

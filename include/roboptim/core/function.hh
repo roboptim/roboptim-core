@@ -55,9 +55,9 @@
 
 // Generate Eigen::Ref types for a given data type. Specialized version for row
 // vectors with the proper stride, no matter what the storage order is.
-# define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF_VEC(NAME,TYPE)	\
-  typedef TYPE NAME##_t;					\
-  typedef Eigen::Ref<NAME##_t, 0, detail::row_vector_stride<StorageOrder>::type> NAME##_ref;			\
+# define ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF_VEC(NAME,TYPE)		\
+  typedef TYPE NAME##_t;						\
+  typedef Eigen::Ref<NAME##_t, 0, detail::row_vector_stride<StorageOrder>::type> NAME##_ref; \
   typedef const Eigen::Ref<const NAME##_t, 0, detail::row_vector_stride<StorageOrder>::type>& const_##NAME##_ref
 
 # define ROBOPTIM_GENERATE_TYPEDEFS_REF(NAME,TYPE)	\
@@ -80,9 +80,9 @@
   typedef typename GenericFunctionTraits<T>::NAME##_ref NAME##_ref;	\
   typedef typename GenericFunctionTraits<T>::const_##NAME##_ref const_##NAME##_ref
 
-# define ROBOPTIM_GENERATE_TRAITS_REFS_T(NAME,TRAITS)				\
-  typedef typename GenericFunctionTraits<TRAITS>::NAME##_t NAME##_t;		\
-  typedef typename GenericFunctionTraits<TRAITS>::NAME##_ref NAME##_ref;	\
+# define ROBOPTIM_GENERATE_TRAITS_REFS_T(NAME,TRAITS)			\
+  typedef typename GenericFunctionTraits<TRAITS>::NAME##_t NAME##_t;	\
+  typedef typename GenericFunctionTraits<TRAITS>::NAME##_ref NAME##_ref; \
   typedef typename GenericFunctionTraits<TRAITS>::const_##NAME##_ref const_##NAME##_ref
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)	\
@@ -93,7 +93,7 @@
   ROBOPTIM_GENERATE_FWD_REFS(argument);		\
   ROBOPTIM_GENERATE_FWD_REFS(result);		\
   ROBOPTIM_GENERATE_FWD_REFS(vector);		\
-  ROBOPTIM_GENERATE_FWD_REFS(rowVector);		\
+  ROBOPTIM_GENERATE_FWD_REFS(rowVector);	\
   ROBOPTIM_GENERATE_FWD_REFS(matrix)
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS_(PARENT)	\
@@ -104,8 +104,25 @@
   ROBOPTIM_GENERATE_FWD_REFS_(argument);		\
   ROBOPTIM_GENERATE_FWD_REFS_(result);			\
   ROBOPTIM_GENERATE_FWD_REFS_(vector);			\
-  ROBOPTIM_GENERATE_FWD_REFS_(rowVector);			\
+  ROBOPTIM_GENERATE_FWD_REFS_(rowVector);		\
   ROBOPTIM_GENERATE_FWD_REFS_(matrix)
+
+# define ROBOPTIM_DEFINE_FLAG_TYPE()		\
+  typedef unsigned int flag_t;
+
+# define ROBOPTIM_ADD_FLAG(FLAG)				\
+  ROBOPTIM_DEFINE_FLAG_TYPE()					\
+  public:							\
+  /* /// \brief Flag representing the Roboptim Function type*/	\
+  static const flag_t flags = parent_t::flags|FLAG;		\
+								\
+  /* /// \brief Get the type-checking flag*/			\
+  virtual flag_t getFlags() const				\
+  {								\
+    return flags;						\
+  }								\
+private:
+
 
 // Default storage order = ColMajor
 # ifndef ROBOPTIM_STORAGE_ORDER
@@ -123,6 +140,19 @@ namespace roboptim
 
   /// \brief Default matrix storage order.
   static const int StorageOrder = Eigen::ROBOPTIM_STORAGE_ORDER;
+
+  enum FunctionFlag
+    {
+      ROBOPTIM_IS_FUNCTION              = 1 << 0,
+      ROBOPTIM_IS_DIFFERENTIABLE        = 1 << 1,
+      ROBOPTIM_IS_TWICE_DIFFERENTIABLE  = 1 << 2,
+      ROBOPTIM_IS_QUADRATIC             = 1 << 3,
+      ROBOPTIM_IS_NUMERIC_QUADRATIC     = 1 << 4,
+      ROBOPTIM_IS_LINEAR                = 1 << 5,
+      ROBOPTIM_IS_NUMERIC_LINEAR        = 1 << 6,
+      ROBOPTIM_IS_POLYNOMIAL            = 1 << 7,
+      ROBOPTIM_IS_CONSTANT              = 1 << 8
+    };
 
   /// \brief GenericFunction traits
   ///
@@ -159,7 +189,8 @@ namespace roboptim
   template <typename T>
   class GenericFunction
   {
-  public:
+    ROBOPTIM_DEFINE_FLAG_TYPE()
+    public:
     /// \brief Traits type.
     ///
     /// Represents the matrix type used to store the underlying data. This
@@ -357,6 +388,39 @@ namespace roboptim
       return boost::get<2> (interval);
     }
 
+    /// \brief Fonction cast as.
+    ///
+    /// \tparam ExpectedType type we want to cast the function into
+    template <class ExpectedType>
+    ExpectedType* castInto()
+    {
+      if (asType<ExpectedType>())
+        return static_cast<ExpectedType*>(this);
+
+      throw std::runtime_error("Forbidden cast !");
+    }
+
+    /// \brief Fonction cast as, const version.
+    ///
+    /// \tparam ExpectedType type we want to cast the function into
+    template <class ExpectedType>
+    const ExpectedType* castInto() const
+    {
+      if (asType<const ExpectedType>())
+        return static_cast<const ExpectedType*>(this);
+
+      throw std::runtime_error("Forbidden cast !");
+    }
+
+    /// \brief Fonction type checking.
+    ///
+    /// \tparam ExpectedType type the function could be compatible with
+    template <class ExpectedType>
+    bool asType() const
+    {
+      return (ExpectedType::flags & getFlags()) == ExpectedType::flags;
+    }
+
     /// \brief Iterate on an interval
     ///
     /// Call the functor to each discretization point of the discrete
@@ -505,6 +569,15 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
 
+    /// \brief Flag representing the Roboptim Function type
+    static const flag_t flags = ROBOPTIM_IS_FUNCTION;
+
+    /// \brief Get the type-checking flag
+    virtual flag_t getFlags() const
+    {
+      return flags;
+    }
+
   protected:
     /// \brief Concrete class constructor should call this constructor.
     ///
@@ -526,7 +599,6 @@ namespace roboptim
     /// \param argument point at which the function will be evaluated
     virtual void impl_compute (result_ref result, const_argument_ref argument)
       const = 0;
-
   private:
     /// \brief Problem dimension.
     size_type inputSize_;

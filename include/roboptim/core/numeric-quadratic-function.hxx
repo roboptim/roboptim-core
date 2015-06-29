@@ -147,7 +147,6 @@ namespace roboptim
 	     << "c = " << this->c_
              << decindent;
   }
-
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX

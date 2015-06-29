@@ -30,9 +30,9 @@ namespace roboptim
   GenericNumericLinearFunction<T>::GenericNumericLinearFunction
   (const_matrix_ref a, const_vector_ref b)
     : GenericLinearFunction<T>
-      (a.cols (), a.rows (), "numeric linear function"),
-      a_ (a),
-      b_ (b)
+    (a.cols (), a.rows (), "numeric linear function"),
+    a_ (a),
+    b_ (b)
   {
     assert (b.size () == this->outputSize ());
   }
@@ -41,13 +41,13 @@ namespace roboptim
   GenericNumericLinearFunction<T>::GenericNumericLinearFunction
   (const GenericLinearFunction<T>& function)
     : GenericLinearFunction<T>
-      (function.inputSize (), function.outputSize (),
-       (boost::format
-	("numeric linear function (built from %s)")
-	% function.getName ()).str ()),
-      a_ (function.outputSize (),
-	  function.inputSize ()),
-      b_ (function.outputSize ())
+    (function.inputSize (), function.outputSize (),
+     (boost::format
+      ("numeric linear function (built from %s)")
+      % function.getName ()).str ()),
+    a_ (function.outputSize (),
+	function.inputSize ()),
+    b_ (function.outputSize ())
   {
     vector_t x (function.inputSize ());
     x.setZero ();
@@ -96,8 +96,8 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericLinearFunction<T>::impl_gradient (gradient_ref gradient,
-					const_argument_ref,
-					size_type idFunction) const
+						  const_argument_ref,
+						  size_type idFunction) const
   {
     for (size_type j = 0; j < this->inputSize (); ++j)
       gradient[j] = a_ (idFunction, j);
@@ -112,7 +112,6 @@ namespace roboptim
              << "B = " << this->b_
              << decindent;
   }
-
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HXX

@@ -27,7 +27,7 @@
 using namespace roboptim;
 
 // Specify the solver that will be used.
-typedef Solver<Function, boost::mpl::vector<Function> > solver_t;
+typedef Solver<EigenMatrixDense> solver_t;
 
 // Define a simple function.
 struct F : public Function
@@ -77,12 +77,12 @@ BOOST_AUTO_TEST_CASE (plugin)
   SolverError& err = boost::get<SolverError> (res);
   const boost::optional<Result>& lastState = err.lastState();
   if(lastState)
-  {
-    (*output) << "Last dummy x: " << lastState->x
-              << std::endl;
-    (*output) << "Last dummy value: " << lastState->value
-              << std::endl << std::endl;
-  }
+    {
+      (*output) << "Last dummy x: " << lastState->x
+		<< std::endl;
+      (*output) << "Last dummy value: " << lastState->value
+		<< std::endl << std::endl;
+    }
 
   // Try to get the minimum from a GenericSolver*.
   GenericSolver* gs = &solver;

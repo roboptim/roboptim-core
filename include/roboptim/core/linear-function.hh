@@ -37,6 +37,8 @@ namespace roboptim
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericQuadraticFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_LINEAR)
+    public:
 
     /// \brief Concrete class constructor should call this constructor.
     ///
@@ -56,6 +58,7 @@ namespace roboptim
     void impl_hessian (hessian_ref hessian,
 		       const_argument_ref argument,
 		       size_type functionId = 0) const;
+
   };
 
   /// @}

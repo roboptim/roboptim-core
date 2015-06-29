@@ -34,13 +34,13 @@ namespace roboptim
   //
   // Unfortunately lt_dlsym is giving us a void* so we have to use
   // this kind of trick to transform it into a pointer to function.
-  template <typename T>
-  T* unionCast(void* ptr)
+  template <typename S>
+  S* unionCast(void* ptr)
   {
     union
     {
       void* ptr;
-      T* real_ptr;
+      S* real_ptr;
     } u;
     u.ptr = ptr;
     return u.real_ptr;
@@ -68,8 +68,8 @@ namespace roboptim
 # endif // __GLIBCXX__ || __GLIBCPP__
 
 
-  template <typename T>
-  SolverFactory<T>::SolverFactory (std::string plugin, const problem_t& pb)
+  template <typename S>
+  SolverFactory<S>::SolverFactory (std::string plugin, const problem_t& pb)
     : handle_ (),
       solver_ ()
   {
@@ -197,8 +197,8 @@ namespace roboptim
     solver_->pluginName () = plugin;
   }
 
-  template <typename T>
-  SolverFactory<T>::~SolverFactory ()
+  template <typename S>
+  SolverFactory<S>::~SolverFactory ()
   {
     typedef void destroy_t (solver_t*);
 
@@ -234,9 +234,9 @@ namespace roboptim
       }
   }
 
-  template <typename T>
-  typename SolverFactory<T>::solver_t&
-  SolverFactory<T>::operator () ()
+  template <typename S>
+  typename SolverFactory<S>::solver_t&
+  SolverFactory<S>::operator () ()
   {
     assert (solver_ != 0);
     return *solver_;

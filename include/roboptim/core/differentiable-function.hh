@@ -80,6 +80,8 @@ namespace roboptim
   {
   public:
     ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_DIFFERENTIABLE)
+    public:
 
     /// \brief Gradient type.
     ROBOPTIM_GENERATE_TRAITS_REFS_(gradient);
@@ -252,6 +254,7 @@ namespace roboptim
 				const_argument_ref argument,
 				size_type functionId = 0)
       const = 0;
+
   };
 
   /// @}

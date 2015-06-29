@@ -39,6 +39,8 @@ namespace roboptim
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericTwiceDifferentiableFunction<T>);
+    ROBOPTIM_ADD_FLAG(roboptim::ROBOPTIM_IS_POLYNOMIAL)
+    public:
 
     /// \brief Build a polynomial function
     ///

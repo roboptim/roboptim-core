@@ -37,13 +37,13 @@ namespace roboptim
   ///
   /// It is also a good starting point for users that
   /// want to develop their own solver.
-  template <typename F>
+  template <typename T>
   class GenericDummySolverLastState
-    : public Solver<F, boost::mpl::vector<F> >
+    : public Solver<T>
   {
   public:
     /// \brief Define parent's type.
-    typedef Solver<F, boost::mpl::vector<F> > parent_t;
+    typedef Solver<T> parent_t;
 
     /// \brief Problem type.
     typedef typename parent_t::problem_t problem_t;
@@ -83,13 +83,13 @@ namespace roboptim
     solverState_t solverState_;
   };
 
-  typedef GenericDummySolverLastState<Function> DummySolverLastState;
-  typedef GenericDummySolverLastState<DifferentiableSparseFunction>
-    DummyDifferentiableSparseSolverLastState;
+  typedef GenericDummySolverLastState<EigenMatrixDense> DummySolverLastState;
+  typedef GenericDummySolverLastState<EigenMatrixSparse>
+  DummyDifferentiableSparseSolverLastState;
 
   // Explicit instantiation
-  template class GenericDummySolverLastState<Function>;
-  template class GenericDummySolverLastState<DifferentiableSparseFunction>;
+  template class GenericDummySolverLastState<EigenMatrixDense>;
+  template class GenericDummySolverLastState<EigenMatrixSparse>;
 
 } // end of namespace roboptim
 

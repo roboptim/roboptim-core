@@ -40,6 +40,8 @@ namespace roboptim
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericQuadraticFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_NUMERIC_QUADRATIC)
+    public:
 
     /// \brief Symmetric matrix type.
     typedef matrix_t symmetric_t;
@@ -112,6 +114,7 @@ namespace roboptim
     void impl_hessian (hessian_ref hessian,
 		       const_argument_ref argument,
 		       size_type functionId = 0) const;
+
   private:
     /// \brief A matrix.
     symmetric_t a_;
