@@ -36,9 +36,6 @@ namespace roboptim
     else
       return o << this->getName () << " (quadratic function)";
   }
-
-  template <typename T>
-  const unsigned long GenericQuadraticFunction<T>::flag_ = ROBOPTIM_IS_QUADRATIC|GenericQuadraticFunction<T>::parent_t::flag_;
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX

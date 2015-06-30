@@ -232,7 +232,7 @@ namespace roboptim
     /// \param interval interval in which the constraint is satisfied
     /// \param scale constraint scale
     /// \throw std::runtime_error
-    void addConstraint (boost::shared_ptr<GenericFunction<T> > constraint,
+    void addConstraint (boost::shared_ptr<function_t> constraint,
 			interval_t interval,
 			value_type scale = 1.);
 
@@ -245,7 +245,7 @@ namespace roboptim
     /// is satisfied
     /// \param scaling constraint scaling
     /// \throw std::runtime_error
-    void addConstraint (boost::shared_ptr<GenericFunction<T> > constraint,
+    void addConstraint (boost::shared_ptr<function_t> constraint,
 			intervals_t intervals,
 			scaling_t scaling);
 

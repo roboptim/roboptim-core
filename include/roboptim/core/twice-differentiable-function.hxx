@@ -51,9 +51,6 @@ namespace roboptim
 
     return o << name << " (twice differentiable function)";
   }
-
-  template <typename T>
-  const unsigned long GenericTwiceDifferentiableFunction<T>::flag_ = ROBOPTIM_IS_TWICE_DIFFERENTIABLE|GenericTwiceDifferentiableFunction<T>::parent_t::flag_;
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HXX

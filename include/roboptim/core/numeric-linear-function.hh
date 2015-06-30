@@ -38,6 +38,7 @@ namespace roboptim
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericLinearFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_NUMERIC_LINEAR);
 
     /// \brief Build a linear function from a matrix and a vector.
     ///
@@ -88,16 +89,6 @@ namespace roboptim
     matrix_t a_;
     /// \brief B vector.
     vector_t b_;
-
-  public:
-    /// \brief Get the type-checking flag
-    virtual unsigned long flag() const
-    {
-      return flag_;
-    }
-
-    /// \brief Flag representing the Roboptim Function type
-    static const unsigned long flag_;
   };
 
   /// Example shows numeric linear function use.

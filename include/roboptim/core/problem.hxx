@@ -89,7 +89,7 @@ namespace roboptim
 
   template <typename T>
   void
-  Problem<T>::addConstraint (boost::shared_ptr<GenericFunction<T> > x,
+  Problem<T>::addConstraint (boost::shared_ptr<function_t> x,
 				    interval_t b,
 				    value_type s)
   {
@@ -113,7 +113,7 @@ namespace roboptim
 
   template <typename T>
   void
-  Problem<T>::addConstraint (boost::shared_ptr<GenericFunction<T> > x,
+  Problem<T>::addConstraint (boost::shared_ptr<function_t> x,
 				    intervals_t b,
 				    scaling_t s)
   {
@@ -405,22 +405,22 @@ namespace roboptim
       {
 	o << iendl << "Starting point: "
 	  << "[" << startingPoint_->size () << "](";
-	for (typename GenericFunction<T>::vector_t::Index i = 0;
+	for (typename function_t::vector_t::Index i = 0;
 	     i < startingPoint_->size (); ++i)
 	  {
 	    if (i > 0)
 	      o << ",";
 	    std::size_t i_ = static_cast<std::size_t> (i);
-	    if (GenericFunction<T>::getLowerBound
+	    if (function_t::getLowerBound
 		(this->argumentBounds ()[i_]) <= (*startingPoint_)[i] &&
-		(*startingPoint_)[i] <= GenericFunction<T>::getUpperBound
+		(*startingPoint_)[i] <= function_t::getUpperBound
 		(this->argumentBounds ()[i_]))
 	      o << fg::ok << (*startingPoint_)[i];
 	    else
 	      o << fg::fail << (*startingPoint_)[i];
 	    o << fg::reset;
 	  }
-	typename GenericFunction<T>::argument_t x0 = *startingPoint_;
+	typename function_t::argument_t x0 = *startingPoint_;
 	o << ")" << iendl << "Starting value: "
 	  << this->function () (x0);
       }

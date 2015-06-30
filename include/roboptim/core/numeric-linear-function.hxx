@@ -113,8 +113,6 @@ namespace roboptim
              << decindent;
   }
 
-  template <typename T>
-  const unsigned long GenericNumericLinearFunction<T>::flag_ = ROBOPTIM_IS_NUMERIC_LINEAR|GenericNumericLinearFunction<T>::parent_t::flag_;
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HXX
