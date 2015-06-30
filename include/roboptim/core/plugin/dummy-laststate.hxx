@@ -19,8 +19,8 @@
 namespace roboptim
 {
 
-  template <typename F>
-  GenericDummySolverLastState<F>::GenericDummySolverLastState
+  template <typename T>
+  GenericDummySolverLastState<T>::GenericDummySolverLastState
   (const problem_t& pb)
     : parent_t (pb),
       callback_ (),
@@ -43,13 +43,13 @@ namespace roboptim
     parent_t::parameters_["dummy-parameter5"].value = false;
   }
 
-  template <typename F>
-  GenericDummySolverLastState<F>::~GenericDummySolverLastState ()
+  template <typename T>
+  GenericDummySolverLastState<T>::~GenericDummySolverLastState ()
   {
   }
 
-  template <typename F>
-  void GenericDummySolverLastState<F>::solve ()
+  template <typename T>
+  void GenericDummySolverLastState<T>::solve ()
   {
     // Set some dummy values for the last state of the solver
     Result res (parent_t::problem ().function ().inputSize (),

@@ -37,6 +37,7 @@ namespace roboptim
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericLinearFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_CONSTANT);
 
     /// \brief Build a constant function.
     ///

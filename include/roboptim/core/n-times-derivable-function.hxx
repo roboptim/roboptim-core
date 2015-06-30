@@ -32,6 +32,5 @@ namespace roboptim
     o << derivabilityOrder << "-time differentiable function.";
     return o;
   }
-
 }
 #endif //! ROBOPTIM_CORE_N_TIMES_DERIVABLE_HXX

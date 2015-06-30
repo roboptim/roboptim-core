@@ -107,6 +107,20 @@
   ROBOPTIM_GENERATE_FWD_REFS_(rowVector);			\
   ROBOPTIM_GENERATE_FWD_REFS_(matrix)
 
+# define ROBOPTIM_DEFINE_FLAG_TYPE()		\
+  typedef unsigned int flag_t
+
+# define ROBOPTIM_ADD_FLAG(FLAG)				\
+  ROBOPTIM_DEFINE_FLAG_TYPE();					\
+ /* /// \brief Get the type-checking flag*/			\
+ virtual flag_t getFlags() const				\
+ {								\
+   return flags;						\
+ }								\
+ /* /// \brief Flag representing the Roboptim Function type*/	\
+ static const flag_t flags = parent_t::flags|FLAG
+
+
 // Default storage order = ColMajor
 # ifndef ROBOPTIM_STORAGE_ORDER
 #  define ROBOPTIM_STORAGE_ORDER ColMajor
@@ -123,6 +137,19 @@ namespace roboptim
 
   /// \brief Default matrix storage order.
   static const int StorageOrder = Eigen::ROBOPTIM_STORAGE_ORDER;
+
+  enum FunctionFlag
+    {
+      ROBOPTIM_IS_FUNCTION              = 1 << 0,
+      ROBOPTIM_IS_DIFFERENTIABLE        = 1 << 1,
+      ROBOPTIM_IS_TWICE_DIFFERENTIABLE  = 1 << 2,
+      ROBOPTIM_IS_QUADRATIC             = 1 << 3,
+      ROBOPTIM_IS_NUMERIC_QUADRATIC     = 1 << 4,
+      ROBOPTIM_IS_LINEAR                = 1 << 5,
+      ROBOPTIM_IS_NUMERIC_LINEAR        = 1 << 6,
+      ROBOPTIM_IS_POLYNOMIAL            = 1 << 7,
+      ROBOPTIM_IS_CONSTANT              = 1 << 8
+    };
 
   /// \brief GenericFunction traits
   ///
@@ -160,6 +187,7 @@ namespace roboptim
   class GenericFunction
   {
   public:
+    ROBOPTIM_DEFINE_FLAG_TYPE();
     /// \brief Traits type.
     ///
     /// Represents the matrix type used to store the underlying data. This
@@ -357,6 +385,39 @@ namespace roboptim
       return boost::get<2> (interval);
     }
 
+    /// \brief Fonction cast as.
+    ///
+    /// \tparam ExpectedType type we want to cast the function into
+    template <class ExpectedType>
+    ExpectedType* castInto()
+    {
+      if (asType<ExpectedType>())
+        return static_cast<ExpectedType*>(this);
+
+      throw std::runtime_error("Forbidden cast !");
+    }
+
+    /// \brief Fonction cast as, const version.
+    ///
+    /// \tparam ExpectedType type we want to cast the function into
+    template <class ExpectedType>
+    const ExpectedType* castInto() const
+    {
+      if (asType<const ExpectedType>())
+        return static_cast<const ExpectedType*>(this);
+
+      throw std::runtime_error("Forbidden cast !");
+    }
+
+    /// \brief Fonction type checking.
+    ///
+    /// \tparam ExpectedType type the function could be compatible with
+    template <class ExpectedType>
+    bool asType() const
+    {
+      return (ExpectedType::flags & getFlags()) == ExpectedType::flags;
+    }
+
     /// \brief Iterate on an interval
     ///
     /// Call the functor to each discretization point of the discrete
@@ -504,6 +565,15 @@ namespace roboptim
     /// \param o output stream used for display
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
+
+    /// \brief Flag representing the Roboptim Function type
+    static const flag_t flags = ROBOPTIM_IS_FUNCTION;
+
+    /// \brief Get the type-checking flag
+    virtual flag_t getFlags() const
+    {
+      return flags;
+    }
 
   protected:
     /// \brief Concrete class constructor should call this constructor.
