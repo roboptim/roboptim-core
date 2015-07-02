@@ -1,4 +1,4 @@
 var a00260 =
 [
-    [ "TwiceDerivableFunction", "a00267.html#a8fe946bb68641ff262c0cfef38af94d5", null ]
+    [ "getBlock", "a00280.html#aaea0849f5afd68a5e8b1d0cd383794f3", null ]
 ];

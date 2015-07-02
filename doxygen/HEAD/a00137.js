@@ -1,4 +1,11 @@
 var a00137 =
 [
-    [ "is_malloc_allowed_update", "a00267.html#a46ce22d5c1b30a5cb8e928b3a5bdcab9", null ]
+    [ "callback_t", "a00137.html#a01f12cbcdde4463bd4a484ba4805b5c7", null ],
+    [ "parent_t", "a00137.html#a0bad93eac47bbb44cc60657a887586ea", null ],
+    [ "problem_t", "a00137.html#a79c5e212671b0c8d457665619b27da7b", null ],
+    [ "solver_t", "a00137.html#aade7b23179be55fd656d5defdbd163dd", null ],
+    [ "solverState_t", "a00137.html#acbce74c508e1a837bcb4a6ac3ff3e20b", null ],
+    [ "Wrapper", "a00137.html#ab7b1772f9d29b4283497363011b9f46a", null ],
+    [ "~Wrapper", "a00137.html#acaffd13feda591268f657a1708a43ff3", null ],
+    [ "perIterationCallbackUnsafe", "a00137.html#a7cf70de90a6b980a84b659bf8b5ebbd7", null ]
 ];

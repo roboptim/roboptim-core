@@ -1,16 +1,10 @@
 var a00077 =
 [
-    [ "result_t", "a00077.html#acd6988bec0b7bda9b8565232d32d1bae", null ],
-    [ "solutions", "a00077.html#a12c31c6bd2e018b05a71d51dd5b34846", null ],
-    [ "GenericSolver", "a00077.html#ac73eb90d375eebe2580be8ad275bbf39", null ],
-    [ "GenericSolver", "a00077.html#a73789e83216bf0ef32a3f123088f04b4", null ],
-    [ "~GenericSolver", "a00077.html#a86170d03b3066285f5c47bfc78819571", null ],
-    [ "getMinimum", "a00077.html#a3f01ea84c377efc66cd55bc38f8676ad", null ],
-    [ "minimum", "a00077.html#aef2460331a80efc404356e9b68269b8c", null ],
-    [ "minimumType", "a00077.html#a2426a7c827ce0c46c77ac29ad1d7f846", null ],
-    [ "print", "a00077.html#a06ac6c38696f931bc1333d974ef25d03", null ],
-    [ "reset", "a00077.html#a16884b058070f8fb6759c6c194665cb7", null ],
-    [ "solve", "a00077.html#a4573db8138895e5dc5eee8880e02e928", null ],
-    [ "logger", "a00077.html#a7fbfdfbf962a90aace9fd42e92e0a428", null ],
-    [ "result_", "a00077.html#ab36ece190971122f7111d7e92c4e66cf", null ]
+    [ "GenericSumOfC1Squares", "a00077.html#a06492c620c9395b3ce8b27811db24155", null ],
+    [ "GenericSumOfC1Squares", "a00077.html#ac9eb8d225c89b2fb482be9367a271e0c", null ],
+    [ "~GenericSumOfC1Squares", "a00077.html#a1a3eb8bc23a2fdf87b06f38f6c1fad25", null ],
+    [ "baseFunction", "a00077.html#adb62136d2d933844f7310a19c930f98d", null ],
+    [ "impl_compute", "a00077.html#a4b37c218f8b2fde9c7d2ae79be8b834d", null ],
+    [ "impl_gradient", "a00077.html#aec074223b39a3d5241a99b98acf588ca", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00077.html#a832f4f791cc7e6e99d204aeee84861df", null ]
 ];

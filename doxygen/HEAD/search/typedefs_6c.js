@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['linearfunction',['LinearFunction',['../a00267.html#abbf3e635a932ae99934936a092aec72c',1,'roboptim']]],
-  ['linearsparsefunction',['LinearSparseFunction',['../a00267.html#aa8f5a3e6e11dab0777930cd974dc9416',1,'roboptim']]]
+  ['linearfunction',['LinearFunction',['../a00274.html#abbf3e635a932ae99934936a092aec72c',1,'roboptim']]],
+  ['linearsparsefunction',['LinearSparseFunction',['../a00274.html#aa8f5a3e6e11dab0777930cd974dc9416',1,'roboptim']]]
 ];

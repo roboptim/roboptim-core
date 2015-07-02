@@ -9,10 +9,9 @@ var searchData=
   ['printconstraint',['printConstraint',['../a00106.html',1,'roboptim::detail']]],
   ['printsolverparameter',['PrintSolverParameter',['../a00107.html',1,'roboptim::detail']]],
   ['problem',['Problem',['../a00108.html',1,'roboptim']]],
-  ['problem_3c_20f_2c_20boost_3a_3ampl_3a_3avector_3c_3e_20_3e',['Problem< F, boost::mpl::vector<> >',['../a00109.html',1,'roboptim']]],
-  ['product',['Product',['../a00110.html',1,'roboptim']]],
-  ['productdifferentiation',['ProductDifferentiation',['../a00111.html',1,'roboptim::detail']]],
-  ['promote2',['promote2',['../a00112.html',1,'roboptim::detail']]],
-  ['promote2_3c_20t1_2c_20t2_2c_200_20_3e',['promote2< T1, T2, 0 >',['../a00113.html',1,'roboptim::detail']]],
-  ['promotetrait',['PromoteTrait',['../a00114.html',1,'roboptim::detail']]]
+  ['product',['Product',['../a00109.html',1,'roboptim']]],
+  ['productdifferentiation',['ProductDifferentiation',['../a00110.html',1,'roboptim::detail']]],
+  ['promote2',['promote2',['../a00111.html',1,'roboptim::detail']]],
+  ['promote2_3c_20t1_2c_20t2_2c_200_20_3e',['promote2< T1, T2, 0 >',['../a00112.html',1,'roboptim::detail']]],
+  ['promotetrait',['PromoteTrait',['../a00113.html',1,'roboptim::detail']]]
 ];

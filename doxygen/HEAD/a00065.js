@@ -1,20 +1,14 @@
 var a00065 =
 [
-    [ "jacobianSize_t", "a00065.html#aac13c21f0df1f14ce16286fd81a6643a", null ],
-    [ "GenericDifferentiableFunction", "a00065.html#a5fa47fea06495251f413721483a35dba", null ],
-    [ "gradient", "a00065.html#a03a9c0c4bee28944a49cd508252a9049", null ],
-    [ "gradient", "a00065.html#aa32b7e4ac45ae8bb63afca8fe23eb72e", null ],
-    [ "gradientSize", "a00065.html#a8c3700cd209f38a0079b739a83edbb4a", null ],
-    [ "impl_gradient", "a00065.html#af392bd6266e56fbf8e38c0df16d22224", null ],
-    [ "impl_jacobian", "a00065.html#a1452fef189bb9c7c24acbfe36404d4e5", null ],
-    [ "impl_jacobian", "a00065.html#a69908de96e02e56b0f3332307ed03d94", null ],
-    [ "isValidGradient", "a00065.html#a0a061e75f289dc6c21530bba1f28a82e", null ],
-    [ "isValidJacobian", "a00065.html#af3de7a6e09f0ebf87e9a0e3c5f5d6e18", null ],
-    [ "jacobian", "a00065.html#a77c47b7abb1a80b79afe4aa3ef058f4c", null ],
-    [ "jacobian", "a00065.html#ab42dcb0d900b4f108a0a25eaa1ea1384", null ],
-    [ "jacobianSize", "a00065.html#a9202ded2cd1138fea87965b792b68057", null ],
-    [ "print", "a00065.html#a9c50e545609bd7ace4f2dad69029fac3", null ],
-    [ "ROBOPTIM_FUNCTION_FWD_TYPEDEFS_", "a00065.html#a8e6535968c7ef22e7930b638c5c8a344", null ],
-    [ "ROBOPTIM_GENERATE_TRAITS_REFS_", "a00065.html#aee74c751bb85e5398a89861732a80dc3", null ],
-    [ "ROBOPTIM_GENERATE_TRAITS_REFS_", "a00065.html#a11a8796c62239517682e1eec33d29f2a", null ]
+    [ "callback_t", "a00065.html#a08f338f7dd768deaf7454eaa778fd822", null ],
+    [ "parent_t", "a00065.html#a24a414ec634aa739a37de3e9b6079a21", null ],
+    [ "problem_t", "a00065.html#a0ced1fa020c0746cfd52c15e63a565a1", null ],
+    [ "solverState_t", "a00065.html#ab0ef9bfaa4c385910e2520c22350e537", null ],
+    [ "GenericDummySolverLastState", "a00065.html#a48411fea27ec26f8d6635117ca17148b", null ],
+    [ "~GenericDummySolverLastState", "a00065.html#a29de49befcb3dd8e559a1ee1566ce2fd", null ],
+    [ "callback", "a00065.html#af7a4b66bf8d44e590c3b44fe7f8d4647", null ],
+    [ "setIterationCallback", "a00065.html#a5a453c46c58795e268a249555825e28a", null ],
+    [ "solve", "a00065.html#a117349482448c60c3ed7da6fec67bedd", null ],
+    [ "callback_", "a00065.html#ade9c96f41bb2dd69e7b9d37097526060", null ],
+    [ "solverState_", "a00065.html#a6d88496dbb87b5856a46ae3637a68f06", null ]
 ];

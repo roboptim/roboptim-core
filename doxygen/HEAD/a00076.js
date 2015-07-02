@@ -1,7 +1,16 @@
 var a00076 =
 [
-    [ "parent_t", "a00076.html#ae53c4978f626bcb0c85fa1155a1f4f12", null ],
-    [ "size_type", "a00076.html#ab6dedaffecb43767584c42bf98346ebb", null ],
-    [ "GenericQuadraticFunction", "a00076.html#a874e014f8499fd0a5d2c04d5bad36fcc", null ],
-    [ "print", "a00076.html#a38f3f609626f43393e854351555459ee", null ]
+    [ "result_t", "a00076.html#acd6988bec0b7bda9b8565232d32d1bae", null ],
+    [ "solutions", "a00076.html#a12c31c6bd2e018b05a71d51dd5b34846", null ],
+    [ "GenericSolver", "a00076.html#ac73eb90d375eebe2580be8ad275bbf39", null ],
+    [ "GenericSolver", "a00076.html#a73789e83216bf0ef32a3f123088f04b4", null ],
+    [ "~GenericSolver", "a00076.html#a86170d03b3066285f5c47bfc78819571", null ],
+    [ "getMinimum", "a00076.html#a3f01ea84c377efc66cd55bc38f8676ad", null ],
+    [ "minimum", "a00076.html#aef2460331a80efc404356e9b68269b8c", null ],
+    [ "minimumType", "a00076.html#a2426a7c827ce0c46c77ac29ad1d7f846", null ],
+    [ "print", "a00076.html#a06ac6c38696f931bc1333d974ef25d03", null ],
+    [ "reset", "a00076.html#a16884b058070f8fb6759c6c194665cb7", null ],
+    [ "solve", "a00076.html#a4573db8138895e5dc5eee8880e02e928", null ],
+    [ "logger", "a00076.html#a7fbfdfbf962a90aace9fd42e92e0a428", null ],
+    [ "result_", "a00076.html#ab36ece190971122f7111d7e92c4e66cf", null ]
 ];

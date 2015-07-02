@@ -1,9 +1,7 @@
 var a00036 =
 [
-    [ "Command", "a00036.html#a5260e4338787992500f910db76baffaa", null ],
-    [ "~Command", "a00036.html#a7ec8a75c1fddc31e7aba9333211472d6", null ],
-    [ "command", "a00036.html#abbb1210a9e14226f7510f58cfd61f449", null ],
-    [ "isPlot", "a00036.html#a1e2040ac38c225f8c0a7ed9bb437e5b0", null ],
-    [ "command_", "a00036.html#a6c60c3824fde4491187bcb8dee8084de", null ],
-    [ "isPlot_", "a00036.html#a32729142e186da5975948a6f5369e69d", null ]
+    [ "Command", "a00036.html#ab81aab26c394149e7819d998b23896db", null ],
+    [ "~Command", "a00036.html#a572bb822c03aaba581c2d9a037358ca8", null ],
+    [ "command", "a00036.html#a0e26b3adc037ad75f7ff4c254c250f94", null ],
+    [ "command_", "a00036.html#a3b76b6c708622368fb56622af6209f6a", null ]
 ];

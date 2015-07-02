@@ -1,6 +1,6 @@
 var a00187 =
 [
-    [ "plot_mat", "a00288.html#gadcb1b5fd0907ef64ce8b6b5aaff42db6", null ],
-    [ "plot_mat", "a00288.html#ga22b3284ccb0b83b4dccef09f4ce53cab", null ],
-    [ "plot_mat", "a00288.html#gabc8e5c002378981e9c06e741d221cffd", null ]
+    [ "discreteInterval_t", "a00295.html#ga1c2bbde67ed2275a6def58e1cea970f3", null ],
+    [ "plot", "a00295.html#ga7a1939a1db1b12c576e85859b728458c", null ],
+    [ "plot_xy", "a00295.html#ga0dba01288d4436dfa417d3dfd5520c27", null ]
 ];

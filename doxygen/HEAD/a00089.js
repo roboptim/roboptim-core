@@ -12,7 +12,7 @@ var a00089 =
     [ "map_t", "a00089.html#a24267f12834eaa54c46633e855b4b502", null ],
     [ "mapKey_t", "a00089.html#a1ae5b2657ca3f720c681010097eef091", null ],
     [ "value_t", "a00089.html#a81e187e255654c3dd8f4f0db5684c5bb", null ],
-    [ "valuePool_t", "a00089.html#add51600be37d5b0b0f15647825efb11f", null ],
+    [ "valuePool_t", "a00089.html#a3658941e38b05f35e8b8ec1f3e19400b", null ],
     [ "LRUCache", "a00089.html#a43c46f8d4d4d71d1c1ec4c42eca7504d", null ],
     [ "~LRUCache", "a00089.html#abebca2518399f6fdb2376174c855b766", null ],
     [ "begin", "a00089.html#aca4eca2d48c018e9b1c7422b3a235ca7", null ],

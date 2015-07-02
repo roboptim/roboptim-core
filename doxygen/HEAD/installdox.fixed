@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!
 
 %subst = ( );
 $quiet   = 0;

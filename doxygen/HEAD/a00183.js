@@ -1,7 +1,9 @@
 var a00183 =
 [
-    [ "dense_jacobian_to_gnuplot", "a00278.html#a00f78445b522347c5914f58bb68c80a0", null ],
-    [ "plot_jac", "a00288.html#ga6089434a4bb7b902af79ee92fbfea1ea", null ],
-    [ "plot_jac", "a00288.html#gaa1f821ed4194ecba54db36327af0fd13", null ],
-    [ "sparse_jacobian_to_gnuplot", "a00278.html#a406862b4cef98a34eca862ce87b99aa5", null ]
+    [ "GNUPLOT_STR_COMMAND", "a00183.html#a44cffa7dc6979331d7660d604e7c8f48", null ],
+    [ "GNUPLOT_UNARY_COMMAND", "a00183.html#abdaa2512aec3201d566ccbfc73fafc46", null ],
+    [ "comment", "a00295.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
+    [ "set", "a00295.html#gad77630a233193748534b41d069d4e180", null ],
+    [ "show", "a00295.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
+    [ "unset", "a00295.html#ga2c2a188b2e89955eee09aa10b5426e43", null ]
 ];

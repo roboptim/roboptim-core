@@ -8,5 +8,6 @@ var a00104 =
     [ "impl_hessian", "a00104.html#aee32daf5b3b242cbc8edca6a788a9cc4", null ],
     [ "impl_jacobian", "a00104.html#a8fce95a83b5d976bca83351c60412b18", null ],
     [ "print", "a00104.html#a9d9d9ee3fd558e30aa8f5891e3028aba", null ],
+    [ "ROBOPTIM_ADD_FLAG", "a00104.html#a834560ed1f86d20d61b829f889d6c40e", null ],
     [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00104.html#af3c2cfc898e83edc8ce340b00c81e1dd", null ]
 ];

@@ -1,14 +1,15 @@
 var a00028 =
 [
-    [ "BindShPtr_t", "a00028.html#ac12bd855013f0ef3d0bf867b47d799b5", null ],
-    [ "boundValues_t", "a00028.html#aa29cc46acf1eb84bda53d9da6ff4a632", null ],
-    [ "parentType_t", "a00028.html#a58322098d06c8face6286742fc6869dd", null ],
-    [ "Bind", "a00028.html#ad1718b5f15fa061eda50ee71e3c01846", null ],
-    [ "~Bind", "a00028.html#adda8d726a09e9d776bc2f597b04e3d0b", null ],
-    [ "impl_compute", "a00028.html#a4fc7ea98bcfed0e1a2bc947925d3de91", null ],
-    [ "impl_gradient", "a00028.html#a55a8df765c283c2997c194ae5cd15096", null ],
-    [ "impl_jacobian", "a00028.html#a86d08817481bc6e6da2e66d0c23b7b55", null ],
-    [ "origin", "a00028.html#a29f1bcab4d91c3ecd75fdf00948f8198", null ],
-    [ "origin", "a00028.html#a69de4a8f82057c2f6d3089caf1fdb1fb", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00028.html#a1bc27f4a503409333ab465458ec747f0", null ]
+    [ "BadJacobian", "a00028.html#a55bcece908699e021e8385beda8ecde2", null ],
+    [ "~BadJacobian", "a00028.html#a426326464926492fb64c0afd2aeac521", null ],
+    [ "BadJacobian", "a00028.html#aa44364253696684fefa34d8169853c07", null ],
+    [ "print", "a00028.html#a0aa8811534e91780a653700d33e866e0", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00028.html#a1a6b0d428a0f18e912d58a365f30cc65", null ],
+    [ "analyticalJacobian_", "a00028.html#ae0a97e300f4cae9e05c948dc7c165cb4", null ],
+    [ "finiteDifferenceJacobian_", "a00028.html#a971f9df17b198609ff11b66bf7efa7c1", null ],
+    [ "maxDelta_", "a00028.html#a800b0d3dd5fb7425c2f4f26584bf895e", null ],
+    [ "maxDeltaCol_", "a00028.html#ab188c9d017ce58c5c0a71ad23915d0dd", null ],
+    [ "maxDeltaRow_", "a00028.html#a1996b8a1bee1f4d42475ec1967d32423", null ],
+    [ "threshold_", "a00028.html#a36048fa3a4c974b60aeabb6eb38c5f95", null ],
+    [ "x_", "a00028.html#abf91759f1939641ce35b3ad8540e9303", null ]
 ];

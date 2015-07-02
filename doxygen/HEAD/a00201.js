@@ -1,9 +1,11 @@
 var a00201 =
 [
-    [ "dense_matrix_to_matplotlib", "a00280.html#aec6bb39f40ca2fb899bc401c83a17075", null ],
-    [ "plot_mat", "a00288.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
-    [ "plot_mat", "a00288.html#gad95bc834df94f24249f83aedddc0e17d", null ],
-    [ "set_red_white_blue_cmap", "a00280.html#a995ab9cb3464f24d2fa6efe75db39792", null ],
-    [ "set_red_yellow_blue_cmap", "a00280.html#a7886ac8e9ba70129ece570e76e13d3e6", null ],
-    [ "sparse_matrix_to_matplotlib", "a00280.html#a431a27b03c8e76126ec235e828691a19", null ]
+    [ "comment", "a00295.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
+    [ "comment", "a00295.html#ga7a509faa4e3dd9a30373a2b320b98c23", null ],
+    [ "figure", "a00295.html#ga064c7f29eb271392e24cbff1699e34c2", null ],
+    [ "import", "a00295.html#ga39b68128dabb457499f493b7f17d3413", null ],
+    [ "import", "a00295.html#ga7f5c136cb79bd9bb01b3681e9f3b693e", null ],
+    [ "set", "a00295.html#gad77630a233193748534b41d069d4e180", null ],
+    [ "show", "a00295.html#ga1be293206175e5a7801b489aacfdaf81", null ],
+    [ "title", "a00295.html#gac53d81b20f0182a4d2381db27a475837", null ]
 ];

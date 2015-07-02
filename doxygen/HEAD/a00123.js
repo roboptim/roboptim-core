@@ -1,14 +1,22 @@
 var a00123 =
 [
-    [ "Sin", "a00123.html#a4732d5e0a1e37379c5b0275effe7e67c", null ],
-    [ "~Sin", "a00123.html#ac23f4e74782bcb9aaa1b5b2453d67d7d", null ],
-    [ "impl_compute", "a00123.html#ae29b31cbfed8b87a6852ce0861bb2696", null ],
-    [ "impl_gradient", "a00283.html#ga41ce1d89a5562b7d36e69606cf166e1b", null ],
-    [ "impl_gradient", "a00123.html#a80554051f4f47797d355874ce956c136", null ],
-    [ "impl_hessian", "a00283.html#gaec6e904bd4d1be042d5ae9692c5b45a9", null ],
-    [ "impl_hessian", "a00123.html#a2d17659d3d99ef9aef862369da8547c5", null ],
-    [ "impl_jacobian", "a00283.html#ga967172085eebe8ca14010a3dee324477", null ],
-    [ "impl_jacobian", "a00123.html#a14f62ccaccebdcc852691a1bdd31fdab", null ],
-    [ "print", "a00123.html#ad1127d5c57e79dd7c1a4dc20398e1086", null ],
-    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00123.html#a0859e9a410b3c1bf41fd7f2cf8636f5a", null ]
+    [ "callback_t", "a00123.html#a09c6fd9becb0420406935ed5f626de00", null ],
+    [ "parameters_t", "a00123.html#a857f5f54f6ad9b9ba46c3fb0d4830762", null ],
+    [ "problem_t", "a00123.html#a00b6d1cd6218108e49e58d8936e6c86a", null ],
+    [ "solverState_t", "a00123.html#a73e162f06ab621b80d4da4d169328810", null ],
+    [ "vector_t", "a00123.html#a8792bd346126774df62d6f36c5b61069", null ],
+    [ "Solver", "a00123.html#a9d5aad6b41d71b80de543eaa268d1630", null ],
+    [ "~Solver", "a00123.html#ae503c46ba5dd1090fdb3980ef5efca26", null ],
+    [ "getParameter", "a00123.html#aeeafdf6f9e7182fdf5cc8da000eb8cf7", null ],
+    [ "parameters", "a00123.html#a5bc57f014385135b4c9b7b7674fedcfb", null ],
+    [ "parameters", "a00123.html#aef58116cbf6f25494edbfa8dce81a521", null ],
+    [ "pluginName", "a00123.html#a73538fd27793cd9a06e5ee59f75ddd6d", null ],
+    [ "pluginName", "a00123.html#ad3efae7630da66319fe04dec1966280b", null ],
+    [ "print", "a00123.html#a594e18b9c52f3711cf728f675bd88547", null ],
+    [ "problem", "a00123.html#a2da97139e00c970150e0373f1d425e96", null ],
+    [ "setIterationCallback", "a00123.html#ae02e3f64d7fcd3a411b3c1a40b6cbc14", null ],
+    [ "logger", "a00123.html#acbbd83e474762cf93835de45865dda3a", null ],
+    [ "parameters_", "a00123.html#af08aa5c73a201c7867570937a17de01f", null ],
+    [ "plugin_name_", "a00123.html#af4d510e7ed9a65aed0c23765ca37d898", null ],
+    [ "problem_", "a00123.html#aea8e986e3e226a5cb578930fbba5112a", null ]
 ];

@@ -1,11 +1,14 @@
 var a00122 =
 [
-    [ "policy_t", "a00122.html#aead16c4e17b1af1a391083124556ed08", null ],
-    [ "Simple", "a00122.html#af284d376d832bca3c9d5e768be6942ed", null ],
-    [ "computeColumn", "a00122.html#aff9ecf8615384943e55930c2280fe4c1", null ],
-    [ "computeColumn", "a00122.html#afdc6c5a2606636ef484ab56fa3375f42", null ],
-    [ "computeGradient", "a00122.html#a588b478c5cb78d973c164c4d33e8bc3e", null ],
-    [ "computeGradient", "a00122.html#a691aeef4b20ee0c6facc126168d6c140", null ],
-    [ "computeJacobian", "a00122.html#ac25340db400888380475be3bbd0ec88c", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00122.html#a589c0a7f4d846453adf91866789ebd7d", null ]
+    [ "Sin", "a00122.html#a4732d5e0a1e37379c5b0275effe7e67c", null ],
+    [ "~Sin", "a00122.html#ac23f4e74782bcb9aaa1b5b2453d67d7d", null ],
+    [ "impl_compute", "a00122.html#ae29b31cbfed8b87a6852ce0861bb2696", null ],
+    [ "impl_gradient", "a00290.html#ga41ce1d89a5562b7d36e69606cf166e1b", null ],
+    [ "impl_gradient", "a00122.html#a80554051f4f47797d355874ce956c136", null ],
+    [ "impl_hessian", "a00290.html#gaec6e904bd4d1be042d5ae9692c5b45a9", null ],
+    [ "impl_hessian", "a00122.html#a2d17659d3d99ef9aef862369da8547c5", null ],
+    [ "impl_jacobian", "a00290.html#ga967172085eebe8ca14010a3dee324477", null ],
+    [ "impl_jacobian", "a00122.html#a14f62ccaccebdcc852691a1bdd31fdab", null ],
+    [ "print", "a00122.html#ad1127d5c57e79dd7c1a4dc20398e1086", null ],
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00122.html#a0859e9a410b3c1bf41fd7f2cf8636f5a", null ]
 ];

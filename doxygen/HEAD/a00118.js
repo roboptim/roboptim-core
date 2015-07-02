@@ -1,13 +1,13 @@
 var a00118 =
 [
-    [ "parentType_t", "a00118.html#a7953a20600361495460caa1f213e9011", null ],
-    [ "ScalarShPtr_t", "a00118.html#a20f63dc977977915cfc81b1743bd2416", null ],
-    [ "Scalar", "a00118.html#ac79b4a6aef381f457296bfdc7f2a3701", null ],
-    [ "~Scalar", "a00118.html#a50fe6bb5f735657401bafce30044056c", null ],
-    [ "impl_compute", "a00118.html#a5b51703743a37256cac90680f2b2360f", null ],
-    [ "impl_gradient", "a00118.html#ae035b79d51ac9930f7c1f8fc44cdc1bd", null ],
-    [ "impl_jacobian", "a00118.html#a2c0c26a9bea4b5a08455521e568f3068", null ],
-    [ "origin", "a00118.html#ad17cc3b06c7818946a6b94254ffcb1c1", null ],
-    [ "origin", "a00118.html#a4e8961237859adaa361aa9fec0d5057d", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00118.html#aefa2eb6460580af5ce6ecc78bf0319de", null ]
+    [ "parentType_t", "a00118.html#a6802dfd6761714f83c4dbbe5f9bcef19", null ],
+    [ "SelectionShPtr_t", "a00118.html#a5cf29c8b2e9a95cf3553d7f21bb1ee83", null ],
+    [ "Selection", "a00118.html#ac07895f78f6a65a8b3f54d5fc1020629", null ],
+    [ "~Selection", "a00118.html#a2f5c18b892a2c6e4d6d1f30561334d4e", null ],
+    [ "impl_compute", "a00118.html#a27810cd60947270ff41970b79f10e741", null ],
+    [ "impl_gradient", "a00118.html#a34eb7fca5608b393e2dff858bbbaa60f", null ],
+    [ "impl_jacobian", "a00118.html#a33d09bf5aa65daf658f4b853322d2b9b", null ],
+    [ "origin", "a00118.html#a5e3e5098b2fe6dd32b773d06ba3de648", null ],
+    [ "origin", "a00118.html#a0cbd7cc3ecf575d338b16306ea1b4646", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00118.html#a224033bde371676be065a7c89fba3d77", null ]
 ];

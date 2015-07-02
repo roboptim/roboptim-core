@@ -1,4 +1,6 @@
 var a00039 =
 [
-    [ "type", "a00039.html#ad9d48d54c9f8b1e6318182443326486f", null ]
+    [ "isDense_t", "a00039.html#a3638652266f8921cc7ec5d4950bf36d6", null ],
+    [ "isNotDense_t", "a00039.html#aa275bf6d2ad4e17dae9015e786a47ec3", null ],
+    [ "traits_t", "a00039.html#a92fe644b12cb521cc7f3907c5853530d", null ]
 ];

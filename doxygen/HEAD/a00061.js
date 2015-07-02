@@ -1,11 +1,12 @@
 var a00061 =
 [
-    [ "interval_t", "a00061.html#aa1fe89a5855ff977bbece5d78f90a5d2", null ],
-    [ "intervalsVect_t", "a00061.html#a8047bc98d54e46144b3f522dd6812d4c", null ],
-    [ "size_type", "a00061.html#a63530c370e23c26988f0727e540e24d4", null ],
-    [ "value_type", "a00061.html#a640d8344231b239f17a20392517c1d68", null ],
-    [ "vector_t", "a00061.html#a0264a3b65ffb6e4ab0753116dbba61c5", null ],
-    [ "EvaluateConstraintViolation", "a00061.html#a306dbff7446a9f1252d32d1ff67cd1f0", null ],
-    [ "computeViolation", "a00061.html#aecd68350a1eb5e9999d0d27f9f02723d", null ],
-    [ "uniformNorm", "a00061.html#a40d8c34b08bf85f2f65f1d12a221dde7", null ]
+    [ "FivePointsRule", "a00061.html#ab5c1fd9815a0277bb395459236cb3f1a", null ],
+    [ "compute_deriv", "a00061.html#a7c5d2405f1ab621b93cabb8a91b9b3d6", null ],
+    [ "computeColumn", "a00061.html#a1617bc57b3d40564876c6a14653da379", null ],
+    [ "computeColumn", "a00061.html#ad27ba0753fa501e3b3e258f1fc5f101a", null ],
+    [ "computeGradient", "a00061.html#a8010120e272f8699e6c066d098217613", null ],
+    [ "computeGradient", "a00061.html#a988d3646fbe09cda5d6df026d894fec4", null ],
+    [ "computeJacobian", "a00061.html#aca1065001985abead79e7291964ceb6b", null ],
+    [ "computeJacobian", "a00061.html#a6f561c17a88b91e3791a0e9d4652b720", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00061.html#a4c077cbda6ba69621d402908b5b1c243", null ]
 ];

@@ -7,6 +7,5 @@ var a00088 =
     [ "size_type", "a00088.html#a8d8ca5968fad8205116dda3f171d73b1", null ],
     [ "traits_t", "a00088.html#a7ee372d93dc3a68e78c1d434ad556905", null ],
     [ "LogJacobianConstraint", "a00088.html#a391459161ac2fe3c05453048a4ad5fab", null ],
-    [ "operator()", "a00088.html#a6f00e3ff90f703822dfeee662a5cdd71", null ],
-    [ "operator()", "a00088.html#a9b7228b8c96ee3ee9376f6e19fcdda3b", null ]
+    [ "operator()", "a00088.html#a3901dec80eb43d5234cf2487bbca2f48", null ]
 ];
