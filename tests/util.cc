@@ -146,6 +146,17 @@ BOOST_AUTO_TEST_CASE (util)
   copySparseBlock (sparse_c, sparse_block, startRow, startCol, true);
   BOOST_CHECK (allclose (sparse_c, sparse_d));
 
+  // Test sparse block update
+  sparse_block.coeffRef (0, 0) = 12.;
+  sparse_d.coeffRef (startRow, startCol) = 12.;
+  BOOST_CHECK_NO_THROW (updateSparseBlock (sparse_c, sparse_block,
+                                           startRow, startCol));
+  BOOST_CHECK (allclose (sparse_c, sparse_d));
+  GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparse_empty (sparse_c.rows (),
+                                                                   sparse_c.cols ());
+  BOOST_CHECK_THROW (updateSparseBlock (sparse_empty, sparse_block, 0, 0),
+                     std::runtime_error);
+
   // Test normalization
   test_normalization (output);
 

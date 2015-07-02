@@ -1,4 +1,5 @@
 // Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
+// Copyright (C) 2015 by Benjamin Chrétien, CNRS-LIRMM.
 //
 // This file is part of the roboptim.
 //
@@ -17,6 +18,9 @@
 
 #ifndef ROBOPTIM_CORE_UTIL_HXX
 # define ROBOPTIM_CORE_UTIL_HXX
+
+# include <stdexcept>
+
 # include <roboptim/core/differentiable-function.hh>
 
 namespace roboptim
@@ -136,6 +140,53 @@ namespace roboptim
     // Compress sparse matrix if asked
     if (compress)
       matrix.makeCompressed ();
+  }
+
+  template <typename U>
+  void updateSparseBlock
+  (U& m, const U& b,
+   Function::size_type startRow, Function::size_type startCol)
+  {
+    typedef U matrix_t;
+    typedef typename U::Index index_t;
+
+    // Make sure that the block fits in the matrix
+    assert (startRow + b.rows () <= m.rows ());
+    assert (startCol + b.cols () <= m.cols ());
+
+    // Iterate over outer size
+    index_t startRow_ = static_cast<index_t> (startRow);
+    index_t startCol_ = static_cast<index_t> (startCol);
+    index_t outer_start = (StorageOrder == Eigen::ColMajor)?
+      startCol_ : startRow_;
+    for (index_t k = 0; k < b.outerSize (); ++k)
+      {
+        // Get iterator to first matrix element in the block
+        typename matrix_t::InnerIterator m_it (m, outer_start + k);
+
+        // TODO: find if there's a better way to find the position of the
+        // iterator
+        while (m_it && ((StorageOrder == Eigen::ColMajor)?
+                        (m_it.row () < startRow_) : (m_it.col () < startCol_)))
+	  {
+	    ++m_it;
+	  }
+
+        if (!m_it)
+          throw std::runtime_error
+            ("sparse matrix structure mismatch in updateSparseBlock");
+
+	// Iterator over inner size
+	for (typename matrix_t::InnerIterator b_it (b.derived (), k);
+	     b_it; ++b_it)
+          {
+            assert (m_it.row () == startRow_ + b_it.row ());
+            assert (m_it.col () == startCol_ + b_it.col ());
+
+            m_it.valueRef () = b_it.value ();
+            ++m_it;
+          }
+      }
   }
 
   inline double normalize (double x)
