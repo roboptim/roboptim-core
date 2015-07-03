@@ -21,6 +21,8 @@
 
 # include <stdexcept>
 
+# include <boost/static_assert.hpp>
+
 # include <roboptim/core/differentiable-function.hh>
 
 namespace roboptim
@@ -154,7 +156,7 @@ namespace roboptim
     // Make sure that the block fits in the matrix
     assert (startRow + b.rows () <= m.rows ());
     assert (startCol + b.cols () <= m.cols ());
-    assert (M::IsRowMajor == B::IsRowMajor);
+    BOOST_STATIC_ASSERT (int (M::IsRowMajor) == int (B::IsRowMajor));
 
     // Iterate over outer size
     index_t startRow_ = static_cast<index_t> (startRow);
