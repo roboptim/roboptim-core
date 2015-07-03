@@ -142,17 +142,19 @@ namespace roboptim
       matrix.makeCompressed ();
   }
 
-  template <typename U>
+  template <typename M, typename B>
   void updateSparseBlock
-  (U& m, const U& b,
+  (M& m, const B& b,
    Function::size_type startRow, Function::size_type startCol)
   {
-    typedef U matrix_t;
-    typedef typename U::Index index_t;
+    typedef M matrix_t;
+    typedef B block_t;
+    typedef typename M::Index index_t;
 
     // Make sure that the block fits in the matrix
     assert (startRow + b.rows () <= m.rows ());
     assert (startCol + b.cols () <= m.cols ());
+    assert (M::IsRowMajor == B::IsRowMajor);
 
     // Iterate over outer size
     index_t startRow_ = static_cast<index_t> (startRow);
@@ -161,8 +163,8 @@ namespace roboptim
     for (index_t k = 0; k < b.outerSize (); ++k)
       {
         // Get iterator to first matrix element in the block
-        typename matrix_t::InnerIterator m_it (m.derived (), outer_start + k);
-        typename matrix_t::InnerIterator b_it (b.derived (), k);
+        typename matrix_t::InnerIterator m_it (m, outer_start + k);
+        typename block_t::InnerIterator b_it (b, k);
 
         if (!(m_it) && !(b_it))
           continue;
@@ -183,13 +185,12 @@ namespace roboptim
             ("sparse matrix structure mismatch in updateSparseBlock");
 
 	// Iterator over inner size
-	for (; b_it; ++b_it)
+	for (; b_it && m_it; ++b_it, ++m_it)
           {
             assert (m_it.row () == startRow_ + b_it.row ());
             assert (m_it.col () == startCol_ + b_it.col ());
 
             m_it.valueRef () = b_it.value ();
-            ++m_it;
           }
       }
   }

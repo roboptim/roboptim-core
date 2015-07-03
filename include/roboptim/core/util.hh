@@ -119,9 +119,11 @@ namespace roboptim
   /// \param b sparse block to copy to m.
   /// \param startRow start row of the block in m where b will be copied.
   /// \param startCol start col of the block in m where b will be copied.
-  template <typename U>
+  /// \tparam M matrix type.
+  /// \tparam B block type.
+  template <typename M, typename B>
   void updateSparseBlock
-  (U& m, const U& b,
+  (M& m, const B& b,
    Function::size_type startRow, Function::size_type startCol);
 
   /// \brief Apply normalize to a scalar.
