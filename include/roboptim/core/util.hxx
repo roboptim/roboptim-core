@@ -157,17 +157,23 @@ namespace roboptim
     // Iterate over outer size
     index_t startRow_ = static_cast<index_t> (startRow);
     index_t startCol_ = static_cast<index_t> (startCol);
-    index_t outer_start = (StorageOrder == Eigen::ColMajor)?
-      startCol_ : startRow_;
+    index_t outer_start = (matrix_t::IsRowMajor)? startRow_ : startCol_;
     for (index_t k = 0; k < b.outerSize (); ++k)
       {
         // Get iterator to first matrix element in the block
-        typename matrix_t::InnerIterator m_it (m, outer_start + k);
+        typename matrix_t::InnerIterator m_it (m.derived (), outer_start + k);
+        typename matrix_t::InnerIterator b_it (b.derived (), k);
+
+        if (!(m_it) && !(b_it))
+          continue;
+        else if (!(m_it) || !(b_it))
+          throw std::runtime_error
+            ("sparse matrix structure mismatch in updateSparseBlock");
 
         // TODO: find if there's a better way to find the position of the
         // iterator
-        while (m_it && ((StorageOrder == Eigen::ColMajor)?
-                        (m_it.row () < startRow_) : (m_it.col () < startCol_)))
+        while ((m_it) && ((matrix_t::IsRowMajor)?
+                        (m_it.col () < startCol_) : (m_it.row () < startRow_)))
 	  {
 	    ++m_it;
 	  }
@@ -177,8 +183,7 @@ namespace roboptim
             ("sparse matrix structure mismatch in updateSparseBlock");
 
 	// Iterator over inner size
-	for (typename matrix_t::InnerIterator b_it (b.derived (), k);
-	     b_it; ++b_it)
+	for (; b_it; ++b_it)
           {
             assert (m_it.row () == startRow_ + b_it.row ());
             assert (m_it.col () == startCol_ + b_it.col ());
