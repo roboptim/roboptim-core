@@ -168,11 +168,8 @@ namespace roboptim
         typename matrix_t::InnerIterator m_it (m, outer_start + k);
         typename block_t::InnerIterator b_it (b, k);
 
-        if (!(m_it) && !(b_it))
+        if (!(b_it))
           continue;
-        else if (!(m_it) || !(b_it))
-          throw std::runtime_error
-            ("sparse matrix structure mismatch in updateSparseBlock");
 
         // TODO: find if there's a better way to find the position of the
         // iterator
