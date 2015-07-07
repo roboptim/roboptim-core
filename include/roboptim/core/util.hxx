@@ -157,7 +157,11 @@ namespace roboptim
     // Make sure that the block fits in the matrix
     assert (startRow + b.rows () <= m.rows ());
     assert (startCol + b.cols () <= m.cols ());
+# if __cplusplus < 201103L || !defined (__GXX_EXPERIMENTAL_CXX0X__)
     BOOST_STATIC_ASSERT (int (M::IsRowMajor) == int (B::IsRowMajor)) ROBOPTIM_UNUSED;
+# else
+    BOOST_STATIC_ASSERT_MSG (int (M::IsRowMajor) == int (B::IsRowMajor), "You should use the same Storage Order");
+# endif
 
     // Iterate over outer size
     index_t startRow_ = static_cast<index_t> (startRow);
