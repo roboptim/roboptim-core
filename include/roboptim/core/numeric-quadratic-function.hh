@@ -52,8 +52,10 @@ namespace roboptim
     /// See class documentation for A and b definition.
     /// \param A A symmetric matrix
     /// \param b b vector
+    /// \param name function's name
     GenericNumericQuadraticFunction (const_symmetric_ref A,
-				     const_vector_ref b);
+				     const_vector_ref b,
+				     std::string name = std::string ());
 
     /// \brief Build a quadratic function from a matrix and a vector.
     ///
@@ -61,9 +63,11 @@ namespace roboptim
     /// \param A A symmetric matrix (inputSize * inputSize)
     /// \param b b vector (size inputSize)
     /// \param c c vector (size one)
+    /// \param name function's name
     GenericNumericQuadraticFunction (const_symmetric_ref A,
 				     const_vector_ref b,
-				     const_vector_ref c);
+				     const_vector_ref c,
+				     std::string name = std::string ());
 
 
     ~GenericNumericQuadraticFunction ();

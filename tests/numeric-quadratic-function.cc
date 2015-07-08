@@ -19,6 +19,8 @@
 
 #include <iostream>
 
+#include <boost/type_traits/is_same.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/decorator/finite-difference-gradient.hh>
 #include <roboptim/core/numeric-quadratic-function.hh>
@@ -35,6 +37,9 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("numeric-quadratic-function");
+
   typename GenericNumericQuadraticFunction<T>::matrix_t a (5, 5);
   typename GenericNumericQuadraticFunction<T>::vector_t b (5);
   typename GenericNumericQuadraticFunction<T>::vector_t x (5);
@@ -60,9 +65,19 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
   b[3] = 0.;
   b[4] = 0.;
 
-  GenericNumericQuadraticFunction<T> f (a, b);
+  GenericNumericQuadraticFunction<T> f (a, b, "Dummy");
 
-  std::cout << f << '\n';
+  (*output) << f << '\n';
+  (*output) << "x = " << x << '\n';
+  (*output) << "f(x) = " << f (x) << '\n';
+  (*output) << "J(x) = " << f.jacobian (x) << '\n';
+  (*output) << "G(x) = " << f.gradient (x, 0) << '\n';
+  (*output) << "H(x) = " << f.hessian (x, 0) << '\n';
+
+  std::cout << output->str () << std::endl;
+
+  if (boost::is_same<T, EigenMatrixDense>::value)
+    BOOST_CHECK (output->match_pattern ());
 
   for (int i = 0; i < 10; ++i)
     {
