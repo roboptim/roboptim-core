@@ -132,7 +132,7 @@ namespace roboptim
   GenericNumericQuadraticFunction<T>::impl_hessian
   (hessian_ref hessian, const_argument_ref, size_type) const
   {
-    hessian = a_;
+    hessian = 2 * a_;
   }
 
   template <typename T>
