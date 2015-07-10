@@ -58,6 +58,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
     typename GenericIdentityFunction<T>::vector_t x (5);
     x.setZero ();
     std::cout
+      << (*fct) << "\n"
       << (*fct) (x) << "\n"
       << fct->gradient (x, 0) << "\n"
       << fct->jacobian (x) << std::endl;
@@ -73,6 +74,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
     typename GenericIdentityFunction<T>::vector_t x (4);
     x.setZero ();
     std::cout
+      << (*fct) << "\n"
       << (*fct) (x) << "\n"
       << fct->gradient (x, 0) << "\n"
       << fct->jacobian (x) << std::endl;

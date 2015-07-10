@@ -17,8 +17,11 @@
 
 #ifndef ROBOPTIM_CORE_OPERATOR_BIND_HXX
 # define ROBOPTIM_CORE_OPERATOR_BIND_HXX
+
 # include <stdexcept>
 # include <boost/format.hpp>
+
+# include <roboptim/core/indent.hh>
 
 namespace roboptim
 {
@@ -122,6 +125,36 @@ namespace roboptim
 	    jacobian.coeffRef (row, id) = jacobian_.coeffRef (row, col);
 	  ++id;
 	}
+  }
+
+
+  template <typename U>
+  std::ostream&
+  Bind<U>::print (std::ostream& o) const
+  {
+    o << this->getName () << ":" << incindent;
+
+    std::size_t n_val = boundValues_.size ()
+      -  static_cast<std::size_t> (std::count (boundValues_.begin (),
+                                               boundValues_.end (),
+                                               boost::optional<value_type> ()));
+
+    o << iendl << "Bound values: [" << n_val << "]{";
+
+    std::size_t cnt = 0;
+    for (std::size_t i = 0; i < boundValues_.size (); ++i)
+      {
+	if (boundValues_[i])
+	  {
+	    o << i << ": " << *boundValues_[i]
+	      << ((cnt < n_val-1)? ", " : "");
+	    cnt++;
+	  }
+      }
+
+    o << "}" << decindent;
+
+    return o;
   }
 
 } // end of namespace roboptim.
