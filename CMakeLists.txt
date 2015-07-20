@@ -26,6 +26,9 @@ SET(PROJECT_NAME roboptim-core)
 SET(PROJECT_DESCRIPTION "RobOptim Core")
 SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
 
+# Use MathJax for Doxygen formulae
+SET(DOXYGEN_USE_MATHJAX "YES")
+
 SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/alloc.hh
