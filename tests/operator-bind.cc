@@ -39,6 +39,12 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("operator-bind");
+
+  typedef Function::vector_t denseVector_t;
+  typedef Function::matrix_t denseMatrix_t;
+
   typedef typename GenericIdentityFunction<T>::value_type value_type;
   typename GenericIdentityFunction<T>::result_t offset (5);
   offset.setZero ();
@@ -57,11 +63,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 
     typename GenericIdentityFunction<T>::vector_t x (5);
     x.setZero ();
-    std::cout
+    (*output)
       << (*fct) << "\n"
       << (*fct) (x) << "\n"
-      << fct->gradient (x, 0) << "\n"
-      << fct->jacobian (x) << std::endl;
+      << denseVector_t (fct->gradient (x, 0)) << "\n"
+      << denseMatrix_t (fct->jacobian (x)) << std::endl;
   }
 
   {
@@ -73,11 +79,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 
     typename GenericIdentityFunction<T>::vector_t x (4);
     x.setZero ();
-    std::cout
+    (*output)
       << (*fct) << "\n"
       << (*fct) (x) << "\n"
-      << fct->gradient (x, 0) << "\n"
-      << fct->jacobian (x) << std::endl;
+      << denseVector_t (fct->gradient (x, 0)) << "\n"
+      << denseMatrix_t (fct->jacobian (x)) << std::endl;
 
     std::vector<boost::optional<value_type> > boundValues_throw
       (6, boost::optional<value_type> ());
@@ -85,6 +91,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
     BOOST_CHECK_THROW (fct = roboptim::bind (identity, boundValues_throw),
                        std::runtime_error);
   }
+
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

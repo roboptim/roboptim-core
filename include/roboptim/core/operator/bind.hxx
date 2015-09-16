@@ -34,7 +34,7 @@ namespace roboptim
        (std::count (boundValues.begin (), boundValues.end (),
 		    boost::optional<value_type> ())),
        origin->outputSize (),
-       (boost::format ("bind(%1%)")
+       (boost::format ("Bind(%1%)")
 	% origin->getName ()).str ()),
       origin_ (origin),
       boundValues_ (boundValues),
