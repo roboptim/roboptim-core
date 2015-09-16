@@ -26,10 +26,48 @@
 #include <roboptim/core/io.hh>
 #include <roboptim/core/operator/bind.hh>
 
+#include <roboptim/core/differentiable-function.hh>
 #include <roboptim/core/function/constant.hh>
 #include <roboptim/core/function/identity.hh>
 
 using namespace roboptim;
+
+template <typename T>
+struct F : public GenericDifferentiableFunction<T>
+{
+public:
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+  (GenericDifferentiableFunction<T>);
+
+  F (size_type n) : GenericDifferentiableFunction<T> (n, 1, "f(x) = Σx_i²")
+  {}
+
+  void impl_compute (result_ref res, const_argument_ref x) const
+  {
+    res[0] = x.squaredNorm ();
+  }
+
+  void impl_gradient (gradient_ref grad, const_argument_ref x,
+		      size_type) const;
+};
+
+template <>
+void F<EigenMatrixSparse>::impl_gradient
+(gradient_ref grad, const_argument_ref x, size_type) const
+{
+  grad.setZero ();
+  for (int i = 0; i < inputSize (); ++i)
+    {
+      grad.insert (i) = 2. * x[i];
+    }
+}
+
+template <typename T>
+void F<T>::impl_gradient
+(gradient_ref grad, const_argument_ref x, size_type) const
+{
+  grad = 2. * x;
+}
 
 
 typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
@@ -45,51 +83,84 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
   typedef Function::vector_t denseVector_t;
   typedef Function::matrix_t denseMatrix_t;
 
-  typedef typename GenericIdentityFunction<T>::value_type value_type;
-  typename GenericIdentityFunction<T>::result_t offset (5);
+  typedef GenericDifferentiableFunction<T> differentiableFunction_t;
+  typedef GenericIdentityFunction<T> identityFunction_t;
+  typedef GenericLinearFunction<T> linearFunction_t;
+
+  typedef typename identityFunction_t::value_type value_type;
+  typedef typename identityFunction_t::size_type size_type;
+  size_type n = 5;
+
+  typename identityFunction_t::result_t offset (n);
   offset.setZero ();
 
-  boost::shared_ptr<GenericIdentityFunction<T> > identity =
-    boost::make_shared<GenericIdentityFunction<T> > (offset);
-
-  std::vector<boost::optional<value_type> > boundValues
-    (5, boost::optional<value_type> ());
+  boost::shared_ptr<identityFunction_t> identity =
+    boost::make_shared<identityFunction_t> (offset);
 
   {
-    boost::shared_ptr<GenericLinearFunction<T> >
+    std::vector<boost::optional<value_type> > boundValues
+      (n, boost::optional<value_type> ());
+    boost::shared_ptr<linearFunction_t>
       fct = roboptim::bind (identity, boundValues);
 
-    BOOST_CHECK (fct->inputSize () == 5);
+    BOOST_CHECK (fct->inputSize () == n);
 
-    typename GenericIdentityFunction<T>::vector_t x (5);
+    typename identityFunction_t::vector_t x (n);
     x.setZero ();
     (*output)
-      << (*fct) << "\n"
-      << (*fct) (x) << "\n"
-      << denseVector_t (fct->gradient (x, 0)) << "\n"
-      << denseMatrix_t (fct->jacobian (x)) << std::endl;
+      << "x: "           << x << "\n"
+      << "fct: "         << (*fct) << "\n"
+      << "fct(x): "      << (*fct) (x) << "\n"
+      << "gradient(x): " << denseVector_t (fct->gradient (x, 0)) << "\n"
+      << "jacobian(x): " << denseMatrix_t (fct->jacobian (x)) << std::endl;
   }
 
   {
+    std::vector<boost::optional<value_type> > boundValues
+      (n, boost::optional<value_type> ());
     boundValues[0] = 42.;
-    boost::shared_ptr<GenericLinearFunction<T> >
+    boost::shared_ptr<linearFunction_t>
       fct = roboptim::bind (identity, boundValues);
 
-    BOOST_CHECK (fct->inputSize () == 4);
+    BOOST_CHECK (fct->inputSize () == n-1);
 
-    typename GenericIdentityFunction<T>::vector_t x (4);
+    typename identityFunction_t::vector_t x (n-1);
     x.setZero ();
     (*output)
-      << (*fct) << "\n"
-      << (*fct) (x) << "\n"
-      << denseVector_t (fct->gradient (x, 0)) << "\n"
-      << denseMatrix_t (fct->jacobian (x)) << std::endl;
+      << "x: "           << x << "\n"
+      << "fct: "         << (*fct) << "\n"
+      << "fct(x): "      << (*fct) (x) << "\n"
+      << "gradient(x): " << denseVector_t (fct->gradient (x, 0)) << "\n"
+      << "jacobian(x): " << denseMatrix_t (fct->jacobian (x)) << std::endl;
 
     std::vector<boost::optional<value_type> > boundValues_throw
       (6, boost::optional<value_type> ());
     boundValues_throw[0] = 42.;
     BOOST_CHECK_THROW (fct = roboptim::bind (identity, boundValues_throw),
                        std::runtime_error);
+  }
+
+  {
+    std::vector<boost::optional<value_type> > boundValues
+      (n, boost::optional<value_type> ());
+    boundValues[1] = 12.;
+    boundValues[3] = -2.;
+
+    boost::shared_ptr<F<T> > norm = boost::make_shared<F<T> > (n);
+    boost::shared_ptr<differentiableFunction_t>
+      fct = boost::make_shared<Bind<differentiableFunction_t> >
+      (norm, boundValues);
+
+    BOOST_CHECK (fct->inputSize () == n-2);
+
+    typename differentiableFunction_t::vector_t x (n-2);
+    x.fill (1.);
+    (*output)
+      << "x: "           << x << "\n"
+      << "fct: "         << (*fct) << "\n"
+      << "fct(x): "      << (*fct) (x) << "\n"
+      << "gradient(x): " << denseVector_t (fct->gradient (x, 0)) << "\n"
+      << "jacobian(x): " << denseMatrix_t (fct->jacobian (x)) << std::endl;
   }
 
   std::cout << output->str () << std::endl;
