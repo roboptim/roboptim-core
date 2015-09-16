@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE (ref)
   F::jacobian_t jac (2,4);
   jac.setZero ();
 
-  Eigen::Map<const Function::vector_t, Eigen::RowMajor, Eigen::Stride<1, 2> >
+  Eigen::Map<const Function::vector_t, Eigen::Unaligned, Eigen::Stride<1, 2> >
     map_x (x, 4, Eigen::Stride<1,2> ());
 
   F::jacobian_ref jac_ref (jac);

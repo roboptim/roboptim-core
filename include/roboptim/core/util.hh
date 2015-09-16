@@ -97,18 +97,34 @@ namespace roboptim
    double rtol = Eigen::NumTraits<double>::dummy_precision (),
    double atol = Eigen::NumTraits<double>::epsilon ());
 
-  /// \brief Copy a sparse block into a sparse matrix.
-  /// \param matrix matrix to fill.
-  /// \param block block to copy.
-  /// \param startRow start row of the block.
-  /// \param startCol start col of the block.
+  /// \brief Copy a sparse block into a sparse matrix. This function involves
+  /// filling a vector of triplets, so this should be avoided in critical
+  /// sections.
+  /// \param m matrix to fill.
+  /// \param b block to copy to m.
+  /// \param startRow start row of the block in m where b will be copied.
+  /// \param startCol start col of the block in m where b will be copied.
   /// \param compress whether to compress the sparse matrix at the end.
   template <typename U>
   void copySparseBlock
-  (U& matrix,
-   const U& block,
+  (U& m, const U& b,
    Function::size_type startRow, Function::size_type startCol,
    bool compress = false);
+
+  /// \brief Update a sparse block of a sparse matrix.
+  /// This function expects the sparse matrix to have its structure set
+  /// already, thus it can easily iterate over the values and copy them without
+  /// any extra allocation. If that's not the case, the behavior is undefined.
+  /// \param m sparse matrix to update.
+  /// \param b sparse block to copy to m.
+  /// \param startRow start row of the block in m where b will be copied.
+  /// \param startCol start col of the block in m where b will be copied.
+  /// \tparam M matrix type.
+  /// \tparam B block type.
+  template <typename M, typename B>
+  void updateSparseBlock
+  (M& m, const B& b,
+   Function::size_type startRow, Function::size_type startCol);
 
   /// \brief Apply normalize to a scalar.
   inline double normalize (double x);

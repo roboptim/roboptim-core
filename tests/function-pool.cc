@@ -27,6 +27,7 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/format.hpp>
 
+#include <Eigen/StdVector>
 #include <Eigen/Geometry>
 
 #include <roboptim/core/io.hh>
@@ -48,7 +49,7 @@ public:
 
   struct EngineData
   {
-    typedef std::vector<point_t> points_t;
+    typedef std::vector<point_t, Eigen::aligned_allocator<point_t> > points_t;
     typedef std::vector<points_t> gradPoints_t;
 
     std::size_t n;

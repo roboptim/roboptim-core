@@ -24,6 +24,8 @@
 #include <roboptim/core/n-times-derivable-function.hh>
 #include <roboptim/core/detail/utility.hh>
 
+#include <vector>
+
 using namespace roboptim;
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
@@ -108,6 +110,25 @@ BOOST_AUTO_TEST_CASE (detail_utility)
     TEST_PREDICATE (predicate3_t);
     TEST_PREDICATE (predicate4_t);
     TEST_PREDICATE (predicate5_t);
+  }
+
+  // Test aligned_vector_type.
+  {
+    typedef Eigen::Vector2d vector2_t;
+    typedef Eigen::MatrixXd matrix_t;
+
+    typedef is_same<std::vector<matrix_t>,
+                    aligned_vector_type<matrix_t>::type>
+      predicate1_t;
+    typedef is_same<std::vector<vector2_t, Eigen::aligned_allocator<vector2_t> >,
+                    aligned_vector_type<vector2_t>::type>
+      predicate2_t;
+    typedef is_same<std::vector<int>, aligned_vector_type<int>::type>
+      predicate3_t;
+
+    TEST_PREDICATE (predicate1_t);
+    TEST_PREDICATE (predicate2_t);
+    TEST_PREDICATE (predicate3_t);
   }
 
   // Test const_ref.

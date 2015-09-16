@@ -146,6 +146,8 @@ namespace roboptim
 
   template <typename K, typename V, typename H> class LRUCache;
 
+  template <typename T>
+  class OptimizationLogger;
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_FWD_HH

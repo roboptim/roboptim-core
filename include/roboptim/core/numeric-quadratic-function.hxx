@@ -26,13 +26,12 @@ namespace roboptim
 {
   template <typename T>
   GenericNumericQuadraticFunction<T>::GenericNumericQuadraticFunction
-  (const_matrix_ref a, const_vector_ref b)
-    : GenericQuadraticFunction<T>
-      (a.rows (), 1, "numeric quadratic function"),
-      a_ (a),
-      b_ (b),
-      c_ (1),
-      buffer_ (b.size ())
+  (const_matrix_ref a, const_vector_ref b, std::string name)
+    : GenericQuadraticFunction<T> (a.rows (), 1, name),
+    a_ (a),
+    b_ (b),
+    c_ (1),
+    buffer_ (b.size ())
   {
     assert (b.size () == this->inputSize ());
     c_.setZero ();
@@ -40,13 +39,12 @@ namespace roboptim
 
   template <typename T>
   GenericNumericQuadraticFunction<T>::GenericNumericQuadraticFunction
-  (const_matrix_ref a, const_vector_ref b, const_vector_ref c)
-    : GenericQuadraticFunction<T>
-      (a.rows (), 1, "numeric quadratic function"),
-      a_ (a),
-      b_ (b),
-      c_ (c),
-      buffer_ (b.size ())
+  (const_matrix_ref a, const_vector_ref b, const_vector_ref c, std::string name)
+    : GenericQuadraticFunction<T> (a.rows (), 1, name),
+    a_ (a),
+    b_ (b),
+    c_ (c),
+    buffer_ (b.size ())
   {
     assert (b.size () == this->inputSize ());
     assert (c.size () == 1);
@@ -134,18 +132,25 @@ namespace roboptim
   GenericNumericQuadraticFunction<T>::impl_hessian
   (hessian_ref hessian, const_argument_ref, size_type) const
   {
-    hessian = a_;
+    hessian = 2 * a_;
   }
 
   template <typename T>
   std::ostream&
   GenericNumericQuadraticFunction<T>::print (std::ostream& o) const
   {
-    return o << "Numeric quadratic function" << incindent << iendl
-             << "A = " << this->a_ << iendl
-             << "B = " << this->b_ << iendl
-	     << "c = " << this->c_
-             << decindent;
+    if (this->getName ().empty ())
+      o << "Numeric quadratic function";
+    else
+      o << this->getName () << " (numeric quadratic function)";
+
+    o  << ":" << incindent << iendl
+       << "A = " << this->a_ << iendl
+       << "B = " << this->b_ << iendl
+       << "c = " << this->c_
+       << decindent;
+
+    return o;
   }
 
 } // end of namespace roboptim

@@ -32,7 +32,10 @@
 # include <boost/shared_ptr.hpp>
 # include <boost/type_traits/is_base_of.hpp>
 
+# include <vector>
+
 # include <Eigen/Core>
+# include <Eigen/StdVector>
 
 namespace roboptim
 {
@@ -95,6 +98,20 @@ namespace roboptim
       : boost::mpl::and_<has_Scalar<T>,
                          has_Index<T>,
                          has_StorageKind<T> >
+    {};
+
+
+    /// \brief Return an Eigen-aligned std::vector if required, else use the
+    /// default allocator.
+    /// \tparam V type of the elements.
+    template <typename V>
+    struct aligned_vector_type
+      : boost::mpl::if_<
+          is_eigen_type<V>,
+          typename boost::mpl::if_c<(sizeof (V) % 16) == 0,
+                                    std::vector<V, Eigen::aligned_allocator<V> >,
+                                    std::vector<V> >::type,
+          std::vector<V> >
     {};
 
 

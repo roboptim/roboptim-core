@@ -125,9 +125,10 @@ BOOST_AUTO_TEST_CASE (util)
   BOOST_CHECK (allclose (eigen_vec, eigen_vec2));
 
   // Test sparse block copy
-  GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparse_c (5,5);
-  GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparse_d (5,5);
-  GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparse_block (2,2);
+  typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparseMatrix_t;
+  sparseMatrix_t sparse_c (5,5);
+  sparseMatrix_t sparse_d (5,5);
+  sparseMatrix_t sparse_block (2,2);
   sparse_block.coeffRef (0, 0) = 42.;
   sparse_block.coeffRef (1, 0) = 2.;
   sparse_block.coeffRef (1, 1) = -1.;
@@ -145,6 +146,44 @@ BOOST_AUTO_TEST_CASE (util)
   sparse_c = sparse_a;
   copySparseBlock (sparse_c, sparse_block, startRow, startCol, true);
   BOOST_CHECK (allclose (sparse_c, sparse_d));
+
+  // Test sparse block update
+  sparse_block = sparseMatrix_t (3,3);
+  sparse_c.setZero ();
+  sparse_d.setZero ();
+  sparse_block.coeffRef (0, 0) = 12.;
+  sparse_block.coeffRef (0, 2) = 42.;
+  sparse_block.coeffRef (1, 2) = 1.;
+  sparse_c.coeffRef (0,          startCol)   = 3.;
+  sparse_c.coeffRef (startRow,   startCol)   = 4.;
+  sparse_c.coeffRef (startRow,   startCol+2) = 5.;
+  sparse_c.coeffRef (startRow+1, startCol+2) = 6.;
+  sparse_d.coeffRef (0,          startCol)   = 3.;
+  sparse_d.coeffRef (startRow,   startCol)   = 12.;
+  sparse_d.coeffRef (startRow,   startCol+2) = 42.;
+  sparse_d.coeffRef (startRow+1, startCol+2) = 1.;
+  (*output) << Eigen::MatrixXd (sparse_d) << std::endl;
+  (*output) << Eigen::MatrixXd (sparse_c) << std::endl;
+  (*output) << Eigen::MatrixXd (sparse_block) << std::endl;
+  BOOST_CHECK_NO_THROW (updateSparseBlock (sparse_c, sparse_block,
+                                           startRow, startCol));
+  (*output) << Eigen::MatrixXd (sparse_c) << std::endl;
+  BOOST_CHECK (allclose (sparse_c, sparse_d));
+  sparseMatrix_t sparse_empty (sparse_c.rows (), sparse_c.cols ());
+  BOOST_CHECK_THROW (updateSparseBlock (sparse_empty, sparse_block, 0, 0),
+                     std::runtime_error);
+  sparseMatrix_t sparse_scaled = sparse_c * 2.;
+  BOOST_CHECK_NO_THROW (updateSparseBlock (sparse_c,
+                                           sparseMatrix_t (sparse_scaled.block (0,0,5,5)),
+                                           0, 0));
+  (*output) << Eigen::MatrixXd (sparse_c) << std::endl;
+  BOOST_CHECK (allclose (sparse_c, sparse_scaled));
+  sparse_scaled = sparse_c * 2.;
+  BOOST_CHECK_NO_THROW (updateSparseBlock (sparse_c,
+                                           sparse_scaled.block (0,0,5,5),
+                                           0, 0));
+  (*output) << Eigen::MatrixXd (sparse_c) << std::endl;
+  BOOST_CHECK (allclose (sparse_c, sparse_scaled));
 
   // Test normalization
   test_normalization (output);

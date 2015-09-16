@@ -1,4 +1,5 @@
 // Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
+// Copyright (C) 2015 by Benjamin Chrétien, CNRS-LIRMM.
 //
 // This file is part of the roboptim.
 //
@@ -17,6 +18,12 @@
 
 #ifndef ROBOPTIM_CORE_UTIL_HXX
 # define ROBOPTIM_CORE_UTIL_HXX
+
+# include <stdexcept>
+
+# include <boost/static_assert.hpp>
+
+# include <roboptim/core/sys.hh>
 # include <roboptim/core/differentiable-function.hh>
 
 namespace roboptim
@@ -136,6 +143,60 @@ namespace roboptim
     // Compress sparse matrix if asked
     if (compress)
       matrix.makeCompressed ();
+  }
+
+  template <typename M, typename B>
+  void updateSparseBlock
+  (M& m, const B& b,
+   Function::size_type startRow, Function::size_type startCol)
+  {
+    typedef M matrix_t;
+    typedef B block_t;
+    typedef typename M::Index index_t;
+
+    // Make sure that the block fits in the matrix
+    assert (startRow + b.rows () <= m.rows ());
+    assert (startCol + b.cols () <= m.cols ());
+# if __cplusplus < 201103L || !defined (__GXX_EXPERIMENTAL_CXX0X__)
+    BOOST_STATIC_ASSERT (int (M::IsRowMajor) == int (B::IsRowMajor)) ROBOPTIM_UNUSED;
+# else
+    BOOST_STATIC_ASSERT_MSG (int (M::IsRowMajor) == int (B::IsRowMajor), "You should use the same Storage Order");
+# endif
+
+    // Iterate over outer size
+    index_t startRow_ = static_cast<index_t> (startRow);
+    index_t startCol_ = static_cast<index_t> (startCol);
+    index_t outer_start = (matrix_t::IsRowMajor)? startRow_ : startCol_;
+    for (index_t k = 0; k < b.outerSize (); ++k)
+      {
+        // Get iterator to first matrix element in the block
+        typename matrix_t::InnerIterator m_it (m, outer_start + k);
+        typename block_t::InnerIterator b_it (b, k);
+
+        if (!(b_it))
+          continue;
+
+        // TODO: find if there's a better way to find the position of the
+        // iterator
+        while ((m_it) && ((matrix_t::IsRowMajor)?
+                        (m_it.col () < startCol_) : (m_it.row () < startRow_)))
+	  {
+	    ++m_it;
+	  }
+
+        if (!m_it)
+          throw std::runtime_error
+            ("sparse matrix structure mismatch in updateSparseBlock");
+
+	// Iterator over inner size
+	for (; b_it && m_it; ++b_it, ++m_it)
+          {
+            assert (m_it.row () == startRow_ + b_it.row ());
+            assert (m_it.col () == startCol_ + b_it.col ());
+
+            m_it.valueRef () = b_it.value ();
+          }
+      }
   }
 
   inline double normalize (double x)

@@ -19,7 +19,6 @@
 # define ROBOPTIM_CORE_CACHE_HH
 
 # include <list>
-# include <vector>
 # include <boost/unordered_map.hpp>
 
 # include <roboptim/core/detail/utility.hh>
@@ -59,7 +58,9 @@ namespace roboptim
     /// \brief Hash type used by the Boost map.
     typedef std::size_t hash_t;
 
-    typedef std::vector<value_t> valuePool_t;
+    /// \brief Pool of values stored as std::vector.
+    /// The container is properly aligned if an Eigen type is used.
+    typedef typename detail::aligned_vector_type<value_t>::type valuePool_t;
 
     /// \brief List used to track key usage.
     /// Note: we use hashes rather than vectors to prevent costly

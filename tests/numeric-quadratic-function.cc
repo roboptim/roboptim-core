@@ -19,6 +19,8 @@
 
 #include <iostream>
 
+#include <boost/type_traits/is_same.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/decorator/finite-difference-gradient.hh>
 #include <roboptim/core/numeric-quadratic-function.hh>
@@ -35,34 +37,38 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("numeric-quadratic-function");
+
+  typedef Function::matrix_t denseMatrix_t;
+  typedef Function::vector_t denseVector_t;
+
   typename GenericNumericQuadraticFunction<T>::matrix_t a (5, 5);
   typename GenericNumericQuadraticFunction<T>::vector_t b (5);
   typename GenericNumericQuadraticFunction<T>::vector_t x (5);
 
   a.setZero ();
   b.setZero ();
-  x.setZero ();
 
-  a.coeffRef (0, 0) = 1., a.coeffRef (0, 1) = 0.,
-    a.coeffRef (0, 2) = 0., a.coeffRef (0, 3) = 0., a.coeffRef (0, 4) = 0.;
-  a.coeffRef (1, 0) = 0., a.coeffRef (1, 1) = 1.,
-    a.coeffRef (1, 2) = 0., a.coeffRef (1, 3) = 0., a.coeffRef (1, 4) = 0.;
-  a.coeffRef (2, 0) = 0., a.coeffRef (2, 1) = 0.,
-    a.coeffRef (2, 2) = 1., a.coeffRef (2, 3) = 0., a.coeffRef (2, 4) = 0.;
-  a.coeffRef (3, 0) = 0., a.coeffRef (3, 1) = 0.,
-    a.coeffRef (3, 2) = 0., a.coeffRef (3, 3) = 1., a.coeffRef (3, 4) = 0.;
-  a.coeffRef (4, 0) = 0., a.coeffRef (4, 1) = 0.,
-    a.coeffRef (4, 2) = 0., a.coeffRef (4, 3) = 0., a.coeffRef (4, 4) = 1.;
+  for (int i = 0; i < 5; ++i)
+  {
+    a.coeffRef (i,i) = 1.;
+    x[i] = static_cast<Function::value_type> (i);
+  }
 
-  b[0] = 0.;
-  b[1] = 0.;
-  b[2] = 0.;
-  b[3] = 0.;
-  b[4] = 0.;
+  GenericNumericQuadraticFunction<T> f (a, b, "Dummy");
 
-  GenericNumericQuadraticFunction<T> f (a, b);
+  (*output) << f << '\n';
+  (*output) << "x = " << x << '\n';
+  (*output) << "f(x) = " << f (x) << '\n';
+  (*output) << "J(x) = " << denseMatrix_t (f.jacobian (x)) << '\n';
+  (*output) << "G(x) = " << denseVector_t (f.gradient (x, 0)) << '\n';
+  (*output) << "H(x) = " << denseMatrix_t (f.hessian (x, 0)) << '\n';
 
-  std::cout << f << '\n';
+  std::cout << output->str () << std::endl;
+
+  if (boost::is_same<T, EigenMatrixDense>::value)
+    BOOST_CHECK (output->match_pattern ());
 
   for (int i = 0; i < 10; ++i)
     {
@@ -88,7 +94,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
 	}
 
       BOOST_CHECK (allclose (f.jacobian (x), J));
-      BOOST_CHECK (allclose (f.hessian (x, 0), a));
+      BOOST_CHECK (allclose (f.hessian (x, 0), 2*a));
 
       BOOST_CHECK (checkGradient (f, 0, x));
       BOOST_CHECK (checkJacobian (f, x));
