@@ -138,6 +138,7 @@ namespace roboptim
   /// \brief Default matrix storage order.
   static const int StorageOrder = Eigen::ROBOPTIM_STORAGE_ORDER;
 
+  /// \brief Bit flags describing the type of function.
   enum FunctionFlag
     {
       ROBOPTIM_IS_FUNCTION              = 1 << 0,
