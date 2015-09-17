@@ -19,6 +19,7 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/filesystem.hpp>
 
@@ -109,7 +110,7 @@ void testLogger
   typedef Solver<typename F::traits_t> solver_t;
 
   // Instantiate the function and the problem.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   typename solver_t::problem_t pb (f);
 
   // Add a dummy constraint to test logging
@@ -117,7 +118,7 @@ void testLogger
   pb.addConstraint (g, F::makeInterval (-1., 1.));
 
   // Give a dummy starting point
-  typename F::argument_t x (f.inputSize ());
+  typename F::argument_t x (f->inputSize ());
   x.setZero ();
   pb.startingPoint () = x;
 

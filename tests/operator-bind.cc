@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 
   {
     std::vector<boost::optional<value_type> > boundValues
-      (n, boost::optional<value_type> ());
+      (static_cast<size_t> (n), boost::optional<value_type> ());
     boost::shared_ptr<linearFunction_t>
       fct = roboptim::bind (identity, boundValues);
 
@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 
   {
     std::vector<boost::optional<value_type> > boundValues
-      (n, boost::optional<value_type> ());
+      (static_cast<size_t> (n), boost::optional<value_type> ());
     boundValues[0] = 42.;
     boost::shared_ptr<linearFunction_t>
       fct = roboptim::bind (identity, boundValues);
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (chain_test, T, functionTypes_t)
 
   {
     std::vector<boost::optional<value_type> > boundValues
-      (n, boost::optional<value_type> ());
+      (static_cast<size_t> (n), boost::optional<value_type> ());
     boundValues[1] = 12.;
     boundValues[3] = -2.;
 

@@ -20,6 +20,7 @@
 #include <iostream>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver.hh>
@@ -83,9 +84,9 @@ BOOST_AUTO_TEST_CASE (solver)
   output = retrievePattern ("solver");
 
   // Instantiate the function, the problem, and solve it.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   solver_t::problem_t pb (f);
-  solver_t::argument_t x (f.inputSize ());
+  solver_t::argument_t x (f->inputSize ());
   x.setZero ();
   pb.startingPoint () = x;
 

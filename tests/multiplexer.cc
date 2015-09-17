@@ -19,6 +19,7 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
 #include <boost/mpl/vector.hpp>
 
 #include <roboptim/core/io.hh>
@@ -75,7 +76,7 @@ BOOST_AUTO_TEST_CASE (multiplexer)
   output = retrievePattern ("multiplexer");
 
   // Instantiate the function and the problem.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   solver_t::problem_t pb (f);
 
   // Instantiate the factory using the dummy solver.

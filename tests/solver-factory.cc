@@ -19,6 +19,8 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/plugin/dummy.hh>
 #include <roboptim/core/twice-differentiable-function.hh>
@@ -61,7 +63,7 @@ BOOST_AUTO_TEST_CASE (solver_factory)
     output = retrievePattern ("solver-factory");
 
   // Create cost function.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
 
   // Create problem.
   solver_t::problem_t pb (f);

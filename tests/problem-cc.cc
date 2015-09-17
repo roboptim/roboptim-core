@@ -18,6 +18,7 @@
 #include "shared-tests/fixture.hh"
 
 #include <boost/mpl/vector.hpp>
+#include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/function/constant.hh>
@@ -43,7 +44,7 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   ConstantFunction::vector_t v (1);
   v.setZero ();
 
-  ConstantFunction f (v);
+  boost::shared_ptr<ConstantFunction> f = boost::make_shared<ConstantFunction> (v);
 
   problemSrc_t pbSrc (f);
 

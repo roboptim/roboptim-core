@@ -17,6 +17,8 @@
 
 #include "shared-tests/fixture.hh"
 
+#include <boost/make_shared.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/problem.hh>
 #include <roboptim/core/function/constant.hh>

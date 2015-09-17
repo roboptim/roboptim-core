@@ -19,6 +19,8 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/plugin/dummy.hh>
 
@@ -73,13 +75,13 @@ BOOST_AUTO_TEST_CASE (simple)
   output = retrievePattern ("simple");
 
   // Instantiate the function and the problem.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   DummySolver::problem_t pb (f);
 
   (*output) << pb << std::endl;
 
   // Check that the problem is well formed.
-  BOOST_CHECK_EQUAL (&pb.function (), &f);
+  BOOST_CHECK_EQUAL (&pb.function (), f.get ());
   BOOST_CHECK_EQUAL (pb.constraints ().size (), 0u);
   BOOST_CHECK (!pb.startingPoint ());
 

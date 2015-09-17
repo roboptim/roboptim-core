@@ -20,6 +20,7 @@
 #include <iostream>
 
 #include <boost/mpl/vector.hpp>
+#include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver-factory.hh>
@@ -53,7 +54,7 @@ BOOST_AUTO_TEST_CASE (plugin)
     output = retrievePattern ("plugin-laststate");
 
   // Instantiate the function and the problem.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   solver_t::problem_t pb (f);
 
   // Instantiate the factory using the dummy solver.

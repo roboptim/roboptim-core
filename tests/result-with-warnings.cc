@@ -20,6 +20,7 @@
 #include <iostream>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver.hh>
@@ -89,7 +90,7 @@ BOOST_AUTO_TEST_CASE (result_with_warnings)
   output = retrievePattern ("result-with-warnings");
 
   // Instantiate the function, the problem, and solve it.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   solver_t::problem_t pb (f);
   boost::shared_ptr<solver_t> solver (new solver_t (pb));
   solver_t::result_t result = solver->minimum ();
