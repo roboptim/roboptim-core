@@ -195,7 +195,7 @@ struct G1 : public TwiceDifferentiableFunction
 int run_test ()
 {
   // Create cost function.
-  F f;
+  boost::shared_ptr&lt;F&gt; f (new F ());
 
   // Create problem.
   solver_t::problem_t pb (f);
