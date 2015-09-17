@@ -150,17 +150,17 @@ namespace roboptim
     /// \{
 
     /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
+    /// \brief Constructor taking a shared_ptr to a cost function.
+    /// \param cost cost function.
+    explicit Problem (const boost::shared_ptr<function_t>& cost);
+
     /// \brief Deprecated constructor taking a reference to a cost function.
     /// This legacy version meant that we simply kept a const reference to the
     /// cost function, which could reference stack variables...
     /// This prepares the transition to something safer (shared_ptr).
     /// \param cost cost function.
+    // TODO: remove after enough releases (deprecated in 3.2).
     explicit Problem (const function_t& cost) ROBOPTIM_CORE_DEPRECATED;
-
-    /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
-    /// \brief Constructor taking a shared_ptr to a cost function.
-    /// \param cost cost function.
-    explicit Problem (const boost::shared_ptr<function_t>& cost);
 
     /// \brief Copy constructor.
     /// \param pb problem to copy.
@@ -295,9 +295,13 @@ namespace roboptim
     std::ostream& print (std::ostream& o) const;
 
   private:
+    /// \brief Initialize attributes and do some checking.
+    void initialize ();
+
     /// \brief Custom deleter that does not delete anything.
     /// This can be used when creating a shared_ptr from a reference, although
     /// this should be used with **great** care...
+    // TODO: remove when const ref constructor is removed (deprecated in 3.2).
     struct NoopDeleter
     {
       inline void operator() (function_t*) const {}

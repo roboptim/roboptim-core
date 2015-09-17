@@ -45,16 +45,13 @@ namespace roboptim
       startingPoint_ (),
       constraints_ (),
       boundsVect_ (),
-      argumentBounds_ (static_cast<std::size_t> (f.inputSize ())),
+      argumentBounds_ (),
       scalingVect_ (),
-      argumentScaling_ (static_cast<std::size_t> (f.inputSize ())),
+      argumentScaling_ (),
       argumentNames_ ()
   {
-    // Initialize bound.
-    std::fill (argumentBounds_.begin (), argumentBounds_.end (),
-               function_t::makeInfiniteInterval ());
-    // Initialize scaling.
-    std::fill (argumentScaling_.begin (), argumentScaling_.end (), 1.);
+    // Initialize attributes.
+    initialize ();
   }
 
   template <typename T>
@@ -63,16 +60,28 @@ namespace roboptim
       startingPoint_ (),
       constraints_ (),
       boundsVect_ (),
-      argumentBounds_ (static_cast<std::size_t> (f->inputSize ())),
+      argumentBounds_ (),
       scalingVect_ (),
-      argumentScaling_ (static_cast<std::size_t> (f->inputSize ())),
+      argumentScaling_ (),
       argumentNames_ ()
   {
+    // Initialize attributes.
+    initialize ();
+  }
+
+  template <typename T>
+  void Problem<T>::initialize ()
+  {
+    // Check the cost function.
+    assert (function_.get () != 0);
+
     // Initialize bound.
-    std::fill (argumentBounds_.begin (), argumentBounds_.end (),
-               function_t::makeInfiniteInterval ());
+    argumentBounds_.resize (static_cast<std::size_t> (function_->inputSize ()),
+                            function_t::makeInfiniteInterval ());
+
     // Initialize scaling.
-    std::fill (argumentScaling_.begin (), argumentScaling_.end (), 1.);
+    argumentScaling_.resize (static_cast<std::size_t> (function_->inputSize ()),
+                             1.);
   }
 
   template <typename T>
