@@ -47,7 +47,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   typename constantFunction_t::vector_t v (2);
   v.setZero ();
 
-  constantFunction_t f (v);
+  // For shared_ptr constructor
+  boost::shared_ptr<constantFunction_t>
+    f = boost::make_shared<constantFunction_t> (v);
 
   problem_t pb_fail (f);
 
@@ -114,6 +116,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   BOOST_CHECK (pb.argumentScales () == pb.argumentScaling ());
   BOOST_CHECK (pb.scalesVector () == pb.scalingVector ());
+
+  // For legacy const ref constructor
+  constantFunction_t fRef (v);
+  problem_t pbRef (fRef);
+  (*output) << pbRef << std::endl;
 #pragma GCC diagnostic pop
 
   // Test a problem with multiple types of constraints.

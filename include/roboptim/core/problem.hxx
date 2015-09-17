@@ -38,13 +38,34 @@ namespace roboptim
   //
   template <typename T>
   Problem<T>::Problem (const function_t& f)
-    : function_ (f),
+  // Note: kids, don't do this at home! Until now, we kept a reference to
+  // the function passed, which is just as bad. This prepares the transition
+  // to the safer shared_ptr version.
+    : function_ (const_cast<function_t*> (&f), NoopDeleter ()),
       startingPoint_ (),
       constraints_ (),
       boundsVect_ (),
       argumentBounds_ (static_cast<std::size_t> (f.inputSize ())),
       scalingVect_ (),
       argumentScaling_ (static_cast<std::size_t> (f.inputSize ())),
+      argumentNames_ ()
+  {
+    // Initialize bound.
+    std::fill (argumentBounds_.begin (), argumentBounds_.end (),
+               function_t::makeInfiniteInterval ());
+    // Initialize scaling.
+    std::fill (argumentScaling_.begin (), argumentScaling_.end (), 1.);
+  }
+
+  template <typename T>
+  Problem<T>::Problem (const boost::shared_ptr<function_t>& f)
+    : function_ (f),
+      startingPoint_ (),
+      constraints_ (),
+      boundsVect_ (),
+      argumentBounds_ (static_cast<std::size_t> (f->inputSize ())),
+      scalingVect_ (),
+      argumentScaling_ (static_cast<std::size_t> (f->inputSize ())),
       argumentNames_ ()
   {
     // Initialize bound.
@@ -77,7 +98,7 @@ namespace roboptim
   const typename Problem<T>::function_t&
   Problem<T>::function () const
   {
-    return function_;
+    return *function_;
   }
 
   template <typename T>

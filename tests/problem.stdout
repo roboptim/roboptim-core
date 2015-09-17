@@ -19,6 +19,32 @@ Problem:
     offset = [2](0,0)
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
+  No constraints.
+  No starting point.
+  Infinity value (for all functions): inf
+Problem:
+  Constant function
+    offset = [2](0,0)
+  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments scaling: 1, 1
+  Arguments names: x₀, x₁
+  Number of constraints: 2
+  Constraint 0
+      Constant function
+        offset = [2](0,0)
+      Bounds: (-inf, inf), (-inf, inf)
+      Scaling: 1, 1
+      Initial value: [2](0, 0)
+  Constraint 1
+      Constant function
+        offset = [2](0,0)
+      Bounds: (-inf, inf), (-inf, inf)
+      Scaling: 1, 1
+      Initial value: [2](0, 0)
+  Starting point: [2](0,0)
+  Starting value: [2](0,0)
+  Infinity value (for all functions): inf
+
   Arguments names: x₀, x₁
   Number of constraints: 2
   Constraint 0

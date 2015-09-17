@@ -150,8 +150,17 @@ namespace roboptim
     /// \{
 
     /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
+    /// \brief Deprecated constructor taking a reference to a cost function.
+    /// This legacy version meant that we simply kept a const reference to the
+    /// cost function, which could reference stack variables...
+    /// This prepares the transition to something safer (shared_ptr).
     /// \param cost cost function.
-    explicit Problem (const function_t& cost);
+    explicit Problem (const function_t& cost) ROBOPTIM_CORE_DEPRECATED;
+
+    /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
+    /// \brief Constructor taking a shared_ptr to a cost function.
+    /// \param cost cost function.
+    explicit Problem (const boost::shared_ptr<function_t>& cost);
 
     /// \brief Copy constructor.
     /// \param pb problem to copy.
@@ -286,10 +295,24 @@ namespace roboptim
     std::ostream& print (std::ostream& o) const;
 
   private:
+    /// \brief Custom deleter that does not delete anything.
+    /// This can be used when creating a shared_ptr from a reference, although
+    /// this should be used with **great** care...
+    struct NoopDeleter
+    {
+      inline void operator() (function_t*) const {}
+    };
+
+  private:
     /// \brief Objective function.
-    const function_t& function_;
+    /// Note: do not give access to this shared_ptr, since for now the legacy
+    /// API relying on a simple reference prevents any proper memory
+    /// management.
+    const boost::shared_ptr<function_t> function_;
+
     /// \brief Starting point.
     startingPoint_t startingPoint_;
+
     /// \brief Vector of constraints.
     constraints_t constraints_;
 
