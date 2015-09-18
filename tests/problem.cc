@@ -20,6 +20,7 @@
 #include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
+#include <roboptim/core/portability.hh>
 #include <roboptim/core/problem.hh>
 #include <roboptim/core/function/constant.hh>
 
@@ -114,8 +115,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 
   // Backward compatibility
   // Disable deprecated warning
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  ROBOPTIM_ALLOW_DEPRECATED_ON;
+
   BOOST_CHECK (pb.argumentScales () == pb.argumentScaling ());
   BOOST_CHECK (pb.scalesVector () == pb.scalingVector ());
 
@@ -123,7 +124,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   constantFunction_t fRef (v);
   problem_t pbRef (fRef);
   (*output) << pbRef << std::endl;
-#pragma GCC diagnostic pop
+
+  // Re-enable deprecated warning
+  ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
   // Test a problem with multiple types of constraints.
   typedef Problem<T> mixedProblem_t;
