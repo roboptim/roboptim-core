@@ -206,6 +206,19 @@ namespace roboptim
   }
 
   template <typename T>
+  typename Problem<T>::size_type Problem<T>::constraintsOutputSize () const
+  {
+    size_type m = 0;
+    for (typename constraints_t::const_iterator
+         c = constraints_.begin (); c != constraints_.end (); ++c)
+    {
+      m += (*c)->outputSize ();
+    }
+
+    return m;
+  }
+
+  template <typename T>
   typename Problem<T>::startingPoint_t&
   Problem<T>::startingPoint ()
   {

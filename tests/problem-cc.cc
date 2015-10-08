@@ -72,6 +72,7 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
     CHECK_COPY(pbSrc, pbDst);
     BOOST_CHECK(pbDst.constraints ()[0]->asType<ConstantFunction>());
     BOOST_CHECK(pbDst.constraints ()[1]->asType<DifferentiableFunction>());
+    BOOST_CHECK(pbDst.constraintsOutputSize () == pbSrc.constraintsOutputSize ());
   }
 
   // Check with a more general type.
@@ -86,6 +87,7 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
     CHECK_COPY(pbSrc, pbDst);
     BOOST_CHECK(pbDst.constraints ()[0]->asType<ConstantFunction>());
     BOOST_CHECK(pbDst.constraints ()[1]->asType<DifferentiableFunction>());
+    BOOST_CHECK(pbDst.constraintsOutputSize () == pbSrc.constraintsOutputSize ());
   }
 
   // With invalid constraints types, compilation would fail.

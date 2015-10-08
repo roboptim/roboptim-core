@@ -269,6 +269,9 @@ namespace roboptim
     /// \brief Retrieve constraints scaling vector (deprecated version).
     const scalesVect_t& scalesVector () const ROBOPTIM_CORE_DEPRECATED;
 
+    /// \brief Return the output size of the problem's constraints.
+    size_type constraintsOutputSize () const;
+
     /// \}
 
 

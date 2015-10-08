@@ -89,6 +89,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
     intervals[i] = Function::makeInfiniteInterval ();
   pb.addConstraint (cstr, intervals, scaling);
 
+  // Check constraints output size
+  BOOST_CHECK (pb.constraintsOutputSize () == cstr->outputSize ());
+
   // Check null ptr
   BOOST_CHECK_THROW (boost::shared_ptr<constantFunction_t> null_ptr;
                      pb.addConstraint (null_ptr, intervals, scaling),
@@ -144,6 +147,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   BOOST_CHECK (mixedPb.constraints()[0]->template asType<constantFunction_t>());
   // Second constraint: DifferentiableFunction
   BOOST_CHECK (mixedPb.constraints()[1]->template asType<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK (mixedPb.constraintsOutputSize () == 2 * cstr->outputSize ());
 
   (*output) << mixedPb << std::endl;
 
