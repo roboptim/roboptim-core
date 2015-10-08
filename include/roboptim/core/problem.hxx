@@ -169,7 +169,7 @@ namespace roboptim
 	   "(%d, expected size is %d)");
 	fmt
 	  % x->getName ()
-	  % s.size ()
+	  % b.size ()
 	  % x->outputSize ();
 	throw std::runtime_error (fmt.str ());
       }
@@ -184,7 +184,7 @@ namespace roboptim
 						     | boost::io::bad_format_string_bit));
 	fmt
 	  % x->getName ()
-	  % b.size ()
+	  % s.size ()
 	  % x->outputSize ();
 	throw std::runtime_error (fmt.str ());
       }
