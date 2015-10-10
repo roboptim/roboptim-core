@@ -77,6 +77,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/constant.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/cos.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/identity.hh

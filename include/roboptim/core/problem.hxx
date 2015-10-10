@@ -483,4 +483,4 @@ namespace roboptim
     return pb.print (o);
   }
 } // end of namespace roboptim
-#endif //! ROBOPTIM_CORE_PROBLEM_HH
+#endif //! ROBOPTIM_CORE_PROBLEM_HXX

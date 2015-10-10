@@ -18,17 +18,11 @@
 #ifndef ROBOPTIM_CORE_FUNCTION_HH
 # define ROBOPTIM_CORE_FUNCTION_HH
 # include <cstring>
-# include <iomanip>
 # include <iostream>
-# include <limits>
-# include <sstream>
-# include <stdexcept>
 # include <string>
-# include <utility>
 # include <vector>
 
 # include <boost/static_assert.hpp>
-# include <boost/algorithm/string/replace.hpp>
 # include <boost/tuple/tuple.hpp>
 # include <boost/preprocessor/punctuation/comma.hpp>
 
@@ -248,17 +242,11 @@ namespace roboptim
     /// floating types comparison.
 
     /// \return machine epsilon value.
-    static value_type epsilon ()
-    {
-      return std::numeric_limits<value_type>::epsilon ();
-    }
+    static value_type epsilon ();
 
     /// \brief Get the value that symbolizes positive infinity.
     /// \return representation of positive infinity in the value type
-    static value_type infinity ()
-    {
-      return std::numeric_limits<value_type>::infinity ();
-    }
+    static value_type infinity ();
 
     /// \name Interval
     /// \{
@@ -275,50 +263,31 @@ namespace roboptim
     /// \param l lower bound
     /// \param u upper bound
     /// \return interval representing \f$[l, u]\f$
-    static interval_t makeInterval (value_type l, value_type u)
-    {
-      assert (l <= u);
-      return std::make_pair (l, u);
-    }
+    static interval_t makeInterval (value_type l, value_type u);
 
     /// \brief Construct an infinite interval.
     /// \return interval representing \f$[-\infty, +\infty]\f$
-    static interval_t makeInfiniteInterval ()
-    {
-      return std::make_pair (-infinity (), infinity  ());
-    }
+    static interval_t makeInfiniteInterval ();
 
     /// \brief Construct an interval from a lower bound.
     /// \param l lower bound
     /// \return interval representing \f$[l, +\infty]\f$
-    static interval_t makeLowerInterval (value_type l)
-    {
-      return makeInterval (l, infinity  ());
-    }
+    static interval_t makeLowerInterval (value_type l);
 
     /// \brief Construct an interval from an upper bound.
     /// \param u upper bound
     /// \return interval representing \f$[-\infty, u]\f$
-    static interval_t makeUpperInterval (value_type u)
-    {
-      return makeInterval (-infinity  (), u);
-    }
+    static interval_t makeUpperInterval (value_type u);
 
     /// \brief Get the lower bound of an interval
     /// \param interval accessed interval
     /// \return lower bound of the interval
-    static value_type getLowerBound (const interval_t& interval)
-    {
-      return interval.first;
-    }
+    static value_type getLowerBound (const interval_t& interval);
 
     /// \brief Get the upper bound of an interval
     /// \param interval accessed interval
     /// \return upper bound of the interval
-    static value_type getUpperBound (const interval_t& interval)
-    {
-      return interval.second;
-    }
+    static value_type getUpperBound (const interval_t& interval);
 
     /// \}
 
@@ -342,82 +311,50 @@ namespace roboptim
     /// \param step discretization step
     static discreteInterval_t makeDiscreteInterval (value_type min,
 						    value_type max,
-						    value_type step)
-    {
-      return discreteInterval_t (min, max, step);
-    }
+						    value_type step);
 
     /// \brief Construct a discrete interval.
     ///
     /// \param interval continuous interval
     /// \param step discretization step
     static discreteInterval_t makeDiscreteInterval (interval_t interval,
-						    value_type step)
-    {
-      return discreteInterval_t (getLowerBound (interval),
-				 getUpperBound (interval),
-				 step);
-    }
+						    value_type step);
 
     /// \brief Get the lower bound of a discrete interval
     ///
     /// \param interval accessed discrete interval
     /// \return lower bound of the discrete interval
-    static value_type getLowerBound (const discreteInterval_t& interval)
-    {
-      return boost::get<0> (interval);
-    }
+    static value_type getLowerBound (const discreteInterval_t& interval);
 
     /// \brief Get the upper bound of a discrete interval
     ///
     /// \param interval accessed discrete interval
     /// \return upper bound of the discrete interval
-    static value_type getUpperBound (const discreteInterval_t& interval)
-    {
-      return boost::get<1> (interval);
-    }
+    static value_type getUpperBound (const discreteInterval_t& interval);
 
     /// \brief Get the upper step of a discrete interval
     ///
     /// \param interval accessed discrete interval
     /// \return upper step of the discrete interval
-    static value_type getStep (const discreteInterval_t& interval)
-    {
-      return boost::get<2> (interval);
-    }
+    static value_type getStep (const discreteInterval_t& interval);
 
     /// \brief Fonction cast as.
     ///
     /// \tparam ExpectedType type we want to cast the function into
     template <class ExpectedType>
-    ExpectedType* castInto()
-    {
-      if (asType<ExpectedType>())
-        return static_cast<ExpectedType*>(this);
-
-      throw std::runtime_error("Forbidden cast !");
-    }
+    ExpectedType* castInto();
 
     /// \brief Fonction cast as, const version.
     ///
     /// \tparam ExpectedType type we want to cast the function into
     template <class ExpectedType>
-    const ExpectedType* castInto() const
-    {
-      if (asType<const ExpectedType>())
-        return static_cast<const ExpectedType*>(this);
-
-      throw std::runtime_error("Forbidden cast !");
-    }
+    const ExpectedType* castInto() const;
 
     /// \brief Fonction type checking.
     ///
     /// \tparam ExpectedType type the function could be compatible with
     template <class ExpectedType>
-    bool asType() const
-    {
-      return (ExpectedType::flags & getFlags()) == ExpectedType::flags;
-    }
+    bool asType() const;
 
     /// \brief Iterate on an interval
     ///
@@ -428,26 +365,7 @@ namespace roboptim
     /// \tparam F functor type (has to satisfy the STL unary function concept)
     template <typename F>
     static void foreach (const discreteInterval_t interval,
-			 F functor)
-    {
-      const value_type delta =
-	getUpperBound (interval) - getLowerBound (interval);
-      assert (delta >= 0.);
-      assert (getStep (interval) > 0.);
-
-      value_type n = std::floor (delta / getStep (interval));
-
-      for (value_type i = 0.; i <= n; i += 1.)
-	{
-	  value_type t =
-	    getLowerBound (interval) + (value_type)i * getStep (interval);
-	  if (t > getUpperBound (interval))
-	    t = getUpperBound (interval);
-	  assert (getLowerBound (interval) <= t
-		  && t <= getUpperBound (interval));
-	  functor (t);
-	}
-    }
+			 F functor);
 
     /// \brief Iterate on an interval
     ///
@@ -459,27 +377,7 @@ namespace roboptim
     template <typename F>
     static void foreach (const interval_t interval,
 			 const size_type n,
-			 F functor)
-    {
-      const value_type delta =
-	getUpperBound (interval) - getLowerBound (interval);
-      assert (delta >= 0.);
-
-      if (!n)
-	return;
-
-      for (size_type i = 0; i < n; ++i)
-	{
-	  value_type t =
-	    getLowerBound (interval)
-	    + (value_type)i * (delta / ((value_type)n - 1));
-	  if (t > getUpperBound (interval))
-	    t = getUpperBound (interval);
-	  assert (getLowerBound (interval) <= t
-		  && t <= getUpperBound (interval));
-	  functor (t);
-	}
-    }
+			 F functor);
 
     /// \}
 
@@ -487,26 +385,17 @@ namespace roboptim
     ///
     /// \param result result that will be checked
     /// \return true if valid, false if not
-    bool isValidResult (const_result_ref result) const
-    {
-      return result.size () == outputSize ();
-    }
+    bool isValidResult (const_result_ref result) const;
 
     /// \brief Return the input size (i.e. argument's vector size).
     ///
     /// \return input size
-    typename GenericFunction<T>::size_type inputSize () const
-    {
-      return inputSize_;
-    }
+    typename GenericFunction<T>::size_type inputSize () const;
 
     /// \brief Return the output size (i.e. result's vector size).
     ///
-    /// \return input size
-    typename GenericFunction<T>::size_type  outputSize () const
-    {
-      return outputSize_;
-    }
+    /// \return output size
+    typename GenericFunction<T>::size_type outputSize () const;
 
     /// \brief Trivial destructor.
     virtual ~GenericFunction ();
@@ -517,13 +406,7 @@ namespace roboptim
     /// expected size.
     /// \param argument point at which the function will be evaluated
     /// \return computed result
-    result_t operator () (const_argument_ref argument) const
-    {
-      result_t result (outputSize ());
-      result.setZero ();
-      (*this) (result, argument);
-      return result;
-    }
+    result_t operator () (const_argument_ref argument) const;
 
     /// \brief Evaluate the function at a specified point.
     ///
@@ -532,34 +415,12 @@ namespace roboptim
     /// \param result result will be stored in this vector
     /// \param argument point at which the function will be evaluated
     void operator () (result_ref result, const_argument_ref argument)
-      const
-    {
-      LOG4CXX_TRACE
-	(logger, "Evaluating function at point: " << argument);
-      assert (argument.size () == inputSize ());
-      assert (isValidResult (result));
-
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      bool cur_malloc_allowed = is_malloc_allowed ();
-      set_is_malloc_allowed (false);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-
-      this->impl_compute (result, argument);
-
-#ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-      set_is_malloc_allowed (cur_malloc_allowed);
-#endif //! ROBOPTIM_DO_NOT_CHECK_ALLOCATION
-
-      assert (isValidResult (result));
-    }
+      const;
 
     /// \brief Get function name.
     ///
     /// \return Function name.
-    const std::string& getName () const
-    {
-      return name_;
-    }
+    const std::string& getName () const;
 
     /// \brief Display the function on the specified output stream.
     ///
@@ -571,10 +432,7 @@ namespace roboptim
     static const flag_t flags = ROBOPTIM_IS_FUNCTION;
 
     /// \brief Get the type-checking flag
-    virtual flag_t getFlags() const
-    {
-      return flags;
-    }
+    virtual flag_t getFlags () const;
 
   protected:
     /// \brief Concrete class constructor should call this constructor.
@@ -616,48 +474,6 @@ namespace roboptim
   template <typename T>
   log4cxx::LoggerPtr GenericFunction<T>::logger
   (log4cxx::Logger::getLogger ("roboptim"));
-
-  template <typename T>
-  GenericFunction<T>::GenericFunction (size_type inputSize,
-                                       size_type outputSize,
-                                       std::string name)
-    : inputSize_ (inputSize),
-      outputSize_ (outputSize),
-      name_ (name)
-  {
-    // Positive size is required.
-    assert (inputSize > 0 && outputSize > 0);
-  }
-
-  template <typename T>
-  GenericFunction<T>::~GenericFunction ()
-  {
-  }
-
-  template <typename T>
-  std::ostream&
-  GenericFunction<T>::print (std::ostream& o) const
-  {
-    if (getName ().empty ())
-      return o << "Function";
-
-    std::stringstream ss;
-    ss << std::endl;
-    char fill = o.fill (' ');
-    ss << std::setw ((int)indent (o))
-       << ""
-       << std::setfill (fill);
-    std::string name = getName ();
-    boost::algorithm::replace_all (name, "\n", ss.str ());
-    return o << name << " (not differentiable)";
-  }
-
-  template <typename T>
-  std::ostream&
-  operator<< (std::ostream& o, const GenericFunction<T>& f)
-  {
-    return f.print (o);
-  }
 
   /// \brief Trait specializing GenericFunction for Eigen dense matrices.
   template <>
@@ -762,5 +578,7 @@ namespace roboptim
   template <typename T>
   std::ostream& operator<< (std::ostream& o, const GenericFunction<T>& f);
 } // end of namespace roboptim
+
+# include <roboptim/core/function.hxx>
 
 #endif //! ROBOPTIM_CORE_FUNCTION_HH
