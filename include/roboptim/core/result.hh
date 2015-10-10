@@ -61,15 +61,24 @@ namespace roboptim
 
     /// \brief Input size (i.e. argument size).
     size_type inputSize;
+
     /// \brief Output size (i.e. result size).
     size_type outputSize;
+
     /// \brief Point found by the solver.
     vector_t x;
+
     /// \brief Function value at the solver found point.
     vector_t value;
+
     /// \brief Constraints final values.
     vector_t constraints;
+
     /// \brief Lagrange multipliers.
+    /// The vector of multipliers is expected to be ordered as follows:
+    ///   - argument bounds multipliers (n),
+    ///   - constraints multipliers (m) as ordered in problem.constraints(),
+    ///   - objective multipliers (only relevant for multi-dimensional cost functions).
     vector_t lambda;
   };
 
