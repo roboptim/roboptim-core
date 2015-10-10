@@ -29,6 +29,9 @@
 # include <boost/format.hpp>
 # include <boost/algorithm/string/replace.hpp>
 
+// WARNING: careful with circular includes
+# include <roboptim/core/util.hh>
+
 namespace roboptim
 {
   template <typename T>
@@ -204,8 +207,7 @@ namespace roboptim
       return static_cast<ExpectedType*>(this);
 
     boost::format fmt ("Cannot cast to %s*");
-    // TODO: use typeString from util.hh
-    fmt % typeid (ExpectedType).name ();
+    fmt % typeString<ExpectedType> ();
     throw std::runtime_error (fmt.str ());
   }
 
@@ -217,8 +219,7 @@ namespace roboptim
       return static_cast<const ExpectedType*>(this);
 
     boost::format fmt ("Cannot cast to const %s*");
-    // TODO: use typeString from util.hh
-    fmt % typeid (ExpectedType).name ();
+    fmt % typeString<ExpectedType> ();
     throw std::runtime_error (fmt.str ());
   }
 

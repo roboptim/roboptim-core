@@ -25,7 +25,8 @@
 # include <map>
 # include <string>
 
-# include <roboptim/core/twice-differentiable-function.hh>
+// WARNING: careful with circular includes
+# include <roboptim/core/function.hh>
 
 namespace roboptim
 {
@@ -47,9 +48,9 @@ namespace roboptim
     /// The first line of the jacobian is the only one used.
     template <typename T>
     void
-    jacobian_from_gradients (DifferentiableFunction::matrix_ref jac,
+    jacobian_from_gradients (Function::matrix_ref jac,
                              const std::vector<const T*>& c,
-                             DifferentiableFunction::const_vector_ref x);
+                             Function::const_vector_ref x);
   } // end of namespace detail.
 
   /// \brief Display a vector.

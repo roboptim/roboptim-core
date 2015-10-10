@@ -33,14 +33,14 @@ namespace roboptim
   {
     template <typename T>
     void
-    jacobian_from_gradients (DifferentiableFunction::matrix_ref jac,
+    jacobian_from_gradients (Function::matrix_ref jac,
                              const std::vector<const T*>& c,
-                             DifferentiableFunction::const_vector_ref x)
+                             Function::const_vector_ref x)
     {
-      for (DifferentiableFunction::matrix_t::Index i = 0; i < jac.rows (); ++i)
+      for (Function::matrix_t::Index i = 0; i < jac.rows (); ++i)
         {
-          DifferentiableFunction::jacobian_t grad = c[i]->jacobian (x);
-          for (DifferentiableFunction::matrix_t::Index j = 0;
+          Function::matrix_t grad = c[i]->jacobian (x);
+          for (Function::matrix_t::Index j = 0;
 	       j < jac.cols (); ++j)
             jac (i, j) = grad(0, j);
         }

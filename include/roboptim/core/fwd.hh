@@ -148,6 +148,11 @@ namespace roboptim
 
   template <typename T>
   class OptimizationLogger;
+
+  // TODO: remove, this is only here because of an unfortunate circular
+  // dependency between function.hh and util.hh
+  template <typename T>
+  std::string typeString ();
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_FWD_HH
