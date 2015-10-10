@@ -319,6 +319,28 @@ namespace roboptim
   {
     return f.print (o);
   }
+
+  template <typename U, typename V>
+  boost::shared_ptr<V> castInto (boost::shared_ptr<U>& u)
+  {
+    if (u->template asType<V> ())
+      return boost::static_pointer_cast<V> (u);
+
+    boost::format fmt ("Cannot cast to %s*");
+    fmt % typeString<V> ();
+    throw std::runtime_error (fmt.str ());
+  }
+
+  template <typename U, typename V>
+  const boost::shared_ptr<V> castInto (const boost::shared_ptr<U>& u)
+  {
+    if (u->template asType<V> ())
+      return boost::static_pointer_cast<V> (u);
+
+    boost::format fmt ("Cannot cast to %s*");
+    fmt % typeString<V> ();
+    throw std::runtime_error (fmt.str ());
+  }
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_FUNCTION_HXX

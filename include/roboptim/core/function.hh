@@ -577,6 +577,26 @@ namespace roboptim
   /// \return output stream
   template <typename T>
   std::ostream& operator<< (std::ostream& o, const GenericFunction<T>& f);
+
+  /// \brief Cast a shared_ptr of function to a different function type.
+  /// This throws if the cast is not possible.
+  ///
+  /// \tparam U type of the origin function.
+  /// \tparam V new function type.
+  /// \param u input shared_ptr to a function.
+  /// \return shared_ptr cast to the appropriate type.
+  template <typename U, typename V>
+  boost::shared_ptr<V> castInto (boost::shared_ptr<U>& u);
+
+  /// \brief Cast a shared_ptr of function to a different function type.
+  /// This throws if the cast is not possible. Const version.
+  ///
+  /// \tparam U type of the origin function.
+  /// \tparam V new function type.
+  /// \param u input shared_ptr to a function.
+  /// \return shared_ptr cast to the appropriate type.
+  template <typename U, typename V>
+  const boost::shared_ptr<V> castInto (const boost::shared_ptr<U>& u);
 } // end of namespace roboptim
 
 # include <roboptim/core/function.hxx>

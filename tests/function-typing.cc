@@ -246,4 +246,87 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (polynomial_function_typing, T, functionTypes_t)
   BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> >(), std::runtime_error);
 }
 
+BOOST_AUTO_TEST_CASE_TEMPLATE (shared_ptr_cast, T, functionTypes_t)
+{
+  boost::shared_ptr<G<T> > func (new G<T> ());
+  boost::shared_ptr<GenericFunction<T> > f = castInto<G<T>, GenericFunction<T> > (func);
+  boost::shared_ptr<GenericDifferentiableFunction<T> > df = castInto<G<T>, GenericDifferentiableFunction<T> > (func);
+
+  // Check ref counters
+  BOOST_CHECK(func.use_count () == 3);
+  BOOST_CHECK(f.use_count () == 3);
+  BOOST_CHECK(df.use_count () == 3);
+
+  // Check that they all have the same properties
+  BOOST_CHECK(func->template asType<GenericFunction<T> >());
+  BOOST_CHECK(func->template asType<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK(func->template asType<GenericTwiceDifferentiableFunction<T> >());
+
+  BOOST_CHECK(f->template asType<GenericFunction<T> >());
+  BOOST_CHECK(f->template asType<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK(f->template asType<GenericTwiceDifferentiableFunction<T> >());
+
+  BOOST_CHECK(df->template asType<GenericFunction<T> >());
+  BOOST_CHECK(df->template asType<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK(df->template asType<GenericTwiceDifferentiableFunction<T> >());
+
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericFunction<T> > ());
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericFunction<T> > ());
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericFunction<T> > ());
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+
+  BOOST_CHECK_THROW(func->template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(f->template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(df->template castInto<Polynomial<T> >(), std::runtime_error);
+}
+
+// TODO: avoid code duplicationc
+BOOST_AUTO_TEST_CASE_TEMPLATE (const_shared_ptr_cast, T, functionTypes_t)
+{
+  const boost::shared_ptr<G<T> > func (new G<T> ());
+  const boost::shared_ptr<GenericFunction<T> > f = castInto<G<T>, GenericFunction<T> > (func);
+  const boost::shared_ptr<GenericDifferentiableFunction<T> > df = castInto<G<T>, GenericDifferentiableFunction<T> > (func);
+
+  // Check ref counters
+  BOOST_CHECK(func.use_count () == 3);
+  BOOST_CHECK(f.use_count () == 3);
+  BOOST_CHECK(df.use_count () == 3);
+
+  // Check that they all have the same properties
+  BOOST_CHECK(func->template asType<GenericFunction<T> >());
+  BOOST_CHECK(func->template asType<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK(func->template asType<GenericTwiceDifferentiableFunction<T> >());
+
+  BOOST_CHECK(f->template asType<GenericFunction<T> >());
+  BOOST_CHECK(f->template asType<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK(f->template asType<GenericTwiceDifferentiableFunction<T> >());
+
+  BOOST_CHECK(df->template asType<GenericFunction<T> >());
+  BOOST_CHECK(df->template asType<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK(df->template asType<GenericTwiceDifferentiableFunction<T> >());
+
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericFunction<T> > ());
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericFunction<T> > ());
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericFunction<T> > ());
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+
+  BOOST_CHECK_THROW(func->template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(f->template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(df->template castInto<Polynomial<T> >(), std::runtime_error);
+}
+
 BOOST_AUTO_TEST_SUITE_END ()
