@@ -81,6 +81,11 @@ BOOST_AUTO_TEST_CASE (util)
   m["bar"] = 1337;
   (*output) << m << std::endl;
 
+  // Test typeString
+  // TODO: relies on demangle() so may fail on different platforms
+  (*output) << typeString<int> () << std::endl;
+  (*output) << typeString<Function> () << std::endl;
+
   // Test operations on dense matrices
   Eigen::MatrixXd dense_a (5,5);
   Eigen::MatrixXd dense_b (5,5);

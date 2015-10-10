@@ -21,10 +21,7 @@
 # include <sstream>
 # include <typeinfo>
 
-# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
-// Include headers for demangling
-#  include <cxxabi.h>
-# endif // __GLIBCXX__ || __GLIBCPP__
+# include <roboptim/core/util.hh>
 
 namespace roboptim
 {
@@ -45,28 +42,6 @@ namespace roboptim
     u.ptr = ptr;
     return u.real_ptr;
   }
-
-# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
-  // Demangling available
-  inline const std::string demangle(const char* name)
-  {
-    int status = -4;
-
-    char* res = abi::__cxa_demangle(name, NULL, NULL, &status);
-    const char* const demangled_name = (status == 0)? res : name;
-    std::string ret_val(demangled_name);
-    free(res);
-
-    return ret_val;
-  }
-# else
-  // No demangling available
-  inline const std::string demangle(const char* name)
-  {
-    return std::string(name);
-  }
-# endif // __GLIBCXX__ || __GLIBCPP__
-
 
   template <typename S>
   SolverFactory<S>::SolverFactory (std::string plugin, const problem_t& pb)

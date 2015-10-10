@@ -20,6 +20,7 @@
 # define ROBOPTIM_CORE_UTIL_HXX
 
 # include <stdexcept>
+# include <typeinfo>
 
 # include <boost/static_assert.hpp>
 
@@ -112,6 +113,12 @@ namespace roboptim
     return o;
   }
 
+  template <typename T>
+  std::string typeString ()
+  {
+    // TODO: use Boost.TypeIndex (Boost >= 1.56.0) instead?
+    return demangle (typeid (T).name ());
+  }
 
   template <typename U>
   void copySparseBlock

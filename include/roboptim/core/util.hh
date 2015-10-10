@@ -23,6 +23,7 @@
 # include <vector>
 # include <utility>
 # include <map>
+# include <string>
 
 # include <roboptim/core/twice-differentiable-function.hh>
 
@@ -66,6 +67,13 @@ namespace roboptim
   /// \brief Display an Eigen object with the appropriate IOFormat.
   template <typename T>
   std::ostream& operator<< (std::ostream&, const Eigen::MatrixBase<T>&);
+
+  /// \brief Demangle (if available).
+  ROBOPTIM_DLLAPI const std::string demangle(const char* name);
+
+  /// \brief Return a string describing the type of T.
+  template <typename T>
+  std::string typeString ();
 
   /// \brief Convert a sparse matrix into a dense matrix.
   ROBOPTIM_DLLAPI
