@@ -18,6 +18,9 @@
 #ifndef ROBOPTIM_CORE_FWD_HH
 # define ROBOPTIM_CORE_FWD_HH
 
+// TODO: remove as soon as the typeString() problem is solved
+# include <iosfwd>
+
 namespace roboptim
 {
   /// \brief Tag a result if no solution has been found.
