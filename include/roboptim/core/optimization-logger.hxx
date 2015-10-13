@@ -26,7 +26,6 @@
 # include <boost/format.hpp>
 # include <boost/variant/apply_visitor.hpp>
 # include <boost/variant/static_visitor.hpp>
-# include <boost/utility/enable_if.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/type_traits/is_same.hpp>
 
@@ -310,9 +309,7 @@ namespace roboptim
   }
 
   template <typename T>
-  template <typename U>
-  typename boost::disable_if<boost::is_same<U, boost::mpl::vector<> > >::type
-  OptimizationLogger<T>::process_constraints
+  void OptimizationLogger<T>::process_constraints
   (const typename solver_t::problem_t& pb,
    const typename solver_t::solverState_t& state,
    const boost::filesystem::path& iterationPath,
@@ -374,19 +371,6 @@ namespace roboptim
       }
   }
 
-
-  template <typename T>
-  template <typename U>
-  typename boost::enable_if<boost::is_same<U, boost::mpl::vector<> > >::type
-  OptimizationLogger<T>::process_constraints
-  (const typename solver_t::problem_t&,
-   const typename solver_t::solverState_t&,
-   const boost::filesystem::path&,
-   const_argument_ref,
-   value_type&)
-  {
-    // Unconstrained problem: do nothing
-  }
 
   template <typename T>
   void OptimizationLogger<T>::attach ()
@@ -497,8 +481,8 @@ namespace roboptim
     streamCost << cost << "\n";
 
     // constraints: only process if the problem is constrained
-    process_constraints<typename solver_t::problem_t::constraintsList_t>
-      (pb, state, iterationPath, x, cstrViol);
+    if (!pb.constraints ().empty ())
+      process_constraints (pb, state, iterationPath, x, cstrViol);
 
     output_ << std::string (80, '-') << iendl;
   }

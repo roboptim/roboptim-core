@@ -26,7 +26,6 @@
 # include <boost/format.hpp>
 # include <boost/variant/apply_visitor.hpp>
 # include <boost/variant/static_visitor.hpp>
-# include <boost/utility/enable_if.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/type_traits/is_same.hpp>
 
@@ -81,24 +80,11 @@ namespace roboptim
 
   private:
     /// \brief Process constraints in the callback.
-    /// This method is needed as long as unconstrained problem_t do not have
-    /// constraint_t and related methods defined.
-    template <typename U>
-    typename boost::disable_if<boost::is_same<U, boost::mpl::vector<> > >::type
-    process_constraints (const typename solver_t::problem_t& pb,
-                         const typename solver_t::solverState_t& state,
-                         const boost::filesystem::path& iterationPath,
-                         const_argument_ref x,
-                         value_type& cstrViol);
-
-
-    template <typename U>
-    typename boost::enable_if<boost::is_same<U, boost::mpl::vector<> > >::type
-    process_constraints (const typename solver_t::problem_t&,
-                         const typename solver_t::solverState_t&,
-                         const boost::filesystem::path&,
-                         const_argument_ref,
-                         value_type&);
+    void process_constraints (const typename solver_t::problem_t& pb,
+                              const typename solver_t::solverState_t& state,
+                              const boost::filesystem::path& iterationPath,
+                              const_argument_ref x,
+                              value_type& cstrViol);
 
     /// \brief Attach the logger to the solver.
     void attach ();
