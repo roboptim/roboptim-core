@@ -22,6 +22,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/xpressive/xpressive.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver-factory.hh>
@@ -70,6 +71,12 @@ struct F2 : public DifferentiableSparseFunction
     grad.insert (3) = 1;
   }
 };
+
+bool findRegex (const std::string& text, const std::string& r)
+{
+  boost::xpressive::sregex rex = boost::xpressive::sregex::compile (r);
+  return boost::xpressive::regex_search (text, rex);
+}
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
@@ -149,10 +156,23 @@ void testLogger
             << "---" << std::endl
             << solver;
 
+  logger.append ("Append test 1");
+  logger << "Append test 2"
+         << solver;
+
   // Test whether the logging directory exists
   BOOST_CHECK (boost::filesystem::exists (logger.logPath ()));
   // Test whether journal.log exists
   BOOST_CHECK (boost::filesystem::exists (logger.logPath () / "journal.log"));
+
+  // Test whether appended strings are found
+  std::ifstream journal ((logger.logPath () / "journal.log").string ().c_str ());
+  std::stringstream buffer;
+  buffer << journal.rdbuf();
+
+  BOOST_CHECK (findRegex (buffer.str (), "Append test 1"));
+  BOOST_CHECK (findRegex (buffer.str (), "Append test 2"));
+  BOOST_CHECK (findRegex (buffer.str (), "Solver error: The dummy solver always fail."));
 }
 
 BOOST_AUTO_TEST_CASE (plugin)

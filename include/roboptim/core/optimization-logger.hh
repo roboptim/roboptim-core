@@ -73,6 +73,15 @@ namespace roboptim
     /// \param text text to append.
     void append (const std::string& text);
 
+    /// \brief Append extra information to the log file.
+    /// \param text text to append.
+    OptimizationLogger<T>& operator<< (const std::string& text);
+
+    /// \brief Append extra information to the log file.
+    /// \param u object to print.
+    template <typename U>
+    OptimizationLogger<T>& operator<< (const U& u);
+
     /// \brief Return the callback function.
     /// This can be used with a callback multiplexer.
     /// \return callback function.

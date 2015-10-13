@@ -18,6 +18,7 @@
 #ifndef ROBOPTIM_CORE_OPTIMIZATION_LOGGER_HXX
 # define ROBOPTIM_CORE_OPTIMIZATION_LOGGER_HXX
 # include <string>
+# include <sstream>
 
 # include <boost/bind.hpp>
 # include <boost/date_time/posix_time/posix_time.hpp>
@@ -298,6 +299,23 @@ namespace roboptim
       << std::string (80, '+') << iendl
       << text << iendl
       << std::string (80, '-') << iendl;
+  }
+
+  template <typename T>
+  OptimizationLogger<T>& OptimizationLogger<T>::operator<< (const std::string& text)
+  {
+    append (text);
+    return *this;
+  }
+
+  template <typename T>
+  template <typename U>
+  OptimizationLogger<T>& OptimizationLogger<T>::operator<< (const U& u)
+  {
+    std::stringstream ss;
+    ss << u;
+    append (ss.str ());
+    return *this;
   }
 
   template <typename T>
