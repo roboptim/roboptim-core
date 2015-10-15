@@ -26,6 +26,7 @@
 # include <boost/functional/hash.hpp>
 
 # include <roboptim/core/cache.hh>
+# include <roboptim/core/twice-differentiable-function.hh>
 
 namespace roboptim
 {
