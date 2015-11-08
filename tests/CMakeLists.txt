@@ -100,6 +100,7 @@ ROBOPTIM_CORE_TEST(simple "${CMAKE_SOURCE_DIR}/src/dummy.cc")
 ROBOPTIM_CORE_TEST(result)
 ROBOPTIM_CORE_TEST(result-with-warnings)
 ROBOPTIM_CORE_TEST(solver-error)
+ROBOPTIM_CORE_TEST(result-analyzer)
 
 # Helpers.
 ROBOPTIM_CORE_TEST(scaling-helper)

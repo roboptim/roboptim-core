@@ -1,0 +1,15 @@
+Problem:
+  x * x (differentiable function)
+  Objective scaling: 1
+  Arguments bounds: (-1, 3), (-1, 3)
+  Arguments scaling: 1, 1
+  Arguments names: x₀, x₁
+  Number of constraints: 1
+  Constraint 0
+      x * x (differentiable function)
+      Bounds: (0, 9)
+      Scaling: 1
+      Initial value: [1](0)
+  Starting point: [2](0,0)
+  Starting value: [1](0)
+  Infinity value (for all functions): inf
