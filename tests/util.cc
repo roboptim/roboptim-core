@@ -117,8 +117,11 @@ BOOST_AUTO_TEST_CASE (util)
   eigen_vec.setRandom ();
 
   // Test conversions to dense
-  (*output) << toDense (dense_a) << std::endl;
-  (*output) << toDense (sparse_a) << std::endl;
+  // Note: extra conversion step to solve compilation error in RowMajor mode
+  typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t denseMatrix_t;
+  typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparseMatrix_t;
+  (*output) << toDense (denseMatrix_t (dense_a)) << std::endl;
+  (*output) << toDense (sparseMatrix_t (sparse_a)) << std::endl;
 
   typedef GenericFunctionTraits<EigenMatrixDense>::gradient_t denseGradient_t;
   denseGradient_t dense_grad (4);
