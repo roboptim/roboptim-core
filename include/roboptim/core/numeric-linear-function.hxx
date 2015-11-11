@@ -108,8 +108,8 @@ namespace roboptim
   GenericNumericLinearFunction<T>::print (std::ostream& o) const
   {
     return o << "Numeric linear function" << incindent << iendl
-             << "A = " << this->a_ << iendl
-             << "B = " << this->b_
+             << "A = " << toDense (this->a_) << iendl
+             << "B = " << toDense (this->b_)
              << decindent;
   }
 

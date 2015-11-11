@@ -86,6 +86,25 @@ namespace roboptim
   GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
   (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref v);
 
+  /// \brief Convert an input gradient to a dense gradient (e.g. for printing).
+  /// \param g input gradient.
+  ROBOPTIM_DLLAPI
+  GenericFunctionTraits<EigenMatrixDense>::gradient_t toDense
+  (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref g);
+
+  /// \brief Convert an input matrix to a dense matrix (e.g. for printing).
+  /// \param m input matrix.
+  ROBOPTIM_DLLAPI
+  GenericFunctionTraits<EigenMatrixDense>::matrix_t toDense
+  (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m);
+
+  /// \brief Convert an input matrix to a dense matrix (e.g. for printing).
+  /// \param m input matrix.
+  /// Note: since the input is a dense matrix, we just return it.
+  ROBOPTIM_DLLAPI
+  GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref toDense
+  (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref m);
+
   /// \brief Compare sparse vectors (matrices) using both relative and absolute
   /// tolerances.
   /// \see http://stackoverflow.com/a/15052131/1043187

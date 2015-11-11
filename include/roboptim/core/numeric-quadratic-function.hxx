@@ -145,9 +145,9 @@ namespace roboptim
       o << this->getName () << " (numeric quadratic function)";
 
     o  << ":" << incindent << iendl
-       << "A = " << this->a_ << iendl
-       << "B = " << this->b_ << iendl
-       << "c = " << this->c_
+       << "A = " << toDense (this->a_) << iendl
+       << "B = " << toDense (this->b_) << iendl
+       << "c = " << toDense (this->c_)
        << decindent;
 
     return o;

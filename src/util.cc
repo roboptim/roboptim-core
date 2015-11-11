@@ -160,4 +160,28 @@ namespace roboptim
       }
     return true;
   }
+
+  GenericFunctionTraits<EigenMatrixDense>::const_gradient_ref
+  toDense (GenericFunctionTraits<EigenMatrixDense>::const_gradient_ref m)
+  {
+    return m;
+  }
+
+  GenericFunctionTraits<EigenMatrixDense>::gradient_t
+  toDense (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref m)
+  {
+    return GenericFunctionTraits<EigenMatrixDense>::gradient_t (m);
+  }
+
+  GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref
+  toDense (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref m)
+  {
+    return m;
+  }
+
+  GenericFunctionTraits<EigenMatrixDense>::matrix_t
+  toDense (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m)
+  {
+    return GenericFunctionTraits<EigenMatrixDense>::matrix_t (m);
+  }
 } // end of namespace roboptim.

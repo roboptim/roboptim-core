@@ -116,6 +116,20 @@ BOOST_AUTO_TEST_CASE (util)
   std::vector<value_type> stl_vec (vec_size);
   eigen_vec.setRandom ();
 
+  // Test conversions to dense
+  (*output) << toDense (dense_a) << std::endl;
+  (*output) << toDense (sparse_a) << std::endl;
+
+  typedef GenericFunctionTraits<EigenMatrixDense>::gradient_t denseGradient_t;
+  denseGradient_t dense_grad (4);
+  dense_grad << 1., 2., 3., 4.;
+  typedef GenericFunctionTraits<EigenMatrixSparse>::gradient_t sparseGradient_t;
+  sparseGradient_t sparse_grad (4);
+  for (sparseGradient_t::Index i = 0; i < 4; ++i)
+    sparse_grad.insert (i) = static_cast<double> (i+1);
+  (*output) << toDense (dense_grad) << std::endl;
+  (*output) << toDense (sparse_grad) << std::endl;
+
   // Copy Eigen vector to C array
   detail::vector_to_array (stl_vec.data (), eigen_vec);
 
