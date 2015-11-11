@@ -18,8 +18,6 @@
 #ifndef ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
 # define ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
 
-# include <boost/format.hpp>
-
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/numeric-linear-function.hh>
 # include <roboptim/core/util.hh>
@@ -28,11 +26,11 @@ namespace roboptim
 {
   template <typename T>
   GenericNumericLinearFunction<T>::GenericNumericLinearFunction
-  (const_matrix_ref a, const_vector_ref b)
+  (const_matrix_ref a, const_vector_ref b, std::string name)
     : GenericLinearFunction<T>
-      (a.cols (), a.rows (), "numeric linear function"),
-      a_ (a),
-      b_ (b)
+    (a.cols (), a.rows (), name),
+    a_ (a),
+    b_ (b)
   {
     assert (b.size () == this->outputSize ());
   }
@@ -41,13 +39,11 @@ namespace roboptim
   GenericNumericLinearFunction<T>::GenericNumericLinearFunction
   (const GenericLinearFunction<T>& function)
     : GenericLinearFunction<T>
-      (function.inputSize (), function.outputSize (),
-       (boost::format
-	("numeric linear function (built from %s)")
-	% function.getName ()).str ()),
-      a_ (function.outputSize (),
-	  function.inputSize ()),
-      b_ (function.outputSize ())
+    (function.inputSize (), function.outputSize (),
+     function.getName ()),
+    a_ (function.outputSize (),
+	function.inputSize ()),
+    b_ (function.outputSize ())
   {
     vector_t x (function.inputSize ());
     x.setZero ();
@@ -96,8 +92,8 @@ namespace roboptim
   template <typename T>
   void
   GenericNumericLinearFunction<T>::impl_gradient (gradient_ref gradient,
-					const_argument_ref,
-					size_type idFunction) const
+						  const_argument_ref,
+						  size_type idFunction) const
   {
     for (size_type j = 0; j < this->inputSize (); ++j)
       gradient[j] = a_ (idFunction, j);
@@ -107,10 +103,17 @@ namespace roboptim
   std::ostream&
   GenericNumericLinearFunction<T>::print (std::ostream& o) const
   {
-    return o << "Numeric linear function" << incindent << iendl
-             << "A = " << toDense (this->a_) << iendl
-             << "B = " << toDense (this->b_)
-             << decindent;
+    if (this->getName ().empty ())
+      o << "Numeric linear function";
+    else
+      o << this->getName () << " (numeric linear function)";
+
+    o  << ":" << incindent << iendl
+       << "A = " << toDense (this->a_) << iendl
+       << "B = " << toDense (this->b_)
+       << decindent;
+
+    return o;
   }
 
 } // end of namespace roboptim

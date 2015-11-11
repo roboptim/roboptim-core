@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function, T, functionTypes_t)
 
   b[0] = 1.;
 
-  GenericNumericLinearFunction<T> f (a, b);
+  GenericNumericLinearFunction<T> f (a, b, "Dummy");
 
   (*output) << f << std::endl;
 

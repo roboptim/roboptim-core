@@ -45,7 +45,9 @@ namespace roboptim
     /// See class documentation for A and b definition.
     /// \param A A matrix
     /// \param b b vector
-    GenericNumericLinearFunction (const_matrix_ref A, const_vector_ref b);
+    /// \param name function's name
+    GenericNumericLinearFunction (const_matrix_ref A, const_vector_ref b,
+				  std::string name = std::string ());
 
     /// \brief Build a linear function from another one.
     GenericNumericLinearFunction (const GenericLinearFunction<T>&);
