@@ -172,8 +172,7 @@ SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_FULL_LIBDIR}/roboptim-core")
 PKG_CONFIG_APPEND_LIBS(roboptim-core)
 
 # Search for dependencies.
-SET(BOOST_COMPONENTS
-  date_time filesystem system thread program_options unit_test_framework)
+SET(BOOST_COMPONENTS date_time filesystem system unit_test_framework)
 SEARCH_FOR_BOOST()
 ADD_REQUIRED_DEPENDENCY("eigen3 >= 3.2.0")
 ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")

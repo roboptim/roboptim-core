@@ -53,6 +53,14 @@ ENDIF()
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
+# Add required libs to pkg-config file.
+PKG_CONFIG_APPEND_LIBS(log4cxx)
+
+SET(ROBOPTIM_API_BOOST_LIBRARIES date_time system filesystem)
+FOREACH(lib ${ROBOPTIM_API_BOOST_LIBRARIES})
+  PKG_CONFIG_APPEND_LIBS(boost_${lib})
+ENDFOREACH()
+
 TARGET_LINK_LIBRARIES(roboptim-core ltdl)
 SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 3 VERSION 3.2.0)
 INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
