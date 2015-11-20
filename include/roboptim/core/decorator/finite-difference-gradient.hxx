@@ -731,7 +731,7 @@ namespace roboptim
      argument_ref /*xEps*/) const
     {
       // TODO: implement for the column-wise Jacobian computation
-      throw std::runtime_error ("Not implemented");
+      throw std::runtime_error ("not implemented");
     }
 
 
@@ -745,7 +745,7 @@ namespace roboptim
      argument_ref /*xEps*/) const
     {
       // TODO: implement for the column-wise Jacobian computation
-      throw std::runtime_error ("Not implemented");
+      throw std::runtime_error ("not implemented");
     }
   } // end of namespace finiteDifferenceGradientPolicies.
 

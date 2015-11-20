@@ -206,7 +206,7 @@ namespace roboptim
     if (asType<ExpectedType>())
       return static_cast<ExpectedType*>(this);
 
-    boost::format fmt ("Cannot cast to %s*");
+    boost::format fmt ("cannot cast to %s*");
     fmt % typeString<ExpectedType> ();
     throw std::runtime_error (fmt.str ());
   }
@@ -218,7 +218,7 @@ namespace roboptim
     if (asType<const ExpectedType>())
       return static_cast<const ExpectedType*>(this);
 
-    boost::format fmt ("Cannot cast to const %s*");
+    boost::format fmt ("cannot cast to const %s*");
     fmt % typeString<ExpectedType> ();
     throw std::runtime_error (fmt.str ());
   }
@@ -326,7 +326,7 @@ namespace roboptim
     if (u->template asType<V> ())
       return boost::static_pointer_cast<V> (u);
 
-    boost::format fmt ("Cannot cast to %s*");
+    boost::format fmt ("cannot cast to %s*");
     fmt % typeString<V> ();
     throw std::runtime_error (fmt.str ());
   }
@@ -337,7 +337,7 @@ namespace roboptim
     if (u->template asType<V> ())
       return boost::static_pointer_cast<V> (u);
 
-    boost::format fmt ("Cannot cast to %s*");
+    boost::format fmt ("cannot cast to %s*");
     fmt % typeString<V> ();
     throw std::runtime_error (fmt.str ());
   }

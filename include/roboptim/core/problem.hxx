@@ -124,10 +124,10 @@ namespace roboptim
 				    value_type s)
   {
     if (x->inputSize () != this->function ().inputSize ())
-      throw std::runtime_error ("Invalid constraint (wrong input size)");
+      throw std::runtime_error ("invalid constraint (wrong input size)");
     if (x->outputSize () != 1)
       throw std::runtime_error
-	("Invalid constraint (output size is not equal to one)");
+	("invalid constraint (output size is not equal to one)");
 
     // Check that the pointer is not null.
     assert (!!x.get ());
@@ -149,12 +149,12 @@ namespace roboptim
   {
     if (!x)
       throw std::runtime_error
-	("Failed to add constraint: null shared pointer");
+	("failed to add constraint: null shared pointer");
 
     if (x->inputSize () != this->function ().inputSize ())
       {
 	boost::format fmt
-	  ("Failed to add constraint '%s': invalid input size "
+	  ("failed to add constraint '%s': invalid input size "
 	   "(%d, expected size is %d)");
 	fmt
 	  % x->getName ()
@@ -165,7 +165,7 @@ namespace roboptim
     if (x->outputSize () != static_cast<typename function_t::size_type> (b.size ()))
       {
 	boost::format fmt
-	  ("Failed to add constraint '%s': interval vector size is invalid "
+	  ("failed to add constraint '%s': interval vector size is invalid "
 	   "(%d, expected size is %d)");
 	fmt
 	  % x->getName ()
@@ -176,7 +176,7 @@ namespace roboptim
     if (x->outputSize () != static_cast<typename function_t::size_type> (s.size ()))
       {
 	boost::format fmt
-	  ("Failed to add constraint '%s': scaling vector size is invalid "
+	  ("failed to add constraint '%s': scaling vector size is invalid "
 	   "(%d, expected size is %d)");
 	// Ignore some irrelevant exceptions
 	fmt.exceptions (boost::io::all_error_bits ^ (boost::io::too_many_args_bit
@@ -224,7 +224,7 @@ namespace roboptim
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
-      throw std::runtime_error ("Invalid starting point (wrong size)");
+      throw std::runtime_error ("invalid starting point (wrong size)");
     return startingPoint_;
   }
 
@@ -234,7 +234,7 @@ namespace roboptim
   {
     if (startingPoint_ && startingPoint_->size ()
 	!= this->function ().inputSize ())
-      throw std::runtime_error ("Invalid starting point (wrong size)");
+      throw std::runtime_error ("invalid starting point (wrong size)");
     return startingPoint_;
   }
 
