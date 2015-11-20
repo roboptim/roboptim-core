@@ -60,22 +60,22 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
 
-    const_matrix_ref A () const
+    const matrix_t& A () const
     {
       return a_;
     }
 
-    const_vector_ref b () const
+    const vector_t& b () const
     {
       return b_;
     }
 
-    matrix_ref A ()
+    matrix_t& A ()
     {
       return a_;
     }
 
-    vector_ref b ()
+    vector_t& b ()
     {
       return b_;
     }
