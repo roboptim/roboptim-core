@@ -131,6 +131,18 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   // Re-enable deprecated warning
   ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
+  // Clear problem's constraints.
+  BOOST_CHECK (!pb.constraints ().empty ());
+  BOOST_CHECK (!pb.boundsVector ().empty ());
+  BOOST_CHECK (!pb.scalingVector ().empty ());
+  BOOST_CHECK (pb.constraintsOutputSize () > 0);
+  pb.clearConstraints ();
+  BOOST_CHECK (pb.constraints ().empty ());
+  BOOST_CHECK (pb.boundsVector ().empty ());
+  BOOST_CHECK (pb.scalingVector ().empty ());
+  BOOST_CHECK_EQUAL (pb.constraintsOutputSize (), 0);
+  (*output) << pb << std::endl;
+
   // Test a problem with multiple types of constraints.
   typedef Problem<T> mixedProblem_t;
   mixedProblem_t mixedPb (f);

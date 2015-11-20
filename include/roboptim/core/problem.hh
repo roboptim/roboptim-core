@@ -272,6 +272,9 @@ namespace roboptim
     /// \brief Return the output size of the problem's constraints.
     size_type constraintsOutputSize () const;
 
+    /// \brief Clear the constraints from the problem.
+    void clearConstraints ();
+
     /// \}
 
 

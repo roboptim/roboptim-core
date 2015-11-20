@@ -28,6 +28,16 @@ Problem:
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
+  No constraints.
+  Starting point: [2](0,0)
+  Starting value: [2](0,0)
+  Infinity value (for all functions): inf
+Problem:
+  Constant function
+    offset = [2](0,0)
+  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments scaling: 1, 1
+  Arguments names: x₀, x₁
   Number of constraints: 2
   Constraint 0
       Constant function

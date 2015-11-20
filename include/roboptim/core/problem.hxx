@@ -219,6 +219,14 @@ namespace roboptim
   }
 
   template <typename T>
+  void Problem<T>::clearConstraints ()
+  {
+    constraints_.clear ();
+    boundsVect_.clear ();
+    scalingVect_.clear ();
+  }
+
+  template <typename T>
   typename Problem<T>::startingPoint_t&
   Problem<T>::startingPoint ()
   {
