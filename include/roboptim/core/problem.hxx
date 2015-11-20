@@ -41,7 +41,7 @@ namespace roboptim
   // Note: kids, don't do this at home! Until now, we kept a reference to
   // the function passed, which is just as bad. This prepares the transition
   // to the safer shared_ptr version.
-    : function_ (const_cast<function_t*> (&f), NoopDeleter ()),
+    : function_ (&f, NoopDeleter ()),
       startingPoint_ (),
       constraints_ (),
       boundsVect_ (),
@@ -55,7 +55,7 @@ namespace roboptim
   }
 
   template <typename T>
-  Problem<T>::Problem (const boost::shared_ptr<function_t>& f)
+  Problem<T>::Problem (const boost::shared_ptr<const function_t>& f)
     : function_ (f),
       startingPoint_ (),
       constraints_ (),

@@ -152,7 +152,7 @@ namespace roboptim
     /// \pre costfunction \f$\mathbb{R}^n \rightarrow \mathbb{R}\f$
     /// \brief Constructor taking a shared_ptr to a cost function.
     /// \param cost cost function.
-    explicit Problem (const boost::shared_ptr<function_t>& cost);
+    explicit Problem (const boost::shared_ptr<const function_t>& cost);
 
     /// \brief Deprecated constructor taking a reference to a cost function.
     /// This legacy version meant that we simply kept a const reference to the
@@ -310,7 +310,7 @@ namespace roboptim
     // TODO: remove when const ref constructor is removed (deprecated in 3.2).
     struct NoopDeleter
     {
-      inline void operator() (function_t*) const {}
+      inline void operator() (const function_t*) const {}
     };
 
   private:
@@ -318,7 +318,7 @@ namespace roboptim
     /// Note: do not give access to this shared_ptr, since for now the legacy
     /// API relying on a simple reference prevents any proper memory
     /// management.
-    const boost::shared_ptr<function_t> function_;
+    const boost::shared_ptr<const function_t> function_;
 
     /// \brief Starting point.
     startingPoint_t startingPoint_;
