@@ -24,6 +24,7 @@
 #include <roboptim/core/portability.hh>
 #include <roboptim/core/problem.hh>
 #include <roboptim/core/function/constant.hh>
+#include <roboptim/core/numeric-linear-function.hh>
 
 using namespace roboptim;
 
@@ -66,6 +67,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   typedef typename problem_t::scaling_t       scaling_t;
 
   typedef GenericConstantFunction<T>          constantFunction_t;
+  typedef GenericNumericLinearFunction<T>     numericLinearFunction_t;
 
   typename constantFunction_t::vector_t v (2);
   v.setZero ();
@@ -101,10 +103,22 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   names[1] = "x₁";
   pb.argumentNames () = names;
 
+  v[0] = 3.;
+  v[1] = -1.;
   boost::shared_ptr<constantFunction_t>
-    g0 = boost::make_shared<constantFunction_t>  (v);
+    g0 = boost::make_shared<constantFunction_t> (v);
+
+  typename numericLinearFunction_t::matrix_t a (2,2);
+  a.coeffRef (0,0) = 1.;
+  a.coeffRef (1,1) = 1.;
+  typename numericLinearFunction_t::vector_t b (2);
+  b << 2., 3.;
+  boost::shared_ptr<numericLinearFunction_t>
+    g1 = boost::make_shared<numericLinearFunction_t> (a, b);
+
   boost::shared_ptr<F<T> >
-    g1 = boost::make_shared<F<T> > ();
+    g2 = boost::make_shared<F<T> > ();
+
   intervals_t intervals (2);
   scaling_t scaling (2, 1);
 
@@ -114,21 +128,23 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 
   for (size_t i = 0; i < intervals.size (); ++i)
     intervals[i] = Function::makeLowerInterval (0.);
-  pb.addConstraint (g0, intervals, scaling);
+  pb.addConstraint (g1, intervals, scaling);
 
   // Also add a non-differentiable constraint
   for (size_t i = 0; i < intervals.size (); ++i)
-    intervals[i] = Function::makeInterval (12., 42.);
-  pb.addConstraint (g1, intervals, scaling);
+    intervals[i] = Function::makeInterval (-12., 42.);
+  pb.addConstraint (g2, intervals, scaling);
 
   // Check jacobian
-  (*output) << toDense (pb.jacobian (*(pb.startingPoint ()))) << std::endl;
+  x[0] = 1.;
+  x[1] = 2.;
+  (*output) << toDense (pb.jacobian (x)) << std::endl;
 
   // Check constraints output size
   BOOST_CHECK_EQUAL (pb.constraintsOutputSize (),
-                     2 * g0->outputSize () + g1->outputSize ());
+                     g0->outputSize () + g1->outputSize () + g2->outputSize ());
   BOOST_CHECK_EQUAL (pb.differentiableConstraintsOutputSize (),
-                     2 * g0->outputSize ());
+                     g0->outputSize () + g1->outputSize ());
 
   // Check null ptr
   BOOST_CHECK_THROW (boost::shared_ptr<constantFunction_t> null_ptr;
@@ -189,8 +205,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 
   // First constraint: ConstantFunction automatically converted to LinearFunction
   mixedPb.addConstraint (g0, intervals, scaling);
-  // Second constraint: ConstantFunction converted to DifferentiableFunction
-  mixedPb.addConstraint (boost::static_pointer_cast<GenericDifferentiableFunction<T> > (g0),
+  // Second constraint: NumericLinearFunction converted to DifferentiableFunction
+  mixedPb.addConstraint (boost::static_pointer_cast<GenericDifferentiableFunction<T> > (g1),
                          intervals, scaling);
 
   // First constraint: LinearFunction
