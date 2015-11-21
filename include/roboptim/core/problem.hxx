@@ -43,9 +43,9 @@ namespace roboptim
   //
   template <typename T>
   Problem<T>::Problem (const function_t& f)
-  // Note: kids, don't do this at home! Until now, we kept a reference to
-  // the function passed, which is just as bad. This prepares the transition
-  // to the safer shared_ptr version.
+    // Note: kids, don't do this at home! Until now, we kept a reference to
+    // the function passed, which is just as bad. This prepares the transition
+    // to the safer shared_ptr version.
     : function_ (&f, NoopDeleter ()),
       startingPoint_ (),
       constraints_ (),
@@ -125,8 +125,8 @@ namespace roboptim
   template <typename T>
   void
   Problem<T>::addConstraint (boost::shared_ptr<function_t> x,
-				    interval_t b,
-				    value_type s)
+			     interval_t b,
+			     value_type s)
   {
     if (x->inputSize () != this->function ().inputSize ())
       throw std::runtime_error ("invalid constraint (wrong input size)");
@@ -149,8 +149,8 @@ namespace roboptim
   template <typename T>
   void
   Problem<T>::addConstraint (boost::shared_ptr<function_t> x,
-				    intervals_t b,
-				    scaling_t s)
+			     intervals_t b,
+			     scaling_t s)
   {
     if (!x)
       throw std::runtime_error
@@ -215,10 +215,10 @@ namespace roboptim
   {
     size_type m = 0;
     for (typename constraints_t::const_iterator
-         c = constraints_.begin (); c != constraints_.end (); ++c)
-    {
-      m += (*c)->outputSize ();
-    }
+	   c = constraints_.begin (); c != constraints_.end (); ++c)
+      {
+	m += (*c)->outputSize ();
+      }
 
     return m;
   }
@@ -544,7 +544,7 @@ namespace roboptim
 	detail::printConstraint<Problem<T> > pc (o, *this, i);
 	try
 	  {
-      pc(this->constraints()[i]);
+	    pc(this->constraints()[i]);
 	  }
 	catch (const boost::bad_get& e)
 	  {

@@ -148,7 +148,7 @@ namespace roboptim
 
     /// \brief Constant reference to an argument vector.
     typedef typename GenericFunctionTraits<T>::const_argument_ref
-      const_argument_ref;
+    const_argument_ref;
 
     /// \name Constructors and destructors.
     /// \{
