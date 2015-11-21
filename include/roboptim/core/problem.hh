@@ -53,19 +53,18 @@ namespace roboptim
   /// To use the class, one has to instantiate a problem with
   /// a reference to a cost function.
   /// Then, constraints can be added through the addConstraint
-  /// method: a reference to a function and an interval is needed.
+  /// method: a shared pointer to a function and an interval is needed.
   ///
   /// The cost function is immutable.
   ///
-  /// Constraints are stored as a Boost.Variant of smart pointers
-  /// (i.e. more precisely using a boost::shared_ptr) representing all
-  /// the different possibles constraint types.
+  /// Constraints are stored in a vector of smart pointers to function
+  /// objects.
   ///
-  /// It is recommended to add a constraint using the following syntax:
+  /// To add a constraint, use the following syntax:
   /// \code
-  /// problem.addConstraint<C> (boost::make_shared<MyFunction> (...), ...);
+  /// problem.addConstraint (boost::make_shared<MyFunction> (...), ...);
   /// \endcode
-  /// where C is the constraint type and MyFunction the function type.
+  /// where MyFunction is the function type.
   ///
   ///
   /// Unlike other classes which just copy functions, pointers are used
@@ -89,9 +88,6 @@ namespace roboptim
     typedef boost::mpl::vector<function_t> constraintsList_t;
 
     /// \brief Constraint's type.
-    ///
-    /// Generate a Boost.Variant of shared pointers from the
-    /// static constraints types list.
     typedef boost::shared_ptr<function_t> constraint_t;
 
     /// \brief Import function's value_type type.
