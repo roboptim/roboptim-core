@@ -143,6 +143,13 @@ namespace roboptim
     /// \brief Vector of scaling vectors (deprecated typedef).
     typedef scalingVect_t scalesVect_t ROBOPTIM_CORE_DEPRECATED;
 
+    /// \brief Jacobian matrix type.
+    typedef typename GenericFunctionTraits<T>::jacobian_t jacobian_t;
+
+    /// \brief Constant reference to an argument vector.
+    typedef typename GenericFunctionTraits<T>::const_argument_ref
+      const_argument_ref;
+
     /// \name Constructors and destructors.
     /// \{
 
@@ -269,6 +276,10 @@ namespace roboptim
     /// \brief Return the output size of the problem's constraints.
     size_type constraintsOutputSize () const;
 
+    /// \brief Return the output size of the problem's differentiable
+    /// constraints.
+    size_type differentiableConstraintsOutputSize () const;
+
     /// \brief Clear the constraints from the problem.
     void clearConstraints ();
 
@@ -287,6 +298,20 @@ namespace roboptim
     /// \return reference on the initial guess
     /// \throw std::runtime_error
     const startingPoint_t& startingPoint () const;
+
+    /// \}
+
+
+    /// \name Helper methods.
+    /// \{
+
+    /// \brief Evaluate the Jacobian matrix of the problem for a given x.
+    /// Note: this is a helper method, and is not supposed to be used in any
+    /// critical loop.
+    ///
+    /// \param x evaluation point.
+    /// \return jacobian matrix evaluated at x.
+    jacobian_t jacobian (const_argument_ref x) const;
 
     /// \}
 

@@ -26,6 +26,10 @@
 # include <boost/variant/get.hpp>
 # include <boost/variant/apply_visitor.hpp>
 
+# define EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET
+# include <Eigen/Core>
+# include <Eigen/Sparse>
+
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/terminal-color.hh>
 # include <roboptim/core/util.hh>
@@ -220,6 +224,20 @@ namespace roboptim
   }
 
   template <typename T>
+  typename Problem<T>::size_type Problem<T>::differentiableConstraintsOutputSize () const
+  {
+    size_type m = 0;
+    for (typename constraints_t::const_iterator
+	   c = constraints_.begin (); c != constraints_.end (); ++c)
+      {
+	if ((*c)->template asType<GenericDifferentiableFunction<T> > ())
+	  m += (*c)->outputSize ();
+      }
+
+    return m;
+  }
+
+  template <typename T>
   void Problem<T>::clearConstraints ()
   {
     constraints_.clear ();
@@ -322,6 +340,88 @@ namespace roboptim
   Problem<T>::argumentNames () const
   {
     return argumentNames_;
+  }
+
+  template <typename T>
+  typename Problem<T>::jacobian_t
+  Problem<T>::jacobian (const_argument_ref x) const
+  {
+    typedef GenericDifferentiableFunction<T> differentiableFunction_t;
+
+    size_type n = function_->inputSize ();
+    size_type m = differentiableConstraintsOutputSize ();
+
+    jacobian_t jac (m, n);
+    jac.setZero ();
+
+    // For each constraint of the problem
+    size_type global_row = 0;
+    for (typename constraints_t::const_iterator
+	   c = constraints_.begin (); c != constraints_.end (); ++c)
+      {
+	// If the constraint is differentiable
+        if ((*c)->template asType<differentiableFunction_t> ())
+	  {
+	    const differentiableFunction_t*
+	      df = (*c)->template castInto<differentiableFunction_t> ();
+	    df->jacobian (jac.block (global_row, 0, df->outputSize (), n), x);
+	    global_row += df->outputSize ();
+	  }
+      }
+
+    return jac;
+  }
+
+  template <>
+  inline typename Problem<EigenMatrixSparse>::jacobian_t
+  Problem<EigenMatrixSparse>::jacobian (const_argument_ref x) const
+  {
+    typedef GenericDifferentiableFunction<EigenMatrixSparse>
+      differentiableFunction_t;
+    typedef Eigen::Triplet<double> triplet_t;
+
+    size_type n = function_->inputSize ();
+    size_type m = differentiableConstraintsOutputSize ();
+
+    jacobian_t jac (m, n);
+    jac.setZero ();
+
+    jacobian_t tmp;
+    std::vector<triplet_t> coeffs;
+
+    // For each constraint of the problem
+    size_type global_row = 0;
+    for (typename constraints_t::const_iterator
+	   c = constraints_.begin (); c != constraints_.end (); ++c)
+      {
+	// If the constraint is differentiable
+        if ((*c)->template asType<differentiableFunction_t> ())
+	  {
+	    const differentiableFunction_t*
+	      df = (*c)->template castInto<differentiableFunction_t> ();
+
+            tmp.resize (df->outputSize (), n);
+            tmp.setZero ();
+	    df->jacobian (tmp, x);
+            tmp.makeCompressed ();
+
+	    for (int k = 0; k < tmp.outerSize (); ++k)
+	      for (differentiableFunction_t::jacobian_t::InnerIterator
+		     it (tmp, k); it; ++it)
+		{
+		  const int row = static_cast<int> (global_row + it.row ());
+		  const int col = static_cast<int> (it.col ());
+		  coeffs.push_back (triplet_t (row, col, it.value ()));
+		}
+
+	    global_row += df->outputSize ();
+	  }
+      }
+
+    jac.setFromTriplets (coeffs.begin (), coeffs.end ());
+    jac.makeCompressed ();
+
+    return jac;
   }
 
   namespace detail

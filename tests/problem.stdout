@@ -1,16 +1,28 @@
+[4,2]((0,0), (0,0), (0,0), (0,0))
 Problem:
   Constant function
     offset = [2](0,0)
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
-  Number of constraints: 1
+  Number of constraints: 3
   Constraint 0
       Constant function
         offset = [2](0,0)
       Bounds: (-inf, inf), (-inf, inf)
       Scaling: 1, 1
       Initial value: [2](0, 0)
+  Constraint 1
+      Constant function
+        offset = [2](0,0)
+      Bounds: (0, inf), (0, inf)
+      Scaling: 1, 1
+      Initial value: [2](0, 0)
+  Constraint 2
+      a * b, a + b (not differentiable)
+      Bounds: (12, 42), (12, 42)
+      Scaling: 1, 1
+      Initial value: [2](0, 0) (constraint not satisfied)
   Starting point: [2](0,0)
   Starting value: [2](0,0)
   Infinity value (for all functions): inf
@@ -42,15 +54,15 @@ Problem:
   Constraint 0
       Constant function
         offset = [2](0,0)
-      Bounds: (-inf, inf), (-inf, inf)
+      Bounds: (12, 42), (12, 42)
       Scaling: 1, 1
-      Initial value: [2](0, 0)
+      Initial value: [2](0, 0) (constraint not satisfied)
   Constraint 1
       Constant function
         offset = [2](0,0)
-      Bounds: (-inf, inf), (-inf, inf)
+      Bounds: (12, 42), (12, 42)
       Scaling: 1, 1
-      Initial value: [2](0, 0)
+      Initial value: [2](0, 0) (constraint not satisfied)
   Starting point: [2](0,0)
   Starting value: [2](0,0)
   Infinity value (for all functions): inf
