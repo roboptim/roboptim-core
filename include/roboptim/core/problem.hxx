@@ -395,10 +395,10 @@ namespace roboptim
 	   c = constraints_.begin (); c != constraints_.end (); ++c)
       {
 	// If the constraint is differentiable
-        if ((*c)->template asType<differentiableFunction_t> ())
+        if ((*c)->asType<differentiableFunction_t> ())
 	  {
 	    const differentiableFunction_t*
-	      df = (*c)->template castInto<differentiableFunction_t> ();
+	      df = (*c)->castInto<differentiableFunction_t> ();
 
             tmp.resize (df->outputSize (), n);
             tmp.setZero ();
