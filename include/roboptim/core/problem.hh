@@ -17,8 +17,9 @@
 
 #ifndef ROBOPTIM_CORE_PROBLEM_HH
 # define ROBOPTIM_CORE_PROBLEM_HH
+
 # include <iostream>
-# include <stdexcept>
+# include <vector>
 
 # include <boost/mpl/assert.hpp>
 # include <boost/mpl/vector.hpp>
@@ -96,7 +97,7 @@ namespace roboptim
     /// \brief Vector type.
     typedef typename function_t::vector_t vector_t;
 
-    /// \brief Argument type
+    /// \brief Argument type.
     typedef typename function_t::argument_t argument_t;
 
     /// \brief Size type.
@@ -361,5 +362,7 @@ namespace roboptim
   std::ostream& operator<< (std::ostream& o, const Problem<T>& pb);
 
 } // end of namespace roboptim
+
 # include <roboptim/core/problem.hxx>
+
 #endif //! ROBOPTIM_CORE_PROBLEM_HH

@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_PROBLEM_HXX
 # define ROBOPTIM_CORE_PROBLEM_HXX
+
 # include <algorithm>
 # include <stdexcept>
 
