@@ -109,6 +109,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
     g0 = boost::make_shared<constantFunction_t> (v);
 
   typename numericLinearFunction_t::matrix_t a (2,2);
+  a.setZero ();
   a.coeffRef (0,0) = 1.;
   a.coeffRef (1,1) = 1.;
   typename numericLinearFunction_t::vector_t b (2);
