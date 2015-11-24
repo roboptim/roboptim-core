@@ -31,6 +31,7 @@
 
 // WARNING: careful with circular includes
 # include <roboptim/core/util.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -341,6 +342,15 @@ namespace roboptim
     fmt % typeString<V> ();
     throw std::runtime_error (fmt.str ());
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_DLLAPI GenericFunction<EigenMatrixDense>;
+  extern template class ROBOPTIM_DLLAPI GenericFunction<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_FUNCTION_HXX

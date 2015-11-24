@@ -18,6 +18,8 @@
 #ifndef ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX
 # define ROBOPTIM_CORE_QUADRATIC_FUNCTION_HXX
 
+# include <roboptim/core/portability.hh>
+
 namespace roboptim
 {
   template <typename T>

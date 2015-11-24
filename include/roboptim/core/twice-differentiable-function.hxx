@@ -21,6 +21,7 @@
 
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/util.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {

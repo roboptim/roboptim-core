@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_HH
 # define ROBOPTIM_CORE_SOLVER_HH
+
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
 
@@ -31,6 +32,7 @@
 # include <boost/variant/get.hpp>
 
 # include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
 # include <roboptim/core/function.hh>
 # include <roboptim/core/problem.hh>
 # include <roboptim/core/generic-solver.hh>
@@ -76,7 +78,7 @@ namespace roboptim
   ///
   /// \tparam T matrix type
   template <typename T>
-  class Solver : public GenericSolver
+  class ROBOPTIM_DLLAPI Solver : public GenericSolver
   {
   public:
     /// \brief Solver problem type.

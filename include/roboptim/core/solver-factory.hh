@@ -17,8 +17,6 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_FACTORY_HH
 # define ROBOPTIM_CORE_SOLVER_FACTORY_HH
-# include <roboptim/core/sys.hh>
-# include <roboptim/core/debug.hh>
 
 # include <stdexcept>
 # include <string>
@@ -29,6 +27,9 @@
 # include <boost/type_traits/is_base_of.hpp>
 
 # include <roboptim/core/fwd.hh>
+# include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
+# include <roboptim/core/portability.hh>
 # include <roboptim/core/solver.hh>
 # include <roboptim/core/solver-error.hh>
 
@@ -52,7 +53,7 @@ namespace roboptim
   /// \tparam S solver type
   /// \pre S has to be a subtype of Solver<T>.
   template <typename S>
-  class SolverFactory
+  class ROBOPTIM_DLLAPI SolverFactory
   {
     BOOST_STATIC_ASSERT((boost::is_base_of<GenericSolver, S>::value));
   public:

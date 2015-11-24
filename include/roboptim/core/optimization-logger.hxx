@@ -546,6 +546,12 @@ namespace roboptim
     return callbackCallId_;
   }
 
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class OptimizationLogger<Solver<EigenMatrixDense> >;
+  extern template class OptimizationLogger<Solver<EigenMatrixSparse> >;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_OPTIMIZATION_LOGGER_HXX

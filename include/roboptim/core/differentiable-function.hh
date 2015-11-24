@@ -27,7 +27,6 @@
 # include <roboptim/core/fwd.hh>
 
 # include <roboptim/core/function.hh>
-# include <roboptim/core/portability.hh>
 
 # define ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
   ROBOPTIM_FUNCTION_FWD_TYPEDEFS (PARENT);			\

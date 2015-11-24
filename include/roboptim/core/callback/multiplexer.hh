@@ -21,6 +21,7 @@
 # include <vector>
 
 # include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
 # include <roboptim/core/solver-state.hh>
 
 namespace roboptim
@@ -37,7 +38,7 @@ namespace roboptim
     ///
     /// \tparam S solver type.
     template <typename S>
-    class Multiplexer
+    class ROBOPTIM_DLLAPI Multiplexer
     {
     public:
 

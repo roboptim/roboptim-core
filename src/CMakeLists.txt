@@ -34,6 +34,7 @@ ADD_LIBRARY(roboptim-core SHARED
   solver-warning.cc
   solver.cc
   util.cc
+  roboptim-core-precompile.cc
 
   visualization/gnuplot.cc
   visualization/gnuplot-commands.cc

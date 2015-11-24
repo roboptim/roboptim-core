@@ -23,6 +23,7 @@
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/config.hh>
+# include <roboptim/core/portability.hh>
 # include <roboptim/core/differentiable-function.hh>
 # include <roboptim/core/function.hh>
 
@@ -39,9 +40,10 @@ namespace roboptim {
   /// The differentiable functions are stored in a vector valued function
   /// called base function.
   ///
-  /// \tparam T function type
+  /// \tparam T matrix traits.
   template <typename T>
-  class GenericSumOfC1Squares : public GenericDifferentiableFunction<T>
+  class ROBOPTIM_DLLAPI GenericSumOfC1Squares
+    : public GenericDifferentiableFunction<T>
   {
   public:
     /// @name Types

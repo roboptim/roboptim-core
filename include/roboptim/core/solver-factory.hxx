@@ -22,6 +22,7 @@
 # include <typeinfo>
 
 # include <roboptim/core/util.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -216,6 +217,12 @@ namespace roboptim
     assert (solver_ != 0);
     return *solver_;
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class SolverFactory<Solver<EigenMatrixDense> >;
+  extern template class SolverFactory<Solver<EigenMatrixSparse> >;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
 
 } // end of namespace roboptim
 

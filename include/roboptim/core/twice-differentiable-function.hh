@@ -25,7 +25,6 @@
 # include <log4cxx/logger.h>
 
 # include <roboptim/core/fwd.hh>
-# include <roboptim/core/portability.hh>
 # include <roboptim/core/differentiable-function.hh>
 
 # define ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\

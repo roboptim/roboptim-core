@@ -29,6 +29,7 @@
 # include <boost/noncopyable.hpp>
 
 # include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
 # include <roboptim/core/function.hh>
 # include <roboptim/core/problem.hh>
 
@@ -75,7 +76,7 @@ namespace roboptim
   ///
   /// \tparam P problem type.
   template <typename P>
-  class SolverState : public boost::noncopyable
+  class ROBOPTIM_DLLAPI SolverState : public boost::noncopyable
   {
   public:
     /// \brief Problem type

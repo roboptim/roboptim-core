@@ -158,7 +158,7 @@ namespace roboptim
   /// - result_t function result type (vector or matrix)
   /// - argument_t function argument type (usually vector)
   template <typename T>
-  struct GenericFunctionTraits
+  struct ROBOPTIM_DLLAPI GenericFunctionTraits
   {};
 
   /// \brief Define an abstract mathematical function (\f$C^0\f$).
@@ -179,10 +179,11 @@ namespace roboptim
   ///
   /// \tparam T Matrix type
   template <typename T>
-  class GenericFunction
+  class ROBOPTIM_DLLAPI GenericFunction
   {
   public:
     ROBOPTIM_DEFINE_FLAG_TYPE();
+
     /// \brief Traits type.
     ///
     /// Represents the matrix type used to store the underlying data. This
@@ -524,7 +525,7 @@ namespace roboptim
 
   /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
   template <>
-  struct GenericFunctionTraits<EigenMatrixSparse>
+  struct ROBOPTIM_DLLAPI GenericFunctionTraits<EigenMatrixSparse>
   {
     /// \brief Matrix storage order.
     static const int StorageOrder = roboptim::StorageOrder;

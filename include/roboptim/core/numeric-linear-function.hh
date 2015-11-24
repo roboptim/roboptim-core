@@ -17,8 +17,10 @@
 
 #ifndef ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HH
 # define ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HH
+
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
+# include <roboptim/core/portability.hh>
 
 # include <roboptim/core/linear-function.hh>
 
@@ -33,7 +35,8 @@ namespace roboptim
   /// \f[f(x) = A x + b\f]
   /// where \f$A\f$ and \f$b\f$ are set when the class is instantiated.
   template <typename T>
-  class GenericNumericLinearFunction : public GenericLinearFunction<T>
+  class ROBOPTIM_DLLAPI GenericNumericLinearFunction
+  : public GenericLinearFunction<T>
   {
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_

@@ -34,6 +34,7 @@
 # include <roboptim/core/terminal-color.hh>
 # include <roboptim/core/util.hh>
 # include <roboptim/core/detail/utility.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -591,5 +592,12 @@ namespace roboptim
   {
     return pb.print (o);
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class Problem<EigenMatrixDense>;
+  extern template class Problem<EigenMatrixSparse>;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_PROBLEM_HXX

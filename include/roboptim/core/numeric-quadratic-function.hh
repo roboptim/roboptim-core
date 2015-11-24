@@ -17,8 +17,10 @@
 
 #ifndef ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HH
 # define ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HH
+
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
+# include <roboptim/core/portability.hh>
 
 # include <roboptim/core/quadratic-function.hh>
 
@@ -35,7 +37,8 @@ namespace roboptim
   ///
   /// \note A is a symmetric matrix.
   template <typename T>
-  class GenericNumericQuadraticFunction : public GenericQuadraticFunction<T>
+  class ROBOPTIM_DLLAPI GenericNumericQuadraticFunction
+  : public GenericQuadraticFunction<T>
   {
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_

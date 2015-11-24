@@ -20,6 +20,8 @@
 
 # include <boost/bind.hpp>
 
+# include <roboptim/core/portability.hh>
+
 namespace roboptim
 {
   namespace callback
@@ -123,6 +125,13 @@ namespace roboptim
       catch (std::exception& e)
       {}
     }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class Multiplexer<Solver<EigenMatrixDense> >;
+  extern template class Multiplexer<Solver<EigenMatrixSparse> >;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
   } // end of namespace callback.
 } // end of namespace roboptim.
 

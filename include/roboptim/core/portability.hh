@@ -88,6 +88,10 @@
   #define ROBOPTIM_ALLOW_DEPRECATED_OFF \
     /* Re-enable deprecated warning */  \
     __pragma(warning(pop))
+
+  // TODO: update for Windows if relevant
+  #define ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  #define ROBOPTIM_ALLOW_ATTRIBUTES_OFF
 #else
 // Otherwise (on Linux/OSX with GCC/Clang)
   #define ROBOPTIM_ALLOW_DEPRECATED_ON \
@@ -98,6 +102,20 @@
   #define ROBOPTIM_ALLOW_DEPRECATED_OFF \
     /* Re-enable deprecated warning */  \
     _Pragma ("GCC diagnostic pop")
+
+  #ifdef __GNUC__
+    #define ROBOPTIM_ALLOW_ATTRIBUTES_ON \
+    /* Disable attributes warning */     \
+    _Pragma ("GCC diagnostic push")      \
+    _Pragma ("GCC diagnostic ignored \"-Wattributes\"")
+
+    #define ROBOPTIM_ALLOW_ATTRIBUTES_OFF \
+    /* Re-enable attributes warning */    \
+    _Pragma ("GCC diagnostic pop")
+  #else
+    #define ROBOPTIM_ALLOW_ATTRIBUTES_ON
+    #define ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+  #endif
 #endif
 
 // Required to avoid size_t resolution error with MSVC. Triggered by

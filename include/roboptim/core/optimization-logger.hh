@@ -30,6 +30,7 @@
 # include <boost/type_traits/is_same.hpp>
 
 # include <roboptim/core/config.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -37,7 +38,7 @@ namespace roboptim
   /// etc.).
   /// \tparam T solver type.
   template <typename T>
-  class OptimizationLogger
+  class ROBOPTIM_DLLAPI OptimizationLogger
   {
   public:
     typedef T solver_t;

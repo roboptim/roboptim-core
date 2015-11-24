@@ -20,7 +20,6 @@
 # include <limits>
 
 # include <roboptim/core/fwd.hh>
-# include <roboptim/core/portability.hh>
 # include <roboptim/core/quadratic-function.hh>
 
 namespace roboptim
