@@ -199,11 +199,14 @@ namespace roboptim
 // Redefine the macro for use outside of this header.
 # undef ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
 
+// WARNING: this macro should be used in the GLOBAL scope!
 # define ROBOPTIM_CORE_DECLARE_AUTOPROMOTE(T1,T2)	\
-  template<>						\
-  struct ::roboptim::detail::AutopromoteTrait<T1>	\
-  {							\
-    typedef T2 T_type;					\
-  }
+  namespace roboptim { namespace detail {		\
+      template<>					\
+      struct AutopromoteTrait<T1>			\
+      {							\
+	typedef T2 T_type;				\
+      };						\
+    } }
 
 #endif //! ROBOPTIM_CORE_DETAIL_AUTOPROMOTE_HH

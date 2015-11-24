@@ -72,18 +72,12 @@ void F<T>::impl_gradient (gradient_ref grad, const_argument_ref x, size_type) co
 }
 
 // Register F for autopromote support
-namespace roboptim
-{
-  namespace detail
-  {
-    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
-    (F<EigenMatrixDense>,
-     GenericDifferentiableFunction<EigenMatrixDense>);
-    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
-    (F<EigenMatrixSparse>,
-     GenericDifferentiableFunction<EigenMatrixSparse>);
-  } // end of namespace detail
-} // end of namespace roboptim
+ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+(F<EigenMatrixDense>,
+ GenericDifferentiableFunction<EigenMatrixDense>)
+ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+(F<EigenMatrixSparse>,
+ GenericDifferentiableFunction<EigenMatrixSparse>)
 
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
