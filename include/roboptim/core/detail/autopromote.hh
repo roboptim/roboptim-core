@@ -196,4 +196,14 @@ namespace roboptim
   } // end of namespace detail.
 } // end of namespace roboptim.
 
+// Redefine the macro for use outside of this header.
+# undef ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+
+# define ROBOPTIM_CORE_DECLARE_AUTOPROMOTE(T1,T2)	\
+  template<>						\
+  struct ::roboptim::detail::AutopromoteTrait<T1>	\
+  {							\
+    typedef T2 T_type;					\
+  }
+
 #endif //! ROBOPTIM_CORE_DETAIL_AUTOPROMOTE_HH

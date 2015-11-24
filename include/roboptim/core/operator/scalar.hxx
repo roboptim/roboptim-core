@@ -52,8 +52,8 @@ namespace roboptim
   template <typename U>
   void
   Scalar<U>::impl_gradient (gradient_ref gradient,
-			 const_argument_ref argument,
-			 size_type functionId)
+			    const_argument_ref argument,
+			    size_type functionId)
     const
   {
     origin_->gradient (gradient, argument, functionId);
@@ -63,11 +63,22 @@ namespace roboptim
   template <typename U>
   void
   Scalar<U>::impl_jacobian (jacobian_ref jacobian,
-			 const_argument_ref argument)
+			    const_argument_ref argument)
     const
   {
     origin_->jacobian (jacobian, argument);
     jacobian *= scalar_;
+  }
+
+  template <typename U>
+  void
+  Scalar<U>::impl_hessian (hessian_ref hessian,
+			   const_argument_ref argument,
+			   size_type functionId)
+    const
+  {
+    origin_->hessian (hessian, argument, functionId);
+    hessian *= scalar_;
   }
 
   template <typename U>

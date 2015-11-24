@@ -26,13 +26,65 @@
 #include <roboptim/core/io.hh>
 #include <roboptim/core/util.hh>
 #include <roboptim/core/operator/scalar.hh>
-#include <roboptim/core/function/identity.hh>
+#include <roboptim/core/differentiable-function.hh>
+#include <roboptim/core/numeric-quadratic-function.hh>
+#include <roboptim/core/detail/autopromote.hh>
 
 using namespace roboptim;
 
 
 typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
 			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+
+template <typename T>
+class F : public GenericDifferentiableFunction<T>
+{
+public:
+  ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+  (GenericDifferentiableFunction<T>);
+
+  explicit F ();
+  void impl_compute (result_ref result, const_argument_ref x) const;
+  void impl_gradient (gradient_ref grad, const_argument_ref x, size_type) const;
+};
+
+template <typename T>
+F<T>::F () : GenericDifferentiableFunction<T> (1, 1, "1 + x²")
+{}
+
+template <typename T>
+void F<T>::impl_compute (result_ref result, const_argument_ref x) const
+{
+  result[0] = 1. + x[0] * x[0];
+}
+
+template <>
+void F<EigenMatrixSparse>::impl_gradient
+(gradient_ref grad, const_argument_ref x, size_type) const
+{
+  grad.insert (0) = 2. * x[0];
+}
+
+template <typename T>
+void F<T>::impl_gradient (gradient_ref grad, const_argument_ref x, size_type) const
+{
+  grad[0] = 2. * x[0];
+}
+
+// Register F for autopromote support
+namespace roboptim
+{
+  namespace detail
+  {
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (F<EigenMatrixDense>,
+     GenericDifferentiableFunction<EigenMatrixDense>);
+    ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+    (F<EigenMatrixSparse>,
+     GenericDifferentiableFunction<EigenMatrixSparse>);
+  } // end of namespace detail
+} // end of namespace roboptim
+
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
@@ -41,25 +93,63 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (scalar_test, T, functionTypes_t)
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("operator-scalar");
 
-  typename GenericIdentityFunction<T>::result_t offset (5);
-  offset << 1., 2., 0., 4., 5.;
+  // Test for differentiable functions
+  {
+    typedef F<T> testFunction_t;
+    typedef GenericDifferentiableFunction<T> testPromoteFunction_t;
 
-  boost::shared_ptr<GenericIdentityFunction<T> > identity =
-    boost::make_shared<GenericIdentityFunction<T> > (offset);
+    boost::shared_ptr<testFunction_t >
+      f = boost::make_shared<testFunction_t > ();
 
-  boost::shared_ptr<GenericLinearFunction<T> > fct = 2. * identity;
+    boost::shared_ptr<testPromoteFunction_t> g = 2. * f;
 
-  typename GenericIdentityFunction<T>::vector_t x (5);
-  x.setZero ();
-  (*output)
-    << (*fct) << "\n"
-    << (*fct) (x) << "\n"
-    << toDense (fct->gradient (x, 0)) << "\n"
-    << toDense (fct->gradient (x, 1)) << "\n"
-    << toDense (fct->gradient (x, 2)) << "\n"
-    << toDense (fct->gradient (x, 3)) << "\n"
-    << toDense (fct->gradient (x, 4)) << "\n"
-    << toDense (fct->jacobian (x)) << std::endl;
+    typename testFunction_t::vector_t x (1);
+    x.fill (1.);
+    (*output)
+      << x << "\n"
+      << (*f) << "\n"
+      << (*f) (x) << "\n"
+      << toDense (f->gradient (x, 0)) << "\n"
+      << toDense (f->jacobian (x)) << "\n"
+      << (*g) << "\n"
+      << (*g) (x) << "\n"
+      << toDense (g->gradient (x, 0)) << "\n"
+      << toDense (g->jacobian (x)) << std::endl;
+  }
+
+  // Test for twice-differentiable functions
+  {
+    typedef GenericNumericQuadraticFunction<T> testFunction_t;
+    typedef GenericQuadraticFunction<T> testPromoteFunction_t;
+    typedef typename testFunction_t::size_type size_type;
+
+    size_type n = 4;
+    typename testFunction_t::matrix_t a (n, n);
+    a.setZero ();
+    for (size_type i = 0; i < n; ++i)
+      a.coeffRef (i, i) = 1.;
+    typename testFunction_t::vector_t b (n);
+    b.setZero ();
+
+    boost::shared_ptr<testFunction_t >
+      f = boost::make_shared<testFunction_t > (a, b);
+
+    boost::shared_ptr<testPromoteFunction_t> g = 2. * f;
+
+    typename testFunction_t::vector_t x (n);
+    x.fill (1.);
+    (*output)
+      << x << "\n"
+      << (*f) << "\n"
+      << (*f) (x) << "\n"
+      << toDense (f->gradient (x, 0)) << "\n"
+      << toDense (f->jacobian (x)) << "\n"
+      << (*g) << "\n"
+      << (*g) (x) << "\n"
+      << toDense (g->gradient (x, 0)) << "\n"
+      << toDense (g->jacobian (x)) << "\n"
+      << toDense (g->hessian (x)) << std::endl;
+  }
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
