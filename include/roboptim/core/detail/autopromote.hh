@@ -103,7 +103,7 @@ namespace roboptim
     template <typename U>
     struct AutopromoteTrait<Scalar<U> >
     {
-      typedef typename Scalar<U>::parent_t T_type;
+      typedef typename AutopromoteTrait<U>::T_type T_type;
     };
 
     ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
