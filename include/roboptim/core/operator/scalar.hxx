@@ -30,7 +30,7 @@ namespace roboptim
        origin->outputSize (),
        (boost::format ("%1% * (%2%)")
 	% scalar
-	% origin->getName ()).str ()),
+	% (origin->getName ().empty ()? "f" : origin->getName ())).str ()),
       origin_ (origin),
       scalar_ (scalar)
   {}
@@ -68,6 +68,16 @@ namespace roboptim
   {
     origin_->jacobian (jacobian, argument);
     jacobian *= scalar_;
+  }
+
+  template <typename U>
+  std::ostream& Scalar<U>::print (std::ostream& o) const
+  {
+    o << this->getName () << ":" << incindent
+      << iendl << "Sub-function: " << *origin_
+      << decindent;
+
+    return o;
   }
 
 } // end of namespace roboptim.

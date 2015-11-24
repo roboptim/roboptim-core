@@ -17,7 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_OPERATOR_SCALAR_HH
 # define ROBOPTIM_CORE_OPERATOR_SCALAR_HH
-# include <vector>
+
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
@@ -67,6 +67,13 @@ namespace roboptim
     void impl_jacobian (jacobian_ref jacobian,
 			const_argument_ref arg)
       const;
+
+    /// \brief Display the function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
+    virtual std::ostream& print (std::ostream& o) const;
+
   private:
     boost::shared_ptr<U> origin_;
 

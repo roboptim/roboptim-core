@@ -37,6 +37,9 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (scalar_test, T, functionTypes_t)
 {
+  boost::shared_ptr<boost::test_tools::output_test_stream>
+    output = retrievePattern ("operator-scalar");
+
   typename GenericIdentityFunction<T>::result_t offset (5);
   offset << 1., 2., 0., 4., 5.;
 
@@ -47,14 +50,18 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (scalar_test, T, functionTypes_t)
 
   typename GenericIdentityFunction<T>::vector_t x (5);
   x.setZero ();
-  std::cout
+  (*output)
+    << (*fct) << "\n"
     << (*fct) (x) << "\n"
-    << fct->gradient (x, 0) << "\n"
-    << fct->gradient (x, 1) << "\n"
-    << fct->gradient (x, 2) << "\n"
-    << fct->gradient (x, 3) << "\n"
-    << fct->gradient (x, 4) << "\n"
-    << fct->jacobian (x) << std::endl;
+    << toDense (fct->gradient (x, 0)) << "\n"
+    << toDense (fct->gradient (x, 1)) << "\n"
+    << toDense (fct->gradient (x, 2)) << "\n"
+    << toDense (fct->gradient (x, 3)) << "\n"
+    << toDense (fct->gradient (x, 4)) << "\n"
+    << toDense (fct->jacobian (x)) << std::endl;
+
+  std::cout << output->str () << std::endl;
+  BOOST_CHECK (output->match_pattern ());
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
