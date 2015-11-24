@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include <roboptim/core/io.hh>
+#include <roboptim/core/util.hh>
 #include <roboptim/core/operator/scalar.hh>
 #include <roboptim/core/function/identity.hh>
 
