@@ -174,12 +174,12 @@ namespace roboptim
 	{
 	  // True if T1 is higher ranked
 	  T1IsBetter =
-	  PrecisionTrait<T1>::precisionRank >
-	  PrecisionTrait<T2>::precisionRank,
+	  static_cast<int> (PrecisionTrait<T1>::precisionRank) >
+	  static_cast<int> (PrecisionTrait<T2>::precisionRank),
 	  // True if we know ranks for both T1 and T2
 	  knowBothRanks =
-	  PrecisionTrait<T1>::knowPrecisionRank
-	  && PrecisionTrait<T2>::knowPrecisionRank
+	  (PrecisionTrait<T1>::knowPrecisionRank != 0)
+	  && (PrecisionTrait<T2>::knowPrecisionRank != 0)
 	};
 
       // If we don't know both ranks, assert.
