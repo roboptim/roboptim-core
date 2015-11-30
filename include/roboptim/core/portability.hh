@@ -71,7 +71,7 @@
 #else
 // On Linux, for GCC >= 4
   #if __GNUC__ >= 4
-    #define ROBOPTIM_UNUSED __attribute__ ((__unused__))
+    #define ROBOPTIM_UNUSED __attribute__((unused))
   #else
 // Otherwise (GCC < 4 or another compiler is used)
     #define ROBOPTIM_UNUSED
