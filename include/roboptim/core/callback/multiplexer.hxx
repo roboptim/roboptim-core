@@ -21,6 +21,7 @@
 # include <boost/bind.hpp>
 
 # include <roboptim/core/portability.hh>
+# include <roboptim/core/solver.hh>
 
 namespace roboptim
 {

@@ -31,6 +31,7 @@
 # include <boost/type_traits/is_same.hpp>
 
 # include <roboptim/core/config.hh>
+# include <roboptim/core/solver.hh>
 
 namespace roboptim
 {
