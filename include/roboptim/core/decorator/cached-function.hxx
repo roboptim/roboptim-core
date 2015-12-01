@@ -69,7 +69,7 @@ namespace roboptim
       isNotTwiceDifferentiable_t;
 
       typedef typename boost::enable_if<detail::
-					derives_from_twice_differentiable_function<T> >
+					derives_from_ntimes_derivable_function<T> >
       isNTimesDerivable_t;
 
       typedef typename boost::disable_if<detail::
