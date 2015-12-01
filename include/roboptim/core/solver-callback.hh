@@ -24,13 +24,14 @@
 # include <boost/function.hpp>
 
 # include <roboptim/core/solver-state.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
   /// \brief Solver per-iteration callback wrapper.
   /// \tparam S solver type.
   template <typename S>
-  class SolverCallback
+  class ROBOPTIM_DLLAPI SolverCallback
   {
   public:
     /// \brief Solver type.

@@ -22,9 +22,11 @@
 #include <roboptim/core/sum-of-c1-squares.hh>
 #include <roboptim/core/problem.hh>
 #include <roboptim/core/solver.hh>
+#include <roboptim/core/solver-callback.hh>
 #include <roboptim/core/solver-factory.hh>
 #include <roboptim/core/optimization-logger.hh>
 #include <roboptim/core/callback/multiplexer.hh>
+#include <roboptim/core/callback/wrapper.hh>
 
 namespace roboptim
 {
@@ -57,6 +59,9 @@ namespace roboptim
   template class ROBOPTIM_DLLAPI SolverState<Problem<EigenMatrixDense> >;
   template class ROBOPTIM_DLLAPI SolverState<Problem<EigenMatrixSparse> >;
 
+  template class ROBOPTIM_DLLAPI SolverCallback<Solver<EigenMatrixDense> >;
+  template class ROBOPTIM_DLLAPI SolverCallback<Solver<EigenMatrixSparse> >;
+
   template class ROBOPTIM_DLLAPI
     OptimizationLogger<Solver<EigenMatrixDense> >;
   template class ROBOPTIM_DLLAPI
@@ -66,6 +71,9 @@ namespace roboptim
   {
     template class ROBOPTIM_DLLAPI Multiplexer<Solver<EigenMatrixDense> >;
     template class ROBOPTIM_DLLAPI Multiplexer<Solver<EigenMatrixSparse> >;
+
+    template class ROBOPTIM_DLLAPI Wrapper<Solver<EigenMatrixDense> >;
+    template class ROBOPTIM_DLLAPI Wrapper<Solver<EigenMatrixSparse> >;
   } // end of namespace callback
 
   ROBOPTIM_ALLOW_ATTRIBUTES_OFF

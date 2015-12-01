@@ -86,6 +86,13 @@ namespace roboptim
   {
     return c.print (o);
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class SolverCallback<Solver<EigenMatrixDense> >;
+  extern template class SolverCallback<Solver<EigenMatrixSparse> >;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_SOLVER_CALLBACK_HXX
