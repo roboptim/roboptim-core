@@ -20,9 +20,12 @@
 
 # include <vector>
 
+# include <boost/shared_ptr.hpp>
+
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/portability.hh>
 # include <roboptim/core/solver-state.hh>
+# include <roboptim/core/solver-callback.hh>
 
 namespace roboptim
 {
@@ -38,9 +41,11 @@ namespace roboptim
     ///
     /// \tparam S solver type.
     template <typename S>
-    class ROBOPTIM_DLLAPI Multiplexer
+    class ROBOPTIM_DLLAPI Multiplexer : public SolverCallback<S>
     {
     public:
+      /// \brief Parent type.
+      typedef SolverCallback<S> parent_t;
 
       /// \brief Type of the solver.
       typedef S solver_t;
@@ -51,11 +56,14 @@ namespace roboptim
       /// \brief Type of the state of the solver.
       typedef SolverState<problem_t> solverState_t;
 
-      /// \brief Callback function type.
-      typedef typename solver_t::callback_t callback_t;
+      /// \brief Solver callback type.
+      typedef SolverCallback<S> solverCallback_t;
+
+      /// \brief Pointer to a callback.
+      typedef boost::shared_ptr<solverCallback_t> solverCallbackPtr_t;
 
       /// \brief Type of a vector of callbacks.
-      typedef std::vector<callback_t> callbacks_t;
+      typedef std::vector<solverCallbackPtr_t> solverCallbacks_t;
 
       /// \brief Default constructor containing no callback.
       /// \param solver solver the multiplexer will attach to.
@@ -64,27 +72,26 @@ namespace roboptim
       /// \brief Constructor filling the vector of callbacks.
       /// \param solver solver the multiplexer will attach to.
       /// \param callbacks a vector of callbacks.
-      explicit Multiplexer (solver_t& solver, const callbacks_t& callbacks);
+      explicit Multiplexer (solver_t& solver,
+                            const solverCallbacks_t& callbacks);
 
       /// \brief Virtual destructor.
       virtual ~Multiplexer ();
 
       /// \brief Return the vector of callbacks.
       /// \return vector of callbacks.
-      callbacks_t& callbacks ();
+      solverCallbacks_t& callbacks ();
 
       /// \brief Return the vector of callbacks.
       /// \return vector of callbacks.
-      const callbacks_t& callbacks () const;
+      const solverCallbacks_t& callbacks () const;
+
+      /// \brief Display the callback on the specified output stream.
+      /// \param o output stream used for display.
+      /// \return output stream.
+      virtual std::ostream& print (std::ostream& o) const;
 
     protected:
-
-      /// \brief Meta-callback calling multiple callbacks.
-      ///
-      /// \param pb problem.
-      /// \param state solver state.
-      void perIterationCallback (const problem_t& pb,
-                                 solverState_t& state);
 
       /// \brief Meta-callback calling multiple callbacks.
       /// Unsafe version that can throw exceptions.
@@ -92,8 +99,7 @@ namespace roboptim
       /// \param pb problem.
       /// \param state solver state.
       virtual void perIterationCallbackUnsafe
-      (const problem_t& pb,
-       solverState_t& state);
+      (const problem_t& pb, solverState_t& state);
 
       /// \brief Register the multiplexer with the solver.
       void attach ();
@@ -107,10 +113,8 @@ namespace roboptim
       solver_t& solver_;
 
       /// \brief Vector of callbacks.
-      callbacks_t callbacks_;
-
+      solverCallbacks_t callbacks_;
     };
-
   } // end of namespace callback
 } // end of namespace roboptim
 

@@ -20,7 +20,6 @@
 # include <string>
 # include <sstream>
 
-# include <boost/bind.hpp>
 # include <boost/date_time/posix_time/posix_time.hpp>
 # include <boost/filesystem.hpp>
 # include <boost/filesystem/fstream.hpp>
@@ -32,6 +31,7 @@
 
 # include <roboptim/core/config.hh>
 # include <roboptim/core/solver.hh>
+# include <roboptim/core/indent.hh>
 
 namespace roboptim
 {
@@ -163,7 +163,8 @@ namespace roboptim
   OptimizationLogger<T>::OptimizationLogger (solver_t& solver,
 					     const boost::filesystem::path& path,
 					     bool selfRegister)
-    : solver_ (solver),
+    : parent_t ("Optimization logger"),
+      solver_ (solver),
       path_ (path),
       output_ (),
       callbackCallId_ (0),
@@ -320,14 +321,6 @@ namespace roboptim
   }
 
   template <typename T>
-  typename OptimizationLogger<T>::callback_t
-  OptimizationLogger<T>::callback ()
-  {
-    return boost::bind (&OptimizationLogger<T>::perIterationCallback,
-                        this, _1, _2);
-  }
-
-  template <typename T>
   void OptimizationLogger<T>::process_constraints
   (const typename solver_t::problem_t& pb,
    const typename solver_t::solverState_t& state,
@@ -396,7 +389,7 @@ namespace roboptim
   {
     try
       {
-	solver_.setIterationCallback (callback ());
+	solver_.setIterationCallback (this->callback ());
       }
     catch (std::runtime_error& e)
       {
@@ -420,7 +413,7 @@ namespace roboptim
 
   template <typename T>
   void OptimizationLogger<T>::perIterationCallback
-  (const problem_t& pb, const solverState_t& state)
+  (const problem_t& pb, solverState_t& state)
   {
     try
       {
@@ -444,7 +437,7 @@ namespace roboptim
   template <typename T>
   void OptimizationLogger<T>::perIterationCallbackUnsafe
   (const typename solver_t::problem_t& pb,
-   const typename solver_t::solverState_t& state)
+   typename solver_t::solverState_t& state)
   {
     // Create the iteration-specific directory.
     boost::filesystem::path iterationPath =
@@ -511,6 +504,17 @@ namespace roboptim
   OptimizationLogger<T>::logPath () const
   {
     return path_;
+  }
+
+  template <typename T>
+  std::ostream&
+  OptimizationLogger<T>::print (std::ostream& o) const
+  {
+    o << this->name () << ":" << incindent;
+    o << iendl << "Log directory: " << path_.string ();
+    o << decindent;
+
+    return o;
   }
 
   template <typename T>

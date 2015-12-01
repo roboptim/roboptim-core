@@ -28,6 +28,7 @@
 #include <roboptim/core/problem.hh>
 #include <roboptim/core/solver-factory.hh>
 #include <roboptim/core/callback/multiplexer.hh>
+#include <roboptim/core/callback/wrapper.hh>
 #include <roboptim/core/optimization-logger.hh>
 
 using namespace roboptim;
@@ -89,14 +90,19 @@ BOOST_AUTO_TEST_CASE (multiplexer)
   multiplexer_t multiplexer (solver);
 
   // Add some dummy callbacks.
-  multiplexer.callbacks ().push_back (callbackFoo);
-  multiplexer.callbacks ().push_back (callbackBar);
+  multiplexer.callbacks ().push_back
+    (boost::make_shared<callback::Wrapper<solver_t> > (callbackFoo));
+  multiplexer.callbacks ().push_back
+    (boost::make_shared<callback::Wrapper<solver_t> > (callbackBar, "bar"));
 
   // Add an optimization logger.
   boost::filesystem::path log_dir =
     "/tmp/roboptim-core-tests/multiplexer-logger";
-  OptimizationLogger<solver_t> logger (solver, log_dir, false);
-  multiplexer.callbacks ().push_back (logger.callback ());
+  boost::shared_ptr<OptimizationLogger<solver_t> >
+    logger (new OptimizationLogger<solver_t> (solver, log_dir, false));
+  multiplexer.callbacks ().push_back (logger);
+
+  (*output) << multiplexer << std::endl;
 
   // Solve the problem.
   solver_t::result_t res = solver.minimum ();

@@ -1,2 +1,5 @@
-Foo
-Bar
+Multiplexer callbacks:
+  - wrapped callback
+  - bar
+  - Optimization logger:
+    Log directory: /tmp/roboptim-core-tests/multiplexer-logger

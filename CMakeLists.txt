@@ -36,6 +36,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/cache.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/multiplexer.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/multiplexer.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/wrapper.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/wrapper.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/debug.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
@@ -111,6 +113,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-callback.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-callback.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-error.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hxx

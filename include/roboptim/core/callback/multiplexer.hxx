@@ -30,7 +30,8 @@ namespace roboptim
 
     template <typename S>
     Multiplexer<S>::Multiplexer (solver_t& solver)
-    : solver_ (solver),
+    : parent_t (),
+      solver_ (solver),
       callbacks_ ()
     {
       attach ();
@@ -38,7 +39,7 @@ namespace roboptim
 
     template <typename S>
     Multiplexer<S>::Multiplexer (solver_t& solver,
-                                 const callbacks_t& callbacks)
+                                 const solverCallbacks_t& callbacks)
     : solver_ (solver),
       callbacks_ (callbacks)
     {
@@ -52,48 +53,30 @@ namespace roboptim
     }
 
     template <typename S>
-    typename Multiplexer<S>::callbacks_t& Multiplexer<S>::callbacks ()
+    typename Multiplexer<S>::solverCallbacks_t&
+    Multiplexer<S>::callbacks ()
     {
       return callbacks_;
     }
 
     template <typename S>
-    const typename Multiplexer<S>::callbacks_t& Multiplexer<S>::callbacks ()
+    const typename Multiplexer<S>::solverCallbacks_t&
+    Multiplexer<S>::callbacks ()
     const
     {
       return callbacks_;
     }
 
     template <typename S>
-    void Multiplexer<S>::perIterationCallback
-    (const problem_t& pb,
-     solverState_t& state)
-    {
-      try
-      {
-        perIterationCallbackUnsafe (pb, state);
-      }
-      catch (std::exception& e)
-      {
-        std::cerr << e.what () << std::endl;
-      }
-      catch (...)
-      {
-        std::cerr << "unknown exception" << std::endl;
-      }
-    }
-
-    template <typename S>
     void Multiplexer<S>::perIterationCallbackUnsafe
-    (const problem_t& pb,
-     solverState_t& state)
+    (const problem_t& pb, solverState_t& state)
     {
       // For each callback function
-      for (typename callbacks_t::iterator
+      for (typename solverCallbacks_t::iterator
            iter  = callbacks_.begin ();
            iter != callbacks_.end (); ++iter)
       {
-        (*iter) (pb, state);
+        (**iter) (pb, state);
       }
     }
 
@@ -121,10 +104,26 @@ namespace roboptim
       // Unregister the callback, do not fail if this is impossible.
       try
       {
-        solver_.setIterationCallback (callback_t ());
+        solver_.setIterationCallback
+          (typename solverCallback_t::callback_t ());
       }
       catch (std::exception& e)
       {}
+    }
+
+    template <typename S>
+    std::ostream&
+    Multiplexer<S>::print (std::ostream& o) const
+    {
+      o << incindent << "Multiplexer callbacks:";
+      for (typename solverCallbacks_t::const_iterator
+           c = callbacks_.begin (); c != callbacks_.end(); ++c)
+      {
+        o << iendl << "- " << **c;
+      }
+      o << decindent;
+
+      return o;
     }
 
 // Explicit template instantiations for dense and sparse matrices.

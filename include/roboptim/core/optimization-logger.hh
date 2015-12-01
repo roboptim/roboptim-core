@@ -31,17 +31,20 @@
 
 # include <roboptim/core/config.hh>
 # include <roboptim/core/portability.hh>
+# include <roboptim/core/solver-callback.hh>
 
 namespace roboptim
 {
   /// \brief Log the optimization process (values, Jacobians, time taken
   /// etc.).
-  /// \tparam T solver type.
-  template <typename T>
-  class ROBOPTIM_DLLAPI OptimizationLogger
+  /// \tparam S solver type.
+  template <typename S>
+  class ROBOPTIM_DLLAPI OptimizationLogger : public SolverCallback<S>
   {
   public:
-    typedef T solver_t;
+    typedef SolverCallback<S> parent_t;
+
+    typedef S solver_t;
     typedef typename solver_t::problem_t                       problem_t;
     typedef typename solver_t::problem_t::value_type           value_type;
     typedef typename solver_t::problem_t::size_type            size_type;
@@ -76,17 +79,12 @@ namespace roboptim
 
     /// \brief Append extra information to the log file.
     /// \param text text to append.
-    OptimizationLogger<T>& operator<< (const std::string& text);
+    OptimizationLogger<S>& operator<< (const std::string& text);
 
     /// \brief Append extra information to the log file.
     /// \param u object to print.
     template <typename U>
-    OptimizationLogger<T>& operator<< (const U& u);
-
-    /// \brief Return the callback function.
-    /// This can be used with a callback multiplexer.
-    /// \return callback function.
-    callback_t callback ();
+    OptimizationLogger<S>& operator<< (const U& u);
 
   private:
     /// \brief Process constraints in the callback.
@@ -104,12 +102,12 @@ namespace roboptim
 
   protected:
     void perIterationCallback (const problem_t& pb,
-                               const solverState_t& state);
+                               solverState_t& state);
 
     virtual
     void perIterationCallbackUnsafe
     (const typename solver_t::problem_t& pb,
-     const typename solver_t::solverState_t& state);
+     typename solver_t::solverState_t& state);
 
   public:
     /// \brief Return the path of the log directory.
@@ -118,6 +116,11 @@ namespace roboptim
     /// overload resolution takes place before accessibility checks.
     /// \return path of the log directory.
     const boost::filesystem::path& logPath () const;
+
+    /// \brief Display the logger on the specified output stream.
+    /// \param o output stream used for display.
+    /// \return output stream.
+    virtual std::ostream& print (std::ostream& o) const;
 
   protected:
     /// \brief Return the path of the log directory.
