@@ -18,6 +18,7 @@
 #ifndef ROBOPTIM_CORE_CALLBACK_WRAPPER_HXX
 # define ROBOPTIM_CORE_CALLBACK_WRAPPER_HXX
 
+# include <roboptim/core/solver.hh>
 # include <roboptim/core/solver-state.hh>
 # include <roboptim/core/solver-callback.hh>
 # include <roboptim/core/portability.hh>
@@ -52,7 +53,5 @@ namespace roboptim
 
   } // end of namespace callback
 } // end of namespace roboptim
-
-# include <roboptim/core/callback/wrapper.hxx>
 
 #endif //! ROBOPTIM_CORE_CALLBACK_WRAPPER_HXX

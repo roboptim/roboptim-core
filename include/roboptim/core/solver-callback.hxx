@@ -20,6 +20,8 @@
 
 # include <boost/bind.hpp>
 
+# include <roboptim/core/solver.hh>
+
 namespace roboptim
 {
   template <typename S>
