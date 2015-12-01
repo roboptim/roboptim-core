@@ -21,6 +21,7 @@
 # include <roboptim/core/debug.hh>
 
 # include <map>
+# include <ostream>
 
 # include <boost/shared_ptr.hpp>
 # include <boost/functional/hash.hpp>
@@ -87,6 +88,12 @@ namespace roboptim
 
     /// \brief Reset the caches.
     void reset ();
+
+    /// \brief Display the cached function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
+    virtual std::ostream& print (std::ostream& o) const;
 
   protected:
 

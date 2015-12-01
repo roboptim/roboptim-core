@@ -1,4 +1,6 @@
-2 * x * x + y (cached) (differentiable function):
+2 * x * x + y (cached):
+  2 * x * x + y (differentiable function)
+  Cache size: 10
 
 computation (not cached)
 [1](0)
@@ -200,3 +202,11 @@ gradient computation (not cached)
 jacobian computation (not cached)
 [2](38,1)
 [2](38,1)
+linear function (numeric linear function):
+  A = [3,3]((0,0,0), (0,0,0), (0,0,0))
+  B = [3](0,0,0)
+linear function (cached):
+  linear function (numeric linear function):
+    A = [3,3]((0,0,0), (0,0,0), (0,0,0))
+    B = [3](0,0,0)
+  Cache size: 3

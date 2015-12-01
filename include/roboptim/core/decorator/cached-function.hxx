@@ -125,6 +125,16 @@ namespace roboptim
       }
   }
 
+  template <typename T>
+  std::ostream&
+  CachedFunction<T>::print (std::ostream& o) const
+  {
+    o << this->getName () << ":" << incindent
+      << iendl << *function_
+      << iendl << "Cache size: " << cache_[0].size ()
+      << decindent;
+    return o;
+  }
 
   template <typename T>
   void
