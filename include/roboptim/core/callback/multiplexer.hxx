@@ -18,6 +18,8 @@
 #ifndef ROBOPTIM_CORE_CALLBACK_MULTIPLEXER_HXX
 # define ROBOPTIM_CORE_CALLBACK_MULTIPLEXER_HXX
 
+# include <stdexcept>
+
 # include <boost/bind.hpp>
 
 # include <roboptim/core/portability.hh>
@@ -107,8 +109,12 @@ namespace roboptim
         solver_.setIterationCallback
           (typename solverCallback_t::callback_t ());
       }
-      catch (std::exception& e)
-      {}
+      catch (std::runtime_error& e)
+      {
+        std::cerr
+          << "failed to unregister callback multiplexer:\n"
+          << e.what () << std::endl;
+      }
     }
 
     template <typename S>
