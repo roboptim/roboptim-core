@@ -175,7 +175,7 @@ namespace roboptim
   /// \brief Override operator<< to display ``parameters'' objects.
   ///
   /// \param o output stream used for display
-  /// \param ns NoSolution object, ignored
+  /// \param parameter parameter
   /// \return output stream
   ROBOPTIM_DLLAPI std::ostream&
   operator<< (std::ostream& o, const Parameter& parameter);
