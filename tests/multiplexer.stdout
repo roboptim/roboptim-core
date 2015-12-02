@@ -3,3 +3,8 @@ Multiplexer callbacks:
   - bar
   - Optimization logger:
     Log directory: /tmp/roboptim-core-tests/multiplexer-logger
+Foo
+Bar
+Multiplexer callbacks:
+  - foo
+Foo

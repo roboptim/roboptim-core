@@ -33,7 +33,8 @@
 
 using namespace roboptim;
 
-boost::shared_ptr<boost::test_tools::output_test_stream> output;
+boost::shared_ptr<boost::test_tools::output_test_stream>
+  output = retrievePattern ("multiplexer");
 
 // Solver type.
 typedef Solver<EigenMatrixDense> solver_t;
@@ -61,21 +62,19 @@ struct F : public Function
 void callbackFoo (const multiplexer_t::problem_t&,
                   multiplexer_t::solverState_t&)
 {
-  std::cout << "Foo" << std::endl;
+  (*output) << "Foo" << std::endl;
 }
 
 void callbackBar (const multiplexer_t::problem_t&,
                   multiplexer_t::solverState_t&)
 {
-  std::cout << "Bar" << std::endl;
+  (*output) << "Bar" << std::endl;
 }
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (multiplexer)
 {
-  output = retrievePattern ("multiplexer");
-
   // Instantiate the function and the problem.
   boost::shared_ptr<F> f = boost::make_shared<F> ();
   solver_t::problem_t pb (f);
@@ -106,6 +105,18 @@ BOOST_AUTO_TEST_CASE (multiplexer)
 
   // Solve the problem.
   solver_t::result_t res = solver.minimum ();
+  solver.reset ();
+
+  // Create another callback multiplexer.
+  multiplexer_t multiplexer2 (solver);
+
+  multiplexer2.callbacks ().push_back
+    (boost::make_shared<callback::Wrapper<solver_t> > (callbackFoo, "foo"));
+
+  (*output) << multiplexer2 << std::endl;
+
+  // Solve the problem.
+  solver_t::result_t res2 = solver.minimum ();
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
