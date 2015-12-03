@@ -33,8 +33,7 @@
 
 using namespace roboptim;
 
-boost::shared_ptr<boost::test_tools::output_test_stream>
-  output = retrievePattern ("multiplexer");
+boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
 // Solver type.
 typedef Solver<EigenMatrixDense> solver_t;
@@ -75,6 +74,8 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (multiplexer)
 {
+  output = retrievePattern ("multiplexer");
+
   // Instantiate the function and the problem.
   boost::shared_ptr<F> f = boost::make_shared<F> ();
   solver_t::problem_t pb (f);
