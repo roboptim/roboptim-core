@@ -60,6 +60,14 @@ FOREACH(lib ${ROBOPTIM_API_BOOST_LIBRARIES})
   PKG_CONFIG_APPEND_LIBS(boost_${lib})
 ENDFOREACH()
 
+IF(ROBOPTIM_PRECOMPILE_DENSE_SPARSE)
+  # core library needs to be linked with Boost libraries (e.g. for
+  # OptimizationLogger)
+  FOREACH(lib ${ROBOPTIM_API_BOOST_LIBRARIES})
+    TARGET_LINK_LIBRARIES(roboptim-core boost_${lib})
+  ENDFOREACH()
+ENDIF()
+
 TARGET_LINK_LIBRARIES(roboptim-core ltdl)
 SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 3 VERSION 3.2.0)
 INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
