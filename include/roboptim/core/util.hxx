@@ -206,15 +206,15 @@ namespace roboptim
       }
   }
 
-  inline double normalize (double x)
+  inline double normalize (double x, double eps)
   {
-      return (std::fabs (x) < 1e-8)? 0:x;
+      return (std::fabs (x) < eps)? 0:x;
   }
 
   template <typename T>
-  inline T normalize (const T& x)
+  inline T normalize (const T& x, double eps)
   {
-    return (x.array ().abs () < 1e-8).select (0, x);
+    return (x.array ().abs () < eps).select (0, x);
   }
 } // end of namespace roboptim.
 

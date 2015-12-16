@@ -155,11 +155,11 @@ namespace roboptim
    Function::size_type startRow, Function::size_type startCol);
 
   /// \brief Apply normalize to a scalar.
-  inline double normalize (double x);
+  inline double normalize (double x, double eps = 1e-8);
 
   /// \brief Apply normalize to each element of an Eigen vector.
   template <typename T>
-  inline T normalize (const T& x);
+  inline T normalize (const T& x, double eps = 1e-8);
 } // end of namespace roboptim.
 
 # include <roboptim/core/util.hxx>
