@@ -1441,6 +1441,7 @@
 #!/usr/bin/gnuplot
 set terminal wxt persist
 set multiplot layout 2,2
+# x * x
 plot '-' title 'x * x' with line
 -100.00000000 10000.00000000
 -99.00000000 9801.00000000
@@ -1644,7 +1645,8 @@ plot '-' title 'x * x' with line
 99.00000000 9801.00000000
 e
 
-plot '-' title '' with line
+# x * x (finite differences)
+plot '-' title 'x * x (finite differences)' with line
 -100.00000000 10000.00000000
 -99.00000000 9801.00000000
 -98.00000000 9604.00000000
@@ -1847,6 +1849,7 @@ plot '-' title '' with line
 99.00000000 9801.00000000
 e
 
+# 
 plot '-' title '' with line
 -100.00000000 -243295.00000000
 -99.00000000 -238486.00000000
@@ -2050,7 +2053,8 @@ plot '-' title '' with line
 99.00000000 -231952.00000000
 e
 
-plot '-' title '' with line
+# Finite difference wrapper
+plot '-' title 'Finite difference wrapper' with line
 -100.00000000 -243295.00000000
 -99.00000000 -238486.00000000
 -98.00000000 -233725.00000000

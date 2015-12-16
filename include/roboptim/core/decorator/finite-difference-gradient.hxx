@@ -17,8 +17,10 @@
 
 #ifndef ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX
 # define ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX
+
 # include <boost/type_traits/is_same.hpp>
 # include <boost/mpl/same_as.hpp>
+# include <boost/format.hpp>
 
 # include <roboptim/core/util.hh>
 
@@ -117,7 +119,7 @@ namespace roboptim
   (const GenericFunction<T>& adaptee,
    typename GenericDifferentiableFunction<T>::value_type epsilon)
     : GenericDifferentiableFunction<T>
-    (adaptee.inputSize (), adaptee.outputSize ()),
+      (adaptee.inputSize (), adaptee.outputSize (), generateName (adaptee)),
     FdgPolicy (adaptee),
     adaptee_ (adaptee),
     epsilon_ (epsilon),
@@ -256,6 +258,28 @@ namespace roboptim
    const_argument_ref argument) const
   {
     this->computeJacobian(epsilon_, jacobian, argument, xEps_);
+  }
+
+  template <typename T, typename FdgPolicy>
+  std::ostream&
+  GenericFiniteDifferenceGradient<T, FdgPolicy>::print (std::ostream& o) const
+  {
+    o << this->getName () << ":" << incindent
+      << iendl << "Wrapped function: " << adaptee_
+      << decindent;
+
+    return o;
+  }
+
+  template <typename T, typename FdgPolicy>
+  std::string
+  GenericFiniteDifferenceGradient<T, FdgPolicy>::generateName
+  (const GenericFunction<T>& adaptee) const
+  {
+    if (!adaptee.getName ().empty ())
+      return (boost::format ("%s (finite differences)")
+              % adaptee.getName ()).str ();
+    else return "Finite difference wrapper";
   }
 
   template <typename T>

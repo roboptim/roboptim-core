@@ -17,7 +17,10 @@
 
 #ifndef ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HH
 # define ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HH
+
 # include <stdexcept>
+# include <string>
+# include <ostream>
 
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/differentiable-function.hh>
@@ -318,6 +321,12 @@ namespace roboptim
      value_type e = finiteDifferenceEpsilon);
     ~GenericFiniteDifferenceGradient ();
 
+    /// \brief Display the function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
+    virtual std::ostream& print (std::ostream& o) const;
+
   protected:
     virtual void impl_compute (result_ref, const_argument_ref) const;
     virtual void impl_gradient (gradient_ref,
@@ -325,6 +334,8 @@ namespace roboptim
                                 size_type = 0) const;
     virtual void impl_jacobian (jacobian_ref jacobian,
                                 const_argument_ref argument) const;
+
+    std::string generateName (const GenericFunction<T>& adaptee) const;
 
     /// \brief Reference to the wrapped function.
     const GenericFunction<T>& adaptee_;
