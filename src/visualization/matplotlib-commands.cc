@@ -78,14 +78,14 @@ namespace roboptim
       Command							\
       NAME ()							\
       {								\
-	return Command ("plt." BOOST_PP_STRINGIZE(NAME) " ()");	\
+	return Command ("plt." BOOST_PP_STRINGIZE(NAME) "()");	\
       }
 
 # define MATPLOTLIB_UNARY_COMMAND_VAR(VAR, NAME)			\
       Command								\
       NAME ()								\
       {									\
-	return Command (BOOST_PP_STRINGIZE(VAR) " = plt." BOOST_PP_STRINGIZE(NAME) " ()"); \
+	return Command (BOOST_PP_STRINGIZE(VAR) " = plt." BOOST_PP_STRINGIZE(NAME) "()"); \
       }
 
 # define MATPLOTLIB_UNARY_COMMAND_ARG(NAME, ARG)			\
