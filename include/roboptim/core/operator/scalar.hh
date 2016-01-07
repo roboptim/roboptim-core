@@ -17,11 +17,11 @@
 
 #ifndef ROBOPTIM_CORE_OPERATOR_SCALAR_HH
 # define ROBOPTIM_CORE_OPERATOR_SCALAR_HH
-# include <vector>
+
 # include <boost/shared_ptr.hpp>
 
 # include <roboptim/core/detail/autopromote.hh>
-# include <roboptim/core/differentiable-function.hh>
+# include <roboptim/core/twice-differentiable-function.hh>
 
 
 namespace roboptim
@@ -36,7 +36,9 @@ namespace roboptim
   {
   public:
     typedef typename detail::AutopromoteTrait<U>::T_type parentType_t;
-    ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_ (parentType_t);
+    typedef typename parentType_t::traits_t traits_t;
+    ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
+      (GenericTwiceDifferentiableFunction<traits_t>);
 
     typedef boost::shared_ptr<Scalar> ScalarShPtr_t;
 
@@ -67,6 +69,17 @@ namespace roboptim
     void impl_jacobian (jacobian_ref jacobian,
 			const_argument_ref arg)
       const;
+
+    void impl_hessian (hessian_ref hessian,
+                       const_argument_ref x,
+                       size_type functionId = 0) const;
+
+    /// \brief Display the function on the specified output stream.
+    ///
+    /// \param o output stream used for display
+    /// \return output stream
+    virtual std::ostream& print (std::ostream& o) const;
+
   private:
     boost::shared_ptr<U> origin_;
 

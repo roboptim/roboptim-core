@@ -18,79 +18,72 @@
 #ifndef ROBOPTIM_CORE_SOLVER_HXX
 # define ROBOPTIM_CORE_SOLVER_HXX
 # include <boost/foreach.hpp>
+
 # include <roboptim/core/io.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
-  template <typename F, typename C>
-  Solver<F, C>::Solver (const problem_t& pb)
+  template <typename T>
+  Solver<T>::Solver (const problem_t& pb)
     : GenericSolver (),
       problem_ (pb),
       plugin_name_ ("")
   {
   }
 
-  template <typename F, typename C>
-  template <typename F_, typename C_>
-  Solver<F, C>::Solver (const Problem<F_, C_>& pb)
-    : GenericSolver (),
-      problem_ (pb),
-      plugin_name_ ("")
+  template <typename T>
+  Solver<T>::~Solver ()
   {
   }
 
-  template <typename F, typename C>
-  Solver<F, C>::~Solver ()
-  {
-  }
-
-  template <typename F, typename C>
-  const typename Solver<F, C>::problem_t&
-  Solver<F, C>::problem () const
+  template <typename T>
+  const typename Solver<T>::problem_t&
+  Solver<T>::problem () const
   {
     return problem_;
   }
 
-  template <typename F, typename C>
-  const typename Solver<F, C>::parameters_t&
-  Solver<F, C>::parameters () const
-  {
-    return parameters_;
-  }
-
-  template <typename F, typename C>
-  typename Solver<F, C>::parameters_t&
-  Solver<F, C>::parameters ()
-  {
-    return parameters_;
-  }
-
-  template <typename F, typename C>
   template <typename T>
-  const T&
-  Solver<F, C>::getParameter (const std::string& key) const
+  const typename Solver<T>::parameters_t&
+  Solver<T>::parameters () const
+  {
+    return parameters_;
+  }
+
+  template <typename T>
+  typename Solver<T>::parameters_t&
+  Solver<T>::parameters ()
+  {
+    return parameters_;
+  }
+
+  template <typename T>
+  template <typename U>
+  const U&
+  Solver<T>::getParameter (const std::string& key) const
   {
     parameters_t::const_iterator it = parameters_.find (key);
-    return boost::get<T> (it->second.value);
+    return boost::get<U> (it->second.value);
   }
 
-  template <typename F, typename C>
+  template <typename T>
   const std::string&
-  Solver<F, C>::pluginName () const
+  Solver<T>::pluginName () const
   {
     return plugin_name_;
   }
 
-  template <typename F, typename C>
+  template <typename T>
   std::string&
-  Solver<F, C>::pluginName ()
+  Solver<T>::pluginName ()
   {
     return plugin_name_;
   }
 
-  template <typename F, typename C>
+  template <typename T>
   std::ostream&
-  Solver<F, C>::print (std::ostream& o) const
+  Solver<T>::print (std::ostream& o) const
   {
     o << incindent << "Solver:";
 
@@ -119,5 +112,12 @@ namespace roboptim
     o << decindent << iendl;
     return o;
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class Solver<EigenMatrixDense>;
+  extern template class Solver<EigenMatrixSparse>;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_SOLVER_HH

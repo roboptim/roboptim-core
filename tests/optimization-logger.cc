@@ -19,8 +19,10 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/xpressive/xpressive.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver-factory.hh>
@@ -70,6 +72,12 @@ struct F2 : public DifferentiableSparseFunction
   }
 };
 
+bool findRegex (const std::string& text, const std::string& r)
+{
+  boost::xpressive::sregex rex = boost::xpressive::sregex::compile (r);
+  return boost::xpressive::regex_search (text, rex);
+}
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 // See: http://stackoverflow.com/a/596348/1043187
@@ -106,11 +114,10 @@ void testLogger
 (boost::shared_ptr<boost::test_tools::output_test_stream> output)
 {
   // Specify the solver that will be used.
-  typedef Solver<typename F::parent_t,
-		 boost::mpl::vector<typename F::parent_t> > solver_t;
+  typedef Solver<typename F::traits_t> solver_t;
 
   // Instantiate the function and the problem.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   typename solver_t::problem_t pb (f);
 
   // Add a dummy constraint to test logging
@@ -118,7 +125,7 @@ void testLogger
   pb.addConstraint (g, F::makeInterval (-1., 1.));
 
   // Give a dummy starting point
-  typename F::argument_t x (f.inputSize ());
+  typename F::argument_t x (f->inputSize ());
   x.setZero ();
   pb.startingPoint () = x;
 
@@ -149,10 +156,23 @@ void testLogger
             << "---" << std::endl
             << solver;
 
+  logger.append ("Append test 1");
+  logger << "Append test 2"
+         << solver;
+
   // Test whether the logging directory exists
   BOOST_CHECK (boost::filesystem::exists (logger.logPath ()));
   // Test whether journal.log exists
   BOOST_CHECK (boost::filesystem::exists (logger.logPath () / "journal.log"));
+
+  // Test whether appended strings are found
+  std::ifstream journal ((logger.logPath () / "journal.log").string ().c_str ());
+  std::stringstream buffer;
+  buffer << journal.rdbuf();
+
+  BOOST_CHECK (findRegex (buffer.str (), "Append test 1"));
+  BOOST_CHECK (findRegex (buffer.str (), "Append test 2"));
+  BOOST_CHECK (findRegex (buffer.str (), "Solver error: The dummy solver always fail."));
 }
 
 BOOST_AUTO_TEST_CASE (plugin)

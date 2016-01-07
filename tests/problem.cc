@@ -17,9 +17,14 @@
 
 #include "shared-tests/fixture.hh"
 
+#include <boost/make_shared.hpp>
+
 #include <roboptim/core/io.hh>
+#include <roboptim/core/util.hh>
+#include <roboptim/core/portability.hh>
 #include <roboptim/core/problem.hh>
 #include <roboptim/core/function/constant.hh>
+#include <roboptim/core/numeric-linear-function.hh>
 
 using namespace roboptim;
 
@@ -28,28 +33,48 @@ typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
 
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
+// Define a simple function.
+template <typename T>
+struct F : public GenericFunction<T>
+{
+  ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<T>);
+
+  F () : GenericFunction<T> (2, 2, "a * b, a + b")
+  {}
+
+  void impl_compute (result_ref res, const_argument_ref x) const
+  {
+    res (0) = x[0] * x[1];
+    res (1) = x[0] + x[1];
+  }
+
+  // No gradient, hessian.
+};
+
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 {
   output = retrievePattern ("problem");
 
-  typedef Problem<GenericDifferentiableFunction<T>,
-		  boost::mpl::vector<GenericDifferentiableFunction<T> > >
-    problem_t;
+  typedef Problem<T> problem_t;
 
   typedef typename problem_t::function_t      function_t;
   typedef typename function_t::argument_t     argument_t;
   typedef typename problem_t::startingPoint_t startingPoint_t;
   typedef typename problem_t::intervals_t     intervals_t;
-  typedef typename problem_t::scaling_t        scaling_t;
+  typedef typename problem_t::scaling_t       scaling_t;
 
   typedef GenericConstantFunction<T>          constantFunction_t;
+  typedef GenericNumericLinearFunction<T>     numericLinearFunction_t;
 
   typename constantFunction_t::vector_t v (2);
   v.setZero ();
 
-  constantFunction_t f (v);
+  // For shared_ptr constructor
+  boost::shared_ptr<constantFunction_t>
+    f = boost::make_shared<constantFunction_t> (v);
 
   problem_t pb_fail (f);
 
@@ -78,13 +103,49 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   names[1] = "x₁";
   pb.argumentNames () = names;
 
+  v[0] = 3.;
+  v[1] = -1.;
   boost::shared_ptr<constantFunction_t>
-    cstr = boost::make_shared<constantFunction_t>  (v);
+    g0 = boost::make_shared<constantFunction_t> (v);
+
+  typename numericLinearFunction_t::matrix_t a (2,2);
+  a.setZero ();
+  a.coeffRef (0,0) = 1.;
+  a.coeffRef (1,1) = 1.;
+  typename numericLinearFunction_t::vector_t b (2);
+  b << 2., 3.;
+  boost::shared_ptr<numericLinearFunction_t>
+    g1 = boost::make_shared<numericLinearFunction_t> (a, b);
+
+  boost::shared_ptr<F<T> >
+    g2 = boost::make_shared<F<T> > ();
+
   intervals_t intervals (2);
   scaling_t scaling (2, 1);
+
   for (size_t i = 0; i < intervals.size (); ++i)
     intervals[i] = Function::makeInfiniteInterval ();
-  pb.addConstraint (cstr, intervals, scaling);
+  pb.addConstraint (g0, intervals, scaling);
+
+  for (size_t i = 0; i < intervals.size (); ++i)
+    intervals[i] = Function::makeLowerInterval (0.);
+  pb.addConstraint (g1, intervals, scaling);
+
+  // Also add a non-differentiable constraint
+  for (size_t i = 0; i < intervals.size (); ++i)
+    intervals[i] = Function::makeInterval (-12., 42.);
+  pb.addConstraint (g2, intervals, scaling);
+
+  // Check jacobian
+  x[0] = 1.;
+  x[1] = 2.;
+  (*output) << toDense (pb.jacobian (x)) << std::endl;
+
+  // Check constraints output size
+  BOOST_CHECK_EQUAL (pb.constraintsOutputSize (),
+                     g0->outputSize () + g1->outputSize () + g2->outputSize ());
+  BOOST_CHECK_EQUAL (pb.differentiableConstraintsOutputSize (),
+                     g0->outputSize () + g1->outputSize ());
 
   // Check null ptr
   BOOST_CHECK_THROW (boost::shared_ptr<constantFunction_t> null_ptr;
@@ -100,42 +161,60 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
 
   // Check invalid interval size
   BOOST_CHECK_THROW (intervals_t intervals_size (6);
-                     pb.addConstraint (cstr, intervals_size, scaling),
+                     pb.addConstraint (g0, intervals_size, scaling),
                      std::runtime_error);
 
   // Check invalid scaling vector size
   BOOST_CHECK_THROW (scaling_t scaling_size (6);
-                     pb.addConstraint (cstr, intervals, scaling_size),
+                     pb.addConstraint (g0, intervals, scaling_size),
                      std::runtime_error);
 
   (*output) << pb << std::endl;
 
   // Backward compatibility
   // Disable deprecated warning
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  ROBOPTIM_ALLOW_DEPRECATED_ON;
+
   BOOST_CHECK (pb.argumentScales () == pb.argumentScaling ());
   BOOST_CHECK (pb.scalesVector () == pb.scalingVector ());
-#pragma GCC diagnostic pop
+
+  // For legacy const ref constructor
+  constantFunction_t fRef (v);
+  problem_t pbRef (fRef);
+  (*output) << pbRef << std::endl;
+
+  // Re-enable deprecated warning
+  ROBOPTIM_ALLOW_DEPRECATED_OFF;
+
+  // Clear problem's constraints.
+  BOOST_CHECK (!pb.constraints ().empty ());
+  BOOST_CHECK (!pb.boundsVector ().empty ());
+  BOOST_CHECK (!pb.scalingVector ().empty ());
+  BOOST_CHECK (pb.constraintsOutputSize () > 0);
+  pb.clearConstraints ();
+  BOOST_CHECK (pb.constraints ().empty ());
+  BOOST_CHECK (pb.boundsVector ().empty ());
+  BOOST_CHECK (pb.scalingVector ().empty ());
+  BOOST_CHECK_EQUAL (pb.constraintsOutputSize (), 0);
+  (*output) << pb << std::endl;
 
   // Test a problem with multiple types of constraints.
-  typedef Problem<GenericDifferentiableFunction<T>,
-		  boost::mpl::vector<GenericLinearFunction<T>,
-				     GenericDifferentiableFunction<T> > > mixedProblem_t;
+  typedef Problem<T> mixedProblem_t;
   mixedProblem_t mixedPb (f);
   mixedPb.startingPoint () = x;
   mixedPb.argumentNames () = names;
 
   // First constraint: ConstantFunction automatically converted to LinearFunction
-  mixedPb.addConstraint (cstr, intervals, scaling);
-  // Second constraint: ConstantFunction converted to DifferentiableFunction
-  mixedPb.addConstraint (boost::static_pointer_cast<GenericDifferentiableFunction<T> > (cstr),
+  mixedPb.addConstraint (g0, intervals, scaling);
+  // Second constraint: NumericLinearFunction converted to DifferentiableFunction
+  mixedPb.addConstraint (boost::static_pointer_cast<GenericDifferentiableFunction<T> > (g1),
                          intervals, scaling);
 
   // First constraint: LinearFunction
-  BOOST_CHECK (mixedPb.constraints() [0].which () == 0);
+  BOOST_CHECK (mixedPb.constraints()[0]->template asType<constantFunction_t>());
   // Second constraint: DifferentiableFunction
-  BOOST_CHECK (mixedPb.constraints() [1].which () == 1);
+  BOOST_CHECK (mixedPb.constraints()[1]->template asType<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK_EQUAL (mixedPb.constraintsOutputSize (), 2 * g0->outputSize ());
 
   (*output) << mixedPb << std::endl;
 

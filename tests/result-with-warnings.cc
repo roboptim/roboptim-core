@@ -20,6 +20,7 @@
 #include <iostream>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver.hh>
@@ -28,7 +29,7 @@
 using namespace roboptim;
 
 // Specify the solver that will be used.
-typedef Solver<Function, boost::mpl::vector<Function> > parent_solver_t;
+typedef Solver<EigenMatrixDense> parent_solver_t;
 
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
@@ -89,7 +90,7 @@ BOOST_AUTO_TEST_CASE (result_with_warnings)
   output = retrievePattern ("result-with-warnings");
 
   // Instantiate the function, the problem, and solve it.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   solver_t::problem_t pb (f);
   boost::shared_ptr<solver_t> solver (new solver_t (pb));
   solver_t::result_t result = solver->minimum ();

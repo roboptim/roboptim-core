@@ -20,7 +20,6 @@
 # include <limits>
 
 # include <roboptim/core/fwd.hh>
-# include <roboptim/core/portability.hh>
 # include <roboptim/core/quadratic-function.hh>
 
 namespace roboptim
@@ -37,6 +36,7 @@ namespace roboptim
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericQuadraticFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_LINEAR);
 
     /// \brief Concrete class constructor should call this constructor.
     ///

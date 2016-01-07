@@ -21,10 +21,8 @@
 # include <sstream>
 # include <typeinfo>
 
-# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
-// Include headers for demangling
-#  include <cxxabi.h>
-# endif // __GLIBCXX__ || __GLIBCPP__
+# include <roboptim/core/util.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -34,42 +32,20 @@ namespace roboptim
   //
   // Unfortunately lt_dlsym is giving us a void* so we have to use
   // this kind of trick to transform it into a pointer to function.
-  template <typename T>
-  T* unionCast(void* ptr)
+  template <typename S>
+  S* unionCast(void* ptr)
   {
     union
     {
       void* ptr;
-      T* real_ptr;
+      S* real_ptr;
     } u;
     u.ptr = ptr;
     return u.real_ptr;
   }
 
-# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
-  // Demangling available
-  inline const std::string demangle(const char* name)
-  {
-    int status = -4;
-
-    char* res = abi::__cxa_demangle(name, NULL, NULL, &status);
-    const char* const demangled_name = (status == 0)? res : name;
-    std::string ret_val(demangled_name);
-    free(res);
-
-    return ret_val;
-  }
-# else
-  // No demangling available
-  inline const std::string demangle(const char* name)
-  {
-    return std::string(name);
-  }
-# endif // __GLIBCXX__ || __GLIBCPP__
-
-
-  template <typename T>
-  SolverFactory<T>::SolverFactory (std::string plugin, const problem_t& pb)
+  template <typename S>
+  SolverFactory<S>::SolverFactory (std::string plugin, const problem_t& pb)
     : handle_ (),
       solver_ ()
   {
@@ -197,8 +173,8 @@ namespace roboptim
     solver_->pluginName () = plugin;
   }
 
-  template <typename T>
-  SolverFactory<T>::~SolverFactory ()
+  template <typename S>
+  SolverFactory<S>::~SolverFactory ()
   {
     typedef void destroy_t (solver_t*);
 
@@ -234,13 +210,19 @@ namespace roboptim
       }
   }
 
-  template <typename T>
-  typename SolverFactory<T>::solver_t&
-  SolverFactory<T>::operator () ()
+  template <typename S>
+  typename SolverFactory<S>::solver_t&
+  SolverFactory<S>::operator () ()
   {
     assert (solver_ != 0);
     return *solver_;
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class SolverFactory<Solver<EigenMatrixDense> >;
+  extern template class SolverFactory<Solver<EigenMatrixSparse> >;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
 
 } // end of namespace roboptim
 

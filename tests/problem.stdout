@@ -1,16 +1,47 @@
+[4,2]((0,0), (0,0), (1,0), (0,1))
 Problem:
   Constant function
     offset = [2](0,0)
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
-  Number of constraints: 1
+  Number of constraints: 3
   Constraint 0
       Constant function
-        offset = [2](0,0)
+        offset = [2](3,-1)
       Bounds: (-inf, inf), (-inf, inf)
       Scaling: 1, 1
+      Initial value: [2](3, -1)
+  Constraint 1
+      Numeric linear function:
+        A = [2,2]((1,0), (0,1))
+        B = [2](2,3)
+      Bounds: (0, inf), (0, inf)
+      Scaling: 1, 1
+      Initial value: [2](2, 3)
+  Constraint 2
+      a * b, a + b (not differentiable)
+      Bounds: (-12, 42), (-12, 42)
+      Scaling: 1, 1
       Initial value: [2](0, 0)
+  Starting point: [2](0,0)
+  Starting value: [2](0,0)
+  Infinity value (for all functions): inf
+Problem:
+  Constant function
+    offset = [2](3,-1)
+  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments scaling: 1, 1
+  No constraints.
+  No starting point.
+  Infinity value (for all functions): inf
+Problem:
+  Constant function
+    offset = [2](0,0)
+  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments scaling: 1, 1
+  Arguments names: x₀, x₁
+  No constraints.
   Starting point: [2](0,0)
   Starting value: [2](0,0)
   Infinity value (for all functions): inf
@@ -19,6 +50,25 @@ Problem:
     offset = [2](0,0)
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
+  Arguments names: x₀, x₁
+  Number of constraints: 2
+  Constraint 0
+      Constant function
+        offset = [2](3,-1)
+      Bounds: (-12, 42), (-12, 42)
+      Scaling: 1, 1
+      Initial value: [2](3, -1)
+  Constraint 1
+      Numeric linear function:
+        A = [2,2]((1,0), (0,1))
+        B = [2](2,3)
+      Bounds: (-12, 42), (-12, 42)
+      Scaling: 1, 1
+      Initial value: [2](3, 5)
+  Starting point: [2](1,2)
+  Starting value: [2](0,0)
+  Infinity value (for all functions): inf
+
   Arguments names: x₀, x₁
   Number of constraints: 2
   Constraint 0

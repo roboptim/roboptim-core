@@ -81,6 +81,11 @@ BOOST_AUTO_TEST_CASE (util)
   m["bar"] = 1337;
   (*output) << m << std::endl;
 
+  // Test typeString
+  // TODO: relies on demangle() so may fail on different platforms
+  (*output) << typeString<int> () << std::endl;
+  (*output) << typeString<Function> () << std::endl;
+
   // Test operations on dense matrices
   Eigen::MatrixXd dense_a (5,5);
   Eigen::MatrixXd dense_b (5,5);
@@ -110,6 +115,23 @@ BOOST_AUTO_TEST_CASE (util)
   Function::vector_t eigen_vec (vec_size);
   std::vector<value_type> stl_vec (vec_size);
   eigen_vec.setRandom ();
+
+  // Test conversions to dense
+  // Note: extra conversion step to solve compilation error in RowMajor mode
+  typedef GenericFunctionTraits<EigenMatrixDense>::matrix_t denseMatrix_t;
+  typedef GenericFunctionTraits<EigenMatrixSparse>::matrix_t sparseMatrix_t;
+  (*output) << toDense (denseMatrix_t (dense_a)) << std::endl;
+  (*output) << toDense (sparseMatrix_t (sparse_a)) << std::endl;
+
+  typedef GenericFunctionTraits<EigenMatrixDense>::gradient_t denseGradient_t;
+  denseGradient_t dense_grad (4);
+  dense_grad << 1., 2., 3., 4.;
+  typedef GenericFunctionTraits<EigenMatrixSparse>::gradient_t sparseGradient_t;
+  sparseGradient_t sparse_grad (4);
+  for (sparseGradient_t::Index i = 0; i < 4; ++i)
+    sparse_grad.insert (i) = static_cast<double> (i+1);
+  (*output) << toDense (dense_grad) << std::endl;
+  (*output) << toDense (sparse_grad) << std::endl;
 
   // Copy Eigen vector to C array
   detail::vector_to_array (stl_vec.data (), eigen_vec);

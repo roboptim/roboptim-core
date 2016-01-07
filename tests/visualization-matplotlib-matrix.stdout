@@ -4,7 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-fig = plt.figure ()
+fig = plt.figure()
 
 # Dense matrix
 ax1 = plt.subplot(3, 2, 1)
@@ -180,5 +180,6 @@ box = ax6.get_position()
 ax6.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 ax6.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
-plt.show ()
+fig.tight_layout()
+plt.show()
 

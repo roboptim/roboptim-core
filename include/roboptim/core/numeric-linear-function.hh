@@ -17,8 +17,10 @@
 
 #ifndef ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HH
 # define ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HH
+
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
+# include <roboptim/core/portability.hh>
 
 # include <roboptim/core/linear-function.hh>
 
@@ -33,18 +35,22 @@ namespace roboptim
   /// \f[f(x) = A x + b\f]
   /// where \f$A\f$ and \f$b\f$ are set when the class is instantiated.
   template <typename T>
-  class GenericNumericLinearFunction : public GenericLinearFunction<T>
+  class ROBOPTIM_DLLAPI GenericNumericLinearFunction
+  : public GenericLinearFunction<T>
   {
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericLinearFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_NUMERIC_LINEAR);
 
     /// \brief Build a linear function from a matrix and a vector.
     ///
     /// See class documentation for A and b definition.
     /// \param A A matrix
     /// \param b b vector
-    GenericNumericLinearFunction (const_matrix_ref A, const_vector_ref b);
+    /// \param name function's name
+    GenericNumericLinearFunction (const_matrix_ref A, const_vector_ref b,
+				  std::string name = std::string ());
 
     /// \brief Build a linear function from another one.
     GenericNumericLinearFunction (const GenericLinearFunction<T>&);
@@ -57,22 +63,22 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
 
-    const_matrix_ref A () const
+    const matrix_t& A () const
     {
       return a_;
     }
 
-    const_vector_ref b () const
+    const vector_t& b () const
     {
       return b_;
     }
 
-    matrix_ref A ()
+    matrix_t& A ()
     {
       return a_;
     }
 
-    vector_ref b ()
+    vector_t& b ()
     {
       return b_;
     }

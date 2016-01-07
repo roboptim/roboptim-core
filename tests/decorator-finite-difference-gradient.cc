@@ -368,9 +368,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
   (*output)
     << (gnuplot
 	<< set ("multiplot layout 2,2")
+	<< comment (fg.getName ())
 	<< plot (fg, interval)
+	<< comment (fg_fd.getName ())
 	<< plot (fg_fd, interval)
+	<< comment (p.getName ())
 	<< plot (p, interval)
+	<< comment (p_fd.getName ())
 	<< plot (p_fd, interval)
 	<< unset ("multiplot")
 	);

@@ -27,7 +27,6 @@
 # include <roboptim/core/fwd.hh>
 
 # include <roboptim/core/function.hh>
-# include <roboptim/core/portability.hh>
 
 # define ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
   ROBOPTIM_FUNCTION_FWD_TYPEDEFS (PARENT);			\
@@ -80,6 +79,7 @@ namespace roboptim
   {
   public:
     ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_DIFFERENTIABLE);
 
     /// \brief Gradient type.
     ROBOPTIM_GENERATE_TRAITS_REFS_(gradient);

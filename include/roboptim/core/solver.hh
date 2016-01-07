@@ -17,6 +17,7 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_HH
 # define ROBOPTIM_CORE_SOLVER_HH
+
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
 
@@ -31,6 +32,7 @@
 # include <boost/variant/get.hpp>
 
 # include <roboptim/core/fwd.hh>
+# include <roboptim/core/portability.hh>
 # include <roboptim/core/function.hh>
 # include <roboptim/core/problem.hh>
 # include <roboptim/core/generic-solver.hh>
@@ -74,24 +76,20 @@ namespace roboptim
   /// Solver classes are immutable, the problem can
   /// not be changed after the class instantiation.
   ///
-  /// \tparam F cost function type
-  /// \tparam C constraints functions type
-  /// \pre F is a subtype of Function
-  template <typename F, typename C>
-  class Solver : public GenericSolver
+  /// \tparam T matrix type
+  template <typename T>
+  class ROBOPTIM_DLLAPI Solver : public GenericSolver
   {
-    BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_base_of<Function, F>,
-		      boost::is_base_of<SparseFunction, F> >));
   public:
     /// \brief Solver problem type.
     ///
     /// The solver can solve problems of this type.
     /// If another kind of problem is given, a conversion will be
     /// required.
-    typedef Problem<F, C> problem_t;
+    typedef Problem<T> problem_t;
 
     /// \brief Import vector type from cost function
-    typedef typename F::vector_t vector_t;
+    typedef typename GenericFunction<T>::vector_t vector_t;
 
     /// \brief Map of parameters.
     typedef std::map<std::string, Parameter> parameters_t;
@@ -117,24 +115,6 @@ namespace roboptim
     explicit Solver (const problem_t& problem);
 
 
-    /// \brief Instantiate a solver from a problem in a different problem class.
-    ///
-    /// This constructor is called when the problem cost function or/and
-    /// constraints type does not match solver's types.
-    ///
-    /// This is only possible if the problem provides too much information
-    /// compared to the solver requirements:
-    /// if the problem contains twice derivable function and the solver requires
-    /// only derivable function, it will work however the opposite will fail.
-    /// Problem compatibility is known at compile-time, so the failure will be
-    /// at compile-time.
-    ///
-    /// \tparam F_ original cost function type
-    /// \tparam C_ original constraints functions type
-    /// \param problem problem that should be solved
-    template <typename F_, typename C_>
-    explicit Solver (const Problem<F_, C_>& problem);
-
     virtual ~Solver ();
 
     /// \brief Retrieve the problem.
@@ -146,8 +126,8 @@ namespace roboptim
     const parameters_t& parameters () const;
     parameters_t& parameters ();
 
-    template <typename T>
-    const T& getParameter (const std::string& key) const;
+    template <typename U>
+    const U& getParameter (const std::string& key) const;
     /// \}
 
     /// \name Plugin name
@@ -195,7 +175,7 @@ namespace roboptim
   /// \brief Override operator<< to display ``parameters'' objects.
   ///
   /// \param o output stream used for display
-  /// \param ns NoSolution object, ignored
+  /// \param parameter parameter
   /// \return output stream
   ROBOPTIM_DLLAPI std::ostream&
   operator<< (std::ostream& o, const Parameter& parameter);

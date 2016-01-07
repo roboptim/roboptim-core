@@ -18,6 +18,11 @@
 #ifndef ROBOPTIM_CORE_FWD_HH
 # define ROBOPTIM_CORE_FWD_HH
 
+// TODO: remove as soon as the typeString() problem is solved
+# include <iosfwd>
+
+# include <roboptim/core/portability.hh>
+
 namespace roboptim
 {
   /// \brief Tag a result if no solution has been found.
@@ -27,12 +32,6 @@ namespace roboptim
   /// It usually means that the solver has not been called to solve
   /// the problem.
   class NoSolution {};
-
-  template <typename T>
-  class GenericConstantFunction;
-
-  template <typename T>
-  class GenericDifferentiableFunction;
 
   class DummySolver;
 
@@ -50,15 +49,15 @@ namespace roboptim
   class GenericFiniteDifferenceGradient;
 
   template <typename T>
-  class GenericFunction;
-
-  template <typename T>
   struct GenericFunctionTraits;
 
   /// \brief Tag type for functions using Eigen dense matrices.
-  struct EigenMatrixDense {};
+  struct ROBOPTIM_DLLAPI EigenMatrixDense {};
   /// \brief Tag type for functions using Eigen sparse matrices.
-  struct EigenMatrixSparse {};
+  struct ROBOPTIM_DLLAPI EigenMatrixSparse {};
+
+  template <typename T>
+  class GenericFunction;
 
   /// \brief Dense function.
   typedef GenericFunction<EigenMatrixDense>
@@ -68,6 +67,9 @@ namespace roboptim
   typedef GenericFunction<EigenMatrixSparse>
   SparseFunction;
 
+  template <typename T>
+  class GenericDifferentiableFunction;
+
   /// \brief Dense differentiable function.
   typedef GenericDifferentiableFunction<EigenMatrixDense>
   DifferentiableFunction;
@@ -75,6 +77,9 @@ namespace roboptim
   /// \brief Sparse differentiable function.
   typedef GenericDifferentiableFunction<EigenMatrixSparse>
   DifferentiableSparseFunction;
+
+  template <typename T>
+  class GenericConstantFunction;
 
   template <typename U, typename V>
   class Minus;
@@ -93,11 +98,15 @@ namespace roboptim
   class GenericNumericLinearFunction;
   typedef GenericNumericLinearFunction<EigenMatrixDense>
   NumericLinearFunction;
+  typedef GenericNumericLinearFunction<EigenMatrixSparse>
+  NumericLinearSparseFunction;
 
   template <typename T>
   class GenericNumericQuadraticFunction;
   typedef GenericNumericQuadraticFunction<EigenMatrixDense>
   NumericQuadraticFunction;
+  typedef GenericNumericQuadraticFunction<EigenMatrixSparse>
+  NumericQuadraticSparseFunction;
 
   template <typename T>
   class GenericConstantFunction;
@@ -136,9 +145,9 @@ namespace roboptim
   typedef GenericQuadraticFunction<EigenMatrixDense> QuadraticFunction;
   typedef GenericQuadraticFunction<EigenMatrixSparse> QuadraticSparseFunction;
 
-  template <typename F, typename C = F> class Problem;
-  template <typename F, typename C = F> class Solver;
-  template <typename T> class SolverFactory;
+  template <typename T> class Problem;
+  template <typename T> class Solver;
+  template <typename S> class SolverFactory;
   template <unsigned DerivabilityOrder> class NTimesDerivableFunction;
 
   template <typename T>
@@ -148,6 +157,11 @@ namespace roboptim
 
   template <typename T>
   class OptimizationLogger;
+
+  // TODO: remove, this is only here because of an unfortunate circular
+  // dependency between function.hh and util.hh
+  template <typename T>
+  std::string typeString ();
 } // end of namespace roboptim.
 
 #endif //! ROBOPTIM_CORE_FWD_HH

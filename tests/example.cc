@@ -17,6 +17,8 @@
 
 #include "shared-tests/fixture.hh"
 
+#include <boost/make_shared.hpp>
+
 #include <iostream>
 
 #include <roboptim/core/io.hh>
@@ -26,8 +28,7 @@
 using namespace roboptim;
 
 // Specify the solver that will be used.
-typedef Solver<TwiceDifferentiableFunction,
-               boost::mpl::vector<TwiceDifferentiableFunction> > solver_t;
+typedef Solver<EigenMatrixDense> solver_t;
 
 // Output stream
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
@@ -178,7 +179,7 @@ static const char* subscripts[] = {"₀", "₁", "₂", "₃", "₄",
 int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
 {
   // Create cost function.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
 
   // Create problem.
   solver_t::problem_t pb (f);
@@ -194,7 +195,7 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
   start[0] = 1., start[1] = 5., start[2] = 5., start[3] = 1.;
 
   // Set arguments names (optional).
-  F::names_t names (static_cast<std::size_t> (f.inputSize ()));
+  F::names_t names (static_cast<std::size_t> (f->inputSize ()));
   for (std::size_t i = 0;
        static_cast<Function::size_type> (i) < pb.function ().inputSize (); ++i)
     names[i] = std::string ("x") + subscripts[i];

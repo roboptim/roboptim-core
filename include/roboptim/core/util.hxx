@@ -20,6 +20,7 @@
 # define ROBOPTIM_CORE_UTIL_HXX
 
 # include <stdexcept>
+# include <typeinfo>
 
 # include <boost/static_assert.hpp>
 
@@ -32,14 +33,14 @@ namespace roboptim
   {
     template <typename T>
     void
-    jacobian_from_gradients (DifferentiableFunction::matrix_ref jac,
+    jacobian_from_gradients (Function::matrix_ref jac,
                              const std::vector<const T*>& c,
-                             DifferentiableFunction::const_vector_ref x)
+                             Function::const_vector_ref x)
     {
-      for (DifferentiableFunction::matrix_t::Index i = 0; i < jac.rows (); ++i)
+      for (Function::matrix_t::Index i = 0; i < jac.rows (); ++i)
         {
-          DifferentiableFunction::jacobian_t grad = c[i]->jacobian (x);
-          for (DifferentiableFunction::matrix_t::Index j = 0;
+          Function::matrix_t grad = c[i]->jacobian (x);
+          for (Function::matrix_t::Index j = 0;
 	       j < jac.cols (); ++j)
             jac (i, j) = grad(0, j);
         }
@@ -112,6 +113,12 @@ namespace roboptim
     return o;
   }
 
+  template <typename T>
+  std::string typeString ()
+  {
+    // TODO: use Boost.TypeIndex (Boost >= 1.56.0) instead?
+    return demangle (typeid (T).name ());
+  }
 
   template <typename U>
   void copySparseBlock
@@ -199,15 +206,15 @@ namespace roboptim
       }
   }
 
-  inline double normalize (double x)
+  inline double normalize (double x, double eps)
   {
-      return (std::fabs (x) < 1e-8)? 0:x;
+      return (std::fabs (x) < eps)? 0:x;
   }
 
   template <typename T>
-  inline T normalize (const T& x)
+  inline T normalize (const T& x, double eps)
   {
-    return (x.array ().abs () < 1e-8).select (0, x);
+    return (x.array ().abs () < eps).select (0, x);
   }
 } // end of namespace roboptim.
 

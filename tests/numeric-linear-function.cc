@@ -21,6 +21,7 @@
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/numeric-linear-function.hh>
+#include <roboptim/core/util.hh>
 
 using namespace roboptim;
 
@@ -51,7 +52,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function, T, functionTypes_t)
 
   b[0] = 1.;
 
-  GenericNumericLinearFunction<T> f (a, b);
+  GenericNumericLinearFunction<T> f (a, b, "Dummy");
 
   (*output) << f << std::endl;
 
@@ -62,9 +63,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function, T, functionTypes_t)
   x[4] = 4.5;
 
   (*output) << "f(x) = " << f (x) << std::endl;
-  (*output) << "G(x) = " << f.gradient (x, 0) << std::endl;
-  (*output) << "J(x) = " << f.jacobian (x) << std::endl;
-  (*output) << "H(x) = " << f.hessian (x) << std::endl;
+  (*output) << "G(x) = " << toDense (f.gradient (x, 0)) << std::endl;
+  (*output) << "J(x) = " << toDense (f.jacobian (x)) << std::endl;
+  (*output) << "H(x) = " << toDense (f.hessian (x)) << std::endl;
 
   GenericNumericLinearFunction<T> numericLinearFunction (a, b);
   GenericLinearFunction<T>* linearFunction = &numericLinearFunction;
@@ -76,7 +77,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function, T, functionTypes_t)
   BOOST_CHECK_EQUAL (numericLinearFunction.b (), numericLinearFunctionRebuilt.b ());
 
   std::cout << output->str () << std::endl;
-  //BOOST_CHECK (output->match_pattern ());
+  BOOST_CHECK (output->match_pattern ());
 }
 
 BOOST_AUTO_TEST_SUITE_END ()

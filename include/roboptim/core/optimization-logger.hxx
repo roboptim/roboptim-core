@@ -18,53 +18,25 @@
 #ifndef ROBOPTIM_CORE_OPTIMIZATION_LOGGER_HXX
 # define ROBOPTIM_CORE_OPTIMIZATION_LOGGER_HXX
 # include <string>
+# include <sstream>
 
-# include <boost/bind.hpp>
 # include <boost/date_time/posix_time/posix_time.hpp>
 # include <boost/filesystem.hpp>
 # include <boost/filesystem/fstream.hpp>
 # include <boost/format.hpp>
 # include <boost/variant/apply_visitor.hpp>
 # include <boost/variant/static_visitor.hpp>
-# include <boost/utility/enable_if.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/type_traits/is_same.hpp>
 
 # include <roboptim/core/config.hh>
+# include <roboptim/core/solver.hh>
+# include <roboptim/core/indent.hh>
 
 namespace roboptim
 {
   namespace detail
   {
-    template <typename P>
-    struct EvaluateConstraint : public boost::static_visitor<typename P::vector_t>
-    {
-      typedef typename P::function_t::const_argument_ref const_argument_ref;
-
-      EvaluateConstraint (const_argument_ref x)
-	: x_ (x)
-      {}
-
-      template <typename U>
-      typename P::vector_t operator () (const U& constraint) const
-      {
-	return constraint->operator () (x_);
-      }
-
-    private:
-      const_argument_ref x_;
-    };
-
-
-    struct ConstraintName : public boost::static_visitor<std::string>
-    {
-      template <typename U>
-      std::string operator () (const U& constraint) const
-      {
-	return constraint->getName ();
-      }
-    };
-
     template <typename P>
     struct EvaluateConstraintViolation
     {
@@ -120,7 +92,7 @@ namespace roboptim
 
 
     template <typename P>
-    struct LogJacobianConstraint : public boost::static_visitor<void>
+    struct LogJacobianConstraint
     {
       /// \brief Type of the problem.
       typedef P problem_t;
@@ -147,39 +119,33 @@ namespace roboptim
           constraintPath_ (constraintPath)
       {}
 
-      // If the constraint is differentiable
       template <typename U>
-      typename boost::enable_if
-      <boost::is_base_of<differentiableFunction_t, U> >::type
-      operator () (const boost::shared_ptr<U>& constraint) const
+      void operator () (const boost::shared_ptr<U>& constraint) const
       {
-        // Differentiable function: log Jacobian
-        boost::filesystem::ofstream
-          jacobianStream (constraintPath_ / "jacobian.csv");
-
-        // Get the Jacobian
-        jacobian_t jacobian = constraint->jacobian (x_);
-
-        for (size_type i = 0;
-             i < static_cast<size_type> (jacobian.rows ()); ++i)
+        // If the constraint is differentiable
+        if (constraint->template asType<differentiableFunction_t> ())
 	  {
-	    for (size_type j = 0; j < jacobian.cols (); ++j)
-	      {
-		jacobianStream << jacobian.coeffRef (i, j);
-		if (j < jacobian.cols () - 1)
-		  jacobianStream << ", ";
-	      }
-	    jacobianStream << "\n";
-	  }
-      }
+	    // Differentiable function: log Jacobian
+	    boost::filesystem::ofstream
+	      jacobianStream (constraintPath_ / "jacobian.csv");
 
-      // If the constraint is not differentiable
-      template <typename U>
-      typename boost::disable_if
-      <boost::is_base_of<differentiableFunction_t, U> >::type
-      operator () (const boost::shared_ptr<U>&) const
-      {
-        // Do nothing
+	    // Get the Jacobian
+	    jacobian_t jacobian
+	      = constraint->template castInto<differentiableFunction_t> ()
+	      ->jacobian (x_);
+
+	    for (size_type i = 0;
+		 i < static_cast<size_type> (jacobian.rows ()); ++i)
+	      {
+		for (size_type j = 0; j < jacobian.cols (); ++j)
+		  {
+		    jacobianStream << jacobian.coeffRef (i, j);
+		    if (j < jacobian.cols () - 1)
+		      jacobianStream << ", ";
+		  }
+		jacobianStream << "\n";
+	      }
+	  }
       }
 
     private:
@@ -195,7 +161,8 @@ namespace roboptim
   OptimizationLogger<T>::OptimizationLogger (solver_t& solver,
 					     const boost::filesystem::path& path,
 					     bool selfRegister)
-    : solver_ (solver),
+    : parent_t ("Optimization logger"),
+      solver_ (solver),
       path_ (path),
       output_ (),
       callbackCallId_ (0),
@@ -335,17 +302,24 @@ namespace roboptim
   }
 
   template <typename T>
-  typename OptimizationLogger<T>::callback_t
-  OptimizationLogger<T>::callback ()
+  OptimizationLogger<T>& OptimizationLogger<T>::operator<< (const std::string& text)
   {
-    return boost::bind (&OptimizationLogger<T>::perIterationCallback,
-                        this, _1, _2);
+    append (text);
+    return *this;
   }
 
   template <typename T>
   template <typename U>
-  typename boost::disable_if<boost::is_same<U, boost::mpl::vector<> > >::type
-  OptimizationLogger<T>::process_constraints
+  OptimizationLogger<T>& OptimizationLogger<T>::operator<< (const U& u)
+  {
+    std::stringstream ss;
+    ss << u;
+    append (ss.str ());
+    return *this;
+  }
+
+  template <typename T>
+  void OptimizationLogger<T>::process_constraints
   (const typename solver_t::problem_t& pb,
    const typename solver_t::solverState_t& state,
    const boost::filesystem::path& iterationPath,
@@ -365,17 +339,12 @@ namespace roboptim
 
 	// Log name
 	boost::filesystem::ofstream nameStream (constraintPath / "name");
-	nameStream << boost::apply_visitor
-	  (::roboptim::detail::ConstraintName (),
-	   pb.constraints ()[constraintId])
-		   << "\n";
+	nameStream << pb.constraints ()[constraintId]->getName() << "\n";
 	// Log value
 	boost::filesystem::ofstream
 	  constraintValueStream (constraintPath / "value.csv");
 
-	vector_t constraintValue = boost::apply_visitor
-	  (::roboptim::detail::EvaluateConstraint<problem_t> (x),
-	   pb.constraints ()[constraintId]);
+	vector_t constraintValue = pb.constraints ()[constraintId]->operator() (x);
 	for (size_type i = 0; i < constraintValue.size (); ++i)
 	  {
 	    constraintValueStream << constraintValue[i];
@@ -386,9 +355,8 @@ namespace roboptim
 	constraintsOneIteration[constraintId] = constraintValue;
 
 	// Log the Jacobian (if the function is differentiable)
-	boost::apply_visitor
-	  (::roboptim::detail::LogJacobianConstraint<problem_t>
-	   (x, constraintPath), pb.constraints ()[constraintId]);
+	::roboptim::detail::LogJacobianConstraint<problem_t> jac(x, constraintPath);
+	jac(pb.constraints ()[constraintId]);
       }
     constraints_.push_back (constraintsOneIteration);
 
@@ -415,24 +383,11 @@ namespace roboptim
 
 
   template <typename T>
-  template <typename U>
-  typename boost::enable_if<boost::is_same<U, boost::mpl::vector<> > >::type
-  OptimizationLogger<T>::process_constraints
-  (const typename solver_t::problem_t&,
-   const typename solver_t::solverState_t&,
-   const boost::filesystem::path&,
-   const_argument_ref,
-   value_type&)
-  {
-    // Unconstrained problem: do nothing
-  }
-
-  template <typename T>
   void OptimizationLogger<T>::attach ()
   {
     try
       {
-	solver_.setIterationCallback (callback ());
+	solver_.setIterationCallback (this->callback ());
       }
     catch (std::runtime_error& e)
       {
@@ -456,7 +411,7 @@ namespace roboptim
 
   template <typename T>
   void OptimizationLogger<T>::perIterationCallback
-  (const problem_t& pb, const solverState_t& state)
+  (const problem_t& pb, solverState_t& state)
   {
     try
       {
@@ -480,7 +435,7 @@ namespace roboptim
   template <typename T>
   void OptimizationLogger<T>::perIterationCallbackUnsafe
   (const typename solver_t::problem_t& pb,
-   const typename solver_t::solverState_t& state)
+   typename solver_t::solverState_t& state)
   {
     // Create the iteration-specific directory.
     boost::filesystem::path iterationPath =
@@ -536,8 +491,8 @@ namespace roboptim
     streamCost << cost << "\n";
 
     // constraints: only process if the problem is constrained
-    process_constraints<typename solver_t::problem_t::constraintsList_t>
-      (pb, state, iterationPath, x, cstrViol);
+    if (!pb.constraints ().empty ())
+      process_constraints (pb, state, iterationPath, x, cstrViol);
 
     output_ << std::string (80, '-') << iendl;
   }
@@ -547,6 +502,17 @@ namespace roboptim
   OptimizationLogger<T>::logPath () const
   {
     return path_;
+  }
+
+  template <typename T>
+  std::ostream&
+  OptimizationLogger<T>::print (std::ostream& o) const
+  {
+    o << this->name () << ":" << incindent;
+    o << iendl << "Log directory: " << path_.string ();
+    o << decindent;
+
+    return o;
   }
 
   template <typename T>
@@ -582,6 +548,12 @@ namespace roboptim
   {
     return callbackCallId_;
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class OptimizationLogger<Solver<EigenMatrixDense> >;
+  extern template class OptimizationLogger<Solver<EigenMatrixSparse> >;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
 
 } // end of namespace roboptim
 

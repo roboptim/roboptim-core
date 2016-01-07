@@ -95,6 +95,13 @@ namespace roboptim {
       (*baseFunction_) (value_, x_);
     }
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class GenericSumOfC1Squares<EigenMatrixDense>;
+  extern template class GenericSumOfC1Squares<EigenMatrixSparse>;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // namespace roboptim
 
 #endif //! ROBOPTIM_CORE_SUM_OF_C1_SQUARES_HXX

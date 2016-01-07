@@ -34,6 +34,7 @@ ADD_LIBRARY(roboptim-core SHARED
   solver-warning.cc
   solver.cc
   util.cc
+  roboptim-core-precompile.cc
 
   visualization/gnuplot.cc
   visualization/gnuplot-commands.cc
@@ -53,8 +54,22 @@ ENDIF()
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
+# Add required libs to pkg-config file.
+SET(ROBOPTIM_API_BOOST_LIBRARIES date_time system filesystem)
+FOREACH(lib ${ROBOPTIM_API_BOOST_LIBRARIES})
+  PKG_CONFIG_APPEND_LIBS(boost_${lib})
+ENDFOREACH()
+
+IF(ROBOPTIM_PRECOMPILE_DENSE_SPARSE)
+  # core library needs to be linked with Boost libraries (e.g. for
+  # OptimizationLogger)
+  FOREACH(lib ${ROBOPTIM_API_BOOST_LIBRARIES})
+    TARGET_LINK_LIBRARIES(roboptim-core boost_${lib})
+  ENDFOREACH()
+ENDIF()
+
 TARGET_LINK_LIBRARIES(roboptim-core ltdl)
-SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 3 VERSION 3.1.0)
+SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 3 VERSION 3.2.0)
 INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 
@@ -67,7 +82,7 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES PREFIX "")
 
 IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy
-    PROPERTIES VERSION 3.1.0 SOVERSION 3)
+    PROPERTIES VERSION 3.2.0 SOVERSION 3)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
 
@@ -80,7 +95,7 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES PREFIX "")
 
 IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate
-    PROPERTIES VERSION 3.1.0 SOVERSION 3)
+    PROPERTIES VERSION 3.2.0 SOVERSION 3)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
 
@@ -93,7 +108,7 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-d-sparse-laststate PROPERTIES P
 
 IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-d-sparse-laststate
-    PROPERTIES VERSION 3.1.0 SOVERSION 3)
+    PROPERTIES VERSION 3.2.0 SOVERSION 3)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-d-sparse-laststate DESTINATION ${PLUGINDIR})
 
@@ -106,7 +121,7 @@ SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td PROPERTIES PREFIX "")
 
 IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td
-    PROPERTIES VERSION 3.1.0 SOVERSION 3)
+    PROPERTIES VERSION 3.2.0 SOVERSION 3)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy-td DESTINATION ${PLUGINDIR})
 

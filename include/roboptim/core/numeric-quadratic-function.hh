@@ -17,8 +17,10 @@
 
 #ifndef ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HH
 # define ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HH
+
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
+# include <roboptim/core/portability.hh>
 
 # include <roboptim/core/quadratic-function.hh>
 
@@ -35,11 +37,13 @@ namespace roboptim
   ///
   /// \note A is a symmetric matrix.
   template <typename T>
-  class GenericNumericQuadraticFunction : public GenericQuadraticFunction<T>
+  class ROBOPTIM_DLLAPI GenericNumericQuadraticFunction
+  : public GenericQuadraticFunction<T>
   {
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericQuadraticFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_NUMERIC_QUADRATIC);
 
     /// \brief Symmetric matrix type.
     typedef matrix_t symmetric_t;
@@ -78,32 +82,32 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
 
-    const_matrix_ref A () const
+    const symmetric_t& A () const
     {
       return a_;
     }
 
-    const_vector_ref b () const
+    const vector_t& b () const
     {
       return b_;
     }
 
-    const_vector_ref c () const
+    const vector_t& c () const
     {
       return c_;
     }
 
-    matrix_ref A ()
+    symmetric_t& A ()
     {
       return a_;
     }
 
-    vector_ref b ()
+    vector_t& b ()
     {
       return b_;
     }
 
-    vector_ref c ()
+    vector_t& c ()
     {
       return c_;
     }

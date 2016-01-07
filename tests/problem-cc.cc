@@ -18,6 +18,7 @@
 #include "shared-tests/fixture.hh"
 
 #include <boost/mpl/vector.hpp>
+#include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/function/constant.hh>
@@ -36,18 +37,14 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (problem_copy_constructor)
 {
-  typedef Problem<DifferentiableFunction,
-		  boost::mpl::vector<LinearFunction, DifferentiableFunction> >
-    problemSrc_t;
-  typedef Problem<Function, boost::mpl::vector<Function> > problemDst_t;
-  typedef Problem<Function,
-		  boost::mpl::vector<QuadraticFunction, DifferentiableFunction> >
-    ambiguousProblemDst_t;
+  typedef Problem<EigenMatrixDense> problemSrc_t;
+  typedef Problem<EigenMatrixDense> problemDst_t;
+  typedef Problem<EigenMatrixDense> ambiguousProblemDst_t;
 
   ConstantFunction::vector_t v (1);
   v.setZero ();
 
-  ConstantFunction f (v);
+  boost::shared_ptr<ConstantFunction> f = boost::make_shared<ConstantFunction> (v);
 
   problemSrc_t pbSrc (f);
 
@@ -73,8 +70,9 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   {
     problemSrc_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
-    BOOST_CHECK(pbDst.constraints ()[0].which () == 0);
-    BOOST_CHECK(pbDst.constraints ()[1].which () == 1);
+    BOOST_CHECK(pbDst.constraints ()[0]->asType<ConstantFunction>());
+    BOOST_CHECK(pbDst.constraints ()[1]->asType<DifferentiableFunction>());
+    BOOST_CHECK(pbDst.constraintsOutputSize () == pbSrc.constraintsOutputSize ());
   }
 
   // Check with a more general type.
@@ -87,8 +85,9 @@ BOOST_AUTO_TEST_CASE (problem_copy_constructor)
   {
     ambiguousProblemDst_t pbDst (pbSrc);
     CHECK_COPY(pbSrc, pbDst);
-    BOOST_CHECK(pbDst.constraints ()[0].which () == 0);
-    BOOST_CHECK(pbDst.constraints ()[1].which () == 1);
+    BOOST_CHECK(pbDst.constraints ()[0]->asType<ConstantFunction>());
+    BOOST_CHECK(pbDst.constraints ()[1]->asType<DifferentiableFunction>());
+    BOOST_CHECK(pbDst.constraintsOutputSize () == pbSrc.constraintsOutputSize ());
   }
 
   // With invalid constraints types, compilation would fail.

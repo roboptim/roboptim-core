@@ -18,7 +18,9 @@
 #ifndef ROBOPTIM_CORE_SOLVER_STATE_HXX
 # define ROBOPTIM_CORE_SOLVER_STATE_HXX
 # include <boost/foreach.hpp>
+
 # include <roboptim/core/io.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -210,5 +212,12 @@ namespace roboptim
   {
     return state.print (o);
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class SolverState<Problem<EigenMatrixDense> >;
+  extern template class SolverState<Problem<EigenMatrixSparse> >;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // end of namespace roboptim
 #endif //! ROBOPTIM_CORE_SOLVER_STATE_HXX

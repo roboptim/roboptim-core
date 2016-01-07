@@ -36,6 +36,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/cache.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/multiplexer.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/multiplexer.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/wrapper.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/callback/wrapper.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/debug.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/derivable-parametrized-function.hh
@@ -77,6 +79,7 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function-pool.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/constant.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/cos.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/function/identity.hh
@@ -110,6 +113,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-callback.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-callback.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-error.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-factory.hxx
@@ -151,6 +156,26 @@ ELSE()
   PKG_CONFIG_APPEND_CFLAGS(-DEIGEN_RUNTIME_NO_MALLOC)
 ENDIF()
 
+# Fix for apparent bug with GCC 5.3
+IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  IF(CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 5.3)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+  ENDIF()
+ENDIF()
+
+SET(USE_CXX11 FALSE CACHE BOOL "Whether to use C++11")
+
+SET(ROBOPTIM_PRECOMPILE_DENSE_SPARSE FALSE CACHE BOOL
+  "Precompile code for dense and sparse matrices (C++11 required)")
+IF(ROBOPTIM_PRECOMPILE_DENSE_SPARSE)
+  IF(USE_CXX11)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DROBOPTIM_PRECOMPILED_DENSE_SPARSE -std=c++11")
+    PKG_CONFIG_APPEND_CFLAGS(-DROBOPTIM_PRECOMPILED_DENSE_SPARSE)
+  ELSE()
+    MESSAGE(WARNING "C++11 is required for explicit template instantiation")
+  ENDIF()
+ENDIF()
+
 IF(MSVC)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_LEXICAL_CAST_ASSUME_C_LOCALE")
   PKG_CONFIG_APPEND_CFLAGS (-DBOOST_LEXICAL_CAST_ASSUME_C_LOCALE)
@@ -171,8 +196,7 @@ SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_FULL_LIBDIR}/roboptim-core")
 PKG_CONFIG_APPEND_LIBS(roboptim-core)
 
 # Search for dependencies.
-SET(BOOST_COMPONENTS
-  date_time filesystem system thread program_options unit_test_framework)
+SET(BOOST_COMPONENTS date_time filesystem system unit_test_framework)
 SEARCH_FOR_BOOST()
 ADD_REQUIRED_DEPENDENCY("eigen3 >= 3.2.0")
 ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")

@@ -19,8 +19,11 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/differentiable-function.hh>
+#include <roboptim/core/numeric-linear-function.hh>
 #include <roboptim/core/util.hh>
 #include <roboptim/core/decorator/cached-function.hh>
 
@@ -139,7 +142,7 @@ BOOST_AUTO_TEST_CASE (cached_function)
 
   CachedFunction<DifferentiableFunction> cachedDenseF (dense_f);
 
-  (*output) << cachedDenseF << ":" << std::endl
+  (*output) << cachedDenseF << std::endl
 	    << std::endl;
 
   Function::vector_t x (2);
@@ -167,7 +170,7 @@ BOOST_AUTO_TEST_CASE (cached_function)
 
   CachedFunction<DifferentiableSparseFunction> cachedSparseF (sparse_f);
 
-  (*output) << cachedSparseF << ":" << std::endl
+  (*output) << cachedSparseF << std::endl
             << std::endl;
 
   for (double i = 0.; i < 10.; i += 0.5)
@@ -198,6 +201,18 @@ BOOST_AUTO_TEST_CASE (cached_function)
   cachedDenseF.reset ();
   cachedSparseF.reset ();
   loopCachedFunction (dense_f, cachedDenseF, sparse_f, cachedSparseF, x, 1e5);
+
+  NumericLinearFunction::matrix_t a (3, 3);
+  NumericLinearFunction::vector_t b (3);
+  a.setZero ();
+  b.setZero ();
+  boost::shared_ptr<NumericLinearFunction>
+    linearF = boost::make_shared<NumericLinearFunction>
+                (a, b, "linear function");
+  CachedFunction<TwiceDifferentiableFunction> cachedLinearF (linearF, 3);
+
+  (*output) << *linearF << std::endl;
+  (*output) << cachedLinearF << std::endl;
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

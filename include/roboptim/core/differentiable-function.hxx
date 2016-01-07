@@ -19,8 +19,9 @@
 # define ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION_HXX
 # include <boost/algorithm/string/replace.hpp>
 
-# include "roboptim/core/indent.hh"
-# include "roboptim/core/util.hh"
+# include <roboptim/core/indent.hh>
+# include <roboptim/core/util.hh>
+# include <roboptim/core/portability.hh>
 
 namespace roboptim
 {
@@ -93,7 +94,6 @@ namespace roboptim
 
     return o << name << " (differentiable function)";
   }
-
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_DIFFERENTIABLE_FUNCTION

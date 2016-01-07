@@ -17,9 +17,14 @@
 
 #include "debug.hh"
 
-#include <cstring>
+# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
+// Include headers for demangling
+#  include <cxxabi.h>
+# endif // __GLIBCXX__ || __GLIBCPP__
 
+#include <cstring>
 #include <algorithm>
+
 #include "roboptim/core/util.hh"
 
 namespace roboptim
@@ -56,6 +61,27 @@ namespace roboptim
 	  assert (dst[i] == src[i]);
     }
   } // end of namespace detail.
+
+# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
+  // Demangling available
+  const std::string demangle(const char* name)
+  {
+    int status = -4;
+
+    char* res = abi::__cxa_demangle(name, NULL, NULL, &status);
+    const char* const demangled_name = (status == 0)? res : name;
+    std::string ret_val(demangled_name);
+    free(res);
+
+    return ret_val;
+  }
+# else
+  // No demangling available
+  const std::string demangle(const char* name)
+  {
+    return std::string(name);
+  }
+# endif // __GLIBCXX__ || __GLIBCPP__
 
   GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
   (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m)
@@ -133,5 +159,29 @@ namespace roboptim
           }
       }
     return true;
+  }
+
+  GenericFunctionTraits<EigenMatrixDense>::const_gradient_ref
+  toDense (GenericFunctionTraits<EigenMatrixDense>::const_gradient_ref m)
+  {
+    return m;
+  }
+
+  GenericFunctionTraits<EigenMatrixDense>::gradient_t
+  toDense (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref m)
+  {
+    return GenericFunctionTraits<EigenMatrixDense>::gradient_t (m);
+  }
+
+  GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref
+  toDense (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref m)
+  {
+    return m;
+  }
+
+  GenericFunctionTraits<EigenMatrixDense>::matrix_t
+  toDense (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m)
+  {
+    return GenericFunctionTraits<EigenMatrixDense>::matrix_t (m);
   }
 } // end of namespace roboptim.

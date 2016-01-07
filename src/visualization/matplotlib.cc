@@ -96,7 +96,7 @@ namespace roboptim
 	    o << it->command () << std::endl;
 
 	  o << std::endl;
-	  o << "fig = plt.figure ()" << std::endl;
+	  o << "fig = plt.figure()" << std::endl;
 	  if (multiplot().first == 1 && multiplot().second == 1)
 	    o << "ax = plt.subplot(111)" << std::endl;
 	  o << std::endl;
@@ -132,7 +132,8 @@ namespace roboptim
 	    }
 
 	  // Show image
-	  o << "plt.show ()" << std::endl;
+	  o << "fig.tight_layout()" << std::endl;
+	  o << "plt.show()" << std::endl;
 	}
 
       return o;

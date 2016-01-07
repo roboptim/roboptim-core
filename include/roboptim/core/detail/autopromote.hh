@@ -103,7 +103,7 @@ namespace roboptim
     template <typename U>
     struct AutopromoteTrait<Scalar<U> >
     {
-      typedef typename Scalar<U>::parent_t T_type;
+      typedef typename AutopromoteTrait<U>::T_type T_type;
     };
 
     ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
@@ -174,12 +174,12 @@ namespace roboptim
 	{
 	  // True if T1 is higher ranked
 	  T1IsBetter =
-	  PrecisionTrait<T1>::precisionRank >
-	  PrecisionTrait<T2>::precisionRank,
+	  static_cast<int> (PrecisionTrait<T1>::precisionRank) >
+	  static_cast<int> (PrecisionTrait<T2>::precisionRank),
 	  // True if we know ranks for both T1 and T2
 	  knowBothRanks =
-	  PrecisionTrait<T1>::knowPrecisionRank
-	  && PrecisionTrait<T2>::knowPrecisionRank
+	  (PrecisionTrait<T1>::knowPrecisionRank != 0)
+	  && (PrecisionTrait<T2>::knowPrecisionRank != 0)
 	};
 
       // If we don't know both ranks, assert.
@@ -195,5 +195,18 @@ namespace roboptim
     };
   } // end of namespace detail.
 } // end of namespace roboptim.
+
+// Redefine the macro for use outside of this header.
+# undef ROBOPTIM_CORE_DECLARE_AUTOPROMOTE
+
+// WARNING: this macro should be used in the GLOBAL scope!
+# define ROBOPTIM_CORE_DECLARE_AUTOPROMOTE(T1,T2)	\
+  namespace roboptim { namespace detail {		\
+      template<>					\
+      struct AutopromoteTrait<T1>			\
+      {							\
+	typedef T2 T_type;				\
+      };						\
+    } }
 
 #endif //! ROBOPTIM_CORE_DETAIL_AUTOPROMOTE_HH

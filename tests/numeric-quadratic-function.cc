@@ -40,9 +40,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("numeric-quadratic-function");
 
-  typedef Function::matrix_t denseMatrix_t;
-  typedef Function::vector_t denseVector_t;
-
   typename GenericNumericQuadraticFunction<T>::matrix_t a (5, 5);
   typename GenericNumericQuadraticFunction<T>::vector_t b (5);
   typename GenericNumericQuadraticFunction<T>::vector_t x (5);
@@ -61,9 +58,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function, T, functionTypes_t)
   (*output) << f << '\n';
   (*output) << "x = " << x << '\n';
   (*output) << "f(x) = " << f (x) << '\n';
-  (*output) << "J(x) = " << denseMatrix_t (f.jacobian (x)) << '\n';
-  (*output) << "G(x) = " << denseVector_t (f.gradient (x, 0)) << '\n';
-  (*output) << "H(x) = " << denseMatrix_t (f.hessian (x, 0)) << '\n';
+  (*output) << "J(x) = " << toDense (f.jacobian (x)) << '\n';
+  (*output) << "G(x) = " << toDense (f.gradient (x, 0)) << '\n';
+  (*output) << "H(x) = " << toDense (f.hessian (x, 0)) << '\n';
 
   std::cout << output->str () << std::endl;
 

@@ -19,6 +19,7 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
 #include <boost/mpl/vector.hpp>
 
 #include <roboptim/core/io.hh>
@@ -27,6 +28,7 @@
 #include <roboptim/core/problem.hh>
 #include <roboptim/core/solver-factory.hh>
 #include <roboptim/core/callback/multiplexer.hh>
+#include <roboptim/core/callback/wrapper.hh>
 #include <roboptim/core/optimization-logger.hh>
 
 using namespace roboptim;
@@ -34,7 +36,7 @@ using namespace roboptim;
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
 // Solver type.
-typedef Solver<Function, boost::mpl::vector<Function> > solver_t;
+typedef Solver<EigenMatrixDense> solver_t;
 
 // Multiplexer type.
 typedef callback::Multiplexer<solver_t> multiplexer_t;
@@ -59,13 +61,13 @@ struct F : public Function
 void callbackFoo (const multiplexer_t::problem_t&,
                   multiplexer_t::solverState_t&)
 {
-  std::cout << "Foo" << std::endl;
+  (*output) << "Foo" << std::endl;
 }
 
 void callbackBar (const multiplexer_t::problem_t&,
                   multiplexer_t::solverState_t&)
 {
-  std::cout << "Bar" << std::endl;
+  (*output) << "Bar" << std::endl;
 }
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
@@ -75,7 +77,7 @@ BOOST_AUTO_TEST_CASE (multiplexer)
   output = retrievePattern ("multiplexer");
 
   // Instantiate the function and the problem.
-  F f;
+  boost::shared_ptr<F> f = boost::make_shared<F> ();
   solver_t::problem_t pb (f);
 
   // Instantiate the factory using the dummy solver.
@@ -88,17 +90,34 @@ BOOST_AUTO_TEST_CASE (multiplexer)
   multiplexer_t multiplexer (solver);
 
   // Add some dummy callbacks.
-  multiplexer.callbacks ().push_back (callbackFoo);
-  multiplexer.callbacks ().push_back (callbackBar);
+  multiplexer.callbacks ().push_back
+    (boost::make_shared<callback::Wrapper<solver_t> > (callbackFoo));
+  multiplexer.callbacks ().push_back
+    (boost::make_shared<callback::Wrapper<solver_t> > (callbackBar, "bar"));
 
   // Add an optimization logger.
   boost::filesystem::path log_dir =
     "/tmp/roboptim-core-tests/multiplexer-logger";
-  OptimizationLogger<solver_t> logger (solver, log_dir, false);
-  multiplexer.callbacks ().push_back (logger.callback ());
+  boost::shared_ptr<OptimizationLogger<solver_t> >
+    logger (new OptimizationLogger<solver_t> (solver, log_dir, false));
+  multiplexer.callbacks ().push_back (logger);
+
+  (*output) << multiplexer << std::endl;
 
   // Solve the problem.
   solver_t::result_t res = solver.minimum ();
+  solver.reset ();
+
+  // Create another callback multiplexer.
+  multiplexer_t multiplexer2 (solver);
+
+  multiplexer2.callbacks ().push_back
+    (boost::make_shared<callback::Wrapper<solver_t> > (callbackFoo, "foo"));
+
+  (*output) << multiplexer2 << std::endl;
+
+  // Solve the problem.
+  solver_t::result_t res2 = solver.minimum ();
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

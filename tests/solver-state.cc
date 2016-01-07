@@ -21,6 +21,7 @@
 
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver-state.hh>
@@ -29,7 +30,7 @@
 using namespace roboptim;
 
 // Specify the solver that will be used.
-typedef Solver<Function, boost::mpl::vector<Function> > parent_solver_t;
+typedef Solver<EigenMatrixDense> parent_solver_t;
 
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
@@ -170,10 +171,10 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 #define ANALYZE_FUNC(N)                                         \
   /* Instantiate the functions and the problems.*/              \
-  F##N f##N;                                                    \
+  boost::shared_ptr<F##N> f##N = boost::make_shared<F##N>();    \
   solver_t::problem_t pb##N (f##N);                             \
   /* Check that the problem is well formed. */                  \
-  BOOST_CHECK_EQUAL (&pb##N.function (), &f##N);                \
+  BOOST_CHECK_EQUAL (&pb##N.function (), f##N.get());           \
   BOOST_CHECK_EQUAL (pb##N.constraints ().size (), 0u);         \
   BOOST_CHECK (!pb##N.startingPoint ());                        \
   /* Create a solver for the problem. */                        \

@@ -25,7 +25,6 @@
 # include <log4cxx/logger.h>
 
 # include <roboptim/core/fwd.hh>
-# include <roboptim/core/portability.hh>
 # include <roboptim/core/differentiable-function.hh>
 
 # define ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS(PARENT)	\
@@ -67,6 +66,7 @@ namespace roboptim
   public:
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
     (GenericDifferentiableFunction<T>);
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_TWICE_DIFFERENTIABLE);
 
     /// \brief Hessian type.
     ///

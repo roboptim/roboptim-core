@@ -20,7 +20,6 @@
 # include <limits>
 
 # include <roboptim/core/fwd.hh>
-# include <roboptim/core/portability.hh>
 # include <roboptim/core/twice-differentiable-function.hh>
 
 namespace roboptim
@@ -37,6 +36,7 @@ namespace roboptim
   public:
     typedef GenericTwiceDifferentiableFunction<T> parent_t;
     typedef typename parent_t::size_type size_type;
+    ROBOPTIM_ADD_FLAG(ROBOPTIM_IS_QUADRATIC);
 
     /// \brief Concrete class constructor should call this constructor.
     ///

@@ -23,8 +23,10 @@
 # include <vector>
 # include <utility>
 # include <map>
+# include <string>
 
-# include <roboptim/core/twice-differentiable-function.hh>
+// WARNING: careful with circular includes
+# include <roboptim/core/function.hh>
 
 namespace roboptim
 {
@@ -46,9 +48,9 @@ namespace roboptim
     /// The first line of the jacobian is the only one used.
     template <typename T>
     void
-    jacobian_from_gradients (DifferentiableFunction::matrix_ref jac,
+    jacobian_from_gradients (Function::matrix_ref jac,
                              const std::vector<const T*>& c,
-                             DifferentiableFunction::const_vector_ref x);
+                             Function::const_vector_ref x);
   } // end of namespace detail.
 
   /// \brief Display a vector.
@@ -67,6 +69,13 @@ namespace roboptim
   template <typename T>
   std::ostream& operator<< (std::ostream&, const Eigen::MatrixBase<T>&);
 
+  /// \brief Demangle (if available).
+  ROBOPTIM_DLLAPI const std::string demangle(const char* name);
+
+  /// \brief Return a string describing the type of T.
+  template <typename T>
+  std::string typeString ();
+
   /// \brief Convert a sparse matrix into a dense matrix.
   ROBOPTIM_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
@@ -76,6 +85,25 @@ namespace roboptim
   ROBOPTIM_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
   (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref v);
+
+  /// \brief Convert an input gradient to a dense gradient (e.g. for printing).
+  /// \param g input gradient.
+  ROBOPTIM_DLLAPI
+  GenericFunctionTraits<EigenMatrixDense>::gradient_t toDense
+  (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref g);
+
+  /// \brief Convert an input matrix to a dense matrix (e.g. for printing).
+  /// \param m input matrix.
+  ROBOPTIM_DLLAPI
+  GenericFunctionTraits<EigenMatrixDense>::matrix_t toDense
+  (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m);
+
+  /// \brief Convert an input matrix to a dense matrix (e.g. for printing).
+  /// \param m input matrix.
+  /// Note: since the input is a dense matrix, we just return it.
+  ROBOPTIM_DLLAPI
+  GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref toDense
+  (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref m);
 
   /// \brief Compare sparse vectors (matrices) using both relative and absolute
   /// tolerances.
@@ -127,11 +155,11 @@ namespace roboptim
    Function::size_type startRow, Function::size_type startCol);
 
   /// \brief Apply normalize to a scalar.
-  inline double normalize (double x);
+  inline double normalize (double x, double eps = 1e-8);
 
   /// \brief Apply normalize to each element of an Eigen vector.
   template <typename T>
-  inline T normalize (const T& x);
+  inline T normalize (const T& x, double eps = 1e-8);
 } // end of namespace roboptim.
 
 # include <roboptim/core/util.hxx>
