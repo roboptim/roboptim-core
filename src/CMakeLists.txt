@@ -19,9 +19,7 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 # Define the directory where plug-ins will be installed.
 SET(PLUGINDIR ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME})
 
-# Main library.
-ADD_LIBRARY(roboptim-core SHARED
-  ${HEADERS}
+SET(ROBOPTIM_CORE_SRC
   debug.hh
   doc.hh
   alloc.cc
@@ -34,7 +32,6 @@ ADD_LIBRARY(roboptim-core SHARED
   solver-warning.cc
   solver.cc
   util.cc
-  roboptim-core-precompile.cc
 
   visualization/gnuplot.cc
   visualization/gnuplot-commands.cc
@@ -45,6 +42,13 @@ ADD_LIBRARY(roboptim-core SHARED
   visualization/matplotlib-commands.cc
   visualization/matplotlib-matrix.cc
   )
+
+IF(ROBOPTIM_PRECOMPILE_DENSE_SPARSE)
+  SET(ROBOPTIM_CORE_SRC ${ROBOPTIM_CORE_SRC} roboptim-core-precompile.cc)
+ENDIF()
+
+# Main library.
+ADD_LIBRARY(roboptim-core SHARED ${HEADERS} ${ROBOPTIM_CORE_SRC})
 
 IF(MSVC)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILDING_ROBOPTIM")
