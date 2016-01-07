@@ -202,10 +202,10 @@ namespace roboptim
 
   template <typename T>
   template <class ExpectedType>
-  ExpectedType* GenericFunction<T>::castInto()
+  ExpectedType* GenericFunction<T>::castInto (bool check)
   {
-    if (asType<ExpectedType>())
-      return static_cast<ExpectedType*>(this);
+    if (!check || asType<ExpectedType> ())
+      return static_cast<ExpectedType*> (this);
 
     boost::format fmt ("cannot cast to %s*");
     fmt % typeString<ExpectedType> ();
@@ -214,10 +214,10 @@ namespace roboptim
 
   template <typename T>
   template <class ExpectedType>
-  const ExpectedType* GenericFunction<T>::castInto() const
+  const ExpectedType* GenericFunction<T>::castInto (bool check) const
   {
-    if (asType<const ExpectedType>())
-      return static_cast<const ExpectedType*>(this);
+    if (!check || asType<const ExpectedType> ())
+      return static_cast<const ExpectedType*> (this);
 
     boost::format fmt ("cannot cast to const %s*");
     fmt % typeString<ExpectedType> ();

@@ -339,17 +339,17 @@ namespace roboptim
     /// \return upper step of the discrete interval
     static value_type getStep (const discreteInterval_t& interval);
 
-    /// \brief Fonction cast as.
-    ///
-    /// \tparam ExpectedType type we want to cast the function into
+    /// \brief Cast function to ExpectedType.
+    /// \tparam ExpectedType type we want to cast the function into.
+    /// \param check check that the cast is valid, and throws if it is not.
     template <class ExpectedType>
-    ExpectedType* castInto();
+    ExpectedType* castInto (bool check = false);
 
-    /// \brief Fonction cast as, const version.
-    ///
-    /// \tparam ExpectedType type we want to cast the function into
+    /// \brief Cast function to ExpectedType (const).
+    /// \tparam ExpectedType type we want to cast the function into.
+    /// \param check check that the cast is valid, and throws if it is not.
     template <class ExpectedType>
-    const ExpectedType* castInto() const;
+    const ExpectedType* castInto (bool check = false) const;
 
     /// \brief Fonction type checking.
     ///

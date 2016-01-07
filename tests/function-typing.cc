@@ -79,24 +79,32 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (differentiable_function_typing, T, functionTypes_
   BOOST_CHECK(func.template asType<GenericFunction<T> >()                     == true);
   BOOST_CHECK(func.template asType<GenericDifferentiableFunction<T> >()       == true);
 
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> >());
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> > (true));
 
-  BOOST_CHECK(func.template asType<GenericTwiceDifferentiableFunction<T> >()  ==false);
-  BOOST_CHECK(func.template asType<GenericLinearFunction<T> >()               ==false);
-  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        ==false);
-  BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            ==false);
-  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     ==false);
-  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             ==false);
-  BOOST_CHECK(func.template asType<Polynomial<T> >()                          ==false);
+  BOOST_CHECK(func.template asType<GenericTwiceDifferentiableFunction<T> >()  == false);
+  BOOST_CHECK(func.template asType<GenericLinearFunction<T> >()               == false);
+  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        == false);
+  BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            == false);
+  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     == false);
+  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             == false);
+  BOOST_CHECK(func.template asType<Polynomial<T> >()                          == false);
 
-  BOOST_CHECK_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericQuadraticFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericQuadraticFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> > (true), std::runtime_error);
+
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericConstantFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<Polynomial<T> > (false));
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (twice_differentiable_function_typing, T, functionTypes_t)
@@ -107,23 +115,30 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (twice_differentiable_function_typing, T, function
   BOOST_CHECK(func.template asType<GenericDifferentiableFunction<T> >()       == true);
   BOOST_CHECK(func.template asType<GenericTwiceDifferentiableFunction<T> >()  == true);
 
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> >());
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> > (true));
 
-  BOOST_CHECK(func.template asType<GenericLinearFunction<T> >()               ==false);
-  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        ==false);
-  BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            ==false);
-  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     ==false);
-  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             ==false);
-  BOOST_CHECK(func.template asType<Polynomial<T> >()                          ==false);
+  BOOST_CHECK(func.template asType<GenericLinearFunction<T> >()               == false);
+  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        == false);
+  BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            == false);
+  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     == false);
+  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             == false);
+  BOOST_CHECK(func.template asType<Polynomial<T> >()                          == false);
 
-  BOOST_CHECK_THROW(func.template castInto<GenericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericQuadraticFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericQuadraticFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> > (true), std::runtime_error);
+
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericConstantFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<Polynomial<T> > (false));
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function_typing, T, functionTypes_t)
@@ -140,21 +155,26 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_quadratic_function_typing, T, functionTyp
   BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            == true);
   BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     == true);
 
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericQuadraticFunction<T> >());
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (true));
 
-  BOOST_CHECK(func.template asType<GenericLinearFunction<T> >()               ==false);
-  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        ==false);
-  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             ==false);
-  BOOST_CHECK(func.template asType<Polynomial<T> >()                          ==false);
+  BOOST_CHECK(func.template asType<GenericLinearFunction<T> >()               == false);
+  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        == false);
+  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             == false);
+  BOOST_CHECK(func.template asType<Polynomial<T> >()                          == false);
 
-  BOOST_CHECK_THROW(func.template castInto<GenericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> > (true), std::runtime_error);
+
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericConstantFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<Polynomial<T> > (false));
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function_typing, T, functionTypes_t)
@@ -172,20 +192,24 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (numeric_linear_function_typing, T, functionTypes_
   BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        == true);
   BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            == true);
 
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericLinearFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericLinearFunction<T> >());
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericLinearFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericLinearFunction<T> > (true));
 
-  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     ==false);
-  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             ==false);
-  BOOST_CHECK(func.template asType<Polynomial<T> >()                          ==false);
+  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     == false);
+  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             == false);
+  BOOST_CHECK(func.template asType<Polynomial<T> >()                          == false);
 
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> > (true), std::runtime_error);
+
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericConstantFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<Polynomial<T> > (false));
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (constant_function_typing, T, functionTypes_t)
@@ -201,20 +225,24 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (constant_function_typing, T, functionTypes_t)
   BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             == true);
   BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            == true);
 
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericLinearFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericConstantFunction<T> >());
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericLinearFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericConstantFunction<T> > (true));
 
-  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        ==false);
-  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     ==false);
-  BOOST_CHECK(func.template asType<Polynomial<T> >()                          ==false);
+  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        == false);
+  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     == false);
+  BOOST_CHECK(func.template asType<Polynomial<T> >()                          == false);
 
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<Polynomial<T> > (true), std::runtime_error);
+
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<Polynomial<T> > (false));
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (polynomial_function_typing, T, functionTypes_t)
@@ -228,22 +256,28 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (polynomial_function_typing, T, functionTypes_t)
   BOOST_CHECK(func.template asType<GenericTwiceDifferentiableFunction<T> >()  == true);
   BOOST_CHECK(func.template asType<Polynomial<T> >()                          == true);
 
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> >());
-  BOOST_CHECK_NO_THROW(func.template castInto<Polynomial<T> >());
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericTwiceDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func.template castInto<Polynomial<T> > (true));
 
-  BOOST_CHECK(func.template asType<GenericLinearFunction<T> >()               ==false);
-  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             ==false);
-  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        ==false);
-  BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            ==false);
-  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     ==false);
+  BOOST_CHECK(func.template asType<GenericLinearFunction<T> >()               == false);
+  BOOST_CHECK(func.template asType<GenericConstantFunction<T> >()             == false);
+  BOOST_CHECK(func.template asType<GenericNumericLinearFunction<T> >()        == false);
+  BOOST_CHECK(func.template asType<GenericQuadraticFunction<T> >()            == false);
+  BOOST_CHECK(func.template asType<GenericNumericQuadraticFunction<T> >()     == false);
 
-  BOOST_CHECK_THROW(func.template castInto<GenericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericQuadraticFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericLinearFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericQuadraticFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(func.template castInto<GenericConstantFunction<T> > (true), std::runtime_error);
+
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericLinearFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericQuadraticFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericNumericQuadraticFunction<T> > (false));
+  BOOST_CHECK_NO_THROW(func.template castInto<GenericConstantFunction<T> > (false));
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (shared_ptr_cast, T, functionTypes_t)
@@ -270,21 +304,25 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (shared_ptr_cast, T, functionTypes_t)
   BOOST_CHECK(df->template asType<GenericDifferentiableFunction<T> >());
   BOOST_CHECK(df->template asType<GenericTwiceDifferentiableFunction<T> >());
 
-  BOOST_CHECK_NO_THROW(func->template castInto<GenericFunction<T> > ());
-  BOOST_CHECK_NO_THROW(func->template castInto<GenericDifferentiableFunction<T> > ());
-  BOOST_CHECK_NO_THROW(func->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericTwiceDifferentiableFunction<T> > (true));
 
-  BOOST_CHECK_NO_THROW(f->template castInto<GenericFunction<T> > ());
-  BOOST_CHECK_NO_THROW(f->template castInto<GenericDifferentiableFunction<T> > ());
-  BOOST_CHECK_NO_THROW(f->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericTwiceDifferentiableFunction<T> > (true));
 
-  BOOST_CHECK_NO_THROW(df->template castInto<GenericFunction<T> > ());
-  BOOST_CHECK_NO_THROW(df->template castInto<GenericDifferentiableFunction<T> > ());
-  BOOST_CHECK_NO_THROW(df->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericTwiceDifferentiableFunction<T> > (true));
 
-  BOOST_CHECK_THROW(func->template castInto<Polynomial<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(f->template castInto<Polynomial<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(df->template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(func->template castInto<Polynomial<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(f->template castInto<Polynomial<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(df->template castInto<Polynomial<T> > (true), std::runtime_error);
+
+  BOOST_CHECK_NO_THROW(func->template castInto<Polynomial<T> > (false));
+  BOOST_CHECK_NO_THROW(f->template castInto<Polynomial<T> > (false));
+  BOOST_CHECK_NO_THROW(df->template castInto<Polynomial<T> > (false));
 }
 
 // TODO: avoid code duplicationc
@@ -312,21 +350,25 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (const_shared_ptr_cast, T, functionTypes_t)
   BOOST_CHECK(df->template asType<GenericDifferentiableFunction<T> >());
   BOOST_CHECK(df->template asType<GenericTwiceDifferentiableFunction<T> >());
 
-  BOOST_CHECK_NO_THROW(func->template castInto<GenericFunction<T> > ());
-  BOOST_CHECK_NO_THROW(func->template castInto<GenericDifferentiableFunction<T> > ());
-  BOOST_CHECK_NO_THROW(func->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(func->template castInto<GenericTwiceDifferentiableFunction<T> > (true));
 
-  BOOST_CHECK_NO_THROW(f->template castInto<GenericFunction<T> > ());
-  BOOST_CHECK_NO_THROW(f->template castInto<GenericDifferentiableFunction<T> > ());
-  BOOST_CHECK_NO_THROW(f->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(f->template castInto<GenericTwiceDifferentiableFunction<T> > (true));
 
-  BOOST_CHECK_NO_THROW(df->template castInto<GenericFunction<T> > ());
-  BOOST_CHECK_NO_THROW(df->template castInto<GenericDifferentiableFunction<T> > ());
-  BOOST_CHECK_NO_THROW(df->template castInto<GenericTwiceDifferentiableFunction<T> > ());
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericDifferentiableFunction<T> > (true));
+  BOOST_CHECK_NO_THROW(df->template castInto<GenericTwiceDifferentiableFunction<T> > (true));
 
-  BOOST_CHECK_THROW(func->template castInto<Polynomial<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(f->template castInto<Polynomial<T> >(), std::runtime_error);
-  BOOST_CHECK_THROW(df->template castInto<Polynomial<T> >(), std::runtime_error);
+  BOOST_CHECK_THROW(func->template castInto<Polynomial<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(f->template castInto<Polynomial<T> > (true), std::runtime_error);
+  BOOST_CHECK_THROW(df->template castInto<Polynomial<T> > (true), std::runtime_error);
+
+  BOOST_CHECK_NO_THROW(func->template castInto<Polynomial<T> > (false));
+  BOOST_CHECK_NO_THROW(f->template castInto<Polynomial<T> > (false));
+  BOOST_CHECK_NO_THROW(df->template castInto<Polynomial<T> > (false));
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
