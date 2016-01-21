@@ -23,6 +23,7 @@ SET(ROBOPTIM_CORE_SRC
   debug.hh
   doc.hh
   alloc.cc
+  debug.cc
   finite-difference-gradient.cc
   generic-solver.cc
   indent.cc
