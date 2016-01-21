@@ -57,10 +57,16 @@ namespace roboptim
 #  define ROBOPTIM_ASSERT_INTERNAL(expr) ((void)0)
 #  define ROBOPTIM_ASSERT_MSG_INTERNAL(expr, msg) ((void)0)
 #else // NDEBUG
+// Fallback if BOOST_LIKELY is not available
+#  ifndef BOOST_LIKELY
+#    define BOOST_LIKELY(x) (x)
+#  endif // BOOST_LIKELY
+
 #  define ROBOPTIM_ASSERT_INTERNAL(expr)                                     \
     (BOOST_LIKELY(!!(expr)) ? ((void)0) : ::roboptim::assertion_failed(      \
                                               #expr, BOOST_CURRENT_FUNCTION, \
                                               __FILE__, __LINE__))
+
 #  define ROBOPTIM_ASSERT_MSG_INTERNAL(expr, msg)                           \
     (BOOST_LIKELY(!!(expr))                                                 \
          ? ((void)0)                                                        \
