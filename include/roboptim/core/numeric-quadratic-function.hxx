@@ -18,6 +18,7 @@
 #ifndef ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HXX
 # define ROBOPTIM_CORE_NUMERIC_QUADRATIC_FUNCTION_HXX
 
+# include <roboptim/core/debug.hh>
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/numeric-linear-function.hh>
 # include <roboptim/core/util.hh>
@@ -34,7 +35,9 @@ namespace roboptim
     c_ (1),
     buffer_ (b.size ())
   {
-    assert (b.size () == this->inputSize ());
+    ROBOPTIM_ASSERT_MSG (b.size () == this->inputSize (),
+                         "invalid size for b: " << b.size ()
+                         << " != " << this->inputSize ());
     c_.setZero ();
   }
 
@@ -47,8 +50,11 @@ namespace roboptim
     c_ (c),
     buffer_ (b.size ())
   {
-    assert (b.size () == this->inputSize ());
-    assert (c.size () == 1);
+    ROBOPTIM_ASSERT_MSG (b.size () == this->inputSize (),
+                         "invalid size for b: " << b.size ()
+                         << " != " << this->inputSize ());
+    ROBOPTIM_ASSERT_MSG (c.size () == 1,
+                         "invalid size for c: " << c.size () << " != 1");
   }
 
   template <typename T>

@@ -30,6 +30,7 @@
 # include <Eigen/Core>
 # include <Eigen/Sparse>
 
+# include <roboptim/core/debug.hh>
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/terminal-color.hh>
 # include <roboptim/core/util.hh>
@@ -79,7 +80,7 @@ namespace roboptim
   void Problem<T>::initialize ()
   {
     // Check the cost function.
-    assert (function_.get () != 0);
+    ROBOPTIM_ASSERT_MSG (function_.get () != 0, "cost function is unset");
 
     // Initialize bound.
     argumentBounds_.resize (static_cast<std::size_t> (function_->inputSize ()),

@@ -18,6 +18,7 @@
 #ifndef ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
 # define ROBOPTIM_CORE_NUMERIC_LINEAR_FUNCTION_HXX
 
+# include <roboptim/core/debug.hh>
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/numeric-linear-function.hh>
 # include <roboptim/core/util.hh>
@@ -33,7 +34,9 @@ namespace roboptim
     a_ (a),
     b_ (b)
   {
-    assert (b.size () == this->outputSize ());
+    ROBOPTIM_ASSERT_MSG (b.size () == this->outputSize (),
+                         "invalid size for b: " << b.size ()
+                         << " != " << this->inputSize ());
   }
 
   template <typename T>
