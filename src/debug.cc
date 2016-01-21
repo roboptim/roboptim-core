@@ -19,13 +19,16 @@
 #include <cstdlib>
 
 #include "roboptim/core/debug.hh"
+#include "roboptim/core/terminal-color.hh"
 
 namespace roboptim
 {
   void assertion_failed(char const *expr, char const *function,
                         char const *file, long line)
   {
-    std::cerr << "Assertion `" << expr << "` failed in " << file << ":" << line
+    std::cerr << fg::bold << "Assertion" << fg::reset
+              << ": `" << fg::fail << fg::bold << expr << fg::reset
+              << "` failed in " << file << ":" << line
               << ": " << function << std::endl;
     std::abort();
   }
@@ -33,8 +36,11 @@ namespace roboptim
   void assertion_failed_msg(char const *expr, char const *msg,
                             char const *function, char const *file, long line)
   {
-    std::cerr << "Assertion `" << expr << "` failed in " << file << ":" << line
-              << ": " << function << ": " << msg << std::endl;
+    std::cerr << fg::bold << "Assertion" << fg::reset
+              << ": `" << fg::fail << fg::bold << expr << fg::reset
+              << "` failed in " <<  fg::bold << file << ":" << line << fg::reset
+              << ": " << function << ": "
+              << fg::warn << fg::bold << msg << fg::reset << std::endl;
     std::abort();
   }
 }
