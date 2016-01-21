@@ -3,6 +3,8 @@
 [0;33myellow[m
 [0;34mblue[m
 [33;40morange[m
+[1mbold[m
+[3mitalic[m
 [0;32mok[m
 [33;40mwarn[m
 [0;31mfail[m

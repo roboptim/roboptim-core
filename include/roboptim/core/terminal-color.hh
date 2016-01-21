@@ -88,6 +88,19 @@ namespace roboptim
       return o;
     }
 
+    inline std::ostream& bold (std::ostream& o)
+    {
+      ROBOPTIM_CORE_FILTER_TTY ();
+      o << "\033[1m";
+      return o;
+    }
+
+    inline std::ostream& italic (std::ostream& o)
+    {
+      ROBOPTIM_CORE_FILTER_TTY ();
+      o << "\033[3m";
+      return o;
+    }
 
     inline std::ostream& ok (std::ostream& o)
     {

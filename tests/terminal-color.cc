@@ -32,6 +32,8 @@ std::ostream& testStream (std::ostream& o)
   o << fg::yellow << "yellow" << fg::reset << std::endl;
   o << fg::blue << "blue" << fg::reset << std::endl;
   o << fg::orange << "orange" << fg::reset << std::endl;
+  o << fg::bold << "bold" << fg::reset << std::endl;
+  o << fg::italic << "italic" << fg::reset << std::endl;
 
   o << fg::ok << "ok" << fg::reset << std::endl;
   o << fg::warn << "warn" << fg::reset << std::endl;
