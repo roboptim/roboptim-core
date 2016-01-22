@@ -46,6 +46,7 @@ namespace roboptim
 #endif // _WIN32
     }
 
+    /// \brief Reset everything (color, attributes).
     inline std::ostream& reset (std::ostream& o)
     {
       ROBOPTIM_CORE_FILTER_TTY ();
@@ -56,35 +57,43 @@ namespace roboptim
     inline std::ostream& red (std::ostream& o)
     {
       ROBOPTIM_CORE_FILTER_TTY ();
-      o << "\033[0;31m";
+      o << "\033[31m";
       return o;
     }
 
     inline std::ostream& green (std::ostream& o)
     {
       ROBOPTIM_CORE_FILTER_TTY ();
-      o << "\033[0;32m";
+      o << "\033[32m";
       return o;
     }
 
     inline std::ostream& yellow (std::ostream& o)
     {
       ROBOPTIM_CORE_FILTER_TTY ();
-      o << "\033[0;33m";
+      o << "\033[33m";
       return o;
     }
 
     inline std::ostream& blue (std::ostream& o)
     {
       ROBOPTIM_CORE_FILTER_TTY ();
-      o << "\033[0;34m";
+      o << "\033[34m";
       return o;
     }
 
     inline std::ostream& orange (std::ostream& o)
     {
       ROBOPTIM_CORE_FILTER_TTY ();
-      o << "\033[33;40m";
+      o << "\033[38;5;208m";
+      return o;
+    }
+
+    /// \brief Default foreground color.
+    inline std::ostream& resetfg (std::ostream& o)
+    {
+      ROBOPTIM_CORE_FILTER_TTY ();
+      o << "\033[39m";
       return o;
     }
 
@@ -99,6 +108,14 @@ namespace roboptim
     {
       ROBOPTIM_CORE_FILTER_TTY ();
       o << "\033[3m";
+      return o;
+    }
+
+    /// \brief Reset attributes (bold, italic...).
+    inline std::ostream& normal (std::ostream& o)
+    {
+      ROBOPTIM_CORE_FILTER_TTY ();
+      o << "\033[0m";
       return o;
     }
 

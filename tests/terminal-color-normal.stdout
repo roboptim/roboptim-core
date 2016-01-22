@@ -1,11 +1,22 @@
-red
-green
-yellow
-blue
-orange
-bold
-italic
-ok
-warn
-fail
+normal text
+red text
+green text
+yellow text
+blue text
+orange text
+bold text
+bold red text
+bold green text
+bold yellow text
+bold blue text
+bold orange text
+italic text
+italic red text
+italic green text
+italic yellow text
+italic blue text
+italic orange text
+ok text
+warn text
+fail text
 

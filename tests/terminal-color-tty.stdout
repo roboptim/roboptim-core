@@ -1,11 +1,22 @@
-[0;31mred[m
-[0;32mgreen[m
-[0;33myellow[m
-[0;34mblue[m
-[33;40morange[m
-[1mbold[m
-[3mitalic[m
-[0;32mok[m
-[33;40mwarn[m
-[0;31mfail[m
+normal text
+[31mred[39m text
+[32mgreen[39m text
+[33myellow[39m text
+[34mblue[39m text
+[38;5;208morange[39m text
+[1mbold[0m text
+[31m[1mbold red[m text
+[32m[1mbold green[m text
+[33m[1mbold yellow[m text
+[34m[1mbold blue[m text
+[38;5;208m[1mbold orange[m text
+[3mitalic[0m text
+[31m[3mitalic red[m text
+[32m[3mitalic green[m text
+[33m[3mitalic yellow[m text
+[34m[3mitalic blue[m text
+[38;5;208m[3mitalic orange[m text
+[32mok[39m text
+[38;5;208mwarn[39m text
+[31mfail[39m text
 

@@ -27,17 +27,34 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 std::ostream& testStream (std::ostream& o)
 {
-  o << fg::red << "red" << fg::reset << std::endl;
-  o << fg::green << "green" << fg::reset << std::endl;
-  o << fg::yellow << "yellow" << fg::reset << std::endl;
-  o << fg::blue << "blue" << fg::reset << std::endl;
-  o << fg::orange << "orange" << fg::reset << std::endl;
-  o << fg::bold << "bold" << fg::reset << std::endl;
-  o << fg::italic << "italic" << fg::reset << std::endl;
+  using namespace std;
+  using namespace roboptim::fg;
 
-  o << fg::ok << "ok" << fg::reset << std::endl;
-  o << fg::warn << "warn" << fg::reset << std::endl;
-  o << fg::fail << "fail" << fg::reset << std::endl;
+  o << "normal text" << endl;
+
+  o << red << "red" << resetfg << " text" << endl;
+  o << green << "green" << resetfg << " text" << endl;
+  o << yellow << "yellow" << resetfg << " text" << endl;
+  o << blue << "blue" << resetfg << " text" << endl;
+  o << orange << "orange" << resetfg << " text" << endl;
+
+  o << bold << "bold" << normal << " text" << endl;
+  o << red << bold << "bold red" << reset << " text" << endl;
+  o << green << bold << "bold green" << reset << " text" << endl;
+  o << yellow << bold << "bold yellow" << reset << " text" << endl;
+  o << blue << bold << "bold blue" << reset << " text" << endl;
+  o << orange << bold << "bold orange" << reset << " text" << endl;
+
+  o << italic << "italic" << normal << " text" << endl;
+  o << red << italic << "italic red" << reset << " text" << endl;
+  o << green << italic << "italic green" << reset << " text" << endl;
+  o << yellow << italic << "italic yellow" << reset << " text" << endl;
+  o << blue << italic << "italic blue" << reset << " text" << endl;
+  o << orange << italic << "italic orange" << reset << " text" << endl;
+
+  o << ok << "ok" << resetfg << " text" << endl;
+  o << warn << "warn" << resetfg << " text" << endl;
+  o << fail << "fail" << resetfg << " text" << endl;
 
   return o;
 }
