@@ -31,6 +31,13 @@ typedef Function::size_type  size_type;
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
+void fpe_raiser ()
+{
+#ifdef ROBOPTIM_HAS_FENV_H
+  feraiseexcept (FE_INVALID);
+#endif //! ROBOPTIM_HAS_FENV_H
+}
+
 void test_normalization
 (boost::shared_ptr<boost::test_tools::output_test_stream> output)
 {
@@ -55,6 +62,23 @@ void test_normalization
   (*output) << m << std::endl
             << normalize (m) << std::endl;
 
+}
+
+void test_sigfpe
+(boost::shared_ptr<boost::test_tools::output_test_stream> output)
+{
+#ifdef ROBOPTIM_HAS_FENV_H
+  feenableexcept (FE_ALL_EXCEPT & ~FE_INEXACT);
+#endif //! ROBOPTIM_HAS_FENV_H
+
+  // Note: we cannot test for an actual SIGFPE since this is a signal we cannot
+  // recover from.
+  {
+    (*output) << "Not expecting a FPE...";
+    detail::DisableFPE d;
+    fpe_raiser ();
+    (*output) << " done!" << std::endl;
+  }
 }
 
 BOOST_AUTO_TEST_CASE (util)
@@ -209,6 +233,9 @@ BOOST_AUTO_TEST_CASE (util)
 
   // Test normalization
   test_normalization (output);
+
+  // Test SIGFPE
+  test_sigfpe (output);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

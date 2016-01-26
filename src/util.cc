@@ -60,6 +60,21 @@ namespace roboptim
 	else
 	  assert (dst[i] == src[i]);
     }
+
+    DisableFPE::DisableFPE()
+    {
+# ifdef ROBOPTIM_HAS_FENV_H
+      feholdexcept (&fenv_);
+# endif //! ROBOPTIM_HAS_FENV_H
+    }
+
+    DisableFPE::~DisableFPE()
+    {
+# ifdef ROBOPTIM_HAS_FENV_H
+      feclearexcept (FE_ALL_EXCEPT);
+      feupdateenv (&fenv_);
+# endif //! ROBOPTIM_HAS_FENV_H
+    }
   } // end of namespace detail.
 
 # if defined(__GLIBCXX__) || defined(__GLIBCPP__)

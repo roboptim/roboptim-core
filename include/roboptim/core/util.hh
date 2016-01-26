@@ -25,6 +25,11 @@
 # include <map>
 # include <string>
 
+# ifdef __linux__
+#  include <fenv.h>
+#  define ROBOPTIM_HAS_FENV_H
+# endif //! __linux__
+
 // WARNING: careful with circular includes
 # include <roboptim/core/function.hh>
 
@@ -32,6 +37,13 @@ namespace roboptim
 {
   namespace detail
   {
+
+# ifdef ROBOPTIM_HAS_FENV_H
+    typedef fenv_t fenv_t;
+# else //! ROBOPTIM_HAS_FENV_H
+    typedef fenv_t void*;
+# endif //! ROBOPTIM_HAS_FENV_H
+
     /// \internal
     /// \brief Copy the content of an Eigen vector into a C array.
     ROBOPTIM_DLLAPI void vector_to_array
@@ -51,6 +63,24 @@ namespace roboptim
     jacobian_from_gradients (Function::matrix_ref jac,
                              const std::vector<const T*>& c,
                              Function::const_vector_ref x);
+
+    /// \brief Helper class used to disable floating-point exceptions.
+    /// Simply create an object in a scope where the exceptions should be
+    /// disabled.
+    class ROBOPTIM_DLLAPI DisableFPE
+    {
+    public:
+      /// \brief Constructor, disabling floating-point exceptions and storing
+      /// the floating-point environment.
+      DisableFPE ();
+
+      /// \brief Destructor, restoring the floating-point environment.
+      ~DisableFPE ();
+
+    private:
+      /// \brief Floating-point exception environment.
+      ::roboptim::detail::fenv_t fenv_;
+    };
   } // end of namespace detail.
 
   /// \brief Display a vector.
