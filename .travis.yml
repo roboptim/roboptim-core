@@ -1,7 +1,5 @@
+sudo: required
 language: cpp
-compiler:
-  - gcc
-  - clang
 env:
   global:
     - secure: "cz8Eo/xP13SCH6j38LE4eFqAfI7H5BUQaWaK9yObZWYxCm3M6FL6TOUJ0vecwKJoPyUuk5Z9qYwZCZstkID5Vyn1xNm5PavdZcRhhb7E9knJeBSTMLAqn51I8KL64E0lyqvqgM89knotGvjgY+HshwWYmR+f9v/sbFyVoUvBvvo="
@@ -16,9 +14,6 @@ env:
     - DEBSIGN_KEYID=5AE5CD75
     - PPA_URI="roboptim/ppa"
     - LCOV_IGNORE_RULES="*tests*"
-  matrix:
-    - ROBOPTIM_STORAGE_ORDER=ColMajor
-    - ROBOPTIM_STORAGE_ORDER=RowMajor
 notifications:
   hipchat:
     rooms:
@@ -32,21 +27,38 @@ branches:
   - travis
   - coverity_scan
 script:
-  - export CMAKE_ADDITIONAL_OPTIONS="-DSTORAGE_ORDER=${ROBOPTIM_STORAGE_ORDER}"
+  - export CMAKE_ADDITIONAL_OPTIONS="-DSTORAGE_ORDER=${ROBOPTIM_STORAGE_ORDER:-ColMajor}"
   - if [ "${COVERITY_SCAN_BRANCH}" != "1" ]; then ./.travis/run build; fi
 after_success: ./.travis/run after_success
 after_failure: ./.travis/run after_failure
 before_install:
   - ./.travis/run  before_install
   - ./.travis/dependencies/eigen-3.2
+
 matrix:
   allow_failures:
     - compiler: clang
     - os: osx
     - env: COVERITY_SCAN_BRANCH=1
-os:
-  - linux
-  - osx
+  include:
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ROBOPTIM_STORAGE_ORDER=ColMajor
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ROBOPTIM_STORAGE_ORDER=RowMajor
+    - os: linux
+      dist: trusty
+      compiler: clang
+    - os: linux
+      dist: precise
+      compiler: gcc
+    - os: linux
+      dist: precise
+      compiler: clang
+    - os: osx
 
 addons:
   coverity_scan:
