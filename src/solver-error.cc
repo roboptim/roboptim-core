@@ -15,9 +15,14 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <string>
+#include <sstream>
+#include <vector>
+
 #include "debug.hh"
 
 #include "roboptim/core/solver-error.hh"
+#include "roboptim/core/util.hh"
 #include "roboptim/core/terminal-color.hh"
 
 namespace roboptim
@@ -47,7 +52,34 @@ namespace roboptim
   std::ostream&
   SolverError::print (std::ostream& o) const
   {
-    return o << fg::fail << "Solver error: " << what () << fg::reset;
+    o << fg::fail << "Solver error";
+
+    // If the error message is not empty
+    std::string msg (what ());
+    if (!msg.empty ())
+    {
+      o << ":";
+
+      // Split string on newlines, and insert indenting
+      std::vector<std::string> errors = split (msg, '\n');
+      if (errors.size () == 1)
+      {
+        o << " " << errors[0];
+      }
+      else
+      {
+        o << incindent;
+        for (std::vector<std::string>::const_iterator
+            s = errors.begin (); s != errors.end (); ++s)
+        {
+          o << iendl << *s;
+        }
+        o << decindent;
+      }
+    }
+    o << fg::reset;
+
+    return o;
   }
 
   const boost::optional<Result>& SolverError::lastState () const

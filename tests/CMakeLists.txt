@@ -105,6 +105,7 @@ ROBOPTIM_CORE_TEST(solver-factory)
 # Results.
 ROBOPTIM_CORE_TEST(result)
 ROBOPTIM_CORE_TEST(result-with-warnings)
+ROBOPTIM_CORE_TEST(solver-error)
 
 # Example from documentation.
 ROBOPTIM_CORE_TEST(example)
