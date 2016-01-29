@@ -109,7 +109,7 @@ namespace roboptim
         o << decindent;
       }
 
-    o << decindent << iendl;
+    o << decindent;
     return o;
   }
 

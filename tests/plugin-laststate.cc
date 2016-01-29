@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE (plugin)
   // Display problem and solver.
   (*output) << pb << std::endl
             << "---" << std::endl
-            << solver << std::endl;
+            << solver << std::endl << std::endl;
 
   // Display the solver's last state (x, objective etc.)
   SolverError& err = boost::get<SolverError> (res);

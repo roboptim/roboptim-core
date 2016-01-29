@@ -91,16 +91,16 @@ BOOST_AUTO_TEST_CASE (solver)
   pb.startingPoint () = x;
 
   solver_t solver (pb);
-  (*output) << solver << std::endl;
+  (*output) << solver << std::endl << std::endl;
   solver.parameters ()["data.string"].value = std::string ("dummy data");
   solver.parameters ()["data.string"].description = "dummy string";
   solver.parameters ()["data.int"].value = int (10);
   solver.parameters ()["data.int"].description = "dummy integer";
   solver.parameters ()["data.value_type"].value = F::value_type (42.);
   solver.parameters ()["data.value_type"].description = "dummy value_type";
-  (*output) << solver << std::endl;
+  (*output) << solver << std::endl << std::endl;
   solver.solve ();
-  (*output) << solver << std::endl;
+  (*output) << solver << std::endl << std::endl;
 
   SolverError error = solver.getMinimum<SolverError> ();
   (*output) << error << std::endl;
@@ -110,15 +110,15 @@ BOOST_AUTO_TEST_CASE (solver)
 
   // Test solver copy.
   solver_t solver2 (solver);
-  (*output) << solver2 << std::endl;
+  (*output) << solver2 << std::endl << std::endl;
   solver2.solve ();
-  (*output) << solver2 << std::endl;
+  (*output) << solver2 << std::endl << std::endl;
 
   // Test solver reset.
   solver2.reset ();
-  (*output) << solver2 << std::endl;
+  (*output) << solver2 << std::endl << std::endl;
   solver2.solve ();
-  (*output) << solver2 << std::endl;
+  (*output) << solver2 << std::endl << std::endl;
 
   // Test iteration callback throw.
   BOOST_CHECK_THROW (solver.setIterationCallback (solver_t::callback_t ()),

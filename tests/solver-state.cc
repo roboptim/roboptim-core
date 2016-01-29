@@ -179,7 +179,7 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
   BOOST_CHECK (!pb##N.startingPoint ());                        \
   /* Create a solver for the problem. */                        \
   boost::shared_ptr<solver_t> solver##N (new solver_t (pb##N)); \
-  (*output) << *(solver##N) << std::endl;                       \
+  (*output) << *(solver##N) << std::endl << std::endl;          \
   /* Set the iteration callback. */                             \
   DummyStruct<solver_t> dummy##N;                               \
   dummy##N.x_val_ = 5;                                          \

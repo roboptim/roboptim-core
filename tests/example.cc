@@ -239,7 +239,7 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
   solver_t::result_t res = solver.minimum ();
 
   // Display solver information.
-  (*output) << solver << std::endl;
+  (*output) << solver << std::endl << std::endl;
 
   // Check if the minimization has succeeded.
 

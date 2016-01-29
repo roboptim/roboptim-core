@@ -154,11 +154,11 @@ void testLogger
   // Display problem and solver.
   (*output) << pb << std::endl
             << "---" << std::endl
-            << solver;
+            << solver << std::endl;
 
   logger.append ("Append test 1");
   logger << "Append test 2"
-         << solver;
+         << solver << "\n";
 
   // Test whether the logging directory exists
   BOOST_CHECK (boost::filesystem::exists (logger.logPath ()));

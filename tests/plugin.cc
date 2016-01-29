@@ -72,11 +72,11 @@ BOOST_AUTO_TEST_CASE (plugin)
   // Display problem and solver.
   (*output) << pb << std::endl
             << "---" << std::endl
-            << solver << std::endl;
+            << solver << std::endl << std::endl;
 
   std::cout << pb << std::endl
             << "---" << std::endl
-            << solver << std::endl;
+            << solver << std::endl << std::endl;
 
   // Try to get the minimum from a GenericSolver*.
   GenericSolver* gs = &solver;
