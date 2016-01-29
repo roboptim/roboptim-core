@@ -21,6 +21,8 @@
 
 #include <iostream>
 
+#include <boost/format.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/util.hh>
 
@@ -62,6 +64,39 @@ void test_normalization
   (*output) << m << std::endl
             << normalize (m) << std::endl;
 
+}
+
+#define TEST_SPLIT(S,D,N) \
+  d = D; \
+  s = S; \
+  result = split (s, d); \
+  BOOST_CHECK_EQUAL (result.size (), N); \
+  switch (d) \
+  { \
+    case '\r': \
+      sd = "\\r"; \
+      break; \
+    case '\n': \
+      sd = "\\n"; \
+      break; \
+    default: \
+      sd = d; \
+  } \
+  (*output) << boost::format ("\"%s\" split with '%s': ") % s % sd \
+            << result << std::endl
+
+void test_split
+(boost::shared_ptr<boost::test_tools::output_test_stream> output)
+{
+  std::vector<std::string> result;
+  std::string s, sd;
+  char d;
+
+  TEST_SPLIT ("aaa", 'a', 3);
+  TEST_SPLIT ("ababa", 'b', 3);
+  TEST_SPLIT ("this is a test", ' ', 4);
+  TEST_SPLIT ("", '\n', 0);
+  TEST_SPLIT ("an awesome\nmultiline test\nwith 3 lines!", '\n', 3);
 }
 
 void test_sigfpe
@@ -233,6 +268,9 @@ BOOST_AUTO_TEST_CASE (util)
 
   // Test normalization
   test_normalization (output);
+
+  // Test split
+  test_split (output);
 
   // Test SIGFPE
   test_sigfpe (output);

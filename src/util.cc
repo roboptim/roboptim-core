@@ -24,6 +24,7 @@
 
 #include <cstring>
 #include <algorithm>
+#include <sstream>
 
 #include "roboptim/core/util.hh"
 
@@ -198,5 +199,17 @@ namespace roboptim
   toDense (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m)
   {
     return GenericFunctionTraits<EigenMatrixDense>::matrix_t (m);
+  }
+
+  std::vector<std::string> split (const std::string& s, char d)
+  {
+    std::vector<std::string> tokens;
+    std::stringstream ss (s);
+    std::string token;
+    while (std::getline (ss, token, d))
+    {
+      tokens.push_back(token);
+    }
+    return tokens;
   }
 } // end of namespace roboptim.

@@ -190,6 +190,13 @@ namespace roboptim
   /// \brief Apply normalize to each element of an Eigen vector.
   template <typename T>
   inline T normalize (const T& x, double eps = 1e-8);
+
+  /// \brief Split a string on a given delimiter.
+  /// \param s string to split.
+  /// \param d delimiter used.
+  /// \return vector of tokens.
+  ROBOPTIM_DLLAPI
+  std::vector<std::string> split (const std::string& s, char d);
 } // end of namespace roboptim.
 
 # include <roboptim/core/util.hxx>
