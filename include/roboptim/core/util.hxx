@@ -53,7 +53,7 @@ namespace roboptim
     typedef typename std::vector<T>::const_iterator citer_t;
 
     if (vect.empty ())
-      return o << "Empty vector";
+      return o << "empty vector";
 
     citer_t it = vect.begin ();
     o << *it;
