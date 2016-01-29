@@ -29,9 +29,12 @@ branches:
 script:
   - export CMAKE_ADDITIONAL_OPTIONS="-DSTORAGE_ORDER=${ROBOPTIM_STORAGE_ORDER:-ColMajor}"
   - if [ "${COVERITY_SCAN_BRANCH}" != "1" ]; then ./.travis/run build; fi
-after_success: ./.travis/run after_success
+after_success:
+  - ./.travis/run after_success
+  - codecov --gcov-root=/tmp/_ci/build
 after_failure: ./.travis/run after_failure
 before_install:
+  - pip install --user codecov
   - ./.travis/run  before_install
   - ./.travis/dependencies/eigen-3.2
 
