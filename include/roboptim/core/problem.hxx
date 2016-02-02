@@ -24,7 +24,7 @@
 # include <boost/format.hpp>
 # include <boost/variant.hpp>
 # include <boost/variant/get.hpp>
-# include <boost/variant/apply_visitor.hpp>
+# include <boost/static_assert.hpp>
 
 # define EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET
 # include <Eigen/Core>
@@ -424,6 +424,46 @@ namespace roboptim
     jac.makeCompressed ();
 
     return jac;
+  }
+
+  template <typename T>
+  template <int NORM>
+  typename Problem<T>::value_type
+  Problem<T>::constraintsViolation (const_argument_ref x) const
+  {
+    BOOST_STATIC_ASSERT (NORM != 0);
+
+    size_type m = constraintsOutputSize ();
+    if (m == 0)
+      return 0.;
+
+    vector_t violations (m);
+    violations.setZero ();
+    size_type i = 0;
+    result_t res;
+
+    for (typename constraints_t::const_iterator
+	   c = constraints_.begin (); c != constraints_.end (); ++c)
+      {
+	const interval_t& bounds = argumentBounds_[i];
+	res.resize ((*c)->outputSize ());
+	(*(*c)) (res, x);
+
+	for (size_type j = 0; j < (*c)->outputSize (); ++j,++i)
+	  {
+	    value_type inf_viol = 0.;
+	    value_type sup_viol = 0.;
+
+	    if (bounds.first != -Function::infinity ())
+	      inf_viol = bounds.first - res[j];
+	    if (bounds.second != Function::infinity ())
+	      sup_viol = res[j] - bounds.second;
+
+	    violations[i] = std::max (inf_viol, sup_viol);
+	  }
+      }
+
+    return violations.template lpNorm<NORM> ();
   }
 
   namespace detail

@@ -100,6 +100,9 @@ namespace roboptim
     /// \brief Argument type.
     typedef typename function_t::argument_t argument_t;
 
+    /// \brief Result type.
+    typedef typename function_t::result_t result_t;
+
     /// \brief Size type.
     typedef typename function_t::size_type size_type;
 
@@ -312,6 +315,15 @@ namespace roboptim
     /// \param x evaluation point.
     /// \return jacobian matrix evaluated at x.
     jacobian_t jacobian (const_argument_ref x) const;
+
+    /// \brief Evaluate the sum of constraint violations for a given x.
+    ///
+    /// \param x evaluation point.
+    /// \return constraint violation at x.
+    /// \tparam ALG Eigen norm used for the reduction, e.g. 1 or
+    /// Eigen::Infinity.
+    template <int NORM>
+    value_type constraintsViolation (const_argument_ref x) const;
 
     /// \}
 

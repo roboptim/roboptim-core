@@ -137,8 +137,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   pb.addConstraint (g2, intervals, scaling);
 
   // Check jacobian
-  x[0] = 1.;
-  x[1] = 2.;
+  x << 1., 2.;
   (*output) << toDense (pb.jacobian (x)) << std::endl;
 
   // Check constraints output size
@@ -196,11 +195,18 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   BOOST_CHECK (pb.boundsVector ().empty ());
   BOOST_CHECK (pb.scalingVector ().empty ());
   BOOST_CHECK_EQUAL (pb.constraintsOutputSize (), 0);
+  x << 0., 0.;
+  BOOST_CHECK_EQUAL (pb.template constraintsViolation<1> (x), 0.);
+  BOOST_CHECK_EQUAL (pb.template constraintsViolation<Eigen::Infinity> (x), 0.);
+  x << 200., 30.;
+  BOOST_CHECK_EQUAL (pb.template constraintsViolation<1> (x), 0.);
+  BOOST_CHECK_EQUAL (pb.template constraintsViolation<Eigen::Infinity> (x), 0.);
   (*output) << pb << std::endl;
 
   // Test a problem with multiple types of constraints.
   typedef Problem<T> mixedProblem_t;
   mixedProblem_t mixedPb (f);
+  x << 1., 2.;
   mixedPb.startingPoint () = x;
   mixedPb.argumentNames () = names;
 
@@ -215,6 +221,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   // Second constraint: DifferentiableFunction
   BOOST_CHECK (mixedPb.constraints()[1]->template asType<GenericDifferentiableFunction<T> >());
   BOOST_CHECK_EQUAL (mixedPb.constraintsOutputSize (), 2 * g0->outputSize ());
+  x << 0., 0.;
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 5.);
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 3.);
+  x << 200., 30.;
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 235.);
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 202.);
 
   (*output) << mixedPb << std::endl;
 
