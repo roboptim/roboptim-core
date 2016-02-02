@@ -433,33 +433,48 @@ namespace roboptim
   {
     BOOST_STATIC_ASSERT (NORM != 0);
 
+    size_type n = function_->inputSize ();
     size_type m = constraintsOutputSize ();
-    if (m == 0)
-      return 0.;
 
-    vector_t violations (m);
+    vector_t violations (n + m);
     violations.setZero ();
     size_type i = 0;
     result_t res;
 
-    for (typename constraints_t::const_iterator
-	   c = constraints_.begin (); c != constraints_.end (); ++c)
+    for (int j = 0; j < n; ++j)
       {
-	const interval_t& bounds = argumentBounds_[i];
+	value_type inf_viol = 0.;
+	value_type sup_viol = 0.;
+
+	const interval_t& bounds = argumentBounds_[j];
+
+	if (bounds.first != -Function::infinity ())
+	  inf_viol = std::max (bounds.first - x[j], 0.);
+	if (bounds.second != Function::infinity ())
+	  sup_viol = std::max (x[j] - bounds.second, 0.);
+
+	violations[i++] = std::max (inf_viol, sup_viol);
+      }
+
+    size_t c_idx = 0;
+    for (typename constraints_t::const_iterator
+	   c = constraints_.begin (); c != constraints_.end (); ++c, ++c_idx)
+      {
+	const intervals_t& bounds = boundsVect_[c_idx];
 	res.resize ((*c)->outputSize ());
 	(*(*c)) (res, x);
 
-	for (size_type j = 0; j < (*c)->outputSize (); ++j,++i)
+	for (size_type j = 0; j < (*c)->outputSize (); ++j)
 	  {
 	    value_type inf_viol = 0.;
 	    value_type sup_viol = 0.;
 
-	    if (bounds.first != -Function::infinity ())
-	      inf_viol = bounds.first - res[j];
-	    if (bounds.second != Function::infinity ())
-	      sup_viol = res[j] - bounds.second;
+	    if (bounds[j].first != -Function::infinity ())
+	      inf_viol = std::max (bounds[j].first - res[j], 0.);
+	    if (bounds[j].second != Function::infinity ())
+	      sup_viol = std::max (res[j] - bounds[j].second, 0.);
 
-	    violations[i] = std::max (inf_viol, sup_viol);
+	    violations[i++] = std::max (inf_viol, sup_viol);
 	  }
       }
 

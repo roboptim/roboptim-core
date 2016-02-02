@@ -196,12 +196,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   BOOST_CHECK (pb.scalingVector ().empty ());
   BOOST_CHECK_EQUAL (pb.constraintsOutputSize (), 0);
   x << 0., 0.;
+  pb.startingPoint () = x;
+  (*output) << pb << std::endl;
   BOOST_CHECK_EQUAL (pb.template constraintsViolation<1> (x), 0.);
   BOOST_CHECK_EQUAL (pb.template constraintsViolation<Eigen::Infinity> (x), 0.);
   x << 200., 30.;
+  pb.startingPoint () = x;
+  (*output) << pb << std::endl;
   BOOST_CHECK_EQUAL (pb.template constraintsViolation<1> (x), 0.);
   BOOST_CHECK_EQUAL (pb.template constraintsViolation<Eigen::Infinity> (x), 0.);
-  (*output) << pb << std::endl;
 
   // Test a problem with multiple types of constraints.
   typedef Problem<T> mixedProblem_t;
@@ -222,13 +225,15 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   BOOST_CHECK (mixedPb.constraints()[1]->template asType<GenericDifferentiableFunction<T> >());
   BOOST_CHECK_EQUAL (mixedPb.constraintsOutputSize (), 2 * g0->outputSize ());
   x << 0., 0.;
-  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 5.);
-  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 3.);
-  x << 200., 30.;
-  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 235.);
-  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 202.);
-
+  mixedPb.startingPoint () = x;
   (*output) << mixedPb << std::endl;
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 0.);
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 0.);
+  x << 200., 50.;
+  mixedPb.startingPoint () = x;
+  (*output) << mixedPb << std::endl;
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 171.);
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 160.);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

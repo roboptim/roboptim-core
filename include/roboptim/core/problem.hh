@@ -317,6 +317,7 @@ namespace roboptim
     jacobian_t jacobian (const_argument_ref x) const;
 
     /// \brief Evaluate the sum of constraint violations for a given x.
+    /// This takes into account both argument bounds and constraint bounds.
     ///
     /// \param x evaluation point.
     /// \return constraint violation at x.
