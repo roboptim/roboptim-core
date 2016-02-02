@@ -15,8 +15,10 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "debug.hh"
+#include <boost/variant/apply_visitor.hpp>
+#include <boost/variant/static_visitor.hpp>
 
+#include "debug.hh"
 #include "roboptim/core/solver.hh"
 
 namespace roboptim

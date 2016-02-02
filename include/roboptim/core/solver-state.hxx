@@ -17,7 +17,11 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_STATE_HXX
 # define ROBOPTIM_CORE_SOLVER_STATE_HXX
+
 # include <boost/foreach.hpp>
+# include <boost/variant/static_visitor.hpp>
+# include <boost/variant/apply_visitor.hpp>
+# include <boost/variant/get.hpp>
 
 # include <roboptim/core/io.hh>
 # include <roboptim/core/portability.hh>

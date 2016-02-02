@@ -24,8 +24,6 @@
 # include <boost/filesystem.hpp>
 # include <boost/filesystem/fstream.hpp>
 # include <boost/format.hpp>
-# include <boost/variant/apply_visitor.hpp>
-# include <boost/variant/static_visitor.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/type_traits/is_same.hpp>
 
