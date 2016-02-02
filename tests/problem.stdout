@@ -2,7 +2,7 @@
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments bounds: (-5, 5), (-10, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   Number of constraints: 3
@@ -38,7 +38,7 @@ Problem:
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments bounds: (-5, 5), (-10, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   No constraints.
@@ -48,7 +48,7 @@ Problem:
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments bounds: (-5, 5), (-10, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   No constraints.
@@ -58,7 +58,7 @@ Problem:
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments bounds: (-inf, 5), (-inf, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   Number of constraints: 2
@@ -81,7 +81,7 @@ Problem:
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments bounds: (-inf, 5), (-inf, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   Number of constraints: 2

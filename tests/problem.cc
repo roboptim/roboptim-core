@@ -97,6 +97,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   argument_t x (2);
   x.setZero ();
   pb.startingPoint () = x;
+  pb.argumentBounds ()[0] = function_t::makeInterval (-5., 5.);
+  pb.argumentBounds ()[1] = function_t::makeLowerInterval (-10.);
 
   typename constantFunction_t::names_t names (2);
   names[0] = "x₀";
@@ -203,8 +205,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   x << 200., 30.;
   pb.startingPoint () = x;
   (*output) << pb << std::endl;
-  BOOST_CHECK_EQUAL (pb.template constraintsViolation<1> (x), 0.);
-  BOOST_CHECK_EQUAL (pb.template constraintsViolation<Eigen::Infinity> (x), 0.);
+  BOOST_CHECK_EQUAL (pb.template constraintsViolation<1> (x), 195.);
+  BOOST_CHECK_EQUAL (pb.template constraintsViolation<Eigen::Infinity> (x), 195.);
 
   // Test a problem with multiple types of constraints.
   typedef Problem<T> mixedProblem_t;
@@ -212,6 +214,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   x << 1., 2.;
   mixedPb.startingPoint () = x;
   mixedPb.argumentNames () = names;
+  mixedPb.argumentBounds ()[0] = function_t::makeUpperInterval (5.);
 
   // First constraint: ConstantFunction automatically converted to LinearFunction
   mixedPb.addConstraint (g0, intervals, scaling);
@@ -232,8 +235,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   x << 200., 50.;
   mixedPb.startingPoint () = x;
   (*output) << mixedPb << std::endl;
-  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 171.);
-  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 160.);
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 366.);
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 195.);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
