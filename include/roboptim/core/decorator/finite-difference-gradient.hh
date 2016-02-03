@@ -22,9 +22,12 @@
 # include <string>
 # include <ostream>
 
+# include <boost/shared_ptr.hpp>
+
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/differentiable-function.hh>
 # include <roboptim/core/portability.hh>
+# include <roboptim/core/deprecated.hh>
 
 namespace roboptim
 {
@@ -311,14 +314,28 @@ namespace roboptim
 
     /// \brief Instantiate a finite differences gradient.
     ///
-    /// Instantiate a derivable function that will wraps a non
+    /// Instantiate a derivable function that will wrap a non
+    /// derivable function and compute automatically its gradient
+    /// using finite differences.
+    /// \param f shared pointer to the function that will be wrapped.
+    /// \param e epsilon used in finite difference computation
+    GenericFiniteDifferenceGradient
+    (const boost::shared_ptr<const GenericFunction<T> >& f,
+     value_type e = finiteDifferenceEpsilon);
+
+    /// \brief Instantiate a finite differences gradient.
+    /// WARNING: deprecated version. Prefer the shared_ptr alternative.
+    ///
+    /// Instantiate a derivable function that will wrap a non
     /// derivable function and compute automatically its gradient
     /// using finite differences.
     /// \param f function that will e wrapped
     /// \param e epsilon used in finite difference computation
+    // TODO: remove after enough releases (deprecated in 3.3).
     GenericFiniteDifferenceGradient
     (const GenericFunction<T>& f,
-     value_type e = finiteDifferenceEpsilon);
+     value_type e = finiteDifferenceEpsilon) ROBOPTIM_CORE_DEPRECATED;
+
     ~GenericFiniteDifferenceGradient ();
 
     /// \brief Display the function on the specified output stream.
@@ -337,8 +354,8 @@ namespace roboptim
 
     std::string generateName (const GenericFunction<T>& adaptee) const;
 
-    /// \brief Reference to the wrapped function.
-    const GenericFunction<T>& adaptee_;
+    /// \brief Shared pointer to the wrapped function.
+    const boost::shared_ptr<const GenericFunction<T> > adaptee_;
 
     //// \brief Epsilon used in finite differences computation.
     const value_type epsilon_;

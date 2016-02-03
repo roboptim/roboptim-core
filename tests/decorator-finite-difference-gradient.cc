@@ -19,9 +19,12 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/decorator/finite-difference-gradient.hh>
 #include <roboptim/core/indent.hh>
+#include <roboptim/core/portability.hh>
 
 #include <roboptim/core/visualization/gnuplot.hh>
 #include <roboptim/core/visualization/gnuplot-commands.hh>
@@ -266,11 +269,15 @@ displayGradient
  typename GenericDifferentiableFunction<T>::const_argument_ref x,
  typename GenericDifferentiableFunction<T>::size_type i)
 {
+  ROBOPTIM_ALLOW_DEPRECATED_ON;
+
   GenericFiniteDifferenceGradient<T> fdfunction (function);
   typename GenericFiniteDifferenceGradient<T>::gradient_t grad =
     function.gradient (x, i);
   typename GenericFiniteDifferenceGradient<T>::gradient_t fdgrad =
     fdfunction.gradient (x, i);
+
+  ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
   (*output) << "#" << grad << std::endl
 	    << "#" << fdgrad << std::endl;
@@ -285,12 +292,16 @@ displayGradient<roboptim::EigenMatrixSparse>
  GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
  size_type i)
 {
+  ROBOPTIM_ALLOW_DEPRECATED_ON;
+
   GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>
     fdfunction (function);
   GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
     gradient_t grad = function.gradient (x, i);
   GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
     gradient_t fdgrad = fdfunction.gradient (x, i);
+
+  ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
   (*output) << "#" << sparse_to_dense(grad) << std::endl
 	    << "#" << sparse_to_dense(fdgrad) << std::endl;
@@ -353,11 +364,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
 
   Gnuplot gnuplot = Gnuplot::make_interactive_gnuplot (false);
 
+  ROBOPTIM_ALLOW_DEPRECATED_ON;
   GenericFiniteDifferenceGradient<
     T,
     finiteDifferenceGradientPolicies::Simple<T> > fg_fd (fg, 10.);
+  ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
-  Polynomial<T> p;
+  boost::shared_ptr<Polynomial<T> > p = boost::make_shared<Polynomial<T> > ();
   GenericFiniteDifferenceGradient<
     T,
     finiteDifferenceGradientPolicies::Simple<T> >
@@ -372,8 +385,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
 	<< plot (fg, interval)
 	<< comment (fg_fd.getName ())
 	<< plot (fg_fd, interval)
-	<< comment (p.getName ())
-	<< plot (p, interval)
+	<< comment (p->getName ())
+	<< plot (*p, interval)
 	<< comment (p_fd.getName ())
 	<< plot (p_fd, interval)
 	<< unset ("multiplot")

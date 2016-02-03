@@ -19,6 +19,8 @@
 
 #include <iostream>
 
+#include <boost/make_shared.hpp>
+
 #include <roboptim/core/io.hh>
 #include <roboptim/core/decorator/finite-difference-gradient.hh>
 #include <roboptim/core/indent.hh>
@@ -160,18 +162,18 @@ FBad<T>::impl_jacobian
 template <typename T>
 void displayJacobian
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
- const GenericDifferentiableFunction<T>&,
+ const boost::shared_ptr<GenericDifferentiableFunction<T> >&,
  typename GenericDifferentiableFunction<T>::const_argument_ref);
 
 template <typename T>
 void displayJacobian
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
- const GenericDifferentiableFunction<T>& function,
+ const boost::shared_ptr<GenericDifferentiableFunction<T> >& f,
  typename GenericDifferentiableFunction<T>::const_argument_ref x)
 {
-  GenericFiniteDifferenceGradient<T> fdfunction (function);
+  GenericFiniteDifferenceGradient<T> fdfunction (f);
   typename GenericFiniteDifferenceGradient<T>::jacobian_t jac =
-    function.jacobian (x);
+    f->jacobian (x);
   typename GenericFiniteDifferenceGradient<T>::jacobian_t fdjac =
     fdfunction.jacobian (x);
 
@@ -181,17 +183,17 @@ void displayJacobian
 
 
 template <>
-void displayJacobian<roboptim::EigenMatrixSparse>
+void displayJacobian<EigenMatrixSparse>
 (boost::shared_ptr<boost::test_tools::output_test_stream> output,
- const GenericDifferentiableFunction<roboptim::EigenMatrixSparse>& function,
- GenericDifferentiableFunction<roboptim::EigenMatrixSparse>::
+ const boost::shared_ptr<GenericDifferentiableFunction<EigenMatrixSparse> >& f,
+ GenericDifferentiableFunction<EigenMatrixSparse>::
  const_argument_ref x)
 {
-  GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>
-    fdfunction (function);
-  GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
-    jacobian_t jac = function.jacobian (x);
-  GenericFiniteDifferenceGradient<roboptim::EigenMatrixSparse>::
+  GenericFiniteDifferenceGradient<EigenMatrixSparse>
+    fdfunction (f);
+  GenericFiniteDifferenceGradient<EigenMatrixSparse>::
+    jacobian_t jac = f->jacobian (x);
+  GenericFiniteDifferenceGradient<EigenMatrixSparse>::
     jacobian_t fdjac = fdfunction.jacobian (x);
 
   (*output) << "#" << sparse_to_dense(jac) << std::endl
@@ -200,16 +202,18 @@ void displayJacobian<roboptim::EigenMatrixSparse>
 
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
-typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
-			  ::roboptim::EigenMatrixSparse> functionTypes_t;
+typedef boost::mpl::list<EigenMatrixDense,
+			 EigenMatrixSparse> functionTypes_t;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_jacobian, T, functionTypes_t)
 {
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("decorator-finite-difference-jacobian");
 
-  FGood<T> fg;
-  FBad<T> fb;
+  boost::shared_ptr<GenericDifferentiableFunction<T> >
+    fg = boost::make_shared<FGood<T> > ();
+  boost::shared_ptr<GenericDifferentiableFunction<T> >
+    fb = boost::make_shared<FBad<T> > ();
 
   typename FGood<T>::vector_t x (2);
 
@@ -226,8 +230,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_jacobian, T, functionTypes_t)
       (*output) << "# Bad" << std::endl;
       displayJacobian (output, fb, x);
 
-      BOOST_CHECK (checkJacobian (fg, x));
-      BOOST_CHECK (! checkJacobian (fb, x));
+      BOOST_CHECK (checkJacobian (*fg, x));
+      BOOST_CHECK (! checkJacobian (*fb, x));
     }
 
   std::cout << output->str () << std::endl;

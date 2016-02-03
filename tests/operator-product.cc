@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (product_test, T, functionTypes_t)
 
   boost::shared_ptr<GenericLinearFunction<T> >
     fct = identity * constant;
-  GenericFiniteDifferenceGradient<T> fd_fct (*fct);
+  GenericFiniteDifferenceGradient<T> fd_fct (fct);
 
   typename GenericIdentityFunction<T>::argument_t x (5);
   for (Function::size_type i = 0; i < x.size (); ++i)
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (product_test, T, functionTypes_t)
   // Test gradient with finite differences
   boost::shared_ptr<GenericDifferentiableFunction<T> >
     fct2 = fct * fct;
-  GenericFiniteDifferenceGradient<T> fd_fct2 (*fct2);
+  GenericFiniteDifferenceGradient<T> fd_fct2 (fct2);
 
   std::cout
     << "x = " << x << "\n"

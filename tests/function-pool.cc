@@ -343,7 +343,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (function_pool, T, functionTypes_t)
 
   // Compare gradient with finite differences
   typedef typename finiteDifferenceGradientPolicies::Simple<T> fdRule_t;
-  GenericFiniteDifferenceGradient<T, fdRule_t> fd_pool (*pool);
+  GenericFiniteDifferenceGradient<T, fdRule_t> fd_pool (pool);
 
   (fd_pool) (fd_res, x);
   BOOST_CHECK_EQUAL (engine->computeCounter (), 1);
