@@ -48,7 +48,7 @@ namespace roboptim
     // Note: kids, don't do this at home! Until now, we kept a reference to
     // the function passed, which is just as bad. This prepares the transition
     // to the safer shared_ptr version.
-    : function_ (&f, NoopDeleter ()),
+    : function_ (&f, detail::NoopDeleter<function_t> ()),
       startingPoint_ (),
       constraints_ (),
       boundsVect_ (),

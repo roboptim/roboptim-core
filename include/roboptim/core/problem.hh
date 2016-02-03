@@ -339,15 +339,6 @@ namespace roboptim
     /// \brief Initialize attributes and do some checking.
     void initialize ();
 
-    /// \brief Custom deleter that does not delete anything.
-    /// This can be used when creating a shared_ptr from a reference, although
-    /// this should be used with **great** care...
-    // TODO: remove when const ref constructor is removed (deprecated in 3.2).
-    struct NoopDeleter
-    {
-      inline void operator() (const function_t*) const {}
-    };
-
   private:
     /// \brief Objective function.
     /// Note: do not give access to this shared_ptr, since for now the legacy

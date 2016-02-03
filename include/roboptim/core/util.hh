@@ -81,6 +81,15 @@ namespace roboptim
       /// \brief Floating-point exception environment.
       ::roboptim::detail::fenv_t fenv_;
     };
+
+    /// \brief Custom deleter that does not delete anything.
+    /// This can be used when creating a shared_ptr from a reference, although
+    /// this should be used with **great** care...
+    template <typename T>
+    struct NoopDeleter
+    {
+      inline void operator() (const T*) const {}
+    };
   } // end of namespace detail.
 
   /// \brief Display a vector.
