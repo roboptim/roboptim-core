@@ -441,12 +441,12 @@ namespace roboptim
     size_type i = 0;
     result_t res;
 
-    for (int j = 0; j < n; ++j)
+    for (size_type j = 0; j < n; ++j)
       {
 	value_type inf_viol = 0.;
 	value_type sup_viol = 0.;
 
-	const interval_t& bounds = argumentBounds_[j];
+	const interval_t& bounds = argumentBounds_[static_cast<size_t> (j)];
 
 	if (bounds.first != -Function::infinity ())
 	  inf_viol = std::max (bounds.first - x[j], 0.);
@@ -466,13 +466,14 @@ namespace roboptim
 
 	for (size_type j = 0; j < (*c)->outputSize (); ++j)
 	  {
+	    size_t jj = static_cast<size_t> (j);
 	    value_type inf_viol = 0.;
 	    value_type sup_viol = 0.;
 
-	    if (bounds[j].first != -Function::infinity ())
-	      inf_viol = std::max (bounds[j].first - res[j], 0.);
-	    if (bounds[j].second != Function::infinity ())
-	      sup_viol = std::max (res[j] - bounds[j].second, 0.);
+	    if (bounds[jj].first != -Function::infinity ())
+	      inf_viol = std::max (bounds[jj].first - res[j], 0.);
+	    if (bounds[jj].second != Function::infinity ())
+	      sup_viol = std::max (res[j] - bounds[jj].second, 0.);
 
 	    violations[i++] = std::max (inf_viol, sup_viol);
 	  }
