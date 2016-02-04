@@ -1,13 +1,11 @@
 var a00139 =
 [
-    [ "parentType_t", "a00139.html#a10ceafe26463a6befaf1a83bae6f2ba3", null ],
-    [ "SelectionByIdShPtr_t", "a00139.html#a2f296e76debe6a7e703f0a769f5f9129", null ],
-    [ "SelectionById", "a00139.html#afed4a5f3312bb43c36cd89e1b24da60e", null ],
-    [ "~SelectionById", "a00139.html#a647ad16eec9c7afb716a748c42c1fd1f", null ],
-    [ "impl_compute", "a00139.html#a9e64ceaf5be532b1d08b43fd48fc1802", null ],
-    [ "impl_gradient", "a00139.html#a670b69ecefa042ad5e6e2f14300c3482", null ],
-    [ "impl_jacobian", "a00139.html#a27306334779e090f25bbd7d630418aa8", null ],
-    [ "origin", "a00139.html#a96d0c5400637449ba56f14e7c25ec69d", null ],
-    [ "origin", "a00139.html#a3fe469f5a1b03ea25527636b326d85ab", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00139.html#a4238e53c744c850cde075fda814a2f26", null ]
+    [ "callback_t", "a00139.html#a01f12cbcdde4463bd4a484ba4805b5c7", null ],
+    [ "parent_t", "a00139.html#a0bad93eac47bbb44cc60657a887586ea", null ],
+    [ "problem_t", "a00139.html#a79c5e212671b0c8d457665619b27da7b", null ],
+    [ "solver_t", "a00139.html#aade7b23179be55fd656d5defdbd163dd", null ],
+    [ "solverState_t", "a00139.html#acbce74c508e1a837bcb4a6ac3ff3e20b", null ],
+    [ "Wrapper", "a00139.html#ab7b1772f9d29b4283497363011b9f46a", null ],
+    [ "~Wrapper", "a00139.html#acaffd13feda591268f657a1708a43ff3", null ],
+    [ "perIterationCallbackUnsafe", "a00139.html#a7cf70de90a6b980a84b659bf8b5ebbd7", null ]
 ];
