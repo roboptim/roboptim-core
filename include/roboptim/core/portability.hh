@@ -92,7 +92,7 @@
   // TODO: update for Windows if relevant
   #define ROBOPTIM_ALLOW_ATTRIBUTES_ON
   #define ROBOPTIM_ALLOW_ATTRIBUTES_OFF
-#else
+#elif !defined (__CUDACC__)
 // Otherwise (on Linux/OSX with GCC/Clang)
   #define ROBOPTIM_ALLOW_DEPRECATED_ON \
     /* Disable deprecated warning */   \
@@ -116,6 +116,11 @@
     #define ROBOPTIM_ALLOW_ATTRIBUTES_ON
     #define ROBOPTIM_ALLOW_ATTRIBUTES_OFF
   #endif
+#else
+    #define ROBOPTIM_ALLOW_DEPRECATED_ON
+    #define ROBOPTIM_ALLOW_DEPRECATED_OFF
+    #define ROBOPTIM_ALLOW_ATTRIBUTES_ON
+    #define ROBOPTIM_ALLOW_ATTRIBUTES_OFF
 #endif
 
 // Required to avoid size_t resolution error with MSVC. Triggered by
