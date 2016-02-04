@@ -1,22 +1,13 @@
 var a00123 =
 [
-    [ "callback_t", "a00123.html#a09c6fd9becb0420406935ed5f626de00", null ],
-    [ "parameters_t", "a00123.html#a857f5f54f6ad9b9ba46c3fb0d4830762", null ],
-    [ "problem_t", "a00123.html#a00b6d1cd6218108e49e58d8936e6c86a", null ],
-    [ "solverState_t", "a00123.html#a73e162f06ab621b80d4da4d169328810", null ],
-    [ "vector_t", "a00123.html#a8792bd346126774df62d6f36c5b61069", null ],
-    [ "Solver", "a00123.html#a9d5aad6b41d71b80de543eaa268d1630", null ],
-    [ "~Solver", "a00123.html#ae503c46ba5dd1090fdb3980ef5efca26", null ],
-    [ "getParameter", "a00123.html#aeeafdf6f9e7182fdf5cc8da000eb8cf7", null ],
-    [ "parameters", "a00123.html#a5bc57f014385135b4c9b7b7674fedcfb", null ],
-    [ "parameters", "a00123.html#aef58116cbf6f25494edbfa8dce81a521", null ],
-    [ "pluginName", "a00123.html#a73538fd27793cd9a06e5ee59f75ddd6d", null ],
-    [ "pluginName", "a00123.html#ad3efae7630da66319fe04dec1966280b", null ],
-    [ "print", "a00123.html#a594e18b9c52f3711cf728f675bd88547", null ],
-    [ "problem", "a00123.html#a2da97139e00c970150e0373f1d425e96", null ],
-    [ "setIterationCallback", "a00123.html#ae02e3f64d7fcd3a411b3c1a40b6cbc14", null ],
-    [ "logger", "a00123.html#acbbd83e474762cf93835de45865dda3a", null ],
-    [ "parameters_", "a00123.html#af08aa5c73a201c7867570937a17de01f", null ],
-    [ "plugin_name_", "a00123.html#af4d510e7ed9a65aed0c23765ca37d898", null ],
-    [ "problem_", "a00123.html#aea8e986e3e226a5cb578930fbba5112a", null ]
+    [ "Policy", "a00123.html#acb3099be9c39be49e8b9497071ee6619", null ],
+    [ "~Policy", "a00123.html#a06bcca9fb5616927cd28834f4ad156b6", null ],
+    [ "computeColumn", "a00123.html#ade034beaccda7a4a064f9a25eb7b0697", null ],
+    [ "computeGradient", "a00123.html#ab4b0ec314e44cddf2a719764a7059bca", null ],
+    [ "computeJacobian", "a00123.html#a59292ba39ede372fa78b14f6f1fabaa8", null ],
+    [ "computeJacobian", "a00123.html#ab5425e8a0254a168b4a51306fca0f376", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00123.html#af62d50124971caeadae570717fbf1740", null ],
+    [ "adaptee_", "a00123.html#a33fa24969277dd190a73d07811e3cff0", null ],
+    [ "column_", "a00123.html#ac5985673f25d84c0a2c78d4cf8dcf896", null ],
+    [ "gradient_", "a00123.html#ad242918f0c749310f5a8cbe77efe8936", null ]
 ];

@@ -1,19 +1,17 @@
 var a00094 =
 [
-    [ "parent_t", "a00094.html#abfe35dc6bf37c51329d12f68685ac92f", null ],
-    [ "problem_t", "a00094.html#addc09c5f72e9a83057c2ed4999057759", null ],
-    [ "solver_t", "a00094.html#a37c8ffbb23e1cb8c25dc281223788be8", null ],
-    [ "solverCallback_t", "a00094.html#a9f1acdbbd5bc5fc47d16d8889ce7e98e", null ],
-    [ "solverCallbackPtr_t", "a00094.html#a00a749f44b301622af2982162315652d", null ],
-    [ "solverCallbacks_t", "a00094.html#a6682164ea4f9dfe64075956dc81d1626", null ],
-    [ "solverState_t", "a00094.html#af89cb0facf75deb84e3a05b93402b9cc", null ],
-    [ "Multiplexer", "a00094.html#ab372b78c8b69376cabc66019c68bb52b", null ],
-    [ "Multiplexer", "a00094.html#aa9dfcaac44bb3113162c93ae593e1c9d", null ],
-    [ "~Multiplexer", "a00094.html#a3900a4896cbb863740e647f7a424d232", null ],
-    [ "attach", "a00094.html#a5c62587c4e6d6c97262a9fc322f0f304", null ],
-    [ "callbacks", "a00094.html#a285432c7163dfc1b4df1a47d80cbce82", null ],
-    [ "callbacks", "a00094.html#af6ea7946022381665a0352e224d7648a", null ],
-    [ "perIterationCallbackUnsafe", "a00094.html#abe0935b5bcc152a52b8b001ba928811e", null ],
-    [ "print", "a00094.html#a040787cdc63284f46669b201dc8e5c70", null ],
-    [ "unregister", "a00094.html#a2133bc01868edc2837aae3c4fb4ec0a1", null ]
+    [ "GenericNumericLinearFunction", "a00094.html#a791a59b77c655f4da3aefe48b48f6b2f", null ],
+    [ "GenericNumericLinearFunction", "a00094.html#a99aa2758f730474ab9d527e400f882cb", null ],
+    [ "~GenericNumericLinearFunction", "a00094.html#a6a95597cdbbdd850a36aed9ba5e03e91", null ],
+    [ "A", "a00094.html#a0bdfbba11cd50682046bbbf6cdf4a932", null ],
+    [ "A", "a00094.html#a38bf72a5ee70689652d8b6b142e2e0c4", null ],
+    [ "b", "a00094.html#a5f335d97438f278d3a12651bdf88748d", null ],
+    [ "b", "a00094.html#a897938ac5cbf6700118e3e9c75ae2abc", null ],
+    [ "impl_compute", "a00094.html#a654eb8a59ff8a69a1a50d5cc360a6bc1", null ],
+    [ "impl_gradient", "a00094.html#a4454eeb44530a70be57375ec3a11b782", null ],
+    [ "impl_gradient", "a00094.html#af56d442eaecbea376a332f4a1785f4b4", null ],
+    [ "impl_jacobian", "a00094.html#a4140a187a9c09c6e53d3eced7f81e3ce", null ],
+    [ "print", "a00094.html#ae57fb039df18b98b7ab403b73c277632", null ],
+    [ "ROBOPTIM_ADD_FLAG", "a00094.html#a31183ca63476819c90f3b63668689470", null ],
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00094.html#acf53d892384fd4691f6c4829e92772f5", null ]
 ];

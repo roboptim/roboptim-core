@@ -1,14 +1,19 @@
 var a00114 =
 [
-    [ "size_type", "a00114.html#a85f59990dc11a8b383f5ac34f3a450df", null ],
-    [ "vector_t", "a00114.html#a0b58ed6d1d318d29ea875467441b782e", null ],
-    [ "Result", "a00114.html#a7c6d866d4162421ebb28e0ba050907f3", null ],
-    [ "~Result", "a00114.html#a888c809793214ded502bfa374dd0c811", null ],
-    [ "print", "a00114.html#af065a63ebc7497011f49be220857b0f0", null ],
-    [ "constraints", "a00114.html#ac35af0a7460b2f266b74af35c8d89f3b", null ],
-    [ "inputSize", "a00114.html#af32478031f205ae7a8fd3676fc02f67d", null ],
-    [ "lambda", "a00114.html#a4a3c615497bd8c83d21a35430f9b204c", null ],
-    [ "outputSize", "a00114.html#a562f3e5a026d2b9c6a008be5bc6c2ec7", null ],
-    [ "value", "a00114.html#a3164fe63a285d7c4739f2606b8cf6b9e", null ],
-    [ "x", "a00114.html#a31284faee67e87284026280767720008", null ]
+    [ "parent_t", "a00114.html#abfe35dc6bf37c51329d12f68685ac92f", null ],
+    [ "problem_t", "a00114.html#addc09c5f72e9a83057c2ed4999057759", null ],
+    [ "solver_t", "a00114.html#a37c8ffbb23e1cb8c25dc281223788be8", null ],
+    [ "solverCallback_t", "a00114.html#a9f1acdbbd5bc5fc47d16d8889ce7e98e", null ],
+    [ "solverCallbackPtr_t", "a00114.html#a00a749f44b301622af2982162315652d", null ],
+    [ "solverCallbacks_t", "a00114.html#a6682164ea4f9dfe64075956dc81d1626", null ],
+    [ "solverState_t", "a00114.html#af89cb0facf75deb84e3a05b93402b9cc", null ],
+    [ "Multiplexer", "a00114.html#ab372b78c8b69376cabc66019c68bb52b", null ],
+    [ "Multiplexer", "a00114.html#aa9dfcaac44bb3113162c93ae593e1c9d", null ],
+    [ "~Multiplexer", "a00114.html#a3900a4896cbb863740e647f7a424d232", null ],
+    [ "attach", "a00114.html#a5c62587c4e6d6c97262a9fc322f0f304", null ],
+    [ "callbacks", "a00114.html#a285432c7163dfc1b4df1a47d80cbce82", null ],
+    [ "callbacks", "a00114.html#af6ea7946022381665a0352e224d7648a", null ],
+    [ "perIterationCallbackUnsafe", "a00114.html#abe0935b5bcc152a52b8b001ba928811e", null ],
+    [ "print", "a00114.html#a040787cdc63284f46669b201dc8e5c70", null ],
+    [ "unregister", "a00114.html#a2133bc01868edc2837aae3c4fb4ec0a1", null ]
 ];

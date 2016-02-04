@@ -1,9 +1,7 @@
 var a00154 =
 [
-    [ "ROBOPTIM_DEBUG_ONLY", "a00154.html#a63c786a95b42777d0562bfacd96e5bfd", null ],
-    [ "RoboptimCoreDebug", "a00154.html#a8899571db39503447bd1d99e926e99da", null ],
-    [ "RoboptimCoreDout", "a00154.html#a248f62148d681974f16f5213d844f25c", null ],
-    [ "RoboptimCoreDoutFatal", "a00154.html#a239887dba9b43a2403f6389ae7a4fc3a", null ],
-    [ "RoboptimCoreForAllDebugChannels", "a00154.html#a4c35c60faacd327b995e06935dcfeb4c", null ],
-    [ "RoboptimCoreForAllDebugObjects", "a00154.html#a3a513caec78746ae88ef7daf0905baf2", null ]
+    [ "differentiableFunction_t", "a00154.html#a3224e351839e394b8d76418f2e28950b", null ],
+    [ "InputJacBlock", "a00154.html#a58fff3a16762ebf8c259e763804a516c", null ],
+    [ "JacBlock", "a00154.html#a69f120973d7aca2fd509099865f7225b", null ],
+    [ "getJacobianBlock", "a00154.html#a070146b9afb2019479c4b0a42f4fbd77", null ]
 ];

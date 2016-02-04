@@ -1,15 +1,13 @@
 var a00124 =
 [
-    [ "callback_t", "a00124.html#a45335c702d520b0729670161fa696ca8", null ],
-    [ "problem_t", "a00124.html#aad0e448957462a8164234c4810cbc8be", null ],
-    [ "solver_t", "a00124.html#ada23ae5850a3650d52441c3c37394eb7", null ],
-    [ "solverState_t", "a00124.html#a4dacf9dc4a957f45403e55a291301b2d", null ],
-    [ "SolverCallback", "a00124.html#ad6f615df2c34d3125240d905796f0bd9", null ],
-    [ "~SolverCallback", "a00124.html#accda56dade897e1022a9da51e4ce2cc6", null ],
-    [ "callback", "a00124.html#a148144307c7967a05d5ecf04ce5a5d33", null ],
-    [ "name", "a00124.html#a2322acd01f2689842f3f999b7a6e13b0", null ],
-    [ "operator()", "a00124.html#acec51603247e51f6412cef88cabb368f", null ],
-    [ "perIterationCallback", "a00124.html#a1f7a9d4f8dd25c874a89989547e8b1ae", null ],
-    [ "perIterationCallbackUnsafe", "a00124.html#a40c0f2d62205e3f6de5f832941077efb", null ],
-    [ "print", "a00124.html#a6bee93a9de3f8ab4db305f4bbbe8cbbe", null ]
+    [ "Polynomial", "a00124.html#af6448679b2e79b074d33139e0423a951", null ],
+    [ "~Polynomial", "a00124.html#ae57cba490238f13f941fc6bb016436d0", null ],
+    [ "applyPolynomial", "a00124.html#a20789828939c48f1aae49d3d01c2c44f", null ],
+    [ "impl_compute", "a00124.html#a60614acc1f02dc2e6cd0311dbc9c6ae5", null ],
+    [ "impl_gradient", "a00124.html#a2e022ec6db958a1cc218ba86945550d6", null ],
+    [ "impl_hessian", "a00124.html#aee32daf5b3b242cbc8edca6a788a9cc4", null ],
+    [ "impl_jacobian", "a00124.html#a8fce95a83b5d976bca83351c60412b18", null ],
+    [ "print", "a00124.html#a9d9d9ee3fd558e30aa8f5891e3028aba", null ],
+    [ "ROBOPTIM_ADD_FLAG", "a00124.html#a834560ed1f86d20d61b829f889d6c40e", null ],
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00124.html#af3c2cfc898e83edc8ce340b00c81e1dd", null ]
 ];

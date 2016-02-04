@@ -1,10 +1,5 @@
 var a00125 =
 [
-    [ "SolverError", "a00125.html#aa8893a6fd45b24fcd4f9a21dc33a5516", null ],
-    [ "SolverError", "a00125.html#ac8b42969cdfac13559a460c4ae38b7a0", null ],
-    [ "SolverError", "a00125.html#ab95d88488f2c6a8563cd2242e41c0b01", null ],
-    [ "~SolverError", "a00125.html#a1a06e6de7a8827debf85b100948a25e8", null ],
-    [ "lastState", "a00125.html#a902e79a13337accd1abe8a9acd0bbacd", null ],
-    [ "lastState", "a00125.html#a242b7cb46fe4e752f4e2077c2879c1a5", null ],
-    [ "print", "a00125.html#a8bffd424a6556c49b69aa8cefc0f9b64", null ]
+    [ "precisionRank", "a00125.html#ab417ff615de14b49dd3b4785c868b5dea4ccdca47cf406064482465b2bd3404b8", null ],
+    [ "knowPrecisionRank", "a00125.html#ab417ff615de14b49dd3b4785c868b5dea9660cd681308d153488bac4462b842fb", null ]
 ];

@@ -1,4 +1,6 @@
 var a00159 =
 [
-    [ "derivative", "a00291.html#ga2aca003d14f5cd52e55a6b4fd6fec025", null ]
+    [ "is_malloc_allowed", "a00159.html#add21353ac5cfccbddf412f0b2c4d6c64", null ],
+    [ "is_malloc_allowed_update", "a00159.html#a46ce22d5c1b30a5cb8e928b3a5bdcab9", null ],
+    [ "set_is_malloc_allowed", "a00159.html#ab1b16b6313a0f191ae29dec8aabd1869", null ]
 ];

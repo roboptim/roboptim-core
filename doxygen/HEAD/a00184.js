@@ -1,16 +1,8 @@
 var a00184 =
 [
-    [ "cd", "a00295.html#ga195d042fd97469e044b37abc0faf1e0f", null ],
-    [ "clear", "a00295.html#gad96d84d9e1a5bab7a33ed90bef8bc01d", null ],
-    [ "comment", "a00295.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
-    [ "comment", "a00295.html#ga7a509faa4e3dd9a30373a2b320b98c23", null ],
-    [ "help", "a00295.html#gabecfe2b1ab67fa65ea2fa8f9de592d0a", null ],
-    [ "pwd", "a00295.html#ga05e850b5c5dc912807d645863c01acd9", null ],
-    [ "quit", "a00295.html#ga9ecd6983c2e9525527f1269b72b85291", null ],
-    [ "replot", "a00295.html#gaa265dffb4d80ad3841b7775136f9f9bb", null ],
-    [ "reread", "a00295.html#gacc11e69c9499c334e4ec1a962c6e6536", null ],
-    [ "reset", "a00295.html#ga73987a2ddca2e5fc23ff8bbdf703842d", null ],
-    [ "set", "a00295.html#gad77630a233193748534b41d069d4e180", null ],
-    [ "show", "a00295.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
-    [ "unset", "a00295.html#ga2c2a188b2e89955eee09aa10b5426e43", null ]
+    [ "solver_t", "a00184.html#a8280e1cea7b0916b6ca6b1fc759804d7", null ],
+    [ "create", "a00184.html#a31e09ac3fc31bbcf3b2a833ebff4bf87", null ],
+    [ "destroy", "a00184.html#af992438f02837bfe836ba0a937747829", null ],
+    [ "getSizeOfProblem", "a00184.html#a60635b065e290b461a1e7be6b54f9cbc", null ],
+    [ "getTypeIdOfConstraintsList", "a00184.html#ac19e43ce0aec95e0349d94f62dce2b12", null ]
 ];

@@ -1,7 +1,7 @@
 var a00135 =
 [
-    [ "differentiableFunction_t", "a00135.html#abd717b38ef0691cbe210e3b631a1ca52", null ],
-    [ "InputJacBlock", "a00135.html#abb1b3be726270a16ad93b0571fc2a59d", null ],
-    [ "JacBlock", "a00135.html#a14d3585a1c58a36d6ab60d6d60f7322f", null ],
-    [ "getJacobianBlock", "a00135.html#a7c5edd9accc952cc72a34e815720f526", null ]
+    [ "ResultWithWarnings", "a00135.html#a2e3e3d6637bb1968eef831d451079124", null ],
+    [ "~ResultWithWarnings", "a00135.html#aa3c7d443e5144fb8dea37bb88b50b387", null ],
+    [ "print", "a00135.html#a555b074ff9d1e8ecacc2c2665f9a5eec", null ],
+    [ "warnings", "a00135.html#a644b84239da645b252e1d9cb1b0b49c8", null ]
 ];

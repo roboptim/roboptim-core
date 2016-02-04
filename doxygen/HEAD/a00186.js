@@ -1,6 +1,6 @@
 var a00186 =
 [
-    [ "plot_jac", "a00295.html#ga82eb26a5bc780a491723b256fd0e3ff9", null ],
-    [ "plot_jac", "a00295.html#ga6089434a4bb7b902af79ee92fbfea1ea", null ],
-    [ "plot_jac", "a00295.html#gaa1f821ed4194ecba54db36327af0fd13", null ]
+    [ "GenericDummySolverLastState", "a00086.html", "a00086" ],
+    [ "DummyDifferentiableSparseSolverLastState", "a00186.html#ace5dfcd2f2bf30fe807572be97e81679", null ],
+    [ "DummySolverLastState", "a00186.html#a4f56c3f618b4c50be2db6709545ef569", null ]
 ];

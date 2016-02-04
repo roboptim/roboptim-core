@@ -1,25 +1,6 @@
 var a00127 =
 [
-    [ "argument_t", "a00127.html#a0efecb6e089b0174146e3267df92aaf0", null ],
-    [ "function_t", "a00127.html#aacb3b375e4d671a64d6565e5a841e527", null ],
-    [ "parameters_t", "a00127.html#aa3ee8db7ea958ff4cfc891020a478d5e", null ],
-    [ "problem_t", "a00127.html#adcc4cd9042785fbf8eefda6becdc30d7", null ],
-    [ "value_type", "a00127.html#a93f2fb753a9292b79fcce994f53516e1", null ],
-    [ "SolverState", "a00127.html#acc13d679d60e2be07ef51c383b2a0d65", null ],
-    [ "~SolverState", "a00127.html#aa50ea7b13e1c862dfb0ab7dbaeeb9d55", null ],
-    [ "constraintViolation", "a00127.html#a33a5c58da5a9ca4da2ec9fde3dc5e6e3", null ],
-    [ "constraintViolation", "a00127.html#ad85d94e3f9e7539725923008c26908ec", null ],
-    [ "cost", "a00127.html#a55c3ac19ec49b98838ff930cbdfe53cd", null ],
-    [ "cost", "a00127.html#af02dac682c3e3e0f4ab45ab1e7c80d0b", null ],
-    [ "getParameter", "a00127.html#a41b9a037bfc7eabc8c055b32a7e66d0f", null ],
-    [ "getParameter", "a00127.html#af845482cbe6240af56b227ea46191a4e", null ],
-    [ "parameters", "a00127.html#ae81a8b11e85c965330bb622872deaad7", null ],
-    [ "parameters", "a00127.html#ab9fdbac9bb72a0933c1b568f05b78242", null ],
-    [ "print", "a00127.html#a816a7e0780350c83f292e21fe455cc4c", null ],
-    [ "x", "a00127.html#a3e24d6813d92417ad11144f1e0abd091", null ],
-    [ "x", "a00127.html#a3cd1863401524e5eacc7ab295d174bf1", null ],
-    [ "constraintViolation_", "a00127.html#a5bfe61cafe1f9189bf3d1231920eecd8", null ],
-    [ "cost_", "a00127.html#a7cf28bfdc71a6d2031ee6c230a1f7d1d", null ],
-    [ "parameters_", "a00127.html#a8054ae314f6bdff94ae4eeca9ea1856b", null ],
-    [ "x_", "a00127.html#af93ecd1ad7365104e8d455348ade6611", null ]
+    [ "PrintSolverParameter", "a00127.html#a7fc36204da05790765eb282c3d4e0a45", null ],
+    [ "operator()", "a00127.html#a198699c8ce7f66b31b8d28e6c913bebb", null ],
+    [ "operator()", "a00127.html#a81bf277ab6aa743d7c213743f9e09292", null ]
 ];

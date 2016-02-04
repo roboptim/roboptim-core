@@ -1,4 +1,8 @@
 var a00112 =
 [
-    [ "T_promote", "a00112.html#a8278ab19e6f53cbf6296e941e42120a2", null ]
+    [ "Type", "a00112.html#aa079ed2005e090509c162f1164496e41", [
+      [ "Values", "a00112.html#aa079ed2005e090509c162f1164496e41aa759505cb2efa66b4b6831ff3413577f", null ],
+      [ "Log", "a00112.html#aa079ed2005e090509c162f1164496e41a75b95f79284ff8d0a2ccc4cfb7c66284", null ],
+      [ "Structure", "a00112.html#aa079ed2005e090509c162f1164496e41a904fec78479d64265dd6dffaaf08ab8f", null ]
+    ] ]
 ];
