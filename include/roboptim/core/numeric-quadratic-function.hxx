@@ -105,7 +105,9 @@ namespace roboptim
   GenericNumericQuadraticFunction<T>::impl_jacobian
   (jacobian_ref jacobian, const_argument_ref x) const
   {
-    jacobian.noalias () = 2 * x.transpose () * a_;
+    // Warning: noalias() led to a possible Eigen bug here
+    // See: http://eigen.tuxfamily.org/bz/show_bug.cgi?id=1166
+    jacobian = 2 * x.transpose () * a_;
     jacobian += b_.transpose ();
   }
 
