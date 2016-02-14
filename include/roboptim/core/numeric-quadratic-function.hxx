@@ -96,7 +96,7 @@ namespace roboptim
       j.coeffRef (0, i) += b_[i];
 
     for (size_type i = 0; i < this->inputSize (); ++i)
-      jacobian.coeffRef (0, i) = j.coeffRef (0, i);;
+      jacobian.coeffRef (0, i) = j.coeffRef (0, i);
   }
 
 
