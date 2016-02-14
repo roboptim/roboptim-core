@@ -1,5 +1,8 @@
 var a00210 =
 [
-    [ "minus", "a00294.html#ga50b429f2b86fb7a9d63333e4686ca688", null ],
-    [ "operator-", "a00294.html#gafb698191cd075127b51cc64130d1b1d3", null ]
+    [ "dense_matrix_to_gnuplot", "a00210.html#abf27b2e0087da6e9ec89b10bbdef8c4e", null ],
+    [ "plot_mat", "a00210.html#gadcb1b5fd0907ef64ce8b6b5aaff42db6", null ],
+    [ "plot_mat", "a00210.html#ga22b3284ccb0b83b4dccef09f4ce53cab", null ],
+    [ "set_matrix_header", "a00210.html#aca3546228e3d8781b5e35ce15a50e0ca", null ],
+    [ "sparse_matrix_to_gnuplot", "a00210.html#a81a6cbb7778fc1a14fe74689c2ea7ed6", null ]
 ];

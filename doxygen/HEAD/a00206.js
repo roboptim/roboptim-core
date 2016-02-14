@@ -1,9 +1,16 @@
 var a00206 =
 [
-    [ "dense_matrix_to_matplotlib", "a00290.html#aec6bb39f40ca2fb899bc401c83a17075", null ],
-    [ "plot_mat", "a00298.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
-    [ "plot_mat", "a00298.html#gad95bc834df94f24249f83aedddc0e17d", null ],
-    [ "set_red_white_blue_cmap", "a00290.html#a995ab9cb3464f24d2fa6efe75db39792", null ],
-    [ "set_red_yellow_blue_cmap", "a00290.html#a7886ac8e9ba70129ece570e76e13d3e6", null ],
-    [ "sparse_matrix_to_matplotlib", "a00290.html#a431a27b03c8e76126ec235e828691a19", null ]
+    [ "cd", "a00206.html#ga195d042fd97469e044b37abc0faf1e0f", null ],
+    [ "clear", "a00206.html#gad96d84d9e1a5bab7a33ed90bef8bc01d", null ],
+    [ "comment", "a00206.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
+    [ "comment", "a00206.html#ga7a509faa4e3dd9a30373a2b320b98c23", null ],
+    [ "help", "a00206.html#gabecfe2b1ab67fa65ea2fa8f9de592d0a", null ],
+    [ "pwd", "a00206.html#ga05e850b5c5dc912807d645863c01acd9", null ],
+    [ "quit", "a00206.html#ga9ecd6983c2e9525527f1269b72b85291", null ],
+    [ "replot", "a00206.html#gaa265dffb4d80ad3841b7775136f9f9bb", null ],
+    [ "reread", "a00206.html#gacc11e69c9499c334e4ec1a962c6e6536", null ],
+    [ "reset", "a00206.html#ga73987a2ddca2e5fc23ff8bbdf703842d", null ],
+    [ "set", "a00206.html#gad77630a233193748534b41d069d4e180", null ],
+    [ "show", "a00206.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
+    [ "unset", "a00206.html#ga2c2a188b2e89955eee09aa10b5426e43", null ]
 ];

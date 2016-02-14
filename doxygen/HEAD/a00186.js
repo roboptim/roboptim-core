@@ -1,9 +1,8 @@
 var a00186 =
 [
-    [ "GNUPLOT_STR_COMMAND", "a00186.html#a44cffa7dc6979331d7660d604e7c8f48", null ],
-    [ "GNUPLOT_UNARY_COMMAND", "a00186.html#abdaa2512aec3201d566ccbfc73fafc46", null ],
-    [ "comment", "a00298.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
-    [ "set", "a00298.html#gad77630a233193748534b41d069d4e180", null ],
-    [ "show", "a00298.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
-    [ "unset", "a00298.html#ga2c2a188b2e89955eee09aa10b5426e43", null ]
+    [ "solver_t", "a00186.html#a5aafe251d5465495fdbaff79da9e5a7d", null ],
+    [ "create", "a00186.html#a019471c853f89a3106d090582809e846", null ],
+    [ "destroy", "a00186.html#af992438f02837bfe836ba0a937747829", null ],
+    [ "getSizeOfProblem", "a00186.html#a60635b065e290b461a1e7be6b54f9cbc", null ],
+    [ "getTypeIdOfConstraintsList", "a00186.html#a25ff9384fbf0c8e416a686a67c7d1fdd", null ]
 ];

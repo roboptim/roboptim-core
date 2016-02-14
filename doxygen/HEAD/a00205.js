@@ -1,5 +1,9 @@
 var a00205 =
 [
-    [ "discreteInterval_t", "a00298.html#gac1d12393050610f8e70843e70183259f", null ],
-    [ "plot", "a00298.html#ga7a1939a1db1b12c576e85859b728458c", null ]
+    [ "GNUPLOT_STR_COMMAND", "a00205.html#a44cffa7dc6979331d7660d604e7c8f48", null ],
+    [ "GNUPLOT_UNARY_COMMAND", "a00205.html#abdaa2512aec3201d566ccbfc73fafc46", null ],
+    [ "comment", "a00205.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
+    [ "set", "a00205.html#gad77630a233193748534b41d069d4e180", null ],
+    [ "show", "a00205.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
+    [ "unset", "a00205.html#ga2c2a188b2e89955eee09aa10b5426e43", null ]
 ];

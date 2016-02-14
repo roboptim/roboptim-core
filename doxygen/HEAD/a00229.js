@@ -1,4 +1,5 @@
 var a00229 =
 [
-    [ "operator<<", "a00277.html#a664d63d1f2f6e8d5c1c981c08e1955a0", null ]
+    [ "minus", "a00229.html#ga50b429f2b86fb7a9d63333e4686ca688", null ],
+    [ "operator-", "a00229.html#gafb698191cd075127b51cc64130d1b1d3", null ]
 ];

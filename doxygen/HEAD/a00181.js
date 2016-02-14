@@ -1,6 +1,4 @@
 var a00181 =
 [
-    [ "castInto", "a00277.html#a138a927716819b1af5033ec1bf2b4b7c", null ],
-    [ "castInto", "a00277.html#a5b374522d94ea6cfc1de10b14bf17548", null ],
-    [ "operator<<", "a00277.html#ac1811528dd1c9cc4c233c14bf5ed6e81", null ]
+    [ "derivative", "a00181.html#ga2aca003d14f5cd52e55a6b4fd6fec025", null ]
 ];

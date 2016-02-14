@@ -1,6 +1,5 @@
 var a00285 =
 [
-    [ "Policy", "a00105.html", null ],
-    [ "Simple", "a00123.html", null ],
-    [ "FivePointsRule", "a00062.html", null ]
+    [ "SumOfC1Squares", "a00285.html#gafefbc90e9cc685f442eb32986ceca7ca", null ],
+    [ "SumOfC1SquaresSparse", "a00285.html#gaeaea633c6cce7cf8a129a9ec1120a57b", null ]
 ];

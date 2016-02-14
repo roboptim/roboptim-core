@@ -1,10 +1,9 @@
 var a00196 =
 [
-    [ "decendl", "a00277.html#a40c2b30f2b9839b3f1f16f3e1bcf8769", null ],
-    [ "decindent", "a00277.html#a5a9d36182ac616874a038fd4217f0a9c", null ],
-    [ "iendl", "a00277.html#a27b6e86639bb04ec042979cdaad0a851", null ],
-    [ "incendl", "a00277.html#a522f7549c2f312397403265b950a9144", null ],
-    [ "incindent", "a00277.html#a053552edbb5c42ac287c22175ea43e69", null ],
-    [ "indent", "a00277.html#a2b00a3916f44e9f9d69e4fc157a0da79", null ],
-    [ "resetindent", "a00277.html#a3f228456aacf0bc862482828cbde643b", null ]
+    [ "checkGradient", "a00196.html#ga243acdc164ebcb9129d073149f02e7ec", null ],
+    [ "checkGradientAndThrow", "a00196.html#ga8844d92b51c9518ec394ad7b6b6bcd7a", null ],
+    [ "checkJacobian", "a00196.html#gaa79713104bed214820abec2b998d3dba", null ],
+    [ "checkJacobianAndThrow", "a00196.html#ga44f24c28a17ec94e68bded5d92a9d40a", null ],
+    [ "operator<<", "a00196.html#gae6e53e4f7183cc2816db6aa8ea7cab6e", null ],
+    [ "operator<<", "a00196.html#ga67f53906aa3085cb9d1bf44f5515349e", null ]
 ];
