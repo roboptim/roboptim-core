@@ -1,0 +1,61 @@
+Constant function
+  offset = [2](1,2)
+Problem:
+  Constant function
+    offset = [2](1,2)
+  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments scaling: 1, 1
+  No constraints.
+  No starting point.
+  Infinity value (for all functions): inf
+[2](2,1)
+[2](100,-200)
+No suggested scaling parameters
+Problem:
+  Constant function
+    offset = [2](1,2)
+  Arguments bounds: (-inf, inf), (-inf, inf)
+  Arguments scaling: 1, 1
+  Number of constraints: 2
+  Constraint 0
+      Numeric linear function:
+        A = [2,2]((300,0), (0,10))
+        B = [2](200,300)
+      Bounds: (0, inf), (0, inf)
+      Scaling: 1, 1
+  Constraint 1
+      Numeric quadratic function:
+        A = [2,2]((300,0), (0,10))
+        B = [2](200,300)
+        c = [1](0)
+      Bounds: (0, inf)
+      Scaling: 1
+  No starting point.
+  Infinity value (for all functions): inf
+[3,2]((300,0), (0,10), (1400,320))
+[3,2]((300,0), (0,10), (60200,-3700))
+Suggested scaling parameters:
+  Constraint 0:
+    Numeric linear function:
+      A = [2,2]((300,0), (0,10))
+      B = [2](200,300)
+    Scaling: 1, 1
+  Constraint 1:
+    Numeric quadratic function:
+      A = [2,2]((300,0), (0,10))
+      B = [2](200,300)
+      c = [1](0)
+    Scaling: 1
+Suggested scaling parameters:
+  Constraint 0:
+    Numeric linear function:
+      A = [2,2]((300,0), (0,10))
+      B = [2](200,300)
+    Scaling: 0.333333, 1
+  Constraint 1:
+    Numeric quadratic function:
+      A = [2,2]((300,0), (0,10))
+      B = [2](200,300)
+      c = [1](0)
+    Scaling: 0.00166113
+

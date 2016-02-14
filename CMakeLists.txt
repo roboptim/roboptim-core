@@ -113,6 +113,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/scaling-helper.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/scaling-helper.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-callback.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-callback.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/solver-error.hh
