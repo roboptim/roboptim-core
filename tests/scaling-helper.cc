@@ -98,6 +98,16 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (scaling_helper, T, functionTypes_t)
     intervals[i] = Function::makeLowerInterval (0.);
   pb.addConstraint (g1, intervals, scaling);
 
+  a *= 1e-6;
+  b *= 1e-6;
+  boost::shared_ptr<numericQuadraticFunction_t>
+    g2 = boost::make_shared<numericQuadraticFunction_t> (a, b);
+  intervals.resize (1);
+  scaling.resize (1);
+  for (size_t i = 0; i < intervals.size (); ++i)
+    intervals[i] = Function::makeLowerInterval (0.);
+  pb.addConstraint (g2, intervals, scaling);
+
   (*output) << pb << std::endl;
 
   // Check with constraints

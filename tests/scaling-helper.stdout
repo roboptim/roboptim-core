@@ -16,7 +16,7 @@ Problem:
     offset = [2](1,2)
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
-  Number of constraints: 2
+  Number of constraints: 3
   Constraint 0
       Numeric linear function:
         A = [2,2]((300,0), (0,10))
@@ -30,10 +30,17 @@ Problem:
         c = [1](0)
       Bounds: (0, inf)
       Scaling: 1
+  Constraint 2
+      Numeric quadratic function:
+        A = [2,2]((0.0003,0), (0,1e-05))
+        B = [2](0.0002,0.0003)
+        c = [1](0)
+      Bounds: (0, inf)
+      Scaling: 1
   No starting point.
   Infinity value (for all functions): inf
-[3,2]((300,0), (0,10), (1400,320))
-[3,2]((300,0), (0,10), (60200,-3700))
+[4,2]((300,0), (0,10), (1400,320), (0.0014,0.00032))
+[4,2]((300,0), (0,10), (60200,-3700), (0.0602,-0.0037))
 Suggested scaling parameters:
   Constraint 0:
     Numeric linear function:
@@ -44,6 +51,12 @@ Suggested scaling parameters:
     Numeric quadratic function:
       A = [2,2]((300,0), (0,10))
       B = [2](200,300)
+      c = [1](0)
+    Scaling: 1
+  Constraint 2:
+    Numeric quadratic function:
+      A = [2,2]((0.0003,0), (0,1e-05))
+      B = [2](0.0002,0.0003)
       c = [1](0)
     Scaling: 1
 Suggested scaling parameters:
@@ -58,4 +71,10 @@ Suggested scaling parameters:
       B = [2](200,300)
       c = [1](0)
     Scaling: 0.00166113
+  Constraint 2:
+    Numeric quadratic function:
+      A = [2,2]((0.0003,0), (0,1e-05))
+      B = [2](0.0002,0.0003)
+      c = [1](0)
+    Scaling: 71.4286
 
