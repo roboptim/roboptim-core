@@ -139,7 +139,7 @@ namespace roboptim
 
     // Note: lpNorm is not available for sparse Eigen::Block
     denseVector_t grad (jac.row (i));
-    return grad.template lpNorm<Eigen::Infinity> ();
+    return grad.lpNorm<Eigen::Infinity> ();
   }
 
   template <typename T>
