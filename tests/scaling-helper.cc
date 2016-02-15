@@ -45,6 +45,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (scaling_helper, T, functionTypes_t)
   typedef typename problem_t::function_t      function_t;
   typedef typename function_t::argument_t     argument_t;
   typedef typename problem_t::intervals_t     intervals_t;
+  typedef typename problem_t::interval_t      interval_t;
   typedef typename problem_t::scaling_t       scaling_t;
 
   typedef GenericConstantFunction<T>          constantFunction_t;
@@ -71,7 +72,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (scaling_helper, T, functionTypes_t)
 
   // Check without constraints
   {
-    ScalingHelper<T> sh (pb);
+    ScalingHelper<T> sh (pb, function_t::makeInterval (1e-1, 1e2));
     (*output) << sh << std::endl;
   }
 
@@ -112,12 +113,23 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (scaling_helper, T, functionTypes_t)
 
   // Check with constraints
   {
-    ScalingHelper<T> sh (pb);
+    ScalingHelper<T> sh (pb, function_t::makeInterval (1e-1, 1e2));
     (*output) << Eigen::MatrixXd (pb.jacobian (x[0])) << std::endl;
     (*output) << Eigen::MatrixXd (pb.jacobian (x[1])) << std::endl;
     (*output) << sh << std::endl;
     sh.computeScaling (x);
     (*output) << sh << std::endl;
+  }
+
+  {
+    interval_t bounds;
+    bounds.first = -1.;
+    bounds.second = 100.;
+    BOOST_CHECK_THROW (ScalingHelper<T> sh1 (pb, bounds),
+          std::runtime_error);
+    bounds.first = 200.;
+    BOOST_CHECK_THROW (ScalingHelper<T> sh2 (pb, bounds),
+          std::runtime_error);
   }
 
   std::cout << output->str () << std::endl;

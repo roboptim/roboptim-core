@@ -50,10 +50,13 @@ namespace roboptim
 
     /// \brief Constructor.
     /// \param pb input problem.
-    ScalingHelper (const problem_t& pb);
+    /// \param gradRange valid absolute gradient range after scaling.
+    ScalingHelper (const problem_t& pb,
+                   const interval_t& gradRange = function_t::makeInterval (0., 100.));
     virtual ~ScalingHelper ();
 
-    /// \brief Get a possible scaling vector based on gradient ranges.
+    /// \brief Get a possible scaling vector based on the gradient's infinity
+    /// norm.
     /// \param x vector of arguments to consider.
     /// \return scaling vector.
     void computeScaling (const std::vector<argument_t>& x);

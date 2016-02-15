@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_SCALING_HELPER_HXX
 
 # include <vector>
+# include <stdexcept>
 
 # include <roboptim/core/util.hh>
 # include <roboptim/core/differentiable-function.hh>
@@ -26,11 +27,15 @@
 namespace roboptim
 {
   template <typename T>
-  ScalingHelper<T>::ScalingHelper (const problem_t& pb)
+  ScalingHelper<T>::ScalingHelper (const problem_t& pb, const interval_t& gradRange)
   : pb_ (pb),
-    gradRange_ (1e-1, 1e2),
+    gradRange_ (gradRange),
     scalingFunc_ ()
   {
+    if (gradRange_.first > gradRange_.second
+        || gradRange_.first < 0. || gradRange_.second < 0.)
+      throw std::runtime_error ("invalid absolute gradient ranges");
+
     scalingFunc_.resize (pb_.constraints ().size ());
     size_t c_idx = 0;
     for (typename std::vector<scalingFunc_t>::iterator
