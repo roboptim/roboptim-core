@@ -1,7 +1,7 @@
 var a00135 =
 [
-    [ "ResultWithWarnings", "a00135.html#a2e3e3d6637bb1968eef831d451079124", null ],
-    [ "~ResultWithWarnings", "a00135.html#aa3c7d443e5144fb8dea37bb88b50b387", null ],
-    [ "print", "a00135.html#a555b074ff9d1e8ecacc2c2665f9a5eec", null ],
-    [ "warnings", "a00135.html#a644b84239da645b252e1d9cb1b0b49c8", null ]
+    [ "ConstSegment", "a00135.html#a031c4da6be575034f962c2a069b32e41", null ],
+    [ "addBlock", "a00135.html#a48b88b2e0734f2fdc7a78596190da540", null ],
+    [ "getInputBlock", "a00135.html#a00c413bf0a8b3729602f16ff59c2d605", null ],
+    [ "getNumBlocks", "a00135.html#a43f373724f0dedb27860c73d0b2e65fb", null ]
 ];
