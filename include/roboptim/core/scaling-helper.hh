@@ -52,7 +52,7 @@ namespace roboptim
     /// \param pb input problem.
     /// \param gradRange valid absolute gradient range after scaling.
     ScalingHelper (const problem_t& pb,
-                   const interval_t& gradRange = function_t::makeInterval (0., 100.));
+                   const interval_t& gradRange = function_t::makeInterval (0.1, 10.));
     virtual ~ScalingHelper ();
 
     /// \brief Get a possible scaling vector based on the gradient's infinity
