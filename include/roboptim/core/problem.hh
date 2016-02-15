@@ -119,6 +119,10 @@ namespace roboptim
     typedef typename function_t::intervals_t intervals_t;
 
     /// \brief Scaling vector.
+    ///
+    /// If \f$g_u\f$ is the constraint as seen by the user, \f$g_a\f$
+    /// the constraint as seen by the solver's algorithm, and \f$s\f$
+    /// the scaling factor, then we have: \f$g_a = s * g_u\f$
     typedef std::vector<value_type> scaling_t;
 
     /// \brief Scaling vector (deprecated typedef)
