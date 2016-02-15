@@ -27,31 +27,42 @@
 
 
 // Main headers.
-# include <roboptim/core/result-with-warnings.hh>
-# include <roboptim/core/derivable-function.hh>
-# include <roboptim/core/derivable-parametrized-function.hh>
-# include <roboptim/core/function.hh>
-# include <roboptim/core/generic-solver.hh>
-# include <roboptim/core/function/constant.hh>
-# include <roboptim/core/function/identity.hh>
+# include <roboptim/core/cache.hh>
 # include <roboptim/core/indent.hh>
+# include <roboptim/core/terminal-color.hh>
+# include <roboptim/core/util.hh>
+
+# include <roboptim/core/function.hh>
+# include <roboptim/core/differentiable-function.hh>
+# include <roboptim/core/derivable-parametrized-function.hh>
 # include <roboptim/core/linear-function.hh>
 # include <roboptim/core/n-times-derivable-function.hh>
 # include <roboptim/core/numeric-linear-function.hh>
 # include <roboptim/core/numeric-quadratic-function.hh>
 # include <roboptim/core/parametrized-function.hh>
-# include <roboptim/core/problem.hh>
 # include <roboptim/core/quadratic-function.hh>
-# include <roboptim/core/result.hh>
+# include <roboptim/core/sum-of-c1-squares.hh>
+# include <roboptim/core/twice-differentiable-function.hh>
+
+# include <roboptim/core/problem.hh>
+# include <roboptim/core/generic-solver.hh>
+# include <roboptim/core/solver.hh>
+# include <roboptim/core/solver-callback.hh>
 # include <roboptim/core/solver-error.hh>
 # include <roboptim/core/solver-factory.hh>
+# include <roboptim/core/solver-state.hh>
 # include <roboptim/core/solver-warning.hh>
-# include <roboptim/core/solver.hh>
-# include <roboptim/core/twice-derivable-function.hh>
-# include <roboptim/core/util.hh>
+
+# include <roboptim/core/result-with-warnings.hh>
+# include <roboptim/core/result.hh>
+
+# include <roboptim/core/optimization-logger.hh>
+# include <roboptim/core/scaling-helper.hh>
+# include <roboptim/core/derivative-size.hh>
 
 
 // Callbacks.
+# include <roboptim/core/callback/wrapper.hh>
 # include <roboptim/core/callback/multiplexer.hh>
 
 // Decorators.
@@ -90,6 +101,7 @@
 # include <roboptim/core/visualization/matplotlib.hh>
 # include <roboptim/core/visualization/matplotlib-commands.hh>
 # include <roboptim/core/visualization/matplotlib-function.hh>
+# include <roboptim/core/visualization/matplotlib-matrix.hh>
 
 
 #endif //! ROBOPTIM_CORE_HH
