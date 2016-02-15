@@ -40,9 +40,10 @@ ADD_DEFINITIONS(-DTESTS_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 #
 # This macro will create a binary from `NAME.cc', link it against
 # Boost and add it to the test suite.
+# Complementary source files can be added as extra arguments.
 #
 MACRO(ROBOPTIM_CORE_TEST NAME)
-  ADD_EXECUTABLE(${NAME} ${NAME}.cc)
+  ADD_EXECUTABLE(${NAME} ${NAME}.cc ${ARGN})
   ADD_TEST(NAME ${NAME}
     COMMAND ${CHECK_PREFIX} ${CMAKE_CURRENT_BINARY_DIR}/${NAME})
 
@@ -61,16 +62,6 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
     TEST ${NAME} PROPERTY ENVIRONMENT
     "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src:$ENV{LD_LIBRARY_PATH}")
 ENDMACRO(ROBOPTIM_CORE_TEST)
-
-
-# simple
-# Link the dummy solver with this test to bypass the plug-in system.
-ADD_EXECUTABLE(simple
-  ${COMMON_HEADERS}
-  simple.cc
-  ${CMAKE_SOURCE_DIR}/src/dummy.cc)
-PKG_CONFIG_USE_DEPENDENCY(simple liblog4cxx)
-TARGET_LINK_LIBRARIES(simple roboptim-core ${Boost_LIBRARIES})
 
 # Basic types.
 ROBOPTIM_CORE_TEST(interval)
@@ -101,6 +92,9 @@ ROBOPTIM_CORE_TEST(ref)
 # Solver.
 ROBOPTIM_CORE_TEST(solver)
 ROBOPTIM_CORE_TEST(solver-factory)
+
+# Compile the dummy solver in this test to bypass the plug-in system.
+ROBOPTIM_CORE_TEST(simple "${CMAKE_SOURCE_DIR}/src/dummy.cc")
 
 # Results.
 ROBOPTIM_CORE_TEST(result)

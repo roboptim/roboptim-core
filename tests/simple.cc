@@ -21,7 +21,8 @@
 
 #include <boost/make_shared.hpp>
 
-#include <roboptim/core/io.hh>
+#include <roboptim/core.hh>
+
 #include <roboptim/core/plugin/dummy.hh>
 
 using namespace roboptim;
