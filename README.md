@@ -121,6 +121,34 @@ Available options are:
 - `CMAKE_INSTALL_PREFIX` set the installation prefix (the directory
   where the software will be copied to after it has been compiled).
 
+### Concerning plug-ins
+
+Plug-ins are installed to `$libdir/roboptim-core` by default. However, since
+libtool needs to find the plug-ins, the proper environment variable needs to be
+exported (e.g. in your `~/.bashrc` or `~/.zshrc`):
+
+```sh
+# $libdir should be the lib directory in your installation prefix, e.g. /usr/lib
+export LTDL_LIBRARY_PATH="$LTDL_LIBRARY_PATH:$libdir/roboptim-core"
+```
+
+Failing to set the environment variable will lead to the following error when
+trying to load a plug-in:
+
+```txt
+libltdl failed to load plug-in ``roboptim-core-plugin-xxxxx'': file not found
+```
+
+You can also use the `PLUGIN_SUBDIR` option to change the subdirectory. For
+instance, if you want your plug-ins to be installed to the default library
+directory (no subdirectory), set it to the empty string, e.g.:
+
+```sh
+cmake -DPLUGIN_SUBDIR="" ..
+```
+
+In that case, `LTDL_LIBRARY_PATH` does not need to be changed if you installed
+RobOptim to a system prefix (e.g. `/usr` or `/usr/local`).
 
 Tips and Tricks
 ---------------

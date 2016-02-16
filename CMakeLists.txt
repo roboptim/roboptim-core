@@ -190,10 +190,6 @@ IF(HAS_VISIBILITY)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
 ENDIF()
 
-# Add extra keys to pkg-config file to export the location of the
-# plug-in directory in a robust manner.
-SET(PKG_CONFIG_EXTRA "plugindir=${CMAKE_INSTALL_FULL_LIBDIR}/roboptim-core")
-
 # Add main library to pkg-config file.
 PKG_CONFIG_APPEND_LIBS(roboptim-core)
 
@@ -215,6 +211,18 @@ ENDIF()
 #FIXME: check that libltdl.so is available instead of adding it blindly.
 PKG_CONFIG_APPEND_LIBS(ltdl)
 HEADER_INSTALL("${HEADERS}")
+
+# Set plug-in subdirectory name (can be empty).
+SET(PLUGIN_SUBDIR "${PROJECT_NAME}" CACHE
+  STRING "libdir subdirectory where plug-ins will be installed (can be empty)")
+SET(PLUGINDIR "${CMAKE_INSTALL_LIBDIR}/${PLUGIN_SUBDIR}")
+SET(FULL_PLUGINDIR "${CMAKE_INSTALL_FULL_LIBDIR}/${PLUGIN_SUBDIR}")
+MESSAGE("-- Relative plug-in directory: ${PLUGIN_SUBDIR}")
+MESSAGE("-- Absolute plug-in directory: ${FULL_PLUGINDIR}")
+
+# Add extra keys to pkg-config file to export the location of the
+# plug-in directory in a robust manner.
+SET(PKG_CONFIG_EXTRA "relplugindir=${PLUGIN_SUBDIR}\nplugindir=\${libdir}/\${relplugindir}")
 
 # Set the default storage order for Eigen matrices (ColMajor or RowMajor).
 # Note: RowMajor may yield better results for the dense Jacobian filling process

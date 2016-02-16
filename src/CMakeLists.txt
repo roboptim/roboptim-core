@@ -16,9 +16,6 @@
 # Add Boost path to include directories.
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
-# Define the directory where plug-ins will be installed.
-SET(PLUGINDIR ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME})
-
 SET(ROBOPTIM_CORE_SRC
   debug.hh
   doc.hh
