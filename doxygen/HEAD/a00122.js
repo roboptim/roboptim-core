@@ -1,13 +1,15 @@
 var a00122 =
 [
-    [ "parentType_t", "a00122.html#a10ceafe26463a6befaf1a83bae6f2ba3", null ],
-    [ "SelectionByIdShPtr_t", "a00122.html#a2f296e76debe6a7e703f0a769f5f9129", null ],
-    [ "SelectionById", "a00122.html#afed4a5f3312bb43c36cd89e1b24da60e", null ],
-    [ "~SelectionById", "a00122.html#a647ad16eec9c7afb716a748c42c1fd1f", null ],
-    [ "impl_compute", "a00122.html#a9e64ceaf5be532b1d08b43fd48fc1802", null ],
-    [ "impl_gradient", "a00122.html#a670b69ecefa042ad5e6e2f14300c3482", null ],
-    [ "impl_jacobian", "a00122.html#a27306334779e090f25bbd7d630418aa8", null ],
-    [ "origin", "a00122.html#a96d0c5400637449ba56f14e7c25ec69d", null ],
-    [ "origin", "a00122.html#a3fe469f5a1b03ea25527636b326d85ab", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00122.html#a4238e53c744c850cde075fda814a2f26", null ]
+    [ "parentType_t", "a00122.html#ab4d12a8f0bcae135aff2dc0e8998801b", null ],
+    [ "PlusShPtr_t", "a00122.html#a4293f7f153edd79aec49ed9d8dd03122", null ],
+    [ "Plus", "a00122.html#a8ab9e9b7348f75e9447251693fc81a7e", null ],
+    [ "~Plus", "a00122.html#abedb0ecb21222e9aca4c7f103d04ea99", null ],
+    [ "impl_compute", "a00122.html#a33dddd26dcadcaf9559ff73581938111", null ],
+    [ "impl_gradient", "a00122.html#a01c9b6d9ef74d019eeb035b706eb5784", null ],
+    [ "impl_jacobian", "a00122.html#aedbf297e4a9ed8d697eb890ece91a7e3", null ],
+    [ "left", "a00122.html#a02962e5b5637c3a0a1f61bf6f188fb9e", null ],
+    [ "left", "a00122.html#af8a02db6bba1a1f20b8a32f10a809248", null ],
+    [ "right", "a00122.html#ade7a10db019cd559298cd1918ebda9ff", null ],
+    [ "right", "a00122.html#a93ea170baf1cb3bcd521edf776676dc1", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00122.html#a0135d05c16cd40f3794d4497f1d2ec4b", null ]
 ];
