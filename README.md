@@ -182,12 +182,12 @@ Available Packages
 ------------------
 
  * Debian and derivatives, i.e. Ubuntu (Release 2.0):
-   http://packages.qa.debian.org/r/roboptim-core.html
- * Arch Linux (Release 2.0):
+   https://tracker.debian.org/pkg/roboptim-core
+ * Arch Linux (Release 3.2):
    https://aur.archlinux.org/packages/roboptim-core/
  * Arch Linux (Git master branch):
    https://aur.archlinux.org/packages/roboptim-core-git/
- * Fedora (Release 0.5):
+ * Fedora (Release 3.1):
    https://apps.fedoraproject.org/packages/roboptim-core
  * Mac OS X Homebrew Formula (Release 2.0 / Git HEAD):
    https://www.github.com/roboptim/homebrew-roboptim
