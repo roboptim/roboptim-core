@@ -139,9 +139,10 @@ trying to load a plug-in:
 libltdl failed to load plug-in ``roboptim-core-plugin-xxxxx'': file not found
 ```
 
-You can also use the `PLUGIN_SUBDIR` option to change the subdirectory. For
-instance, if you want your plug-ins to be installed to the default library
-directory (no subdirectory), set it to the empty string, e.g.:
+You can also use the `PLUGIN_SUBDIR` option to change the subdirectory
+(available since version 3.3). For instance, if you want your plug-ins to be
+installed to the default library directory (no subdirectory), set it to the
+empty string, e.g.:
 
 ```sh
 cmake -DPLUGIN_SUBDIR="" ..
