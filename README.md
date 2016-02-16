@@ -185,8 +185,6 @@ Available Packages
    https://tracker.debian.org/pkg/roboptim-core
  * Arch Linux (Release 3.2):
    https://aur.archlinux.org/packages/roboptim-core/
- * Arch Linux (Git master branch):
-   https://aur.archlinux.org/packages/roboptim-core-git/
  * Fedora (Release 3.1):
    https://apps.fedoraproject.org/packages/roboptim-core
  * Mac OS X Homebrew Formula (Release 2.0 / Git HEAD):
@@ -194,10 +192,12 @@ Available Packages
  * RobotPkg (Release 1.0):
    http://robotpkg.openrobots.org/robotpkg/optimization/roboptim-core/
 
-Development Snapshost ( *unstable* ):
+Development Snapshots ( *unstable* ):
 
  * Ubuntu Launchpad PPA:
    https://launchpad.net/~roboptim/+archive/ppa
+ * Arch Linux (Git master branch):
+   https://aur.archlinux.org/packages/roboptim-core-git/
 
 
 [badge-license]: https://img.shields.io/badge/license-LGPL_3-green.svg
