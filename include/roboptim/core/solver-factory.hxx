@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_SOLVER_FACTORY_HXX
 # include <cstddef>
 # include <sstream>
+# include <string>
 # include <typeinfo>
 
 # include <roboptim/core/util.hh>
@@ -62,10 +63,13 @@ namespace roboptim
     if (!handle_)
       {
 	std::stringstream sserror;
-	sserror << "libltdl failed to load plug-in ``"
-		<< ss.str () << "'': " << lt_dlerror ();
+	std::string err = lt_dlerror ();
+	sserror << "libltdl failed to load plug-in ``" << ss.str () << "'': "
+		<< err;
+	if (err == "file not found")
+	  sserror << "\nIs the plug-in in your LTDL_LIBRARY_PATH or LD_LIBRARY_PATH?";
 	if (lt_dlexit ())
-	  sserror << " lt_dlexit failed too";
+	  sserror << "\nlt_dlexit failed too";
 	throw std::runtime_error (sserror.str ().c_str ());
       }
 
