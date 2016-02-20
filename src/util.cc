@@ -66,6 +66,9 @@ namespace roboptim
     {
 # ifdef ROBOPTIM_HAS_FENV_H
       feholdexcept (&fenv_);
+# else //! ROBOPTIM_HAS_FENV_H
+      // Avoid private field 'fenv_' is not used warning
+      fenv_ = 0;
 # endif //! ROBOPTIM_HAS_FENV_H
     }
 
