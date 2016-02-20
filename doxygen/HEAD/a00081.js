@@ -1,11 +1,11 @@
 var a00081 =
 [
-    [ "interval_t", "a00081.html#aa1fe89a5855ff977bbece5d78f90a5d2", null ],
-    [ "intervalsVect_t", "a00081.html#a8047bc98d54e46144b3f522dd6812d4c", null ],
-    [ "size_type", "a00081.html#a63530c370e23c26988f0727e540e24d4", null ],
-    [ "value_type", "a00081.html#a640d8344231b239f17a20392517c1d68", null ],
-    [ "vector_t", "a00081.html#a0264a3b65ffb6e4ab0753116dbba61c5", null ],
-    [ "EvaluateConstraintViolation", "a00081.html#a306dbff7446a9f1252d32d1ff67cd1f0", null ],
-    [ "computeViolation", "a00081.html#aecd68350a1eb5e9999d0d27f9f02723d", null ],
-    [ "uniformNorm", "a00081.html#a40d8c34b08bf85f2f65f1d12a221dde7", null ]
+    [ "~Gnuplot", "a00081.html#ab2620f9d29a97757d0acbfe68e6a2c79", null ],
+    [ "Gnuplot", "a00081.html#ab134923cbb8cc53b251664f4b5c6b73c", null ],
+    [ "clear", "a00081.html#a0bc170d3f32a3abaa388b27e17242ad3", null ],
+    [ "make_gnuplot", "a00081.html#a55c76cc46b5c54b1bc0d4684128403ff", null ],
+    [ "make_interactive_gnuplot", "a00081.html#a14e55569e7e70d12d7cd1d83117576a1", null ],
+    [ "operator<<", "a00081.html#af7addb186708c556e603c3fd8e7768a6", null ],
+    [ "print", "a00081.html#ad4b42f563ebbdb501d397a42a4420525", null ],
+    [ "push_command", "a00081.html#aaa242efdd1e20124d0698793b4fd4bdd", null ]
 ];
