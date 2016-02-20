@@ -7,7 +7,7 @@ env:
     - secure: "Hn0mNkHgP0azydZUqq3CXifrDw+6adcJ541/EInw59BhM9Q7orJEDsfkqSMICLsIQxe+qNb0pYjCze10GZQPqhNBKcsDGmMDOqvwNPyOqEy8TOWl0j6emO3K0QVbfz7l2I9Gvwym/ZVQ+4XH1oZgmfJOPgxLmWZ69wZUDFBlMCg="
     - secure: "Atmvwjxe3WqmUPumdDubBTvgC1v5JbIVtgBwuvZOsYdQ36eKOCSBuS0uVS0WbHHmeljeVUzb1EEGitKKjS6hYAkdg3F5eFmHPophL8zUHkY4fGAE80oGyPAFOeqZzIYp5cpStR8540K32C7vkqKqPFkufwLGKI0QZ87HP3U60AM="
     - APT_DEPENDENCIES="doxygen libltdl-dev libboost-all-dev liblog4cxx10-dev"
-    - HOMEBREW_DEPENDENCIES="doxygen libtool boost log4cxx"
+    - HOMEBREW_DEPENDENCIES="doxygen log4cxx"
     - GIT_DEPENDENCIES=""
     - GH_USERNAME=bchretien
     - GH_REPO=roboptim/roboptim-core
