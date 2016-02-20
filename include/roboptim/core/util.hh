@@ -41,7 +41,7 @@ namespace roboptim
 # ifdef ROBOPTIM_HAS_FENV_H
     typedef fenv_t fenv_t;
 # else //! ROBOPTIM_HAS_FENV_H
-    typedef fenv_t void*;
+    typedef void* fenv_t;
 # endif //! ROBOPTIM_HAS_FENV_H
 
     /// \internal
