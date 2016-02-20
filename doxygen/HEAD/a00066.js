@@ -1,14 +1,13 @@
 var a00066 =
 [
-    [ "callback_t", "a00066.html#a08f338f7dd768deaf7454eaa778fd822", null ],
-    [ "parent_t", "a00066.html#a24a414ec634aa739a37de3e9b6079a21", null ],
-    [ "problem_t", "a00066.html#a0ced1fa020c0746cfd52c15e63a565a1", null ],
-    [ "solverState_t", "a00066.html#ab0ef9bfaa4c385910e2520c22350e537", null ],
-    [ "GenericDummySolverLastState", "a00066.html#a48411fea27ec26f8d6635117ca17148b", null ],
-    [ "~GenericDummySolverLastState", "a00066.html#a29de49befcb3dd8e559a1ee1566ce2fd", null ],
-    [ "callback", "a00066.html#af7a4b66bf8d44e590c3b44fe7f8d4647", null ],
-    [ "setIterationCallback", "a00066.html#a5a453c46c58795e268a249555825e28a", null ],
-    [ "solve", "a00066.html#a117349482448c60c3ed7da6fec67bedd", null ],
-    [ "callback_", "a00066.html#ade9c96f41bb2dd69e7b9d37097526060", null ],
-    [ "solverState_", "a00066.html#a6d88496dbb87b5856a46ae3637a68f06", null ]
+    [ "DerivativeShPtr_t", "a00066.html#ac31bb4fcfc3f627982f26d53329d18e4", null ],
+    [ "jacobianSize_t", "a00066.html#a773278e0955e248c1d8929c2d09c693d", null ],
+    [ "parentType_t", "a00066.html#a1d88c319dd2fa86439a86fd0c6a7da1a", null ],
+    [ "Derivative", "a00066.html#a8c77526d5667849224840b254fd9a2f9", null ],
+    [ "~Derivative", "a00066.html#ae9bbb544ebacd592160d3753e4dde603", null ],
+    [ "impl_compute", "a00066.html#a4e055e1ef1401b1230c857f77d3eec42", null ],
+    [ "impl_gradient", "a00066.html#a61ab160ffd4612f2d8d158da31ceca8c", null ],
+    [ "origin", "a00066.html#a2d8a0a49a99ccd4a4140b96e12195d9c", null ],
+    [ "origin", "a00066.html#aaf51f143b5c6881e69b99fb9e481b63c", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00066.html#a9f8b668834dfeb2bb913a455bbacd3b6", null ]
 ];
