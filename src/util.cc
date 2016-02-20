@@ -20,14 +20,14 @@
 #include <boost/version.hpp>
 
 // If Boost >= 1.56.0
-# if (BOOST_VERSION >= 105600)
-#  define HAS_BOOST_CORE_DEMANGLE
-#  include <boost/core/demangle.hpp>
+#if (BOOST_VERSION >= 105600)
+# define HAS_BOOST_CORE_DEMANGLE
+# include <boost/core/demangle.hpp>
 // If glic
-# elif defined(__GLIBCXX__) || defined(__GLIBCPP__)
-#  define HAS_CXXABI_H
-#  include <cxxabi.h>
-# endif
+#elif defined(__GLIBCXX__) || defined(__GLIBCPP__)
+# define HAS_CXXABI_H
+# include <cxxabi.h>
+#endif
 
 #include <cstring>
 #include <algorithm>
@@ -95,7 +95,7 @@ namespace roboptim
 # ifdef HAS_BOOST_CORE_DEMANGLE
     return boost::core::demangle (name);
     // Demangling available in glibc
-# elif HAS_CXXABI_H
+# elif defined(HAS_CXXABI_H)
     int status = -4;
 
     char* res = abi::__cxa_demangle(name, NULL, NULL, &status);
