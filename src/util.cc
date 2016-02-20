@@ -17,10 +17,17 @@
 
 #include "debug.hh"
 
-# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
-// Include headers for demangling
+#include <boost/version.hpp>
+
+// If Boost >= 1.56.0
+# if (BOOST_VERSION >= 105600)
+#  define HAS_BOOST_CORE_DEMANGLE
+#  include <boost/core/demangle.hpp>
+// If glic
+# elif defined(__GLIBCXX__) || defined(__GLIBCPP__)
+#  define HAS_CXXABI_H
 #  include <cxxabi.h>
-# endif // __GLIBCXX__ || __GLIBCPP__
+# endif
 
 #include <cstring>
 #include <algorithm>
@@ -81,10 +88,14 @@ namespace roboptim
     }
   } // end of namespace detail.
 
-# if defined(__GLIBCXX__) || defined(__GLIBCPP__)
-  // Demangling available
+
   const std::string demangle(const char* name)
   {
+    // Use Boost.Core's demangle (Boost >= 1.56.0) is available
+# ifdef HAS_BOOST_CORE_DEMANGLE
+    return boost::core::demangle (name);
+    // Demangling available in glibc
+# elif HAS_CXXABI_H
     int status = -4;
 
     char* res = abi::__cxa_demangle(name, NULL, NULL, &status);
@@ -93,14 +104,10 @@ namespace roboptim
     free(res);
 
     return ret_val;
-  }
-# else
-  // No demangling available
-  const std::string demangle(const char* name)
-  {
+# else // No demangling available
     return std::string(name);
+# endif // Demangling support
   }
-# endif // __GLIBCXX__ || __GLIBCPP__
 
   GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
   (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m)
