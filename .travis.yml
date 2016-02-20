@@ -62,6 +62,9 @@ matrix:
       dist: precise
       compiler: clang
     - os: osx
+      compiler: clang
+    - os: osx
+      compiler: gcc
 
 addons:
   coverity_scan:
