@@ -95,6 +95,9 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream& o) const;
 
+    /// \brief Get the inner cached function.
+    const boost::shared_ptr<const T> function () const;
+
   protected:
 
     template <typename U>

@@ -142,7 +142,9 @@ BOOST_AUTO_TEST_CASE (cached_function)
 
   CachedFunction<DifferentiableFunction> cachedDenseF (dense_f);
 
-  (*output) << cachedDenseF << std::endl
+  (*output) << *dense_f << std::endl
+	    << cachedDenseF << std::endl
+	    << *(cachedDenseF.function ()) << std::endl
 	    << std::endl;
 
   Function::vector_t x (2);
@@ -170,8 +172,10 @@ BOOST_AUTO_TEST_CASE (cached_function)
 
   CachedFunction<DifferentiableSparseFunction> cachedSparseF (sparse_f);
 
-  (*output) << cachedSparseF << std::endl
-            << std::endl;
+  (*output) << *sparse_f << std::endl
+	    << cachedSparseF << std::endl
+	    << *(cachedSparseF.function ()) << std::endl
+	    << std::endl;
 
   for (double i = 0.; i < 10.; i += 0.5)
     {
@@ -211,8 +215,9 @@ BOOST_AUTO_TEST_CASE (cached_function)
                 (a, b, "linear function");
   CachedFunction<TwiceDifferentiableFunction> cachedLinearF (linearF, 3);
 
-  (*output) << *linearF << std::endl;
-  (*output) << cachedLinearF << std::endl;
+  (*output) << *linearF << std::endl
+	    << cachedLinearF << std::endl
+	    << *(cachedLinearF.function ()) << std::endl;
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

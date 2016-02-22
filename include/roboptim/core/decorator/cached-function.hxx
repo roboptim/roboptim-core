@@ -137,6 +137,13 @@ namespace roboptim
   }
 
   template <typename T>
+  const boost::shared_ptr<const T>
+  CachedFunction<T>::function () const
+  {
+    return function_;
+  }
+
+  template <typename T>
   void
   CachedFunction<T>::impl_compute (result_ref result,
 				   const_argument_ref argument)
