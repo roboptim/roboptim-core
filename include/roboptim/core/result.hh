@@ -43,6 +43,10 @@ namespace roboptim
     typedef Function::size_type size_type;
     /// \brief Import vector type from Function class.
     typedef Function::vector_t vector_t;
+    /// \brief Import argument type from Function class.
+    typedef Function::argument_t argument_t;
+    /// \brief Import result type from Function class.
+    typedef Function::result_t result_t;
 
     /// \brief Instantiate a result and fix input/output sizes.
     ///
@@ -66,13 +70,13 @@ namespace roboptim
     size_type outputSize;
 
     /// \brief Point found by the solver.
-    vector_t x;
+    argument_t x;
 
-    /// \brief Function value at the solver found point.
-    vector_t value;
+    /// \brief Function value at the point found by the solver.
+    result_t value;
 
-    /// \brief Constraints final values.
-    vector_t constraints;
+    /// \brief Final constraints values.
+    result_t constraints;
 
     /// \brief Lagrange multipliers.
     /// The vector of multipliers is expected to be ordered as follows:
