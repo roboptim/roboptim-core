@@ -1,6 +1,9 @@
 var a00195 =
 [
-    [ "EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET", "a00195.html#a77e6db63e071b40535df9ee30f2acfd7", null ],
-    [ "operator<<", "a00301.html#ga22576c0708e8fe4af42060ff87bfad20", null ],
-    [ "operator<<", "a00289.html#a45951c8d967c172f9f8213900b3d7884", null ]
+    [ "checkGradient", "a00195.html#ga243acdc164ebcb9129d073149f02e7ec", null ],
+    [ "checkGradientAndThrow", "a00195.html#ga8844d92b51c9518ec394ad7b6b6bcd7a", null ],
+    [ "checkJacobian", "a00195.html#gaa79713104bed214820abec2b998d3dba", null ],
+    [ "checkJacobianAndThrow", "a00195.html#ga44f24c28a17ec94e68bded5d92a9d40a", null ],
+    [ "operator<<", "a00195.html#gae6e53e4f7183cc2816db6aa8ea7cab6e", null ],
+    [ "operator<<", "a00195.html#ga67f53906aa3085cb9d1bf44f5515349e", null ]
 ];

@@ -1,5 +1,5 @@
 var a00232 =
 [
-    [ "operator*", "a00297.html#gaf11c3c491b73e8b7a6587174cb964dc0", null ],
-    [ "product", "a00297.html#ga673c3306f8238e795813509847ee31f8", null ]
+    [ "ROBOPTIM_NTIMES_DERIVABLE_FUNCTION_FWD_TYPEDEFS", "a00232.html#a92bbdf413e1860caea50b24c0e4aa412", null ],
+    [ "ROBOPTIM_NTIMES_DERIVABLE_FUNCTION_FWD_TYPEDEFS_", "a00232.html#abe58a2efc0b5724b107b9dc8266926ae", null ]
 ];

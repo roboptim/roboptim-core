@@ -1,5 +1,6 @@
 var a00225 =
 [
-    [ "operator+", "a00297.html#ga1c85364bc3106af5973bb6cb5113e2dd", null ],
-    [ "plus", "a00297.html#ga29192465f69ffd7e843e907cb66dbe75", null ]
+    [ "plot_mat", "a00225.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
+    [ "plot_mat", "a00225.html#gad95bc834df94f24249f83aedddc0e17d", null ],
+    [ "plot_mat", "a00225.html#gad4703635fcedadbb33319b576c22ff79", null ]
 ];

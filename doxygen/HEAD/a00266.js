@@ -1,4 +1,5 @@
 var a00266 =
 [
-    [ "getBlock", "a00286.html#aaea0849f5afd68a5e8b1d0cd383794f3", null ]
+    [ "SolverCallback", "a00144.html", "a00144" ],
+    [ "operator<<", "a00266.html#a613ad8f871e1edc4ed2dc2a457ce2a9b", null ]
 ];

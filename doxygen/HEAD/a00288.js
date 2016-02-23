@@ -1,6 +1,5 @@
 var a00288 =
 [
-    [ "Policy", "a00105.html", null ],
-    [ "Simple", "a00124.html", null ],
-    [ "FivePointsRule", "a00062.html", null ]
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS", "a00288.html#a2def6adcd8c6b13fe8be72ba4a6b41bf", null ],
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00288.html#a4e569ff9277e3bd7fc49eadf52fcc2f3", null ]
 ];

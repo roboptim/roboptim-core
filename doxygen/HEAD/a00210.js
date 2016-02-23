@@ -1,6 +1,6 @@
 var a00210 =
 [
-    [ "EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET", "a00210.html#a77e6db63e071b40535df9ee30f2acfd7", null ],
-    [ "operator<<", "a00301.html#ga754766ba098561274be740474369e1ba", null ],
-    [ "operator<<", "a00289.html#aa5714b11301afc8bc1ee4d544eafac2f", null ]
+    [ "plot_mat", "a00210.html#gadcb1b5fd0907ef64ce8b6b5aaff42db6", null ],
+    [ "plot_mat", "a00210.html#ga22b3284ccb0b83b4dccef09f4ce53cab", null ],
+    [ "plot_mat", "a00210.html#gab39cf33a554dc4cd4d4bc1d2368c8d83", null ]
 ];

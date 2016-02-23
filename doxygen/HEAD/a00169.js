@@ -1,5 +1,5 @@
 var a00169 =
 [
-    [ "DummyDifferentiableSparseSolverLastState", "a00280.html#ace5dfcd2f2bf30fe807572be97e81679", null ],
-    [ "DummySolverLastState", "a00280.html#a4f56c3f618b4c50be2db6709545ef569", null ]
+    [ "ConcatenateTypes", "a00058.html", "a00058" ],
+    [ "concatenate", "a00169.html#gab96495c02bce2fe1e2ad1e08770f4dcc", null ]
 ];

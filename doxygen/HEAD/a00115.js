@@ -1,7 +1,4 @@
 var a00115 =
 [
-    [ "T1", "a00115.html#ab5acc3d14344b28f8011ccc060d15494", null ],
-    [ "T2", "a00115.html#ac39c39ae33adbfa77d5202b8bdb7539e", null ],
-    [ "T_promote", "a00115.html#afff7587eb16f8d5708a406f08a413463", null ],
-    [ "BOOST_MPL_ASSERT", "a00115.html#a6e4a50c4e55255b57f664c321151579c", null ]
+    [ "operator()", "a00115.html#a9fb3e54a9ee48af4af22c95d4da50346", null ]
 ];

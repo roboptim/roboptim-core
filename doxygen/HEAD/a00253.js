@@ -1,4 +1,4 @@
 var a00253 =
 [
-    [ "operator<<", "a00280.html#ae6c649aa8d935cb8c8fbe8307cfa2b1f", null ]
+    [ "ROBOPTIM_CORE_DEPRECATED", "a00253.html#gac493f30f9f1a664e84073f56569c62fd", null ]
 ];

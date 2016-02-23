@@ -1,10 +1,9 @@
 var a00204 =
 [
-    [ "MATPLOTLIB_UNARY_COMMAND", "a00204.html#ada98b8f63c02be17bdbf654bc529d0bd", null ],
-    [ "MATPLOTLIB_UNARY_COMMAND_ARG", "a00204.html#adcd6527d205fadf14757084bb7902f82", null ],
-    [ "MATPLOTLIB_UNARY_COMMAND_VAR", "a00204.html#ae91cb430ac819bcd54672228ac6094cd", null ],
-    [ "comment", "a00301.html#ga1263290fead3bbefebb52ad9acba0236", null ],
-    [ "import", "a00301.html#ga39b68128dabb457499f493b7f17d3413", null ],
-    [ "import", "a00301.html#ga7f5c136cb79bd9bb01b3681e9f3b693e", null ],
-    [ "set", "a00301.html#ga7cdf3f4f9a0ad3a8a3428375389c1332", null ]
+    [ "GNUPLOT_STR_COMMAND", "a00204.html#a44cffa7dc6979331d7660d604e7c8f48", null ],
+    [ "GNUPLOT_UNARY_COMMAND", "a00204.html#abdaa2512aec3201d566ccbfc73fafc46", null ],
+    [ "comment", "a00204.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
+    [ "set", "a00204.html#gad77630a233193748534b41d069d4e180", null ],
+    [ "show", "a00204.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
+    [ "unset", "a00204.html#ga2c2a188b2e89955eee09aa10b5426e43", null ]
 ];

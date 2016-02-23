@@ -1,5 +1,5 @@
 var a00272 =
 [
-    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS", "a00272.html#a2def6adcd8c6b13fe8be72ba4a6b41bf", null ],
-    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00272.html#a4e569ff9277e3bd7fc49eadf52fcc2f3", null ]
+    [ "operator<<", "a00272.html#ga5370a1e1cec76aec9419f4f5403945f7", null ],
+    [ "operator<<", "a00272.html#gaca8c6ea372c71de9eb3ab27dd09ae90c", null ]
 ];

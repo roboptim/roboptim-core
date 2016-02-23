@@ -1,7 +1,13 @@
 var a00138 =
 [
-    [ "differentiableFunction_t", "a00138.html#abd717b38ef0691cbe210e3b631a1ca52", null ],
-    [ "InputJacBlock", "a00138.html#abb1b3be726270a16ad93b0571fc2a59d", null ],
-    [ "JacBlock", "a00138.html#a14d3585a1c58a36d6ab60d6d60f7322f", null ],
-    [ "getJacobianBlock", "a00138.html#a7c5edd9accc952cc72a34e815720f526", null ]
+    [ "parentType_t", "a00138.html#a6802dfd6761714f83c4dbbe5f9bcef19", null ],
+    [ "SelectionShPtr_t", "a00138.html#a5cf29c8b2e9a95cf3553d7f21bb1ee83", null ],
+    [ "Selection", "a00138.html#ac07895f78f6a65a8b3f54d5fc1020629", null ],
+    [ "~Selection", "a00138.html#a2f5c18b892a2c6e4d6d1f30561334d4e", null ],
+    [ "impl_compute", "a00138.html#a27810cd60947270ff41970b79f10e741", null ],
+    [ "impl_gradient", "a00138.html#a34eb7fca5608b393e2dff858bbbaa60f", null ],
+    [ "impl_jacobian", "a00138.html#a33d09bf5aa65daf658f4b853322d2b9b", null ],
+    [ "origin", "a00138.html#a5e3e5098b2fe6dd32b773d06ba3de648", null ],
+    [ "origin", "a00138.html#a0cbd7cc3ecf575d338b16306ea1b4646", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00138.html#a224033bde371676be065a7c89fba3d77", null ]
 ];
