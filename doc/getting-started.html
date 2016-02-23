@@ -266,18 +266,6 @@ int run_test ()
         return 0;
       }
 
-    case solver_t::SOLVER_VALUE_WARNINGS:
-      {
-        // Get the result.
-        ResultWithWarnings&amp; result = boost::get&lt;ResultWithWarnings&gt; (res);
-
-        // Display the result.
-        std::cout &lt;&lt; &quot;A solution has been found: &quot; &lt;&lt; std::endl
-                  &lt;&lt; result &lt;&lt; std::endl;
-
-        return 0;
-      }
-
     case solver_t::SOLVER_NO_SOLUTION:
     case solver_t::SOLVER_ERROR:
       {

@@ -20,8 +20,10 @@
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
 
-# include <iostream>
+# include <ostream>
+# include <string>
 # include <stdexcept>
+
 # include <boost/optional.hpp>
 
 # include <roboptim/core/result.hh>

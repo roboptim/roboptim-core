@@ -34,7 +34,8 @@ namespace roboptim
       x (inputSize),
       value (outputSize),
       constraints (),
-      lambda ()
+      lambda (),
+      warnings ()
   {
     x.setZero ();
     value.setZero ();
@@ -57,6 +58,8 @@ namespace roboptim
       o << iendl << "Constraints values: " << constraints;
     if (lambda.size () > 0)
       o << iendl << "Lambda: " << lambda;
+    if (!warnings.empty ())
+      o << iendl << "Warnings: " << warnings;
 
     return o << decindent;
   }

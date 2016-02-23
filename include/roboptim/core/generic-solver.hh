@@ -35,7 +35,6 @@
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/problem.hh>
 # include <roboptim/core/result.hh>
-# include <roboptim/core/result-with-warnings.hh>
 # include <roboptim/core/solver-error.hh>
 # include <roboptim/core/solver-warning.hh>
 
@@ -54,22 +53,21 @@ namespace roboptim
       SOLVER_NO_SOLUTION,
       /// Solution has been found.
       SOLVER_VALUE,
-      /// Solution has been found but some problems happened.
-      SOLVER_VALUE_WARNINGS,
       /// The solver failed to found a solution.
-      SOLVER_ERROR
+      SOLVER_ERROR,
+      /// Solution has been found but some problems happened.
+      SOLVER_VALUE_WARNINGS
     };
 
     /// \brief Result type.
     ///
     /// Uses a Boost.Variant to represent the different possible results:
     /// - no solution (problem not yet solved),
-    /// - result (problem has been solved successfully),
+    /// - result (problem has been solved successfully, possibly with warnings),
     /// - result and warnings (problem solved but some errors happened),
     /// - solver error (optimization has failed).
     typedef boost::variant<NoSolution,
                            Result,
-                           ResultWithWarnings,
                            SolverError> result_t;
 
     /// \name Constructors and destructors.
@@ -113,8 +111,6 @@ namespace roboptim
 	case 1:
 	  return SOLVER_VALUE;
 	case 2:
-	  return SOLVER_VALUE_WARNINGS;
-	case 3:
 	  return SOLVER_ERROR;
 	default:
 	  break;

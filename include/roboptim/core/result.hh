@@ -24,6 +24,7 @@
 # include <vector>
 
 # include <roboptim/core/function.hh>
+# include <roboptim/core/solver-warning.hh>
 
 namespace roboptim
 {
@@ -36,6 +37,9 @@ namespace roboptim
   /// found.
   /// It is a set of mutable fields representing the solution
   /// and its associated meta-information.
+  ///
+  /// A vector of warnings is provided, which can help identify the cause of
+  /// termination or possible issues in the optimization process.
   class ROBOPTIM_DLLAPI Result
   {
   public:
@@ -84,6 +88,12 @@ namespace roboptim
     ///   - constraints multipliers (m) as ordered in problem.constraints(),
     ///   - objective multipliers (only relevant for multi-dimensional cost functions).
     vector_t lambda;
+
+    /// \brief Vector of warnings.
+    /// Each element of this vector is a potential problem that occurred during
+    /// the optimization. It may also simply indicate how the optimization
+    /// terminated (e.g. user-defined callback).
+    std::vector<SolverWarning> warnings;
   };
 
   /// Example shows Result class use.

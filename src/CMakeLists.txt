@@ -24,7 +24,6 @@ SET(ROBOPTIM_CORE_SRC
   finite-difference-gradient.cc
   generic-solver.cc
   indent.cc
-  result-with-warnings.cc
   result.cc
   solver-error.cc
   solver-warning.cc

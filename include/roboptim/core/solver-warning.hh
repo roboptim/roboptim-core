@@ -17,10 +17,13 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_WARNING_HH
 # define ROBOPTIM_CORE_SOLVER_WARNING_HH
+
+# include <string>
+# include <ostream>
+# include <stdexcept>
+
 # include <roboptim/core/sys.hh>
 # include <roboptim/core/debug.hh>
-
-# include <roboptim/core/solver-error.hh>
 
 namespace roboptim
 {
@@ -31,7 +34,7 @@ namespace roboptim
   ///
   /// This class is mainly used to populate the warning vector of the
   /// ResultWithWarnings class.
-  class ROBOPTIM_DLLAPI SolverWarning : public SolverError
+  class ROBOPTIM_DLLAPI SolverWarning : public std::runtime_error
   {
   public:
     /// \brief Instantiate the class with a message.
@@ -44,6 +47,14 @@ namespace roboptim
     /// \return output stream
     virtual std::ostream& print (std::ostream&) const;
   };
+
+  /// \brief Override operator<< to handle warning display.
+  ///
+  /// \param o output stream used for display
+  /// \param w warning to be displayed
+  /// \return output stream
+  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+					    const SolverWarning& w);
 
   /// @}
 } // end of namespace roboptim
