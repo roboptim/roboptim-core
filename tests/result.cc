@@ -55,6 +55,7 @@ BOOST_AUTO_TEST_CASE (result)
   result.constraints.setZero ();
   result.lambda.resize (c_size);
   result.lambda.setZero ();
+  result.constraint_violation = 0.;
 
   assert (result.x.size () == 3);
   assert (result.value.size () == 8);

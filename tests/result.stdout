@@ -3,4 +3,5 @@ Result:
   X: [3](0,0,0)
   Value: [8](0,0,0,0,0,0,0,0)
   Constraints values: [4](0,0,0,0)
+  Constraint violation: 0
   Lambda: [4](0,0,0,0)

@@ -34,6 +34,7 @@ namespace roboptim
       x (inputSize),
       value (outputSize),
       constraints (),
+      constraint_violation (Function::infinity ()),
       lambda (),
       warnings ()
   {
@@ -56,6 +57,8 @@ namespace roboptim
       << iendl << "Value: " << value;
     if (constraints.size () > 0)
       o << iendl << "Constraints values: " << constraints;
+    if (constraint_violation < Function::infinity ())
+      o << iendl << "Constraint violation: " << constraint_violation;
     if (lambda.size () > 0)
       o << iendl << "Lambda: " << lambda;
     if (!warnings.empty ())

@@ -45,6 +45,8 @@ namespace roboptim
   public:
     /// \brief Import size type from Function class.
     typedef Function::size_type size_type;
+    /// \brief Import value type from Function class.
+    typedef Function::value_type value_type;
     /// \brief Import vector type from Function class.
     typedef Function::vector_t vector_t;
     /// \brief Import argument type from Function class.
@@ -81,6 +83,9 @@ namespace roboptim
 
     /// \brief Final constraints values.
     result_t constraints;
+
+    /// \brief Final violation of the constraints.
+    value_type constraint_violation;
 
     /// \brief Lagrange multipliers.
     /// The vector of multipliers is expected to be ordered as follows:
