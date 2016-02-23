@@ -266,12 +266,19 @@ int run_test ()
         return 0;
       }
 
-    case solver_t::SOLVER_NO_SOLUTION:
     case solver_t::SOLVER_ERROR:
       {
         std::cout &lt;&lt; &quot;A solution should have been found. Failing...&quot;
                   &lt;&lt; std::endl
                   &lt;&lt; boost::get&lt;SolverError&gt; (res).what ()
+                  &lt;&lt; std::endl;
+
+        return 2;
+      }
+
+    case solver_t::SOLVER_NO_SOLUTION:
+      {
+        std::cout &lt;&lt; &quot;The problem has not been solved yet.&quot;
                   &lt;&lt; std::endl;
 
         return 2;

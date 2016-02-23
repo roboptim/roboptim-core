@@ -270,7 +270,6 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
         break;
       }
 
-    case solver_t::SOLVER_NO_SOLUTION:
     case solver_t::SOLVER_ERROR:
       {
         (*output) << "A solution has not been found. As expected..."
@@ -278,7 +277,12 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
                   << boost::get<SolverError> (res).what ()
                   << std::endl;
 
-        return solver_t::SOLVER_NO_SOLUTION;
+        return solver_t::SOLVER_ERROR;
+      }
+
+    case solver_t::SOLVER_NO_SOLUTION:
+      {
+        (*output) << "The problem has not been solved yet." << std::endl;
       }
     }
 
@@ -293,7 +297,7 @@ BOOST_AUTO_TEST_CASE (example)
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("example");
 
-  BOOST_CHECK_EQUAL (run_test (output), solver_t::SOLVER_NO_SOLUTION);
+  BOOST_CHECK_EQUAL (run_test (output), solver_t::SOLVER_ERROR);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
