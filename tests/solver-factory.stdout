@@ -6,7 +6,7 @@ Solver:
     Arguments scaling: 1
     No constraints.
     No starting point.
-    Infinity value (for all functions): inf
+    Infinity value (for all functions): 1.#INF
   Parameters:
     dummy-parameter (dummy parameter): 42
     dummy-parameter2 (yet another dummy parameter): 3

@@ -1,21 +1,21 @@
 Solver:
   Plugin: dummy-td
   Problem:
-    x₀ * x₃ * (x₀ + x₁ + x₂) + x₃ (twice differentiable function)
+    x? * x? * (x? + x? + x?) + x? (twice differentiable function)
     Arguments bounds: (1, 5), (1, 5), (1, 5), (1, 5)
     Arguments scaling: 1, 1, 1, 1
-    Arguments names: x₀, x₁, x₂, x₃
+    Arguments names: x?, x?, x?, x?
     Number of constraints: 2
     Constraint 0
-        x₀ * x₁ * x₂ * x₃ (twice differentiable function)
-        Bounds: (25, inf)
+        x? * x? * x? * x? (twice differentiable function)
+        Bounds: (25, 1.#INF)
         Scaling: 1
     Constraint 1
-        x₀² + x₁² + x₂² + x₃² (twice differentiable function)
+        x?� + x?� + x?� + x?� (twice differentiable function)
         Bounds: (40, 40)
         Scaling: 1
     No starting point.
-    Infinity value (for all functions): inf
+    Infinity value (for all functions): 1.#INF
   Result:
     Solver error: The dummy solver always fail.
   Parameters:
