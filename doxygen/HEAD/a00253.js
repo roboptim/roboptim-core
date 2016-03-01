@@ -1,4 +1,4 @@
 var a00253 =
 [
-    [ "unionCast", "a00278.html#a917869f7813c003450eea08553284049", null ]
+    [ "ROBOPTIM_CORE_DEPRECATED", "a00253.html#gac493f30f9f1a664e84073f56569c62fd", null ]
 ];
