@@ -126,7 +126,7 @@ namespace roboptim
     typedef std::vector<value_type> scaling_t;
 
     /// \brief Scaling vector (deprecated typedef)
-    typedef scaling_t scales_t ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED typedef scaling_t scales_t;
 
     /// \brief Vector of names (e.g. for arguments).
     typedef typename function_t::names_t names_t;
@@ -148,7 +148,7 @@ namespace roboptim
     typedef std::vector<scaling_t> scalingVect_t;
 
     /// \brief Vector of scaling vectors (deprecated typedef).
-    typedef scalingVect_t scalesVect_t ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED typedef scalingVect_t scalesVect_t;
 
     /// \brief Jacobian matrix type.
     typedef typename GenericFunctionTraits<T>::jacobian_t jacobian_t;
@@ -171,7 +171,7 @@ namespace roboptim
     /// This prepares the transition to something safer (shared_ptr).
     /// \param cost cost function.
     // TODO: remove after enough releases (deprecated in 3.2).
-    explicit Problem (const function_t& cost) ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED explicit Problem (const function_t& cost);
 
     /// \brief Copy constructor.
     /// \param pb problem to copy.
@@ -215,10 +215,10 @@ namespace roboptim
     const scaling_t& argumentScaling () const;
 
     /// \brief Retrieve arguments scaling (deprecated version).
-    scales_t& argumentScales () ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED scales_t& argumentScales ();
 
     /// \brief Retrieve arguments scaling (deprecated version).
-    const scales_t& argumentScales () const ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED const scales_t& argumentScales () const;
 
     /// \brief Retrieve arguments names.
     /// Arguments names define a name for each argument. This is particularly
@@ -278,7 +278,7 @@ namespace roboptim
     const scalingVect_t& scalingVector () const;
 
     /// \brief Retrieve constraints scaling vector (deprecated version).
-    const scalesVect_t& scalesVector () const ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED const scalesVect_t& scalesVector () const;
 
     /// \brief Return the output size of the problem's constraints.
     size_type constraintsOutputSize () const;

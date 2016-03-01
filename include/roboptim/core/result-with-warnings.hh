@@ -27,7 +27,7 @@ namespace roboptim
   /// @{
 
   /// \brief Warnings have been merged to Result to simplify the API.
-  typedef Result ResultWithWarnings ROBOPTIM_CORE_DEPRECATED;
+  ROBOPTIM_CORE_DEPRECATED typedef Result ResultWithWarnings;
 
   /// @}
 
