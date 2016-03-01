@@ -165,7 +165,7 @@ namespace roboptim
     assert (startRow + b.rows () <= m.rows ());
     assert (startCol + b.cols () <= m.cols ());
 # if __cplusplus < 201103L || !defined (__GXX_EXPERIMENTAL_CXX0X__)
-    BOOST_STATIC_ASSERT (int (M::IsRowMajor) == int (B::IsRowMajor)) ROBOPTIM_UNUSED;
+    BOOST_STATIC_ASSERT ( ROBOPTIM_UNUSED int (M::IsRowMajor) == int (B::IsRowMajor));
 # else
     BOOST_STATIC_ASSERT_MSG (int (M::IsRowMajor) == int (B::IsRowMajor), "You should use the same Storage Order");
 # endif
