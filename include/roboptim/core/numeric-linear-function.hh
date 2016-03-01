@@ -35,7 +35,7 @@ namespace roboptim
   /// \f[f(x) = A x + b\f]
   /// where \f$A\f$ and \f$b\f$ are set when the class is instantiated.
   template <typename T>
-  class ROBOPTIM_DLLAPI GenericNumericLinearFunction
+  class GenericNumericLinearFunction
   : public GenericLinearFunction<T>
   {
   public:
