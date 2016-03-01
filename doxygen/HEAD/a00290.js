@@ -1,17 +1,15 @@
 var a00290 =
 [
-    [ "Import", "a00084.html", null ],
-    [ "Command", "a00037.html", null ],
-    [ "MatrixPlotType", "a00093.html", null ],
-    [ "discreteInterval_t", "a00299.html#gac1d12393050610f8e70843e70183259f", null ],
-    [ "comment", "a00299.html#ga1263290fead3bbefebb52ad9acba0236", null ],
-    [ "figure", "a00299.html#ga064c7f29eb271392e24cbff1699e34c2", null ],
-    [ "import", "a00299.html#ga39b68128dabb457499f493b7f17d3413", null ],
-    [ "import", "a00299.html#ga7f5c136cb79bd9bb01b3681e9f3b693e", null ],
-    [ "plot_mat", "a00299.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
-    [ "plot_mat", "a00299.html#gad95bc834df94f24249f83aedddc0e17d", null ],
-    [ "plot_mat", "a00299.html#gad4703635fcedadbb33319b576c22ff79", null ],
-    [ "set", "a00299.html#ga7cdf3f4f9a0ad3a8a3428375389c1332", null ],
-    [ "show", "a00299.html#ga1be293206175e5a7801b489aacfdaf81", null ],
-    [ "title", "a00299.html#gac53d81b20f0182a4d2381db27a475837", null ]
+    [ "allclose", "a00290.html#a553b9a5a35bb96778d0f07cedf0a3bb6", null ],
+    [ "allclose", "a00290.html#ae044018ab08f8cebb5e7e9b3a0a409eb", null ],
+    [ "array_to_vector", "a00290.html#a18239091e8dccca412363bc04ab52748", null ],
+    [ "demangle", "a00290.html#ad0cea48f93b9d3dabb9ae4b5b57fff9f", null ],
+    [ "sparse_to_dense", "a00290.html#afd78f2c9e9f13163183da639019c6f05", null ],
+    [ "sparse_to_dense", "a00290.html#ad88a3cbb485670804344f0ed6a42dfe7", null ],
+    [ "split", "a00290.html#aa03cd18a519177ed5657cb356267fd3a", null ],
+    [ "toDense", "a00290.html#a0fee6550b91a5a6cb27cb836fd96dff0", null ],
+    [ "toDense", "a00290.html#a4fd5de4050ed18a03f22ebcb686348f6", null ],
+    [ "toDense", "a00290.html#aa0e73cd356e6f3e9bfc6a50745ff5399", null ],
+    [ "toDense", "a00290.html#af943af7d6ec113fcbe86445bbd2149de", null ],
+    [ "vector_to_array", "a00290.html#a45d027e5d21701eaed1833b65b9c479f", null ]
 ];
