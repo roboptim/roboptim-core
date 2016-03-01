@@ -37,7 +37,7 @@ namespace roboptim
   /// etc.).
   /// \tparam S solver type.
   template <typename S>
-  class ROBOPTIM_DLLAPI OptimizationLogger : public SolverCallback<S>
+  class OptimizationLogger : public SolverCallback<S>
   {
   public:
     typedef SolverCallback<S> parent_t;

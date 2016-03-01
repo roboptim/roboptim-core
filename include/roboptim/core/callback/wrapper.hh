@@ -28,7 +28,7 @@ namespace roboptim
     /// \brief Raw callback wrapper.
     /// \tparam S solver type.
     template <typename S>
-    class ROBOPTIM_DLLAPI Wrapper : public SolverCallback<S>
+    class Wrapper : public SolverCallback<S>
     {
     public:
       /// \brief Parent type.

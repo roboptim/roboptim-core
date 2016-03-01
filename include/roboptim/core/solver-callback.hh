@@ -31,7 +31,7 @@ namespace roboptim
   /// \brief Solver per-iteration callback wrapper.
   /// \tparam S solver type.
   template <typename S>
-  class ROBOPTIM_DLLAPI SolverCallback
+  class SolverCallback
   {
   public:
     /// \brief Solver type.

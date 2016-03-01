@@ -78,7 +78,7 @@ namespace roboptim
   ///
   /// \tparam T matrix type
   template <typename T>
-  class ROBOPTIM_DLLAPI Solver : public GenericSolver
+  class Solver : public GenericSolver
   {
   public:
     /// \brief Solver problem type.

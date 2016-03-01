@@ -76,7 +76,7 @@ namespace roboptim
   ///
   /// \tparam T matrix type
   template <typename T>
-  class ROBOPTIM_DLLAPI Problem
+  class Problem
   {
   public:
     /// \brief Function type.

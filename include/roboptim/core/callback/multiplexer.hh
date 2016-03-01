@@ -41,7 +41,7 @@ namespace roboptim
     ///
     /// \tparam S solver type.
     template <typename S>
-    class ROBOPTIM_DLLAPI Multiplexer : public SolverCallback<S>
+    class Multiplexer : public SolverCallback<S>
     {
     public:
       /// \brief Parent type.

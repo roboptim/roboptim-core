@@ -76,7 +76,7 @@ namespace roboptim
   ///
   /// \tparam P problem type.
   template <typename P>
-  class ROBOPTIM_DLLAPI SolverState : public boost::noncopyable
+  class SolverState : public boost::noncopyable
   {
   public:
     /// \brief Problem type

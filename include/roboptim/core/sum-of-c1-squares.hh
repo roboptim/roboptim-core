@@ -42,8 +42,7 @@ namespace roboptim {
   ///
   /// \tparam T matrix traits.
   template <typename T>
-  class ROBOPTIM_DLLAPI GenericSumOfC1Squares
-    : public GenericDifferentiableFunction<T>
+  class GenericSumOfC1Squares : public GenericDifferentiableFunction<T>
   {
   public:
     /// @name Types

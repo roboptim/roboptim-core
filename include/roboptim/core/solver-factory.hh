@@ -53,7 +53,7 @@ namespace roboptim
   /// \tparam S solver type
   /// \pre S has to be a subtype of Solver<T>.
   template <typename S>
-  class ROBOPTIM_DLLAPI SolverFactory
+  class SolverFactory
   {
     BOOST_STATIC_ASSERT((boost::is_base_of<GenericSolver, S>::value));
   public:
