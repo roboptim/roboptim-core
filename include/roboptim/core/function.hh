@@ -75,9 +75,9 @@
   typedef typename GenericFunctionTraits<T>::const_##NAME##_ref const_##NAME##_ref
 
 # define ROBOPTIM_GENERATE_TRAITS_REFS_T(NAME,TRAITS)				\
-  typedef typename GenericFunctionTraits<TRAITS>::NAME##_t NAME##_t;		\
-  typedef typename GenericFunctionTraits<TRAITS>::NAME##_ref NAME##_ref;	\
-  typedef typename GenericFunctionTraits<TRAITS>::const_##NAME##_ref const_##NAME##_ref
+  typedef GenericFunctionTraits<TRAITS>::NAME##_t NAME##_t;		\
+  typedef GenericFunctionTraits<TRAITS>::NAME##_ref NAME##_ref;	\
+  typedef GenericFunctionTraits<TRAITS>::const_##NAME##_ref const_##NAME##_ref
 
 # define ROBOPTIM_FUNCTION_FWD_TYPEDEFS(PARENT)	\
   typedef PARENT parent_t;			\

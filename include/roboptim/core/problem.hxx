@@ -393,7 +393,7 @@ namespace roboptim
 
     // For each constraint of the problem
     size_type global_row = 0;
-    for (typename constraints_t::const_iterator
+    for (constraints_t::const_iterator
 	   c = constraints_.begin (); c != constraints_.end (); ++c)
       {
 	// If the constraint is differentiable
