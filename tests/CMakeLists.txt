@@ -27,6 +27,9 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/tests)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
 # Make Boost.Test generates the main function in test cases.
+IF(WIN32)
+  ADD_DEFINITIONS(-DBOOST_ALL_NO_LIB)
+ENDIF(WIN32)
 ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
 
 # To locate built plug-in.

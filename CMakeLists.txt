@@ -202,14 +202,23 @@ ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")
 # Libtool dynamic loading
 # This project does not use Libtool directly but still uses ltdl for
 # plug-in loading.
-INCLUDE(CheckIncludeFileCXX)
-CHECK_INCLUDE_FILE_CXX(ltdl.h LTDL_H_FOUND)
-IF (NOT LTDL_H_FOUND)
-  MESSAGE(FATAL_ERROR
-    "Failed to find ltdl.h, check that Libtool ltdl is installed.")
-ENDIF()
-#FIXME: check that libltdl.so is available instead of adding it blindly.
-PKG_CONFIG_APPEND_LIBS(ltdl)
+IF(WIN32)
+  ADD_OPTIONAL_DEPENDENCY("ltdl")
+  include_directories(${LTDL_INCLUDEDIR})
+ENDIF(WIN32)
+
+IF(NOT LTDL_FOUND)
+  #FIXME: check that libltdl.so is available instead of adding it blindly.
+  INCLUDE(CheckIncludeFileCXX)
+  CHECK_INCLUDE_FILE_CXX(ltdl.h LTDL_H_FOUND)
+  IF (NOT LTDL_H_FOUND)
+    MESSAGE(FATAL_ERROR
+      "Failed to find ltdl.h, check that Libtool ltdl is installed.")
+  ENDIF()
+
+  PKG_CONFIG_APPEND_LIBS(ltdl)
+ENDIF(NOT LTDL_FOUND)
+
 HEADER_INSTALL("${HEADERS}")
 
 # Set plug-in subdirectory name (can be empty).
