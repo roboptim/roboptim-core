@@ -1,9 +1,13 @@
 var a00120 =
 [
-    [ "parameterValues_t", "a00120.html#ae22aab4f180e46eb0764eb2a1ec4e258", null ],
-    [ "value_type", "a00120.html#a0fb49780f98cd996a9b3e45bf19b41ec", null ],
-    [ "vector_t", "a00120.html#a7af3eec9012669354d55a58132f04901", null ],
-    [ "Parameter", "a00120.html#a7ed3b8d90d1dc1c6853eefbf2fe1c9e9", null ],
-    [ "description", "a00120.html#a8758825ae290c6722354c7e2b4a40453", null ],
-    [ "value", "a00120.html#a6a9253ce0d03f844c642a1a41dcd60b1", null ]
+    [ "parentType_t", "a00120.html#a6802dfd6761714f83c4dbbe5f9bcef19", null ],
+    [ "SelectionShPtr_t", "a00120.html#a5cf29c8b2e9a95cf3553d7f21bb1ee83", null ],
+    [ "Selection", "a00120.html#ac07895f78f6a65a8b3f54d5fc1020629", null ],
+    [ "~Selection", "a00120.html#a2f5c18b892a2c6e4d6d1f30561334d4e", null ],
+    [ "impl_compute", "a00120.html#a27810cd60947270ff41970b79f10e741", null ],
+    [ "impl_gradient", "a00120.html#a34eb7fca5608b393e2dff858bbbaa60f", null ],
+    [ "impl_jacobian", "a00120.html#a33d09bf5aa65daf658f4b853322d2b9b", null ],
+    [ "origin", "a00120.html#a5e3e5098b2fe6dd32b773d06ba3de648", null ],
+    [ "origin", "a00120.html#a0cbd7cc3ecf575d338b16306ea1b4646", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00120.html#a224033bde371676be065a7c89fba3d77", null ]
 ];
