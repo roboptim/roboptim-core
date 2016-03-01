@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_OPERATOR_SPLIT_HXX
 # include <boost/format.hpp>
 
+# include <roboptim/core/debug.hh>
 # include <roboptim/core/derivative-size.hh>
 
 namespace roboptim
@@ -77,7 +78,7 @@ namespace roboptim
   void
   Split<T>::impl_gradient (gradient_ref gradient,
 			   const_argument_ref argument,
-			   size_type functionId)
+			   size_type ROBOPTIM_DEBUG_ONLY (functionId))
     const
   {
     assert (functionId == 0);
@@ -109,7 +110,7 @@ namespace roboptim
   void
   Split<T>::impl_hessian (hessian_ref hessian,
 			  const_argument_ref argument,
-			  size_type functionId)
+			  size_type ROBOPTIM_DEBUG_ONLY (functionId))
     const
   {
     assert (functionId == 0);
