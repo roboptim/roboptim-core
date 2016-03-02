@@ -126,6 +126,9 @@ namespace roboptim
     typedef std::vector<value_type> scaling_t;
 
     /// \brief Scaling vector (deprecated typedef)
+    ///
+    /// \deprecated Deprecated since version 3.1. Use Problem<T>::scaling_t
+    /// instead.
     typedef scaling_t scales_t ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Vector of names (e.g. for arguments).
@@ -148,6 +151,9 @@ namespace roboptim
     typedef std::vector<scaling_t> scalingVect_t;
 
     /// \brief Vector of scaling vectors (deprecated typedef).
+    ///
+    /// \deprecated Deprecated since version 3.1. Use Problem<T>::scalingVect_t
+    /// instead.
     typedef scalingVect_t scalesVect_t ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Jacobian matrix type.
@@ -170,6 +176,9 @@ namespace roboptim
     /// cost function, which could reference stack variables...
     /// This prepares the transition to something safer (shared_ptr).
     /// \param cost cost function.
+    ///
+    /// \deprecated Deprecated since version 3.2. Use the shared_ptr
+    /// constructor instead.
     // TODO: remove after enough releases (deprecated in 3.2).
     explicit Problem (const function_t& cost) ROBOPTIM_CORE_DEPRECATED;
 
@@ -215,9 +224,13 @@ namespace roboptim
     const scaling_t& argumentScaling () const;
 
     /// \brief Retrieve arguments scaling (deprecated version).
+    ///
+    /// \deprecated Deprecated since version 3.1. Use argumentScaling() instead.
     scales_t& argumentScales () ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Retrieve arguments scaling (deprecated version).
+    ///
+    /// \deprecated Deprecated since version 3.1. Use argumentScaling() instead.
     const scales_t& argumentScales () const ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Retrieve arguments names.
@@ -278,6 +291,8 @@ namespace roboptim
     const scalingVect_t& scalingVector () const;
 
     /// \brief Retrieve constraints scaling vector (deprecated version).
+    ///
+    /// \deprecated Deprecated since version 3.1. Use scalingVector() instead.
     const scalesVect_t& scalesVector () const ROBOPTIM_CORE_DEPRECATED;
 
     /// \brief Return the output size of the problem's constraints.
