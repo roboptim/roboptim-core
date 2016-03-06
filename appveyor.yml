@@ -1,0 +1,38 @@
+version: 1.0.{build}
+os: Visual Studio 2015
+clone_folder: C:\devel-src\roboptim-core
+environment:
+  CMAKE_INSTALL_PREFIX: C:\devel
+  PROJECT_SOURCE_DIR: C:\devel-src\roboptim-core
+  PATH: C:\devel\bin;%PATH%
+  PKG_CONFIG_PATH: C:\devel\lib\pkgconfig
+before_build:
+- cmd: >-
+    md C:\devel
+
+    if not exist C:\devel-src (md C:\devel-src)
+
+    cd C:\devel-src
+
+    choco install doxygen.portable
+
+    appveyor DownloadFile http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.28/glib_2.28.8-1_win32.zip
+
+    appveyor DownloadFile http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip
+
+    appveyor DownloadFile http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime_0.18.1.1-2_win32.zip
+
+    7z x glib_2.28.8-1_win32.zip -oC:\devel -r
+
+    7z x pkg-config_0.26-1_win32.zip -oC:\devel -r
+
+    7z x gettext-runtime_0.18.1.1-2_win32.zip -oC:\devel -r
+
+    cd %PROJECT_SOURCE_DIR%
+
+    git submodule update --init
+
+    cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_INSTALL_PREFIX=%CMAKE_INSTALL_PREFIX%
+build:
+  project: INSTALL.vcxproj
+  verbosity: maximal
