@@ -1,6 +1,5 @@
 var a00186 =
 [
-    [ "GenericDummySolverLastState", "a00086.html", "a00086" ],
-    [ "DummyDifferentiableSparseSolverLastState", "a00186.html#ace5dfcd2f2bf30fe807572be97e81679", null ],
-    [ "DummySolverLastState", "a00186.html#a4f56c3f618b4c50be2db6709545ef569", null ]
+    [ "operator<<", "a00280.html#af9168236068ddff8b8df413c430212e8", null ],
+    [ "operator<<", "a00280.html#a41ae14a82f5a36b0a5d17c3b4455a922", null ]
 ];
