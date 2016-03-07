@@ -1,14 +1,12 @@
 var a00064 =
 [
-    [ "Cos", "a00064.html#a22276bb5907afad6ce3ef5d9ad724ab8", null ],
-    [ "~Cos", "a00064.html#a2c614f54551bb78c08bfcba24b404762", null ],
-    [ "impl_compute", "a00064.html#ac598f1fe744a1a40c2fd8138d90e8034", null ],
-    [ "impl_gradient", "a00312.html#ga18f6935028c4edb5231bbefcd014b8dd", null ],
-    [ "impl_gradient", "a00064.html#a35baf63e2a6a9733e7415b573ceb102f", null ],
-    [ "impl_hessian", "a00312.html#gac5b507e077795c1be8b314e640166550", null ],
-    [ "impl_hessian", "a00064.html#ac3b609457f049201bf66d51f4b4bf715", null ],
-    [ "impl_jacobian", "a00312.html#gae2c871b48d14d7227b73abbb57881aaa", null ],
-    [ "impl_jacobian", "a00064.html#a2a8c782166f842e8767cba8ec8b509a6", null ],
-    [ "print", "a00064.html#a39db9ef66cdb3605a811b232fcfaad13", null ],
-    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00064.html#aaf50a1ab67cc74f7b7f3a571fb093420", null ]
+    [ "GenericConstantFunction", "a00064.html#a729621da550c13cb53425dadce15ae0c", null ],
+    [ "GenericConstantFunction", "a00064.html#a642abdee0b4aa97885ce1a5f16109aeb", null ],
+    [ "~GenericConstantFunction", "a00064.html#aab88e6da3308d2ca7b8b58ac6bd87504", null ],
+    [ "impl_compute", "a00064.html#a18ba1d5574d1c5d4b20930ba56e384d3", null ],
+    [ "impl_gradient", "a00064.html#a053b938b015f59da2afef5be46c9b1e3", null ],
+    [ "impl_jacobian", "a00064.html#a77adebf8f590e6cba316b69446aabe57", null ],
+    [ "print", "a00064.html#ac98c86704dc8443933a50ad664cca533", null ],
+    [ "ROBOPTIM_ADD_FLAG", "a00064.html#a911e461a5d382c118bf2663520295c00", null ],
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00064.html#addaf70df2c7d3dbf77ef6e53658d656d", null ]
 ];

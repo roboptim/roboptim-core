@@ -1,8 +1,5 @@
 var a00184 =
 [
-    [ "solver_t", "a00184.html#a8280e1cea7b0916b6ca6b1fc759804d7", null ],
-    [ "create", "a00184.html#a40e6bd9183968b68f61b49ff45d2cdd8", null ],
-    [ "destroy", "a00184.html#a1cf814d98d474ded87cdd24cad3588b8", null ],
-    [ "getSizeOfProblem", "a00184.html#a8c7aac59ed1b08104ddc2e6c6dd6fb38", null ],
-    [ "getTypeIdOfConstraintsList", "a00184.html#a1b937f739027abf2c1c2d0eb031ad665", null ]
+    [ "operator<<", "a00278.html#af9168236068ddff8b8df413c430212e8", null ],
+    [ "operator<<", "a00278.html#a41ae14a82f5a36b0a5d17c3b4455a922", null ]
 ];

@@ -1,18 +1,13 @@
 var a00121 =
 [
-    [ "argument_t", "a00121.html#af4bb1d815e33a2fbb81165604d48e32a", null ],
-    [ "const_argument_ref", "a00121.html#a5b689ddb53cba72b6fe79c550c3bef3e", null ],
-    [ "matrix_t", "a00121.html#ae1ae1137efff66af2fc84c967a2e64e5", null ],
-    [ "result_t", "a00121.html#a650dd3199ebc63021f83ab30b603d982", null ],
-    [ "size_type", "a00121.html#ac88a1cbae53587c432cb346982c9302d", null ],
-    [ "value_type", "a00121.html#ad6f5a983e3c1c4f657ef972d8a781a57", null ],
-    [ "vector_t", "a00121.html#a485059f799b3a571c5446677a8655a34", null ],
-    [ "ParametrizedFunction", "a00121.html#a0cb8331de8f0fdc4ad395446b191fc81", null ],
-    [ "~ParametrizedFunction", "a00121.html#af4e8e1ee202ade5a6ec8d66fd497fe29", null ],
-    [ "functionInputSize", "a00121.html#a067147c8d9a6cfe99f46820a41d08aeb", null ],
-    [ "functionOutputSize", "a00121.html#af15dfa5e7e9e13e7f5d4720091a7d28f", null ],
-    [ "impl_compute", "a00121.html#a51e63e20af1027306aa09b86bb968a7e", null ],
-    [ "inputSize", "a00121.html#aa11a87582936a2ce58f853f6ea4541d8", null ],
-    [ "operator()", "a00121.html#aa743716ae487e979498571784038240b", null ],
-    [ "print", "a00121.html#a7769a5ffb197cd0009a27c6e12d40888", null ]
+    [ "parentType_t", "a00121.html#a10ceafe26463a6befaf1a83bae6f2ba3", null ],
+    [ "SelectionByIdShPtr_t", "a00121.html#a2f296e76debe6a7e703f0a769f5f9129", null ],
+    [ "SelectionById", "a00121.html#afed4a5f3312bb43c36cd89e1b24da60e", null ],
+    [ "~SelectionById", "a00121.html#a647ad16eec9c7afb716a748c42c1fd1f", null ],
+    [ "impl_compute", "a00121.html#a9e64ceaf5be532b1d08b43fd48fc1802", null ],
+    [ "impl_gradient", "a00121.html#a670b69ecefa042ad5e6e2f14300c3482", null ],
+    [ "impl_jacobian", "a00121.html#a27306334779e090f25bbd7d630418aa8", null ],
+    [ "origin", "a00121.html#a96d0c5400637449ba56f14e7c25ec69d", null ],
+    [ "origin", "a00121.html#a3fe469f5a1b03ea25527636b326d85ab", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00121.html#a4238e53c744c850cde075fda814a2f26", null ]
 ];

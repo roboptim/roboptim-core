@@ -1,8 +1,6 @@
 var a00209 =
 [
-    [ "dense_matrix_to_gnuplot", "a00209.html#abf27b2e0087da6e9ec89b10bbdef8c4e", null ],
-    [ "plot_mat", "a00209.html#gae86c4ab9d72721f2b01b9cbd1b05b5ad", null ],
-    [ "plot_mat", "a00209.html#gaa7f26ff4c47d30ad1437f4c2a39f4747", null ],
-    [ "set_matrix_header", "a00209.html#aca3546228e3d8781b5e35ce15a50e0ca", null ],
-    [ "sparse_matrix_to_gnuplot", "a00209.html#a81a6cbb7778fc1a14fe74689c2ea7ed6", null ]
+    [ "EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET", "a00209.html#a77e6db63e071b40535df9ee30f2acfd7", null ],
+    [ "operator<<", "a00299.html#ga754766ba098561274be740474369e1ba", null ],
+    [ "operator<<", "a00287.html#aa5714b11301afc8bc1ee4d544eafac2f", null ]
 ];
