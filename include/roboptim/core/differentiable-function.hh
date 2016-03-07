@@ -242,10 +242,10 @@ namespace roboptim
     /// \brief Gradient evaluation.
     ///
     /// Compute the gradient, has to be implemented in concrete classes.
-    /// The gradient is computed for a specific sub-function which id
+    /// The gradient is computed for a specific sub-function whose id
     /// is passed through the functionId argument.
     /// \warning Do not call this function directly, call #gradient instead.
-    /// \param gradient gradient will be store in this argument
+    /// \param gradient gradient will be stored in this vector
     /// \param argument point where the gradient will be computed
     /// \param functionId evaluated function id in the split representation
     virtual void impl_gradient (gradient_ref gradient,
