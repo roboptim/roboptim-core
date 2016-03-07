@@ -34,7 +34,7 @@ namespace roboptim
   ///
   /// This class is mainly used to populate the warning vector of the
   /// ResultWithWarnings class.
-  class ROBOPTIM_DLLAPI SolverWarning : public std::runtime_error
+  class ROBOPTIM_CORE_DLLAPI SolverWarning : public std::runtime_error
   {
   public:
     /// \brief Instantiate the class with a message.
@@ -53,7 +53,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param w warning to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+  ROBOPTIM_CORE_DLLAPI std::ostream& operator<< (std::ostream& o,
 					    const SolverWarning& w);
 
   /// @}

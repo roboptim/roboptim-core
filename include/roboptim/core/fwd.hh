@@ -52,9 +52,9 @@ namespace roboptim
   struct GenericFunctionTraits;
 
   /// \brief Tag type for functions using Eigen dense matrices.
-  struct ROBOPTIM_DLLAPI EigenMatrixDense {};
+  struct ROBOPTIM_CORE_DLLAPI EigenMatrixDense {};
   /// \brief Tag type for functions using Eigen sparse matrices.
-  struct ROBOPTIM_DLLAPI EigenMatrixSparse {};
+  struct ROBOPTIM_CORE_DLLAPI EigenMatrixSparse {};
 
   template <typename T>
   class GenericFunction;

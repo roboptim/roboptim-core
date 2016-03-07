@@ -40,7 +40,7 @@ namespace roboptim
   ///
   /// A vector of warnings is provided, which can help identify the cause of
   /// termination or possible issues in the optimization process.
-  class ROBOPTIM_DLLAPI Result
+  class ROBOPTIM_CORE_DLLAPI Result
   {
   public:
     /// \brief Import size type from Function class.
@@ -111,7 +111,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param r result to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o, const Result& r);
+  ROBOPTIM_CORE_DLLAPI std::ostream& operator<< (std::ostream& o, const Result& r);
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_RESULT_HH

@@ -57,11 +57,11 @@ namespace roboptim
                         const_argument_ref arg);
 
       template <>
-      ROBOPTIM_DLLAPI
+      ROBOPTIM_CORE_DLLAPI
       Command plot_jac (const DifferentiableFunction& f,
                         DifferentiableFunction::const_argument_ref arg);
       template <>
-      ROBOPTIM_DLLAPI
+      ROBOPTIM_CORE_DLLAPI
       Command plot_jac (const DifferentiableSparseFunction& f,
                         DifferentiableSparseFunction::const_argument_ref arg);
 

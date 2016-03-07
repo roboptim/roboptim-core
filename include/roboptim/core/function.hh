@@ -478,7 +478,7 @@ namespace roboptim
 
   /// \brief Trait specializing GenericFunction for Eigen dense matrices.
   template <>
-  struct ROBOPTIM_DLLAPI GenericFunctionTraits<EigenMatrixDense>
+  struct ROBOPTIM_CORE_DLLAPI GenericFunctionTraits<EigenMatrixDense>
   {
     /// \brief Matrix storage order.
     static const int StorageOrder = roboptim::StorageOrder;
@@ -525,7 +525,7 @@ namespace roboptim
 
   /// \brief Trait specializing GenericFunction for Eigen sparse matrices.
   template <>
-  struct ROBOPTIM_DLLAPI GenericFunctionTraits<EigenMatrixSparse>
+  struct ROBOPTIM_CORE_DLLAPI GenericFunctionTraits<EigenMatrixSparse>
   {
     /// \brief Matrix storage order.
     static const int StorageOrder = roboptim::StorageOrder;

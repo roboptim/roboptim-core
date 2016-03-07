@@ -38,7 +38,7 @@ namespace roboptim
       /// A command represents a Gnuplot command.
       /// The representation of the command as a string
       /// can be accessed through the #command() method.
-      class ROBOPTIM_DLLAPI Command
+      class ROBOPTIM_CORE_DLLAPI Command
       {
       public:
 	/// \brief Make a command from a string.
@@ -55,7 +55,7 @@ namespace roboptim
 
       /// \brief Make a Gnuplot comment.
       /// \throw std::runtime_error
-      ROBOPTIM_DLLAPI Command comment (const char*);
+      ROBOPTIM_CORE_DLLAPI Command comment (const char*);
 
       /// \brief Make a Gnuplot comment.
       /// \throw std::runtime_error
@@ -85,71 +85,71 @@ namespace roboptim
       /// \param var variable that will be set
       /// \param val new variable value
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command set (const char* var, const char* val = "");
+      ROBOPTIM_CORE_DLLAPI Command set (const char* var, const char* val = "");
 
       /// \brief Make a Gnuplot unset command.
       ///
       /// Make a Gnuplot unset command (destroy a variable).
       /// \param var variable that will be unset
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command unset (const char* var);
+      ROBOPTIM_CORE_DLLAPI Command unset (const char* var);
 
       /// \brief Make a Gnuplot show command.
       ///
       /// Make a Gnuplot show command (show a variable value).
       /// \param var variable that will be shown
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command show (const char* var);
+      ROBOPTIM_CORE_DLLAPI Command show (const char* var);
 
       /// \brief Make a Gnuplot clear command.
       ///
       /// Make a Gnuplot clear command (clear the screen).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command clear ();
+      ROBOPTIM_CORE_DLLAPI Command clear ();
 
       /// \brief Make a Gnuplot pwdcommand.
       ///
       /// Make a Gnuplot pwd command (show the current directory).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command pwd ();
+      ROBOPTIM_CORE_DLLAPI Command pwd ();
 
       /// \brief Make a Gnuplot quit command.
       ///
       /// Make a Gnuplot quit command (quit Gnuplot).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command quit ();
+      ROBOPTIM_CORE_DLLAPI Command quit ();
 
       /// \brief Make a Gnuplot replot command.
       ///
       /// Make a Gnuplot replot command (redraw previously defined curves).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command replot ();
+      ROBOPTIM_CORE_DLLAPI Command replot ();
 
       /// \brief Make a Gnuplot reread command.
       ///
       /// Make a Gnuplot reread command (reread data files).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command reread ();
+      ROBOPTIM_CORE_DLLAPI Command reread ();
 
       /// \brief Make a Gnuplot reset command.
       ///
       /// Make a Gnuplot replot command (reset Gnuplot state).
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command reset ();
+      ROBOPTIM_CORE_DLLAPI Command reset ();
 
       /// \brief Make a Gnuplot cd command.
       ///
       /// Make a Gnuplot cd command (change current directory).
       /// \param dir new directory
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command cd (const char* dir);
+      ROBOPTIM_CORE_DLLAPI Command cd (const char* dir);
 
       /// \brief Make a Gnuplot help command.
       ///
       /// Make a Gnuplot help command (display Gnuplot help).
       /// \param topic help topic
       /// \return Gnuplot command
-      ROBOPTIM_DLLAPI Command help (const char* topic = "");
+      ROBOPTIM_CORE_DLLAPI Command help (const char* topic = "");
 
       /// @}
 

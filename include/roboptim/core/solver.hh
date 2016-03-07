@@ -59,7 +59,7 @@ namespace roboptim
                            int, std::string, bool> parameterValues_t;
 
     /// \brief Default constructor.
-    ROBOPTIM_DLLAPI Parameter ();
+    ROBOPTIM_CORE_DLLAPI Parameter ();
 
     /// \brief Parameter description (for humans).
     std::string description;
@@ -177,7 +177,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param parameter parameter
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream&
+  ROBOPTIM_CORE_DLLAPI std::ostream&
   operator<< (std::ostream& o, const Parameter& parameter);
   /// @}
 

@@ -36,7 +36,7 @@ namespace roboptim
   /// \param function function where the assertion was made.
   /// \param file file where the assertion was made.
   /// \param line line where the assertion was made.
-  ROBOPTIM_DLLEXPORT
+  ROBOPTIM_CORE_DLLAPI
   void assertion_failed(char const *expr, char const *function, char const *file,
                         long line);
 
@@ -48,7 +48,7 @@ namespace roboptim
   /// \param function function where the assertion was made.
   /// \param file file where the assertion was made.
   /// \param line line where the assertion was made.
-  ROBOPTIM_DLLEXPORT
+  ROBOPTIM_CORE_DLLAPI
   void assertion_failed_msg(char const *expr, char const *msg,
                             char const *function, char const *file, long line);
 }

@@ -32,7 +32,7 @@ namespace roboptim
   /// \f[f(x) = offset\f]
   /// where \f$offset\f$ is set when the class is instantiated.
   template <typename T>
-  class ROBOPTIM_DLLAPI GenericConstantFunction
+  class ROBOPTIM_CORE_DLLAPI GenericConstantFunction
   : public GenericLinearFunction<T>
   {
   public:

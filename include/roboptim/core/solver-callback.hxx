@@ -91,8 +91,8 @@ namespace roboptim
 
 // Explicit template instantiations for dense and sparse matrices.
 # ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
-  extern template class ROBOPTIM_DLLAPI SolverCallback<Solver<EigenMatrixDense> >;
-  extern template class ROBOPTIM_DLLAPI SolverCallback<Solver<EigenMatrixSparse> >;
+  extern template class ROBOPTIM_CORE_DLLAPI SolverCallback<Solver<EigenMatrixDense> >;
+  extern template class ROBOPTIM_CORE_DLLAPI SolverCallback<Solver<EigenMatrixSparse> >;
 # endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
 
 } // end of namespace roboptim

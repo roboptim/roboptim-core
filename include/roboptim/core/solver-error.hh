@@ -36,7 +36,7 @@ namespace roboptim
   /// \brief Base exception class for solving errors.
   /// All other exceptions classes concerning the optimization
   /// process should inherits this class.
-  class ROBOPTIM_DLLAPI SolverError : public std::runtime_error
+  class ROBOPTIM_CORE_DLLAPI SolverError : public std::runtime_error
   {
   public:
     /// \brief Instantiate an error from an error message.
@@ -85,7 +85,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param e error to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+  ROBOPTIM_CORE_DLLAPI std::ostream& operator<< (std::ostream& o,
 					    const SolverError& e);
 } // end of namespace roboptim
 
