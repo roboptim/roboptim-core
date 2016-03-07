@@ -53,7 +53,7 @@ namespace roboptim
       SOLVER_NO_SOLUTION,
       /// Solution has been found.
       SOLVER_VALUE,
-      /// The solver failed to found a solution.
+      /// The solver failed to find a solution.
       SOLVER_ERROR,
       /// Solution has been found but some problems happened.
       SOLVER_VALUE_WARNINGS

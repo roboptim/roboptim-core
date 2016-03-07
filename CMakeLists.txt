@@ -245,7 +245,7 @@ IF(NOT DISABLE_TESTS)
   ADD_SUBDIRECTORY(tests)
 ELSE()
   MESSAGE(WARNING
-    "Tests should only be disabled for speficic cases. Do it at your own risk.")
+    "Tests should only be disabled for specific cases. Do it at your own risk.")
 ENDIF()
 
 SETUP_PROJECT_FINALIZE()
