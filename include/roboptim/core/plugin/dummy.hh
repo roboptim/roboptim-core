@@ -31,17 +31,23 @@ namespace roboptim
   ///
   /// It is also a good starting point for users that
   /// want to develop their own solver.
-  class DummySolver : public Solver<EigenMatrixDense>
+  ///
+  /// \tparam T matrix traits.
+  template <typename T>
+  class GenericDummySolver : public Solver<T>
   {
   public:
     /// \brief Define parent's type.
-    typedef Solver<EigenMatrixDense> parent_t;
+    typedef Solver<T> parent_t;
+
+    /// \brief Problem type.
+    typedef typename parent_t::problem_t problem_t;
 
     /// \brief Build a solver from a problem.
     /// \param problem problem that will be solved
-    explicit DummySolver (const problem_t& problem);
+    explicit GenericDummySolver (const problem_t& problem);
 
-    virtual ~DummySolver ();
+    virtual ~GenericDummySolver ();
 
     /// \brief Implement the solve algorithm.
     ///
@@ -51,5 +57,7 @@ namespace roboptim
   };
 
 } // end of namespace roboptim
+
+# include <roboptim/core/plugin/dummy.hxx>
 
 #endif //! ROBOPTIM_CORE_DUMMY_HH

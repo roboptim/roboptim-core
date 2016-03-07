@@ -1,4 +1,4 @@
-// Copyright (C) 2009 by Thomas Moulard, AIST, CNRS, INRIA.
+// Copyright (C) 2016 by Benjamin Chrétien, CNRS-AIST JRL.
 //
 // This file is part of the roboptim.
 //
@@ -24,12 +24,12 @@
 
 extern "C"
 {
-  typedef roboptim::GenericDummySolver<roboptim::EigenMatrixDense> DummySolver;
-  typedef DummySolver::parent_t solver_t;
+  typedef roboptim::GenericDummySolver<roboptim::EigenMatrixSparse> DummySparseSolver;
+  typedef DummySparseSolver::parent_t solver_t;
 
   ROBOPTIM_CORE_DLLEXPORT std::size_t getSizeOfProblem ();
   ROBOPTIM_CORE_DLLEXPORT const char* getTypeIdOfConstraintsList ();
-  ROBOPTIM_CORE_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb);
+  ROBOPTIM_CORE_DLLEXPORT solver_t* create (const DummySparseSolver::problem_t& pb);
   ROBOPTIM_CORE_DLLEXPORT void destroy (solver_t* p);
 
   ROBOPTIM_CORE_DLLEXPORT std::size_t getSizeOfProblem ()
@@ -42,9 +42,9 @@ extern "C"
     return typeid (solver_t::problem_t::constraintsList_t).name ();
   }
 
-  ROBOPTIM_CORE_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb)
+  ROBOPTIM_CORE_DLLEXPORT solver_t* create (const DummySparseSolver::problem_t& pb)
   {
-    return new DummySolver (pb);
+    return new DummySparseSolver (pb);
   }
 
   ROBOPTIM_CORE_DLLEXPORT void destroy (solver_t* p)
