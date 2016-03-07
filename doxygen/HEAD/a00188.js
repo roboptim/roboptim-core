@@ -1,7 +1,9 @@
 var a00188 =
 [
-    [ "dense_jacobian_to_gnuplot", "a00289.html#a00f78445b522347c5914f58bb68c80a0", null ],
-    [ "plot_jac", "a00299.html#ga6089434a4bb7b902af79ee92fbfea1ea", null ],
-    [ "plot_jac", "a00299.html#gaa1f821ed4194ecba54db36327af0fd13", null ],
-    [ "sparse_jacobian_to_gnuplot", "a00289.html#a406862b4cef98a34eca862ce87b99aa5", null ]
+    [ "DummySparseSolver", "a00188.html#a43477e1f423a754c35e9b124bcca87a6", null ],
+    [ "solver_t", "a00188.html#adacf6d26ff9e8422395ed5a038a2afed", null ],
+    [ "create", "a00188.html#a5b24411c13bae2e2ced6bee72f42f335", null ],
+    [ "destroy", "a00188.html#a1cf814d98d474ded87cdd24cad3588b8", null ],
+    [ "getSizeOfProblem", "a00188.html#a8c7aac59ed1b08104ddc2e6c6dd6fb38", null ],
+    [ "getTypeIdOfConstraintsList", "a00188.html#a3ca571f5bd28a61a05de54366690379c", null ]
 ];

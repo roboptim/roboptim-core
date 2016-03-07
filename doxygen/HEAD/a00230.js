@@ -1,8 +1,5 @@
 var a00230 =
 [
-    [ "EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET", "a00230.html#a77e6db63e071b40535df9ee30f2acfd7", null ],
-    [ "impl_print", "a00284.html#a78ae5ee1ba15a6256b01f3bb3765a747", null ],
-    [ "impl_print", "a00284.html#a974b01d3e6b19ebbfb1c45cc3cabd9ed", null ],
-    [ "impl_print", "a00284.html#a92d03025b36c11fc83d49f550228996e", null ],
-    [ "operator<<", "a00278.html#a664d63d1f2f6e8d5c1c981c08e1955a0", null ]
+    [ "minus", "a00230.html#ga50b429f2b86fb7a9d63333e4686ca688", null ],
+    [ "operator-", "a00230.html#gafb698191cd075127b51cc64130d1b1d3", null ]
 ];

@@ -1,5 +1,4 @@
 var a00265 =
 [
-    [ "SumOfC1Squares", "a00293.html#gafefbc90e9cc685f442eb32986ceca7ca", null ],
-    [ "SumOfC1SquaresSparse", "a00293.html#gaeaea633c6cce7cf8a129a9ec1120a57b", null ]
+    [ "selection", "a00265.html#gab04bd0199420c0f6bcbe3d25029428bc", null ]
 ];

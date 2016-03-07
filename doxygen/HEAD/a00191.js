@@ -1,8 +1,9 @@
 var a00191 =
 [
-    [ "dense_matrix_to_gnuplot", "a00289.html#abf27b2e0087da6e9ec89b10bbdef8c4e", null ],
-    [ "plot_mat", "a00299.html#gae86c4ab9d72721f2b01b9cbd1b05b5ad", null ],
-    [ "plot_mat", "a00299.html#gaa7f26ff4c47d30ad1437f4c2a39f4747", null ],
-    [ "set_matrix_header", "a00289.html#aca3546228e3d8781b5e35ce15a50e0ca", null ],
-    [ "sparse_matrix_to_gnuplot", "a00289.html#a81a6cbb7778fc1a14fe74689c2ea7ed6", null ]
+    [ "DummySolver", "a00191.html#a286e717657d5374e62d4e9cfbbdf182e", null ],
+    [ "solver_t", "a00191.html#a926347d1adaf0ea2a6a2a50bc50a209e", null ],
+    [ "create", "a00191.html#a1174e9c1169393c8f5c31846a4bdce03", null ],
+    [ "destroy", "a00191.html#a1cf814d98d474ded87cdd24cad3588b8", null ],
+    [ "getSizeOfProblem", "a00191.html#a8c7aac59ed1b08104ddc2e6c6dd6fb38", null ],
+    [ "getTypeIdOfConstraintsList", "a00191.html#a3ca571f5bd28a61a05de54366690379c", null ]
 ];

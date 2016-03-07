@@ -1,4 +1,6 @@
 var a00229 =
 [
-    [ "operator<<", "a00278.html#a664d63d1f2f6e8d5c1c981c08e1955a0", null ]
+    [ "EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET", "a00229.html#a77e6db63e071b40535df9ee30f2acfd7", null ],
+    [ "operator<<", "a00229.html#ga754766ba098561274be740474369e1ba", null ],
+    [ "operator<<", "a00229.html#aa5714b11301afc8bc1ee4d544eafac2f", null ]
 ];

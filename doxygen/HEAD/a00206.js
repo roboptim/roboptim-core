@@ -1,9 +1,9 @@
 var a00206 =
 [
-    [ "dense_matrix_to_matplotlib", "a00291.html#aec6bb39f40ca2fb899bc401c83a17075", null ],
-    [ "plot_mat", "a00299.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
-    [ "plot_mat", "a00299.html#gad95bc834df94f24249f83aedddc0e17d", null ],
-    [ "set_red_white_blue_cmap", "a00291.html#a995ab9cb3464f24d2fa6efe75db39792", null ],
-    [ "set_red_yellow_blue_cmap", "a00291.html#a7886ac8e9ba70129ece570e76e13d3e6", null ],
-    [ "sparse_matrix_to_matplotlib", "a00291.html#a431a27b03c8e76126ec235e828691a19", null ]
+    [ "GNUPLOT_STR_COMMAND", "a00206.html#a44cffa7dc6979331d7660d604e7c8f48", null ],
+    [ "GNUPLOT_UNARY_COMMAND", "a00206.html#abdaa2512aec3201d566ccbfc73fafc46", null ],
+    [ "comment", "a00206.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
+    [ "set", "a00206.html#gad77630a233193748534b41d069d4e180", null ],
+    [ "show", "a00206.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
+    [ "unset", "a00206.html#ga2c2a188b2e89955eee09aa10b5426e43", null ]
 ];

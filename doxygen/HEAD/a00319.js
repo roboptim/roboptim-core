@@ -1,0 +1,85 @@
+var a00319 =
+[
+    [ "Command", "a00056.html", [
+      [ "Command", "a00056.html#ab81aab26c394149e7819d998b23896db", null ],
+      [ "~Command", "a00056.html#a572bb822c03aaba581c2d9a037358ca8", null ],
+      [ "command", "a00056.html#a0e26b3adc037ad75f7ff4c254c250f94", null ],
+      [ "command_", "a00056.html#a3b76b6c708622368fb56622af6209f6a", null ]
+    ] ],
+    [ "Gnuplot", "a00101.html", [
+      [ "~Gnuplot", "a00101.html#ab2620f9d29a97757d0acbfe68e6a2c79", null ],
+      [ "Gnuplot", "a00101.html#ab134923cbb8cc53b251664f4b5c6b73c", null ],
+      [ "clear", "a00101.html#a0bc170d3f32a3abaa388b27e17242ad3", null ],
+      [ "make_gnuplot", "a00101.html#a55c76cc46b5c54b1bc0d4684128403ff", null ],
+      [ "make_interactive_gnuplot", "a00101.html#a14e55569e7e70d12d7cd1d83117576a1", null ],
+      [ "operator<<", "a00101.html#af7addb186708c556e603c3fd8e7768a6", null ],
+      [ "print", "a00101.html#ad4b42f563ebbdb501d397a42a4420525", null ],
+      [ "push_command", "a00101.html#aaa242efdd1e20124d0698793b4fd4bdd", null ]
+    ] ],
+    [ "Import", "a00103.html", [
+      [ "Import", "a00103.html#ae8c72eb632d4046d7bf89e877ee4da7b", null ],
+      [ "Import", "a00103.html#ab836b0eb7bbff4f67f233436383d2d26", null ],
+      [ "~Import", "a00103.html#aad0bfde5142daf2d08ed9a0c5080e1e5", null ],
+      [ "command", "a00103.html#a70c298d4be24bf7c71390d672552a927", null ]
+    ] ],
+    [ "MatrixPlotType", "a00112.html", [
+      [ "Type", "a00112.html#aa079ed2005e090509c162f1164496e41", [
+        [ "Values", "a00112.html#aa079ed2005e090509c162f1164496e41aa759505cb2efa66b4b6831ff3413577f", null ],
+        [ "Log", "a00112.html#aa079ed2005e090509c162f1164496e41a75b95f79284ff8d0a2ccc4cfb7c66284", null ],
+        [ "Structure", "a00112.html#aa079ed2005e090509c162f1164496e41a904fec78479d64265dd6dffaaf08ab8f", null ]
+      ] ]
+    ] ],
+    [ "Matplotlib", "a00111.html", [
+      [ "~Matplotlib", "a00111.html#ad30ddac4c701f3857324dc1723bd431b", null ],
+      [ "Matplotlib", "a00111.html#af77550d6aaa0ecf435abf50516f90c06", null ],
+      [ "clear", "a00111.html#ab74d871b72839dedd30f30877d05f960", null ],
+      [ "make_matplotlib", "a00111.html#a76f40fe422159fba4501080eca915ebd", null ],
+      [ "multiplot", "a00111.html#a7ab9c2b8a3970b4ad9a844943e63baa5", null ],
+      [ "multiplot", "a00111.html#a24e1d662a986d8fa5321cee29e909ced", null ],
+      [ "operator<<", "a00111.html#a64f59a4876bebeaebfa909fa087d881c", null ],
+      [ "operator<<", "a00111.html#add7be32075c5232ef70ac302c6483ee7", null ],
+      [ "print", "a00111.html#a565123c4086afdec4934dfd78aa5e6dc", null ],
+      [ "push_command", "a00111.html#aa2dde9d00c39af15e221bc2e4545a514", null ],
+      [ "push_import", "a00111.html#af77130e3b6b8f68dd95adc5e09daa51d", null ],
+      [ "resetImports", "a00111.html#ab6d4daa910500975a1805b340fa82c33", null ],
+      [ "withHeader", "a00111.html#a02fc7712b24296ca6da6f5c7b15a4a5c", null ],
+      [ "withHeader", "a00111.html#a59afeebf5cc92b39b8dd53a05ad05c9f", null ]
+    ] ],
+    [ "discreteInterval_t", "a00319.html#ga1c2bbde67ed2275a6def58e1cea970f3", null ],
+    [ "discreteInterval_t", "a00319.html#gac1d12393050610f8e70843e70183259f", null ],
+    [ "cd", "a00319.html#gae71944c0d9277d186211fed99dd1b7bb", null ],
+    [ "clear", "a00319.html#gae70257a0b33228391fed5ba1474fff3c", null ],
+    [ "comment", "a00319.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
+    [ "comment", "a00319.html#ga7a509faa4e3dd9a30373a2b320b98c23", null ],
+    [ "comment", "a00319.html#ga4c395b1d7d97dc70bd1e20bb18a57cb2", null ],
+    [ "comment", "a00319.html#ga463e980b502c7934fba428e1a093fba7", null ],
+    [ "figure", "a00319.html#gadc3481e3e9ff4370b961a415a00c7d54", null ],
+    [ "help", "a00319.html#gae00f4cfc4faefd710d143af3ecda22fa", null ],
+    [ "import", "a00319.html#ga39b68128dabb457499f493b7f17d3413", null ],
+    [ "import", "a00319.html#ga7f5c136cb79bd9bb01b3681e9f3b693e", null ],
+    [ "operator<<", "a00319.html#ga22576c0708e8fe4af42060ff87bfad20", null ],
+    [ "operator<<", "a00319.html#ga754766ba098561274be740474369e1ba", null ],
+    [ "plot", "a00319.html#ga7a1939a1db1b12c576e85859b728458c", null ],
+    [ "plot", "a00319.html#ga88db3744004afec9b9d46434ae480b8f", null ],
+    [ "plot_jac", "a00319.html#ga82eb26a5bc780a491723b256fd0e3ff9", null ],
+    [ "plot_jac", "a00319.html#ga9775565a4a8ec4f90e25e006838af841", null ],
+    [ "plot_jac", "a00319.html#ga568652599399c4e972088fb9fa2be520", null ],
+    [ "plot_mat", "a00319.html#gae86c4ab9d72721f2b01b9cbd1b05b5ad", null ],
+    [ "plot_mat", "a00319.html#gaa7f26ff4c47d30ad1437f4c2a39f4747", null ],
+    [ "plot_mat", "a00319.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
+    [ "plot_mat", "a00319.html#gad95bc834df94f24249f83aedddc0e17d", null ],
+    [ "plot_mat", "a00319.html#gad4703635fcedadbb33319b576c22ff79", null ],
+    [ "plot_xy", "a00319.html#ga0dba01288d4436dfa417d3dfd5520c27", null ],
+    [ "pwd", "a00319.html#gad2c044a9346c0ac16a4d6396ed16a0f1", null ],
+    [ "quit", "a00319.html#gaf9a410f722ae8c38d97dff1c2fc8ae9d", null ],
+    [ "replot", "a00319.html#gab22229b5d2077f921eeda5670a7c2532", null ],
+    [ "reread", "a00319.html#ga4280cd2cd70f8f8e41be3cd093d21512", null ],
+    [ "reset", "a00319.html#ga61ec9a18f0dccb1880ead0350ade218d", null ],
+    [ "set", "a00319.html#gad77630a233193748534b41d069d4e180", null ],
+    [ "set", "a00319.html#ga2690387f5414c233b3f9895f2f9fe0f3", null ],
+    [ "show", "a00319.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
+    [ "show", "a00319.html#ga185b3ac03398aa23d171d74a4243dd0e", null ],
+    [ "title", "a00319.html#ga473e082b449f8d4070da8150b204a189", null ],
+    [ "unset", "a00319.html#ga2c2a188b2e89955eee09aa10b5426e43", null ],
+    [ "plot_mat", "a00319.html#gab39cf33a554dc4cd4d4bc1d2368c8d83", null ]
+];
