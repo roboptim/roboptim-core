@@ -1,11 +1,12 @@
 var a00081 =
 [
-    [ "~Gnuplot", "a00081.html#ab2620f9d29a97757d0acbfe68e6a2c79", null ],
-    [ "Gnuplot", "a00081.html#ab134923cbb8cc53b251664f4b5c6b73c", null ],
-    [ "clear", "a00081.html#a0bc170d3f32a3abaa388b27e17242ad3", null ],
-    [ "make_gnuplot", "a00081.html#a55c76cc46b5c54b1bc0d4684128403ff", null ],
-    [ "make_interactive_gnuplot", "a00081.html#a14e55569e7e70d12d7cd1d83117576a1", null ],
-    [ "operator<<", "a00081.html#af7addb186708c556e603c3fd8e7768a6", null ],
-    [ "print", "a00081.html#ad4b42f563ebbdb501d397a42a4420525", null ],
-    [ "push_command", "a00081.html#aaa242efdd1e20124d0698793b4fd4bdd", null ]
+    [ "FivePointsRule", "a00081.html#ab5c1fd9815a0277bb395459236cb3f1a", null ],
+    [ "compute_deriv", "a00081.html#a7c5d2405f1ab621b93cabb8a91b9b3d6", null ],
+    [ "computeColumn", "a00081.html#a1617bc57b3d40564876c6a14653da379", null ],
+    [ "computeColumn", "a00081.html#ad27ba0753fa501e3b3e258f1fc5f101a", null ],
+    [ "computeGradient", "a00081.html#a8010120e272f8699e6c066d098217613", null ],
+    [ "computeGradient", "a00081.html#a988d3646fbe09cda5d6df026d894fec4", null ],
+    [ "computeJacobian", "a00081.html#aca1065001985abead79e7291964ceb6b", null ],
+    [ "computeJacobian", "a00081.html#a6f561c17a88b91e3791a0e9d4652b720", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00081.html#a4c077cbda6ba69621d402908b5b1c243", null ]
 ];
