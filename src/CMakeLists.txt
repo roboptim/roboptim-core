@@ -53,9 +53,7 @@ PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 # Add required libs to pkg-config file.
 SET(ROBOPTIM_API_BOOST_LIBRARIES date_time system filesystem)
-FOREACH(lib ${ROBOPTIM_API_BOOST_LIBRARIES})
-  PKG_CONFIG_APPEND_LIBS(boost_${lib})
-ENDFOREACH()
+PKG_CONFIG_APPEND_BOOST_LIBS(${ROBOPTIM_API_BOOST_LIBRARIES})
 
 IF(ROBOPTIM_PRECOMPILE_DENSE_SPARSE)
   # core library needs to be linked with Boost libraries (e.g. for
