@@ -188,6 +188,7 @@ namespace roboptim
   /// \param startCol start col of the block in m where b will be copied.
   /// \tparam M matrix type.
   /// \tparam B block type.
+  /// \throw std::runtime_error if the sparse pattern does not match.
   template <typename M, typename B>
   void updateSparseBlock
   (M& m, const B& b,

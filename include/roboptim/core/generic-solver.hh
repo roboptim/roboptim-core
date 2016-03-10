@@ -78,15 +78,18 @@ namespace roboptim
     /// \}
 
     /// \brief Force to restart the optimization.
+    ///
     /// Reset the internal mechanism to force the solution to be
-    /// re-computed next time getMinimum is called.
+    /// re-computed next time getMinimum() is called.
     void reset ();
 
     /// \brief Solve the problem.
-    /// Called automatically by getMinimum if required.
+    ///
+    /// Called automatically by getMinimum() if required.
     virtual void solve () = 0;
 
-    /// \brief Returns the function minimum
+    /// \brief Returns the function minimum.
+    ///
     /// This solves the problem automatically, if it has not yet been solved.
     /// \see minimumType()
     /// \see getMinimum()
