@@ -1,9 +1,9 @@
 var a00188 =
 [
-    [ "DummySparseSolver", "a00188.html#a43477e1f423a754c35e9b124bcca87a6", null ],
-    [ "solver_t", "a00188.html#adacf6d26ff9e8422395ed5a038a2afed", null ],
-    [ "create", "a00188.html#a5b24411c13bae2e2ced6bee72f42f335", null ],
-    [ "destroy", "a00188.html#a1cf814d98d474ded87cdd24cad3588b8", null ],
-    [ "getSizeOfProblem", "a00188.html#a8c7aac59ed1b08104ddc2e6c6dd6fb38", null ],
-    [ "getTypeIdOfConstraintsList", "a00188.html#a3ca571f5bd28a61a05de54366690379c", null ]
+    [ "GNUPLOT_STR_COMMAND", "a00188.html#a44cffa7dc6979331d7660d604e7c8f48", null ],
+    [ "GNUPLOT_UNARY_COMMAND", "a00188.html#abdaa2512aec3201d566ccbfc73fafc46", null ],
+    [ "comment", "a00301.html#ga108c0cb6161fb8813817a7b7a1ac980d", null ],
+    [ "set", "a00301.html#gad77630a233193748534b41d069d4e180", null ],
+    [ "show", "a00301.html#gaf90f5364d8c3597b8909ba99083fc23f", null ],
+    [ "unset", "a00301.html#ga2c2a188b2e89955eee09aa10b5426e43", null ]
 ];

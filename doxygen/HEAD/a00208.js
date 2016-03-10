@@ -1,7 +1,9 @@
 var a00208 =
 [
-    [ "dense_jacobian_to_gnuplot", "a00208.html#a00f78445b522347c5914f58bb68c80a0", null ],
-    [ "plot_jac", "a00208.html#ga9775565a4a8ec4f90e25e006838af841", null ],
-    [ "plot_jac", "a00208.html#ga568652599399c4e972088fb9fa2be520", null ],
-    [ "sparse_jacobian_to_gnuplot", "a00208.html#a406862b4cef98a34eca862ce87b99aa5", null ]
+    [ "dense_matrix_to_matplotlib", "a00293.html#aec6bb39f40ca2fb899bc401c83a17075", null ],
+    [ "plot_mat", "a00301.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
+    [ "plot_mat", "a00301.html#gad95bc834df94f24249f83aedddc0e17d", null ],
+    [ "set_gradient_cmap", "a00293.html#ae2b0cedbefa7eeaac6b222c17e693fa1", null ],
+    [ "set_pattern_cmap", "a00293.html#a37c9b670a86949c6be1713217ef594ba", null ],
+    [ "sparse_matrix_to_matplotlib", "a00293.html#a431a27b03c8e76126ec235e828691a19", null ]
 ];
