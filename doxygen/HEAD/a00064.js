@@ -1,21 +1,14 @@
 var a00064 =
 [
-    [ "jacobianSize_t", "a00064.html#aac13c21f0df1f14ce16286fd81a6643a", null ],
-    [ "GenericDifferentiableFunction", "a00064.html#a5fa47fea06495251f413721483a35dba", null ],
-    [ "gradient", "a00064.html#a03a9c0c4bee28944a49cd508252a9049", null ],
-    [ "gradient", "a00064.html#aa32b7e4ac45ae8bb63afca8fe23eb72e", null ],
-    [ "gradientSize", "a00064.html#a8c3700cd209f38a0079b739a83edbb4a", null ],
-    [ "impl_gradient", "a00064.html#af392bd6266e56fbf8e38c0df16d22224", null ],
-    [ "impl_jacobian", "a00064.html#a1452fef189bb9c7c24acbfe36404d4e5", null ],
-    [ "impl_jacobian", "a00064.html#a69908de96e02e56b0f3332307ed03d94", null ],
-    [ "isValidGradient", "a00064.html#a0a061e75f289dc6c21530bba1f28a82e", null ],
-    [ "isValidJacobian", "a00064.html#af3de7a6e09f0ebf87e9a0e3c5f5d6e18", null ],
-    [ "jacobian", "a00064.html#a77c47b7abb1a80b79afe4aa3ef058f4c", null ],
-    [ "jacobian", "a00064.html#ab42dcb0d900b4f108a0a25eaa1ea1384", null ],
-    [ "jacobianSize", "a00064.html#a9202ded2cd1138fea87965b792b68057", null ],
-    [ "print", "a00064.html#a9c50e545609bd7ace4f2dad69029fac3", null ],
-    [ "ROBOPTIM_ADD_FLAG", "a00064.html#a31a8eb8f28f5f5ae30f405687c2ecd02", null ],
-    [ "ROBOPTIM_FUNCTION_FWD_TYPEDEFS_", "a00064.html#a8e6535968c7ef22e7930b638c5c8a344", null ],
-    [ "ROBOPTIM_GENERATE_TRAITS_REFS_", "a00064.html#aee74c751bb85e5398a89861732a80dc3", null ],
-    [ "ROBOPTIM_GENERATE_TRAITS_REFS_", "a00064.html#a11a8796c62239517682e1eec33d29f2a", null ]
+    [ "Cos", "a00064.html#a22276bb5907afad6ce3ef5d9ad724ab8", null ],
+    [ "~Cos", "a00064.html#a2c614f54551bb78c08bfcba24b404762", null ],
+    [ "impl_compute", "a00064.html#ac598f1fe744a1a40c2fd8138d90e8034", null ],
+    [ "impl_gradient", "a00314.html#ga18f6935028c4edb5231bbefcd014b8dd", null ],
+    [ "impl_gradient", "a00064.html#a35baf63e2a6a9733e7415b573ceb102f", null ],
+    [ "impl_hessian", "a00314.html#gac5b507e077795c1be8b314e640166550", null ],
+    [ "impl_hessian", "a00064.html#ac3b609457f049201bf66d51f4b4bf715", null ],
+    [ "impl_jacobian", "a00314.html#gae2c871b48d14d7227b73abbb57881aaa", null ],
+    [ "impl_jacobian", "a00064.html#a2a8c782166f842e8767cba8ec8b509a6", null ],
+    [ "print", "a00064.html#a39db9ef66cdb3605a811b232fcfaad13", null ],
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00064.html#aaf50a1ab67cc74f7b7f3a571fb093420", null ]
 ];
