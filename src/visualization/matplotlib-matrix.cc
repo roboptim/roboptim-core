@@ -15,14 +15,15 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <string>
 #include <sstream>
+
+#include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <roboptim/core/visualization/matplotlib.hh>
 #include <roboptim/core/visualization/matplotlib-commands.hh>
 #include <roboptim/core/visualization/matplotlib-matrix.hh>
-
-# include <boost/format.hpp>
-# include <boost/lexical_cast.hpp>
 
 namespace roboptim
 {
@@ -32,7 +33,7 @@ namespace roboptim
     {
       namespace detail
       {
-        std::string set_red_white_blue_cmap ()
+        std::string set_pattern_cmap ()
         {
           std::stringstream ss;
 
@@ -45,15 +46,18 @@ namespace roboptim
           return ss.str ();
         }
 
-        std::string set_red_yellow_blue_cmap ()
+        std::string set_gradient_cmap ()
         {
           std::stringstream ss;
 
-          ss << "cmap = matplotlib.colors.LinearSegmentedColormap.from_list(\n"
-             << "         name='red_yellow_blue',\n"
-             << "         colors =[(0, 0, 1),\n"
-             << "                  (1, 1, 0),\n"
-             << "                  (1, 0, 0)])\n";
+          ss << "try:\n"
+             << "    cmap = plt.get_cmap('plasma')\n"
+             << "except:\n"
+             << "    cmap = matplotlib.colors.LinearSegmentedColormap.from_list(\n"
+             << "             name='red_yellow_blue',\n"
+             << "             colors =[(0, 0, 1),\n"
+             << "                      (1, 1, 0),\n"
+             << "                      (1, 0, 0)])\n";
 
           return ss.str ();
         }
@@ -92,19 +96,20 @@ namespace roboptim
           }
           else if (type == MatrixPlotType::Log)
           {
-            std::string set_cmap = set_red_yellow_blue_cmap ();
+            std::string set_cmap = set_gradient_cmap ();
             ss << set_cmap
                << "cmap.set_bad('w',1.)\n"
                << "log_data = np.log10(abs(data))\n"
                << "masked_data = np.ma.array (log_data, mask=np.isinf(log_data))\n"
-               << "crange = abs(masked_data).max()\n"
-               << "im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
+               << "crange_min = masked_data.min()\n"
+               << "crange_max = masked_data.max()\n"
+               << "im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=crange_min, vmax=crange_max)\n"
                << "cbar = plt.colorbar(im)\n"
                << "cbar.draw_all()\n";
           }
           else // values
           {
-            std::string set_cmap = set_red_white_blue_cmap ();
+            std::string set_cmap = set_pattern_cmap ();
             ss << set_cmap
                << "crange = abs(data).max()\n"
                << "im = plt.imshow(data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
@@ -149,19 +154,20 @@ namespace roboptim
           }
           else if (type == MatrixPlotType::Log)
           {
-            std::string set_cmap = set_red_yellow_blue_cmap ();
+            std::string set_cmap = set_gradient_cmap ();
             ss << set_cmap
                << "cmap.set_bad('w',1.)\n"
                << "log_data = np.log10(abs(data))\n"
                << "masked_data = np.ma.array (log_data, mask=np.isinf(log_data))\n"
-               << "crange = abs(masked_data).max()\n"
-               << "im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"
+               << "crange_min = masked_data.min()\n"
+               << "crange_max = masked_data.max()\n"
+               << "im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=crange_min, vmax=crange_max)\n"
                << "cbar = plt.colorbar(im)\n"
                << "cbar.draw_all()\n";
           }
           else // values
           {
-            std::string set_cmap = set_red_white_blue_cmap ();
+            std::string set_cmap = set_pattern_cmap ();
             ss << set_cmap
                << "crange = abs(data).max()\n"
                << "im = plt.imshow(data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)\n"

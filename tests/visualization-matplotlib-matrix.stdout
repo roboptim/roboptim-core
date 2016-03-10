@@ -77,16 +77,20 @@ data = np.array ([[1.00000000,0.00000000,0.00000000,0.00000000,1.00000000,1.0000
 [0.00000000,0.00000000,6.00000000,0.00000000,6.00000000,0.00000000,0.00000000],
 [0.00000000,0.00000000,7.00000000,0.00000000,7.00000000,7.00000000,7.00000000],
 ])
-cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
-         name='red_yellow_blue',
-         colors =[(0, 0, 1),
-                  (1, 1, 0),
-                  (1, 0, 0)])
+try:
+    cmap = plt.get_cmap('plasma')
+except:
+    cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
+             name='red_yellow_blue',
+             colors =[(0, 0, 1),
+                      (1, 1, 0),
+                      (1, 0, 0)])
 cmap.set_bad('w',1.)
 log_data = np.log10(abs(data))
 masked_data = np.ma.array (log_data, mask=np.isinf(log_data))
-crange = abs(masked_data).max()
-im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)
+crange_min = masked_data.min()
+crange_max = masked_data.max()
+im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=crange_min, vmax=crange_max)
 cbar = plt.colorbar(im)
 cbar.draw_all()
 
@@ -118,16 +122,20 @@ data[6,5] = 7.00000000
 data[1,6] = 2.00000000
 data[2,6] = 3.00000000
 data[6,6] = 7.00000000
-cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
-         name='red_yellow_blue',
-         colors =[(0, 0, 1),
-                  (1, 1, 0),
-                  (1, 0, 0)])
+try:
+    cmap = plt.get_cmap('plasma')
+except:
+    cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
+             name='red_yellow_blue',
+             colors =[(0, 0, 1),
+                      (1, 1, 0),
+                      (1, 0, 0)])
 cmap.set_bad('w',1.)
 log_data = np.log10(abs(data))
 masked_data = np.ma.array (log_data, mask=np.isinf(log_data))
-crange = abs(masked_data).max()
-im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=-crange, vmax=crange)
+crange_min = masked_data.min()
+crange_max = masked_data.max()
+im = plt.imshow(masked_data, interpolation='nearest', cmap=cmap, vmin=crange_min, vmax=crange_max)
 cbar = plt.colorbar(im)
 cbar.draw_all()
 
