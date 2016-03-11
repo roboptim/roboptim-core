@@ -17,10 +17,12 @@
 
 #ifndef ROBOPTIM_CORE_SOLVER_FACTORY_HXX
 # define ROBOPTIM_CORE_SOLVER_FACTORY_HXX
+
 # include <cstddef>
 # include <sstream>
 # include <string>
 # include <typeinfo>
+# include <stdexcept>
 
 # include <roboptim/core/util.hh>
 # include <roboptim/core/portability.hh>
@@ -125,8 +127,7 @@ namespace roboptim
     const std::string typeIdOfConstraintsList
       = demangle(getTypeIdOfConstraintsList ());
     const std::string expectedTypeIdOfConstraintsList
-      = demangle(typeid
-                 (typename solver_t::problem_t::constraintsList_t).name ());
+      = typeString<typename solver_t::problem_t::constraintsList_t> ();
     if (typeIdOfConstraintsList != expectedTypeIdOfConstraintsList)
       {
         std::stringstream sserror;
