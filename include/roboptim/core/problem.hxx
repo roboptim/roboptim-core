@@ -54,6 +54,7 @@ namespace roboptim
       boundsVect_ (),
       argumentBounds_ (),
       scalingVect_ (),
+      objectiveScaling_ (),
       argumentScaling_ (),
       argumentNames_ ()
   {
@@ -69,6 +70,7 @@ namespace roboptim
       boundsVect_ (),
       argumentBounds_ (),
       scalingVect_ (),
+      objectiveScaling_ (),
       argumentScaling_ (),
       argumentNames_ ()
   {
@@ -87,6 +89,8 @@ namespace roboptim
                             function_t::makeInfiniteInterval ());
 
     // Initialize scaling.
+    objectiveScaling_.resize (static_cast<std::size_t> (function_->outputSize ()),
+                              1.);
     argumentScaling_.resize (static_cast<std::size_t> (function_->inputSize ()),
                              1.);
   }
@@ -105,6 +109,7 @@ namespace roboptim
       boundsVect_ (pb.boundsVect_),
       argumentBounds_ (pb.argumentBounds_),
       scalingVect_ (pb.scalingVect_),
+      objectiveScaling_ (pb.objectiveScaling_),
       argumentScaling_ (pb.argumentScaling_),
       argumentNames_ (pb.argumentNames_)
   {
@@ -300,6 +305,20 @@ namespace roboptim
   Problem<T>::scalesVector () const
   {
     return scalingVector ();
+  }
+
+  template <typename T>
+  typename Problem<T>::scaling_t&
+  Problem<T>::objectiveScaling ()
+  {
+    return objectiveScaling_;
+  }
+
+  template <typename T>
+  const typename Problem<T>::scaling_t&
+  Problem<T>::objectiveScaling () const
+  {
+    return objectiveScaling_;
   }
 
   template <typename T>
@@ -583,6 +602,8 @@ namespace roboptim
     // Function.
     o << this->function () << iendl;
 
+    // Objective scaling.
+    o << "Objective scaling: " << this->objectiveScaling () << iendl;
     // Arguments bounds.
     o << "Arguments bounds: " << this->argumentBounds () << iendl;
     // Arguments scaling.

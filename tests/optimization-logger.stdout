@@ -1,5 +1,6 @@
 Problem:
   a * d * (a + b + c) + d (not differentiable)
+  Objective scaling: 1
   Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   Number of constraints: 1
@@ -16,6 +17,7 @@ Solver:
   Plugin: dummy-laststate
   Problem:
     a * d * (a + b + c) + d (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     Number of constraints: 1
@@ -38,6 +40,7 @@ Solver:
 ---
 Problem:
   a + b + c + d (differentiable function)
+  Objective scaling: 1
   Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   Number of constraints: 1
@@ -54,6 +57,7 @@ Solver:
   Plugin: dummy-d-sparse-laststate
   Problem:
     a + b + c + d (differentiable function)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     Number of constraints: 1

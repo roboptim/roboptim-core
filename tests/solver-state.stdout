@@ -1,6 +1,7 @@
 Solver:
   Problem:
     a + b + c + d (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     No constraints.
@@ -48,6 +49,7 @@ solver_t.solve ()
 Solver:
   Problem:
     a + b + c + d + e, a * b * c * d * e (not differentiable)
+    Objective scaling: 1, 1
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1, 1
     No constraints.

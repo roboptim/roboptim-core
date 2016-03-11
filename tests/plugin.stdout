@@ -1,5 +1,6 @@
 Problem:
   a * d * (a + b + c) + d (not differentiable)
+  Objective scaling: 1
   Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   No constraints.
@@ -10,6 +11,7 @@ Solver:
   Plugin: dummy
   Problem:
     a * d * (a + b + c) + d (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     No constraints.

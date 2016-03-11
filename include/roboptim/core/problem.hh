@@ -212,6 +212,18 @@ namespace roboptim
     /// \return arguments bounds
     const intervals_t& argumentBounds () const;
 
+    /// \brief Retrieve objective scaling.
+    /// Objective scaling defines the scaling factors applied to the objective
+    /// function.
+    /// \return objective scaling
+    scaling_t& objectiveScaling ();
+
+    /// \brief Retrieve objective scaling.
+    /// Objective scaling defines the scaling factors applied to the objective
+    /// function.
+    /// \return objective scaling
+    const scaling_t& objectiveScaling () const;
+
     /// \brief Retrieve arguments scaling.
     /// Arguments scaling define which scale factor is applied for each argument.
     /// \return arguments scaling
@@ -379,6 +391,9 @@ namespace roboptim
 
     /// \brief Constraints scaling vector.
     scalingVect_t scalingVect_;
+
+    /// \brief Objective scaling.
+    scaling_t objectiveScaling_;
 
     /// \brief Arguments scaling.
     scaling_t argumentScaling_;

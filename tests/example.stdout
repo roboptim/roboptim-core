@@ -2,6 +2,7 @@ Solver:
   Plugin: dummy-td
   Problem:
     x₀ * x₃ * (x₀ + x₁ + x₂) + x₃ (twice differentiable function)
+    Objective scaling: 1
     Arguments bounds: (1, 5), (1, 5), (1, 5), (1, 5)
     Arguments scaling: 1, 1, 1, 1
     Arguments names: x₀, x₁, x₂, x₃
