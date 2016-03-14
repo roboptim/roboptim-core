@@ -397,30 +397,6 @@ namespace roboptim
 
     return null_grad;
   }
-
-  template <typename T>
-  std::ostream&
-  operator<< (std::ostream& o,
-              const typename ResultAnalyzer<T>::LICQData& d)
-  {
-    return d.print (o);
-  }
-
-  template <typename T>
-  std::ostream&
-  operator<< (std::ostream& o,
-              const typename ResultAnalyzer<T>::KKTData& d)
-  {
-    return d.print (o);
-  }
-
-  template <typename T>
-  std::ostream&
-  operator<< (std::ostream& o,
-              const typename ResultAnalyzer<T>::NullGradientData& d)
-  {
-    return d.print (o);
-  }
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_RESULT_ANALYZER_HXX
