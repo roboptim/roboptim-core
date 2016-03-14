@@ -1,3 +1,14 @@
+LICQ conditions: not satisfied
+KKT conditions: not satisfied
+Null gradient condition: not satisfied
+  - Constraint: x * x (differentiable function)
+    Null gradient indices: 0
+LICQ conditions: not satisfied
+KKT conditions: not satisfied
+Null gradient condition: satisfied
+LICQ conditions: satisfied
+KKT conditions: not satisfied
+Null gradient condition: satisfied
 Problem:
   x * x (differentiable function)
   Objective scaling: 1

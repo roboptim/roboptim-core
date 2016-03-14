@@ -139,20 +139,40 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
   {
     Result res (pb.function ().inputSize (), pb.constraintsOutputSize ());
     res.x = (argument_t (2) << 0., 0.).finished ();
+
     ResultAnalyzer<T> ra (pb, res);
-    BOOST_CHECK (!ra.checkLICQ ());
-    BOOST_CHECK (!ra.checkKKT ());
-    BOOST_CHECK (!ra.checkNullGradient ());
+
+    typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
+    BOOST_CHECK (!licq);
+    (*output) << licq << std::endl;
+
+    typename ResultAnalyzer<T>::KKTData kkt = ra.checkKKT ();
+    BOOST_CHECK (!kkt);
+    (*output) << kkt << std::endl;
+
+    typename ResultAnalyzer<T>::NullGradientData ngd = ra.checkNullGradient ();
+    BOOST_CHECK (!ngd);
+    (*output) << ngd << std::endl;
   }
 
   // A = {x,g}, but gradients linearly dependent
   {
     Result res (pb.function ().inputSize (), pb.constraintsOutputSize ());
     res.x = (argument_t (2) << 0., 3.).finished ();
+
     ResultAnalyzer<T> ra (pb, res);
-    BOOST_CHECK (!ra.checkLICQ ());
-    BOOST_CHECK (!ra.checkKKT ());
-    BOOST_CHECK (ra.checkNullGradient ());
+
+    typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
+    BOOST_CHECK (!licq);
+    (*output) << licq << std::endl;
+
+    typename ResultAnalyzer<T>::KKTData kkt = ra.checkKKT ();
+    BOOST_CHECK (!kkt);
+    (*output) << kkt << std::endl;
+
+    typename ResultAnalyzer<T>::NullGradientData ngd = ra.checkNullGradient ();
+    BOOST_CHECK (ngd);
+    (*output) << ngd << std::endl;
   }
 
   // TODO: A = {g}
@@ -161,10 +181,20 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
   {
     Result res (pb.function ().inputSize (), pb.constraintsOutputSize ());
     res.x = (argument_t (2) << -1., 1.).finished ();
+
     ResultAnalyzer<T> ra (pb, res);
-    BOOST_CHECK (ra.checkLICQ ());
-    BOOST_CHECK (!ra.checkKKT ());
-    BOOST_CHECK (ra.checkNullGradient ());
+
+    typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
+    BOOST_CHECK (licq);
+    (*output) << licq << std::endl;
+
+    typename ResultAnalyzer<T>::KKTData kkt = ra.checkKKT ();
+    BOOST_CHECK (!kkt);
+    (*output) << kkt << std::endl;
+
+    typename ResultAnalyzer<T>::NullGradientData ngd = ra.checkNullGradient ();
+    BOOST_CHECK (ngd);
+    (*output) << ngd << std::endl;
   }
 
   (*output) << pb << std::endl;

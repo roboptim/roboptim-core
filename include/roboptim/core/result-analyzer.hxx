@@ -23,6 +23,9 @@
 
 # include <Eigen/OrderingMethods>
 
+# include <roboptim/core/indent.hh>
+# include <roboptim/core/util.hh>
+
 namespace roboptim
 {
   template <typename T>
@@ -32,6 +35,7 @@ namespace roboptim
     res_ (res),
     activeJac_ (),
     jac_ (),
+    activeCstrIndices_ (),
     eps_ (1e-6)
   {
   }
@@ -51,7 +55,7 @@ namespace roboptim
   }
 
   template <typename T>
-  ResultAnalyzer<T>::QueryData::operator bool () const
+  bool ResultAnalyzer<T>::QueryData::operator_bool () const
   {
     return isValid ();
   }
@@ -70,6 +74,15 @@ namespace roboptim
   }
 
   template <typename T>
+  std::ostream& ResultAnalyzer<T>::LICQData::print (std::ostream& o) const
+  {
+    o << "LICQ conditions: ";
+    if (!isValid ()) o << "not ";
+    o << "satisfied";
+    return o;
+  }
+
+  template <typename T>
   ResultAnalyzer<T>::KKTData::KKTData ()
   : grad_L (),
     eps (std::numeric_limits<value_type>::epsilon ())
@@ -84,8 +97,18 @@ namespace roboptim
   }
 
   template <typename T>
+  std::ostream& ResultAnalyzer<T>::KKTData::print (std::ostream& o) const
+  {
+    o << "KKT conditions: ";
+    if (!isValid ()) o << "not ";
+    o << "satisfied";
+    return o;
+  }
+
+  template <typename T>
   ResultAnalyzer<T>::NullGradientData::NullGradientData ()
-  : null_rows (0)
+  : null_rows (0),
+    constraint_indices ()
   {
   }
 
@@ -96,33 +119,35 @@ namespace roboptim
   }
 
   template <typename T>
+  std::ostream& ResultAnalyzer<T>::NullGradientData::print (std::ostream& o) const
+  {
+    o << "Null gradient condition:";
+    if (constraint_indices.empty ())
+    {
+      return o << " satisfied";
+    }
+
+    o << " not satisfied" << incindent;
+    for (typename std::map<const constraint_t, std::vector<size_type> >::const_iterator
+         c  = constraint_indices.begin ();
+         c != constraint_indices.end (); ++c)
+    {
+      o << iendl << "- Constraint: " << incindent
+        << *(c->first) << decindent
+        << iendl << "  Null gradient indices: " << c->second;
+    }
+    o << decindent;
+
+    return o;
+  }
+
+  template <typename T>
   void ResultAnalyzer<T>::computeJacobian () const
   {
     if (jac_.size () != 0)
       return;
 
-    size_type n = pb_.function ().inputSize ();
-    size_type m = pb_.constraintsOutputSize ();
-    const argument_t& x = res_.x;
-
-    jac_ = jacobian_t (m, n);
-    jac_.setZero ();
-
-    size_type row_iter = 0;
-    for (typename problem_t::constraints_t::const_iterator
-        cstr  = pb_.constraints ().begin ();
-        cstr != pb_.constraints ().end (); ++cstr)
-    {
-      if ((*cstr)->template asType<differentiableFunction_t> ())
-      {
-        const differentiableFunction_t*
-          diffCstr = (*cstr)->template castInto<differentiableFunction_t> ();
-        diffCstr->jacobian
-          (jac_.block (row_iter, 0,
-                       (*cstr)->outputSize (), n), x);
-      }
-      row_iter += (*cstr)->outputSize ();
-    }
+    jac_ = pb_.jacobian (res_.x);
   }
 
   template <typename T>
@@ -159,10 +184,35 @@ namespace roboptim
     std::vector<size_type> activeConstraints;
     if (!needs_compute)
     {
+      // Global index
+      size_t cstr_idx = 0;
+      // Local index
+      size_type idx = 0;
+
+      typename problem_t::constraints_t::const_iterator
+        citer = pb_.constraints ().begin ();
+
       for (int i = 0; i < m; ++i)
-        // TODO: epsilon threshold?
-        if (res_.lambda[n + i] != 0)
+      {
+        if (std::abs (res_.lambda[n + i]) > eps_)
+        {
           activeConstraints.push_back (static_cast<size_type> (n + i));
+
+          ConstraintIndex index;
+          index.global = cstr_idx;
+          index.local = idx;
+          index.active = static_cast<size_type> (activeCstrIndices_.size ());
+          activeCstrIndices_.push_back (index);
+        }
+
+        idx++;
+        if (idx == (*citer)->outputSize ())
+        {
+          citer++;
+          idx = 0;
+          cstr_idx++;
+        }
+      }
     }
     else
     {
@@ -171,20 +221,26 @@ namespace roboptim
 
       for (typename problem_t::constraints_t::const_iterator
            cstr  = pb_.constraints ().begin ();
-           cstr != pb_.constraints ().end (); ++cstr)
+           cstr != pb_.constraints ().end (); ++cstr, ++cstr_idx)
       {
         const typename problem_t::intervals_t&
           bounds = pb_.boundsVector ()[cstr_idx];
         result_t val = (**cstr) (x);
-        for (size_type j = 0; j < val.size (); ++j)
+        for (size_type j = 0; j < val.size (); ++j, ++idx)
         {
           size_t jj = static_cast<size_t> (j);
           if (std::abs (val[j] - bounds[jj].first) < eps_
               || std::abs (val[j] - bounds[jj].second) < eps_)
+          {
             activeConstraints.push_back (idx);
-          idx++;
+
+            ConstraintIndex index;
+            index.global = cstr_idx;
+            index.local = j;
+            index.active = static_cast<size_type> (activeCstrIndices_.size ());
+            activeCstrIndices_.push_back (index);
+          }
         }
-        cstr_idx++;
       }
     }
 
@@ -278,13 +334,46 @@ namespace roboptim
 
     NullGradientData null_grad;
 
-    for (int i = 0; i < activeJac_.rows (); ++i)
+    for (typename std::vector<ConstraintIndex>::const_iterator
+         ci  = activeCstrIndices_.begin ();
+         ci != activeCstrIndices_.end (); ++ci)
     {
-      if (activeJac_.row (i).norm () < eps_)
+      size_t g_idx = ci->global;
+      size_type l_idx = ci->local;
+      size_type as_idx = ci->active;
+
+      if (activeJac_.row (as_idx).norm () < eps_)
+      {
         null_grad.null_rows++;
+        null_grad.constraint_indices[pb_.constraints ()[g_idx]].push_back (l_idx);
+      }
     }
 
     return null_grad;
+  }
+
+  template <typename T>
+  std::ostream&
+  operator<< (std::ostream& o,
+              const typename ResultAnalyzer<T>::LICQData& d)
+  {
+    return d.print (o);
+  }
+
+  template <typename T>
+  std::ostream&
+  operator<< (std::ostream& o,
+              const typename ResultAnalyzer<T>::KKTData& d)
+  {
+    return d.print (o);
+  }
+
+  template <typename T>
+  std::ostream&
+  operator<< (std::ostream& o,
+              const typename ResultAnalyzer<T>::NullGradientData& d)
+  {
+    return d.print (o);
   }
 } // end of namespace roboptim
 

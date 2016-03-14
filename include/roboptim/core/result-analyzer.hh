@@ -18,6 +18,13 @@
 #ifndef ROBOPTIM_CORE_RESULT_ANALYZER_HH
 # define ROBOPTIM_CORE_RESULT_ANALYZER_HH
 
+# pragma message "ResultAnalyzer is an unfinished experimental feature."
+
+# include <vector>
+# include <ostream>
+
+# include <boost/spirit/include/classic_safe_bool.hpp>
+
 # include <roboptim/core/problem.hh>
 # include <roboptim/core/differentiable-function.hh>
 
@@ -38,42 +45,84 @@ namespace roboptim
     typedef typename problem_t::size_type         size_type;
     typedef typename problem_t::value_type        value_type;
 
+    struct ConstraintIndex
+    {
+      /// \brief Index in the global constraint vector.
+      size_t global;
+
+      /// \brief Index in the local constraint representation.
+      size_type local;
+
+      /// \brief Index in the global active set.
+      size_type active;
+    };
+
     typedef GenericDifferentiableFunction<T> differentiableFunction_t;
 
+    /// \brief Constructor.
+    ///
+    /// \param pb problem to analyze.
+    /// \param res result of an optimization.
     ResultAnalyzer (const problem_t& pb, const optimResult_t& res);
     virtual ~ResultAnalyzer ();
 
-    struct QueryData
+    /// \brief Interface for checks.
+    /// Note: we use the safe-bool idiom, which is deprecated in C++11.
+    struct QueryData : public boost::spirit::classic::safe_bool<QueryData>
     {
-      operator bool () const;
+      /// \brief Evaluate the query.
+      bool operator_bool () const;
 
+      /// \brief Whether the input data is valid w.r.t. that query.
       virtual bool isValid () const = 0;
+
+      /// \brief Print method.
+      virtual std::ostream& print (std::ostream& o) const = 0;
+
+      /// \brief Override operator<< to display data.
+      /// \param o output stream.
+      /// \param d data.
+      /// \return output stream.
+      friend std::ostream& operator<< (std::ostream& o, const QueryData& d)
+      {
+        return d.print (o);
+      }
     };
 
+    /// \brief Data for LICQ check.
     struct LICQData : public QueryData
     {
       LICQData ();
       bool isValid () const;
+      std::ostream& print (std::ostream& o) const;
 
       size_type rank;
       size_type max_rank;
     };
 
+    /// \brief Data for KKT check.
     struct KKTData : public QueryData
     {
       KKTData ();
       bool isValid () const;
+      std::ostream& print (std::ostream& o) const;
 
       gradient_t grad_L;
       value_type eps;
     };
 
+    /// \brief Data for null-gradient check.
     struct NullGradientData : public QueryData
     {
+      typedef typename problem_t::constraint_t constraint_t;
+
       NullGradientData();
       bool isValid () const;
+      std::ostream& print (std::ostream& o) const;
 
       size_type null_rows;
+      std::map<const constraint_t, std::vector<size_type> >
+        constraint_indices;
     };
 
     /// \brief Check the LICQ conditions.
@@ -105,6 +154,9 @@ namespace roboptim
 
     /// \brief Jacobian of the constraints.
     mutable jacobian_t jac_;
+
+    /// \brief Indices of the active constraints.
+    mutable std::vector<ConstraintIndex> activeCstrIndices_;
 
     /// \brief Epsilon.
     value_type eps_;
