@@ -21,7 +21,6 @@
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/result-analyzer.hh>
-#include <roboptim/core/function/constant.hh>
 
 using namespace roboptim;
 
@@ -107,7 +106,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
   typedef typename problem_t::intervals_t     intervals_t;
   typedef typename problem_t::scaling_t       scaling_t;
 
-  typedef GenericConstantFunction<T>          constantFunction_t;
   typedef Square<T>                           square_t;
 
   // For shared_ptr constructor
@@ -119,7 +117,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
   x << 0., 0.;
   pb.startingPoint () = x;
 
-  typename constantFunction_t::names_t names (2);
+  typename square_t::names_t names (2);
   names[0] = "x₀";
   names[1] = "x₁";
   pb.argumentNames () = names;
@@ -139,15 +137,18 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
   {
     Result res (pb.function ().inputSize (), pb.constraintsOutputSize ());
     res.x = (argument_t (2) << 0., 0.).finished ();
+    res.lambda = (argument_t (4) << 0., 0., 0., 1.).finished ();
 
     ResultAnalyzer<T> ra (pb, res);
+
+    (*output) << "x = " << res.x << std::endl;
 
     typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
     BOOST_CHECK (!licq);
     (*output) << licq << std::endl;
 
     typename ResultAnalyzer<T>::KKTData kkt = ra.checkKKT ();
-    BOOST_CHECK (!kkt);
+    BOOST_CHECK (kkt);
     (*output) << kkt << std::endl;
 
     typename ResultAnalyzer<T>::NullGradientData ngd = ra.checkNullGradient ();
@@ -159,8 +160,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
   {
     Result res (pb.function ().inputSize (), pb.constraintsOutputSize ());
     res.x = (argument_t (2) << 0., 3.).finished ();
+    res.lambda = (argument_t (4) << 1., 1., -1., 1.).finished ();
 
     ResultAnalyzer<T> ra (pb, res);
+
+    (*output) << "x = " << res.x << std::endl;
 
     typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
     BOOST_CHECK (!licq);
@@ -181,8 +185,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
   {
     Result res (pb.function ().inputSize (), pb.constraintsOutputSize ());
     res.x = (argument_t (2) << -1., 1.).finished ();
+    res.lambda = (argument_t (4) << 1., 1., -1., 1.).finished ();
 
     ResultAnalyzer<T> ra (pb, res);
+
+    (*output) << "x = " << res.x << std::endl;
 
     typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
     BOOST_CHECK (licq);

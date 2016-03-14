@@ -41,6 +41,7 @@ namespace roboptim
     typedef typename functionTraits_t::result_t   result_t;
     typedef typename functionTraits_t::gradient_t gradient_t;
     typedef typename functionTraits_t::jacobian_t jacobian_t;
+    typedef typename functionTraits_t::vector_t   vector_t;
     typedef typename problem_t::interval_t        interval_t;
     typedef typename problem_t::size_type         size_type;
     typedef typename problem_t::value_type        value_type;
@@ -107,7 +108,13 @@ namespace roboptim
       bool isValid () const;
       std::ostream& print (std::ostream& o) const;
 
+      // \brief ∇L(x*,λ*)
       gradient_t grad_L;
+
+      /// \brief Lagrange multipliers λ.
+      vector_t lambda;
+
+      // \brief Epsilon used for checking.
       value_type eps;
     };
 
@@ -125,10 +132,11 @@ namespace roboptim
         constraint_indices;
     };
 
-    /// \brief Check the LICQ conditions.
+    /// \brief Check the LICQ (Linear Independence Constraint Qualification)
+    /// conditions.
     LICQData checkLICQ () const;
 
-    /// \brief Check the KKT conditions.
+    /// \brief Check the KKT (Karush-Kuhn-Tucker) conditions.
     KKTData checkKKT () const;
 
     /// \brief Check for null gradients.

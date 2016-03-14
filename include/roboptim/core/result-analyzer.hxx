@@ -36,7 +36,7 @@ namespace roboptim
     activeJac_ (),
     jac_ (),
     activeCstrIndices_ (),
-    eps_ (1e-6)
+    eps_ (1e-12)
   {
   }
 
@@ -79,12 +79,17 @@ namespace roboptim
     o << "LICQ conditions: ";
     if (!isValid ()) o << "not ";
     o << "satisfied";
+
+    o << incindent << iendl << "rank: " << rank
+      << iendl << "max_rank: " << max_rank << decindent;
+
     return o;
   }
 
   template <typename T>
   ResultAnalyzer<T>::KKTData::KKTData ()
   : grad_L (),
+    lambda (),
     eps (std::numeric_limits<value_type>::epsilon ())
   {
   }
@@ -92,16 +97,32 @@ namespace roboptim
   template <typename T>
   bool ResultAnalyzer<T>::KKTData::isValid () const
   {
-    // TODO
-    return grad_L.size () > 0 && grad_L.norm () < eps;
+    return grad_L.size () > 0
+      && grad_L.norm () < eps
+      && (lambda.array () >= 0.).all ();
   }
 
   template <typename T>
   std::ostream& ResultAnalyzer<T>::KKTData::print (std::ostream& o) const
   {
     o << "KKT conditions: ";
-    if (!isValid ()) o << "not ";
-    o << "satisfied";
+    if (isValid ()) o << "satisfied";
+    else o << "not satisfied";
+
+    o << incindent;
+
+    if (grad_L.size () == 0)
+      o << iendl << "∇L(x*,λ*) could not be computed";
+    else
+      o << iendl << "∇L(x*,λ*) = " << grad_L;
+
+    if (lambda.size () == 0)
+      o << iendl << "λ was not provided";
+    else
+      o << iendl << "λ = " << lambda;
+
+    o << decindent;
+
     return o;
   }
 
@@ -122,7 +143,7 @@ namespace roboptim
   std::ostream& ResultAnalyzer<T>::NullGradientData::print (std::ostream& o) const
   {
     o << "Null gradient condition:";
-    if (constraint_indices.empty ())
+    if (isValid ())
     {
       return o << " satisfied";
     }
@@ -144,7 +165,7 @@ namespace roboptim
   template <typename T>
   void ResultAnalyzer<T>::computeJacobian () const
   {
-    if (jac_.size () != 0)
+    if (jac_.cols () + jac_.rows () != 0)
       return;
 
     jac_ = pb_.jacobian (res_.x);
@@ -153,93 +174,49 @@ namespace roboptim
   template <typename T>
   void ResultAnalyzer<T>::computeActiveJacobian () const
   {
-    if (activeJac_.size () != 0)
+    if (activeJac_.cols () + activeJac_.rows ()!= 0)
       return;
 
     size_type n = pb_.function ().inputSize ();
     size_type m = pb_.constraintsOutputSize ();
 
-    bool needs_compute = ! hasLambda ();
     const argument_t& x = res_.x;
 
     // 1) Argument bounds
     std::vector<size_type> activeBounds;
     for (size_type i = 0; i < n; ++i)
     {
-      if (!needs_compute)
-      {
-        if (res_.lambda[i] != 0)
-          activeBounds.push_back (i);
-      }
-      else
-      {
-        const interval_t& bounds = pb_.argumentBounds ()[static_cast<size_t> (i)];
-        if (std::abs (x[i] - bounds.first) < eps_
-            || std::abs (x[i] - bounds.second) < eps_)
-          activeBounds.push_back (i);
-      }
+      const interval_t& bounds = pb_.argumentBounds ()[static_cast<size_t> (i)];
+      if (std::abs (x[i] - bounds.first) < eps_
+          || std::abs (x[i] - bounds.second) < eps_)
+        activeBounds.push_back (i);
     }
 
     // 2) Constraints
     std::vector<size_type> activeConstraints;
-    if (!needs_compute)
+    size_type idx = 0;
+    size_t cstr_idx = 0;
+
+    for (typename problem_t::constraints_t::const_iterator
+         cstr  = pb_.constraints ().begin ();
+         cstr != pb_.constraints ().end (); ++cstr, ++cstr_idx)
     {
-      // Global index
-      size_t cstr_idx = 0;
-      // Local index
-      size_type idx = 0;
-
-      typename problem_t::constraints_t::const_iterator
-        citer = pb_.constraints ().begin ();
-
-      for (int i = 0; i < m; ++i)
+      const typename problem_t::intervals_t&
+        bounds = pb_.boundsVector ()[cstr_idx];
+      result_t val = (**cstr) (x);
+      for (size_type j = 0; j < val.size (); ++j, ++idx)
       {
-        if (std::abs (res_.lambda[n + i]) > eps_)
+        size_t jj = static_cast<size_t> (j);
+        if (std::abs (val[j] - bounds[jj].first) < eps_
+            || std::abs (val[j] - bounds[jj].second) < eps_)
         {
-          activeConstraints.push_back (static_cast<size_type> (n + i));
+          activeConstraints.push_back (idx);
 
           ConstraintIndex index;
           index.global = cstr_idx;
-          index.local = idx;
+          index.local = j;
           index.active = static_cast<size_type> (activeCstrIndices_.size ());
           activeCstrIndices_.push_back (index);
-        }
-
-        idx++;
-        if (idx == (*citer)->outputSize ())
-        {
-          citer++;
-          idx = 0;
-          cstr_idx++;
-        }
-      }
-    }
-    else
-    {
-      size_type idx = 0;
-      size_t cstr_idx = 0;
-
-      for (typename problem_t::constraints_t::const_iterator
-           cstr  = pb_.constraints ().begin ();
-           cstr != pb_.constraints ().end (); ++cstr, ++cstr_idx)
-      {
-        const typename problem_t::intervals_t&
-          bounds = pb_.boundsVector ()[cstr_idx];
-        result_t val = (**cstr) (x);
-        for (size_type j = 0; j < val.size (); ++j, ++idx)
-        {
-          size_t jj = static_cast<size_t> (j);
-          if (std::abs (val[j] - bounds[jj].first) < eps_
-              || std::abs (val[j] - bounds[jj].second) < eps_)
-          {
-            activeConstraints.push_back (idx);
-
-            ConstraintIndex index;
-            index.global = cstr_idx;
-            index.local = j;
-            index.active = static_cast<size_type> (activeCstrIndices_.size ());
-            activeCstrIndices_.push_back (index);
-          }
         }
       }
     }
@@ -259,6 +236,7 @@ namespace roboptim
 
     for (size_t i = 0; i < activeConstraints.size (); ++i)
     {
+      // Index in the global Jacobian of active constraints
       size_type idx = static_cast<size_type> (activeBounds.size () + i);
       // FIXME: sparse
       activeJac_.row (idx) = jac_.row (activeConstraints[i]);
@@ -319,9 +297,10 @@ namespace roboptim
     kkt.grad_L += res_.lambda.segment (0, n);
 
     // Constraints
-    kkt.grad_L += res_.lambda.segment (n, m) * jac_.transpose ();
+    kkt.grad_L += res_.lambda.segment (n, m) * jac_;
 
-    // TODO
+    // Store lambda
+    kkt.lambda = res_.lambda;
 
     return kkt;
   }
