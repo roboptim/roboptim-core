@@ -358,6 +358,11 @@ namespace roboptim
 
     /// \brief Evaluate the vector of constraints violation for a given x.
     /// This takes into account both argument bounds and constraint bounds.
+    /// If the output value is lower than the lower bound, the violation is
+    /// negative.
+    /// If the output value is higher than the upper bound, the violation is
+    /// positive.
+    /// If the output value is within the bounds, the violation is null.
     ///
     /// \param x evaluation point.
     /// \return vector of constraint violation at x.
