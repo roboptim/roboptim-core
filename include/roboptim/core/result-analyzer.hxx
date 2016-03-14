@@ -39,6 +39,7 @@ namespace roboptim
     jac_ (),
     activeCstrIndices_ (),
     ineqIndices_ (),
+    isLowerBound_ (),
     eps_ (eps)
   {
   }
@@ -197,9 +198,13 @@ namespace roboptim
     for (size_type i = 0; i < n; ++i)
     {
       const interval_t& bounds = pb_.argumentBounds ()[static_cast<size_t> (i)];
-      if (std::abs (x[i] - bounds.first) < eps_
-          || std::abs (x[i] - bounds.second) < eps_)
+      bool is_lb = (std::abs (x[i] - bounds.first) < eps_);
+      bool is_ub = (std::abs (x[i] - bounds.second) < eps_);
+      if (is_lb || is_ub)
+      {
         activeBounds.push_back (i);
+      }
+      isLowerBound_.push_back (is_lb);
     }
 
     // 2) Constraints
@@ -217,8 +222,9 @@ namespace roboptim
       for (size_type j = 0; j < val.size (); ++j, ++idx)
       {
         size_t jj = static_cast<size_t> (j);
-        if (std::abs (val[j] - bounds[jj].first) < eps_
-            || std::abs (val[j] - bounds[jj].second) < eps_)
+        bool is_lb = (std::abs (val[j] - bounds[jj].first) < eps_);
+        bool is_ub = (std::abs (val[j] - bounds[jj].second) < eps_);
+        if (is_lb || is_ub)
         {
           activeConstraints.push_back (idx);
 
@@ -228,6 +234,7 @@ namespace roboptim
           index.active = static_cast<size_type> (activeCstrIndices_.size ());
           activeCstrIndices_.push_back (index);
         }
+        isLowerBound_.push_back (is_lb);
       }
     }
 
@@ -357,13 +364,17 @@ namespace roboptim
     for (size_t i = 0; i < ineqIndices_.size (); ++i)
     {
       size_type ii = ineqIndices_[i];
-      kkt.complementary_slackness += kkt.lambda (ii) * violations[ii];
-      value_type sgn = 1.0;
-      // If lower bound constraint, i.e. 0 ≤ g
-      if (violations[ii] < 0.) sgn = -1.0;
+      value_type lambda_g = kkt.lambda (ii) * violations[ii];
+      kkt.complementary_slackness += lambda_g;
 
-      // Valid if λ ≥ 0 for g ≤ 0
-      if (kkt.dual_feasible && sgn * kkt.lambda (ii) < 0.)
+      // If lower bound constraint, i.e. 0 ≤ g, we need to flip λ's sign
+      value_type sgn = 1.0;
+      if (isLowerBound_[ii]) sgn = -1.0;
+
+      // Dual feasible if λ ≥ 0 for g ≤ 0 (upper bound)
+      //               or λ ≤ 0 for g ≥ 0 (lower bound)
+      if (kkt.dual_feasible && std::abs (violations[ii]) > eps_
+          && sgn * kkt.lambda (ii) < 0.)
       {
         kkt.dual_feasible = false;
       }

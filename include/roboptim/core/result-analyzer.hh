@@ -181,6 +181,9 @@ namespace roboptim
     /// \brief Indices of inequality constraints.
     mutable std::vector<size_type> ineqIndices_;
 
+    /// \brief Whether an active constraint is a lower bound.
+    mutable std::vector<bool> isLowerBound_;
+
     /// \brief Epsilon.
     value_type eps_;
   };
