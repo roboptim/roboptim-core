@@ -30,13 +30,14 @@ namespace roboptim
 {
   template <typename T>
   ResultAnalyzer<T>::ResultAnalyzer (const problem_t& pb,
-                                     const optimResult_t& res)
+                                     const optimResult_t& res,
+                                     value_type eps)
   : pb_ (pb),
     res_ (res),
     activeJac_ (),
     jac_ (),
     activeCstrIndices_ (),
-    eps_ (1e-12)
+    eps_ (eps)
   {
   }
 
@@ -301,6 +302,9 @@ namespace roboptim
 
     // Store lambda
     kkt.lambda = res_.lambda;
+
+    // Set epsilon
+    kkt.eps = eps_;
 
     return kkt;
   }

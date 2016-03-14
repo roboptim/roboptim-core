@@ -64,7 +64,9 @@ namespace roboptim
     ///
     /// \param pb problem to analyze.
     /// \param res result of an optimization.
-    ResultAnalyzer (const problem_t& pb, const optimResult_t& res);
+    /// \param eps epsilon used for zero checking.
+    ResultAnalyzer (const problem_t& pb, const optimResult_t& res,
+                    value_type eps = 1e-12);
     virtual ~ResultAnalyzer ();
 
     /// \brief Interface for checks.
