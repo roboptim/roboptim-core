@@ -25,6 +25,7 @@
 
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/util.hh>
+# include <roboptim/core/terminal-color.hh>
 
 namespace roboptim
 {
@@ -77,9 +78,9 @@ namespace roboptim
   template <typename T>
   std::ostream& ResultAnalyzer<T>::LICQData::print (std::ostream& o) const
   {
-    o << "LICQ conditions: ";
-    if (!isValid ()) o << "not ";
-    o << "satisfied";
+    o << fg::bold << "LICQ conditions: " << fg::reset;
+    if (isValid ()) o << fg::green << "satisfied" << fg::reset;
+    else o << fg::red << "not satisfied" << fg::reset;
 
     o << incindent << iendl << "rank: " << rank
       << iendl << "max_rank: " << max_rank << decindent;
@@ -106,9 +107,9 @@ namespace roboptim
   template <typename T>
   std::ostream& ResultAnalyzer<T>::KKTData::print (std::ostream& o) const
   {
-    o << "KKT conditions: ";
-    if (isValid ()) o << "satisfied";
-    else o << "not satisfied";
+    o << fg::bold << "KKT conditions: " << fg::reset;
+    if (isValid ()) o << fg::green << "satisfied" << fg::reset;
+    else o << fg::red << "not satisfied" << fg::reset;
 
     o << incindent;
 
@@ -143,13 +144,11 @@ namespace roboptim
   template <typename T>
   std::ostream& ResultAnalyzer<T>::NullGradientData::print (std::ostream& o) const
   {
-    o << "Null gradient condition:";
-    if (isValid ())
-    {
-      return o << " satisfied";
-    }
+    o << fg::bold << "Null gradient condition: " << fg::reset;
+    if (isValid ()) return o << fg::green << "satisfied" << fg::reset;
+    else o << fg::red << "not satisfied" << fg::reset;
 
-    o << " not satisfied" << incindent;
+    o << incindent;
     for (typename std::map<const constraint_t, std::vector<size_type> >::const_iterator
          c  = constraint_indices.begin ();
          c != constraint_indices.end (); ++c)
