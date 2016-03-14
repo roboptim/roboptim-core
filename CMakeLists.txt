@@ -111,6 +111,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-analyzer.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-analyzer.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/scaling-helper.hh
