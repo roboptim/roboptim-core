@@ -105,16 +105,19 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   names[1] = "x₁";
   pb.argumentNames () = names;
 
-  v[0] = 3.;
-  v[1] = -1.;
-  boost::shared_ptr<constantFunction_t>
-    g0 = boost::make_shared<constantFunction_t> (v);
-
   typename numericLinearFunction_t::matrix_t a (2,2);
-  a.setZero ();
-  a.coeffRef (0,0) = 1.;
-  a.coeffRef (1,1) = 1.;
   typename numericLinearFunction_t::vector_t b (2);
+  a.setZero ();
+  a.coeffRef (0,0) = 100.;
+  a.coeffRef (1,1) = 0.01;
+  b << 200., -30.;
+
+  boost::shared_ptr<numericLinearFunction_t>
+    g0 = boost::make_shared<numericLinearFunction_t> (a, b);
+
+  a.setZero ();
+  a.coeffRef (0,0) = 10.;
+  a.coeffRef (1,1) = -0.4;
   b << 2., 3.;
   boost::shared_ptr<numericLinearFunction_t>
     g1 = boost::make_shared<numericLinearFunction_t> (a, b);
@@ -125,22 +128,31 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   intervals_t intervals (2);
   scaling_t scaling (2, 1);
 
+  scaling[0] = 1.;
+  scaling[1] = 100.;
   for (size_t i = 0; i < intervals.size (); ++i)
     intervals[i] = Function::makeInfiniteInterval ();
   pb.addConstraint (g0, intervals, scaling);
 
+  scaling[0] = 10.;
+  scaling[1] = 10.;
   for (size_t i = 0; i < intervals.size (); ++i)
     intervals[i] = Function::makeLowerInterval (0.);
   pb.addConstraint (g1, intervals, scaling);
 
   // Also add a non-differentiable constraint
+  pb.argumentScaling ()[0] = 0.01;
+  pb.argumentScaling ()[1] = 0.5;
+  scaling[0] = 0.1;
+  scaling[1] = 10.;
   for (size_t i = 0; i < intervals.size (); ++i)
     intervals[i] = Function::makeInterval (-12., 42.);
   pb.addConstraint (g2, intervals, scaling);
 
   // Check jacobian
-  x << 1., 2.;
+  x << 100., 2.;
   (*output) << toDense (pb.jacobian (x)) << std::endl;
+  (*output) << toDense (pb.scaledJacobian (x)) << std::endl;
 
   // Check constraints output size
   BOOST_CHECK_EQUAL (pb.constraintsOutputSize (),
@@ -216,8 +228,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   mixedPb.argumentNames () = names;
   mixedPb.argumentBounds ()[0] = function_t::makeUpperInterval (5.);
 
+  v[0] = 3.;
+  v[1] = -1.;
+  boost::shared_ptr<constantFunction_t>
+    g3 = boost::make_shared<constantFunction_t> (v);
+
   // First constraint: ConstantFunction automatically converted to LinearFunction
-  mixedPb.addConstraint (g0, intervals, scaling);
+  mixedPb.addConstraint (g3, intervals, scaling);
   // Second constraint: NumericLinearFunction converted to DifferentiableFunction
   mixedPb.addConstraint (boost::static_pointer_cast<GenericDifferentiableFunction<T> > (g1),
                          intervals, scaling);
@@ -235,8 +252,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   x << 200., 50.;
   mixedPb.startingPoint () = x;
   (*output) << mixedPb << std::endl;
-  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 366.);
-  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 195.);
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<1> (x), 2160.);
+  BOOST_CHECK_EQUAL (mixedPb.template constraintsViolation<Eigen::Infinity> (x), 1960.);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

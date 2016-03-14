@@ -344,8 +344,17 @@ namespace roboptim
     /// critical loop.
     ///
     /// \param x evaluation point.
-    /// \return jacobian matrix evaluated at x.
+    /// \return Jacobian matrix evaluated at x.
     jacobian_t jacobian (const_argument_ref x) const;
+
+    /// \brief Evaluate the scaled Jacobian matrix of the problem for a given x.
+    /// Note: this is a helper method, and is not supposed to be used in any
+    /// critical loop. Both constraint and argument scaling parameters are
+    /// applied.
+    ///
+    /// \param x evaluation point.
+    /// \return scaled Jacobian matrix evaluated at x.
+    jacobian_t scaledJacobian (const_argument_ref x) const;
 
     /// \brief Evaluate the sum of constraint violations for a given x.
     /// This takes into account both argument bounds and constraint bounds.

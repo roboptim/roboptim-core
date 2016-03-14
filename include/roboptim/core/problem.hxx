@@ -393,6 +393,44 @@ namespace roboptim
     return jac;
   }
 
+  template <typename T>
+  typename Problem<T>::jacobian_t
+  Problem<T>::scaledJacobian (const_argument_ref x) const
+  {
+    typedef GenericDifferentiableFunction<T> differentiableFunction_t;
+
+    // Compute the unscaled Jacobian matrix
+    jacobian_t jac = jacobian (x);
+
+    // Apply constraint scaling parameters
+    size_type global_row = 0;
+    size_t c_idx = 0;
+    for (typename constraints_t::const_iterator
+	   c = constraints_.begin (); c != constraints_.end (); ++c)
+      {
+	// If the constraint is differentiable
+        if ((*c)->template asType<differentiableFunction_t> ())
+	  {
+	    const differentiableFunction_t*
+	      df = (*c)->template castInto<differentiableFunction_t> ();
+            for (size_type i = 0; i < df->outputSize (); ++i)
+	      {
+		jac.row (global_row + i) *= scalingVect_[c_idx][i];
+	      }
+	    global_row += df->outputSize ();
+	  }
+        c_idx++;
+      }
+
+    // Apply argument scaling parameters
+    for (size_t i = 0; i < argumentScaling_.size (); ++i)
+      {
+	jac.col (static_cast<size_type> (i)) *= argumentScaling_[i];
+      }
+
+    return jac;
+  }
+
   template <>
   inline typename Problem<EigenMatrixSparse>::jacobian_t
   Problem<EigenMatrixSparse>::jacobian (const_argument_ref x) const

@@ -1,36 +1,38 @@
-[4,2]((0,0), (0,0), (1,0), (0,1))
+[4,2]((100,0), (0,0.01), (10,0), (0,-0.4))
+[4,2]((1,0), (0,0.5), (1,0), (0,-2))
 Problem:
   Constant function
     offset = [2](0,0)
   Objective scaling: 1, 1
   Arguments bounds: (-5, 5), (-10, inf)
-  Arguments scaling: 1, 1
+  Arguments scaling: 0.01, 0.5
   Arguments names: x₀, x₁
   Number of constraints: 3
   Constraint 0
-      Constant function
-        offset = [2](3,-1)
+      Numeric linear function:
+        A = [2,2]((100,0), (0,0.01))
+        B = [2](200,-30)
       Bounds: (-inf, inf), (-inf, inf)
-      Scaling: 1, 1
-      Initial value: [2](3, -1)
+      Scaling: 1, 100
+      Initial value: [2](200, -30)
   Constraint 1
       Numeric linear function:
-        A = [2,2]((1,0), (0,1))
+        A = [2,2]((10,0), (0,-0.4))
         B = [2](2,3)
       Bounds: (0, inf), (0, inf)
-      Scaling: 1, 1
+      Scaling: 10, 10
       Initial value: [2](2, 3)
   Constraint 2
       a * b, a + b (not differentiable)
       Bounds: (-12, 42), (-12, 42)
-      Scaling: 1, 1
+      Scaling: 0.1, 10
       Initial value: [2](0, 0)
   Starting point: [2](0,0)
   Starting value: [2](0,0)
   Infinity value (for all functions): inf
 Problem:
   Constant function
-    offset = [2](3,-1)
+    offset = [2](0,0)
   Objective scaling: 1, 1
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
@@ -42,7 +44,7 @@ Problem:
     offset = [2](0,0)
   Objective scaling: 1, 1
   Arguments bounds: (-5, 5), (-10, inf)
-  Arguments scaling: 1, 1
+  Arguments scaling: 0.01, 0.5
   Arguments names: x₀, x₁
   No constraints.
   Starting point: [2](0,0)
@@ -53,7 +55,7 @@ Problem:
     offset = [2](0,0)
   Objective scaling: 1, 1
   Arguments bounds: (-5, 5), (-10, inf)
-  Arguments scaling: 1, 1
+  Arguments scaling: 0.01, 0.5
   Arguments names: x₀, x₁
   No constraints.
   Starting point: [2](200,30)
@@ -71,14 +73,14 @@ Problem:
       Constant function
         offset = [2](3,-1)
       Bounds: (-12, 42), (-12, 42)
-      Scaling: 1, 1
+      Scaling: 0.1, 10
       Initial value: [2](3, -1)
   Constraint 1
       Numeric linear function:
-        A = [2,2]((1,0), (0,1))
+        A = [2,2]((10,0), (0,-0.4))
         B = [2](2,3)
       Bounds: (-12, 42), (-12, 42)
-      Scaling: 1, 1
+      Scaling: 0.1, 10
       Initial value: [2](2, 3)
   Starting point: [2](0,0)
   Starting value: [2](0,0)
@@ -95,15 +97,15 @@ Problem:
       Constant function
         offset = [2](3,-1)
       Bounds: (-12, 42), (-12, 42)
-      Scaling: 1, 1
+      Scaling: 0.1, 10
       Initial value: [2](3, -1)
   Constraint 1
       Numeric linear function:
-        A = [2,2]((1,0), (0,1))
+        A = [2,2]((10,0), (0,-0.4))
         B = [2](2,3)
       Bounds: (-12, 42), (-12, 42)
-      Scaling: 1, 1
-      Initial value: [2](202, 53) (constraint not satisfied)
+      Scaling: 0.1, 10
+      Initial value: [2](2002, -17) (constraint not satisfied)
   Starting point: [2](200,50)
   Starting value: [2](0,0)
   Infinity value (for all functions): inf
