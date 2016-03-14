@@ -116,6 +116,15 @@ namespace roboptim
       /// \brief Lagrange multipliers λ.
       vector_t lambda;
 
+      /// \brief Constraint violation.
+      value_type violation;
+
+      /// \brief Complementary slackness.
+      value_type complementary_slackness;
+
+      /// \brief Whether dual feasibility is satisfied.
+      bool dual_feasible;
+
       // \brief Epsilon used for checking.
       value_type eps;
     };
@@ -147,6 +156,7 @@ namespace roboptim
   private:
     void computeJacobian () const;
     void computeActiveJacobian () const;
+    void findIneqIndices () const;
 
     size_type computeRank (const jacobian_t& jac) const;
 
@@ -167,6 +177,9 @@ namespace roboptim
 
     /// \brief Indices of the active constraints.
     mutable std::vector<ConstraintIndex> activeCstrIndices_;
+
+    /// \brief Indices of inequality constraints.
+    mutable std::vector<size_type> ineqIndices_;
 
     /// \brief Epsilon.
     value_type eps_;

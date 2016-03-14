@@ -356,7 +356,14 @@ namespace roboptim
     /// \return scaled Jacobian matrix evaluated at x.
     jacobian_t scaledJacobian (const_argument_ref x) const;
 
-    /// \brief Evaluate the sum of constraint violations for a given x.
+    /// \brief Evaluate the vector of constraints violation for a given x.
+    /// This takes into account both argument bounds and constraint bounds.
+    ///
+    /// \param x evaluation point.
+    /// \return vector of constraint violation at x.
+    result_t constraintsViolationVector (const_argument_ref x) const;
+
+    /// \brief Evaluate the constraint violation for a given x.
     /// This takes into account both argument bounds and constraint bounds.
     ///
     /// \param x evaluation point.

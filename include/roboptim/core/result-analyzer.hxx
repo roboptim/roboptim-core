@@ -38,6 +38,7 @@ namespace roboptim
     activeJac_ (),
     jac_ (),
     activeCstrIndices_ (),
+    ineqIndices_ (),
     eps_ (eps)
   {
   }
@@ -92,6 +93,9 @@ namespace roboptim
   ResultAnalyzer<T>::KKTData::KKTData ()
   : grad_L (),
     lambda (),
+    violation (std::numeric_limits<value_type>::infinity ()),
+    complementary_slackness (std::numeric_limits<value_type>::infinity ()),
+    dual_feasible (false),
     eps (std::numeric_limits<value_type>::epsilon ())
   {
   }
@@ -99,9 +103,11 @@ namespace roboptim
   template <typename T>
   bool ResultAnalyzer<T>::KKTData::isValid () const
   {
-    return grad_L.size () > 0
-      && grad_L.norm () < eps
-      && (lambda.array () >= 0.).all ();
+    bool stationarity = (grad_L.size () > 0) && (grad_L.norm () < eps);
+    bool primal_feasibility = (violation < eps);
+
+    return stationarity && primal_feasibility && dual_feasible &&
+           (complementary_slackness < eps);
   }
 
   template <typename T>
@@ -122,6 +128,10 @@ namespace roboptim
       o << iendl << "λ was not provided";
     else
       o << iendl << "λ = " << lambda;
+
+    o << iendl << "constraint violation = " << violation;
+    o << iendl << "complementary slackness = " << complementary_slackness;
+    o << iendl << "dual feasible = " << (dual_feasible? "true":"false");
 
     o << decindent;
 
@@ -243,6 +253,37 @@ namespace roboptim
     }
   }
 
+  template <typename T>
+  void ResultAnalyzer<T>::findIneqIndices () const
+  {
+    if (ineqIndices_.size () > 0)
+      return;
+
+    size_type n = pb_.function ().inputSize ();
+
+    // Argument bounds
+    size_type idx = 0;
+    for (size_type i = 0; i < n; ++i, ++idx)
+    {
+      const interval_t& bounds = pb_.argumentBounds ()[static_cast<size_t> (i)];
+      if (bounds.first != bounds.second) ineqIndices_.push_back (idx);
+    }
+
+    // Constraints bounds
+    size_type cstr_idx = 0;
+    for (size_t cstr_idx = 0; cstr_idx < pb_.constraints ().size (); ++cstr_idx)
+    {
+      const typename problem_t::intervals_t&
+        bounds = pb_.boundsVector ()[cstr_idx];
+
+      for (size_t j = 0; j < bounds.size (); ++j, ++idx)
+      {
+        if (bounds[j].first != bounds[j].second)
+          ineqIndices_.push_back (idx);
+      }
+    }
+  }
+
   template <>
   inline typename ResultAnalyzer<EigenMatrixSparse>::size_type
   ResultAnalyzer<EigenMatrixSparse>::computeRank (const jacobian_t& jac) const
@@ -278,12 +319,13 @@ namespace roboptim
   typename ResultAnalyzer<T>::KKTData
   ResultAnalyzer<T>::checkKKT () const
   {
-    computeActiveJacobian ();
-
     KKTData kkt;
 
     if (!hasLambda ())
       return kkt;
+
+    computeActiveJacobian ();
+    findIneqIndices ();
 
     size_type n = pb_.function ().inputSize ();
     size_type m = pb_.constraintsOutputSize ();
@@ -304,6 +346,24 @@ namespace roboptim
 
     // Set epsilon
     kkt.eps = eps_;
+
+    // Set constraint violation
+    result_t violations = pb_.constraintsViolationVector (x);
+    kkt.violation = violations.template lpNorm<Eigen::Infinity> ();
+
+    // Complementary slackness and dual feasibility
+    kkt.dual_feasible = true;
+    kkt.complementary_slackness = 0.;
+    for (size_t i = 0; i < ineqIndices_.size (); ++i)
+    {
+      size_type ii = ineqIndices_[i];
+      kkt.complementary_slackness += kkt.lambda (ii) * violations[ii];
+
+      if (kkt.dual_feasible && kkt.lambda (ii) < 0.)
+      {
+        kkt.dual_feasible = false;
+      }
+    }
 
     return kkt;
   }

@@ -484,12 +484,9 @@ namespace roboptim
   }
 
   template <typename T>
-  template <int NORM>
-  typename Problem<T>::value_type
-  Problem<T>::constraintsViolation (const_argument_ref x) const
+  typename Problem<T>::result_t
+  Problem<T>::constraintsViolationVector (const_argument_ref x) const
   {
-    BOOST_STATIC_ASSERT (NORM != 0);
-
     size_type n = function_->inputSize ();
     size_type m = constraintsOutputSize ();
 
@@ -536,8 +533,19 @@ namespace roboptim
 	  }
       }
 
-    return violations.template lpNorm<NORM> ();
+    return violations;
   }
+
+  template <typename T>
+  template <int NORM>
+  typename Problem<T>::value_type
+  Problem<T>::constraintsViolation (const_argument_ref x) const
+  {
+    BOOST_STATIC_ASSERT (NORM != 0);
+
+    return constraintsViolationVector (x).template lpNorm<NORM> ();
+  }
+
 
   namespace detail
   {
