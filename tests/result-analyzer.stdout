@@ -7,7 +7,7 @@ KKT conditions: satisfied
   λ = [4](0,0,0,1)
   constraint violation = 0
   complementary slackness = 0
-  dual feasible = true
+  dual feasible: true
 Null gradient condition: not satisfied
   - Constraint: x * x (differentiable function)
     Null gradient indices: 0
@@ -20,7 +20,7 @@ KKT conditions: not satisfied
   λ = [4](1,1,-1,1)
   constraint violation = 0
   complementary slackness = 0
-  dual feasible = false
+  dual feasible: false
 Null gradient condition: satisfied
 x = [2](-1,1)
 LICQ conditions: satisfied
@@ -31,7 +31,7 @@ KKT conditions: not satisfied
   λ = [4](1,1,-1,1)
   constraint violation = 0
   complementary slackness = 0
-  dual feasible = false
+  dual feasible: false
 Null gradient condition: satisfied
 Problem:
   x * x (differentiable function)

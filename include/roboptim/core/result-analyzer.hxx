@@ -131,7 +131,7 @@ namespace roboptim
 
     o << iendl << "constraint violation = " << violation;
     o << iendl << "complementary slackness = " << complementary_slackness;
-    o << iendl << "dual feasible = " << (dual_feasible? "true":"false");
+    o << iendl << "dual feasible: " << (dual_feasible? "true":"false");
 
     o << decindent;
 
@@ -358,8 +358,12 @@ namespace roboptim
     {
       size_type ii = ineqIndices_[i];
       kkt.complementary_slackness += kkt.lambda (ii) * violations[ii];
+      value_type sgn = 1.0;
+      // If lower bound constraint, i.e. 0 ≤ g
+      if (violations[ii] < 0.) sgn = -1.0;
 
-      if (kkt.dual_feasible && kkt.lambda (ii) < 0.)
+      // Valid if λ ≥ 0 for g ≤ 0
+      if (kkt.dual_feasible && sgn * kkt.lambda (ii) < 0.)
       {
         kkt.dual_feasible = false;
       }
