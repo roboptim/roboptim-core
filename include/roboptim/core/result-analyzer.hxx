@@ -297,7 +297,7 @@ namespace roboptim
     kkt.grad_L += res_.lambda.segment (0, n);
 
     // Constraints
-    kkt.grad_L += res_.lambda.segment (n, m) * jac_;
+    kkt.grad_L += res_.lambda.segment (n, m).transpose () * jac_;
 
     // Store lambda
     kkt.lambda = res_.lambda;
