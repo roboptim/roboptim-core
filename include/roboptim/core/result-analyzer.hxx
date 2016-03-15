@@ -130,9 +130,9 @@ namespace roboptim
     else
       o << iendl << "λ = " << lambda;
 
-    o << iendl << "constraint violation = " << violation;
-    o << iendl << "complementary slackness = " << complementary_slackness;
-    o << iendl << "dual feasible: " << (dual_feasible? "true":"false");
+    o << iendl << "Constraint violation: " << violation;
+    o << iendl << "Complementary slackness: " << complementary_slackness;
+    o << iendl << "Dual feasible: " << (dual_feasible? "true":"false");
 
     o << decindent;
 
@@ -346,7 +346,8 @@ namespace roboptim
     kkt.grad_L += res_.lambda.segment (0, n);
 
     // Constraints
-    kkt.grad_L += res_.lambda.segment (n, m).transpose () * jac_;
+    if (m > 0)
+      kkt.grad_L += res_.lambda.segment (n, m).transpose () * jac_;
 
     // Store lambda
     kkt.lambda = res_.lambda;

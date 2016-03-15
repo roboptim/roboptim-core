@@ -5,9 +5,9 @@ LICQ conditions: not satisfied
 KKT conditions: satisfied
   ∇L(x*,λ*) = [2](0,0)
   λ = [4](0,0,0,1)
-  constraint violation = 0
-  complementary slackness = 0
-  dual feasible: true
+  Constraint violation: 0
+  Complementary slackness: 0
+  Dual feasible: true
 Null gradient condition: not satisfied
   - Constraint: x * x (differentiable function)
     Null gradient indices: 0
@@ -18,9 +18,9 @@ LICQ conditions: not satisfied
 KKT conditions: not satisfied
   ∇L(x*,λ*) = [2](1,1)
   λ = [4](1,1,-1,1)
-  constraint violation = 0
-  complementary slackness = 0
-  dual feasible: true
+  Constraint violation: 0
+  Complementary slackness: 0
+  Dual feasible: true
 Null gradient condition: satisfied
 x = [2](-1,1)
 LICQ conditions: satisfied
@@ -29,9 +29,9 @@ LICQ conditions: satisfied
 KKT conditions: not satisfied
   ∇L(x*,λ*) = [2](1,1)
   λ = [4](1,1,-1,1)
-  constraint violation = 0
-  complementary slackness = 0
-  dual feasible: true
+  Constraint violation: 0
+  Complementary slackness: 0
+  Dual feasible: true
 Null gradient condition: satisfied
 Problem:
   x * x (differentiable function)
