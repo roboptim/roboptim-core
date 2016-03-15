@@ -18,8 +18,6 @@
 #ifndef ROBOPTIM_CORE_RESULT_ANALYZER_HH
 # define ROBOPTIM_CORE_RESULT_ANALYZER_HH
 
-# pragma message "ResultAnalyzer is an unfinished experimental feature."
-
 # include <vector>
 # include <ostream>
 
