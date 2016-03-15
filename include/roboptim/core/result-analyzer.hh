@@ -158,7 +158,18 @@ namespace roboptim
     void computeActiveJacobian () const;
     void findIneqIndices () const;
 
-    size_type computeRank (const jacobian_t& jac) const;
+    /// \brief Compute the rank of the Jacobian matrix.
+    ///
+    /// \param jac Jacobian matrix. It is not const as it needs to be
+    /// compressed in sparse mode.
+    ///
+    /// \return rank of the matrix
+    size_type computeRank (jacobian_t& jac) const;
+
+    void copyRow (jacobian_t& dst, size_type row_dst,
+                  const jacobian_t& src, size_type row_src) const;
+
+    gradient_t gradLagrangian () const;
 
     bool hasLambda () const;
 

@@ -26,6 +26,7 @@
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/util.hh>
 # include <roboptim/core/terminal-color.hh>
+# include <roboptim/core/debug.hh>
 
 namespace roboptim
 {
@@ -123,7 +124,7 @@ namespace roboptim
     if (grad_L.size () == 0)
       o << iendl << "∇L(x*,λ*) could not be computed";
     else
-      o << iendl << "∇L(x*,λ*) = " << grad_L;
+      o << iendl << "∇L(x*,λ*) = " << toDense (grad_L);
 
     if (lambda.size () == 0)
       o << iendl << "λ was not provided";
@@ -245,8 +246,7 @@ namespace roboptim
 
     for (size_type i = 0; i < static_cast<size_type> (activeBounds.size ()); ++i)
     {
-      // FIXME: sparse
-      activeJac_ (i, activeBounds[static_cast<size_t> (i)]) = 1.;
+      activeJac_.coeffRef (i, activeBounds[static_cast<size_t> (i)]) = 1.;
     }
 
     computeJacobian ();
@@ -255,8 +255,7 @@ namespace roboptim
     {
       // Index in the global Jacobian of active constraints
       size_type idx = static_cast<size_type> (activeBounds.size () + i);
-      // FIXME: sparse
-      activeJac_.row (idx) = jac_.row (activeConstraints[i]);
+      copyRow (activeJac_, idx, jac_, activeConstraints[i]);
     }
   }
 
@@ -293,15 +292,16 @@ namespace roboptim
 
   template <>
   inline typename ResultAnalyzer<EigenMatrixSparse>::size_type
-  ResultAnalyzer<EigenMatrixSparse>::computeRank (const jacobian_t& jac) const
+  ResultAnalyzer<EigenMatrixSparse>::computeRank (jacobian_t& jac) const
   {
+    jac.makeCompressed ();
     Eigen::SparseQR<jacobian_t, Eigen::COLAMDOrdering<int> > qr (jac);
     return static_cast<size_type> (qr.rank ());
   }
 
   template <typename T>
   typename ResultAnalyzer<T>::size_type
-  ResultAnalyzer<T>::computeRank (const jacobian_t& jac) const
+  ResultAnalyzer<T>::computeRank (jacobian_t& jac) const
   {
     Eigen::FullPivLU<jacobian_t> lu (jac);
     return static_cast<size_type> (lu.rank ());
@@ -338,16 +338,8 @@ namespace roboptim
     size_type m = pb_.constraintsOutputSize ();
     const argument_t& x = res_.x;
 
-    const differentiableFunction_t* diffObj
-      = pb_.function ().template castInto<differentiableFunction_t> ();
-    kkt.grad_L = diffObj->gradient (x);
-
-    // Argument bounds
-    kkt.grad_L += res_.lambda.segment (0, n);
-
-    // Constraints
-    if (m > 0)
-      kkt.grad_L += res_.lambda.segment (n, m).transpose () * jac_;
+    // Compute the gradient of the Lagrangian
+    kkt.grad_L = gradLagrangian ();
 
     // Store lambda
     kkt.lambda = res_.lambda;
@@ -408,6 +400,88 @@ namespace roboptim
     }
 
     return null_grad;
+  }
+
+  template <>
+  void ResultAnalyzer<EigenMatrixSparse>::copyRow (jacobian_t& dst,
+                                                   size_type row_dst,
+                                                   const jacobian_t& src,
+                                                   size_type row_src) const
+  {
+    ROBOPTIM_ASSERT (row_src < src.rows ());
+    ROBOPTIM_ASSERT (row_dst < dst.rows ());
+
+    // FIXME: Eigen bug here
+    jacobian_t tmp = src.block (row_src, 0, 1, src.cols ());
+    copySparseBlock (dst, tmp, row_dst, 0);
+  }
+
+  template <typename T>
+  void ResultAnalyzer<T>::copyRow (jacobian_t& dst,
+                                   size_type row_dst,
+                                   const jacobian_t& src,
+                                   size_type row_src) const
+  {
+    dst.row (row_dst) = src.row (row_src);
+  }
+
+  template <>
+  typename ResultAnalyzer<EigenMatrixSparse>::gradient_t
+  inline ResultAnalyzer<EigenMatrixSparse>::gradLagrangian () const
+  {
+    gradient_t grad_L;
+
+    size_type n = pb_.function ().inputSize ();
+    size_type m = pb_.constraintsOutputSize ();
+    const argument_t& x = res_.x;
+
+    const differentiableFunction_t* diffObj
+      = pb_.function ().castInto<differentiableFunction_t> ();
+    grad_L = diffObj->gradient (x);
+
+    // Argument bounds
+    // Note: the following does not work
+    // grad_L += res_.lambda.segment (0, n).sparseView (0.);
+    for (size_type i = 0; i < n; ++i)
+    {
+      if (std::abs (res_.lambda[i]) > eps_)
+        grad_L.coeffRef (i) += res_.lambda[i];
+    }
+
+    // Constraints
+    if (m > 0)
+    {
+      // TODO: avoid temporary here (used for storage order mismatch)
+      jacobian_t sparseLambda = res_.lambda.sparseView ();
+      gradient_t tmp = sparseLambda.block (n, 0, m, 1).transpose () * jac_;
+      grad_L += tmp;
+    }
+
+    return grad_L;
+  }
+
+  template <typename T>
+  typename ResultAnalyzer<T>::gradient_t
+  ResultAnalyzer<T>::gradLagrangian () const
+  {
+    gradient_t grad_L;
+
+    size_type n = pb_.function ().inputSize ();
+    size_type m = pb_.constraintsOutputSize ();
+    const argument_t& x = res_.x;
+
+    const differentiableFunction_t* diffObj
+      = pb_.function ().template castInto<differentiableFunction_t> ();
+    grad_L = diffObj->gradient (x);
+
+    // Argument bounds
+    grad_L += res_.lambda.segment (0, n);
+
+    // Constraints
+    if (m > 0)
+      grad_L += res_.lambda.segment (n, m).transpose () * jac_;
+
+    return grad_L;
   }
 } // end of namespace roboptim
 

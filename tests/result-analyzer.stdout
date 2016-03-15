@@ -1,4 +1,5 @@
 x = [2](0,0)
+λ = [4](0,0,0,1)
 LICQ conditions: not satisfied
   rank: 0
   max_rank: 1
@@ -12,6 +13,7 @@ Null gradient condition: not satisfied
   - Constraint: x * x (differentiable function)
     Null gradient indices: 0
 x = [2](0,3)
+λ = [4](1,1,-1,1)
 LICQ conditions: not satisfied
   rank: 1
   max_rank: 2
@@ -23,6 +25,7 @@ KKT conditions: not satisfied
   Dual feasible: true
 Null gradient condition: satisfied
 x = [2](-1,1)
+λ = [4](1,1,-1,1)
 LICQ conditions: satisfied
   rank: 1
   max_rank: 1

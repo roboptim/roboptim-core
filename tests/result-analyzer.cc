@@ -24,8 +24,8 @@
 
 using namespace roboptim;
 
-// TODO: enable sparse tests
-typedef boost::mpl::list< ::roboptim::EigenMatrixDense> functionTypes_t;
+typedef boost::mpl::list< ::roboptim::EigenMatrixDense,
+                          ::roboptim::EigenMatrixSparse> functionTypes_t;
 
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
@@ -142,6 +142,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
     ResultAnalyzer<T> ra (pb, res);
 
     (*output) << "x = " << res.x << std::endl;
+    (*output) << "λ = " << res.lambda << std::endl;
 
     typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
     BOOST_CHECK (!licq);
@@ -165,6 +166,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
     ResultAnalyzer<T> ra (pb, res);
 
     (*output) << "x = " << res.x << std::endl;
+    (*output) << "λ = " << res.lambda << std::endl;
 
     typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
     BOOST_CHECK (!licq);
@@ -190,6 +192,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (result_analyzer, T, functionTypes_t)
     ResultAnalyzer<T> ra (pb, res);
 
     (*output) << "x = " << res.x << std::endl;
+    (*output) << "λ = " << res.lambda << std::endl;
 
     typename ResultAnalyzer<T>::LICQData licq = ra.checkLICQ ();
     BOOST_CHECK (licq);
