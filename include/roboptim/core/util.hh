@@ -172,9 +172,9 @@ namespace roboptim
   /// \param startRow start row of the block in m where b will be copied.
   /// \param startCol start col of the block in m where b will be copied.
   /// \param compress whether to compress the sparse matrix at the end.
-  template <typename U>
+  template <typename M, typename B>
   void copySparseBlock
-  (U& m, const U& b,
+  (M& m, const B& b,
    Function::size_type startRow, Function::size_type startCol,
    bool compress = false);
 

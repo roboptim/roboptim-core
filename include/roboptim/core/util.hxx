@@ -120,15 +120,15 @@ namespace roboptim
     return demangle (typeid (T).name ());
   }
 
-  template <typename U>
+  template <typename M, typename B>
   void copySparseBlock
-  (U& matrix,
-   const U& block,
+  (M& matrix,
+   const B& block,
    Function::size_type startRow, Function::size_type startCol,
    bool compress)
   {
-    typedef U matrix_t;
-    typedef typename U::Index index_t;
+    typedef M matrix_t;
+    typedef typename M::Index index_t;
 
     // Make sure that the block fits in the matrix
     assert (startRow + block.rows () <= matrix.rows ());
