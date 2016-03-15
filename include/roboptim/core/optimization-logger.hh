@@ -24,6 +24,7 @@
 # include <boost/filesystem.hpp>
 # include <boost/filesystem/fstream.hpp>
 # include <boost/format.hpp>
+# include <boost/shared_ptr.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/type_traits/is_same.hpp>
 
@@ -46,7 +47,7 @@ namespace roboptim
     typedef typename solver_t::problem_t                       problem_t;
     typedef typename solver_t::problem_t::value_type           value_type;
     typedef typename solver_t::problem_t::size_type            size_type;
-    typedef typename solver_t::problem_t::vector_t             vector_t;
+    typedef typename solver_t::problem_t::result_t             result_t;
     typedef typename solver_t::solverState_t                   solverState_t;
     typedef typename solver_t::callback_t                      callback_t;
     typedef typename solver_t::problem_t::function_t::traits_t traits_t;
@@ -67,11 +68,11 @@ namespace roboptim
 	/// \brief Log the cost function's values.
 	LOG_COST = 1 << 1,
 	/// \brief Log the constraint values.
-	LOG_CONSTRAINTS = 1 << 2,
+	LOG_CONSTRAINT = 1 << 2,
 	/// \brief Log the constraint Jacobian matrices.
-	LOG_CONSTRAINTS_JACOBIAN = 1 << 3,
+	LOG_CONSTRAINT_JACOBIAN = 1 << 3,
 	/// \brief Log the constraint violation.
-	LOG_CONSTRAINTS_VIOLATION = 1 << 4,
+	LOG_CONSTRAINT_VIOLATION = 1 << 4,
 	/// \brief Log the time.
 	LOG_TIME = 1 << 5,
 	/// \brief Log the solver.
@@ -188,6 +189,19 @@ namespace roboptim
     /// \brief Output stream for journal.log.
     boost::filesystem::ofstream output_;
 
+    /// \brief Output stream for the argument vector.
+    boost::filesystem::ofstream xStream_;
+
+    /// \brief Output stream for the cost function.
+    boost::filesystem::ofstream costStream_;
+
+    /// \brief Vector of output streams for the constraint evolutions.
+    // TODO: use move operator when moving to C++11
+    std::vector<boost::shared_ptr<boost::filesystem::ofstream> > constraintStreams_;
+
+    /// \brief Output stream for the constraint violations.
+    boost::filesystem::ofstream constraintViolationStream_;
+
     /// \brief Callback iteration index.
     unsigned callbackCallId_;
 
@@ -204,10 +218,7 @@ namespace roboptim
     /// Note: this provides a way to use the logger in a callback multiplexer.
     bool selfRegister_;
 
-    std::vector<vector_t> x_;
     std::vector<value_type> costs_;
-    std::vector<value_type> constraintViolations_;
-    std::vector<std::vector<vector_t> > constraints_;
   };
 } // end of namespace roboptim
 

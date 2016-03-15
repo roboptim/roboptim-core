@@ -178,6 +178,10 @@ void testLogger
     BOOST_CHECK (boost::filesystem::exists (log_path));
     // Test whether journal.log exists
     BOOST_CHECK (boost::filesystem::exists (log_path / "journal.log"));
+    // Test whether constraint-violation.csv exists
+    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_CONSTRAINT_VIOLATION),
+                            boost::filesystem::exists
+                              (log_path / "constraint-violation-evolution.csv")));
 
     // Test whether appended strings are found
     std::ifstream journal ((log_path / "journal.log").string ().c_str ());
@@ -188,7 +192,7 @@ void testLogger
                             findRegex (buffer.str (), "- x:\n")));
     BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_COST),
                             findRegex (buffer.str (), "- f\\(x\\):\n")));
-    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_CONSTRAINTS_VIOLATION),
+    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_CONSTRAINT_VIOLATION),
                             findRegex (buffer.str (), "- viol_g\\(x\\):\n")));
     BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_TIME),
                             findRegex (buffer.str (),
