@@ -53,9 +53,31 @@ namespace roboptim
 
     typedef typename solver_t::problem_t::function_t           function_t;
     typedef typename function_t::matrix_t                      jacobian_t;
+    typedef typename function_t::argument_t                    argument_t;
     typedef typename function_t::const_argument_ref            const_argument_ref;
 
     typedef GenericDifferentiableFunction<traits_t> differentiableFunction_t;
+
+    /// \brief Requests supported by the logger.
+    /// TODO: use strongly typed enum when moving to C++11
+    enum LogRequestFlag
+      {
+	/// \brief Log the argument vector.
+	LOG_X = 1 << 0,
+	/// \brief Log the cost function's values.
+	LOG_COST = 1 << 1,
+	/// \brief Log the constraint values.
+	LOG_CONSTRAINTS = 1 << 2,
+	/// \brief Log the constraint Jacobian matrices.
+	LOG_CONSTRAINTS_JACOBIAN = 1 << 3,
+	/// \brief Log the constraint violation.
+	LOG_CONSTRAINTS_VIOLATION = 1 << 4,
+	/// \brief Log the time.
+	LOG_TIME = 1 << 5,
+	/// \brief Log the solver.
+	LOG_SOLVER = 1 << 6
+      };
+    typedef unsigned int logRequest_t;
 
     /// \brief Constructor.
     /// \param solver solver that will be logged.
@@ -63,9 +85,11 @@ namespace roboptim
     /// \param selfRegister whether the logger will register itself as a
     /// callback with the solver. Set this to false if you use it with a
     /// multiplexer.
+    /// \param requests request the logging of specific data.
     explicit OptimizationLogger (solver_t& solver,
 				 const boost::filesystem::path& path,
-				 bool selfRegister = true);
+				 bool selfRegister = true,
+                                 logRequest_t requests = FullLogging ());
 
     /// \brief Destructor.
     /// CSV files are written in this destructor.
@@ -83,6 +107,15 @@ namespace roboptim
     /// \param u object to print.
     template <typename U>
     OptimizationLogger<S>& operator<< (const U& u);
+
+    /// \brief Log everything.
+    static logRequest_t FullLogging ();
+
+    /// \brief Determine if a given request was made by the user.
+    ///
+    /// \param r request.
+    /// \return true if the user made this request.
+    bool isRequested (logRequest_t r) const;
 
   private:
     /// \brief Process constraints in the callback.
@@ -163,6 +196,9 @@ namespace roboptim
 
     /// \brief First time the logger was called.
     boost::posix_time::ptime firstTime_;
+
+    /// \brief Data log requests.
+    logRequest_t requests_;
 
     /// \brief Whether the logger should register itself to the solver.
     /// Note: this provides a way to use the logger in a callback multiplexer.
