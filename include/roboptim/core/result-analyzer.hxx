@@ -190,7 +190,6 @@ namespace roboptim
       return;
 
     size_type n = pb_.function ().inputSize ();
-    size_type m = pb_.constraintsOutputSize ();
 
     const argument_t& x = res_.x;
 
@@ -276,7 +275,6 @@ namespace roboptim
     }
 
     // Constraints bounds
-    size_type cstr_idx = 0;
     for (size_t cstr_idx = 0; cstr_idx < pb_.constraints ().size (); ++cstr_idx)
     {
       const typename problem_t::intervals_t&
@@ -340,8 +338,6 @@ namespace roboptim
     computeActiveJacobian ();
     findIneqIndices ();
 
-    size_type n = pb_.function ().inputSize ();
-    size_type m = pb_.constraintsOutputSize ();
     const argument_t& x = res_.x;
 
     // Compute the gradient of the Lagrangian
@@ -368,7 +364,7 @@ namespace roboptim
 
       // If lower bound constraint, i.e. 0 ≤ g, we need to flip λ's sign
       value_type sgn = 1.0;
-      if (isLowerBound_[ii]) sgn = -1.0;
+      if (isLowerBound_[i]) sgn = -1.0;
 
       // Dual feasible if λ ≥ 0 for g ≤ 0 (upper bound)
       //               or λ ≤ 0 for g ≥ 0 (lower bound)

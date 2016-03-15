@@ -415,8 +415,9 @@ namespace roboptim
 	      df = (*c)->template castInto<differentiableFunction_t> ();
             for (size_type i = 0; i < df->outputSize (); ++i)
 	      {
-		jac.row (global_row + i) *= scalingVect_[c_idx][i];
-	      }
+                jac.row(global_row + i) *=
+		  scalingVect_[c_idx][static_cast<size_t> (i)];
+              }
 	    global_row += df->outputSize ();
 	  }
         c_idx++;
