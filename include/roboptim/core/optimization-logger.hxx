@@ -233,6 +233,7 @@ namespace roboptim
 	      }
 
 	    cStream << "\n";
+	    cStream.flush ();
 	  }
       }
 
@@ -336,8 +337,11 @@ namespace roboptim
 	// Log value
         if (isRequested (LOG_CONSTRAINT))
 	  {
-            // Note: need to reopen stream to avoid running out of file handles
-	    boost::filesystem::ofstream cStream (constraintStreamPaths_[constraintId]);
+            // Note: need to reopen stream and append to avoid running out of
+            // file handles
+	    boost::filesystem::ofstream
+              cStream (path_ / constraintStreamPaths_[constraintId],
+                       std::ios::app);
 
             // TODO: avoid reallocations
 	    result_t constraintValue = pb.constraints ()[constraintId]->operator() (x);
@@ -348,6 +352,7 @@ namespace roboptim
 		  cStream << ", ";
 	      }
 	    cStream << "\n";
+	    cStream.flush ();
 
             if (!state.constraintViolation ())
 	      {
