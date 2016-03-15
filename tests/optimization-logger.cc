@@ -36,7 +36,7 @@ struct F1 : public Function
 {
   typedef Function parent_t;
 
-  F1 () : parent_t (4, 1, "a * d * (a + b + c) + d")
+  F1 () : parent_t (4, 1, "a * d * (a + b + c) + d\nDummy constraint")
   {}
 
   void impl_compute (result_ref result, const_argument_ref x)
@@ -53,7 +53,7 @@ struct F2 : public DifferentiableSparseFunction
 {
   typedef DifferentiableSparseFunction parent_t;
 
-  F2 () : parent_t (4, 1, "a + b + c + d")
+  F2 () : parent_t (4, 1, "a + b + c + d\nDummy constraint")
   {}
 
   void impl_compute (result_ref result, const_argument_ref x)

@@ -30,6 +30,7 @@
 # include <roboptim/core/config.hh>
 # include <roboptim/core/solver.hh>
 # include <roboptim/core/indent.hh>
+# include <roboptim/core/util.hh>
 
 namespace roboptim
 {
@@ -350,10 +351,6 @@ namespace roboptim
 	boost::filesystem::remove_all (constraintPath);
 	boost::filesystem::create_directories (constraintPath);
 
-	// Log name
-	boost::filesystem::ofstream nameStream (constraintPath / "name");
-	nameStream << pb.constraints ()[constraintId]->getName() << "\n";
-
 	// Log value
         if (isRequested (LOG_CONSTRAINTS))
 	  {
@@ -465,8 +462,27 @@ namespace roboptim
     boost::filesystem::create_directories (iterationPath);
 
     // Update journal
-    if (callbackCallId_ == 0 && isRequested (LOG_SOLVER))
-      output_ << solver_ << iendl;
+    if (callbackCallId_ == 0)
+      {
+	if (isRequested (LOG_SOLVER))
+	  output_ << solver_ << iendl;
+
+	// Log the names of the constraints once
+	if (isRequested (LOG_CONSTRAINTS) || isRequested (LOG_CONSTRAINTS_JACOBIAN))
+	  {
+	    boost::filesystem::ofstream nameStream (path_ / "constraint-names.csv");
+	    for (std::size_t i = 0; i < pb.constraints ().size (); ++i)
+	      {
+		// Replace newlines from name (if any)
+		std::vector<std::string> tokens
+		  = split (pb.constraints ()[i]->getName (), '\n');
+		std::string formatted_name = tokens[0];
+		for (std::size_t j = 1; j < tokens.size (); ++j)
+		  formatted_name += "\\n" + tokens[j];
+		nameStream << formatted_name << "\n";
+	      }
+	  }
+      }
 
     output_
       << std::string (80, '+') << iendl
