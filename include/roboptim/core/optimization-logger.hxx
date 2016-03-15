@@ -167,7 +167,7 @@ namespace roboptim
       output_ (),
       xStream_ (),
       costStream_ (),
-      constraintStreams_ (),
+      constraintStreamPaths_ (),
       constraintViolationStream_ (),
       callbackCallId_ (0),
       firstTime_ (boost::posix_time::microsec_clock::universal_time ()),
@@ -219,23 +219,20 @@ namespace roboptim
 
     if (isRequested (LOG_CONSTRAINT))
       {
-	constraintStreams_.reserve (pb.constraints ().size ());
+	constraintStreamPaths_.resize (pb.constraints ().size ());
 	for (std::size_t cIdx = 0; cIdx < pb.constraints ().size (); ++cIdx)
 	  {
-	    std::string filename = (boost::format ("constraint-%d-evolution.csv")
-				    % cIdx).str ();
-	    boost::shared_ptr<boost::filesystem::ofstream>
-	      cStream (new boost::filesystem::ofstream (path_ / filename));
+	    constraintStreamPaths_[cIdx]
+              = (boost::format ("constraint-%d-evolution.csv") % cIdx).str ();
+	    boost::filesystem::ofstream cStream (path_ / constraintStreamPaths_[cIdx]);
 
-	    for (size_type i = 0; i < pb.constraints ()[cIdx]->outputSize (); ++i)
+            for (size_type i = 0; i < pb.constraints ()[cIdx]->outputSize (); ++i)
 	      {
-		if (i > 0) (*cStream) << ", ";
-		(*cStream) << "output " << i;
+		if (i > 0) cStream << ", ";
+		cStream << "output " << i;
 	      }
 
-	    (*cStream) << "\n";
-	    cStream->flush ();
-	    constraintStreams_.push_back (cStream);
+	    cStream << "\n";
 	  }
       }
 
@@ -339,7 +336,8 @@ namespace roboptim
 	// Log value
         if (isRequested (LOG_CONSTRAINT))
 	  {
-	    boost::filesystem::ofstream& cStream = *constraintStreams_[constraintId];
+            // Note: need to reopen stream to avoid running out of file handles
+	    boost::filesystem::ofstream cStream (constraintStreamPaths_[constraintId]);
 
             // TODO: avoid reallocations
 	    result_t constraintValue = pb.constraints ()[constraintId]->operator() (x);
@@ -350,7 +348,6 @@ namespace roboptim
 		  cStream << ", ";
 	      }
 	    cStream << "\n";
-            cStream.flush ();
 
             if (!state.constraintViolation ())
 	      {
@@ -520,6 +517,7 @@ namespace roboptim
 	  << cost << decindent << iendl;
 
 	costStream_ << cost << "\n";
+	costStream_.flush ();
       }
 
     // constraints: only process if the problem is constrained

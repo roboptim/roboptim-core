@@ -24,7 +24,6 @@
 # include <boost/filesystem.hpp>
 # include <boost/filesystem/fstream.hpp>
 # include <boost/format.hpp>
-# include <boost/shared_ptr.hpp>
 # include <boost/mpl/vector.hpp>
 # include <boost/type_traits/is_same.hpp>
 
@@ -195,9 +194,10 @@ namespace roboptim
     /// \brief Output stream for the cost function.
     boost::filesystem::ofstream costStream_;
 
-    /// \brief Vector of output streams for the constraint evolutions.
-    // TODO: use move operator when moving to C++11
-    std::vector<boost::shared_ptr<boost::filesystem::ofstream> > constraintStreams_;
+    /// \brief Vector of filenames for the constraint evolutions.
+    /// Note: since there can be a lot of constraints, we cannot keep the
+    /// streams open, so we store the log paths instead.
+    std::vector<boost::filesystem::path> constraintStreamPaths_;
 
     /// \brief Output stream for the constraint violations.
     boost::filesystem::ofstream constraintViolationStream_;
