@@ -294,6 +294,9 @@ namespace roboptim
   inline typename ResultAnalyzer<EigenMatrixSparse>::size_type
   ResultAnalyzer<EigenMatrixSparse>::computeRank (jacobian_t& jac) const
   {
+    if (jac.nonZeros () == 0)
+      return 0;
+
     jac.makeCompressed ();
     Eigen::SparseQR<jacobian_t, Eigen::COLAMDOrdering<int> > qr (jac);
     return static_cast<size_type> (qr.rank ());
@@ -303,6 +306,9 @@ namespace roboptim
   typename ResultAnalyzer<T>::size_type
   ResultAnalyzer<T>::computeRank (jacobian_t& jac) const
   {
+    if (jac.size () == 0)
+      return 0;
+
     Eigen::FullPivLU<jacobian_t> lu (jac);
     return static_cast<size_type> (lu.rank ());
   }
