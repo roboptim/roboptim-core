@@ -298,6 +298,10 @@ namespace roboptim
     /// \return constraints bounds vector
     const intervalsVect_t& boundsVector () const;
 
+    /// \brief Retrieve constraints bounds vector.
+    /// \return constraints bounds vector
+    intervalsVect_t& boundsVector ();
+
     /// \brief Retrieve constraints scaling vector.
     /// \return constraints scaling vector
     const scalingVect_t& scalingVector () const;

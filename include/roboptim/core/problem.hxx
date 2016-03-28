@@ -273,6 +273,13 @@ namespace roboptim
   }
 
   template <typename T>
+  typename Problem<T>::intervalsVect_t&
+  Problem<T>::boundsVector ()
+  {
+    return boundsVect_;
+  }
+
+  template <typename T>
   const typename Problem<T>::intervalsVect_t&
   Problem<T>::boundsVector () const
   {
