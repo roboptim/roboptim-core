@@ -564,6 +564,9 @@ namespace roboptim
      argument_ref xEps) const
     {
       assert (adaptee_.inputSize () - colIdx > 0);
+      assert (resultEps_.size () == adaptee_.outputSize ());
+      assert (result_.size () == adaptee_.outputSize ());
+
       // Note: result_ = f(x) should have been called already
       xEps = argument;
       xEps[colIdx] += epsilon;
@@ -583,6 +586,9 @@ namespace roboptim
      argument_ref xEps) const
     {
       assert (this->adaptee_.inputSize () - colIdx > 0);
+      assert (this->resultEps_.size () == this->adaptee_.outputSize ());
+      assert (this->result_.size () == this->adaptee_.outputSize ());
+
       // Note: result_ = f(x) should have been called already
       xEps = argument;
       xEps[colIdx] += epsilon;
