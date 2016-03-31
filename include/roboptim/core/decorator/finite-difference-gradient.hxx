@@ -101,8 +101,8 @@ namespace roboptim
   {
     o << this->what () << incindent << iendl
       << "X: " << x_ << iendl
-      << "Analytical gradient: " << analyticalGradient_ << iendl
-      << "Finite difference gradient: " << finiteDifferenceGradient_
+      << "Analytical gradient: " << toDense (analyticalGradient_) << iendl
+      << "Finite difference gradient: " << toDense (finiteDifferenceGradient_)
       << iendl
       << "Max. delta: " << maxDelta_ << iendl
       << "Max. delta in component: " << maxDeltaComponent_ << iendl
@@ -228,8 +228,8 @@ namespace roboptim
   {
     o << this->what () << incindent << iendl
       << "X: " << x_ << iendl
-      << "Analytical Jacobian: " << analyticalJacobian_ << iendl
-      << "Finite difference Jacobian: " << finiteDifferenceJacobian_
+      << "Analytical Jacobian: " << toDense (analyticalJacobian_) << iendl
+      << "Finite difference Jacobian: " << toDense (finiteDifferenceJacobian_)
       << iendl
       << "Max. delta: " << maxDelta_ << iendl
       << "Max. delta in row: " << maxDeltaRow_ << iendl
