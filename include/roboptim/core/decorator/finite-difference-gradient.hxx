@@ -338,7 +338,7 @@ namespace roboptim
     typename GenericFiniteDifferenceGradient<T>::gradient_t fdgrad =
       fdfunction.gradient (x, functionId);
 
-    if (!checkGradient (function, functionId, x, threshold))
+    if (!allclose(grad, fdgrad, threshold, threshold))
       throw BadGradient<T> (x, grad, fdgrad, threshold);
   }
 
@@ -378,7 +378,7 @@ namespace roboptim
     typename GenericDifferentiableFunction<T>::jacobian_t fdjac =
       fdfunction.jacobian (x);
 
-    if (!checkJacobian (function, x, threshold))
+    if (!allclose(jac, fdjac, threshold, threshold))
       throw BadJacobian<T> (x, jac, fdjac, threshold);
   }
 
