@@ -566,8 +566,9 @@ namespace roboptim
       xEps = argument;
       xEps[colIdx] += epsilon;
       adaptee_ (resultEps_, xEps);
-      // Note: actual zeros won't be added to the sparse matrix
-      column = ((resultEps_ - result_) / epsilon).sparseView ();
+      // Note: actual zeros may also be added to the sparse matrix to keep the
+      // sparse pattern constant.
+      column = ((resultEps_ - result_) / epsilon).sparseView (-1., this->sparseEps_);
     }
 
     template <typename T>

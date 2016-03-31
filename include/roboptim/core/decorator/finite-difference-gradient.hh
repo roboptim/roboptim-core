@@ -157,11 +157,23 @@ namespace roboptim
       explicit Policy (const GenericFunction<T>& adaptee)
 	: adaptee_ (adaptee),
 	  column_ (adaptee.outputSize ()),
-	  gradient_ (adaptee.inputSize ())
+	  gradient_ (adaptee.inputSize ()),
+	  sparseEps_ (-1.)
       {}
 
       /// \brief Virtual destructor.
       virtual ~Policy () {}
+
+      /// \brief Get a reference to the epsilon used to converse dense to
+      /// sparse matrices. This is only relevant when dealing with sparse
+      /// functions.
+      /// Set to a negative value to keep zeros as well.
+      value_type& sparseEpsilon ()
+      {
+        return sparseEps_;
+      }
+
+    protected:
 
       virtual void computeGradient
       (value_type epsilon,
@@ -192,6 +204,9 @@ namespace roboptim
 
       /// \brief Vector storing temporary Jacobian row.
       mutable gradient_t gradient_;
+
+      /// \brief Threshold used for the conversion from dense to sparse matrix.
+      value_type sparseEps_;
     };
 
     /// \brief Fast finite difference gradient computation.
@@ -299,14 +314,20 @@ namespace roboptim
   /// This class takes a Function as its input and wraps it into a derivable
   /// function.
   ///
-  /// The one dimensional formula is:
+  /// The one dimensional formula with the Simple policy is:
   /// \f[f'(x)\approx {f(x+\epsilon)-f(x)\over \epsilon}\f]
   /// where \f$\epsilon\f$ is a constant given when calling the class
   /// constructor.
+  ///
+  /// For sparse functions, the default behavior is to treat all values as
+  /// nonzeros. That way, the function can be used in an optimization problem
+  /// (sparse solvers expect the full sparse pattern during the
+  /// initialization). The downside to this approach is the lower performance,
+  /// as the Jacobian matrix will be a dense matrix treated as a sparse one.
   template <typename T, typename FdgPolicy>
   class GenericFiniteDifferenceGradient
     : public GenericDifferentiableFunction<T>,
-      protected FdgPolicy
+      public FdgPolicy
   {
   public:
     ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
