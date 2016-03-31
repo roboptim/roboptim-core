@@ -115,10 +115,10 @@ namespace roboptim
     argument_t x_;
 
     /// \brief Analytical Jacobian.
-    gradient_t analyticalJacobian_;
+    jacobian_t analyticalJacobian_;
 
     /// \brief Jacobian computed through finite differences.
-    gradient_t finiteDifferenceJacobian_;
+    jacobian_t finiteDifferenceJacobian_;
 
     /// \brief Maximum error.
     value_type maxDelta_;
