@@ -18,6 +18,8 @@
 #ifndef ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX
 # define ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX
 
+# include <stdexcept>
+
 # include <boost/type_traits/is_same.hpp>
 # include <boost/mpl/same_as.hpp>
 # include <boost/format.hpp>
