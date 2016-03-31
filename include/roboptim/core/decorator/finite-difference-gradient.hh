@@ -400,7 +400,9 @@ namespace roboptim
    typename GenericDifferentiableFunction<T>::size_type functionId,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
-   finiteDifferenceThreshold);
+   finiteDifferenceThreshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps =
+   finiteDifferenceEpsilon);
 
   template <typename T>
   void
@@ -409,7 +411,9 @@ namespace roboptim
    typename GenericDifferentiableFunction<T>::size_type functionId,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
-   finiteDifferenceThreshold)
+   finiteDifferenceThreshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps =
+   finiteDifferenceEpsilon)
     throw (BadGradient<T>);
 
   /// \brief Check if a Jacobian is valid.
@@ -426,7 +430,9 @@ namespace roboptim
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
-   finiteDifferenceThreshold);
+   finiteDifferenceThreshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps =
+   finiteDifferenceEpsilon);
 
   template <typename T>
   void
@@ -434,7 +440,9 @@ namespace roboptim
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold =
-   finiteDifferenceThreshold)
+   finiteDifferenceThreshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps =
+   finiteDifferenceEpsilon)
     throw (BadJacobian<T>);
 
   /// Example shows finite differences gradient use.

@@ -306,10 +306,11 @@ namespace roboptim
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::size_type functionId,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
-   typename GenericDifferentiableFunction<T>::value_type threshold)
+   typename GenericDifferentiableFunction<T>::value_type threshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
-    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
     ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     typename GenericDifferentiableFunction<T>::gradient_t grad =
@@ -326,11 +327,12 @@ namespace roboptim
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::size_type functionId,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
-   typename GenericDifferentiableFunction<T>::value_type threshold)
+   typename GenericDifferentiableFunction<T>::value_type threshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps)
     throw (BadGradient<T>)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
-    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
     ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     typename GenericFiniteDifferenceGradient<T>::gradient_t grad =
@@ -347,10 +349,11 @@ namespace roboptim
   checkJacobian
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
-   typename GenericDifferentiableFunction<T>::value_type threshold)
+   typename GenericDifferentiableFunction<T>::value_type threshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
-    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
     ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     typename GenericDifferentiableFunction<T>::jacobian_t jac =
@@ -366,11 +369,12 @@ namespace roboptim
   checkJacobianAndThrow
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
-   typename GenericDifferentiableFunction<T>::value_type threshold)
+   typename GenericDifferentiableFunction<T>::value_type threshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps)
     throw (BadJacobian<T>)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
-    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
     ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     typename GenericDifferentiableFunction<T>::jacobian_t jac =
