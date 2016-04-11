@@ -20,7 +20,6 @@
 
 # include <roboptim/core/debug.hh>
 # include <roboptim/core/indent.hh>
-# include <roboptim/core/numeric-linear-function.hh>
 # include <roboptim/core/util.hh>
 # include <roboptim/core/portability.hh>
 
