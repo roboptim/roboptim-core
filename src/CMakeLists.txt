@@ -52,7 +52,6 @@ IF(MSVC)
   PKG_CONFIG_APPEND_CFLAGS (-DBUILDING_ROBOPTIM)
 ENDIF()
 
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 # Add required libs to pkg-config file.
@@ -79,7 +78,11 @@ ELSE()
 ENDIF(NOT LTDL_FOUND)
 
 SET_TARGET_PROPERTIES(roboptim-core PROPERTIES SOVERSION 3 VERSION 3.2.0)
-INSTALL(TARGETS roboptim-core DESTINATION ${CMAKE_INSTALL_LIBDIR})
+INSTALL(TARGETS roboptim-core 
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib
+        )
 
 
 # Dummy plug-in.

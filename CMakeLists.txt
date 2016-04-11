@@ -25,6 +25,7 @@ INCLUDE(cmake/eigen.cmake)
 SET(PROJECT_NAME roboptim-core)
 SET(PROJECT_DESCRIPTION "RobOptim Core")
 SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
+set(PROJECT_DEBUG_POSTFIX "_d")
 
 # Use MathJax for Doxygen formulae
 SET(DOXYGEN_USE_MATHJAX "YES")
@@ -196,7 +197,7 @@ PKG_CONFIG_APPEND_LIBS(roboptim-core)
 # Search for dependencies.
 SET(BOOST_COMPONENTS date_time filesystem system unit_test_framework)
 SEARCH_FOR_BOOST()
-ADD_REQUIRED_DEPENDENCY("eigen3 >= 3.2.0")
+SEARCH_FOR_EIGEN("eigen3 >= 3.2.0")
 ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")
 
 # Libtool dynamic loading
