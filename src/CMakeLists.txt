@@ -47,7 +47,7 @@ ENDIF()
 # Main library.
 ADD_LIBRARY(roboptim-core SHARED ${HEADERS} ${ROBOPTIM_CORE_SRC})
 SET_TARGET_PROPERTIES(roboptim-core PROPERTIES
-  COMPILE_FLAGS "-Droboptim_core_EXPORTS")
+  COMPILE_DEFINITIONS "roboptim_core_EXPORTS")
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core eigen3)
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
