@@ -44,7 +44,6 @@ Problem:
 [4,2]((300,0), (0,10), (1400,320), (0.0014,0.00032))
 [4,2]((300,0), (0,10), (60200,-3700), (0.0602,-0.0037))
 Suggested scaling parameters:
-  Argument scaling: 1, 1
   Constraint 0:
     Numeric linear function:
       A = [2,2]((300,0), (0,10))
@@ -63,7 +62,6 @@ Suggested scaling parameters:
       c = [1](0)
     Scaling: 1
 Suggested scaling parameters:
-  Argument scaling: 1, 1
   Constraint 0:
     Numeric linear function:
       A = [2,2]((300,0), (0,10))
