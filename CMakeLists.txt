@@ -14,7 +14,7 @@
 # along with roboptim-core.  If not, see <http://www.gnu.org/licenses/>.
 
 # Requires at least CMake 2.8 to configure the package.
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
 
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
