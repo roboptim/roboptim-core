@@ -73,9 +73,7 @@ ROBOPTIM_CORE_TEST(interval)
 ROBOPTIM_CORE_TEST(util)
 ROBOPTIM_CORE_TEST(terminal-color)
 ROBOPTIM_CORE_TEST(indent)
-IF(NOT WIN32)
-  ROBOPTIM_CORE_TEST(detail-utility)
-ENDIF(NOT WIN32)
+ROBOPTIM_CORE_TEST(detail-utility)
 ROBOPTIM_CORE_TEST(detail-autopromote)
 ROBOPTIM_CORE_TEST(detail-structured-input)
 ROBOPTIM_CORE_TEST(cache)
@@ -101,9 +99,7 @@ ROBOPTIM_CORE_TEST(solver)
 ROBOPTIM_CORE_TEST(solver-factory)
 
 # Compile the dummy solver in this test to bypass the plug-in system.
-IF(NOT WIN32)
-  ROBOPTIM_CORE_TEST(simple "${CMAKE_SOURCE_DIR}/src/dummy.cc")
-ENDIF(NOT WIN32)
+ROBOPTIM_CORE_TEST(simple "${CMAKE_SOURCE_DIR}/src/dummy.cc")
 
 # Results.
 ROBOPTIM_CORE_TEST(result)
@@ -120,16 +116,12 @@ ROBOPTIM_CORE_TEST(example)
 ROBOPTIM_CORE_TEST(plugin)
 
 # Dynamic loading mechanism with solver's last state
-IF(NOT WIN32)
- ROBOPTIM_CORE_TEST(plugin-laststate)
-ENDIF(NOT WIN32)
+ROBOPTIM_CORE_TEST(plugin-laststate)
 
 # Callbacks.
 ROBOPTIM_CORE_TEST(solver-state)
 ROBOPTIM_CORE_TEST(optimization-logger)
-IF(NOT WIN32)
-  ROBOPTIM_CORE_TEST(multiplexer)
-ENDIF(NOT WIN32)
+ROBOPTIM_CORE_TEST(multiplexer)
 
 # Built-in mathematical functions.
 ROBOPTIM_CORE_TEST(function-constant)
@@ -139,23 +131,18 @@ ROBOPTIM_CORE_TEST(function-sin)
 ROBOPTIM_CORE_TEST(function-polynomial)
 
 # Sum Of C1 Squares.
-IF(NOT WIN32)
-  ROBOPTIM_CORE_TEST(sum-of-c1-squares)
-ENDIF(NOT WIN32)
+ROBOPTIM_CORE_TEST(sum-of-c1-squares)
 
 # Decorators.
-IF(NOT WIN32)
-  ROBOPTIM_CORE_TEST(decorator-cached-function)
-ENDIF(NOT WIN32)
+ROBOPTIM_CORE_TEST(decorator-cached-function)
+
 ROBOPTIM_CORE_TEST(decorator-finite-difference-gradient)
 ROBOPTIM_CORE_TEST(decorator-finite-difference-jacobian)
 
 # Operators.
 ROBOPTIM_CORE_TEST(operator-bind)
 ROBOPTIM_CORE_TEST(operator-chain)
-IF(NOT WIN32)
-  ROBOPTIM_CORE_TEST(operator-concatenate)
-ENDIF(NOT WIN32)
+ROBOPTIM_CORE_TEST(operator-concatenate)
 ROBOPTIM_CORE_TEST(operator-derivative)
 ROBOPTIM_CORE_TEST(operator-map)
 ROBOPTIM_CORE_TEST(operator-minus)
