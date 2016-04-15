@@ -375,6 +375,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (finite_difference_gradient, T, functionTypes_t)
     T,
     finiteDifferenceGradientPolicies::Simple<T> >
     p_fd (p, 10.);
+  p_fd.sparseEpsilon () = -1.;
 
   Function::discreteInterval_t interval (-100., 100., 1.);
 

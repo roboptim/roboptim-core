@@ -20,7 +20,6 @@
 
 # include <roboptim/core/debug.hh>
 # include <roboptim/core/indent.hh>
-# include <roboptim/core/numeric-linear-function.hh>
 # include <roboptim/core/util.hh>
 # include <roboptim/core/portability.hh>
 
@@ -123,9 +122,9 @@ namespace roboptim
 // Explicit template instantiations for dense and sparse matrices.
 # ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
   ROBOPTIM_ALLOW_ATTRIBUTES_ON
-  extern template class ROBOPTIM_DLLAPI
+  extern template class ROBOPTIM_CORE_DLLAPI
     GenericNumericLinearFunction<EigenMatrixDense>;
-  extern template class ROBOPTIM_DLLAPI
+  extern template class ROBOPTIM_CORE_DLLAPI
     GenericNumericLinearFunction<EigenMatrixSparse>;
   ROBOPTIM_ALLOW_ATTRIBUTES_OFF
 # endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE

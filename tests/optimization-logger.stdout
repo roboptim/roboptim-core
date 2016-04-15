@@ -1,10 +1,13 @@
 Problem:
-  a * d * (a + b + c) + d (not differentiable)
+  a * d * (a + b + c) + d
+  Dummy constraint (not differentiable)
+  Objective scaling: 1
   Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   Number of constraints: 1
   Constraint 0
-      a * d * (a + b + c) + d (not differentiable)
+      a * d * (a + b + c) + d
+      Dummy constraint (not differentiable)
       Bounds: (-1, 1)
       Scaling: 1
       Initial value: [1](0)
@@ -15,12 +18,15 @@ Problem:
 Solver:
   Plugin: dummy-laststate
   Problem:
-    a * d * (a + b + c) + d (not differentiable)
+    a * d * (a + b + c) + d
+    Dummy constraint (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     Number of constraints: 1
     Constraint 0
-        a * d * (a + b + c) + d (not differentiable)
+        a * d * (a + b + c) + d
+        Dummy constraint (not differentiable)
         Bounds: (-1, 1)
         Scaling: 1
         Initial value: [1](0)
@@ -37,12 +43,15 @@ Solver:
     dummy-parameter5 (dummy boolean): false
 ---
 Problem:
-  a + b + c + d (differentiable function)
+  a + b + c + d
+  Dummy constraint (differentiable function)
+  Objective scaling: 1
   Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   Number of constraints: 1
   Constraint 0
-      a + b + c + d (differentiable function)
+      a + b + c + d
+      Dummy constraint (differentiable function)
       Bounds: (-1, 1)
       Scaling: 1
       Initial value: [1](0)
@@ -53,12 +62,59 @@ Problem:
 Solver:
   Plugin: dummy-d-sparse-laststate
   Problem:
-    a + b + c + d (differentiable function)
+    a + b + c + d
+    Dummy constraint (differentiable function)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     Number of constraints: 1
     Constraint 0
-        a + b + c + d (differentiable function)
+        a + b + c + d
+        Dummy constraint (differentiable function)
+        Bounds: (-1, 1)
+        Scaling: 1
+        Initial value: [1](0)
+    Starting point: [4](0,0,0,0)
+    Starting value: [1](0)
+    Infinity value (for all functions): inf
+  Result:
+    Solver error: The dummy solver always fail.
+  Parameters:
+    dummy-parameter (dummy parameter): 42
+    dummy-parameter2 (yet another dummy parameter): 3
+    dummy-parameter3 (just a dummy key): ...and a dummy value!
+    dummy-parameter4: [4](1,2,3,4)
+    dummy-parameter5 (dummy boolean): false
+---
+Problem:
+  a * d * (a + b + c) + d
+  Dummy constraint (not differentiable)
+  Objective scaling: 1
+  Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
+  Arguments scaling: 1, 1, 1, 1
+  Number of constraints: 1
+  Constraint 0
+      a * d * (a + b + c) + d
+      Dummy constraint (not differentiable)
+      Bounds: (-1, 1)
+      Scaling: 1
+      Initial value: [1](0)
+  Starting point: [4](0,0,0,0)
+  Starting value: [1](0)
+  Infinity value (for all functions): inf
+---
+Solver:
+  Plugin: dummy-laststate
+  Problem:
+    a * d * (a + b + c) + d
+    Dummy constraint (not differentiable)
+    Objective scaling: 1
+    Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
+    Arguments scaling: 1, 1, 1, 1
+    Number of constraints: 1
+    Constraint 0
+        a * d * (a + b + c) + d
+        Dummy constraint (not differentiable)
         Bounds: (-1, 1)
         Scaling: 1
         Initial value: [1](0)

@@ -2,6 +2,7 @@ Solver:
   Plugin: dummy-td
   Problem:
     0 (twice differentiable function)
+    Objective scaling: 1
     Arguments bounds: (0, 1)
     Arguments scaling: 1
     No constraints.

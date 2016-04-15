@@ -54,6 +54,7 @@ namespace roboptim
       boundsVect_ (),
       argumentBounds_ (),
       scalingVect_ (),
+      objectiveScaling_ (),
       argumentScaling_ (),
       argumentNames_ ()
   {
@@ -69,6 +70,7 @@ namespace roboptim
       boundsVect_ (),
       argumentBounds_ (),
       scalingVect_ (),
+      objectiveScaling_ (),
       argumentScaling_ (),
       argumentNames_ ()
   {
@@ -87,6 +89,8 @@ namespace roboptim
                             function_t::makeInfiniteInterval ());
 
     // Initialize scaling.
+    objectiveScaling_.resize (static_cast<std::size_t> (function_->outputSize ()),
+                              1.);
     argumentScaling_.resize (static_cast<std::size_t> (function_->inputSize ()),
                              1.);
   }
@@ -105,6 +109,7 @@ namespace roboptim
       boundsVect_ (pb.boundsVect_),
       argumentBounds_ (pb.argumentBounds_),
       scalingVect_ (pb.scalingVect_),
+      objectiveScaling_ (pb.objectiveScaling_),
       argumentScaling_ (pb.argumentScaling_),
       argumentNames_ (pb.argumentNames_)
   {
@@ -268,6 +273,13 @@ namespace roboptim
   }
 
   template <typename T>
+  typename Problem<T>::intervalsVect_t&
+  Problem<T>::boundsVector ()
+  {
+    return boundsVect_;
+  }
+
+  template <typename T>
   const typename Problem<T>::intervalsVect_t&
   Problem<T>::boundsVector () const
   {
@@ -300,6 +312,20 @@ namespace roboptim
   Problem<T>::scalesVector () const
   {
     return scalingVector ();
+  }
+
+  template <typename T>
+  typename Problem<T>::scaling_t&
+  Problem<T>::objectiveScaling ()
+  {
+    return objectiveScaling_;
+  }
+
+  template <typename T>
+  const typename Problem<T>::scaling_t&
+  Problem<T>::objectiveScaling () const
+  {
+    return objectiveScaling_;
   }
 
   template <typename T>
@@ -374,6 +400,45 @@ namespace roboptim
     return jac;
   }
 
+  template <typename T>
+  typename Problem<T>::jacobian_t
+  Problem<T>::scaledJacobian (const_argument_ref x) const
+  {
+    typedef GenericDifferentiableFunction<T> differentiableFunction_t;
+
+    // Compute the unscaled Jacobian matrix
+    jacobian_t jac = jacobian (x);
+
+    // Apply constraint scaling parameters
+    size_type global_row = 0;
+    size_t c_idx = 0;
+    for (typename constraints_t::const_iterator
+	   c = constraints_.begin (); c != constraints_.end (); ++c)
+      {
+	// If the constraint is differentiable
+        if ((*c)->template asType<differentiableFunction_t> ())
+	  {
+	    const differentiableFunction_t*
+	      df = (*c)->template castInto<differentiableFunction_t> ();
+            for (size_type i = 0; i < df->outputSize (); ++i)
+	      {
+                jac.row(global_row + i) *=
+		  scalingVect_[c_idx][static_cast<size_t> (i)];
+              }
+	    global_row += df->outputSize ();
+	  }
+        c_idx++;
+      }
+
+    // Apply argument scaling parameters
+    for (size_t i = 0; i < argumentScaling_.size (); ++i)
+      {
+	jac.col (static_cast<size_type> (i)) *= argumentScaling_[i];
+      }
+
+    return jac;
+  }
+
   template <>
   inline typename Problem<EigenMatrixSparse>::jacobian_t
   Problem<EigenMatrixSparse>::jacobian (const_argument_ref x) const
@@ -427,12 +492,9 @@ namespace roboptim
   }
 
   template <typename T>
-  template <int NORM>
-  typename Problem<T>::value_type
-  Problem<T>::constraintsViolation (const_argument_ref x) const
+  typename Problem<T>::result_t
+  Problem<T>::constraintsViolationVector (const_argument_ref x) const
   {
-    BOOST_STATIC_ASSERT (NORM != 0);
-
     size_type n = function_->inputSize ();
     size_type m = constraintsOutputSize ();
 
@@ -441,7 +503,7 @@ namespace roboptim
     size_type i = 0;
     result_t res;
 
-    for (size_type j = 0; j < n; ++j)
+    for (size_type j = 0; j < n; ++j, ++i)
       {
 	value_type inf_viol = 0.;
 	value_type sup_viol = 0.;
@@ -449,11 +511,12 @@ namespace roboptim
 	const interval_t& bounds = argumentBounds_[static_cast<size_t> (j)];
 
 	if (bounds.first != -Function::infinity ())
-	  inf_viol = std::max (bounds.first - x[j], 0.);
+	  inf_viol = std::min (x[j] - bounds.first, 0.);
 	if (bounds.second != Function::infinity ())
 	  sup_viol = std::max (x[j] - bounds.second, 0.);
 
-	violations[i++] = std::max (inf_viol, sup_viol);
+        if (inf_viol < 0.) violations[i] = inf_viol;
+        else violations[i] = sup_viol;
       }
 
     size_t c_idx = 0;
@@ -464,23 +527,35 @@ namespace roboptim
 	res.resize ((*c)->outputSize ());
 	(*(*c)) (res, x);
 
-	for (size_type j = 0; j < (*c)->outputSize (); ++j)
+	for (size_type j = 0; j < (*c)->outputSize (); ++j, ++i)
 	  {
 	    size_t jj = static_cast<size_t> (j);
 	    value_type inf_viol = 0.;
 	    value_type sup_viol = 0.;
 
 	    if (bounds[jj].first != -Function::infinity ())
-	      inf_viol = std::max (bounds[jj].first - res[j], 0.);
+	      inf_viol = std::min (res[j] - bounds[jj].first, 0.);
 	    if (bounds[jj].second != Function::infinity ())
 	      sup_viol = std::max (res[j] - bounds[jj].second, 0.);
 
-	    violations[i++] = std::max (inf_viol, sup_viol);
+	    if (inf_viol < 0.) violations[i] = inf_viol;
+	    else violations[i] = sup_viol;
 	  }
       }
 
-    return violations.template lpNorm<NORM> ();
+    return violations;
   }
+
+  template <typename T>
+  template <int NORM>
+  typename Problem<T>::value_type
+  Problem<T>::constraintsViolation (const_argument_ref x) const
+  {
+    BOOST_STATIC_ASSERT (NORM != 0);
+
+    return constraintsViolationVector (x).template lpNorm<NORM> ();
+  }
+
 
   namespace detail
   {
@@ -583,6 +658,8 @@ namespace roboptim
     // Function.
     o << this->function () << iendl;
 
+    // Objective scaling.
+    o << "Objective scaling: " << this->objectiveScaling () << iendl;
     // Arguments bounds.
     o << "Arguments bounds: " << this->argumentBounds () << iendl;
     // Arguments scaling.
@@ -652,8 +729,8 @@ namespace roboptim
 
 // Explicit template instantiations for dense and sparse matrices.
 # ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
-  extern template class ROBOPTIM_DLLAPI Problem<EigenMatrixDense>;
-  extern template class ROBOPTIM_DLLAPI Problem<EigenMatrixSparse>;
+  extern template class ROBOPTIM_CORE_DLLAPI Problem<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI Problem<EigenMatrixSparse>;
 # endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
 
 } // end of namespace roboptim

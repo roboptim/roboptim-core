@@ -30,6 +30,7 @@
 # include <roboptim/core/config.hh>
 # include <roboptim/core/solver.hh>
 # include <roboptim/core/indent.hh>
+# include <roboptim/core/util.hh>
 
 namespace roboptim
 {
@@ -38,14 +39,14 @@ namespace roboptim
     template <typename P>
     struct EvaluateConstraintViolation
     {
-      typedef typename P::vector_t        vector_t;
+      typedef typename P::result_t        result_t;
       typedef typename P::value_type      value_type;
       typedef typename P::size_type       size_type;
       typedef typename P::intervalsVect_t intervalsVect_t;
       typedef typename P::interval_t      interval_t;
 
       EvaluateConstraintViolation
-      (const std::vector<vector_t>& constraints,
+      (const std::vector<result_t>& constraints,
        const intervalsVect_t& bounds)
         : constraints_ (constraints),
           bounds_ (bounds)
@@ -84,7 +85,7 @@ namespace roboptim
       }
 
     private:
-      const std::vector<vector_t>& constraints_;
+      const std::vector<result_t>& constraints_;
       const intervalsVect_t& bounds_;
     };
 
@@ -158,13 +159,19 @@ namespace roboptim
   template <typename T>
   OptimizationLogger<T>::OptimizationLogger (solver_t& solver,
 					     const boost::filesystem::path& path,
-					     bool selfRegister)
+					     bool selfRegister,
+                                             logRequest_t requests)
     : parent_t ("Optimization logger"),
       solver_ (solver),
       path_ (path),
       output_ (),
+      xStream_ (),
+      costStream_ (),
+      constraintStreamPaths_ (),
+      constraintViolationStream_ (),
       callbackCallId_ (0),
       firstTime_ (boost::posix_time::microsec_clock::universal_time ()),
+      requests_ (requests),
       selfRegister_ (selfRegister)
   {
     lastTime_ = firstTime_;
@@ -176,7 +183,66 @@ namespace roboptim
     boost::filesystem::remove_all (path);
     boost::filesystem::create_directories (path);
 
+    const problem_t& pb = solver_.problem ();
+
+    // Open streams
     output_.open (path / "journal.log");
+
+    if (isRequested (LOG_X))
+      {
+	xStream_.open (path / "x-evolution.csv");
+
+	const typename solver_t::problem_t::names_t
+	  argumentNames = pb.argumentNames ();
+
+	// Whether to print X 0, X 1 etc... or user-provided names.
+	size_type n = pb.function ().inputSize ();
+	bool printDefaultX = (static_cast<size_type> (argumentNames.size ()) != n);
+
+	for (std::size_t i = 0; i < static_cast<std::size_t> (n); ++i)
+	  {
+	    if (i > 0) xStream_ << ", ";
+
+	    if (printDefaultX) xStream_ << "X_" << i;
+	    else xStream_ << argumentNames[i];
+	  }
+	xStream_ << "\n";
+	xStream_.flush ();
+      }
+
+    if (isRequested (LOG_CONSTRAINT_VIOLATION))
+      {
+	constraintViolationStream_.open (path / "constraint-violation-evolution.csv");
+	constraintViolationStream_ << "Constraint violation\n";
+	constraintViolationStream_.flush ();
+      }
+
+    if (isRequested (LOG_CONSTRAINT))
+      {
+	constraintStreamPaths_.resize (pb.constraints ().size ());
+	for (std::size_t cIdx = 0; cIdx < pb.constraints ().size (); ++cIdx)
+	  {
+	    constraintStreamPaths_[cIdx]
+              = (boost::format ("constraint-%d-evolution.csv") % cIdx).str ();
+	    boost::filesystem::ofstream cStream (path_ / constraintStreamPaths_[cIdx]);
+
+            for (size_type i = 0; i < pb.constraints ()[cIdx]->outputSize (); ++i)
+	      {
+		if (i > 0) cStream << ", ";
+		cStream << "output " << i;
+	      }
+
+	    cStream << "\n";
+	    cStream.flush ();
+	  }
+      }
+
+    if (isRequested (LOG_COST))
+      {
+	costStream_.open (path / "cost-evolution.csv");
+	costStream_ << "Cost\n";
+	costStream_.flush ();
+      }
 
     // Display banner.
     output_
@@ -185,8 +251,7 @@ namespace roboptim
       << " - current time: "
       << boost::posix_time::to_iso_extended_string (firstTime_) << "Z" << iendl
       << " - roboptim-core version: " ROBOPTIM_CORE_VERSION "\n"
-      << std::string (80, '*') << iendl
-      ;
+      << std::string (80, '*') << iendl;
   }
 
   template <typename T>
@@ -195,99 +260,23 @@ namespace roboptim
     // Unregister the callback, do not fail if this is impossible.
     if (selfRegister_) unregister ();
 
-    // Get current time
-    boost::posix_time::ptime t =
-      boost::posix_time::microsec_clock::universal_time();
-
     output_
       << std::string (80, '*') << iendl
-      << "RobOptim Optimization Logger" << iendl
-      << " - current time: "
-      << boost::posix_time::to_iso_extended_string(t) << "Z" << iendl
-      << " - total elapsed time: "
-      << (t - firstTime_) << iendl
-      << std::string (80, '*') << iendl
-      ;
+      << "RobOptim Optimization Logger" << iendl;
 
-    // Cost evolution over time.
-    {
-      boost::filesystem::ofstream streamCost (path_ / "cost-evolution.csv");
-      streamCost << "Cost\n";
-      for (std::size_t i = 0; i < costs_.size (); ++i)
-	streamCost << costs_[i] << "\n";
-    }
-
-    // Constraint violation evolution over time.
-    if (!constraintViolations_.empty ())
+    if (isRequested (LOG_TIME))
       {
-	boost::filesystem::ofstream streamCstrViol
-	  (path_ / "constraint-violation-evolution.csv");
-	streamCstrViol << "Constraint violation\n";
-	for (std::size_t i = 0; i < constraintViolations_.size (); ++i)
-	  streamCstrViol << constraintViolations_[i] << "\n";
+	// Get current time
+	boost::posix_time::ptime t =
+	  boost::posix_time::microsec_clock::universal_time();
+
+	output_
+	  << " - current time: "
+	  << boost::posix_time::to_iso_extended_string(t) << "Z" << iendl
+	  << " - total elapsed time: "
+	  << (t - firstTime_) << iendl;
       }
-
-    // X evolution over time.
-    {
-      boost::filesystem::ofstream streamX (path_ / "x-evolution.csv");
-      const typename solver_t::problem_t::names_t
-	argumentNames = solver_.problem ().argumentNames ();
-
-      // Whether to print X 0, X 1 etc... or user-provided names.
-      bool printDefaultX = (static_cast<size_type> (argumentNames.size ())
-			    != solver_.problem ().function ().inputSize ());
-
-      if (!x_.empty ())
-	{
-	  for (std::size_t i = 0;
-	       i < static_cast<std::size_t> (x_[0].size ()); ++i)
-	    {
-	      if (i > 0)
-		streamX << ", ";
-	      if (printDefaultX)
-		streamX << "X_" << i;
-	      else streamX << argumentNames[i];
-	    }
-	  streamX << "\n";
-	  for (std::size_t nIter = 0; nIter < x_.size (); ++nIter)
-	    {
-	      for (size_type i = 0; i < x_[nIter].size (); ++i)
-		{
-		  if (i > 0)
-		    streamX << ", ";
-		  streamX << x_[nIter][i];
-		}
-	      streamX << "\n";
-	    }
-	}
-    }
-
-
-    // Constraints evolution over time.
-    if (!constraints_.empty ())
-      for (std::size_t constraintId = 0; constraintId < constraints_[0].size ();
-	   ++constraintId)
-	{
-	  boost::filesystem::ofstream streamConstraint
-	    (path_ / (boost::format ("constraint-%d-evolution.csv") % constraintId).str ());
-	  for (size_type i = 0; i < constraints_[0][constraintId].size (); ++i)
-	    {
-	      if (i > 0)
-		streamConstraint << ", ";
-	      streamConstraint << "output " << i;
-	    }
-	  streamConstraint << "\n";
-	  for (std::size_t nIter = 0; nIter < constraints_.size (); ++nIter)
-	    {
-	      for (size_type i = 0; i < constraints_[nIter][constraintId].size (); ++i)
-		{
-		  if (i > 0)
-		    streamConstraint << ", ";
-		  streamConstraint << constraints_[nIter][constraintId][i];
-		}
-	      streamConstraint << "\n";
-	    }
-	}
+    output_ << std::string (80, '*') << iendl;
   }
 
   template <typename T>
@@ -317,6 +306,14 @@ namespace roboptim
   }
 
   template <typename T>
+  typename OptimizationLogger<T>::logRequest_t
+  OptimizationLogger<T>::FullLogging ()
+  {
+    return LOG_X | LOG_COST | LOG_CONSTRAINT | LOG_CONSTRAINT_JACOBIAN |
+      LOG_CONSTRAINT_VIOLATION | LOG_TIME | LOG_SOLVER;
+  }
+
+  template <typename T>
   void OptimizationLogger<T>::process_constraints
   (const typename solver_t::problem_t& pb,
    const typename solver_t::solverState_t& state,
@@ -324,8 +321,10 @@ namespace roboptim
    const_argument_ref x,
    value_type& cstrViol)
   {
+    // Note: only relevant if violation is not provided
+    std::vector<result_t> constraintsOneIteration (pb.constraints ().size ());
+
     // constraints
-    std::vector<vector_t> constraintsOneIteration (pb.constraints ().size ());
     for (std::size_t constraintId = 0; constraintId < pb.constraints ().size ();
 	 ++constraintId)
       {
@@ -335,31 +334,42 @@ namespace roboptim
 	boost::filesystem::remove_all (constraintPath);
 	boost::filesystem::create_directories (constraintPath);
 
-	// Log name
-	boost::filesystem::ofstream nameStream (constraintPath / "name");
-	nameStream << pb.constraints ()[constraintId]->getName() << "\n";
 	// Log value
-	boost::filesystem::ofstream
-	  constraintValueStream (constraintPath / "value.csv");
-
-	vector_t constraintValue = pb.constraints ()[constraintId]->operator() (x);
-	for (size_type i = 0; i < constraintValue.size (); ++i)
+        if (isRequested (LOG_CONSTRAINT))
 	  {
-	    constraintValueStream << constraintValue[i];
-	    if (i < constraintValue.size () - 1)
-	      constraintValueStream << ", ";
+            // Note: need to reopen stream and append to avoid running out of
+            // file handles
+	    boost::filesystem::ofstream
+              cStream (path_ / constraintStreamPaths_[constraintId],
+                       std::ios::app);
+
+            // TODO: avoid reallocations
+	    result_t constraintValue = pb.constraints ()[constraintId]->operator() (x);
+	    for (size_type i = 0; i < constraintValue.size (); ++i)
+	      {
+		cStream << constraintValue[i];
+		if (i < constraintValue.size () - 1)
+		  cStream << ", ";
+	      }
+	    cStream << "\n";
+	    cStream.flush ();
+
+            if (!state.constraintViolation ())
+	      {
+		constraintsOneIteration[constraintId] = constraintValue;
+	      }
 	  }
-	constraintValueStream << "\n";
-	constraintsOneIteration[constraintId] = constraintValue;
 
 	// Log the Jacobian (if the function is differentiable)
-	::roboptim::detail::LogJacobianConstraint<problem_t> jac(x, constraintPath);
-	jac(pb.constraints ()[constraintId]);
+        if (isRequested (LOG_CONSTRAINT_JACOBIAN))
+	  {
+	    ::roboptim::detail::LogJacobianConstraint<problem_t> jac(x, constraintPath);
+	    jac(pb.constraints ()[constraintId]);
+	  }
       }
-    constraints_.push_back (constraintsOneIteration);
 
     // constraint violation: if the vector of constraints is not empty
-    if (!pb.constraints (). empty ())
+    if (!pb.constraints ().empty ())
       {
 	// if the constraint violation was not given by the solver
 	if (!state.constraintViolation ())
@@ -369,10 +379,12 @@ namespace roboptim
 	      evalCstrViol (constraintsOneIteration, pb.boundsVector ());
 	    cstrViol = evalCstrViol.uniformNorm ();
 	  }
-	constraintViolations_.push_back (cstrViol);
 
-	boost::filesystem::ofstream streamCstrViol (iterationPath / "constraint-violation");
-	streamCstrViol << cstrViol << "\n";
+        if (isRequested (LOG_CONSTRAINT_VIOLATION))
+	  {
+	    constraintViolationStream_ << cstrViol << "\n";
+	    constraintViolationStream_.flush ();
+	  }
 
 	output_ << "- viol_g(x):" << incindent << iendl
 		<< cstrViol << decindent << iendl;
@@ -441,56 +453,93 @@ namespace roboptim
     boost::filesystem::remove_all (iterationPath);
     boost::filesystem::create_directories (iterationPath);
 
-    // Compute intermediary values.
-    // - Store X
-    const_argument_ref x = state.x ();
-    x_.push_back (x);
-    // - Get current time
-    boost::posix_time::ptime t =
-      boost::posix_time::microsec_clock::universal_time ();
-    // - Current cost
-    value_type cost;
-    if (!state.cost ())
-      cost = pb.function ()(x)[0];
-    else cost = *state.cost ();
-    costs_.push_back (cost);
-    // - Current constraint violation
-    value_type cstrViol;
-    if (!state.constraintViolation ())
-      cstrViol = 0;
-    else cstrViol = *state.constraintViolation ();
-
     // Update journal
     if (callbackCallId_ == 0)
-      output_ << solver_ << iendl;
+      {
+	if (isRequested (LOG_SOLVER))
+	  output_ << solver_ << iendl;
+
+	// Log the names of the constraints once
+	if (isRequested (LOG_CONSTRAINT) || isRequested (LOG_CONSTRAINT_JACOBIAN))
+	  {
+	    boost::filesystem::ofstream nameStream (path_ / "constraint-names.csv");
+	    for (std::size_t i = 0; i < pb.constraints ().size (); ++i)
+	      {
+		// Replace newlines from name (if any)
+		std::vector<std::string> tokens
+		  = split (pb.constraints ()[i]->getName (), '\n');
+		std::string formatted_name = tokens[0];
+		for (std::size_t j = 1; j < tokens.size (); ++j)
+		  formatted_name += "\\n" + tokens[j];
+		nameStream << formatted_name << "\n";
+	      }
+	  }
+      }
 
     output_
       << std::string (80, '+') << iendl
-      << boost::format ("Callback call number: %d") % callbackCallId_ << iendl
-      << "Elapsed time since last call: " << (t - lastTime_) << iendl
-      << "- x:" << incindent << iendl
-      << x << decindent << iendl
-      << "- f(x):" << incindent << iendl
-      << cost << decindent << iendl;
+      << boost::format ("Callback call number: %d") % callbackCallId_ << iendl;
 
-    // Log all data
-    // x
-    boost::filesystem::ofstream streamX (iterationPath / "x.csv");
-    for (size_type i = 0; i < x.size (); ++i)
+    // - Get current time
+    if (isRequested (LOG_TIME))
       {
-	streamX << x[i];
-	if (i < x.size () - 1)
-	  streamX << ", ";
-      }
-    streamX << "\n";
+	boost::posix_time::ptime t =
+	  boost::posix_time::microsec_clock::universal_time ();
 
-    // cost
-    boost::filesystem::ofstream streamCost (iterationPath / "cost");
-    streamCost << cost << "\n";
+	output_
+	  << "Elapsed time since last call: " << (t - lastTime_) << iendl;
+      }
+
+    // Store X
+    const argument_t& x = state.x ();
+    if (isRequested (LOG_X))
+      {
+	output_
+	  << "- x:" << incindent << iendl
+	  << x << decindent << iendl;
+
+	for (size_type i = 0; i < x.size (); ++i)
+	  {
+	    xStream_ << x[i];
+	    if (i < x.size () - 1)
+	      xStream_ << ", ";
+	  }
+	xStream_ << "\n";
+        xStream_.flush ();
+      }
+
+    // Current cost
+    if (isRequested (LOG_COST))
+      {
+        value_type cost;
+	if (!state.cost ())
+	  cost = pb.function ()(x)[0];
+	else cost = *state.cost ();
+	costs_.push_back (cost);
+
+	output_
+	  << "- f(x):" << incindent << iendl
+	  << cost << decindent << iendl;
+
+	costStream_ << cost << "\n";
+	costStream_.flush ();
+      }
 
     // constraints: only process if the problem is constrained
-    if (!pb.constraints ().empty ())
-      process_constraints (pb, state, iterationPath, x, cstrViol);
+    if ((isRequested (LOG_CONSTRAINT)
+         || isRequested (LOG_CONSTRAINT_JACOBIAN))
+        && !pb.constraints ().empty ())
+      {
+	// - Current constraint violation
+	value_type cstrViol = 0.;
+	if (isRequested (LOG_CONSTRAINT))
+	  {
+	    if (state.constraintViolation ())
+	      cstrViol = *state.constraintViolation ();
+	  }
+
+	process_constraints (pb, state, iterationPath, x, cstrViol);
+      }
 
     output_ << std::string (80, '-') << iendl;
   }
@@ -547,10 +596,16 @@ namespace roboptim
     return callbackCallId_;
   }
 
+  template <typename T>
+  bool OptimizationLogger<T>::isRequested (logRequest_t r) const
+  {
+    return (r & requests_) == r;
+  }
+
 // Explicit template instantiations for dense and sparse matrices.
 # ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
-  extern template class ROBOPTIM_DLLAPI OptimizationLogger<Solver<EigenMatrixDense> >;
-  extern template class ROBOPTIM_DLLAPI OptimizationLogger<Solver<EigenMatrixSparse> >;
+  extern template class ROBOPTIM_CORE_DLLAPI OptimizationLogger<Solver<EigenMatrixDense> >;
+  extern template class ROBOPTIM_CORE_DLLAPI OptimizationLogger<Solver<EigenMatrixSparse> >;
 # endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
 
 } // end of namespace roboptim

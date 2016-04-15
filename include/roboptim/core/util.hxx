@@ -22,9 +22,8 @@
 # include <stdexcept>
 # include <typeinfo>
 
-# include <boost/static_assert.hpp>
-
 # include <roboptim/core/sys.hh>
+# include <roboptim/core/debug.hh>
 # include <roboptim/core/differentiable-function.hh>
 
 namespace roboptim
@@ -120,19 +119,19 @@ namespace roboptim
     return demangle (typeid (T).name ());
   }
 
-  template <typename U>
+  template <typename M, typename B>
   void copySparseBlock
-  (U& matrix,
-   const U& block,
+  (M& matrix,
+   const B& block,
    Function::size_type startRow, Function::size_type startCol,
    bool compress)
   {
-    typedef U matrix_t;
-    typedef typename U::Index index_t;
+    typedef M matrix_t;
+    typedef typename M::Index index_t;
 
     // Make sure that the block fits in the matrix
-    assert (startRow + block.rows () <= matrix.rows ());
-    assert (startCol + block.cols () <= matrix.cols ());
+    ROBOPTIM_ASSERT (startRow + block.rows () <= matrix.rows ());
+    ROBOPTIM_ASSERT (startCol + block.cols () <= matrix.cols ());
 
     // Iterate over outer size
     for (int k = 0; k < block.outerSize (); ++k)
@@ -141,6 +140,12 @@ namespace roboptim
 	for (typename matrix_t::InnerIterator it (block.derived (), k);
 	     it; ++it)
           {
+	    ROBOPTIM_ASSERT_MSG (startRow + it.row () < matrix.rows (),
+                                 startRow + it.row () << " ≥ "
+                                 << matrix.rows ());
+	    ROBOPTIM_ASSERT_MSG (startCol + it.col () < matrix.cols (),
+                                 startCol + it.col () << " ≥ "
+                                 << matrix.cols ());
 	    matrix.coeffRef (static_cast<index_t> (startRow + it.row ()),
 			     static_cast<index_t> (startCol + it.col ()))
 	      = it.value ();
@@ -162,12 +167,13 @@ namespace roboptim
     typedef typename M::Index index_t;
 
     // Make sure that the block fits in the matrix
-    assert (startRow + b.rows () <= m.rows ());
-    assert (startCol + b.cols () <= m.cols ());
+    ROBOPTIM_ASSERT (startRow + b.rows () <= m.rows ());
+    ROBOPTIM_ASSERT (startCol + b.cols () <= m.cols ());
 # if __cplusplus < 201103L || !defined (__GXX_EXPERIMENTAL_CXX0X__)
-    BOOST_STATIC_ASSERT ( ROBOPTIM_UNUSED int (M::IsRowMajor) == int (B::IsRowMajor));
+    ROBOPTIM_ASSERT ( ROBOPTIM_UNUSED int (M::IsRowMajor) == int (B::IsRowMajor));
 # else
-    BOOST_STATIC_ASSERT_MSG (int (M::IsRowMajor) == int (B::IsRowMajor), "You should use the same Storage Order");
+    ROBOPTIM_ASSERT_MSG (int (M::IsRowMajor) == int (B::IsRowMajor),
+                         "You should use the same storage order");
 # endif
 
     // Iterate over outer size
@@ -198,8 +204,8 @@ namespace roboptim
 	// Iterator over inner size
 	for (; b_it && m_it; ++b_it, ++m_it)
           {
-            assert (m_it.row () == startRow_ + b_it.row ());
-            assert (m_it.col () == startCol_ + b_it.col ());
+            ROBOPTIM_ASSERT (m_it.row () == startRow_ + b_it.row ());
+            ROBOPTIM_ASSERT (m_it.col () == startCol_ + b_it.col ());
 
             m_it.valueRef () = b_it.value ();
           }

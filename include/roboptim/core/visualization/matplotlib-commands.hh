@@ -36,7 +36,7 @@ namespace roboptim
       /// \brief matplotlib import.
       ///
       /// This class represents a Python import command.
-      class ROBOPTIM_DLLAPI Import
+      class ROBOPTIM_CORE_DLLAPI Import
       {
       public:
         /// \brief Construct from a Python package.
@@ -64,10 +64,10 @@ namespace roboptim
       };
 
       /// \brief Import function that follows the style of commands.
-      ROBOPTIM_DLLAPI Import import (const std::string& packages);
+      ROBOPTIM_CORE_DLLAPI Import import (const std::string& packages);
 
       /// \brief Import function that follows the style of commands.
-      ROBOPTIM_DLLAPI Import import (const std::string& from,
+      ROBOPTIM_CORE_DLLAPI Import import (const std::string& from,
                                      const std::string& packages);
 
       /// \brief matplotlib command.
@@ -75,7 +75,7 @@ namespace roboptim
       /// A command represents a matplotlib command.
       /// The representation of the command as a string
       /// can be accessed through the #command() method.
-      class ROBOPTIM_DLLAPI Command
+      class ROBOPTIM_CORE_DLLAPI Command
       {
       public:
 	/// \brief Make a command from a string.
@@ -97,7 +97,7 @@ namespace roboptim
 
       /// \brief Make a matplotlib comment.
       /// \throw std::runtime_error
-      ROBOPTIM_DLLAPI Command comment (const char*);
+      ROBOPTIM_CORE_DLLAPI Command comment (const char*);
 
       /// \brief Make a matplotlib comment.
       /// \throw std::runtime_error
@@ -127,11 +127,11 @@ namespace roboptim
       /// \param var variable that will be set
       /// \param val new variable value
       /// \return matplotlib command
-      ROBOPTIM_DLLAPI Command set (const char* var, const char* val);
+      ROBOPTIM_CORE_DLLAPI Command set (const char* var, const char* val);
 
-      ROBOPTIM_DLLAPI Command show ();
-      ROBOPTIM_DLLAPI Command figure ();
-      ROBOPTIM_DLLAPI Command title (const char* argument);
+      ROBOPTIM_CORE_DLLAPI Command show ();
+      ROBOPTIM_CORE_DLLAPI Command figure ();
+      ROBOPTIM_CORE_DLLAPI Command title (const char* argument);
 
       /// @}
 

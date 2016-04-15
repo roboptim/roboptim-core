@@ -28,29 +28,29 @@ extern "C"
   using namespace roboptim;
   typedef DummySolverLastState::parent_t solver_t;
 
-  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ();
-  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ();
-  ROBOPTIM_DLLEXPORT solver_t* create
+  ROBOPTIM_CORE_DLLEXPORT std::size_t getSizeOfProblem ();
+  ROBOPTIM_CORE_DLLEXPORT const char* getTypeIdOfConstraintsList ();
+  ROBOPTIM_CORE_DLLEXPORT solver_t* create
   (const DummySolverLastState::problem_t& pb);
-  ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
+  ROBOPTIM_CORE_DLLEXPORT void destroy (solver_t* p);
 
-  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ()
+  ROBOPTIM_CORE_DLLEXPORT std::size_t getSizeOfProblem ()
   {
     return sizeof (solver_t::problem_t);
   }
 
-  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ()
+  ROBOPTIM_CORE_DLLEXPORT const char* getTypeIdOfConstraintsList ()
   {
     return typeid (solver_t::problem_t::constraintsList_t).name ();
   }
 
-  ROBOPTIM_DLLEXPORT solver_t* create
+  ROBOPTIM_CORE_DLLEXPORT solver_t* create
   (const DummySolverLastState::problem_t& pb)
   {
     return new DummySolverLastState (pb);
   }
 
-  ROBOPTIM_DLLEXPORT void destroy (solver_t* p)
+  ROBOPTIM_CORE_DLLEXPORT void destroy (solver_t* p)
   {
     delete p;
   }

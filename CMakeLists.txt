@@ -15,6 +15,7 @@
 
 # Requires at least CMake 2.8 to configure the package.
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
 INCLUDE(cmake/lapack.cmake)
@@ -111,6 +112,8 @@ SET(HEADERS
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/problem.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/quadratic-function.hxx
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-analyzer.hh
+  ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-analyzer.hxx
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result-with-warnings.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/result.hh
   ${CMAKE_SOURCE_DIR}/include/roboptim/core/scaling-helper.hh
@@ -151,10 +154,10 @@ SETUP_PROJECT()
 SET (ROBOPTIM_DO_NOT_CHECK_ALLOCATION TRUE CACHE BOOL
   "Do not check dynamic allocation of Eigen matrices")
 IF(ROBOPTIM_DO_NOT_CHECK_ALLOCATION)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DROBOPTIM_DO_NOT_CHECK_ALLOCATION")
+  ADD_DEFINITIONS(-DROBOPTIM_DO_NOT_CHECK_ALLOCATION)
   PKG_CONFIG_APPEND_CFLAGS (-DROBOPTIM_DO_NOT_CHECK_ALLOCATION)
 ELSE()
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DEIGEN_RUNTIME_NO_MALLOC")
+  ADD_DEFINITIONS(-DEIGEN_RUNTIME_NO_MALLOC)
   PKG_CONFIG_APPEND_CFLAGS(-DEIGEN_RUNTIME_NO_MALLOC)
 ENDIF()
 
@@ -177,7 +180,8 @@ SET(ROBOPTIM_PRECOMPILE_DENSE_SPARSE FALSE CACHE BOOL
   "Precompile code for dense and sparse matrices (C++11 required)")
 IF(ROBOPTIM_PRECOMPILE_DENSE_SPARSE)
   IF(USE_CXX11)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DROBOPTIM_PRECOMPILED_DENSE_SPARSE -std=c++11")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    ADD_DEFINITIONS(-DROBOPTIM_PRECOMPILED_DENSE_SPARSE)
     PKG_CONFIG_APPEND_CFLAGS(-DROBOPTIM_PRECOMPILED_DENSE_SPARSE)
   ELSE()
     MESSAGE(WARNING "C++11 is required for explicit template instantiation")
@@ -185,7 +189,7 @@ IF(ROBOPTIM_PRECOMPILE_DENSE_SPARSE)
 ENDIF()
 
 IF(MSVC)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_LEXICAL_CAST_ASSUME_C_LOCALE")
+  ADD_DEFINITIONS(-DBOOST_LEXICAL_CAST_ASSUME_C_LOCALE)
   PKG_CONFIG_APPEND_CFLAGS (-DBOOST_LEXICAL_CAST_ASSUME_C_LOCALE)
 ENDIF()
 
@@ -248,7 +252,7 @@ IF(NOT (STORAGE_ORDER STREQUAL "ColMajor" OR STORAGE_ORDER STREQUAL "RowMajor"))
   MESSAGE(FATAL_ERROR "Storage order should be either ColMajor or RowMajor.")
 ENDIF()
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DROBOPTIM_STORAGE_ORDER=${STORAGE_ORDER}")
+ADD_DEFINITIONS(-DROBOPTIM_STORAGE_ORDER=${STORAGE_ORDER})
 PKG_CONFIG_APPEND_CFLAGS (-DROBOPTIM_STORAGE_ORDER=${STORAGE_ORDER})
 
 OPTION(DISABLE_TESTS "Disable test programs" OFF)
@@ -259,7 +263,7 @@ IF(NOT DISABLE_TESTS)
   ADD_SUBDIRECTORY(tests)
 ELSE()
   MESSAGE(WARNING
-    "Tests should only be disabled for speficic cases. Do it at your own risk.")
+    "Tests should only be disabled for specific cases. Do it at your own risk.")
 ENDIF()
 
 SETUP_PROJECT_FINALIZE()

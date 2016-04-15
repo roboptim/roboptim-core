@@ -46,13 +46,13 @@ namespace roboptim
 
     /// \internal
     /// \brief Copy the content of an Eigen vector into a C array.
-    ROBOPTIM_DLLAPI void vector_to_array
+    ROBOPTIM_CORE_DLLAPI void vector_to_array
     (Function::value_type* dst,
      Function::const_vector_ref src);
 
     /// \internal
     /// \brief Copy the content of a C array into an Eigen vector.
-    ROBOPTIM_DLLAPI void array_to_vector (Function::vector_ref dst,
+    ROBOPTIM_CORE_DLLAPI void array_to_vector (Function::vector_ref dst,
 					  const Function::value_type* src);
 
     /// \internal
@@ -67,7 +67,7 @@ namespace roboptim
     /// \brief Helper class used to disable floating-point exceptions.
     /// Simply create an object in a scope where the exceptions should be
     /// disabled.
-    class ROBOPTIM_DLLAPI DisableFPE
+    class ROBOPTIM_CORE_DLLAPI DisableFPE
     {
     public:
       /// \brief Constructor, disabling floating-point exceptions and storing
@@ -109,45 +109,45 @@ namespace roboptim
   std::ostream& operator<< (std::ostream&, const Eigen::MatrixBase<T>&);
 
   /// \brief Demangle (if available).
-  ROBOPTIM_DLLAPI const std::string demangle(const char* name);
+  ROBOPTIM_CORE_DLLAPI const std::string demangle(const char* name);
 
   /// \brief Return a string describing the type of T.
   template <typename T>
   std::string typeString ();
 
   /// \brief Convert a sparse matrix into a dense matrix.
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::matrix_t sparse_to_dense
   (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m);
 
   /// \brief Convert a sparse vector into a dense vector.
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::vector_t sparse_to_dense
   (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref v);
 
   /// \brief Convert an input gradient to a dense gradient (e.g. for printing).
   /// \param g input gradient.
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::gradient_t toDense
   (GenericFunctionTraits<EigenMatrixSparse>::const_gradient_ref g);
 
   /// \brief Convert an input matrix to a dense matrix (e.g. for printing).
   /// \param m input matrix.
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::matrix_t toDense
   (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref m);
 
   /// \brief Convert an input matrix to a dense matrix (e.g. for printing).
   /// \param m input matrix.
   /// Note: since the input is a dense matrix, we just return it.
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref toDense
   (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref m);
 
   /// \brief Compare sparse vectors (matrices) using both relative and absolute
   /// tolerances.
   /// \see http://stackoverflow.com/a/15052131/1043187
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   bool allclose
   (const Eigen::SparseMatrix<double>& a,
    const Eigen::SparseMatrix<double>& b,
@@ -157,7 +157,7 @@ namespace roboptim
   /// \brief Compare dense vectors (matrices) using both relative and absolute
   /// tolerances.
   /// \see http://stackoverflow.com/a/15052131/1043187
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   bool allclose
   (const Eigen::Ref<const Eigen::MatrixXd>& a,
    const Eigen::Ref<const Eigen::MatrixXd>& b,
@@ -172,9 +172,9 @@ namespace roboptim
   /// \param startRow start row of the block in m where b will be copied.
   /// \param startCol start col of the block in m where b will be copied.
   /// \param compress whether to compress the sparse matrix at the end.
-  template <typename U>
+  template <typename M, typename B>
   void copySparseBlock
-  (U& m, const U& b,
+  (M& m, const B& b,
    Function::size_type startRow, Function::size_type startCol,
    bool compress = false);
 
@@ -188,6 +188,7 @@ namespace roboptim
   /// \param startCol start col of the block in m where b will be copied.
   /// \tparam M matrix type.
   /// \tparam B block type.
+  /// \throw std::runtime_error if the sparse pattern does not match.
   template <typename M, typename B>
   void updateSparseBlock
   (M& m, const B& b,
@@ -204,7 +205,7 @@ namespace roboptim
   /// \param s string to split.
   /// \param d delimiter used.
   /// \return vector of tokens.
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   std::vector<std::string> split (const std::string& s, char d);
 } // end of namespace roboptim.
 

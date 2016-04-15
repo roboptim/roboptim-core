@@ -20,69 +20,34 @@
 #include <typeinfo>
 
 #include "roboptim/core/function.hh"
-#include "roboptim/core/problem.hh"
 #include "roboptim/core/plugin/dummy.hh"
-
-namespace roboptim
-{
-  DummySolver::DummySolver (const problem_t& pb)
-    : parent_t (pb)
-  {
-    parameters_["dummy-parameter"].description = "dummy parameter";
-    parameters_["dummy-parameter"].value = 42.;
-
-    parameters_["dummy-parameter2"].description = "yet another dummy parameter";
-    parameters_["dummy-parameter2"].value = 3;
-
-    parameters_["dummy-parameter3"].description = "just a dummy key";
-    parameters_["dummy-parameter3"].value = std::string ("...and a dummy value!");
-
-    Parameter::vector_t v (4);
-    v << 1., 2., 3., 4.;
-    parameters_["dummy-parameter4"].value = v;
-
-    parameters_["dummy-parameter5"].description = "dummy boolean";
-    parameters_["dummy-parameter5"].value = false;
-  }
-
-  DummySolver::~DummySolver ()
-  {
-  }
-
-  void
-  DummySolver::solve ()
-  {
-    result_ = SolverError ("The dummy solver always fail.");
-  }
-
-} // end of namespace roboptim
 
 extern "C"
 {
-  using namespace roboptim;
+  typedef roboptim::GenericDummySolver<roboptim::EigenMatrixDense> DummySolver;
   typedef DummySolver::parent_t solver_t;
 
-  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ();
-  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ();
-  ROBOPTIM_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb);
-  ROBOPTIM_DLLEXPORT void destroy (solver_t* p);
+  ROBOPTIM_CORE_DLLEXPORT std::size_t getSizeOfProblem ();
+  ROBOPTIM_CORE_DLLEXPORT const char* getTypeIdOfConstraintsList ();
+  ROBOPTIM_CORE_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb);
+  ROBOPTIM_CORE_DLLEXPORT void destroy (solver_t* p);
 
-  ROBOPTIM_DLLEXPORT std::size_t getSizeOfProblem ()
+  ROBOPTIM_CORE_DLLEXPORT std::size_t getSizeOfProblem ()
   {
     return sizeof (solver_t::problem_t);
   }
 
-  ROBOPTIM_DLLEXPORT const char* getTypeIdOfConstraintsList ()
+  ROBOPTIM_CORE_DLLEXPORT const char* getTypeIdOfConstraintsList ()
   {
     return typeid (solver_t::problem_t::constraintsList_t).name ();
   }
 
-  ROBOPTIM_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb)
+  ROBOPTIM_CORE_DLLEXPORT solver_t* create (const DummySolver::problem_t& pb)
   {
     return new DummySolver (pb);
   }
 
-  ROBOPTIM_DLLEXPORT void destroy (solver_t* p)
+  ROBOPTIM_CORE_DLLEXPORT void destroy (solver_t* p)
   {
     delete p;
   }

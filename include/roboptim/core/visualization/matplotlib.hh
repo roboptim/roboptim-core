@@ -47,7 +47,7 @@ namespace roboptim
     /// this object through the \c << operator
     /// and this object can be put into an output stream
     /// using the \c << operator.
-    class ROBOPTIM_DLLAPI Matplotlib
+    class ROBOPTIM_CORE_DLLAPI Matplotlib
     {
     public:
       ~Matplotlib ();
@@ -143,7 +143,7 @@ namespace roboptim
     /// \param o output stream used for display
     /// \param ml matplotlib script to be displayed
     /// \return output stream
-    ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream&, const Matplotlib& ml);
+    ROBOPTIM_CORE_DLLAPI std::ostream& operator<< (std::ostream&, const Matplotlib& ml);
   } // end of namespace visualization.
 } // end of namespace roboptim.
 

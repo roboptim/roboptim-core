@@ -126,6 +126,9 @@ namespace roboptim
     typedef std::vector<value_type> scaling_t;
 
     /// \brief Scaling vector (deprecated typedef)
+    ///
+    /// \deprecated Deprecated since version 3.1. Use Problem<T>::scaling_t
+    /// instead.
     ROBOPTIM_CORE_DEPRECATED typedef scaling_t scales_t;
 
     /// \brief Vector of names (e.g. for arguments).
@@ -148,6 +151,9 @@ namespace roboptim
     typedef std::vector<scaling_t> scalingVect_t;
 
     /// \brief Vector of scaling vectors (deprecated typedef).
+    ///
+    /// \deprecated Deprecated since version 3.1. Use Problem<T>::scalingVect_t
+    /// instead.
     ROBOPTIM_CORE_DEPRECATED typedef scalingVect_t scalesVect_t;
 
     /// \brief Jacobian matrix type.
@@ -170,6 +176,9 @@ namespace roboptim
     /// cost function, which could reference stack variables...
     /// This prepares the transition to something safer (shared_ptr).
     /// \param cost cost function.
+    ///
+    /// \deprecated Deprecated since version 3.2. Use the shared_ptr
+    /// constructor instead.
     // TODO: remove after enough releases (deprecated in 3.2).
     ROBOPTIM_CORE_DEPRECATED explicit Problem (const function_t& cost);
 
@@ -203,6 +212,18 @@ namespace roboptim
     /// \return arguments bounds
     const intervals_t& argumentBounds () const;
 
+    /// \brief Retrieve objective scaling.
+    /// Objective scaling defines the scaling factors applied to the objective
+    /// function.
+    /// \return objective scaling
+    scaling_t& objectiveScaling ();
+
+    /// \brief Retrieve objective scaling.
+    /// Objective scaling defines the scaling factors applied to the objective
+    /// function.
+    /// \return objective scaling
+    const scaling_t& objectiveScaling () const;
+
     /// \brief Retrieve arguments scaling.
     /// Arguments scaling define which scale factor is applied for each argument.
     /// \return arguments scaling
@@ -215,9 +236,13 @@ namespace roboptim
     const scaling_t& argumentScaling () const;
 
     /// \brief Retrieve arguments scaling (deprecated version).
+    ///
+    /// \deprecated Deprecated since version 3.1. Use argumentScaling() instead.
     ROBOPTIM_CORE_DEPRECATED scales_t& argumentScales ();
 
     /// \brief Retrieve arguments scaling (deprecated version).
+    ///
+    /// \deprecated Deprecated since version 3.1. Use argumentScaling() instead.
     ROBOPTIM_CORE_DEPRECATED const scales_t& argumentScales () const;
 
     /// \brief Retrieve arguments names.
@@ -273,11 +298,17 @@ namespace roboptim
     /// \return constraints bounds vector
     const intervalsVect_t& boundsVector () const;
 
+    /// \brief Retrieve constraints bounds vector.
+    /// \return constraints bounds vector
+    intervalsVect_t& boundsVector ();
+
     /// \brief Retrieve constraints scaling vector.
     /// \return constraints scaling vector
     const scalingVect_t& scalingVector () const;
 
     /// \brief Retrieve constraints scaling vector (deprecated version).
+    ///
+    /// \deprecated Deprecated since version 3.1. Use scalingVector() instead.
     ROBOPTIM_CORE_DEPRECATED const scalesVect_t& scalesVector () const;
 
     /// \brief Return the output size of the problem's constraints.
@@ -317,10 +348,31 @@ namespace roboptim
     /// critical loop.
     ///
     /// \param x evaluation point.
-    /// \return jacobian matrix evaluated at x.
+    /// \return Jacobian matrix evaluated at x.
     jacobian_t jacobian (const_argument_ref x) const;
 
-    /// \brief Evaluate the sum of constraint violations for a given x.
+    /// \brief Evaluate the scaled Jacobian matrix of the problem for a given x.
+    /// Note: this is a helper method, and is not supposed to be used in any
+    /// critical loop. Both constraint and argument scaling parameters are
+    /// applied.
+    ///
+    /// \param x evaluation point.
+    /// \return scaled Jacobian matrix evaluated at x.
+    jacobian_t scaledJacobian (const_argument_ref x) const;
+
+    /// \brief Evaluate the vector of constraints violation for a given x.
+    /// This takes into account both argument bounds and constraint bounds.
+    /// If the output value is lower than the lower bound, the violation is
+    /// negative.
+    /// If the output value is higher than the upper bound, the violation is
+    /// positive.
+    /// If the output value is within the bounds, the violation is null.
+    ///
+    /// \param x evaluation point.
+    /// \return vector of constraint violation at x.
+    result_t constraintsViolationVector (const_argument_ref x) const;
+
+    /// \brief Evaluate the constraint violation for a given x.
     /// This takes into account both argument bounds and constraint bounds.
     ///
     /// \param x evaluation point.
@@ -364,6 +416,9 @@ namespace roboptim
 
     /// \brief Constraints scaling vector.
     scalingVect_t scalingVect_;
+
+    /// \brief Objective scaling.
+    scaling_t objectiveScaling_;
 
     /// \brief Arguments scaling.
     scaling_t argumentScaling_;

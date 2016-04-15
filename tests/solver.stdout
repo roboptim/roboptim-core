@@ -1,6 +1,7 @@
 Solver:
   Problem:
     x (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
@@ -11,6 +12,7 @@ Solver:
 Solver:
   Problem:
     x (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
@@ -26,6 +28,7 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
@@ -48,6 +51,7 @@ Result:
 Solver:
   Problem:
     x (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
@@ -65,6 +69,7 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
@@ -81,6 +86,7 @@ Solver:
 Solver:
   Problem:
     x (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
@@ -96,6 +102,7 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.

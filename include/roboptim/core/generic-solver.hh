@@ -44,7 +44,7 @@ namespace roboptim
   /// @{
 
   /// \brief Abstract interface satisfied by all solvers.
-  class ROBOPTIM_DLLAPI GenericSolver : public boost::noncopyable
+  class ROBOPTIM_CORE_DLLAPI GenericSolver : public boost::noncopyable
   {
   public:
     /// \brief Define the kind of solution which has been found.
@@ -53,7 +53,7 @@ namespace roboptim
       SOLVER_NO_SOLUTION,
       /// Solution has been found.
       SOLVER_VALUE,
-      /// The solver failed to found a solution.
+      /// The solver failed to find a solution.
       SOLVER_ERROR,
       /// Solution has been found but some problems happened.
       SOLVER_VALUE_WARNINGS
@@ -78,15 +78,18 @@ namespace roboptim
     /// \}
 
     /// \brief Force to restart the optimization.
+    ///
     /// Reset the internal mechanism to force the solution to be
-    /// re-computed next time getMinimum is called.
+    /// re-computed next time getMinimum() is called.
     void reset ();
 
     /// \brief Solve the problem.
-    /// Called automatically by getMinimum if required.
+    ///
+    /// Called automatically by getMinimum() if required.
     virtual void solve () = 0;
 
-    /// \brief Returns the function minimum
+    /// \brief Returns the function minimum.
+    ///
     /// This solves the problem automatically, if it has not yet been solved.
     /// \see minimumType()
     /// \see getMinimum()
@@ -147,7 +150,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param gs solver to be displayed
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+  ROBOPTIM_CORE_DLLAPI std::ostream& operator<< (std::ostream& o,
 					    const GenericSolver& gs);
 
 
@@ -156,7 +159,7 @@ namespace roboptim
   /// \param o output stream used for display
   /// \param ns NoSolution object, ignored
   /// \return output stream
-  ROBOPTIM_DLLAPI std::ostream& operator<< (std::ostream& o,
+  ROBOPTIM_CORE_DLLAPI std::ostream& operator<< (std::ostream& o,
 					    const NoSolution& ns);
 
 } // end of namespace roboptim

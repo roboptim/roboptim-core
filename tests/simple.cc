@@ -28,7 +28,7 @@
 using namespace roboptim;
 
 // Specify the solver that will be used.
-typedef DummySolver solver_t;
+typedef GenericDummySolver<EigenMatrixDense> solver_t;
 
 boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE (simple)
 
   // Instantiate the function and the problem.
   boost::shared_ptr<F> f = boost::make_shared<F> ();
-  DummySolver::problem_t pb (f);
+  solver_t::problem_t pb (f);
 
   (*output) << pb << std::endl;
 

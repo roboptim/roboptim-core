@@ -62,6 +62,7 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
   TARGET_LINK_LIBRARIES(${NAME} ${Boost_LIBRARIES})
 
   # Make sure the plugins will be found.
+  # Note: this does not append the environment variables!
   SET_PROPERTY(
     TEST ${NAME} PROPERTY ENVIRONMENT
     "LTDL_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/${CMAKE_BUILD_TYPE}:$ENV{LTDL_LIBRARY_PATH} "
@@ -105,6 +106,7 @@ ROBOPTIM_CORE_TEST(simple "${CMAKE_SOURCE_DIR}/src/dummy.cc")
 ROBOPTIM_CORE_TEST(result)
 ROBOPTIM_CORE_TEST(result-with-warnings)
 ROBOPTIM_CORE_TEST(solver-error)
+ROBOPTIM_CORE_TEST(result-analyzer)
 
 # Helpers.
 ROBOPTIM_CORE_TEST(scaling-helper)

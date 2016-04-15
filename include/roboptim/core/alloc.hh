@@ -32,7 +32,7 @@
 namespace roboptim
 {
   /// \brief Update the static variable used for Eigen::set_is_malloc_allowed.
-  ROBOPTIM_DLLAPI
+  ROBOPTIM_CORE_DLLAPI
   bool is_malloc_allowed_update (bool update = false, bool new_value = false);
 
   /// \brief Manage the calls to Eigen::set_is_malloc_allowed.

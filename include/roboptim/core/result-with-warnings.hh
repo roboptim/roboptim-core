@@ -19,7 +19,7 @@
 # define ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH
 
 # include <roboptim/core/result.hh>
-# include <roboptim/core/portability.hh>
+# include <roboptim/core/deprecated.hh>
 
 namespace roboptim
 {

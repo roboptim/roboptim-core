@@ -1,5 +1,6 @@
 Problem:
   a * d * (a + b + c) + d (not differentiable)
+  Objective scaling: 1
   Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   No constraints.
@@ -7,6 +8,7 @@ Problem:
   Infinity value (for all functions): inf
 Problem:
   a * d * (a + b + c) + d (not differentiable)
+  Objective scaling: 1
   Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   Number of constraints: 1
@@ -22,6 +24,7 @@ Problem:
 Solver:
   Problem:
     a * d * (a + b + c) + d (not differentiable)
+    Objective scaling: 1
     Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     Number of constraints: 1

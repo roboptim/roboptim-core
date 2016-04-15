@@ -46,20 +46,13 @@ ENDIF()
 
 # Main library.
 ADD_LIBRARY(roboptim-core SHARED ${HEADERS} ${ROBOPTIM_CORE_SRC})
-
-IF(MSVC)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILDING_ROBOPTIM")
-  PKG_CONFIG_APPEND_CFLAGS (-DBUILDING_ROBOPTIM)
-ENDIF()
-
+TARGET_COMPILE_OPTIONS(roboptim-core PUBLIC "-Droboptim_core_EXPORTS")
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 # Add required libs to pkg-config file.
 SET(ROBOPTIM_API_BOOST_LIBRARIES date_time system filesystem)
 IF(NOT WIN32)
-  FOREACH(lib ${ROBOPTIM_API_BOOST_LIBRARIES})
-    PKG_CONFIG_APPEND_LIBS(boost_${lib})
-  ENDFOREACH()
+  PKG_CONFIG_APPEND_BOOST_LIBS(${ROBOPTIM_API_BOOST_LIBRARIES})
 ENDIF(NOT WIN32)
 
 IF(ROBOPTIM_PRECOMPILE_DENSE_SPARSE)
@@ -97,6 +90,19 @@ IF(NOT APPLE)
 ENDIF()
 INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
 
+# Dummy-sparse plug-in.
+ADD_LIBRARY(roboptim-core-plugin-dummy-sparse MODULE dummy-sparse.cc)
+ADD_DEPENDENCIES(roboptim-core-plugin-dummy-sparse roboptim-core)
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy-sparse liblog4cxx)
+TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-sparse roboptim-core)
+SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-sparse PROPERTIES PREFIX "")
+
+IF(NOT APPLE)
+  SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-sparse
+    PROPERTIES VERSION 3.2.0 SOVERSION 3)
+ENDIF()
+INSTALL(TARGETS roboptim-core-plugin-dummy-sparse DESTINATION ${PLUGINDIR})
+
 # Dummy-laststate plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy-laststate MODULE dummy-laststate.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy-laststate roboptim-core)
@@ -108,7 +114,6 @@ IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate
     PROPERTIES VERSION 3.2.0 SOVERSION 3)
 ENDIF()
-INSTALL(TARGETS roboptim-core-plugin-dummy-laststate DESTINATION ${PLUGINDIR})
 
 # Dummy-laststate plug-in for differentiable sparse functions.
 ADD_LIBRARY(roboptim-core-plugin-dummy-d-sparse-laststate MODULE dummy-d-sparse-laststate.cc)
@@ -121,7 +126,6 @@ IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-d-sparse-laststate
     PROPERTIES VERSION 3.2.0 SOVERSION 3)
 ENDIF()
-INSTALL(TARGETS roboptim-core-plugin-dummy-d-sparse-laststate DESTINATION ${PLUGINDIR})
 
 # Dummy-td plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy-td MODULE dummy-td.cc)
@@ -134,7 +138,6 @@ IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td
     PROPERTIES VERSION 3.2.0 SOVERSION 3)
 ENDIF()
-INSTALL(TARGETS roboptim-core-plugin-dummy-td DESTINATION ${PLUGINDIR})
 
 IF(MSVC)
   INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/Debug/${PROJECT_NAME}${PROJECT_DEBUG_POSTFIX}.pdb" DESTINATION ${CMAKE_INSTALL_LIBDIR} CONFIGURATIONS Debug)

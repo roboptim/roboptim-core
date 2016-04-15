@@ -36,7 +36,7 @@ struct F1 : public Function
 {
   typedef Function parent_t;
 
-  F1 () : parent_t (4, 1, "a * d * (a + b + c) + d")
+  F1 () : parent_t (4, 1, "a * d * (a + b + c) + d\nDummy constraint")
   {}
 
   void impl_compute (result_ref result, const_argument_ref x)
@@ -53,7 +53,7 @@ struct F2 : public DifferentiableSparseFunction
 {
   typedef DifferentiableSparseFunction parent_t;
 
-  F2 () : parent_t (4, 1, "a + b + c + d")
+  F2 () : parent_t (4, 1, "a + b + c + d\nDummy constraint")
   {}
 
   void impl_compute (result_ref result, const_argument_ref x)
@@ -109,9 +109,16 @@ struct toString<DifferentiableSparseFunction>
   static char const* value () { return "-d-sparse"; }
 };
 
+template <typename T>
+bool testXOR (const T& a, const T& b)
+{
+  return !a != !b;
+}
+
 template <typename F>
 void testLogger
-(boost::shared_ptr<boost::test_tools::output_test_stream> output)
+(boost::shared_ptr<boost::test_tools::output_test_stream> output,
+ unsigned int requests)
 {
   // Specify the solver that will be used.
   typedef Solver<typename F::traits_t> solver_t;
@@ -140,39 +147,73 @@ void testLogger
   solver_t& solver = factory ();
 
   // Add optimization logger.
-  OptimizationLogger<solver_t>
-    logger (solver,
-            std::string ("/tmp/roboptim-core-tests/optimization-logger-")
-            + toString<F>::value ());
-
-  // Get the Boost.Variant minimum.
-  typename solver_t::result_t res = solver.minimum ();
-
-  // Get the "real" minimum.
-  solver.template getMinimum<SolverError> ();
-
-  // Display problem and solver.
-  (*output) << pb << std::endl
-            << "---" << std::endl
-            << solver << std::endl;
-
-  logger.append ("Append test 1");
-  logger << "Append test 2"
-         << solver << "\n";
-
-  // Test whether the logging directory exists
-  BOOST_CHECK (boost::filesystem::exists (logger.logPath ()));
-  // Test whether journal.log exists
-  BOOST_CHECK (boost::filesystem::exists (logger.logPath () / "journal.log"));
-
-  // Test whether appended strings are found
-  std::ifstream journal ((logger.logPath () / "journal.log").string ().c_str ());
+  // Note: scoped to trigger the destructor.
+  typedef OptimizationLogger<solver_t> logger_t;
   std::stringstream buffer;
-  buffer << journal.rdbuf();
+  boost::filesystem::path log_path;
+
+  {
+    logger_t logger (solver,
+        std::string ("/tmp/roboptim-core-tests/optimization-logger-")
+        + toString<F>::value (), true, requests);
+
+    // Get the Boost.Variant minimum.
+    typename solver_t::result_t res = solver.minimum ();
+
+    // Get the "real" minimum.
+    solver.template getMinimum<SolverError> ();
+
+    // Display problem and solver.
+    (*output) << pb << std::endl
+      << "---" << std::endl
+      << solver << std::endl;
+
+    logger.append ("Append test 1");
+    logger << "Append test 2"
+      << solver.problem () << "\n";
+
+    log_path = logger.logPath ();
+
+    // Test whether the logging directory exists
+    BOOST_CHECK (boost::filesystem::exists (log_path));
+    // Test whether journal.log exists
+    BOOST_CHECK (boost::filesystem::exists (log_path / "journal.log"));
+    // Test whether constraint-violation.csv exists
+    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_CONSTRAINT_VIOLATION),
+                            boost::filesystem::exists
+                              (log_path / "constraint-violation-evolution.csv")));
+
+    // Test whether appended strings are found
+    std::ifstream journal ((log_path / "journal.log").string ().c_str ());
+    // Load unfinished journal
+    buffer << journal.rdbuf();
+
+    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_X),
+                            findRegex (buffer.str (), "- x:\n")));
+    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_COST),
+                            findRegex (buffer.str (), "- f\\(x\\):\n")));
+    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_CONSTRAINT_VIOLATION),
+                            findRegex (buffer.str (), "- viol_g\\(x\\):\n")));
+    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_TIME),
+                            findRegex (buffer.str (),
+                                       "Elapsed time since last call:")));
+    BOOST_CHECK (! testXOR (logger.isRequested (logger_t::LOG_SOLVER),
+                            findRegex (buffer.str (), "Solver:\n")));
+
+    buffer.clear ();
+  }
+
+  // Load finalized journal
+  std::ifstream final_journal ((log_path / "journal.log").string ().c_str ());
+  buffer << final_journal.rdbuf();
+
+  // Note: triggered during the destructor of the logger
+  BOOST_CHECK (! testXOR ((logger_t::LOG_TIME & requests) == logger_t::LOG_TIME,
+                          findRegex (buffer.str (), " - total elapsed time:")));
 
   BOOST_CHECK (findRegex (buffer.str (), "Append test 1"));
   BOOST_CHECK (findRegex (buffer.str (), "Append test 2"));
-  BOOST_CHECK (findRegex (buffer.str (), "Solver error: The dummy solver always fail."));
+  BOOST_CHECK (findRegex (buffer.str (), "Problem:\n"));
 }
 
 BOOST_AUTO_TEST_CASE (plugin)
@@ -180,9 +221,12 @@ BOOST_AUTO_TEST_CASE (plugin)
   boost::shared_ptr<boost::test_tools::output_test_stream>
     output = retrievePattern ("optimization-logger");
 
-  testLogger<F1> (output);
+  typedef OptimizationLogger<Solver<F1::traits_t> > logger_t;
+  testLogger<F1> (output, logger_t::FullLogging ());
   (*output) << "---" << std::endl;
-  testLogger<F2> (output);
+  testLogger<F2> (output, logger_t::FullLogging ());
+  (*output) << "---" << std::endl;
+  testLogger<F1> (output, 0);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

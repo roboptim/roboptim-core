@@ -18,6 +18,8 @@
 #ifndef ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX
 # define ROBOPTIM_CORE_DECORATOR_FINITE_DIFFERENCE_GRADIENT_HXX
 
+# include <stdexcept>
+
 # include <boost/type_traits/is_same.hpp>
 # include <boost/mpl/same_as.hpp>
 # include <boost/format.hpp>
@@ -99,8 +101,8 @@ namespace roboptim
   {
     o << this->what () << incindent << iendl
       << "X: " << x_ << iendl
-      << "Analytical gradient: " << analyticalGradient_ << iendl
-      << "Finite difference gradient: " << finiteDifferenceGradient_
+      << "Analytical gradient: " << toDense (analyticalGradient_) << iendl
+      << "Finite difference gradient: " << toDense (finiteDifferenceGradient_)
       << iendl
       << "Max. delta: " << maxDelta_ << iendl
       << "Max. delta in component: " << maxDeltaComponent_ << iendl
@@ -226,8 +228,8 @@ namespace roboptim
   {
     o << this->what () << incindent << iendl
       << "X: " << x_ << iendl
-      << "Analytical Jacobian: " << analyticalJacobian_ << iendl
-      << "Finite difference Jacobian: " << finiteDifferenceJacobian_
+      << "Analytical Jacobian: " << toDense (analyticalJacobian_) << iendl
+      << "Finite difference Jacobian: " << toDense (finiteDifferenceJacobian_)
       << iendl
       << "Max. delta: " << maxDelta_ << iendl
       << "Max. delta in row: " << maxDeltaRow_ << iendl
@@ -304,10 +306,11 @@ namespace roboptim
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::size_type functionId,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
-   typename GenericDifferentiableFunction<T>::value_type threshold)
+   typename GenericDifferentiableFunction<T>::value_type threshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
-    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
     ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     typename GenericDifferentiableFunction<T>::gradient_t grad =
@@ -324,11 +327,12 @@ namespace roboptim
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::size_type functionId,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
-   typename GenericDifferentiableFunction<T>::value_type threshold)
+   typename GenericDifferentiableFunction<T>::value_type threshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps)
     throw (BadGradient<T>)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
-    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
     ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     typename GenericFiniteDifferenceGradient<T>::gradient_t grad =
@@ -336,7 +340,7 @@ namespace roboptim
     typename GenericFiniteDifferenceGradient<T>::gradient_t fdgrad =
       fdfunction.gradient (x, functionId);
 
-    if (!checkGradient (function, functionId, x, threshold))
+    if (!allclose(grad, fdgrad, threshold, threshold))
       throw BadGradient<T> (x, grad, fdgrad, threshold);
   }
 
@@ -345,10 +349,11 @@ namespace roboptim
   checkJacobian
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
-   typename GenericDifferentiableFunction<T>::value_type threshold)
+   typename GenericDifferentiableFunction<T>::value_type threshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
-    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
     ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     typename GenericDifferentiableFunction<T>::jacobian_t jac =
@@ -364,11 +369,12 @@ namespace roboptim
   checkJacobianAndThrow
   (const GenericDifferentiableFunction<T>& function,
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
-   typename GenericDifferentiableFunction<T>::value_type threshold)
+   typename GenericDifferentiableFunction<T>::value_type threshold,
+   typename GenericDifferentiableFunction<T>::value_type fd_eps)
     throw (BadJacobian<T>)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
-    GenericFiniteDifferenceGradient<T> fdfunction (function);
+    GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
     ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     typename GenericDifferentiableFunction<T>::jacobian_t jac =
@@ -376,7 +382,7 @@ namespace roboptim
     typename GenericDifferentiableFunction<T>::jacobian_t fdjac =
       fdfunction.jacobian (x);
 
-    if (!checkJacobian (function, x, threshold))
+    if (!allclose(jac, fdjac, threshold, threshold))
       throw BadJacobian<T> (x, jac, fdjac, threshold);
   }
 
@@ -562,12 +568,16 @@ namespace roboptim
      argument_ref xEps) const
     {
       assert (adaptee_.inputSize () - colIdx > 0);
+      assert (resultEps_.size () == adaptee_.outputSize ());
+      assert (result_.size () == adaptee_.outputSize ());
+
       // Note: result_ = f(x) should have been called already
       xEps = argument;
       xEps[colIdx] += epsilon;
       adaptee_ (resultEps_, xEps);
-      // Note: actual zeros won't be added to the sparse matrix
-      column = ((resultEps_ - result_) / epsilon).sparseView ();
+      // Note: actual zeros may also be added to the sparse matrix to keep the
+      // sparse pattern constant.
+      column = ((resultEps_ - result_) / epsilon).sparseView (-1., this->sparseEps_);
     }
 
     template <typename T>
@@ -580,6 +590,9 @@ namespace roboptim
      argument_ref xEps) const
     {
       assert (this->adaptee_.inputSize () - colIdx > 0);
+      assert (this->resultEps_.size () == this->adaptee_.outputSize ());
+      assert (this->result_.size () == this->adaptee_.outputSize ());
+
       // Note: result_ = f(x) should have been called already
       xEps = argument;
       xEps[colIdx] += epsilon;

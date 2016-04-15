@@ -33,47 +33,43 @@ namespace roboptim
   // Disable GCC warnings for explicit template instantiations
   ROBOPTIM_ALLOW_ATTRIBUTES_ON
 
-  template class ROBOPTIM_DLLAPI GenericFunction<EigenMatrixDense>;
-  template class ROBOPTIM_DLLAPI GenericFunction<EigenMatrixSparse>;
+  template class GenericFunction<EigenMatrixDense>;
+  template class GenericFunction<EigenMatrixSparse>;
 
-  template class ROBOPTIM_DLLAPI GenericNumericQuadraticFunction<EigenMatrixDense>;
-  template class ROBOPTIM_DLLAPI GenericNumericQuadraticFunction<EigenMatrixSparse>;
+  template class GenericNumericQuadraticFunction<EigenMatrixDense>;
+  template class GenericNumericQuadraticFunction<EigenMatrixSparse>;
 
-  template class ROBOPTIM_DLLAPI
-    GenericNumericLinearFunction<EigenMatrixDense>;
-  template class ROBOPTIM_DLLAPI
-    GenericNumericLinearFunction<EigenMatrixSparse>;
+  template class GenericNumericLinearFunction<EigenMatrixDense>;
+  template class GenericNumericLinearFunction<EigenMatrixSparse>;
 
-  template class ROBOPTIM_DLLAPI GenericSumOfC1Squares<EigenMatrixDense>;
-  template class ROBOPTIM_DLLAPI GenericSumOfC1Squares<EigenMatrixSparse>;
+  template class GenericSumOfC1Squares<EigenMatrixDense>;
+  template class GenericSumOfC1Squares<EigenMatrixSparse>;
 
-  template class ROBOPTIM_DLLAPI Problem<EigenMatrixDense>;
-  template class ROBOPTIM_DLLAPI Problem<EigenMatrixSparse>;
+  template class Problem<EigenMatrixDense>;
+  template class Problem<EigenMatrixSparse>;
 
-  template class ROBOPTIM_DLLAPI Solver<EigenMatrixDense>;
-  template class ROBOPTIM_DLLAPI Solver<EigenMatrixSparse>;
+  template class Solver<EigenMatrixDense>;
+  template class Solver<EigenMatrixSparse>;
 
-  template class ROBOPTIM_DLLAPI SolverFactory<Solver<EigenMatrixDense> >;
-  template class ROBOPTIM_DLLAPI SolverFactory<Solver<EigenMatrixSparse> >;
+  template class SolverFactory<Solver<EigenMatrixDense> >;
+  template class SolverFactory<Solver<EigenMatrixSparse> >;
 
-  template class ROBOPTIM_DLLAPI SolverState<Problem<EigenMatrixDense> >;
-  template class ROBOPTIM_DLLAPI SolverState<Problem<EigenMatrixSparse> >;
+  template class SolverState<Problem<EigenMatrixDense> >;
+  template class SolverState<Problem<EigenMatrixSparse> >;
 
-  template class ROBOPTIM_DLLAPI SolverCallback<Solver<EigenMatrixDense> >;
-  template class ROBOPTIM_DLLAPI SolverCallback<Solver<EigenMatrixSparse> >;
+  template class SolverCallback<Solver<EigenMatrixDense> >;
+  template class SolverCallback<Solver<EigenMatrixSparse> >;
 
-  template class ROBOPTIM_DLLAPI
-    OptimizationLogger<Solver<EigenMatrixDense> >;
-  template class ROBOPTIM_DLLAPI
-    OptimizationLogger<Solver<EigenMatrixSparse> >;
+  template class OptimizationLogger<Solver<EigenMatrixDense> >;
+  template class OptimizationLogger<Solver<EigenMatrixSparse> >;
 
   namespace callback
   {
-    template class ROBOPTIM_DLLAPI Multiplexer<Solver<EigenMatrixDense> >;
-    template class ROBOPTIM_DLLAPI Multiplexer<Solver<EigenMatrixSparse> >;
+    template class Multiplexer<Solver<EigenMatrixDense> >;
+    template class Multiplexer<Solver<EigenMatrixSparse> >;
 
-    template class ROBOPTIM_DLLAPI Wrapper<Solver<EigenMatrixDense> >;
-    template class ROBOPTIM_DLLAPI Wrapper<Solver<EigenMatrixSparse> >;
+    template class Wrapper<Solver<EigenMatrixDense> >;
+    template class Wrapper<Solver<EigenMatrixSparse> >;
   } // end of namespace callback
 
   ROBOPTIM_ALLOW_ATTRIBUTES_OFF

@@ -1,4 +1,4 @@
-// Copyright (C) 2014 by Benjamin Chretien, CNRS-LIRMM.
+// Copyright (C) 2016 by Benjamin Chrétien, CNRS-AIST JRL.
 //
 // This file is part of the roboptim.
 //
@@ -20,18 +20,16 @@
 #include <typeinfo>
 
 #include "roboptim/core/function.hh"
-#include "roboptim/core/problem.hh"
-#include "roboptim/core/plugin/dummy-laststate.hh"
+#include "roboptim/core/plugin/dummy.hh"
 
 extern "C"
 {
-  using namespace roboptim;
-  typedef DummyDifferentiableSparseSolverLastState::parent_t solver_t;
+  typedef roboptim::GenericDummySolver<roboptim::EigenMatrixSparse> DummySparseSolver;
+  typedef DummySparseSolver::parent_t solver_t;
 
   ROBOPTIM_CORE_DLLEXPORT std::size_t getSizeOfProblem ();
   ROBOPTIM_CORE_DLLEXPORT const char* getTypeIdOfConstraintsList ();
-  ROBOPTIM_CORE_DLLEXPORT solver_t* create
-  (const DummyDifferentiableSparseSolverLastState::problem_t& pb);
+  ROBOPTIM_CORE_DLLEXPORT solver_t* create (const DummySparseSolver::problem_t& pb);
   ROBOPTIM_CORE_DLLEXPORT void destroy (solver_t* p);
 
   ROBOPTIM_CORE_DLLEXPORT std::size_t getSizeOfProblem ()
@@ -44,10 +42,9 @@ extern "C"
     return typeid (solver_t::problem_t::constraintsList_t).name ();
   }
 
-  ROBOPTIM_CORE_DLLEXPORT solver_t* create
-  (const DummyDifferentiableSparseSolverLastState::problem_t& pb)
+  ROBOPTIM_CORE_DLLEXPORT solver_t* create (const DummySparseSolver::problem_t& pb)
   {
-    return new DummyDifferentiableSparseSolverLastState (pb);
+    return new DummySparseSolver (pb);
   }
 
   ROBOPTIM_CORE_DLLEXPORT void destroy (solver_t* p)

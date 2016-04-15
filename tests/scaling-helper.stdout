@@ -3,6 +3,7 @@ Constant function
 Problem:
   Constant function
     offset = [2](1,2)
+  Objective scaling: 1, 1
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
   No constraints.
@@ -14,6 +15,7 @@ No suggested scaling parameters
 Problem:
   Constant function
     offset = [2](1,2)
+  Objective scaling: 1, 1
   Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
   Number of constraints: 3

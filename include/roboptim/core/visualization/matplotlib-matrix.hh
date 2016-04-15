@@ -62,12 +62,12 @@ namespace roboptim
       /// \param type type of plotting for the matrix.
       /// \return Gnuplot command.
 
-      ROBOPTIM_DLLAPI
+      ROBOPTIM_CORE_DLLAPI
       Command plot_mat
       (GenericFunctionTraits<EigenMatrixDense>::const_matrix_ref mat,
        MatrixPlotType::Type type = MatrixPlotType::Values);
 
-      ROBOPTIM_DLLAPI
+      ROBOPTIM_CORE_DLLAPI
       Command plot_mat
       (GenericFunctionTraits<EigenMatrixSparse>::const_matrix_ref mat,
        MatrixPlotType::Type type = MatrixPlotType::Values);
