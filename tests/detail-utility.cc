@@ -71,7 +71,8 @@ namespace detail
 BOOST_AUTO_TEST_CASE (detail_utility)
 {
   using namespace boost;
-  using namespace boost::mpl;
+  using boost::mpl::vector;
+  using boost::mpl::not_;
   using namespace ::roboptim::detail;
 
   // Test add_shared_ptr.
