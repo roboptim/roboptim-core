@@ -91,17 +91,39 @@ namespace roboptim
 
   private:
 
-    template <typename T>
-    void concatenateJacobian (jacobian_ref jacobian,
-                              const_argument_ref argument,
-                              typename detail::ConcatenateTypes<T>::isDense_t::type* = 0)
-      const;
+    /// \internal
+    /// The two following function definitions should be put in the .hxx file.
+    /// However, msvc compilers (at least up to Visual Sutdio 2015 Update 1) 
+    /// fails in this case: it tries to match the definitions with the 
+    /// declarations but since it does so before any substitution of any 
+    ///template parameters, it can't distiguish between the two declarations.
 
     template <typename T>
-    void concatenateJacobian (jacobian_ref jacobian,
-                              const_argument_ref argument,
-                              typename detail::ConcatenateTypes<T>::isNotDense_t::type* = 0)
-      const;
+    void concatenateJacobian(jacobian_ref jacobian,
+      const_argument_ref x,
+      typename detail::ConcatenateTypes<T>::isDense_t::type* = 0)
+      const
+    {
+      left_->jacobian(jacobianLeft_, x);
+      right_->jacobian(jacobianRight_, x);
+      jacobian.middleRows(0, left_->outputSize()) =
+        jacobianLeft_;
+      jacobian.middleRows(left_->outputSize(), right_->outputSize()) =
+        jacobianRight_;
+    }
+
+    template <typename T>
+    void concatenateJacobian(jacobian_ref jacobian,
+      const_argument_ref x,
+      typename detail::ConcatenateTypes<T>::isNotDense_t::type* = 0)
+      const
+    {
+      left_->jacobian(jacobianLeft_, x);
+      right_->jacobian(jacobianRight_, x);
+
+      copySparseBlock(jacobian, jacobianLeft_, 0, 0);
+      copySparseBlock(jacobian, jacobianRight_, left_->outputSize(), 0);
+    }
 
   private:
     boost::shared_ptr<U> left_;
