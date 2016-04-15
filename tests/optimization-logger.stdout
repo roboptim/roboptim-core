@@ -1,6 +1,6 @@
 Problem:
   a * d * (a + b + c) + d (not differentiable)
-  Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+  Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   Number of constraints: 1
   Constraint 0
@@ -10,13 +10,13 @@ Problem:
       Initial value: [1](0)
   Starting point: [4](0,0,0,0)
   Starting value: [1](0)
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 ---
 Solver:
   Plugin: dummy-laststate
   Problem:
     a * d * (a + b + c) + d (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     Number of constraints: 1
     Constraint 0
@@ -26,7 +26,7 @@ Solver:
         Initial value: [1](0)
     Starting point: [4](0,0,0,0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Result:
     Solver error: The dummy solver always fail.
   Parameters:
@@ -38,7 +38,7 @@ Solver:
 ---
 Problem:
   a + b + c + d (differentiable function)
-  Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+  Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   Number of constraints: 1
   Constraint 0
@@ -48,13 +48,13 @@ Problem:
       Initial value: [1](0)
   Starting point: [4](0,0,0,0)
   Starting value: [1](0)
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 ---
 Solver:
   Plugin: dummy-d-sparse-laststate
   Problem:
     a + b + c + d (differentiable function)
-    Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     Number of constraints: 1
     Constraint 0
@@ -64,7 +64,7 @@ Solver:
         Initial value: [1](0)
     Starting point: [4](0,0,0,0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Result:
     Solver error: The dummy solver always fail.
   Parameters:

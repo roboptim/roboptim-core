@@ -1,22 +1,22 @@
 Solver:
   Problem:
     x (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
 
 Solver:
   Problem:
     x (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Parameters:
     data.int (dummy integer): 10
     data.string (dummy string): dummy data
@@ -26,12 +26,12 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Result:
     Solver error: the null solver always fails.
   Parameters:
@@ -48,12 +48,12 @@ Result:
 Solver:
   Problem:
     x (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Result:
     Solver error: the null solver always fails.
   Parameters:
@@ -65,12 +65,12 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Result:
     Solver error: the null solver always fails.
   Parameters:
@@ -81,12 +81,12 @@ Solver:
 Solver:
   Problem:
     x (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Parameters:
     data.int (dummy integer): 10
     data.string (dummy string): dummy data
@@ -96,12 +96,12 @@ solve ()
 Solver:
   Problem:
     x (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf)
     Arguments scaling: 1
     No constraints.
     Starting point: [1](0)
     Starting value: [1](0)
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Result:
     Solver error: the null solver always fails.
   Parameters:

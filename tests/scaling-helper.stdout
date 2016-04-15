@@ -3,42 +3,42 @@ Constant function
 Problem:
   Constant function
     offset = [2](1,2)
-  Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+  Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
   No constraints.
   No starting point.
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 [2](2,1)
 [2](100,-200)
 No suggested scaling parameters
 Problem:
   Constant function
     offset = [2](1,2)
-  Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+  Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
   Number of constraints: 3
   Constraint 0
       Numeric linear function:
         A = [2,2]((300,0), (0,10))
         B = [2](200,300)
-      Bounds: (0, 1.#INF), (0, 1.#INF)
+      Bounds: (0, inf), (0, inf)
       Scaling: 1, 1
   Constraint 1
       Numeric quadratic function:
         A = [2,2]((300,0), (0,10))
         B = [2](200,300)
         c = [1](0)
-      Bounds: (0, 1.#INF)
+      Bounds: (0, inf)
       Scaling: 1
   Constraint 2
       Numeric quadratic function:
-        A = [2,2]((0.0003,0), (0,1e-005))
+        A = [2,2]((0.0003,0), (0,1e-05))
         B = [2](0.0002,0.0003)
         c = [1](0)
-      Bounds: (0, 1.#INF)
+      Bounds: (0, inf)
       Scaling: 1
   No starting point.
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 [4,2]((300,0), (0,10), (1400,320), (0.0014,0.00032))
 [4,2]((300,0), (0,10), (60200,-3700), (0.0602,-0.0037))
 Suggested scaling parameters:
@@ -55,7 +55,7 @@ Suggested scaling parameters:
     Scaling: 1
   Constraint 2:
     Numeric quadratic function:
-      A = [2,2]((0.0003,0), (0,1e-005))
+      A = [2,2]((0.0003,0), (0,1e-05))
       B = [2](0.0002,0.0003)
       c = [1](0)
     Scaling: 1
@@ -73,7 +73,8 @@ Suggested scaling parameters:
     Scaling: 0.00166113
   Constraint 2:
     Numeric quadratic function:
-      A = [2,2]((0.0003,0), (0,1e-005))
+      A = [2,2]((0.0003,0), (0,1e-05))
       B = [2](0.0002,0.0003)
       c = [1](0)
     Scaling: 71.4286
+

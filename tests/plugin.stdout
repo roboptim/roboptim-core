@@ -1,20 +1,20 @@
 Problem:
   a * d * (a + b + c) + d (not differentiable)
-  Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+  Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1, 1, 1
   No constraints.
   No starting point.
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 ---
 Solver:
   Plugin: dummy
   Problem:
     a * d * (a + b + c) + d (not differentiable)
-    Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+    Arguments bounds: (-inf, inf), (-inf, inf), (-inf, inf), (-inf, inf)
     Arguments scaling: 1, 1, 1, 1
     No constraints.
     No starting point.
-    Infinity value (for all functions): 1.#INF
+    Infinity value (for all functions): inf
   Result:
     Solver error: The dummy solver always fail.
   Parameters:

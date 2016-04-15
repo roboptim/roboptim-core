@@ -2,21 +2,21 @@
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-5, 5), (-10, 1.#INF)
+  Arguments bounds: (-5, 5), (-10, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   Number of constraints: 3
   Constraint 0
       Constant function
         offset = [2](3,-1)
-      Bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+      Bounds: (-inf, inf), (-inf, inf)
       Scaling: 1, 1
       Initial value: [2](3, -1)
   Constraint 1
       Numeric linear function:
         A = [2,2]((1,0), (0,1))
         B = [2](2,3)
-      Bounds: (0, 1.#INF), (0, 1.#INF)
+      Bounds: (0, inf), (0, inf)
       Scaling: 1, 1
       Initial value: [2](2, 3)
   Constraint 2
@@ -26,39 +26,39 @@ Problem:
       Initial value: [2](0, 0)
   Starting point: [2](0,0)
   Starting value: [2](0,0)
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 Problem:
   Constant function
     offset = [2](3,-1)
-  Arguments bounds: (-1.#INF, 1.#INF), (-1.#INF, 1.#INF)
+  Arguments bounds: (-inf, inf), (-inf, inf)
   Arguments scaling: 1, 1
   No constraints.
   No starting point.
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-5, 5), (-10, 1.#INF)
+  Arguments bounds: (-5, 5), (-10, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   No constraints.
   Starting point: [2](0,0)
   Starting value: [2](0,0)
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-5, 5), (-10, 1.#INF)
+  Arguments bounds: (-5, 5), (-10, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   No constraints.
   Starting point: [2](200,30)
   Starting value: [2](0,0)
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-1.#INF, 5), (-1.#INF, 1.#INF)
+  Arguments bounds: (-inf, 5), (-inf, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   Number of constraints: 2
@@ -77,11 +77,11 @@ Problem:
       Initial value: [2](2, 3)
   Starting point: [2](0,0)
   Starting value: [2](0,0)
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
 Problem:
   Constant function
     offset = [2](0,0)
-  Arguments bounds: (-1.#INF, 5), (-1.#INF, 1.#INF)
+  Arguments bounds: (-inf, 5), (-inf, inf)
   Arguments scaling: 1, 1
   Arguments names: x₀, x₁
   Number of constraints: 2
@@ -100,4 +100,4 @@ Problem:
       Initial value: [2](202, 53) (constraint not satisfied)
   Starting point: [2](200,50)
   Starting value: [2](0,0)
-  Infinity value (for all functions): 1.#INF
+  Infinity value (for all functions): inf
