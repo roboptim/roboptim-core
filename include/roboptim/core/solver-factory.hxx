@@ -209,7 +209,7 @@ namespace roboptim
     if (lt_dlexit ())
       {
 	std::stringstream sserror;
-	sserror << "libltdl failed to call ``create'': "
+	sserror << "libltdl failed to call ``exit'': "
 		<< lt_dlerror ();
 	std::cerr << sserror.str () << std::endl;
       }
