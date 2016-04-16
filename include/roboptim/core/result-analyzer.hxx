@@ -455,7 +455,7 @@ namespace roboptim
     {
       // TODO: avoid temporary here (used for storage order mismatch)
       jacobian_t sparseLambda = res_.lambda.sparseView ();
-      gradient_t tmp = sparseLambda.block (n, 0, m, 1).transpose () * jac_;
+      gradient_t tmp = gradient_t (sparseLambda.block (n, 0, m, 1).transpose ()) * jac_;
       grad_L += tmp;
     }
 
