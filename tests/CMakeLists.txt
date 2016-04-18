@@ -33,7 +33,19 @@ ENDIF(WIN32)
 ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
 
 # To locate built plug-in.
-ADD_DEFINITIONS(-DPLUGIN_PATH="${CMAKE_BINARY_DIR}/src/${CMAKE_BUILD_TYPE}")
+# First, determine the build subdirectory according to the build type
+# [TODO] This could be a macro in jrl-cmake-modules
+IF(WIN32)
+  SET(BUILD_SUBDIRECTORY 
+      "/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>$<$<CONFIG:RelWithDebInfo>:RelWithDebInfo>$<$<CONFIG:MinSizeRel>:MinSizeRel>"
+	 )
+ELSE()
+  SET(BUILD_SUBDIRECTORY "")
+ENDIF(WIN32)
+# Second, add the path
+ADD_COMPILE_OPTIONS(-DPLUGIN_PATH="${CMAKE_BINARY_DIR}${BUILD_SUBDIRECTORY}")
+
+# To locate reference logs
 ADD_DEFINITIONS(-DTESTS_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 # ROBOPTIM_CORE_TEST(NAME)
@@ -60,13 +72,6 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
 
   # Link against Boost.
   TARGET_LINK_LIBRARIES(${NAME} ${Boost_LIBRARIES})
-
-  # Make sure the plugins will be found.
-  # Note: this does not append the environment variables!
-  SET_PROPERTY(
-    TEST ${NAME} PROPERTY ENVIRONMENT
-    "LTDL_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/${CMAKE_BUILD_TYPE}:$ENV{LTDL_LIBRARY_PATH} "
-    "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/${CMAKE_BUILD_TYPE}:$ENV{LD_LIBRARY_PATH}")
 ENDMACRO(ROBOPTIM_CORE_TEST)
 
 # Basic types.
