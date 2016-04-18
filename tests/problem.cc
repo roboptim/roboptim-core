@@ -212,13 +212,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (problem, T, functionTypes_t)
   x << 0., 0.;
   pb.startingPoint () = x;
   (*output) << pb << std::endl;
-  (*output) << pb.template constraintsViolationVector (x) << std::endl;
+  (*output) << pb.constraintsViolationVector (x) << std::endl;
   BOOST_CHECK_EQUAL (pb.template constraintsViolation<1> (x), 0.);
   BOOST_CHECK_EQUAL (pb.template constraintsViolation<Eigen::Infinity> (x), 0.);
   x << 200., 30.;
   pb.startingPoint () = x;
   (*output) << pb << std::endl;
-  (*output) << pb.template constraintsViolationVector (x) << std::endl;
+  (*output) << pb.constraintsViolationVector (x) << std::endl;
   BOOST_CHECK_EQUAL (pb.template constraintsViolation<1> (x), 195.);
   BOOST_CHECK_EQUAL (pb.template constraintsViolation<Eigen::Infinity> (x), 195.);
 
