@@ -311,17 +311,15 @@
 
    By default <code>result_</code> contains an instance of the
    <code>No_Solution</code> class.  It has to be changed to an instance of
-   <code>Result</code>, <code>ResultWithWarnings</code> or
-   <code>SolverError</code>.
+   <code>Result</code> or <code>SolverError</code>.
 
    <ul>
    <li><code>No_Solution</code>: represents the fact that solve has never been
    called. A user should never retrieve an instance of <code>No_Solution</code>.
    </li>
-   <li><code>Result</code>, <code>ResultWithWarnings</code>: represents a
-   <strong>valid</strong> result.  If <code>ResultWithWarnings</code> is used,
-   some non-critical problems might have happened and are specified in the
-   object (minor numerical instabilities for instance).</li>
+   <li><code>Result</code>: represents a <strong>valid</strong> result. Some
+   non-critical problems might have happened and are specified in the warnings
+   vector (minor numerical instabilities for instance).</li>
    <li><code>SolverError</code>: indicates that the optimization has
    <strong>failed</strong>.</li>
    </ul>
