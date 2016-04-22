@@ -141,9 +141,16 @@ BOOST_AUTO_TEST_CASE (util)
   (*output) << m << std::endl;
 
   // Test typeString
-  // TODO: relies on demangle() so may fail on different platforms
-  (*output) << typeString<int> () << std::endl;
-  (*output) << typeString<Function> () << std::endl;
+  // typeString relies on demangle() which is not portable. We manually test
+  // on Windows and feed the expected string to output.
+  // TODO: find a portable replacement to demangle?
+  (*output) << typeString<int>() << std::endl;
+#ifndef WIN32
+  (*output) << typeString<Function>() << std::endl;
+#else
+  BOOST_CHECK(typeString<Function>() == "class roboptim::GenericFunction<struct roboptim::EigenMatrixDense>");
+  (*output) << "roboptim::GenericFunction<roboptim::EigenMatrixDense>" << std::endl;
+#endif
 
   // Test operations on dense matrices
   Eigen::MatrixXd dense_a (5,5);
