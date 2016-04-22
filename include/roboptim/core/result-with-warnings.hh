@@ -19,6 +19,7 @@
 # define ROBOPTIM_CORE_RESULT_WITH_WARNINGS_HH
 
 # include <roboptim/core/result.hh>
+# include <roboptim/core/config.hh>
 # include <roboptim/core/deprecated.hh>
 
 namespace roboptim
@@ -27,8 +28,22 @@ namespace roboptim
   /// @{
 
   /// \brief Warnings have been merged to Result to simplify the API.
-  typedef Result ResultWithWarnings ROBOPTIM_CORE_DEPRECATED;
+  /// To prevent issues with existing visitors, we cannot use a simple
+  /// typedef such as:
+  // typedef Result ResultWithWarnings ROBOPTIM_CORE_DEPRECATED;
+  ///
+  /// \deprecated Deprecated since version 3.3. Use Result instead.
+  class ROBOPTIM_CORE_DLLAPI ROBOPTIM_CORE_DEPRECATED
+    ResultWithWarnings : public Result
+  {
+  public:
+    /// \brief Import size type from Result class.
+    typedef Result::size_type size_type;
 
+    explicit ResultWithWarnings (const size_type inputSize,
+                                 const size_type outputSize = 1);
+    ~ResultWithWarnings ();
+  };
   /// @}
 
 } // end of namespace roboptim

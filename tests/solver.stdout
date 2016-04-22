@@ -25,6 +25,9 @@ Solver:
     data.value_type (dummy value_type): 42
 
 solve ()
+Visitor (SolverError):
+  Solver error: the null solver always fails.
+solve ()
 Solver:
   Problem:
     x (not differentiable)
@@ -42,6 +45,8 @@ Solver:
     data.string (dummy string): dummy data
     data.value_type (dummy value_type): 42
 
+Visitor (SolverError):
+  Solver error: the null solver always fails.
 Solver error: the null solver always fails.
 Result:
   Size (input, output): 1, 1

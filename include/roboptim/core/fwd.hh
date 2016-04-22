@@ -124,7 +124,7 @@ namespace roboptim
 
 
   class Result;
-  typedef Result ResultWithWarnings;
+  class ResultWithWarnings;
   class SolverError;
   class SolverWarning;
 
