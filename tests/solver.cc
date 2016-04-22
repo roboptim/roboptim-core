@@ -95,13 +95,13 @@ public:
                << iendl << res << decindent << iendl;
   }
 
-  ROBOPTIM_ALLOW_DEPRECATED_ON;
+  ROBOPTIM_ALLOW_DEPRECATED_ON
   void operator() (const roboptim::ResultWithWarnings& res)
   {
     (*output_) << "Visitor (ResultWithWarnings):" << incindent
                << iendl << res << decindent << iendl;
   }
-  ROBOPTIM_ALLOW_DEPRECATED_OFF;
+  ROBOPTIM_ALLOW_DEPRECATED_OFF
 
   void operator() (const roboptim::SolverError& res)
   {
