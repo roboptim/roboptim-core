@@ -149,9 +149,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (detail_structured_input, T, functionTypes_t)
   # else
   #  define TMP_ROBOPTIM_UNUSED
   # endif
-  BOOST_STATIC_ASSERT( TMP_ROBOPTIM_UNUSED (boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename F<T>::parent_t, typename F<T>::traits_t>, F<T> >::value));
+  BOOST_STATIC_ASSERT((boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename F<T>::parent_t, typename F<T>::traits_t>, F<T> >::value)) TMP_ROBOPTIM_UNUSED;
   // G is just a Function, and as such does not expose the getJacobianBlock() method
-  BOOST_STATIC_ASSERT(TMP_ROBOPTIM_UNUSED (!boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename G<T>::parent_t, typename G<T>::traits_t>, G<T> >::value));
+  BOOST_STATIC_ASSERT((!boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename G<T>::parent_t, typename G<T>::traits_t>, G<T> >::value)) TMP_ROBOPTIM_UNUSED;
 
   typename F<T>::argument_t arg(22);
   for(int i = 0; i < arg.size(); ++i)
