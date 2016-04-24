@@ -25,7 +25,7 @@
 
 // Extra useful attributes
 #if defined _WIN32 || defined __CYGWIN__
-  #define ROBOPTIM_UNUSED __declspec(deprecated)
+  #define ROBOPTIM_UNUSED
 #else
 // On Linux, for GCC >= 4
   #if __GNUC__ >= 4

@@ -170,7 +170,7 @@ namespace roboptim
     ROBOPTIM_ASSERT (startRow + b.rows () <= m.rows ());
     ROBOPTIM_ASSERT (startCol + b.cols () <= m.cols ());
 # if __cplusplus < 201103L || !defined (__GXX_EXPERIMENTAL_CXX0X__)
-    ROBOPTIM_ASSERT ( ROBOPTIM_UNUSED int (M::IsRowMajor) == int (B::IsRowMajor));
+    ROBOPTIM_ASSERT (int (M::IsRowMajor) == int (B::IsRowMajor));
 # else
     ROBOPTIM_ASSERT_MSG (int (M::IsRowMajor) == int (B::IsRowMajor),
                          "You should use the same storage order");
