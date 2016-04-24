@@ -75,14 +75,14 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
 
   # Link against Boost.
   TARGET_LINK_LIBRARIES(${NAME} ${Boost_LIBRARIES})
-  
+
   # Make sure the plugins will be found.
   # Note: this does not append the environment variables!
   IF(NOT WIN32)
   SET_PROPERTY(
     TEST ${NAME} PROPERTY ENVIRONMENT
-    "LTDL_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/${CMAKE_BUILD_TYPE}:$ENV{LTDL_LIBRARY_PATH} "
-    "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/${CMAKE_BUILD_TYPE}:$ENV{LD_LIBRARY_PATH}")
+    "LTDL_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src:$ENV{LTDL_LIBRARY_PATH} "
+    "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/:$ENV{LD_LIBRARY_PATH}")
   ENDIF(NOT WIN32)
 ENDMACRO(ROBOPTIM_CORE_TEST)
 
@@ -154,7 +154,6 @@ ROBOPTIM_CORE_TEST(sum-of-c1-squares)
 
 # Decorators.
 ROBOPTIM_CORE_TEST(decorator-cached-function)
-
 ROBOPTIM_CORE_TEST(decorator-finite-difference-gradient)
 ROBOPTIM_CORE_TEST(decorator-finite-difference-jacobian)
 
