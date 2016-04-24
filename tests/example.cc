@@ -258,6 +258,7 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
         break;
       }
 
+    ROBOPTIM_ALLOW_DEPRECATED_ON
     case solver_t::SOLVER_VALUE_WARNINGS:
       {
         // Get the result.
@@ -269,6 +270,7 @@ int run_test (boost::shared_ptr<boost::test_tools::output_test_stream>& output)
 
         break;
       }
+    ROBOPTIM_ALLOW_DEPRECATED_OFF
 
     case solver_t::SOLVER_ERROR:
       {

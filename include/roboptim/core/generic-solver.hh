@@ -38,6 +38,10 @@
 # include <roboptim/core/solver-error.hh>
 # include <roboptim/core/solver-warning.hh>
 
+// Kept for backward compatibility until ResultWithWarnings is removed
+# include <roboptim/core/deprecated.hh>
+# include <roboptim/core/result-with-warnings.hh>
+
 namespace roboptim
 {
   /// \addtogroup roboptim_solver
@@ -64,11 +68,15 @@ namespace roboptim
     /// Uses a Boost.Variant to represent the different possible results:
     /// - no solution (problem not yet solved),
     /// - result (problem has been solved successfully, possibly with warnings),
-    /// - result and warnings (problem solved but some errors happened),
     /// - solver error (optimization has failed).
+    /// Note: the usage of ResultWithWarnings is deprecated. Use Result
+    /// directly.
+    ROBOPTIM_ALLOW_DEPRECATED_ON
     typedef boost::variant<NoSolution,
                            Result,
-                           SolverError> result_t;
+                           SolverError,
+                           ResultWithWarnings> result_t;
+    ROBOPTIM_ALLOW_DEPRECATED_OFF
 
     /// \name Constructors and destructors.
     /// \{

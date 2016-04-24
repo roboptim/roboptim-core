@@ -25,6 +25,7 @@ SET(ROBOPTIM_CORE_SRC
   generic-solver.cc
   indent.cc
   result.cc
+  result-with-warnings.cc
   solver-error.cc
   solver-warning.cc
   solver.cc

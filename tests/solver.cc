@@ -21,16 +21,25 @@
 
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/variant/apply_visitor.hpp>
+#include <boost/variant/static_visitor.hpp>
 
+#include <roboptim/core/fwd.hh>
+#include <roboptim/core/deprecated.hh>
 #include <roboptim/core/io.hh>
 #include <roboptim/core/solver.hh>
+#include <roboptim/core/result.hh>
+#include <roboptim/core/result-with-warnings.hh>
+#include <roboptim/core/solver-error.hh>
 
 using namespace roboptim;
 
 // Specify the solver that will be used.
 typedef Solver<EigenMatrixDense> parent_solver_t;
 
-boost::shared_ptr<boost::test_tools::output_test_stream> output;
+typedef boost::shared_ptr<boost::test_tools::output_test_stream>
+  outputStreamPtr;
+outputStreamPtr output;
 
 // Define a simple function.
 struct F : public Function
@@ -75,6 +84,46 @@ public:
   }
 };
 
+class ResultVisitor : public boost::static_visitor<void>
+{
+public:
+  ResultVisitor (outputStreamPtr o) : output_ (o) {}
+
+  void operator() (const roboptim::Result& res)
+  {
+    (*output_) << "Visitor (Result):" << incindent
+               << iendl << res << decindent << iendl;
+  }
+
+  ROBOPTIM_ALLOW_DEPRECATED_ON
+  void operator() (const roboptim::ResultWithWarnings& res)
+  {
+    (*output_) << "Visitor (ResultWithWarnings):" << incindent
+               << iendl << res << decindent << iendl;
+  }
+  ROBOPTIM_ALLOW_DEPRECATED_OFF
+
+  void operator() (const roboptim::SolverError& res)
+  {
+    (*output_) << "Visitor (SolverError):" << incindent
+               << iendl << res << decindent << iendl;
+  }
+
+  void operator() (const roboptim::NoSolution&)
+  {
+    (*output_) << "Visitor (NoSolution)" << std::endl;
+  }
+
+  template <typename R>
+  void operator() (const R&)
+  {
+    (*output_) << "Unknown result type" << std::endl;
+  }
+
+private:
+  outputStreamPtr output_;
+};
+
 BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
 
 BOOST_AUTO_TEST_CASE (solver)
@@ -90,6 +139,8 @@ BOOST_AUTO_TEST_CASE (solver)
   x.setZero ();
   pb.startingPoint () = x;
 
+  ResultVisitor vis (output);
+
   solver_t solver (pb);
   (*output) << solver << std::endl << std::endl;
   solver.parameters ()["data.string"].value = std::string ("dummy data");
@@ -99,8 +150,10 @@ BOOST_AUTO_TEST_CASE (solver)
   solver.parameters ()["data.value_type"].value = F::value_type (42.);
   solver.parameters ()["data.value_type"].description = "dummy value_type";
   (*output) << solver << std::endl << std::endl;
+  boost::apply_visitor (vis, solver.minimum ());
   solver.solve ();
   (*output) << solver << std::endl << std::endl;
+  boost::apply_visitor (vis, solver.minimum ());
 
   SolverError error = solver.getMinimum<SolverError> ();
   (*output) << error << std::endl;

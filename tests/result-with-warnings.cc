@@ -23,8 +23,10 @@
 #include <boost/make_shared.hpp>
 
 #include <roboptim/core/io.hh>
+#include <roboptim/core/deprecated.hh>
 #include <roboptim/core/solver.hh>
 #include <roboptim/core/solver-warning.hh>
+#include <roboptim/core/result-with-warnings.hh>
 
 using namespace roboptim;
 
@@ -71,11 +73,13 @@ public:
     argument_t x (problem ().function ().inputSize ());
     x.setZero ();
 
+    ROBOPTIM_ALLOW_DEPRECATED_ON;
     ResultWithWarnings result (problem ().function ().inputSize (),
 			       problem ().function ().outputSize ());
     result.x = x;
     result.value = problem ().function () (result.x);
     result.warnings.push_back (SolverWarning ("Dummy warning message."));
+    ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
     result_ = result;
   }
@@ -96,8 +100,10 @@ BOOST_AUTO_TEST_CASE (result_with_warnings)
   solver_t::result_t result = solver->minimum ();
 
   // Get the result.
+  ROBOPTIM_ALLOW_DEPRECATED_ON;
   ResultWithWarnings& result_warnings = boost::get<ResultWithWarnings> (result);
   (*output) << result_warnings << std::endl;
+  ROBOPTIM_ALLOW_DEPRECATED_OFF;
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
