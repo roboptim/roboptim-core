@@ -37,10 +37,10 @@ ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
 # [TODO] This could be a macro in jrl-cmake-modules
 IF(WIN32)
   SET(BUILD_SUBDIRECTORY 
-      "/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>$<$<CONFIG:RelWithDebInfo>:RelWithDebInfo>$<$<CONFIG:MinSizeRel>:MinSizeRel>"
+      "/src/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>$<$<CONFIG:RelWithDebInfo>:RelWithDebInfo>$<$<CONFIG:MinSizeRel>:MinSizeRel>"
 	 )
 ELSE()
-  SET(BUILD_SUBDIRECTORY "")
+  SET(BUILD_SUBDIRECTORY "/src")
 ENDIF(WIN32)
 # Second, add the path
 ADD_COMPILE_OPTIONS(-DPLUGIN_PATH="${CMAKE_BINARY_DIR}${BUILD_SUBDIRECTORY}")
@@ -62,6 +62,9 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
   ADD_TEST(NAME ${NAME}
     COMMAND ${CHECK_PREFIX} ${CMAKE_CURRENT_BINARY_DIR}/${NAME})
 
+  #Adding a project configuration file (for MSVC only)
+  GENERATE_MSVC_DOT_USER_FILE(${NAME})
+
   TARGET_LINK_LIBRARIES(${NAME} roboptim-core)
   PKG_CONFIG_USE_DEPENDENCY(${NAME} liblog4cxx)
   IF(NOT LTDL_FOUND)
@@ -72,6 +75,15 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
 
   # Link against Boost.
   TARGET_LINK_LIBRARIES(${NAME} ${Boost_LIBRARIES})
+  
+  # Make sure the plugins will be found.
+  # Note: this does not append the environment variables!
+  IF(NOT WIN32)
+  SET_PROPERTY(
+    TEST ${NAME} PROPERTY ENVIRONMENT
+    "LTDL_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/${CMAKE_BUILD_TYPE}:$ENV{LTDL_LIBRARY_PATH} "
+    "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/${CMAKE_BUILD_TYPE}:$ENV{LD_LIBRARY_PATH}")
+  ENDIF(NOT WIN32)
 ENDMACRO(ROBOPTIM_CORE_TEST)
 
 # Basic types.
