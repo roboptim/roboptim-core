@@ -24,6 +24,8 @@
 #include <roboptim/core/solver.hh>
 #include <roboptim/core/solver-callback.hh>
 #include <roboptim/core/solver-factory.hh>
+#include <roboptim/core/result-analyzer.hh>
+#include <roboptim/core/scaling-helper.hh>
 #include <roboptim/core/optimization-logger.hh>
 #include <roboptim/core/callback/multiplexer.hh>
 #include <roboptim/core/callback/wrapper.hh>
@@ -59,6 +61,12 @@ namespace roboptim
 
   template class SolverCallback<Solver<EigenMatrixDense> >;
   template class SolverCallback<Solver<EigenMatrixSparse> >;
+
+  template class ResultAnalyzer<EigenMatrixDense>;
+  template class ResultAnalyzer<EigenMatrixSparse>;
+
+  template class ScalingHelper<EigenMatrixDense>;
+  template class ScalingHelper<EigenMatrixSparse>;
 
   template class OptimizationLogger<Solver<EigenMatrixDense> >;
   template class OptimizationLogger<Solver<EigenMatrixSparse> >;

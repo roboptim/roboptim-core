@@ -28,6 +28,9 @@
 
 namespace roboptim
 {
+  /// \brief Analyze optimization results.
+  ///
+  /// \tparam T matrix type (dense or sparse).
   template <typename T>
   class ResultAnalyzer
   {

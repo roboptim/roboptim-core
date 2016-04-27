@@ -160,6 +160,15 @@ namespace roboptim
   {
     return sh.print (o);
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  extern template class ROBOPTIM_CORE_DLLAPI
+    ScalingHelper<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI
+    ScalingHelper<EigenMatrixSparse>;
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_SCALING_HELPER_HXX
