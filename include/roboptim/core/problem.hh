@@ -76,7 +76,13 @@ namespace roboptim
   ///
   /// \tparam T matrix type
   template <typename T>
+// Work around a probable bug in GCC, see #111
+# if defined(ROBOPTIM_PRECOMPILED_DENSE_SPARSE) && \
+     __GNUC__ >= 4 && not defined(__clang__)
   class ROBOPTIM_CORE_DLLAPI Problem
+#else
+  class Problem
+#endif
   {
   public:
     /// \brief Function type.
