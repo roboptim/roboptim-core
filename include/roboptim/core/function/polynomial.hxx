@@ -163,6 +163,14 @@ namespace roboptim
     hessian.coeffRef (0, 0) = applyPolynomial (dDCoeffs_, x);
   }
 
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI Polynomial<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI Polynomial<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_FUNCTION_POLYNOMIAL_HXX

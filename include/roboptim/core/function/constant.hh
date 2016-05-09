@@ -32,7 +32,7 @@ namespace roboptim
   /// \f[f(x) = offset\f]
   /// where \f$offset\f$ is set when the class is instantiated.
   template <typename T>
-  class ROBOPTIM_CORE_DLLAPI GenericConstantFunction
+  class GenericConstantFunction
   : public GenericLinearFunction<T>
   {
   public:
@@ -101,6 +101,14 @@ namespace roboptim
   /// \example constant-function.cc
 
   /// @}
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI GenericConstantFunction<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI GenericConstantFunction<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif
 
 } // end of namespace roboptim
 

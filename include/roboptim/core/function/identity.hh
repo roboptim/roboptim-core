@@ -31,7 +31,7 @@ namespace roboptim
   /// \f[f(x) = x + offset\f]
   /// where \f$A\f$ and \f$b\f$ are set when the class is instantiated.
   template <typename T>
-  class GenericIdentityFunction : public GenericLinearFunction<T>
+  class ROBOPTIM_GCC_ETI_WORKAROUND GenericIdentityFunction : public GenericLinearFunction<T>
   {
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
@@ -107,6 +107,14 @@ namespace roboptim
   /// \example identity-function.cc
 
   /// @}
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI GenericIdentityFunction<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI GenericIdentityFunction<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif
 
 } // end of namespace roboptim
 
