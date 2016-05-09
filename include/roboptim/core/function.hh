@@ -179,7 +179,7 @@ namespace roboptim
   ///
   /// \tparam T Matrix type
   template <typename T>
-  class GenericFunction
+  class ROBOPTIM_GCC_ETI_WORKAROUND GenericFunction
   {
   public:
     ROBOPTIM_DEFINE_FLAG_TYPE();

@@ -29,6 +29,11 @@
 #include <roboptim/core/optimization-logger.hh>
 #include <roboptim/core/callback/multiplexer.hh>
 #include <roboptim/core/callback/wrapper.hh>
+#include <roboptim/core/function/constant.hh>
+#include <roboptim/core/function/cos.hh>
+#include <roboptim/core/function/identity.hh>
+#include <roboptim/core/function/polynomial.hh>
+#include <roboptim/core/function/sin.hh>
 
 namespace roboptim
 {
@@ -37,6 +42,18 @@ namespace roboptim
 
   template class GenericFunction<EigenMatrixDense>;
   template class GenericFunction<EigenMatrixSparse>;
+
+  template class GenericDifferentiableFunction<EigenMatrixDense>;
+  template class GenericDifferentiableFunction<EigenMatrixSparse>;
+
+  template class GenericTwiceDifferentiableFunction<EigenMatrixDense>;
+  template class GenericTwiceDifferentiableFunction<EigenMatrixSparse>;
+
+  template class GenericLinearFunction<EigenMatrixDense>;
+  template class GenericLinearFunction<EigenMatrixSparse>;
+
+  template class GenericQuadraticFunction<EigenMatrixDense>;
+  template class GenericQuadraticFunction<EigenMatrixSparse>;
 
   template class GenericNumericQuadraticFunction<EigenMatrixDense>;
   template class GenericNumericQuadraticFunction<EigenMatrixSparse>;
@@ -70,6 +87,21 @@ namespace roboptim
 
   template class OptimizationLogger<Solver<EigenMatrixDense> >;
   template class OptimizationLogger<Solver<EigenMatrixSparse> >;
+
+  template class GenericConstantFunction<EigenMatrixDense>;
+  template class GenericConstantFunction<EigenMatrixSparse>;
+
+  template class Cos<EigenMatrixDense>;
+  template class Cos<EigenMatrixSparse>;
+
+  template class GenericIdentityFunction<EigenMatrixDense>;
+  template class GenericIdentityFunction<EigenMatrixSparse>;
+
+  template class Polynomial<EigenMatrixDense>;
+  template class Polynomial<EigenMatrixSparse>;
+
+  template class Sin<EigenMatrixDense>;
+  template class Sin<EigenMatrixSparse>;
 
   namespace callback
   {

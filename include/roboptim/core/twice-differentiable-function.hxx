@@ -52,6 +52,15 @@ namespace roboptim
 
     return o << name << " (twice differentiable function)";
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI GenericTwiceDifferentiableFunction<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI GenericTwiceDifferentiableFunction<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_TWICE_DIFFERENTIABLE_FUNCTION_HXX
