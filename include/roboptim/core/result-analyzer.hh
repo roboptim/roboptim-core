@@ -32,7 +32,7 @@ namespace roboptim
   ///
   /// \tparam T matrix type (dense or sparse).
   template <typename T>
-  class ROBOPTIM_CORE_DLLAPI ResultAnalyzer
+  class ROBOPTIM_GCC_ETI_WORKAROUND ResultAnalyzer
   {
   public:
     typedef GenericFunctionTraits<T>              functionTraits_t;
