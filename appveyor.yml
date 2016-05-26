@@ -1,4 +1,7 @@
 version: 1.0.{build}
+branches:
+  only:
+    - dev
 os: Visual Studio 2015
 clone_folder: C:\devel-src\roboptim-core
 environment:
@@ -12,15 +15,17 @@ environment:
 # Do not tinker with the variables below unless you know what you are doing
   SOURCE_FOLDER: C:\devel-src
   CMAKE_INSTALL_PREFIX: C:/devel
-  PATH: C:/devel/bin;C:\Libraries\boost_1_59_0\lib64-msvc-14.0;C:\msys64\mingw64\bin;%PATH%
+  PATH: C:/devel/bin;C:\Libraries\boost_1_60_0\lib64-msvc-14.0;C:\msys64\mingw64\bin;%PATH%
   PKG_CONFIG_PATH: C:/devel/lib/pkgconfig
-  BOOST_ROOT: C:\Libraries\boost_1_59_0
-  BOOST_LIBRARYDIR: C:\Libraries\boost_1_59_0\lib64-msvc-14.0
+  BOOST_ROOT: C:\Libraries\boost_1_60_0
+  BOOST_LIBRARYDIR: C:\Libraries\boost_1_60_0\lib64-msvc-14.0
   MINGW_GFORTRAN: C:\msys64\mingw64\bin\gfortran.exe
 # N.B: empty lines here and in test_script are VERY important
 build_script:
 - ps: >-
     Set-PSDebug -Trace 2
+
+    iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aescande/testAppveyor/master/installAsAppveyorDependency.ps1'))
 
     git submodule update --init --recursive
 
