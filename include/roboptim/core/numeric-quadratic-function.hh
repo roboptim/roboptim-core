@@ -37,7 +37,7 @@ namespace roboptim
   ///
   /// \note A is a symmetric matrix.
   template <typename T>
-  class GenericNumericQuadraticFunction
+  class ROBOPTIM_GCC_ETI_WORKAROUND GenericNumericQuadraticFunction
   : public GenericQuadraticFunction<T>
   {
   public:
