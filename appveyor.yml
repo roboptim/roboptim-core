@@ -42,4 +42,4 @@ test_script:
 - cmd: >-
     cd %PROJECT_SOURCE_DIR%/build
 
-    ctest
+    ctest --build-config %CONFIGURATION% --exclude-regex example
