@@ -28,7 +28,7 @@ namespace roboptim
 
   /// \brief Cos function.
   template <typename T>
-  class Cos : public GenericTwiceDifferentiableFunction<T>
+  class ROBOPTIM_GCC_ETI_WORKAROUND Cos : public GenericTwiceDifferentiableFunction<T>
   {
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
@@ -124,6 +124,14 @@ namespace roboptim
   /// \example function_cos.cc
 
   /// @}
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI Cos<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI Cos<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif
 
 } // end of namespace roboptim
 

@@ -28,6 +28,7 @@ branches:
   - coverity_scan
 script:
   - export CMAKE_ADDITIONAL_OPTIONS="-DSTORAGE_ORDER=${ROBOPTIM_STORAGE_ORDER:-ColMajor}"
+  - if [ "${ENABLE_CXX11}" == "1" ]; then export CMAKE_ADDITIONAL_OPTIONS="-DUSE_CXX11:BOOL=ON -DROBOPTIM_PRECOMPILE_DENSE_SPARSE:BOOL=ON ${CMAKE_ADDITIONAL_OPTIONS}"; fi
   - if [ "${COVERITY_SCAN_BRANCH}" != "1" ]; then ./.travis/run build; fi
 after_success:
   - ./.travis/run after_success
@@ -55,6 +56,14 @@ matrix:
     - os: linux
       dist: trusty
       compiler: clang
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ENABLE_CXX11=1
+    - os: linux
+      dist: trusty
+      compiler: clang
+      env: ENABLE_CXX11=1
     - os: linux
       dist: precise
       compiler: gcc

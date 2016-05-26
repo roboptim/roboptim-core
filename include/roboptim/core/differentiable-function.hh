@@ -75,7 +75,7 @@ namespace roboptim
   /// The class provides a default value for the function id so that
   /// these functions do not have to explicitly set the function id.
   template <typename T>
-  class GenericDifferentiableFunction : public GenericFunction<T>
+  class ROBOPTIM_GCC_ETI_WORKAROUND GenericDifferentiableFunction : public GenericFunction<T>
   {
   public:
     ROBOPTIM_FUNCTION_FWD_TYPEDEFS_ (GenericFunction<T>);

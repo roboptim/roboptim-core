@@ -485,6 +485,17 @@ namespace roboptim
 
     return grad_L;
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI
+    ResultAnalyzer<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI
+    ResultAnalyzer<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif //! ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_RESULT_ANALYZER_HXX
