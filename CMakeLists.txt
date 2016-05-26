@@ -208,7 +208,11 @@ PKG_CONFIG_APPEND_LIBS(roboptim-core)
 SET(BOOST_COMPONENTS date_time filesystem system unit_test_framework)
 SEARCH_FOR_BOOST()
 SEARCH_FOR_EIGEN("eigen3 >= 3.2.0")
-ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0" "liblog4cxx_d >= 0.10.0")
+IF(WIN32)
+  ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0" "liblog4cxx_d >= 0.10.0")
+ELSE()
+  ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")
+ENDIF()
 
 # Libtool dynamic loading
 # This project does not use Libtool directly but still uses ltdl for
