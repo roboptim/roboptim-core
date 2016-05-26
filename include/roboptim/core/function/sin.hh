@@ -28,7 +28,7 @@ namespace roboptim
 
   /// \brief Sin function.
   template <typename T>
-  class Sin : public GenericTwiceDifferentiableFunction<T>
+  class ROBOPTIM_GCC_ETI_WORKAROUND Sin : public GenericTwiceDifferentiableFunction<T>
   {
   public:
     ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_
@@ -123,6 +123,14 @@ namespace roboptim
   /// \example sin.cc
 
   /// @}
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI Sin<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI Sin<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif
 
 } // end of namespace roboptim
 

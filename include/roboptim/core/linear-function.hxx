@@ -47,6 +47,15 @@ namespace roboptim
     else
       return o << this->getName () << " (linear function)";
   }
+
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI GenericLinearFunction<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI GenericLinearFunction<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_LINEAR_FUNCTION_HXX

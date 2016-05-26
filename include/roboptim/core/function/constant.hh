@@ -102,6 +102,14 @@ namespace roboptim
 
   /// @}
 
+// Explicit template instantiations for dense and sparse matrices.
+# ifdef ROBOPTIM_PRECOMPILED_DENSE_SPARSE
+  ROBOPTIM_ALLOW_ATTRIBUTES_ON
+  extern template class ROBOPTIM_CORE_DLLAPI GenericConstantFunction<EigenMatrixDense>;
+  extern template class ROBOPTIM_CORE_DLLAPI GenericConstantFunction<EigenMatrixSparse>;
+  ROBOPTIM_ALLOW_ATTRIBUTES_OFF
+# endif
+
 } // end of namespace roboptim
 
 #endif //! ROBOPTIM_CORE_FUNCTION_CONSTANT_HH
