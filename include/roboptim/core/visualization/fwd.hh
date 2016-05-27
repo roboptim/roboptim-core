@@ -30,7 +30,6 @@ namespace roboptim
     {
       class Command;
 
-      class comment;
       class clear;
       class pwd;
       class quit;
@@ -42,8 +41,6 @@ namespace roboptim
 
       class cd;
       class help;
-
-      class plot;
 
     } // end of namespace gnuplot.
 

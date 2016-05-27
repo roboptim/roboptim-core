@@ -101,35 +101,6 @@ namespace roboptim
   }
 
   template <typename U>
-  template <typename T>
-  void Concatenate<U>::concatenateJacobian (jacobian_ref jacobian,
-                                            const_argument_ref x,
-                                            typename detail::ConcatenateTypes<T>::isDense_t::type*)
-    const
-  {
-    left_->jacobian (jacobianLeft_, x);
-    right_->jacobian (jacobianRight_, x);
-    jacobian.middleRows (0, left_->outputSize ()) =
-      jacobianLeft_;
-    jacobian.middleRows (left_->outputSize (), right_->outputSize ()) =
-      jacobianRight_;
-  }
-
-  template <typename U>
-  template <typename T>
-  void Concatenate<U>::concatenateJacobian (jacobian_ref jacobian,
-                                            const_argument_ref x,
-                                            typename detail::ConcatenateTypes<T>::isNotDense_t::type*)
-    const
-  {
-    left_->jacobian (jacobianLeft_, x);
-    right_->jacobian (jacobianRight_, x);
-
-    copySparseBlock (jacobian, jacobianLeft_, 0, 0);
-    copySparseBlock (jacobian, jacobianRight_, left_->outputSize (), 0);
-  }
-
-  template <typename U>
   void
   Concatenate<U>::impl_jacobian (jacobian_ref jacobian,
 				 const_argument_ref x)

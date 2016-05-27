@@ -129,7 +129,7 @@ namespace roboptim
     ///
     /// \deprecated Deprecated since version 3.1. Use Problem<T>::scaling_t
     /// instead.
-    typedef scaling_t scales_t ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED typedef scaling_t scales_t;
 
     /// \brief Vector of names (e.g. for arguments).
     typedef typename function_t::names_t names_t;
@@ -154,7 +154,7 @@ namespace roboptim
     ///
     /// \deprecated Deprecated since version 3.1. Use Problem<T>::scalingVect_t
     /// instead.
-    typedef scalingVect_t scalesVect_t ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED typedef scalingVect_t scalesVect_t;
 
     /// \brief Jacobian matrix type.
     typedef typename GenericFunctionTraits<T>::jacobian_t jacobian_t;
@@ -180,7 +180,7 @@ namespace roboptim
     /// \deprecated Deprecated since version 3.2. Use the shared_ptr
     /// constructor instead.
     // TODO: remove after enough releases (deprecated in 3.2).
-    explicit Problem (const function_t& cost) ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED explicit Problem (const function_t& cost);
 
     /// \brief Copy constructor.
     /// \param pb problem to copy.
@@ -238,12 +238,12 @@ namespace roboptim
     /// \brief Retrieve arguments scaling (deprecated version).
     ///
     /// \deprecated Deprecated since version 3.1. Use argumentScaling() instead.
-    scales_t& argumentScales () ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED scales_t& argumentScales ();
 
     /// \brief Retrieve arguments scaling (deprecated version).
     ///
     /// \deprecated Deprecated since version 3.1. Use argumentScaling() instead.
-    const scales_t& argumentScales () const ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED const scales_t& argumentScales () const;
 
     /// \brief Retrieve arguments names.
     /// Arguments names define a name for each argument. This is particularly
@@ -309,7 +309,7 @@ namespace roboptim
     /// \brief Retrieve constraints scaling vector (deprecated version).
     ///
     /// \deprecated Deprecated since version 3.1. Use scalingVector() instead.
-    const scalesVect_t& scalesVector () const ROBOPTIM_CORE_DEPRECATED;
+    ROBOPTIM_CORE_DEPRECATED const scalesVect_t& scalesVector () const;
 
     /// \brief Return the output size of the problem's constraints.
     size_type constraintsOutputSize () const;

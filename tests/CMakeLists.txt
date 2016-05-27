@@ -27,10 +27,25 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR}/tests)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
 # Make Boost.Test generates the main function in test cases.
+IF(WIN32)
+  ADD_DEFINITIONS(-DBOOST_ALL_NO_LIB)
+ENDIF(WIN32)
 ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
 
 # To locate built plug-in.
-ADD_DEFINITIONS(-DPLUGIN_PATH="${CMAKE_BINARY_DIR}/src")
+# First, determine the build subdirectory according to the build type
+# [TODO] This could be a macro in jrl-cmake-modules
+IF(WIN32)
+  SET(BUILD_SUBDIRECTORY 
+      "/src/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>$<$<CONFIG:RelWithDebInfo>:RelWithDebInfo>$<$<CONFIG:MinSizeRel>:MinSizeRel>"
+	 )
+ELSE()
+  SET(BUILD_SUBDIRECTORY "/src")
+ENDIF(WIN32)
+# Second, add the path
+ADD_COMPILE_OPTIONS(-DPLUGIN_PATH="${CMAKE_BINARY_DIR}${BUILD_SUBDIRECTORY}")
+
+# To locate reference logs
 ADD_DEFINITIONS(-DTESTS_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 # ROBOPTIM_CORE_TEST(NAME)
@@ -47,19 +62,28 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
   ADD_TEST(NAME ${NAME}
     COMMAND ${CHECK_PREFIX} ${CMAKE_CURRENT_BINARY_DIR}/${NAME})
 
+  #Adding a project configuration file (for MSVC only)
+  GENERATE_MSVC_DOT_USER_FILE(${NAME})
+
   TARGET_LINK_LIBRARIES(${NAME} roboptim-core)
-  PKG_CONFIG_USE_DEPENDENCY(${NAME} eigen3)
   PKG_CONFIG_USE_DEPENDENCY(${NAME} liblog4cxx)
+  IF(NOT LTDL_FOUND)
+    TARGET_LINK_LIBRARIES(${NAME} ltdl)
+  ELSE()
+    PKG_CONFIG_USE_DEPENDENCY(${NAME} ltdl)
+  ENDIF(NOT LTDL_FOUND)
 
   # Link against Boost.
   TARGET_LINK_LIBRARIES(${NAME} ${Boost_LIBRARIES})
 
   # Make sure the plugins will be found.
   # Note: this does not append the environment variables!
+  IF(NOT WIN32)
   SET_PROPERTY(
     TEST ${NAME} PROPERTY ENVIRONMENT
     "LTDL_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src:$ENV{LTDL_LIBRARY_PATH} "
-    "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src:$ENV{LD_LIBRARY_PATH}")
+    "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/:$ENV{LD_LIBRARY_PATH}")
+  ENDIF(NOT WIN32)
 ENDMACRO(ROBOPTIM_CORE_TEST)
 
 # Basic types.

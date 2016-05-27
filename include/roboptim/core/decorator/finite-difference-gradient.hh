@@ -353,9 +353,9 @@ namespace roboptim
     /// \param f function that will e wrapped
     /// \param e epsilon used in finite difference computation
     // TODO: remove after enough releases (deprecated in 3.3).
-    GenericFiniteDifferenceGradient
+    ROBOPTIM_CORE_DEPRECATED GenericFiniteDifferenceGradient
     (const GenericFunction<T>& f,
-     value_type e = finiteDifferenceEpsilon) ROBOPTIM_CORE_DEPRECATED;
+     value_type e = finiteDifferenceEpsilon);
 
     ~GenericFiniteDifferenceGradient ();
 

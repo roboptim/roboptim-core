@@ -30,7 +30,7 @@ namespace roboptim
   /// \brief Warnings have been merged to Result to simplify the API.
   /// To prevent issues with existing visitors, we cannot use a simple
   /// typedef such as:
-  // typedef Result ResultWithWarnings ROBOPTIM_CORE_DEPRECATED;
+  // ROBOPTIM_CORE_DEPRECATED typedef Result ResultWithWarnings;
   ///
   /// \deprecated Deprecated since version 3.3. Use Result instead.
   class ROBOPTIM_CORE_DLLAPI ROBOPTIM_CORE_DEPRECATED

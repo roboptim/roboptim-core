@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with roboptim-core.  If not, see <http://www.gnu.org/licenses/>.
 
-# Requires at least CMake 2.8 to configure the package.
+# Requires at least CMake 2.8.12 to configure the package.
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
 
 INCLUDE(cmake/base.cmake)
@@ -21,10 +21,12 @@ INCLUDE(cmake/boost.cmake)
 INCLUDE(cmake/lapack.cmake)
 INCLUDE(cmake/cpack.cmake)
 INCLUDE(cmake/eigen.cmake)
+INCLUDE(cmake/msvc-specific.cmake)
 
 SET(PROJECT_NAME roboptim-core)
 SET(PROJECT_DESCRIPTION "RobOptim Core")
 SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
+SET(PROJECT_DEBUG_POSTFIX "_d")
 
 # Use MathJax for Doxygen formulae
 SET(DOXYGEN_USE_MATHJAX "YES")
@@ -167,6 +169,12 @@ IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   ENDIF()
 ENDIF()
 
+IF(PROJECT_DEBUG_POSTFIX)
+  SET(FLAG_POSTFIX -DROBOPTIM_DEBUG_POSTFIX="${PROJECT_DEBUG_POSTFIX}")
+  ADD_COMPILE_OPTIONS($<$<CONFIG:Debug>:${FLAG_POSTFIX}>)
+  PKG_CONFIG_APPEND_CFLAGS_DEBUG(${FLAG_POSTFIX})
+ENDIF()
+
 SET(USE_CXX11 FALSE CACHE BOOL "Whether to use C++11")
 
 SET(ROBOPTIM_PRECOMPILE_DENSE_SPARSE FALSE CACHE BOOL
@@ -199,20 +207,32 @@ PKG_CONFIG_APPEND_LIBS(roboptim-core)
 # Search for dependencies.
 SET(BOOST_COMPONENTS date_time filesystem system unit_test_framework)
 SEARCH_FOR_BOOST()
-ADD_REQUIRED_DEPENDENCY("eigen3 >= 3.2.0")
-ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")
+SEARCH_FOR_EIGEN("eigen3 >= 3.2.0")
+IF(WIN32)
+  ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0" "liblog4cxx_d >= 0.10.0")
+ELSE()
+  ADD_REQUIRED_DEPENDENCY("liblog4cxx >= 0.10.0")
+ENDIF()
 
 # Libtool dynamic loading
 # This project does not use Libtool directly but still uses ltdl for
 # plug-in loading.
-INCLUDE(CheckIncludeFileCXX)
-CHECK_INCLUDE_FILE_CXX(ltdl.h LTDL_H_FOUND)
-IF (NOT LTDL_H_FOUND)
-  MESSAGE(FATAL_ERROR
-    "Failed to find ltdl.h, check that Libtool ltdl is installed.")
-ENDIF()
-#FIXME: check that libltdl.so is available instead of adding it blindly.
-PKG_CONFIG_APPEND_LIBS(ltdl)
+IF(WIN32)
+  ADD_OPTIONAL_DEPENDENCY("ltdl" "ltdl_d")
+ENDIF(WIN32)
+
+IF(NOT LTDL_FOUND)
+  #FIXME: check that libltdl.so is available instead of adding it blindly.
+  INCLUDE(CheckIncludeFileCXX)
+  CHECK_INCLUDE_FILE_CXX(ltdl.h LTDL_H_FOUND)
+  IF (NOT LTDL_H_FOUND)
+    MESSAGE(FATAL_ERROR
+      "Failed to find ltdl.h, check that Libtool ltdl is installed.")
+  ENDIF()
+
+  PKG_CONFIG_APPEND_LIBS(ltdl)
+ENDIF(NOT LTDL_FOUND)
+
 HEADER_INSTALL("${HEADERS}")
 
 # Set plug-in subdirectory name (can be empty).
@@ -241,6 +261,12 @@ ADD_DEFINITIONS(-DROBOPTIM_STORAGE_ORDER=${STORAGE_ORDER})
 PKG_CONFIG_APPEND_CFLAGS (-DROBOPTIM_STORAGE_ORDER=${STORAGE_ORDER})
 
 OPTION(DISABLE_TESTS "Disable test programs" OFF)
+
+# For MSVC, set local environment variable to enable finding the built dlls
+# of roboptim-core and the plugins when launching ctest with RUN_TESTS
+IF(MSVC)
+  SET(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/src/\$(Configuration)")
+ENDIF(MSVC)
 
 ADD_SUBDIRECTORY(src)
 

@@ -1,0 +1,52 @@
+version: 1.0.{build}
+branches:
+  only:
+    - dev
+
+configuration:
+- Debug
+
+platform:
+- x64
+
+os: Visual Studio 2015
+clone_folder: C:\devel-src\roboptim-core
+environment:
+  CI_OS_NAME: win32
+  CI_TOOL: appveyor
+# Dependencies should be a list of dependencies separated by spaces
+  CHOCO_DEPENDENCIES: "doxygen.portable"
+  GIT_DEPENDENCIES: "gergondet/ltdl-win32"
+# Should be the same as clone_folder
+  PROJECT_SOURCE_DIR: C:\devel-src\roboptim-core
+# Do not tinker with the variables below unless you know what you are doing
+  SOURCE_FOLDER: C:\devel-src
+  CMAKE_INSTALL_PREFIX: C:/devel
+  PATH: C:/devel/bin;C:\Libraries\boost_1_60_0\lib64-msvc-14.0;C:\msys64\mingw64\bin;%PATH%
+  PKG_CONFIG_PATH: C:/devel/lib/pkgconfig
+  BOOST_ROOT: C:\Libraries\boost_1_60_0
+  BOOST_LIBRARYDIR: C:\Libraries\boost_1_60_0\lib64-msvc-14.0
+  MINGW_GFORTRAN: C:\msys64\mingw64\bin\gfortran.exe
+# N.B: empty lines here and in test_script are VERY important
+build_script:
+- ps: >-
+    Set-PSDebug -Trace 2
+
+    iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aescande/testAppveyor/master/installAsAppveyorDependency.ps1'))
+
+    git submodule update --init --recursive
+
+    . ./.travis/functions.ps1
+
+    setup_build
+
+    ./.travis/dependencies/eigen-3.2.ps1
+
+    install_dependencies
+
+    build_project
+test_script:
+- cmd: >-
+    cd %PROJECT_SOURCE_DIR%/build
+
+    ctest --build-config %CONFIGURATION% --exclude-regex example

@@ -144,19 +144,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (detail_structured_input, T, functionTypes_t)
   // Note: here we use ROBOPTIM_UNUSED to prevent compiler warnings
   // For more information, cf. https://svn.boost.org/trac/boost/ticket/7242
   // F is a DifferentiableFunction, and as such exposes the getJacobianBlock() method
-  BOOST_STATIC_ASSERT((boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename F<T>::parent_t, typename F<T>::traits_t>, F<T> >::value))
-# if __cplusplus < 201103L || !defined (__GXX_EXPERIMENTAL_CXX0X__)
- ROBOPTIM_UNUSED;
-# else
-  ;
-# endif
+  # if __cplusplus < 201103L || !defined (__GXX_EXPERIMENTAL_CXX0X__)
+  #  define TMP_ROBOPTIM_UNUSED ROBOPTIM_UNUSED
+  # else
+  #  define TMP_ROBOPTIM_UNUSED
+  # endif
+  BOOST_STATIC_ASSERT((boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename F<T>::parent_t, typename F<T>::traits_t>, F<T> >::value)) TMP_ROBOPTIM_UNUSED;
   // G is just a Function, and as such does not expose the getJacobianBlock() method
-  BOOST_STATIC_ASSERT((!boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename G<T>::parent_t, typename G<T>::traits_t>, G<T> >::value))
-# if __cplusplus < 201103L || !defined (__GXX_EXPERIMENTAL_CXX0X__)
- ROBOPTIM_UNUSED;
-# else
-  ;
-# endif
+  BOOST_STATIC_ASSERT((!boost::is_base_of<roboptim::detail::StructuredInputJacobianInternal<typename G<T>::parent_t, typename G<T>::traits_t>, G<T> >::value)) TMP_ROBOPTIM_UNUSED;
 
   typename F<T>::argument_t arg(22);
   for(int i = 0; i < arg.size(); ++i)

@@ -25,7 +25,7 @@
 
 // Extra useful attributes
 #if defined _WIN32 || defined __CYGWIN__
-  #define ROBOPTIM_UNUSED __declspec(deprecated)
+  #define ROBOPTIM_UNUSED
 #else
 // On Linux, for GCC >= 4
   #if __GNUC__ >= 4
@@ -81,16 +81,10 @@
     #define ROBOPTIM_ALLOW_ATTRIBUTES_OFF
 #endif
 
-// Required to avoid size_t resolution error with MSVC. Triggered by
-// the boost/tuple/tuple_io.hpp inclusion in roboptim/core/io.hh.
-#ifdef _WIN32
-# define BOOST_NO_STD_LOCALE
-#endif
-
 // Work around for explicit template instantation in GCC, see #111 for
 // more details
 # if defined(ROBOPTIM_PRECOMPILED_DENSE_SPARSE) && \
-  __GNUC__ >= 4 && not defined(__clang__)
+  __GNUC__ >= 4 && !defined(__clang__)
 # define ROBOPTIM_GCC_ETI_WORKAROUND ROBOPTIM_CORE_DLLAPI
 # else
 # define ROBOPTIM_GCC_ETI_WORKAROUND

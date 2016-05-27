@@ -61,6 +61,9 @@ namespace roboptim
 
     std::stringstream ss;
     ss << "roboptim-core-plugin-" << plugin;
+#ifdef ROBOPTIM_DEBUG_POSTFIX
+    ss << ROBOPTIM_DEBUG_POSTFIX;
+#endif
     handle_ = lt_dlopenext (ss.str ().c_str ());
     if (!handle_)
       {
