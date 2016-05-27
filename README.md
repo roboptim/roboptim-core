@@ -3,6 +3,7 @@ roboptim-core
 
 [![License LGPL 3][badge-license]](http://www.gnu.org/licenses/lgpl-3.0.txt)
 [![Build Status](https://travis-ci.org/roboptim/roboptim-core.png?branch=master)](https://travis-ci.org/roboptim/roboptim-core)
+[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/n3dkj3o317peiinc?svg=true)](https://ci.appveyor.com/project/bchretien/roboptim-core)
 [![codecov.io](https://codecov.io/github/roboptim/roboptim-core/coverage.svg?branch=master)](https://codecov.io/github/roboptim/roboptim-core?branch=master)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/863/badge.svg)](https://scan.coverity.com/projects/863)
 [![Join the chat at https://gitter.im/roboptim/development](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/roboptim/development?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
