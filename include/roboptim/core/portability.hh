@@ -84,7 +84,7 @@
 // Work around for explicit template instantation in GCC, see #111 for
 // more details
 # if defined(ROBOPTIM_PRECOMPILED_DENSE_SPARSE) && \
-  __GNUC__ >= 4 && not defined(__clang__)
+  __GNUC__ >= 4 && !defined(__clang__)
 # define ROBOPTIM_GCC_ETI_WORKAROUND ROBOPTIM_CORE_DLLAPI
 # else
 # define ROBOPTIM_GCC_ETI_WORKAROUND
