@@ -24,6 +24,8 @@
 # include <typeinfo>
 # include <stdexcept>
 
+# include <boost/preprocessor/stringize.hpp>
+
 # include <roboptim/core/util.hh>
 # include <roboptim/core/portability.hh>
 
@@ -62,7 +64,7 @@ namespace roboptim
     std::stringstream ss;
     ss << "roboptim-core-plugin-" << plugin;
 #ifdef ROBOPTIM_DEBUG_POSTFIX
-    ss << ROBOPTIM_DEBUG_POSTFIX;
+    ss << BOOST_PP_STRINGIZE(ROBOPTIM_DEBUG_POSTFIX);
 #endif
     handle_ = lt_dlopenext (ss.str ().c_str ());
     if (!handle_)
