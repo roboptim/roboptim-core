@@ -201,9 +201,6 @@ IF(HAS_VISIBILITY)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
 ENDIF()
 
-# Add main library to pkg-config file.
-PKG_CONFIG_APPEND_LIBS(roboptim-core)
-
 # Search for dependencies.
 SET(BOOST_COMPONENTS date_time filesystem system unit_test_framework)
 SEARCH_FOR_BOOST()
@@ -269,6 +266,9 @@ IF(MSVC)
 ENDIF(MSVC)
 
 ADD_SUBDIRECTORY(src)
+
+# Add main library to pkg-config file.
+PKG_CONFIG_APPEND_LIBS(roboptim-core)
 
 IF(NOT DISABLE_TESTS)
   ADD_SUBDIRECTORY(tests)
