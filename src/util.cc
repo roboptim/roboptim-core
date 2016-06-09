@@ -24,9 +24,15 @@
 # define HAS_BOOST_CORE_DEMANGLE
 # include <boost/core/demangle.hpp>
 // If glic
-#elif defined(__GLIBCXX__) || defined(__GLIBCPP__) \
-  || (defined(__clang__) && __has_include(<cxxabi.h>))
+#elif defined(__GLIBCXX__) || defined(__GLIBCPP__)
 # define HAS_CXXABI_H
+#elif defined(__clang__) && defined(__has_include)
+# if __has_include(<cxxabi.h>)
+#  define HAS_CXXABI_H
+# endif
+#endif
+
+#ifdef HAS_CXXABI_H
 # include <cxxabi.h>
 #endif
 
