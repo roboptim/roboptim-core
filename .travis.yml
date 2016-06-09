@@ -41,8 +41,10 @@ before_install:
 
 matrix:
   allow_failures:
-    - compiler: clang
+    - os: linux
+      compiler: clang
     - os: osx
+      compiler: gcc
     - env: COVERITY_SCAN_BRANCH=1
   include:
     - os: linux
