@@ -19,7 +19,7 @@
 # define ROBOPTIM_CORE_FWD_HH
 
 // TODO: remove as soon as the typeString() problem is solved
-# include <iosfwd>
+# include <string>
 
 # include <roboptim/core/portability.hh>
 
