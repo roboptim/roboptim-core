@@ -194,6 +194,8 @@ struct G1 : public TwiceDifferentiableFunction
 <pre><code>
 int run_test ()
 {
+  typedef Solver&lt;EigenMatrixDense&gt; solver_t;
+
   // Create cost function.
   boost::shared_ptr&lt;F&gt; f (new F ());
 
