@@ -1,8 +1,13 @@
 var a00094 =
 [
-    [ "GenericLinearFunction", "a00094.html#a413894f3e510da5ec620231f30d4bb08", null ],
-    [ "impl_hessian", "a00094.html#a2c6a7b8371cb6d4046e9f3fe016b2eda", null ],
-    [ "print", "a00094.html#a00e124bc18548130332a1f5ceacf70c5", null ],
-    [ "ROBOPTIM_ADD_FLAG", "a00094.html#acca8f3161fce466f051c78c7bbd56c30", null ],
-    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00094.html#a6884c6af51fbc1b1cbd6d72ebd955796", null ]
+    [ "MapShPtr_t", "a00094.html#a574f40013b83ac08459277e74dc8289e", null ],
+    [ "parentType_t", "a00094.html#aa472baf5213f2a8afc29b442073031eb", null ],
+    [ "Map", "a00094.html#a4c8f20cf07ee28545f24df00a427e7b9", null ],
+    [ "~Map", "a00094.html#af65411ba263b5776211a5edb162a89aa", null ],
+    [ "impl_compute", "a00094.html#a21a174f7e6e5c1fd925438234b74533a", null ],
+    [ "impl_gradient", "a00094.html#a50f3f13c83b02df9885bdc15a8b7d8c4", null ],
+    [ "impl_jacobian", "a00094.html#a55bf380b9fe15572cc595c3796978cec", null ],
+    [ "origin", "a00094.html#a6084518aafb074773522d069b84418b3", null ],
+    [ "origin", "a00094.html#a323b53ffd6ed09b1460ea1c112c1b340", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00094.html#a934ae91992e7f17a02dbde5ec8e7de3c", null ]
 ];
