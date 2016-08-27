@@ -1,6 +1,9 @@
 var a00236 =
 [
-    [ "EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET", "a00236.html#a77e6db63e071b40535df9ee30f2acfd7", null ],
-    [ "operator<<", "a00236.html#ga754766ba098561274be740474369e1ba", null ],
-    [ "operator<<", "a00236.html#aa5714b11301afc8bc1ee4d544eafac2f", null ]
+    [ "ROBOPTIM_ALLOW_ATTRIBUTES_OFF", "a00236.html#a1c006d1e409b5ede082a90e6c45c53b2", null ],
+    [ "ROBOPTIM_ALLOW_ATTRIBUTES_ON", "a00236.html#ae8f815d55df5c41882f100b0bd3dbd8c", null ],
+    [ "ROBOPTIM_ALLOW_DEPRECATED_OFF", "a00236.html#ac86612c6d84b2498e4ad58f36ca62fa4", null ],
+    [ "ROBOPTIM_ALLOW_DEPRECATED_ON", "a00236.html#a0c93fc8711ca2cfd3eec6853a923aa8d", null ],
+    [ "ROBOPTIM_GCC_ETI_WORKAROUND", "a00236.html#a6eeb7aa37807c549fbe27fb23a3d9ab8", null ],
+    [ "ROBOPTIM_UNUSED", "a00236.html#aa446017b1b035b55a23e6289044db2cf", null ]
 ];
