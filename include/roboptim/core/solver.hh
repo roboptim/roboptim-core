@@ -167,9 +167,6 @@ namespace roboptim
 
     /// \brief Plugin name.
     std::string plugin_name_;
-
-    /// \brief Pointer to function logger (see log4cxx documentation).
-    static log4cxx::LoggerPtr logger;
   };
 
   /// \brief Override operator<< to display ``parameters'' objects.

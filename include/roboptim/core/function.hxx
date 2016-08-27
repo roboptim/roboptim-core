@@ -171,8 +171,6 @@ namespace roboptim
   void GenericFunction<T>::operator () (result_ref result,
                                         const_argument_ref argument) const
   {
-    LOG4CXX_TRACE
-      (logger, "Evaluating function at point: " << argument);
     assert (argument.size () == inputSize ());
     assert (isValidResult (result));
 

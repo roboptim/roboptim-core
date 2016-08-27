@@ -122,8 +122,6 @@ namespace roboptim
 		  const_argument_ref argument,
 		  size_type functionId = 0) const
     {
-      LOG4CXX_TRACE (this->logger,
-		     "Evaluating hessian at point: " << argument);
       assert (isValidHessian (hessian));
 
 #ifndef ROBOPTIM_DO_NOT_CHECK_ALLOCATION

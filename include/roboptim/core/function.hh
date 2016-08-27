@@ -466,15 +466,7 @@ namespace roboptim
 
     /// \brief Function name (for user-friendliness).
     std::string name_;
-
-  protected:
-    /// \brief Pointer to function logger (see log4cxx documentation).
-    static log4cxx::LoggerPtr logger;
   };
-
-  template <typename T>
-  log4cxx::LoggerPtr GenericFunction<T>::logger
-  (log4cxx::Logger::getLogger ("roboptim"));
 
   /// \brief Trait specializing GenericFunction for Eigen dense matrices.
   template <>

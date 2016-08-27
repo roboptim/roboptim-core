@@ -145,8 +145,6 @@ namespace roboptim
     void jacobian (jacobian_ref jacobian, const_argument_ref argument)
       const
     {
-      LOG4CXX_TRACE (this->logger,
-		     "Evaluating jacobian at point: " << argument);
       assert (argument.size () == this->inputSize ());
       assert (isValidJacobian (jacobian));
 
@@ -191,10 +189,6 @@ namespace roboptim
 		   const_argument_ref argument,
 		   size_type functionId = 0) const
     {
-      LOG4CXX_TRACE (this->logger,
-		     "Evaluating gradient at point: "
-		     << argument
-		     << " (function id: " << functionId << ")");
       assert (functionId < this->outputSize ());
       assert (argument.size () == this->inputSize ());
       assert (isValidGradient (gradient));

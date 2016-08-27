@@ -146,9 +146,6 @@ namespace roboptim
   protected:
     /// \brief Optimization result.
     result_t result_;
-
-    /// \brief Pointer to function logger (see log4cxx documentation).
-    static log4cxx::LoggerPtr logger;
   };
 
   /// @}

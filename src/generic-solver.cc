@@ -23,9 +23,6 @@
 
 namespace roboptim
 {
-  log4cxx::LoggerPtr GenericSolver::logger
-  (log4cxx::Logger::getLogger ("roboptim.solver"));
-
   GenericSolver::GenericSolver ()
     : boost::noncopyable (),
       result_ (NoSolution ())
@@ -45,7 +42,6 @@ namespace roboptim
   void
   GenericSolver::reset ()
   {
-    LOG4CXX_INFO (logger, "Solver has been reset.");
     result_ = NoSolution ();
   }
 
