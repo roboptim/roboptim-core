@@ -1,4 +1,4 @@
 var namespaces =
 [
-    [ "roboptim", "a00308.html", "a00308" ]
+    [ "roboptim", "a00289.html", "a00289" ]
 ];
