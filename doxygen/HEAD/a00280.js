@@ -1,4 +1,4 @@
 var a00280 =
 [
-    [ "TwiceDerivableFunction", "a00280.html#a8fe946bb68641ff262c0cfef38af94d5", null ]
+    [ "operator<<", "a00280.html#ae6c649aa8d935cb8c8fbe8307cfa2b1f", null ]
 ];

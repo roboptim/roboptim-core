@@ -1,4 +1,4 @@
 var a00268 =
 [
-    [ "operator<<", "a00268.html#ga5e5560e6bd1a1a605c499d2a16ecd831", null ]
+    [ "GenericFunction< EigenMatrixDense >", "a00268.html#a93719835e430a71cefe9419ca7137bf4", null ]
 ];
