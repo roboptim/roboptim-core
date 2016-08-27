@@ -1,15 +1,15 @@
 var a00126 =
 [
-    [ "callback_t", "a00126.html#a45335c702d520b0729670161fa696ca8", null ],
-    [ "problem_t", "a00126.html#aad0e448957462a8164234c4810cbc8be", null ],
-    [ "solver_t", "a00126.html#ada23ae5850a3650d52441c3c37394eb7", null ],
-    [ "solverState_t", "a00126.html#a4dacf9dc4a957f45403e55a291301b2d", null ],
-    [ "SolverCallback", "a00126.html#ad6f615df2c34d3125240d905796f0bd9", null ],
-    [ "~SolverCallback", "a00126.html#accda56dade897e1022a9da51e4ce2cc6", null ],
-    [ "callback", "a00126.html#a148144307c7967a05d5ecf04ce5a5d33", null ],
-    [ "name", "a00126.html#a2322acd01f2689842f3f999b7a6e13b0", null ],
-    [ "operator()", "a00126.html#acec51603247e51f6412cef88cabb368f", null ],
-    [ "perIterationCallback", "a00126.html#a1f7a9d4f8dd25c874a89989547e8b1ae", null ],
-    [ "perIterationCallbackUnsafe", "a00126.html#a40c0f2d62205e3f6de5f832941077efb", null ],
-    [ "print", "a00126.html#a6bee93a9de3f8ab4db305f4bbbe8cbbe", null ]
+    [ "parentType_t", "a00126.html#ab4d12a8f0bcae135aff2dc0e8998801b", null ],
+    [ "PlusShPtr_t", "a00126.html#a4293f7f153edd79aec49ed9d8dd03122", null ],
+    [ "Plus", "a00126.html#a8ab9e9b7348f75e9447251693fc81a7e", null ],
+    [ "~Plus", "a00126.html#abedb0ecb21222e9aca4c7f103d04ea99", null ],
+    [ "impl_compute", "a00126.html#a33dddd26dcadcaf9559ff73581938111", null ],
+    [ "impl_gradient", "a00126.html#a01c9b6d9ef74d019eeb035b706eb5784", null ],
+    [ "impl_jacobian", "a00126.html#aedbf297e4a9ed8d697eb890ece91a7e3", null ],
+    [ "left", "a00126.html#a02962e5b5637c3a0a1f61bf6f188fb9e", null ],
+    [ "left", "a00126.html#af8a02db6bba1a1f20b8a32f10a809248", null ],
+    [ "right", "a00126.html#ade7a10db019cd559298cd1918ebda9ff", null ],
+    [ "right", "a00126.html#a93ea170baf1cb3bcd521edf776676dc1", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00126.html#a0135d05c16cd40f3794d4497f1d2ec4b", null ]
 ];

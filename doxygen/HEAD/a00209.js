@@ -1,6 +1,28 @@
 var a00209 =
 [
-    [ "plot_mat", "a00301.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
-    [ "plot_mat", "a00301.html#gad95bc834df94f24249f83aedddc0e17d", null ],
-    [ "plot_mat", "a00301.html#gad4703635fcedadbb33319b576c22ff79", null ]
+    [ "NoSolution", "a00119.html", null ],
+    [ "Simple", "a00148.html", "a00148" ],
+    [ "FivePointsRule", "a00082.html", "a00082" ],
+    [ "EigenMatrixDense", "a00079.html", null ],
+    [ "EigenMatrixSparse", "a00080.html", null ],
+    [ "derivativeSize", "a00068.html", null ],
+    [ "LRUCache", "a00112.html", "a00112" ],
+    [ "OptimizationLogger", "a00123.html", "a00123" ],
+    [ "ConstantFunction", "a00209.html#aae31207e6c555a8c607a7f444c1d437b", null ],
+    [ "DifferentiableFunction", "a00209.html#a1fe6728680de2e1a17e250717269fe22", null ],
+    [ "DifferentiableSparseFunction", "a00209.html#a7e31c0c139e1f6949efdda2c8925bf0a", null ],
+    [ "Function", "a00209.html#a1864afd8c0c95cea8029da9b52352736", null ],
+    [ "IdentityFunction", "a00209.html#a9a14f34c11e87aa249b2bd5a500f0ff9", null ],
+    [ "LinearFunction", "a00209.html#abbf3e635a932ae99934936a092aec72c", null ],
+    [ "LinearSparseFunction", "a00209.html#aa8f5a3e6e11dab0777930cd974dc9416", null ],
+    [ "NumericLinearFunction", "a00209.html#a2177dd2963638a1a068cb05dc64fac32", null ],
+    [ "NumericLinearSparseFunction", "a00209.html#af638b0011cdc93dbc752dc841dafed2b", null ],
+    [ "NumericQuadraticFunction", "a00209.html#a4a940419845321db972ff15085448fe5", null ],
+    [ "NumericQuadraticSparseFunction", "a00209.html#a4a91fb268c46dca0cf451f92d04847c7", null ],
+    [ "QuadraticFunction", "a00209.html#ab03c6ad564de263af42983892cab684a", null ],
+    [ "QuadraticSparseFunction", "a00209.html#a8a37fb59bc67c514268e4ae99c80567d", null ],
+    [ "SparseFunction", "a00209.html#a0036230886e32e7043e29e0f14682637", null ],
+    [ "TwiceDifferentiableFunction", "a00209.html#a664a3377f606592dfc57f9525c9afa37", null ],
+    [ "TwiceDifferentiableSparseFunction", "a00209.html#a18d2ef51eb9bfce27cb92b82a684bf56", null ],
+    [ "typeString", "a00209.html#a954055e1fba458cc6f367cf8a16a6083", null ]
 ];

@@ -1,6 +1,8 @@
 var a00196 =
 [
-    [ "EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET", "a00196.html#a77e6db63e071b40535df9ee30f2acfd7", null ],
-    [ "operator<<", "a00301.html#ga22576c0708e8fe4af42060ff87bfad20", null ],
-    [ "operator<<", "a00289.html#a45951c8d967c172f9f8213900b3d7884", null ]
+    [ "solver_t", "a00196.html#a9a7157c7f730c89881de1b6122cc2337", null ],
+    [ "create", "a00196.html#afb87c12dcd8c23d875c913a07f02a1b2", null ],
+    [ "destroy", "a00196.html#a1cf814d98d474ded87cdd24cad3588b8", null ],
+    [ "getSizeOfProblem", "a00196.html#a8c7aac59ed1b08104ddc2e6c6dd6fb38", null ],
+    [ "getTypeIdOfConstraintsList", "a00196.html#a3ca571f5bd28a61a05de54366690379c", null ]
 ];

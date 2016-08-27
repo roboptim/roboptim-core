@@ -1,9 +1,6 @@
 var a00208 =
 [
-    [ "dense_matrix_to_matplotlib", "a00293.html#aec6bb39f40ca2fb899bc401c83a17075", null ],
-    [ "plot_mat", "a00301.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
-    [ "plot_mat", "a00301.html#gad95bc834df94f24249f83aedddc0e17d", null ],
-    [ "set_gradient_cmap", "a00293.html#ae2b0cedbefa7eeaac6b222c17e693fa1", null ],
-    [ "set_pattern_cmap", "a00293.html#a37c9b670a86949c6be1713217ef594ba", null ],
-    [ "sparse_matrix_to_matplotlib", "a00293.html#a431a27b03c8e76126ec235e828691a19", null ]
+    [ "castInto", "a00208.html#a138a927716819b1af5033ec1bf2b4b7c", null ],
+    [ "castInto", "a00208.html#a5b374522d94ea6cfc1de10b14bf17548", null ],
+    [ "operator<<", "a00208.html#ac1811528dd1c9cc4c233c14bf5ed6e81", null ]
 ];

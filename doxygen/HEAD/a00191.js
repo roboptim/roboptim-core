@@ -1,6 +1,8 @@
 var a00191 =
 [
-    [ "plot_jac", "a00301.html#ga82eb26a5bc780a491723b256fd0e3ff9", null ],
-    [ "plot_jac", "a00301.html#ga6089434a4bb7b902af79ee92fbfea1ea", null ],
-    [ "plot_jac", "a00301.html#gaa1f821ed4194ecba54db36327af0fd13", null ]
+    [ "solver_t", "a00191.html#a8280e1cea7b0916b6ca6b1fc759804d7", null ],
+    [ "create", "a00191.html#a40e6bd9183968b68f61b49ff45d2cdd8", null ],
+    [ "destroy", "a00191.html#a1cf814d98d474ded87cdd24cad3588b8", null ],
+    [ "getSizeOfProblem", "a00191.html#a8c7aac59ed1b08104ddc2e6c6dd6fb38", null ],
+    [ "getTypeIdOfConstraintsList", "a00191.html#a1b937f739027abf2c1c2d0eb031ad665", null ]
 ];

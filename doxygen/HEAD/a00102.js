@@ -1,9 +1,11 @@
 var a00102 =
 [
-    [ "parameterValues_t", "a00102.html#ae22aab4f180e46eb0764eb2a1ec4e258", null ],
-    [ "value_type", "a00102.html#a0fb49780f98cd996a9b3e45bf19b41ec", null ],
-    [ "vector_t", "a00102.html#a7af3eec9012669354d55a58132f04901", null ],
-    [ "Parameter", "a00102.html#a7ed3b8d90d1dc1c6853eefbf2fe1c9e9", null ],
-    [ "description", "a00102.html#a8758825ae290c6722354c7e2b4a40453", null ],
-    [ "value", "a00102.html#a6a9253ce0d03f844c642a1a41dcd60b1", null ]
+    [ "~Gnuplot", "a00102.html#ab2620f9d29a97757d0acbfe68e6a2c79", null ],
+    [ "Gnuplot", "a00102.html#ab134923cbb8cc53b251664f4b5c6b73c", null ],
+    [ "clear", "a00102.html#a0bc170d3f32a3abaa388b27e17242ad3", null ],
+    [ "make_gnuplot", "a00102.html#a55c76cc46b5c54b1bc0d4684128403ff", null ],
+    [ "make_interactive_gnuplot", "a00102.html#a14e55569e7e70d12d7cd1d83117576a1", null ],
+    [ "operator<<", "a00102.html#af7addb186708c556e603c3fd8e7768a6", null ],
+    [ "print", "a00102.html#ad4b42f563ebbdb501d397a42a4420525", null ],
+    [ "push_command", "a00102.html#aaa242efdd1e20124d0698793b4fd4bdd", null ]
 ];

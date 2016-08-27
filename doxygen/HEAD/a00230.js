@@ -1,8 +1,10 @@
 var a00230 =
 [
-    [ "ROBOPTIM_ALLOW_ATTRIBUTES_OFF", "a00230.html#a1c006d1e409b5ede082a90e6c45c53b2", null ],
-    [ "ROBOPTIM_ALLOW_ATTRIBUTES_ON", "a00230.html#ae8f815d55df5c41882f100b0bd3dbd8c", null ],
-    [ "ROBOPTIM_ALLOW_DEPRECATED_OFF", "a00230.html#ac86612c6d84b2498e4ad58f36ca62fa4", null ],
-    [ "ROBOPTIM_ALLOW_DEPRECATED_ON", "a00230.html#a0c93fc8711ca2cfd3eec6853a923aa8d", null ],
-    [ "ROBOPTIM_UNUSED", "a00230.html#aa446017b1b035b55a23e6289044db2cf", null ]
+    [ "MATPLOTLIB_UNARY_COMMAND", "a00230.html#ada98b8f63c02be17bdbf654bc529d0bd", null ],
+    [ "MATPLOTLIB_UNARY_COMMAND_ARG", "a00230.html#adcd6527d205fadf14757084bb7902f82", null ],
+    [ "MATPLOTLIB_UNARY_COMMAND_VAR", "a00230.html#ae91cb430ac819bcd54672228ac6094cd", null ],
+    [ "comment", "a00230.html#ga4c395b1d7d97dc70bd1e20bb18a57cb2", null ],
+    [ "import", "a00230.html#ga39b68128dabb457499f493b7f17d3413", null ],
+    [ "import", "a00230.html#ga7f5c136cb79bd9bb01b3681e9f3b693e", null ],
+    [ "set", "a00230.html#ga2690387f5414c233b3f9895f2f9fe0f3", null ]
 ];

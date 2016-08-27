@@ -1,7 +1,8 @@
 var a00115 =
 [
-    [ "T1", "a00115.html#ab5acc3d14344b28f8011ccc060d15494", null ],
-    [ "T2", "a00115.html#ac39c39ae33adbfa77d5202b8bdb7539e", null ],
-    [ "T_promote", "a00115.html#afff7587eb16f8d5708a406f08a413463", null ],
-    [ "BOOST_MPL_ASSERT", "a00115.html#a6e4a50c4e55255b57f664c321151579c", null ]
+    [ "Type", "a00115.html#aa079ed2005e090509c162f1164496e41", [
+      [ "Values", "a00115.html#aa079ed2005e090509c162f1164496e41aa759505cb2efa66b4b6831ff3413577f", null ],
+      [ "Log", "a00115.html#aa079ed2005e090509c162f1164496e41a75b95f79284ff8d0a2ccc4cfb7c66284", null ],
+      [ "Structure", "a00115.html#aa079ed2005e090509c162f1164496e41a904fec78479d64265dd6dffaaf08ab8f", null ]
+    ] ]
 ];

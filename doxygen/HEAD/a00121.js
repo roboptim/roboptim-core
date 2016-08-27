@@ -1,13 +1,22 @@
 var a00121 =
 [
-    [ "parentType_t", "a00121.html#a10ceafe26463a6befaf1a83bae6f2ba3", null ],
-    [ "SelectionByIdShPtr_t", "a00121.html#a2f296e76debe6a7e703f0a769f5f9129", null ],
-    [ "SelectionById", "a00121.html#afed4a5f3312bb43c36cd89e1b24da60e", null ],
-    [ "~SelectionById", "a00121.html#a647ad16eec9c7afb716a748c42c1fd1f", null ],
-    [ "impl_compute", "a00121.html#a9e64ceaf5be532b1d08b43fd48fc1802", null ],
-    [ "impl_gradient", "a00121.html#a670b69ecefa042ad5e6e2f14300c3482", null ],
-    [ "impl_jacobian", "a00121.html#a27306334779e090f25bbd7d630418aa8", null ],
-    [ "origin", "a00121.html#a96d0c5400637449ba56f14e7c25ec69d", null ],
-    [ "origin", "a00121.html#a3fe469f5a1b03ea25527636b326d85ab", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00121.html#a4238e53c744c850cde075fda814a2f26", null ]
+    [ "parent_t", "a00121.html#a63f0c8ee46caebd96b3f3ac95007a4e4", null ],
+    [ "traits_t", "a00121.html#a47feb7c0143659f5b92787053a15bbb5", null ],
+    [ "~NTimesDerivableFunction", "a00121.html#aa53731c25ac3d5d1fc7a3ea8150aed11", null ],
+    [ "NTimesDerivableFunction", "a00121.html#aadbad9470dae42b36850ae6335061499", null ],
+    [ "derivabilityOrderMax", "a00121.html#a1a183ff8b5a808c6f7055046d3d92c61", null ],
+    [ "derivative", "a00121.html#aa8e60c37f51f78f2dbf74120a0171df9", null ],
+    [ "derivative", "a00121.html#a5c225bc92b04846604e942b546118883", null ],
+    [ "derivativeSize", "a00121.html#a268b3fd1413566d680615cacd990b16a", null ],
+    [ "impl_compute", "a00121.html#a608c4e68e7860f984b6b08e534b2019b", null ],
+    [ "impl_compute", "a00121.html#aa731d43cd179890bd75e36ed6477f707", null ],
+    [ "impl_derivative", "a00121.html#a84e1d794855de7e5a806ec948188462d", null ],
+    [ "impl_gradient", "a00121.html#aa7e2133add7bc02a1126d66bfe0d0c63", null ],
+    [ "impl_hessian", "a00121.html#a76b7c04673c755f81d57d9236465d293", null ],
+    [ "isValidDerivative", "a00121.html#ab3cf75353ae399e19e7ae0009ae50054", null ],
+    [ "operator()", "a00121.html#a28c3421f695912a9ad78728e0cf9f3b9", null ],
+    [ "operator()", "a00121.html#af2490b8d0ea10daa90173e080456edba", null ],
+    [ "print", "a00121.html#ae0961c8f2f33ecb177216919420b21cb", null ],
+    [ "ROBOPTIM_GENERATE_TRAITS_REFS_T", "a00121.html#aa4887d85d996c73698747ddd1c413960", null ],
+    [ "derivabilityOrder", "a00121.html#ac4e7bbc8e11d709811e4c748ea7bb067", null ]
 ];

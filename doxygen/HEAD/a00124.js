@@ -1,14 +1,9 @@
 var a00124 =
 [
-    [ "Sin", "a00124.html#a4732d5e0a1e37379c5b0275effe7e67c", null ],
-    [ "~Sin", "a00124.html#ac23f4e74782bcb9aaa1b5b2453d67d7d", null ],
-    [ "impl_compute", "a00124.html#ae29b31cbfed8b87a6852ce0861bb2696", null ],
-    [ "impl_gradient", "a00296.html#ga41ce1d89a5562b7d36e69606cf166e1b", null ],
-    [ "impl_gradient", "a00124.html#a80554051f4f47797d355874ce956c136", null ],
-    [ "impl_hessian", "a00296.html#gaec6e904bd4d1be042d5ae9692c5b45a9", null ],
-    [ "impl_hessian", "a00124.html#a2d17659d3d99ef9aef862369da8547c5", null ],
-    [ "impl_jacobian", "a00296.html#ga967172085eebe8ca14010a3dee324477", null ],
-    [ "impl_jacobian", "a00124.html#a14f62ccaccebdcc852691a1bdd31fdab", null ],
-    [ "print", "a00124.html#ad1127d5c57e79dd7c1a4dc20398e1086", null ],
-    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00124.html#a0859e9a410b3c1bf41fd7f2cf8636f5a", null ]
+    [ "parameterValues_t", "a00124.html#ae22aab4f180e46eb0764eb2a1ec4e258", null ],
+    [ "value_type", "a00124.html#a0fb49780f98cd996a9b3e45bf19b41ec", null ],
+    [ "vector_t", "a00124.html#a7af3eec9012669354d55a58132f04901", null ],
+    [ "Parameter", "a00124.html#a7ed3b8d90d1dc1c6853eefbf2fe1c9e9", null ],
+    [ "description", "a00124.html#a8758825ae290c6722354c7e2b4a40453", null ],
+    [ "value", "a00124.html#a6a9253ce0d03f844c642a1a41dcd60b1", null ]
 ];

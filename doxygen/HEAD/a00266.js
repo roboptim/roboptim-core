@@ -1,4 +1,4 @@
 var a00266 =
 [
-    [ "getBlock", "a00286.html#aaea0849f5afd68a5e8b1d0cd383794f3", null ]
+    [ "operator<<", "a00266.html#a0d11c06d8ac34af3a7f0a803ab8d10f8", null ]
 ];

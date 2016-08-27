@@ -1,13 +1,9 @@
 var a00120 =
 [
-    [ "parentType_t", "a00120.html#a6802dfd6761714f83c4dbbe5f9bcef19", null ],
-    [ "SelectionShPtr_t", "a00120.html#a5cf29c8b2e9a95cf3553d7f21bb1ee83", null ],
-    [ "Selection", "a00120.html#ac07895f78f6a65a8b3f54d5fc1020629", null ],
-    [ "~Selection", "a00120.html#a2f5c18b892a2c6e4d6d1f30561334d4e", null ],
-    [ "impl_compute", "a00120.html#a27810cd60947270ff41970b79f10e741", null ],
-    [ "impl_gradient", "a00120.html#a34eb7fca5608b393e2dff858bbbaa60f", null ],
-    [ "impl_jacobian", "a00120.html#a33d09bf5aa65daf658f4b853322d2b9b", null ],
-    [ "origin", "a00120.html#a5e3e5098b2fe6dd32b773d06ba3de648", null ],
-    [ "origin", "a00120.html#a0cbd7cc3ecf575d338b16306ea1b4646", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00120.html#a224033bde371676be065a7c89fba3d77", null ]
+    [ "size_type", "a00120.html#a0b16636d1ed2950355c0cd7e22aaffa8", null ],
+    [ "~NTimesDerivableFunction", "a00120.html#abac49e2227ca9041fd9a70b429ea3fa1", null ],
+    [ "NTimesDerivableFunction", "a00120.html#a794258aa1fd8a40705cb07af333dc5dd", null ],
+    [ "derivabilityOrderMax", "a00120.html#a78da40b42cc149c600873c1c7707941b", null ],
+    [ "print", "a00120.html#a1f48092699bd7d0ec66d698d215e24ac", null ],
+    [ "derivabilityOrder", "a00120.html#ad7b273dd6b55a50f56851d372fe1daa1", null ]
 ];

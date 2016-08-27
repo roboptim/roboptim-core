@@ -1,8 +1,14 @@
 var a00065 =
 [
-    [ "parent_t", "a00065.html#adcb46d2bc1b5d17adcd5d97b52ce3c67", null ],
-    [ "problem_t", "a00065.html#a0e0362682de999a215fecd25edb659a8", null ],
-    [ "GenericDummySolver", "a00065.html#ab9259c88a6b1e557cb606555f7128426", null ],
-    [ "~GenericDummySolver", "a00065.html#ab46c3a53c3645dc1098f38062356b5a5", null ],
-    [ "solve", "a00065.html#ab69e52e60d513b6654c103f96c2b6a68", null ]
+    [ "Cos", "a00065.html#a22276bb5907afad6ce3ef5d9ad724ab8", null ],
+    [ "~Cos", "a00065.html#a2c614f54551bb78c08bfcba24b404762", null ],
+    [ "impl_compute", "a00065.html#ac598f1fe744a1a40c2fd8138d90e8034", null ],
+    [ "impl_gradient", "a00324.html#ga18f6935028c4edb5231bbefcd014b8dd", null ],
+    [ "impl_gradient", "a00065.html#a35baf63e2a6a9733e7415b573ceb102f", null ],
+    [ "impl_hessian", "a00324.html#gac5b507e077795c1be8b314e640166550", null ],
+    [ "impl_hessian", "a00065.html#ac3b609457f049201bf66d51f4b4bf715", null ],
+    [ "impl_jacobian", "a00324.html#gae2c871b48d14d7227b73abbb57881aaa", null ],
+    [ "impl_jacobian", "a00065.html#a2a8c782166f842e8767cba8ec8b509a6", null ],
+    [ "print", "a00065.html#a39db9ef66cdb3605a811b232fcfaad13", null ],
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00065.html#aaf50a1ab67cc74f7b7f3a571fb093420", null ]
 ];

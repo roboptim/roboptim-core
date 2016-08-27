@@ -1,19 +1,15 @@
 var a00116 =
 [
-    [ "argument_t", "a00116.html#ab49a988d1dda85525dfa3bb2eab5ee29", null ],
-    [ "result_t", "a00116.html#a561eb7172518a6b62ab9beddf80b752d", null ],
-    [ "size_type", "a00116.html#a85f59990dc11a8b383f5ac34f3a450df", null ],
-    [ "value_type", "a00116.html#aecf786c083759ec7e3e58fb11f34eb4e", null ],
-    [ "vector_t", "a00116.html#a0b58ed6d1d318d29ea875467441b782e", null ],
-    [ "Result", "a00116.html#a7c6d866d4162421ebb28e0ba050907f3", null ],
-    [ "~Result", "a00116.html#a888c809793214ded502bfa374dd0c811", null ],
-    [ "print", "a00116.html#af065a63ebc7497011f49be220857b0f0", null ],
-    [ "constraint_violation", "a00116.html#a9e23f2757927241a62486be4dd44fae2", null ],
-    [ "constraints", "a00116.html#a50137a730ec39d6bbdc2e86efbcecf42", null ],
-    [ "inputSize", "a00116.html#af32478031f205ae7a8fd3676fc02f67d", null ],
-    [ "lambda", "a00116.html#a4a3c615497bd8c83d21a35430f9b204c", null ],
-    [ "outputSize", "a00116.html#a562f3e5a026d2b9c6a008be5bc6c2ec7", null ],
-    [ "value", "a00116.html#ac3261d3141982c57e6e75a4c7dd4764c", null ],
-    [ "warnings", "a00116.html#a5a1ffd0ab7b476e1d4bc892e568f3d4d", null ],
-    [ "x", "a00116.html#ad845c2c2c0afd849e840f65569cb62fc", null ]
+    [ "MinusShPtr_t", "a00116.html#ae344478e5d53643778a5c4aee576b55c", null ],
+    [ "parentType_t", "a00116.html#a8b7f52fa80d2c59b7c7bc9a35a7e0031", null ],
+    [ "Minus", "a00116.html#ac824027a41ce9d5a343d1e0faa13bb8c", null ],
+    [ "~Minus", "a00116.html#a4eb1f38d5fb4f07cb695b431ff715f6c", null ],
+    [ "impl_compute", "a00116.html#ac83aa9833c95aeee657e4e7f52da4650", null ],
+    [ "impl_gradient", "a00116.html#a0644c67716f21a1e58a5630f85ca264f", null ],
+    [ "impl_jacobian", "a00116.html#a54025f8e09cc4249bb754e17e39aef88", null ],
+    [ "left", "a00116.html#ad452d59bf5247d3f65c8e46154cce947", null ],
+    [ "left", "a00116.html#a6c53d7372eb9f682cf70b372df297b70", null ],
+    [ "right", "a00116.html#a736678b418a2be8841df0558ed2395fd", null ],
+    [ "right", "a00116.html#a6fb299cf7d68ae57699fca015b7f7eba", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00116.html#ada08c22a7499f3af4279f6df1c095d63", null ]
 ];

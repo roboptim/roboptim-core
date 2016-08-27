@@ -1,15 +1,11 @@
 var a00111 =
 [
-    [ "parentType_t", "a00111.html#ac3331e7746ea38a799a09fb68c0e057e", null ],
-    [ "ProductShPtr_t", "a00111.html#a7ed381024c39ddaa1123e0fa5e1488dd", null ],
-    [ "Product", "a00111.html#ab76dde7e852516b81cdb7d78a621596b", null ],
-    [ "~Product", "a00111.html#ac478e0d0632fa9805cc730e7bb6d53f4", null ],
-    [ "impl_compute", "a00111.html#a68108350282033815a0c5d03c97e7087", null ],
-    [ "impl_gradient", "a00111.html#a6d55588c9d0480dd7a34e883aa837399", null ],
-    [ "impl_jacobian", "a00111.html#a4660c503634f2cd3364a3736d9c666e1", null ],
-    [ "left", "a00111.html#a641399a2f1b6c3abd60c605dd0d537d8", null ],
-    [ "left", "a00111.html#aa9df8d10e508914ed7714d047e73e68d", null ],
-    [ "right", "a00111.html#a2a04bb5774afd196984863548dd7be56", null ],
-    [ "right", "a00111.html#a5ae21a63e263c7c94d40762eafc3f047", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00111.html#a8aedb5c3a59794247402eaef608e1ed6", null ]
+    [ "const_argument_ref", "a00111.html#a6bdb10b5154e882f0125831a557c5e03", null ],
+    [ "differentiableFunction_t", "a00111.html#a02677fab92ae55a7000391bd9a04ed23", null ],
+    [ "jacobian_t", "a00111.html#abbeb60092977d57c29e444ca403d8640", null ],
+    [ "problem_t", "a00111.html#a81fc882c5a4cd9b7dafe32c246277a46", null ],
+    [ "size_type", "a00111.html#a8d8ca5968fad8205116dda3f171d73b1", null ],
+    [ "traits_t", "a00111.html#a7ee372d93dc3a68e78c1d434ad556905", null ],
+    [ "LogJacobianConstraint", "a00111.html#a391459161ac2fe3c05453048a4ad5fab", null ],
+    [ "operator()", "a00111.html#a3901dec80eb43d5234cf2487bbca2f48", null ]
 ];

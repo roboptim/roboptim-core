@@ -1,6 +1,6 @@
 var a00141 =
 [
-    [ "is_malloc_allowed", "a00280.html#add21353ac5cfccbddf412f0b2c4d6c64", null ],
-    [ "is_malloc_allowed_update", "a00280.html#a46ce22d5c1b30a5cb8e928b3a5bdcab9", null ],
-    [ "set_is_malloc_allowed", "a00280.html#ab1b16b6313a0f191ae29dec8aabd1869", null ]
+    [ "size_type", "a00141.html#a5150d91930498d3f6bf19e7bad48979b", null ],
+    [ "ResultWithWarnings", "a00141.html#ab63634e58d13ea451a46e58e8fc17405", null ],
+    [ "~ResultWithWarnings", "a00141.html#aa3c7d443e5144fb8dea37bb88b50b387", null ]
 ];

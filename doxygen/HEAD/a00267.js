@@ -1,5 +1,4 @@
 var a00267 =
 [
-    [ "SumOfC1Squares", "a00295.html#gafefbc90e9cc685f442eb32986ceca7ca", null ],
-    [ "SumOfC1SquaresSparse", "a00295.html#gaeaea633c6cce7cf8a129a9ec1120a57b", null ]
+    [ "operator<<", "a00267.html#a0d11c06d8ac34af3a7f0a803ab8d10f8", null ]
 ];

@@ -1,21 +1,15 @@
 var a00182 =
 [
-    [ "EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET", "a00182.html#aa93624b0b2836d2510e8c92ae951d817", null ],
-    [ "ROBOPTIM_ADD_FLAG", "a00182.html#a11fd7c68eb49c7db3d2c13c2d73bb518", null ],
-    [ "ROBOPTIM_DEFINE_FLAG_TYPE", "a00182.html#a4dfd43979fd4c19c9b182deb033c79f5", null ],
-    [ "ROBOPTIM_FUNCTION_FWD_TYPEDEFS", "a00182.html#aff4b9961233370447282cd20d9c77860", null ],
-    [ "ROBOPTIM_FUNCTION_FWD_TYPEDEFS_", "a00182.html#a934385dbb178b478182aaf71b426e20b", null ],
-    [ "ROBOPTIM_GENERATE_FWD_REFS", "a00182.html#ae011806b2b385981e61ca4eac95c7214", null ],
-    [ "ROBOPTIM_GENERATE_FWD_REFS_", "a00182.html#ad01677e106bfdcccbc444381d584dcd9", null ],
-    [ "ROBOPTIM_GENERATE_TRAITS_REFS_", "a00182.html#a794c23ac0db0a1b936309e3bda6b9d5f", null ],
-    [ "ROBOPTIM_GENERATE_TRAITS_REFS_T", "a00182.html#aa5eea96a44a45ffdb1a0137c06de2701", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF", "a00182.html#a0bacc1580bb552c860fc50c8eea7e919", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF_VEC", "a00182.html#aaa0f1b75f2360834e870f4bb0f458695", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_REF", "a00182.html#ada2ae6a941857678bb864be9523e7eaf", null ],
-    [ "FunctionFlag", "a00295.html#gad2a7549840c2506fe07b17a003f04df2", null ],
-    [ "BOOST_STATIC_ASSERT_MSG", "a00182.html#a4e42d026dc5961a189ce401e9d27c6f5", null ],
-    [ "castInto", "a00280.html#a138a927716819b1af5033ec1bf2b4b7c", null ],
-    [ "castInto", "a00280.html#a5b374522d94ea6cfc1de10b14bf17548", null ],
-    [ "operator<<", "a00280.html#ac1811528dd1c9cc4c233c14bf5ed6e81", null ],
-    [ "StorageOrder", "a00295.html#gae4e272df17bb4c04ecfaec9370a7f8f5", null ]
+    [ "ROBOPTIM_ASSERT", "a00182.html#a7e758821b6d63e3983be2a4c248d2419", null ],
+    [ "ROBOPTIM_ASSERT_INTERNAL", "a00182.html#ad30840ed01979be446bcd1d91917db10", null ],
+    [ "ROBOPTIM_ASSERT_MSG", "a00182.html#ad3343be91bb6a549744c88f4ba6b8893", null ],
+    [ "ROBOPTIM_ASSERT_MSG_INTERNAL", "a00182.html#a869399f275b8f7263a79a8737fea26f0", null ],
+    [ "ROBOPTIM_DEBUG_ONLY", "a00182.html#a63c786a95b42777d0562bfacd96e5bfd", null ],
+    [ "RoboptimCoreDebug", "a00182.html#a8899571db39503447bd1d99e926e99da", null ],
+    [ "RoboptimCoreDout", "a00182.html#a248f62148d681974f16f5213d844f25c", null ],
+    [ "RoboptimCoreDoutFatal", "a00182.html#a239887dba9b43a2403f6389ae7a4fc3a", null ],
+    [ "RoboptimCoreForAllDebugChannels", "a00182.html#a4c35c60faacd327b995e06935dcfeb4c", null ],
+    [ "RoboptimCoreForAllDebugObjects", "a00182.html#a3a513caec78746ae88ef7daf0905baf2", null ],
+    [ "assertion_failed", "a00182.html#a1a1563ff9a70777fd6353a8984057286", null ],
+    [ "assertion_failed_msg", "a00182.html#a3fca74fb0f139a982f3173e9cfa646b5", null ]
 ];

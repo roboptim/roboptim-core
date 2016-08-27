@@ -1,4 +1,9 @@
 var a00255 =
 [
-    [ "unionCast", "a00280.html#a917869f7813c003450eea08553284049", null ]
+    [ "ROBOPTIM_ALLOW_ATTRIBUTES_OFF", "a00255.html#a1c006d1e409b5ede082a90e6c45c53b2", null ],
+    [ "ROBOPTIM_ALLOW_ATTRIBUTES_ON", "a00255.html#ae8f815d55df5c41882f100b0bd3dbd8c", null ],
+    [ "ROBOPTIM_ALLOW_DEPRECATED_OFF", "a00255.html#ac86612c6d84b2498e4ad58f36ca62fa4", null ],
+    [ "ROBOPTIM_ALLOW_DEPRECATED_ON", "a00255.html#a0c93fc8711ca2cfd3eec6853a923aa8d", null ],
+    [ "ROBOPTIM_GCC_ETI_WORKAROUND", "a00255.html#a6eeb7aa37807c549fbe27fb23a3d9ab8", null ],
+    [ "ROBOPTIM_UNUSED", "a00255.html#aa446017b1b035b55a23e6289044db2cf", null ]
 ];

@@ -1,9 +1,10 @@
 var a00099 =
 [
-    [ "size_type", "a00099.html#a0b16636d1ed2950355c0cd7e22aaffa8", null ],
-    [ "~NTimesDerivableFunction", "a00099.html#abac49e2227ca9041fd9a70b429ea3fa1", null ],
-    [ "NTimesDerivableFunction", "a00099.html#a794258aa1fd8a40705cb07af333dc5dd", null ],
-    [ "derivabilityOrderMax", "a00099.html#a78da40b42cc149c600873c1c7707941b", null ],
-    [ "print", "a00099.html#a1f48092699bd7d0ec66d698d215e24ac", null ],
-    [ "derivabilityOrder", "a00099.html#ad7b273dd6b55a50f56851d372fe1daa1", null ]
+    [ "GenericSumOfC1Squares", "a00099.html#a06492c620c9395b3ce8b27811db24155", null ],
+    [ "GenericSumOfC1Squares", "a00099.html#ac9eb8d225c89b2fb482be9367a271e0c", null ],
+    [ "~GenericSumOfC1Squares", "a00099.html#a1a3eb8bc23a2fdf87b06f38f6c1fad25", null ],
+    [ "baseFunction", "a00099.html#adb62136d2d933844f7310a19c930f98d", null ],
+    [ "impl_compute", "a00099.html#a4b37c218f8b2fde9c7d2ae79be8b834d", null ],
+    [ "impl_gradient", "a00099.html#aec074223b39a3d5241a99b98acf588ca", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00099.html#a832f4f791cc7e6e99d204aeee84861df", null ]
 ];

@@ -1,8 +1,5 @@
 var a00241 =
 [
-    [ "operator*", "a00297.html#ga18d7466822b488bac385bfb3a389a8d4", null ],
-    [ "operator*", "a00297.html#ga2317dd14956eb1499e4fde7cc9fc2024", null ],
-    [ "operator+", "a00297.html#ga8d0e9408d11db81a2b24b216ed3cd370", null ],
-    [ "operator-", "a00297.html#gaa692f09a5e2833a1fb15c1834d0603f5", null ],
-    [ "scalar", "a00297.html#ga6354c8c5e1101410ab5a74b2f6f11cfb", null ]
+    [ "ROBOPTIM_NTIMES_DERIVABLE_FUNCTION_FWD_TYPEDEFS", "a00241.html#a92bbdf413e1860caea50b24c0e4aa412", null ],
+    [ "ROBOPTIM_NTIMES_DERIVABLE_FUNCTION_FWD_TYPEDEFS_", "a00241.html#abe58a2efc0b5724b107b9dc8266926ae", null ]
 ];

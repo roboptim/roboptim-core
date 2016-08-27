@@ -1,6 +1,8 @@
 var a00192 =
 [
-    [ "discreteInterval_t", "a00301.html#ga1c2bbde67ed2275a6def58e1cea970f3", null ],
-    [ "plot", "a00301.html#ga7a1939a1db1b12c576e85859b728458c", null ],
-    [ "plot_xy", "a00301.html#ga0dba01288d4436dfa417d3dfd5520c27", null ]
+    [ "solver_t", "a00192.html#a5aafe251d5465495fdbaff79da9e5a7d", null ],
+    [ "create", "a00192.html#a17138f4444c6cc69e3cf96b04fa4d2b4", null ],
+    [ "destroy", "a00192.html#a1cf814d98d474ded87cdd24cad3588b8", null ],
+    [ "getSizeOfProblem", "a00192.html#a8c7aac59ed1b08104ddc2e6c6dd6fb38", null ],
+    [ "getTypeIdOfConstraintsList", "a00192.html#a3ca571f5bd28a61a05de54366690379c", null ]
 ];
