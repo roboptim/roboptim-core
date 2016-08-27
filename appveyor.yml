@@ -1,6 +1,7 @@
 version: 3.2-{branch}-{build}
 branches:
   only:
+    - master
     - dev
 
 configuration:
