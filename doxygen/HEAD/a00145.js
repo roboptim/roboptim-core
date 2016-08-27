@@ -1,11 +1,13 @@
 var a00145 =
 [
-    [ "callback_t", "a00145.html#a01f12cbcdde4463bd4a484ba4805b5c7", null ],
-    [ "parent_t", "a00145.html#a0bad93eac47bbb44cc60657a887586ea", null ],
-    [ "problem_t", "a00145.html#a79c5e212671b0c8d457665619b27da7b", null ],
-    [ "solver_t", "a00145.html#aade7b23179be55fd656d5defdbd163dd", null ],
-    [ "solverState_t", "a00145.html#acbce74c508e1a837bcb4a6ac3ff3e20b", null ],
-    [ "Wrapper", "a00145.html#ab7b1772f9d29b4283497363011b9f46a", null ],
-    [ "~Wrapper", "a00145.html#acaffd13feda591268f657a1708a43ff3", null ],
-    [ "perIterationCallbackUnsafe", "a00145.html#a7cf70de90a6b980a84b659bf8b5ebbd7", null ]
+    [ "parentType_t", "a00145.html#a6802dfd6761714f83c4dbbe5f9bcef19", null ],
+    [ "SelectionShPtr_t", "a00145.html#a5cf29c8b2e9a95cf3553d7f21bb1ee83", null ],
+    [ "Selection", "a00145.html#ac07895f78f6a65a8b3f54d5fc1020629", null ],
+    [ "~Selection", "a00145.html#a2f5c18b892a2c6e4d6d1f30561334d4e", null ],
+    [ "impl_compute", "a00145.html#a27810cd60947270ff41970b79f10e741", null ],
+    [ "impl_gradient", "a00145.html#a34eb7fca5608b393e2dff858bbbaa60f", null ],
+    [ "impl_jacobian", "a00145.html#a33d09bf5aa65daf658f4b853322d2b9b", null ],
+    [ "origin", "a00145.html#a5e3e5098b2fe6dd32b773d06ba3de648", null ],
+    [ "origin", "a00145.html#a0cbd7cc3ecf575d338b16306ea1b4646", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00145.html#a224033bde371676be065a7c89fba3d77", null ]
 ];
