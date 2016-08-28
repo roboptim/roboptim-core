@@ -1,10 +1,10 @@
 var modules =
 [
-    [ "Mathematical abstract functions", "a00323.html", "a00323" ],
-    [ "Mathematical functions", "a00324.html", "a00324" ],
-    [ "Function operators", "a00325.html", "a00325" ],
-    [ "Function decorators", "a00326.html", "a00326" ],
-    [ "Optimization problems", "a00327.html", "a00327" ],
-    [ "Optimization solvers", "a00328.html", "a00328" ],
-    [ "Visualization", "a00329.html", "a00329" ]
+    [ "Mathematical abstract functions", "a00304.html", "a00304" ],
+    [ "Mathematical functions", "a00305.html", "a00305" ],
+    [ "Function operators", "a00306.html", "a00306" ],
+    [ "Function decorators", "a00307.html", "a00307" ],
+    [ "Optimization problems", "a00308.html", "a00308" ],
+    [ "Optimization solvers", "a00309.html", "a00309" ],
+    [ "Visualization", "a00310.html", "a00310" ]
 ];

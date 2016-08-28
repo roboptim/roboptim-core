@@ -1,17 +1,17 @@
 var a00095 =
 [
-    [ "GenericNumericLinearFunction", "a00095.html#a791a59b77c655f4da3aefe48b48f6b2f", null ],
-    [ "GenericNumericLinearFunction", "a00095.html#a99aa2758f730474ab9d527e400f882cb", null ],
-    [ "~GenericNumericLinearFunction", "a00095.html#a6a95597cdbbdd850a36aed9ba5e03e91", null ],
-    [ "A", "a00095.html#a0bdfbba11cd50682046bbbf6cdf4a932", null ],
-    [ "A", "a00095.html#a38bf72a5ee70689652d8b6b142e2e0c4", null ],
-    [ "b", "a00095.html#a5f335d97438f278d3a12651bdf88748d", null ],
-    [ "b", "a00095.html#a897938ac5cbf6700118e3e9c75ae2abc", null ],
-    [ "impl_compute", "a00095.html#a654eb8a59ff8a69a1a50d5cc360a6bc1", null ],
-    [ "impl_gradient", "a00095.html#a4454eeb44530a70be57375ec3a11b782", null ],
-    [ "impl_gradient", "a00095.html#af56d442eaecbea376a332f4a1785f4b4", null ],
-    [ "impl_jacobian", "a00095.html#a4140a187a9c09c6e53d3eced7f81e3ce", null ],
-    [ "print", "a00095.html#ae57fb039df18b98b7ab403b73c277632", null ],
-    [ "ROBOPTIM_ADD_FLAG", "a00095.html#a31183ca63476819c90f3b63668689470", null ],
-    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00095.html#acf53d892384fd4691f6c4829e92772f5", null ]
+    [ "~Matplotlib", "a00095.html#ad30ddac4c701f3857324dc1723bd431b", null ],
+    [ "Matplotlib", "a00095.html#af77550d6aaa0ecf435abf50516f90c06", null ],
+    [ "clear", "a00095.html#ab74d871b72839dedd30f30877d05f960", null ],
+    [ "make_matplotlib", "a00095.html#a76f40fe422159fba4501080eca915ebd", null ],
+    [ "multiplot", "a00095.html#a7ab9c2b8a3970b4ad9a844943e63baa5", null ],
+    [ "multiplot", "a00095.html#a24e1d662a986d8fa5321cee29e909ced", null ],
+    [ "operator<<", "a00095.html#a64f59a4876bebeaebfa909fa087d881c", null ],
+    [ "operator<<", "a00095.html#add7be32075c5232ef70ac302c6483ee7", null ],
+    [ "print", "a00095.html#a565123c4086afdec4934dfd78aa5e6dc", null ],
+    [ "push_command", "a00095.html#aa2dde9d00c39af15e221bc2e4545a514", null ],
+    [ "push_import", "a00095.html#af77130e3b6b8f68dd95adc5e09daa51d", null ],
+    [ "resetImports", "a00095.html#ab6d4daa910500975a1805b340fa82c33", null ],
+    [ "withHeader", "a00095.html#a02fc7712b24296ca6da6f5c7b15a4a5c", null ],
+    [ "withHeader", "a00095.html#a59afeebf5cc92b39b8dd53a05ad05c9f", null ]
 ];

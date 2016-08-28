@@ -1,8 +1,8 @@
 var a00134 =
 [
-    [ "Types", "a00163.html", "a00163" ],
-    [ "gradient", "a00134.html#a71d08ec49db9732bfb6e551b753d3c15", null ],
-    [ "gradient", "a00134.html#a8900da81ef3b865bec4f1b2457ea3fbd", null ],
-    [ "jacobian", "a00134.html#af666d36d962b31244b2838aea7df7951", null ],
-    [ "jacobian", "a00134.html#a9a55ee9762560feebe5f2c950e5b340c", null ]
+    [ "problem_t", "a00134.html#a520af20cc0bb431571c214f75ec6b303", null ],
+    [ "solver_t", "a00134.html#a3752b51245792838324ab0a984e77e02", null ],
+    [ "SolverFactory", "a00134.html#aff20aa69d2acbd881c5ee39fcbe7d5be", null ],
+    [ "~SolverFactory", "a00134.html#aa218b01060ab52039fc870df1d7e6a01", null ],
+    [ "operator()", "a00134.html#a780efc759eb986c55fd2205ea1ab6fff", null ]
 ];
