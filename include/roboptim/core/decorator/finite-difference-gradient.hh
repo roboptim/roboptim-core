@@ -27,7 +27,6 @@
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/differentiable-function.hh>
 # include <roboptim/core/portability.hh>
-# include <roboptim/core/deprecated.hh>
 
 namespace roboptim
 {
@@ -345,15 +344,14 @@ namespace roboptim
      value_type e = finiteDifferenceEpsilon);
 
     /// \brief Instantiate a finite differences gradient.
-    /// WARNING: deprecated version. Prefer the shared_ptr alternative.
+    /// WARNING: prefer the shared_ptr alternative if possible.
     ///
     /// Instantiate a derivable function that will wrap a non
     /// derivable function and compute automatically its gradient
     /// using finite differences.
     /// \param f function that will e wrapped
     /// \param e epsilon used in finite difference computation
-    // TODO: remove after enough releases (deprecated in 3.3).
-    ROBOPTIM_CORE_DEPRECATED GenericFiniteDifferenceGradient
+    GenericFiniteDifferenceGradient
     (const GenericFunction<T>& f,
      value_type e = finiteDifferenceEpsilon);
 
