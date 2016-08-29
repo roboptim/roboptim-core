@@ -1,9 +1,16 @@
 var a00124 =
 [
-    [ "parameterValues_t", "a00124.html#ae22aab4f180e46eb0764eb2a1ec4e258", null ],
-    [ "value_type", "a00124.html#a0fb49780f98cd996a9b3e45bf19b41ec", null ],
-    [ "vector_t", "a00124.html#a7af3eec9012669354d55a58132f04901", null ],
-    [ "Parameter", "a00124.html#a7ed3b8d90d1dc1c6853eefbf2fe1c9e9", null ],
-    [ "description", "a00124.html#a8758825ae290c6722354c7e2b4a40453", null ],
-    [ "value", "a00124.html#a6a9253ce0d03f844c642a1a41dcd60b1", null ]
+    [ "parentType_t", "a00124.html#a7953a20600361495460caa1f213e9011", null ],
+    [ "ScalarShPtr_t", "a00124.html#a20f63dc977977915cfc81b1743bd2416", null ],
+    [ "traits_t", "a00124.html#a4db7e56e1bbd1c2817f6fd4df9955784", null ],
+    [ "Scalar", "a00124.html#ac79b4a6aef381f457296bfdc7f2a3701", null ],
+    [ "~Scalar", "a00124.html#a50fe6bb5f735657401bafce30044056c", null ],
+    [ "impl_compute", "a00124.html#a5b51703743a37256cac90680f2b2360f", null ],
+    [ "impl_gradient", "a00124.html#ae035b79d51ac9930f7c1f8fc44cdc1bd", null ],
+    [ "impl_hessian", "a00124.html#a250e3188a0d658574d3ffae13e0c0da1", null ],
+    [ "impl_jacobian", "a00124.html#a2c0c26a9bea4b5a08455521e568f3068", null ],
+    [ "origin", "a00124.html#ad17cc3b06c7818946a6b94254ffcb1c1", null ],
+    [ "origin", "a00124.html#a4e8961237859adaa361aa9fec0d5057d", null ],
+    [ "print", "a00124.html#a077e1bb4b7d262de82c38e288c6d50ec", null ],
+    [ "ROBOPTIM_TWICE_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00124.html#a477a88df2411d3c492c9a7f47dcae262", null ]
 ];

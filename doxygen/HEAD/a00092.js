@@ -1,15 +1,11 @@
 var a00092 =
 [
-    [ "size_type", "a00092.html#ae382b9a557d9e2f5e54a54ef60acb10c", null ],
-    [ "value_type", "a00092.html#aec74d18f9e7a7ebb4b34285870e06e28", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF", "a00092.html#adf8c15b3da621f4f67be111683db5710", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF", "a00092.html#a2a4e9aa7f3690e0b77d2d7a0925d28b3", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF", "a00092.html#af9e1b20e8a236a7b67c109f8f9b5c934", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF", "a00092.html#ab8e5dc91c3827ec92cb0741019570f9f", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_EIGEN_REF", "a00092.html#ab3e584806dfba522a77fa55d8739df22", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_REF", "a00092.html#ac07dca5eb455def155ed11b94881a537", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_REF", "a00092.html#a60f427e5c32ec7b8cb586f0d114e8a0c", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_REF", "a00092.html#aed5e8ac8cc2ff9b0844f14de973b29e1", null ],
-    [ "ROBOPTIM_GENERATE_TYPEDEFS_REF", "a00092.html#a470dbcc845cdd0d3f2e0a73be5f80417", null ],
-    [ "StorageOrder", "a00092.html#ac589de0ba331e2f4963b3a1de6441815", null ]
+    [ "const_argument_ref", "a00092.html#a6bdb10b5154e882f0125831a557c5e03", null ],
+    [ "differentiableFunction_t", "a00092.html#a02677fab92ae55a7000391bd9a04ed23", null ],
+    [ "jacobian_t", "a00092.html#abbeb60092977d57c29e444ca403d8640", null ],
+    [ "problem_t", "a00092.html#a81fc882c5a4cd9b7dafe32c246277a46", null ],
+    [ "size_type", "a00092.html#a8d8ca5968fad8205116dda3f171d73b1", null ],
+    [ "traits_t", "a00092.html#a7ee372d93dc3a68e78c1d434ad556905", null ],
+    [ "LogJacobianConstraint", "a00092.html#a391459161ac2fe3c05453048a4ad5fab", null ],
+    [ "operator()", "a00092.html#a3901dec80eb43d5234cf2487bbca2f48", null ]
 ];

@@ -1,17 +1,15 @@
 var a00114 =
 [
-    [ "~Matplotlib", "a00114.html#ad30ddac4c701f3857324dc1723bd431b", null ],
-    [ "Matplotlib", "a00114.html#af77550d6aaa0ecf435abf50516f90c06", null ],
-    [ "clear", "a00114.html#ab74d871b72839dedd30f30877d05f960", null ],
-    [ "make_matplotlib", "a00114.html#a76f40fe422159fba4501080eca915ebd", null ],
-    [ "multiplot", "a00114.html#a7ab9c2b8a3970b4ad9a844943e63baa5", null ],
-    [ "multiplot", "a00114.html#a24e1d662a986d8fa5321cee29e909ced", null ],
-    [ "operator<<", "a00114.html#a64f59a4876bebeaebfa909fa087d881c", null ],
-    [ "operator<<", "a00114.html#add7be32075c5232ef70ac302c6483ee7", null ],
-    [ "print", "a00114.html#a565123c4086afdec4934dfd78aa5e6dc", null ],
-    [ "push_command", "a00114.html#aa2dde9d00c39af15e221bc2e4545a514", null ],
-    [ "push_import", "a00114.html#af77130e3b6b8f68dd95adc5e09daa51d", null ],
-    [ "resetImports", "a00114.html#ab6d4daa910500975a1805b340fa82c33", null ],
-    [ "withHeader", "a00114.html#a02fc7712b24296ca6da6f5c7b15a4a5c", null ],
-    [ "withHeader", "a00114.html#a59afeebf5cc92b39b8dd53a05ad05c9f", null ]
+    [ "parentType_t", "a00114.html#ac3331e7746ea38a799a09fb68c0e057e", null ],
+    [ "ProductShPtr_t", "a00114.html#a7ed381024c39ddaa1123e0fa5e1488dd", null ],
+    [ "Product", "a00114.html#ab76dde7e852516b81cdb7d78a621596b", null ],
+    [ "~Product", "a00114.html#ac478e0d0632fa9805cc730e7bb6d53f4", null ],
+    [ "impl_compute", "a00114.html#a68108350282033815a0c5d03c97e7087", null ],
+    [ "impl_gradient", "a00114.html#a6d55588c9d0480dd7a34e883aa837399", null ],
+    [ "impl_jacobian", "a00114.html#a4660c503634f2cd3364a3736d9c666e1", null ],
+    [ "left", "a00114.html#a641399a2f1b6c3abd60c605dd0d537d8", null ],
+    [ "left", "a00114.html#aa9df8d10e508914ed7714d047e73e68d", null ],
+    [ "right", "a00114.html#a2a04bb5774afd196984863548dd7be56", null ],
+    [ "right", "a00114.html#a5ae21a63e263c7c94d40762eafc3f047", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00114.html#a8aedb5c3a59794247402eaef608e1ed6", null ]
 ];

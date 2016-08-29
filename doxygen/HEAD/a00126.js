@@ -1,15 +1,13 @@
 var a00126 =
 [
-    [ "parentType_t", "a00126.html#ab4d12a8f0bcae135aff2dc0e8998801b", null ],
-    [ "PlusShPtr_t", "a00126.html#a4293f7f153edd79aec49ed9d8dd03122", null ],
-    [ "Plus", "a00126.html#a8ab9e9b7348f75e9447251693fc81a7e", null ],
-    [ "~Plus", "a00126.html#abedb0ecb21222e9aca4c7f103d04ea99", null ],
-    [ "impl_compute", "a00126.html#a33dddd26dcadcaf9559ff73581938111", null ],
-    [ "impl_gradient", "a00126.html#a01c9b6d9ef74d019eeb035b706eb5784", null ],
-    [ "impl_jacobian", "a00126.html#aedbf297e4a9ed8d697eb890ece91a7e3", null ],
-    [ "left", "a00126.html#a02962e5b5637c3a0a1f61bf6f188fb9e", null ],
-    [ "left", "a00126.html#af8a02db6bba1a1f20b8a32f10a809248", null ],
-    [ "right", "a00126.html#ade7a10db019cd559298cd1918ebda9ff", null ],
-    [ "right", "a00126.html#a93ea170baf1cb3bcd521edf776676dc1", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00126.html#a0135d05c16cd40f3794d4497f1d2ec4b", null ]
+    [ "parentType_t", "a00126.html#a6802dfd6761714f83c4dbbe5f9bcef19", null ],
+    [ "SelectionShPtr_t", "a00126.html#a5cf29c8b2e9a95cf3553d7f21bb1ee83", null ],
+    [ "Selection", "a00126.html#ac07895f78f6a65a8b3f54d5fc1020629", null ],
+    [ "~Selection", "a00126.html#a2f5c18b892a2c6e4d6d1f30561334d4e", null ],
+    [ "impl_compute", "a00126.html#a27810cd60947270ff41970b79f10e741", null ],
+    [ "impl_gradient", "a00126.html#a34eb7fca5608b393e2dff858bbbaa60f", null ],
+    [ "impl_jacobian", "a00126.html#a33d09bf5aa65daf658f4b853322d2b9b", null ],
+    [ "origin", "a00126.html#a5e3e5098b2fe6dd32b773d06ba3de648", null ],
+    [ "origin", "a00126.html#a0cbd7cc3ecf575d338b16306ea1b4646", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00126.html#a224033bde371676be065a7c89fba3d77", null ]
 ];
