@@ -1,6 +1,7 @@
 var a00215 =
 [
-    [ "plot_mat", "a00215.html#ga2da6bf45ab7f212d244f5ebacaed41b4", null ],
-    [ "plot_mat", "a00215.html#gad95bc834df94f24249f83aedddc0e17d", null ],
-    [ "plot_mat", "a00215.html#gad4703635fcedadbb33319b576c22ff79", null ]
+    [ "dense_jacobian_to_gnuplot", "a00215.html#a00f78445b522347c5914f58bb68c80a0", null ],
+    [ "plot_jac", "a00215.html#ga9775565a4a8ec4f90e25e006838af841", null ],
+    [ "plot_jac", "a00215.html#ga568652599399c4e972088fb9fa2be520", null ],
+    [ "sparse_jacobian_to_gnuplot", "a00215.html#a406862b4cef98a34eca862ce87b99aa5", null ]
 ];

@@ -1,5 +1,5 @@
 var a00232 =
 [
-    [ "operator+", "a00232.html#ga1c85364bc3106af5973bb6cb5113e2dd", null ],
-    [ "plus", "a00232.html#ga29192465f69ffd7e843e907cb66dbe75", null ]
+    [ "discreteInterval_t", "a00232.html#gac1d12393050610f8e70843e70183259f", null ],
+    [ "plot", "a00232.html#ga88db3744004afec9b9d46434ae480b8f", null ]
 ];
