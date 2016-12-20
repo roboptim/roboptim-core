@@ -39,14 +39,19 @@ namespace roboptim
     const
   {
     typedef Eigen::Triplet<value_type> triplet_t;
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+    typedef jacobian_t::StorageIndex index_t;
+#else
+    typedef jacobian_t::Index index_t;
+#endif
     std::vector<triplet_t> coefficients;
 
-    for (jacobian_t::Index i = 0; i < this->outputSize (); ++i)
+    for (index_t i = 0; i < this->outputSize (); ++i)
       {
         gradient_t grad = gradient (argument, i);
         for (gradient_t::InnerIterator it (grad); it; ++it)
           {
-            const jacobian_t::Index
+            const index_t
               idx = static_cast<const jacobian_t::Index> (it.index ());
             coefficients.push_back
               (triplet_t (i, idx, it.value ()));

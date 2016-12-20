@@ -470,20 +470,36 @@ namespace roboptim
       std::vector<triplet_t> coefficients;
 
       // For each column
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+      for (jacobian_t::StorageIndex j = 0; j < this->adaptee_.inputSize (); ++j)
+#else
       for (jacobian_t::Index j = 0; j < this->adaptee_.inputSize (); ++j)
+#endif
         {
           gradient_t col (this->adaptee_.outputSize ());
 
           computeColumn (epsilon, col, argument, j, xEps);
 
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+          const matrix_t::StorageIndex j_ = j;
+#else
           const matrix_t::Index j_ = static_cast<const matrix_t::Index> (j);
+#endif
           for (gradient_t::InnerIterator it (col); it; ++it)
             {
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+              const matrix_t::StorageIndex idx = it.index ();
+#else
               const matrix_t::Index idx =
                 static_cast<const matrix_t::Index> (it.index ());
+#endif
 
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+              assert (idx < this->adaptee_.outputSize ());
+#else
               assert (idx < static_cast<const matrix_t::Index>
                       (this->adaptee_.outputSize ()));
+#endif
 
               coefficients.push_back
 		(triplet_t (idx, j_, it.value ()));
@@ -743,20 +759,36 @@ namespace roboptim
       typedef Eigen::Triplet<double> triplet_t;
 
       std::vector<triplet_t> coefficients;
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+      for (jacobian_t::StorageIndex i = 0; i < this->adaptee_.outputSize (); ++i)
+#else
       for (jacobian_t::Index i = 0; i < this->adaptee_.outputSize (); ++i)
+#endif
         {
           gradient_t grad (this->adaptee_.inputSize ());
 
           computeGradient (epsilon, grad, argument, i, xEps);
 
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+          const matrix_t::StorageIndex i_ = i;
+#else
           const matrix_t::Index i_ = static_cast<const matrix_t::Index> (i);
+#endif
           for (gradient_t::InnerIterator it (grad); it; ++it)
             {
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+              const matrix_t::StorageIndex idx = it.index ();
+#else
               const matrix_t::Index idx =
                 static_cast<const matrix_t::Index> (it.index ());
+#endif
 
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+              assert (idx < this->adaptee_.inputSize ());
+#else
               assert (idx < static_cast<const matrix_t::Index>
                       (this->adaptee_.inputSize ()));
+#endif
 
               coefficients.push_back
 		(triplet_t (i_, idx, it.value ()));
