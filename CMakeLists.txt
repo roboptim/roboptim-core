@@ -201,6 +201,16 @@ IF(HAS_VISIBILITY)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
 ENDIF()
 
+# If we were given coverage options, we will only pass them to the core
+# library.
+SET(GENERATE_COVERAGE FALSE CACHE BOOL "Generate coverage data")
+IF("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
+  SET(GENERATE_COVERAGE TRUE CACHE BOOL "Generate coverage data" FORCE)
+  STRING(REPLACE "--coverage" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  STRING(REPLACE "--coverage" "" CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+  STRING(REPLACE "--coverage" "" CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}")
+ENDIF()
+
 # Search for dependencies.
 SET(BOOST_COMPONENTS date_time filesystem system unit_test_framework)
 SEARCH_FOR_BOOST()

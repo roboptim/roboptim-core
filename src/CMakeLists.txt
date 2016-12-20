@@ -48,6 +48,10 @@ ENDIF()
 # Main library.
 ADD_LIBRARY(roboptim-core SHARED ${HEADERS} ${ROBOPTIM_CORE_SRC})
 TARGET_COMPILE_OPTIONS(roboptim-core PUBLIC "-Droboptim_core_EXPORTS")
+IF(GENERATE_COVERAGE)
+  TARGET_COMPILE_OPTIONS(roboptim-core PRIVATE "--coverage")
+  SET_TARGET_PROPERTIES(roboptim-core PROPERTIES LINK_FLAGS "--coverage")
+ENDIF()
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 # Add required libs to pkg-config file.
