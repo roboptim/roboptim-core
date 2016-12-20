@@ -394,7 +394,7 @@ namespace roboptim
       size_type l_idx = ci->local;
       size_type as_idx = ci->active;
 
-      if (activeJac_.row (as_idx).norm () < eps_)
+      if (activeJac_.middleRows (as_idx, 1).norm () < eps_)
       {
         null_grad.null_rows++;
         null_grad.constraint_indices[pb_.constraints ()[g_idx]].push_back (l_idx);
