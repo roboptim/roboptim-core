@@ -348,7 +348,7 @@ namespace roboptim
   }
 
   template <typename T>
-  const typename Problem<T>::scalesVect_t&
+  const typename Problem<T>::scalingVect_t&
   Problem<T>::scalesVector () const
   {
     return scalingVector ();
@@ -383,14 +383,14 @@ namespace roboptim
   }
 
   template <typename T>
-  typename Problem<T>::scales_t&
+  typename Problem<T>::scaling_t&
   Problem<T>::argumentScales ()
   {
     return argumentScaling ();
   }
 
   template <typename T>
-  const typename Problem<T>::scales_t&
+  const typename Problem<T>::scaling_t&
   Problem<T>::argumentScales () const
   {
     return argumentScaling ();
