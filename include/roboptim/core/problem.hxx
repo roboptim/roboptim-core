@@ -40,6 +40,46 @@
 namespace roboptim
 {
 
+  namespace detail
+  {
+    /// \internal
+    /// \brief Scale a row of an input jacobian.
+    /// \param j input jacobian.
+    /// \param ri row index.
+    /// \param s scaling value.
+    template <typename T>
+    inline void scale_jacobian_row(typename roboptim::Problem<T>::jacobian_t & j,
+                                   typename roboptim::Problem<T>::size_type ri,
+                                   const typename roboptim::Problem<T>::value_type & s)
+    {
+      j.middleRows(ri, 1) *= s;
+    }
+
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90) && (! EIGEN_VERSION_AT_LEAST(3, 3, 2))
+    /// Specialization for sparse type in Eigen >= 3.2.90 and < 3.3.2
+    /// See #115
+    template<>
+    inline void scale_jacobian_row<roboptim::EigenMatrixSparse>(
+                  roboptim::Problem<roboptim::EigenMatrixSparse>::jacobian_t & j,
+                  roboptim::Problem<roboptim::EigenMatrixSparse>::size_type ri,
+                  const roboptim::Problem<roboptim::EigenMatrixSparse>::value_type & s)
+    {
+      typedef roboptim::Problem<roboptim::EigenMatrixSparse>::size_type size_type;
+      typedef roboptim::Problem<roboptim::EigenMatrixSparse>::jacobian_t jacobian_t;
+      for (size_type k = 0; k < j.outerSize (); ++k)
+      {
+        for (jacobian_t::InnerIterator it(j, k); it; ++it)
+        {
+          if (it.row() == ri)
+          {
+            it.valueRef () *= s;
+          }
+        }
+      }
+    }
+#endif
+  }
+
   //
   // General template implementation
   //
@@ -422,8 +462,8 @@ namespace roboptim
 	      df = (*c)->template castInto<differentiableFunction_t> ();
             for (size_type i = 0; i < df->outputSize (); ++i)
 	      {
-                jac.row(global_row + i) *=
-		  scalingVect_[c_idx][static_cast<size_t> (i)];
+                detail::scale_jacobian_row<T> (jac, global_row + i,
+                                             scalingVect_[c_idx][static_cast<size_t> (i)]);
               }
 	    global_row += df->outputSize ();
 	  }
