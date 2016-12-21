@@ -1,15 +1,13 @@
 var a00048 =
 [
-    [ "BindShPtr_t", "a00048.html#ac12bd855013f0ef3d0bf867b47d799b5", null ],
-    [ "boundValues_t", "a00048.html#aa29cc46acf1eb84bda53d9da6ff4a632", null ],
-    [ "parentType_t", "a00048.html#a58322098d06c8face6286742fc6869dd", null ],
-    [ "Bind", "a00048.html#ad1718b5f15fa061eda50ee71e3c01846", null ],
-    [ "~Bind", "a00048.html#adda8d726a09e9d776bc2f597b04e3d0b", null ],
-    [ "impl_compute", "a00048.html#a4fc7ea98bcfed0e1a2bc947925d3de91", null ],
-    [ "impl_gradient", "a00048.html#a55a8df765c283c2997c194ae5cd15096", null ],
-    [ "impl_jacobian", "a00048.html#a86d08817481bc6e6da2e66d0c23b7b55", null ],
-    [ "origin", "a00048.html#a29f1bcab4d91c3ecd75fdf00948f8198", null ],
-    [ "origin", "a00048.html#a69de4a8f82057c2f6d3089caf1fdb1fb", null ],
-    [ "print", "a00048.html#a891b9770894884ab5531e4ae6b6abb16", null ],
-    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00048.html#a1bc27f4a503409333ab465458ec747f0", null ]
+    [ "DerivativeShPtr_t", "a00048.html#ac31bb4fcfc3f627982f26d53329d18e4", null ],
+    [ "jacobianSize_t", "a00048.html#a773278e0955e248c1d8929c2d09c693d", null ],
+    [ "parentType_t", "a00048.html#a1d88c319dd2fa86439a86fd0c6a7da1a", null ],
+    [ "Derivative", "a00048.html#a8c77526d5667849224840b254fd9a2f9", null ],
+    [ "~Derivative", "a00048.html#ae9bbb544ebacd592160d3753e4dde603", null ],
+    [ "impl_compute", "a00048.html#a4e055e1ef1401b1230c857f77d3eec42", null ],
+    [ "impl_gradient", "a00048.html#a61ab160ffd4612f2d8d158da31ceca8c", null ],
+    [ "origin", "a00048.html#a2d8a0a49a99ccd4a4140b96e12195d9c", null ],
+    [ "origin", "a00048.html#aaf51f143b5c6881e69b99fb9e481b63c", null ],
+    [ "ROBOPTIM_DIFFERENTIABLE_FUNCTION_FWD_TYPEDEFS_", "a00048.html#a9f8b668834dfeb2bb913a455bbacd3b6", null ]
 ];
