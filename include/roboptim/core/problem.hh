@@ -238,12 +238,12 @@ namespace roboptim
     /// \brief Retrieve arguments scaling (deprecated version).
     ///
     /// \deprecated Deprecated since version 3.1. Use argumentScaling() instead.
-    ROBOPTIM_CORE_DEPRECATED scales_t& argumentScales ();
+    ROBOPTIM_CORE_DEPRECATED scaling_t& argumentScales ();
 
     /// \brief Retrieve arguments scaling (deprecated version).
     ///
     /// \deprecated Deprecated since version 3.1. Use argumentScaling() instead.
-    ROBOPTIM_CORE_DEPRECATED const scales_t& argumentScales () const;
+    ROBOPTIM_CORE_DEPRECATED const scaling_t& argumentScales () const;
 
     /// \brief Retrieve arguments names.
     /// Arguments names define a name for each argument. This is particularly
@@ -309,7 +309,7 @@ namespace roboptim
     /// \brief Retrieve constraints scaling vector (deprecated version).
     ///
     /// \deprecated Deprecated since version 3.1. Use scalingVector() instead.
-    ROBOPTIM_CORE_DEPRECATED const scalesVect_t& scalesVector () const;
+    ROBOPTIM_CORE_DEPRECATED const scalingVect_t& scalesVector () const;
 
     /// \brief Return the output size of the problem's constraints.
     size_type constraintsOutputSize () const;

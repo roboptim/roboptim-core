@@ -165,6 +165,10 @@ namespace roboptim
     typedef M matrix_t;
     typedef B block_t;
     typedef typename M::Index index_t;
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+    typedef typename Eigen::internal::evaluator<block_t>::InnerIterator EvalIterator;
+    Eigen::internal::evaluator<block_t> thisEval(b);
+#endif
 
     // Make sure that the block fits in the matrix
     ROBOPTIM_ASSERT (startRow + b.rows () <= m.rows ());
@@ -184,7 +188,11 @@ namespace roboptim
       {
         // Get iterator to first matrix element in the block
         typename matrix_t::InnerIterator m_it (m, outer_start + k);
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+        EvalIterator b_it(thisEval, k);
+#else
         typename block_t::InnerIterator b_it (b, k);
+#endif
 
         if (!(b_it))
           continue;

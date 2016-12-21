@@ -21,6 +21,7 @@
 # include <boost/utility/enable_if.hpp>
 # include <boost/type_traits/is_same.hpp>
 # include <boost/mpl/and.hpp>
+# include <Eigen/Core>
 
 namespace roboptim
 {
@@ -164,14 +165,22 @@ namespace roboptim
 
         // For each column of the Jacobian
         // FIXME: do it Eigen-style
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+        for (typename Types<U,V>::jacobian_t::StorageIndex i = 0;
+#else
         for (typename Types<U,V>::jacobian_t::Index i = 0;
+#endif
              i < jac_uv.cols (); ++i)
 	  {
 	    // grad_uv = u * grad_v;
 	    for (typename Types<U,V>::jacobianV_t::InnerIterator
 		   it (jac_v, i); it; ++it)
 	      {
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+		typename Types<U,V>::gradientV_t::StorageIndex id = it.index ();
+#else
 		typename Types<U,V>::gradientV_t::Index id = it.index ();
+#endif
 		tripletList.push_back (triplet_t (id, i, u (id) * it.value ()));
 	      }
 
@@ -179,7 +188,11 @@ namespace roboptim
 	    for (typename Types<U,V>::jacobianU_t::InnerIterator
 		   it (jac_u, i); it; ++it)
 	      {
+#if EIGEN_VERSION_AT_LEAST(3, 2, 90)
+		typename Types<U,V>::gradientU_t::StorageIndex id = it.index ();
+#else
 		typename Types<U,V>::gradientU_t::Index id = it.index ();
+#endif
 		tripletList.push_back (triplet_t (id, i, v (id) * it.value ()));
 	      }
 	  }
