@@ -1,5 +1,4 @@
 var a00299 =
 [
-    [ "detail", "a00300.html", null ],
-    [ "Command", "a00036.html", "a00036" ]
+    [ "TwiceDerivableFunction", "a00299.html#a8fe946bb68641ff262c0cfef38af94d5", null ]
 ];

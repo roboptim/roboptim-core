@@ -1,7 +1,8 @@
 var a00196 =
 [
-    [ "dense_jacobian_to_gnuplot", "a00196.html#a00f78445b522347c5914f58bb68c80a0", null ],
-    [ "plot_jac", "a00196.html#ga9775565a4a8ec4f90e25e006838af841", null ],
-    [ "plot_jac", "a00196.html#ga568652599399c4e972088fb9fa2be520", null ],
-    [ "sparse_jacobian_to_gnuplot", "a00196.html#a406862b4cef98a34eca862ce87b99aa5", null ]
+    [ "solver_t", "a00196.html#a9a7157c7f730c89881de1b6122cc2337", null ],
+    [ "create", "a00196.html#afb87c12dcd8c23d875c913a07f02a1b2", null ],
+    [ "destroy", "a00196.html#a1cf814d98d474ded87cdd24cad3588b8", null ],
+    [ "getSizeOfProblem", "a00196.html#a8c7aac59ed1b08104ddc2e6c6dd6fb38", null ],
+    [ "getTypeIdOfConstraintsList", "a00196.html#a3ca571f5bd28a61a05de54366690379c", null ]
 ];
