@@ -28,6 +28,8 @@ SET(PROJECT_DESCRIPTION "RobOptim Core")
 SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
 SET(PROJECT_DEBUG_POSTFIX "_d")
 
+INCLUDE(cmake/GNUInstallDirs.cmake)
+
 # Use MathJax for Doxygen formulae
 SET(DOXYGEN_USE_MATHJAX "YES")
 
