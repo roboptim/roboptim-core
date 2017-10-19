@@ -75,7 +75,6 @@ RobOptim uses the following tools:
  * [Doxygen][] a documentation generation tool
  * [Boost][] C++ library
  * [Eigen][] (>= 3.2) C++ template library for linear algebra
- * [log4cxx][] logging framework
  * [Libtool][] and its ltdl library for portable plug-in management
  * a C++03 compliant modern C++ compiler such as GCC or clang
 
@@ -213,6 +212,5 @@ Development Snapshots ( *unstable* ):
 [Eigen]: http://eigen.tuxfamily.org/
 [Git]: http://git-scm.com/
 [Libtool]: https://www.gnu.org/software/libtool/
-[log4cxx]: https://logging.apache.org/log4cxx/
 [pkg-config]: http://www.freedesktop.org/wiki/Software/pkg-config/
 [RobotPkg]: http://robotpkg.openrobots.org/

@@ -22,8 +22,6 @@
 # include <stdexcept>
 # include <utility>
 
-# include <log4cxx/logger.h>
-
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/differentiable-function.hh>
 
