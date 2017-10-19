@@ -329,7 +329,6 @@ namespace roboptim
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold,
    typename GenericDifferentiableFunction<T>::value_type fd_eps)
-    throw (BadGradient<T>)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
     GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
@@ -371,7 +370,6 @@ namespace roboptim
    typename GenericDifferentiableFunction<T>::const_argument_ref x,
    typename GenericDifferentiableFunction<T>::value_type threshold,
    typename GenericDifferentiableFunction<T>::value_type fd_eps)
-    throw (BadJacobian<T>)
   {
     ROBOPTIM_ALLOW_DEPRECATED_ON;
     GenericFiniteDifferenceGradient<T> fdfunction (function, fd_eps);
