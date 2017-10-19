@@ -30,8 +30,6 @@
 # include <boost/variant/variant.hpp>
 # include <boost/utility.hpp>
 
-# include <log4cxx/logger.h>
-
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/problem.hh>
 # include <roboptim/core/result.hh>

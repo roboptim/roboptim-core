@@ -18,7 +18,6 @@
 #include "debug.hh"
 
 #include <cassert>
-#include <log4cxx/logger.h>
 #include "roboptim/core/generic-solver.hh"
 
 namespace roboptim

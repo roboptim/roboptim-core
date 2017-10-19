@@ -33,8 +33,6 @@
 # include <Eigen/Dense>
 # include <Eigen/Sparse>
 
-# include <log4cxx/logger.h>
-
 # include <roboptim/core/fwd.hh>
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/portability.hh>

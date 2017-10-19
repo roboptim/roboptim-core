@@ -22,7 +22,6 @@
 # include <boost/config.hpp>
 # include <boost/current_function.hpp>
 
-# include <log4cxx/logger.h>
 # include <roboptim/core/indent.hh>
 
 // Note: the API is inspired by BOOST_ASSERT. We reimplement the high-level
@@ -81,24 +80,12 @@ namespace roboptim
 #define ROBOPTIM_ASSERT(expr) ROBOPTIM_ASSERT_INTERNAL(expr)
 #define ROBOPTIM_ASSERT_MSG(expr,msg) ROBOPTIM_ASSERT_MSG_INTERNAL(expr, msg)
 
-# define RoboptimCoreDebug(STATEMENT)		\
-  LOG4CXX_DEBUG(log4cxx::Logger::getLogger("roboptim.core"),	\
-		STATEMENT)
-
-#  define RoboptimCoreDout(cntrl, data)				\
-  LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),	\
-	       data)
-
-#define RoboptimCoreDoutFatal(cntrl, data)			\
-  LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),	\
-	       data)
-
-#define RoboptimCoreForAllDebugChannels(STATEMENT)			\
-  LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),		\
-	       STATEMEMT)
-#define RoboptimCoreForAllDebugObjects(STATEMENT)		\
-  LOG4CXX_INFO(log4cxx::Logger::getLogger("roboptim.core"),	\
-	       STATEMENT)
+// Legacy log4cxx macros
+# define RoboptimCoreDebug(STATEMENT)
+# define RoboptimCoreDout(cntrl, data)
+# define RoboptimCoreDoutFatal(cntrl, data)
+# define RoboptimCoreForAllDebugChannels(STATEMENT)
+# define RoboptimCoreForAllDebugObjects(STATEMENT)
 
 # ifdef NDEBUG
 #  define ROBOPTIM_DEBUG_ONLY(X)

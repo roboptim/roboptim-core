@@ -52,7 +52,6 @@ IF(GENERATE_COVERAGE)
   TARGET_COMPILE_OPTIONS(roboptim-core PRIVATE "--coverage")
   SET_TARGET_PROPERTIES(roboptim-core PROPERTIES LINK_FLAGS "--coverage")
 ENDIF()
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core liblog4cxx)
 
 # Add required libs to pkg-config file.
 SET(ROBOPTIM_API_BOOST_LIBRARIES date_time system filesystem)
@@ -88,7 +87,6 @@ INSTALL(TARGETS roboptim-core
 # Dummy plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy MODULE dummy.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy roboptim-core)
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy liblog4cxx)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy PROPERTIES PREFIX "")
 
@@ -101,7 +99,6 @@ INSTALL(TARGETS roboptim-core-plugin-dummy DESTINATION ${PLUGINDIR})
 # Dummy-sparse plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy-sparse MODULE dummy-sparse.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy-sparse roboptim-core)
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy-sparse liblog4cxx)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-sparse roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-sparse PROPERTIES PREFIX "")
 
@@ -114,7 +111,6 @@ INSTALL(TARGETS roboptim-core-plugin-dummy-sparse DESTINATION ${PLUGINDIR})
 # Dummy-laststate plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy-laststate MODULE dummy-laststate.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy-laststate roboptim-core)
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy-laststate liblog4cxx)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-laststate roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-laststate PROPERTIES PREFIX "")
 
@@ -126,7 +122,6 @@ ENDIF()
 # Dummy-laststate plug-in for differentiable sparse functions.
 ADD_LIBRARY(roboptim-core-plugin-dummy-d-sparse-laststate MODULE dummy-d-sparse-laststate.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy-d-sparse-laststate roboptim-core)
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy-d-sparse-laststate liblog4cxx)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-d-sparse-laststate roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-d-sparse-laststate PROPERTIES PREFIX "")
 
@@ -138,7 +133,6 @@ ENDIF()
 # Dummy-td plug-in.
 ADD_LIBRARY(roboptim-core-plugin-dummy-td MODULE dummy-td.cc)
 ADD_DEPENDENCIES(roboptim-core-plugin-dummy-td roboptim-core)
-PKG_CONFIG_USE_DEPENDENCY(roboptim-core-plugin-dummy-td liblog4cxx)
 TARGET_LINK_LIBRARIES(roboptim-core-plugin-dummy-td roboptim-core)
 SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td PROPERTIES PREFIX "")
 
