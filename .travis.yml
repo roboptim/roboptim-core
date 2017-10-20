@@ -7,8 +7,8 @@ env:
     - secure: "Hn0mNkHgP0azydZUqq3CXifrDw+6adcJ541/EInw59BhM9Q7orJEDsfkqSMICLsIQxe+qNb0pYjCze10GZQPqhNBKcsDGmMDOqvwNPyOqEy8TOWl0j6emO3K0QVbfz7l2I9Gvwym/ZVQ+4XH1oZgmfJOPgxLmWZ69wZUDFBlMCg="
     - secure: "Atmvwjxe3WqmUPumdDubBTvgC1v5JbIVtgBwuvZOsYdQ36eKOCSBuS0uVS0WbHHmeljeVUzb1EEGitKKjS6hYAkdg3F5eFmHPophL8zUHkY4fGAE80oGyPAFOeqZzIYp5cpStR8540K32C7vkqKqPFkufwLGKI0QZ87HP3U60AM="
     - EIGEN_MAJOR=3.2
-    - APT_DEPENDENCIES="cmake cmake-data doxygen libltdl-dev libboost-all-dev liblog4cxx10-dev"
-    - HOMEBREW_DEPENDENCIES="doxygen log4cxx"
+    - APT_DEPENDENCIES="cmake cmake-data doxygen libltdl-dev libboost-all-dev"
+    - HOMEBREW_DEPENDENCIES="doxygen"
     - GIT_DEPENDENCIES=""
     - GH_USERNAME=bchretien
     - GH_REPO=roboptim/roboptim-core
@@ -36,6 +36,8 @@ after_success:
   - codecov --gcov-root=/tmp/_ci/build
 after_failure: ./.travis/run after_failure
 before_install:
+  # Avoid bug on CI with OSX, see https://github.com/travis-ci/travis-ci/issues/8552
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
   - pip install --user codecov
   - ./.travis/run  before_install
   - ./.travis/dependencies/eigen-${EIGEN_MAJOR}
