@@ -189,7 +189,7 @@ Available Packages
    https://apps.fedoraproject.org/packages/roboptim-core
  * Mac OS X Homebrew Formula (Release 2.0 / Git HEAD):
    https://www.github.com/roboptim/homebrew-roboptim
- * RobotPkg (Release 1.0):
+ * RobotPkg (Release 3.1):
    http://robotpkg.openrobots.org/robotpkg/optimization/roboptim-core/
 
 Development Snapshots ( *unstable* ):
