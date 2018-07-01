@@ -52,7 +52,7 @@ namespace roboptim
         for (gradient_t::InnerIterator it (grad); it; ++it)
           {
             const index_t
-              idx = static_cast<const jacobian_t::Index> (it.index ());
+              idx = static_cast<jacobian_t::Index> (it.index ());
             coefficients.push_back
               (triplet_t (i, idx, it.value ()));
           }

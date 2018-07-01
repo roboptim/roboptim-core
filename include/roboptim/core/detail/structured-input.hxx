@@ -58,7 +58,9 @@ namespace roboptim
     {
       assert(blockInd < BlockProvider::blocks.size());
 
-      return input.segment(static_cast<long>(BlockProvider::blocks[blockInd].first), static_cast<long>(BlockProvider::blocks[blockInd].second));
+      const std::pair<size_t, size_t>& block = this->BlockProvider::blocks[blockInd];
+      return input.segment(static_cast<typename U::argument_t::Index>(block.first),
+                           static_cast<typename U::argument_t::Index>(block.second));
     }
 
     template<typename FuncType>

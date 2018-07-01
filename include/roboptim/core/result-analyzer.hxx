@@ -289,7 +289,7 @@ namespace roboptim
   }
 
   template <>
-  inline typename ResultAnalyzer<EigenMatrixSparse>::size_type
+  inline ResultAnalyzer<EigenMatrixSparse>::size_type
   ResultAnalyzer<EigenMatrixSparse>::computeRank (jacobian_t& jac) const
   {
     if (jac.nonZeros () == 0)
@@ -428,7 +428,7 @@ namespace roboptim
   }
 
   template <>
-  typename ResultAnalyzer<EigenMatrixSparse>::gradient_t
+  ResultAnalyzer<EigenMatrixSparse>::gradient_t
   inline ResultAnalyzer<EigenMatrixSparse>::gradLagrangian () const
   {
     gradient_t grad_L;

@@ -518,7 +518,7 @@ namespace roboptim
   }
 
   template <>
-  inline typename Problem<EigenMatrixSparse>::jacobian_t
+  inline Problem<EigenMatrixSparse>::jacobian_t
   Problem<EigenMatrixSparse>::jacobian (const_argument_ref x) const
   {
     typedef GenericDifferentiableFunction<EigenMatrixSparse>
