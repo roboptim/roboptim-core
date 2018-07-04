@@ -1,0 +1,23 @@
+codecov:
+  max_report_age: off
+
+coverage:
+  range: 60..90
+  round: down
+  precision: 2
+
+  status:
+    project:
+      default:
+        threshold: null
+        if_not_found: success
+    patch:
+      default:
+        enabled: yes
+        threshold: null
+        if_not_found: success
+    changes:
+      default:
+        enabled: yes
+        threshold: null
+        if_not_found: success
