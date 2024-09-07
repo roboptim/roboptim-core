@@ -16,12 +16,13 @@
 # Requires at least CMake 2.8.12 to configure the package.
 CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 
+SET(CMAKE_CXX_STANDARD 98)
+
 SET(PROJECT_NAME roboptim-core)
 SET(PROJECT_DESCRIPTION "RobOptim Core")
 SET(PROJECT_URL "http://github.com/roboptim/roboptim-core")
 SET(PROJECT_DEBUG_POSTFIX "_d")
-+
-SET(CMAKE_CXX_STANDARD 98)
+set(PROJECT_USE_CMAKE_EXPORT TRUE)
 
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
@@ -30,7 +31,7 @@ INCLUDE(cmake/cpack.cmake)
 INCLUDE(cmake/eigen.cmake)
 INCLUDE(cmake/msvc-specific.cmake)
 
-compute_project_args(PROJECT_ARGS LANGUAGES CXX)
+compute_project_args(PROJECT_ARGS LANGUAGES CXX C)
 project(${PROJECT_NAME} ${PROJECT_ARGS})
 
 # Use MathJax for Doxygen formulae
@@ -285,5 +286,4 @@ ELSE()
     "Tests should only be disabled for specific cases. Do it at your own risk.")
 ENDIF()
 
-SETUP_PROJECT_FINALIZE()
-SETUP_PROJECT_CPACK()
+
