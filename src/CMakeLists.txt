@@ -52,6 +52,8 @@ IF(GENERATE_COVERAGE)
   TARGET_COMPILE_OPTIONS(roboptim-core PRIVATE "--coverage")
   SET_TARGET_PROPERTIES(roboptim-core PROPERTIES LINK_FLAGS "--coverage")
 ENDIF()
+target_include_directories(
+  roboptim-core PUBLIC $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 # Add required libs to pkg-config file.
 SET(ROBOPTIM_API_BOOST_LIBRARIES date_time system filesystem)
@@ -140,6 +142,11 @@ IF(NOT APPLE)
   SET_TARGET_PROPERTIES(roboptim-core-plugin-dummy-td
     PROPERTIES VERSION 3.2.0 SOVERSION 3)
 ENDIF()
+
+install(
+  TARGETS ${PROJECT_NAME}
+  EXPORT ${TARGETS_EXPORT_NAME}
+  DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 IF(MSVC)
   IF("${CMAKE_GENERATOR}" MATCHES "Visual Studio.*")
