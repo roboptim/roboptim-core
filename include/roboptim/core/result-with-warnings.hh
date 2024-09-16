@@ -33,8 +33,8 @@ namespace roboptim
   // ROBOPTIM_CORE_DEPRECATED typedef Result ResultWithWarnings;
   ///
   /// \deprecated Deprecated since version 3.3. Use Result instead.
-  class ROBOPTIM_CORE_DLLAPI ROBOPTIM_CORE_DEPRECATED
-    ResultWithWarnings : public Result
+  ROBOPTIM_CORE_DEPRECATED
+  class ROBOPTIM_CORE_DLLAPI ResultWithWarnings : public Result
   {
   public:
     /// \brief Import size type from Result class.
