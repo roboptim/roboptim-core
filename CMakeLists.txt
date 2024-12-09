@@ -219,6 +219,7 @@ ENDIF()
 SET(BOOST_COMPONENTS date_time filesystem system unit_test_framework)
 SEARCH_FOR_BOOST()
 SEARCH_FOR_EIGEN("eigen3 >= 3.2.5")
+add_project_dependency(Eigen3)
 
 # Libtool dynamic loading
 # This project does not use Libtool directly but still uses ltdl for

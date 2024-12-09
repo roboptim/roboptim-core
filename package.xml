@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package>
+<package format="3">
   <name>roboptim-core</name>
   <version>0.1.0</version>
   <description>This plus provides the core librairie to do optimization in robotics.</description>
@@ -11,7 +11,16 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
   
   <build_depend>rclcpp</build_depend>
+  <depend>libboost-dev</depend>
+  <depend>libboost-date-time-dev</depend>
+  <depend>libboost-system-dev</depend>
+  <depend>libboost-filesystem-dev</depend>
+  <depend>libboost-test-dev</depend>
+  <depend>libeigen3-dev</depend>
+  <depend>liblapack-dev</depend>
+  <depend>libblas-dev</depend>
+  <depend>libltdl-dev</depend>
   
-  <run_depend>rclcpp</run_depend>
+  <exec_depend>rclcpp</exec_depend>
 
 </package>
