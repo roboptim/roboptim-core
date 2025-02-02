@@ -57,6 +57,7 @@ ADD_DEFINITIONS(-DTESTS_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 # Boost and add it to the test suite.
 # Complementary source files can be added as extra arguments.
 #
+SET(CMAKE_VERBOSE_MAKEFILE ON)
 MACRO(ROBOPTIM_CORE_TEST NAME)
   ADD_EXECUTABLE(${NAME} ${NAME}.cc ${ARGN})
   ADD_TEST(NAME ${NAME}
@@ -65,6 +66,9 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
   #Adding a project configuration file (for MSVC only)
   GENERATE_MSVC_DOT_USER_FILE(${NAME})
 
+  target_include_directories(
+    ${NAME} PUBLIC
+    ${CMAKE_SOURCE_DIR}/tests)
   TARGET_LINK_LIBRARIES(${NAME} roboptim-core)
   IF(NOT LTDL_FOUND)
     TARGET_LINK_LIBRARIES(${NAME} ltdl)
