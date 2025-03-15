@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>roboptim-core</name>
-  <version>0.1.0</version>
+  <version>3.2</version>
   <description>This plus provides the core librairie to do optimization in robotics.</description>
 
   <maintainer email="guilhem.saurel@laas.fr">Guilhem Saurel</maintainer>
 
-  <license>BSD</license>
+  <license>GPL3</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   
