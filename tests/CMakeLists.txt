@@ -67,7 +67,7 @@ MACRO(ROBOPTIM_CORE_TEST NAME)
   GENERATE_MSVC_DOT_USER_FILE(${NAME})
 
   target_include_directories(
-    ${NAME} PUBLIC
+    ${NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/tests)
   TARGET_LINK_LIBRARIES(${NAME} roboptim-core)
   IF(NOT LTDL_FOUND)
