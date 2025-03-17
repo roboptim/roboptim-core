@@ -34,7 +34,7 @@
 
 # include <vector>
 
-# include <eigen3/Eigen/Core>
+# include <Eigen/Core>
 
 namespace roboptim
 {
