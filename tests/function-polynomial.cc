@@ -18,7 +18,7 @@
 #include <iostream>
 
 #include <boost/mpl/list.hpp>
-#include <boost/test/test_case_template.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <roboptim/core/io.hh>
 #include <roboptim/core/function/polynomial.hh>

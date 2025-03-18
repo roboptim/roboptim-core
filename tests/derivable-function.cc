@@ -18,7 +18,7 @@
 #include "shared-tests/fixture.hh"
 
 #include <boost/mpl/list.hpp>
-#include <boost/test/test_case_template.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <iostream>
 

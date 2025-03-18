@@ -18,7 +18,7 @@
 #ifndef ROBOPTIM_CORE_SOLVER_CALLBACK_HXX
 # define ROBOPTIM_CORE_SOLVER_CALLBACK_HXX
 
-# include <boost/bind.hpp>
+# include <boost/bind/bind.hpp>
 
 # include <roboptim/core/solver.hh>
 
@@ -44,7 +44,7 @@ namespace roboptim
   SolverCallback<S>::callback ()
   {
     return boost::bind (&SolverCallback<S>::perIterationCallback,
-                        this, _1, _2);
+                        this, boost::placeholders::_1, boost::placeholders::_2);
   }
 
 
