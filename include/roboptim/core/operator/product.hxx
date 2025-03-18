@@ -21,7 +21,7 @@
 # include <boost/utility/enable_if.hpp>
 # include <boost/type_traits/is_same.hpp>
 # include <boost/mpl/and.hpp>
-# include <eigen3/Eigen/Core>
+# include <Eigen/Core>
 
 namespace roboptim
 {

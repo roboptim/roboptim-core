@@ -21,7 +21,7 @@
 # include <vector>
 # include <limits>
 
-# include <eigen3/Eigen/OrderingMethods>
+# include <Eigen/OrderingMethods>
 
 # include <roboptim/core/indent.hh>
 # include <roboptim/core/util.hh>
