@@ -20,7 +20,7 @@
 
 # include <stdexcept>
 
-# include <boost/bind.hpp>
+# include <boost/bind/bind.hpp>
 
 # include <roboptim/core/portability.hh>
 # include <roboptim/core/solver.hh>
@@ -90,7 +90,7 @@ namespace roboptim
       {
         solver_.setIterationCallback
           (boost::bind (&Multiplexer<S>::perIterationCallback,
-                        this, _1, _2));
+                        this, boost::placeholders::_1, boost::placeholders::_2));
       }
       catch (std::runtime_error& e)
       {

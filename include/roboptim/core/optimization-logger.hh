@@ -19,7 +19,7 @@
 # define ROBOPTIM_CORE_OPTIMIZATION_LOGGER_HH
 # include <string>
 
-# include <boost/bind.hpp>
+# include <boost/bind/bind.hpp>
 # include <boost/date_time/posix_time/posix_time.hpp>
 # include <boost/filesystem.hpp>
 # include <boost/filesystem/fstream.hpp>

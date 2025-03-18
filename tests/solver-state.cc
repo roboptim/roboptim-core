@@ -19,7 +19,7 @@
 
 #include <iostream>
 
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
@@ -188,7 +188,8 @@ BOOST_FIXTURE_TEST_SUITE (core, TestSuiteConfiguration)
   (*output) << solver##N->solverState () << std::endl;          \
   solver##N->setIterationCallback                               \
   (boost::bind (&DummyStruct<solver_t>::callback,               \
-                &dummy##N, _1, _2));                            \
+                &dummy##N, boost::placeholders::_1,             \
+                boost::placeholders::_2));                      \
   solver##N->solve ();                                          \
   /* Modify callback */                                         \
   dummy##N.x_val_ = 2.;                                         \
