@@ -25,8 +25,8 @@
 # include <vector>
 
 # define EIGEN_YES_I_KNOW_SPARE_MODULE_IS_NOT_STABLE_YET
-# include <eigen3/Eigen/Core>
-# include <eigen3/Eigen/Sparse>
+# include <Eigen/Core>
+# include <Eigen/Sparse>
 
 # include <roboptim/core/function.hh>
 # include <roboptim/core/visualization/fwd.hh>
